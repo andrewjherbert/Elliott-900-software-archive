@@ -1,4 +1,4 @@
-# INDEXER - progrsm to insert HTML index files in a directory tree
+# INDEXER - program to insert HTML index files in a directory tree
 #
 # Andrew Herbert 19/06/2020
 
