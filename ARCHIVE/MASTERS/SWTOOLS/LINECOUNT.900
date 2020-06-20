@@ -1,0 +1,25 @@
+﻿
+linecount;
+"begin"
+    "code" "procedure" chio; "algol";
+    "code" "procedure" ch900; "algol";
+    "code" "integer" "procedure" getc (ch); "integer" ch; "algol";
+    "code" "procedure" putc (ch); "value" ch; "integer" ch; "algol";
+    "integer" EOF, NEWLINE;
+
+    "integer" c, i, nl;
+
+    "comment" initialize special characters;
+    EOF := 20; NEWLINE := 10;
+
+    "comment" initialize chio;
+    chio; ch900;
+
+    nl := 0;
+   "for" i := 0 "while" (getc(c) "ne" EOF) "do" 
+	"if" c = NEWLINE "then" nl := nl+1;
+
+    "print" nl
+
+"end" linecount
+<! halt !>

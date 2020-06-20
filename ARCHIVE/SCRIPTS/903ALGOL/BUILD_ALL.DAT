@@ -1,0 +1,4 @@
+﻿c Build all versions of 903 ALGOL
+
+do BUILD_ALG2PASS(ISS6).DAT
+do BUILD_ALG16KLP(ISS6).DAT

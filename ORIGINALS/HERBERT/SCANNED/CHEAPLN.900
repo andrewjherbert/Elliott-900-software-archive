@@ -1,0 +1,47 @@
+﻿
+CHEAP;
+"BEGIN" "REAL" X,Y;
+<! Halt !>
+
+   "REAL" "PROCEDURE" LN(X); "VALUE" X; "REAL" X;
+   "BEGIN"
+      "REAL" A,B,C; "INTEGER" M;
+      "IF" X "LE" 0.0 "THEN" "PRINT" ''L@BAD LN ARG.@,STOP;
+      M:=0; A:=X; C:=0.0;
+
+      "IF" A<1.0 "THEN" "GOTO" L5 "ELSE"
+      "IF" A=1.0 "THEN" "GOTO" L6 "ELSE" "GOTO" L7;
+
+L5:
+      A:=A*10.0; M:=M-1;
+      "IF" A<1.0 "THEN" "GOTO" L5 "ELSE"
+      "IF" A=1.0 "THEN" "GOTO" L9 "ELSE" "GOTO" L7;
+
+L6:
+      LN:=0.0; "GOTO" EXIT;
+
+L7:
+     "IF" A<10.0 "THEN" "GOTO" L8 "ELSE"
+      "IF" A=10.0 "THEN" "GOTO" L10 "ELSE" "GOTO" L11;
+
+L8:
+      A:=(A-3.1622777)/(A+3.1622777);
+      B:=A*A;
+      C:=((.1913377*B+9.437648?-2)*B+.1775221)*B;
+      C:=((C+.2893355)*B+.8685917)*A+.5;
+
+L9:
+      LN:=(M+C)*2.3025851; "GOTO" EXIT;
+
+L10:
+      C:=1.0; "GOTO" L9;
+
+L11:
+      A:=A*0.1; M:=M+1; "GOTO" L7;
+EXIT:
+   "END";
+<! Halt !>
+   READER(3); PUNCH(3);
+AGAIN:
+   "READ" X; Y:=LN(X); "PRINT" FREEPOINT(8,Y; "GOTO" AGAIN
+"END";

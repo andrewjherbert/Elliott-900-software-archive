@@ -1,0 +1,16 @@
+﻿C Convert Hark The Herald Angels from Algol to AJH format.
+C Andrew Herbert 16/01/2014.
+on 903 16K
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+at ptr file ../../MASTERS/MUSIC/ALGOL_MUSIC/ALG_TRANS.900
+j 8
+c initialize
+j 10
+at ptp file AJH_HARK.900
+at ptr file ../../MASTERS/MUSIC/ALGOL_MUSIC/ALG_HARK.900
+j 9
+de ptp
+
+sh t

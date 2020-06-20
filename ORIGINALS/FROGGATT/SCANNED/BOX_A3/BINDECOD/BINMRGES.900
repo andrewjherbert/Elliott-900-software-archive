@@ -1,0 +1,414 @@
+﻿
+((BINARY MERGE PROGRAM, 26/2/71)
+
+[BTIPF BTIPL BTIPE BTIPA BTIPW
+BTOPF BTOPL BTOPI BTOPE BTOPT
+BTOPA BTOPW BTOPJ
+ERRORL ERRORE]
+
+ERRORL=1028
+ERRORE=1029
+
+^2047    8    START
+         8    ST8K
+         8    ST16K
+         8    CONTIN
+         8    END
+
+START    4    +0
+         8    ;+4
+ST8K     4    +1
+         8    ;+2
+ST16K    4    +2
+         5    SIZE
+         11   BTOPL
+         8    BTOPI
+         4    SIZE
+         5    BTOPF
+
+CONTIN   4    +0
+         5    BTIPF
+
+LOOP     11   BTIPL
+         8    BTIPE
+         4    BTIPF
+         7    ENDFND
+
+         4    BTIPA
+         5    BTOPA
+         4    BTIPW
+         11   BTOPL
+         8    BTOPE
+         8    LOOP
+
+ENDFND   4    BTIPA
+         9    ;+0
+         1    =7 0
+         5    BTOPJ
+
+END      11   BTOPL
+         8    BTOPT
+         8    ;+0
+
+SIZE     >1
+
+((BINARY TAPE INPUT SUBROUTINE, 26/2/71)
+
+[BTIPF BTIPL BTIPE BTIPA BTIPW
+ERRORL ERRORE]
+
+BTIPF    >1
+BTIPL    >1
+BTIPA    >1
+BTIPW    >1
+
+BTIPE    4    BTIPF
+         7    ;+2
+         8    CONTIN
+
+         4    =/5 2235
+         5    SC
+         4    -15
+         5    COUNT
+
+LL       4    +0
+         15   2048
+         9    ;+2
+         8    ;-2
+         15   2048
+         1    SC
+         5    SC
+
+         10   COUNT
+         4    COUNT
+         9    LL
+
+         4    SC
+         7    ;+3
+         4    +1
+         8    ERROR
+
+         5    BTIPA
+         5    B
+
+NEXT     4    +0
+         15   2048
+         7    DIRC
+         15   2048
+         15   2048
+         5    BTIPW
+         1    SC
+         5    SC
+
+         4    BTIPA
+         7    EF
+         1    -1
+         7    SETB
+
+         4    -1
+         8    EXIT
+
+CONTIN   10   BTIPA
+         8    NEXT
+
+SETB     4    BTIPW
+         5    B
+
+DIRC     15   2048
+         7    ;-1
+         15   2048
+         15   2048
+         5    BTIPW
+         1    SC
+         5    SC
+
+         4    BTIPW
+         2    =8 8180
+         7    END
+         10   BTIPW
+
+         4    BTIPW
+         6    =15 0
+         2    =5 0
+         7    ;+3
+
+EF       4    +2
+         8    ERROR
+
+         4    BTIPW
+         9    ;+3
+         6    =0 8191
+         8    ;+3
+         6    =0 8191
+         1    B
+         5    BTIPA
+         8    NEXT
+
+END      4    -19
+         5    COUNT
+         4    BTIPW
+         15   2048
+         5    BTIPW
+         10   COUNT
+         4    COUNT
+         9    ;-5
+
+         4    BTIPW
+         2    SC
+         7    ;+3
+
+         4    +3
+         8    ERROR
+
+         15   2048
+         15   2048
+         15   2048
+         15   2048
+         6    =0 8191
+         5    BTIPA
+
+         2    =0 8175
+         7    ;+2
+         8    ;+3
+         4    -1
+         5    BTIPA
+
+         4    +0
+EXIT     5    BTIPF
+         0    BTIPL
+         /8   1
+
+ERROR    0    +0
+         14   6
+         1    £ 0.
+         5    ERRNO
+         11   ERRORL
+         8    ERRORE
+         £BTI
+         £ ER
+         £ROR
+ERRNO    >1
+
+SC       >1
+COUNT    >1
+B        >1
+
+((BINARY TAPE OUTPUT SUBROUTINE, 26/2/71)
+
+[BTOPL BTOPI BTOPE BTOPT
+BTOPF BTOPA BTOPW BTOPJ]
+
+BTOPL    >1
+
+BTOPT    4    &400000
+         5    BTOPA
+         8    ;+2
+
+BTOPE    5    BTOPW
+(+1)     4    BTOPF
+         9    SUBSEQ
+
+         4    -46080
+         15   6144
+         1    +256
+         9    ;-2
+
+         4    BTOPF
+         7    PL
+         2    +1
+         7    PCS
+
+         0    +0
+         14   13
+         5    LAST
+         4    -9
+         11   PGL
+         8    PGE
+
+         10   1        (8171)
+         /5   8191     (8172)
+         4    1        (8173)
+         1    8179     (8174)
+         7    8181     (8175)
+         4    8178     (8176)
+         8    8171     (8177)
+         +0            (8178)
+LAST     >1            (8179)
+
+         4    -1024
+         15   6144
+         1    +256
+         9    ;-2
+
+PCS      4    -5
+         11   PGL
+         8    PGE
+
+         8    8177     (8175)
+         8    8181     (8176)
+         5    2        (8177)
+         10   8177     (8178)
+         8    8175     (8179)
+
+         4    -1024
+         15   6144
+         1    +256
+         9    ;-2
+
+PL       4    -12
+         11   PGL
+         8    PGE
+
+         4    8169     (8168)
+         5    8175     (8169)
+         4    1        (8170)
+         15   2048     (8171)
+         7    8168     (8172)
+         15   2048     (8173)
+         15   2048     (8174)
+         +0            (8175)
+         1    8167     (8176)
+         5    8167     (8177)
+         10   8175     (8178)
+         8    8170     (8179)
+
+         4    &400000
+         5    BTOPF
+
+SUBSEQ   4    BTOPA
+         9    PT
+
+         6    =15 0
+         2    MODULE
+         7    ;+2
+         8    PMP
+
+         4    BTOPA
+         2    EXPECT
+         7    PW
+         8    PSP
+
+PMP      4    =5 0
+         11   PWL
+         8    PWE1
+         4    BTOPA
+         6    =15 0
+         5    MODULE
+         11   PWL
+         8    PWE2
+
+PSP      4    BTOPA
+         5    EXPECT
+         6    =0 8191
+         1    =/4 8191
+         11   PWL
+         8    PWE1
+
+PW       4    BTOPW
+         11   PWL
+         8    PWE2
+         10   EXPECT
+         10   BTOPA
+         8    EXIT
+
+PT       4    =8 8180
+         11   PWL
+         8    PWE1
+         4    +0
+         11   PWL
+         8    PWE2
+
+         4    -6
+         11   PGL
+         8    PGE
+
+SUM      >1            (8174)
+BTOPJ    >1            (8175)
+         15   6144     (8176)
+         4    8174     (8177)
+         2    8167     (8178)
+         8    8175     (8179)
+
+         4    -46080
+         15   6144
+         1    +256
+         9    ;-2
+
+BTOPI    4    +0
+         5    BTOPF
+         5    MODULE
+         5    SUM
+         4    &400000
+         5    EXPECT
+         4    =7 8175
+         5    BTOPJ
+
+EXIT     0    BTOPL
+         /8   1
+
+PGL      >1
+
+PGE      5    HEAD+2
+         4    -3
+         5    COUNT
+
+PM       4    +9       (For Binary Merge program)
+         15   6144
+
+         4    COUNT
+         7    ;+5
+         0    COUNT
+         /4   HEAD+3
+         10   COUNT
+         8    ;+5
+         0    PGL
+         /4   1
+         10   PGL
+         10   HEAD+2
+
+         11   PWL
+         8    PWE3
+
+         4    HEAD+2
+         9    PM
+         0    PGL
+         /8   1
+
+HEAD     0    8179     (8177)
+         8    8182     (8178)
+         >1            (8179)
+
+PWL      >1
+
+PWE1     5    WORD
+         4    +0
+         15   6144
+         4    WORD
+
+PWE2     5    WORD
+         1    SUM
+         5    SUM
+         4    WORD
+
+PWE3     14   8178
+         1    &100
+         15   6144
+         4    +0
+         14   7
+         15   6144
+         4    +0
+         14   7
+         15   6144
+
+         0    PWL
+         /8   1
+
+BTOPF    >1
+BTOPA    >1
+BTOPW    >1
+
+MODULE   >1
+EXPECT   >1
+COUNT    >1
+WORD     >1
+<! Halt !>

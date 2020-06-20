@@ -1,0 +1,353 @@
+﻿
+*PROG PTEXEC
+
+((MASIR ISSUE  3:  TAPE 8))
+((PTEXEC 8/5/70 VERSION 7))
+
+
+[  STARTEX EX QEXCON QCHOP QCHIN QDOUT QDIN QES QEP
+   QSTOP QCOP QPAUSE ]
+^128
+
+
+STARTEX
+EX
+ASK          4  +141
+            15  6148
+             4  +10
+            15  6148
+             4  +95
+            15  6148
+
+RDTP         4  +0
+            15  2052
+             6  &000177
+             1  -48
+             9  RDTP
+             5  CHAR
+             1  -8
+             9  DIGIN
+             1  -11
+             7  CC
+             1  -10
+             7  MM
+             1  -2
+             7  OPTIN
+             1  -3
+             7  RR
+             1  -5
+             7  ;+0             (W)
+             8  RDTP
+
+QEXCON          +0
+CC           0  QEP
+            /8  1
+
+AMAIN=18
+RR
+MM           4  +0
+             5  QEXCON
+             4  OPTION
+            11  W
+            14  18
+             2  +0
+             5  W
+             0  W
+            /0  AMAIN
+             4  OPTION
+            /8  0
+
+OPTIN        4  +0
+             5  OPTION
+             8  RDTP
+
+DIGIN        4  OPTION
+             0  +0
+            14  3
+             1  CHAR
+             5  OPTION
+             8  RDTP
+
+CHAR            +0
+OPTION          +64
+CT              +0
+W               +0
+QCOP            +0
+             5  W
+             4  +10
+            15  6148
+             4  -5
+             5  CT
+
+OCT          4  W
+            14  3
+             5  W
+            14  8177
+             6  +7
+             1  +48
+            15  6148
+            10  CT
+             4  CT
+             9  OCT
+             0  QCOP
+            /8  1
+
+QES             +0
+             4  +3
+             5  QDOUT
+             4  +1
+            11  QCHOP
+             8  QCHOP+1
+             4  +10
+            11  QCHOP
+             8  QCHOP+1
+             0  QES
+            /4  1
+             9  ;+2
+
+QSTOP        8  ASK
+             4  OPTION
+            14  11
+             9  ASK
+            /4  1
+             6  +63
+             5  W
+             6  OPTION
+             2  W
+             1  OPTION
+             5  OPTION
+             8  RR
+
+QEP             +0
+             0  QEP
+            /4  1
+            10  QEP
+            11  QCOP
+             8  QCOP+1
+             8  ASK
+
+QPAUSE          +0
+             4  QPAUSE
+             5  QEP
+             8  ASK
+
+[  QCHOP QCHIN QDOUT QDIN QDINS QDOUTS QRR QPAUSE
+   QOUTRLB QRWORD E7 ]
+
+
+
+PW              +0
+PW1             +0
+CH              +0
+PARITY          +0
+             0  +0
+             3  PW
+
+P1           7  P2
+            10  PW
+             5  PW1
+             1  -1
+             6  PW1
+             8  P1
+
+P2           4  PW
+             0  PARITY          ( PARITY BIT IS L.S. ACC)
+            /8  1
+                +0              (QCHOP-7)
+             0  ;-1
+            /4  1
+            11  QCHOP
+             8  QCHOP+1
+             0  QCHOP-7
+            /8  2
+
+QCHOP           +0
+             5  CHAR1
+             4  QCHOP
+             5  QCHOP+7
+             8  NORMAL
+             0  QCHOP+7         (EXIT VIA QCHOP)
+            /8  1
+                +0
+             8  NORMAL
+             8  SLAVE
+
+CHAR1           +0
+NORMAL       4  CHAR1
+             0  QDOUT
+            /0  QDOUT
+            /8  0
+
+QDOUT           +1
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+             0  PTOUT
+
+QDOUTS          +0              (SMAVE)
+SLAVE        8  ;+0
+PTOUT        6  =/0 255
+             9  SPEC            ( OUTPUT BINARY PATTERN )
+             1  -1
+             7  NL              ( TEST FOR NEWLINE )
+             1  +33
+             5  CH
+            11  PARITY
+             8  PARITY+1
+            14  7
+             6  +128
+             1  CH              ( 1 CORRECT PARITY BIT )
+
+SPEC         5  CH
+             4  QDOUT
+             1  -3
+             7  PTP             ( JUMP IF TELEPRINTER REQIRED )
+             4  CH
+            15  6144            ( OUTPUT TO PUNCH)
+
+EXIT         6  &377400
+             7  QCHOP+5
+            14  8184
+             1  -1              ( FORM NEXT CHARACTER IN NEWLINE SEQUENCE)
+             8  SPEC
+
+PTP          4  CH
+            15  6148            (TELEPRINTER)
+             8  EXIT
+
+NL           4  &205615         ( SEQUENCE FOR NEWLINE )
+             8  SPEC
+
+QCHIN           +0
+             8  NORM
+             8  SLAVE1
+                +0
+                +0
+             0  QCHIN
+            /8  1
+
+NORM         0  QDIN
+            /0  QDIN
+            /8  0
+
+QDIN            +1
+             0  PTIN
+             0  PTIN
+             0  PTIN
+             0  PTIN
+             0  PTIN
+             0  PTIN
+             0  PTIN
+             0  PTIN
+             0  PTIN
+             0  PTIN
+
+QDINS           +0              (SLAVE)
+SLAVE1       8  ;+0
+PTIN            +0              ( INPUT INTERNAL CODE CHAR )
+             4  QDIN
+             1  -3
+             7  TPIN            ( JUMP IF TELEPRINTER INPUT)
+             4  +0
+            15  2048
+
+GOT          5  CHAR
+            11  PARITY
+             8  PARITY+1
+             6  +1
+             7  EVPAR           ( CORRECT PARITY )
+
+INERR        8  E7
+TPIN        15  2052            ( TELEPRINTER INPUT)
+             8  GOT
+
+EVPAR        4  CHAR
+             6  +127
+             1  -32
+             9  LESS
+             1  -64
+             9  KCODE
+             1  -27
+             9  LOWCAS          ( LOWER CASE CHARS )
+             1  -4
+             7  QCHIN+1         ( ERASE )
+             8  INERR
+
+LOWCAS       1  +58
+NWLF       1  -63
+
+KCODE        1  +64             (ADD 64 )
+EXIT2        0  QCHIN
+            /8  1
+
+LESS         1  +22
+             7  NWLF            ( NEWLINE )
+             1  +1
+             7  EXIT2           ( TAB )
+             1  -4
+             7  QCHIN+1         ( CARRIAGE RETURN)
+             1  -7
+             7  HALT
+             4  CHAR
+             7  QCHIN+1         ( BLANK )
+             8  INERR
+
+HALT        11  QPAUSE
+             8  QPAUSE+1
+             8  QCHIN+1
+
+DATA         0  QCHIN
+             0  1
+                \CHN
+
+CHAR            +0
+
+QOUTRLB       +0
+           4  QRWORD
+           1  QRWORD+1
+           1  QRWORD+2
+           5  QRWORD+2
+           4  QRWORD
+           6  +127
+           15 6144
+           4  QRWORD
+          14  8185
+           6  +127
+          15  6144
+           0  QRWORD
+           4  QRWORD+1
+           14 4
+          15  6144
+           0  QOUTRLB
+          /8  1
+
+QRWORD        >+3
+%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

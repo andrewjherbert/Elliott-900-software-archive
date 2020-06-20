@@ -1,0 +1,735 @@
+﻿
+*17
+((   GPM10  )
+
+ GPM10 8 STARTALL
+ 8 START
+ 8 PUNCH
+ 4 V1
+ 5 X
+LZ 11 LREADCH
+ 8 READCH
+ 4 A
+ 0 X
+ /5 WARC
+ 10 X
+ 4 X
+ 2 V8
+WAIT 7 WAIT
+ 8 LZ
+PUNCH 4 V20
+ 5 R
+LZ3 5 A
+LZ2 11 LWRITECH
+ 8 WRITECH
+ 10 R
+ 4 R
+ 9 LZ2
+LZ4 7 WAIT
+P127 4 MARKER
+ 5 R
+ 4 V0
+ 8 LZ3
+LZ6 7 LZ5
+STARTALL 4 LZ6
+ 5 LZ4
+ 8 P127
+LZ5 4 WAIT
+ 5 LZ4
+ 4 V0
+ 5 H
+ 5 P
+  5 F
+ 5 C
+ 5 Q
+ 5 EF
+ 4 V39
+ 5 S
+ 4 V33
+ 5 E
+ 8 START
+
+LPARITY >1
+PARITY 5 CO
+ 4 T
+L1 10 CO
+L2 14 1
+ 6 VM2
+ 9 L1
+ 7 L3
+ 8 L2
+L3 4 CO
+ 6 V1
+ 14 7
+ 0 LPARITY
+ /8 1
+LREADCH >1
+READCH 4 V0
+ 15 2048
+ 7 READCH
+ 5 T
+ 6 V127
+ 5 A
+ 2 V127
+ 7 READCH
+ 4 V0
+ 11 LPARITY
+ 8 PARITY
+ 7 MON6
+ 0 LREADCH
+ /8 1
+LWRITECH >1
+WRITECH 4 A
+ 5 T
+ 4 V1
+ 11 LPARITY
+ 8 PARITY
+ 1 A
+ 15 6144
+ 0 LWRITECH
+ /8 1
+LLOAD >1
+LOAD 4 H
+ 7 L4
+ 0 S
+ 4 A
+ /5 ST
+ 10 S
+ 8 L5
+L4 11 LWRITECH
+ 8 WRITECH
+L5 0 LLOAD
+ /8 1
+LNEXTCH >1
+NEXTCH 4 C
+ 7 L6
+ 0 C
+ /4 ST
+ 5 A
+ 10 C
+ 8 L7
+L6 11 LREADCH
+ 8 READCH
+L7 0 LNEXTCH
+ /8 1
+LFIND >1
+FIND 5 W
+ 4 E
+ 8 LA2
+LA1 0 A
+ /4 ST
+LA2 5 A
+ 9 MON7
+ 4 VM1
+ 5 R
+LA3 10 R
+ 0 W
+ /4 ST
+ 2 R
+ 7 LA4
+ 4 W
+ 1 R
+ 5 T
+ 4 A
+ 1 R
+ 1 V1
+ 5 1
+ /4 ST
+ 0 T
+ /2 ST
+ 7 LA3
+ 8 LA1
+LA4 /4 ST
+ 1 A
+ 1 V1
+ 5 W
+ 0 LFIND
+ /8 1
+
+
+START 11 LNEXTCH
+ 8 NEXTCH
+ 4 VM1
+ 5 W
+LA5 10 W
+ 4 W
+ 2 V8
+ 7 COPY
+ 0 W
+ /4 WARC
+ 2 A
+ /7 JLIST
+ 8 LA5
+JLIST 8 ENDFN
+ 8 EXIT
+ 8 COPY
+ 8 FN
+ 8 LOADARG
+ 8 NEXTITEM
+ 8 APPLY
+ 10 Q
+ 8 Q2
+COPY 11 LLOAD
+ 8 LOAD
+SCAN 4 Q
+ 7 START
+Q2 11 LNEXTCH
+ 8 NEXTCH
+ 4 A
+ 2 SQO
+ 7 LSQO
+ 4 A
+ 2 SQC
+ 7 LSQC
+ 8 COPY
+LSQO 10 Q
+ 8 COPY
+LSQC 4 Q
+ 1 VM1
+ 5 Q
+ 7 START
+ 8 COPY
+FN 0 S
+ 4 H
+ /5 ST
+ 4 F
+ /5 ST+1
+ 4 V0
+ /5 ST+2
+ /5 ST+3
+ 4 S
+ 1 V1
+ 5 F
+ 1 V2
+ 5 H
+ 1 V1
+ 5 S
+ 8 START
+NEXTITEM 4 H
+  7 COPY
+  0 H
+ /1 ST
+ 2 S
+ /5 ST
+ 0 S
+ 4 V0
+ /5 ST
+ 4 S
+ 5 H
+ 10 S
+ 8 START
+
+
+APPLY 4 P
+ 2 F
+ 9 MON1
+ 4 H
+ 7 COPY
+ 2 S
+ 0 H
+ /5 ST
+ 0 S
+ 4 MARKER
+ /5 ST
+ 4 C
+ 0 F
+ /5 ST+1
+ /4 ST-1
+ 5 H
+ 4 F
+ 2 S
+ 1 V2
+ /5 ST-1
+ 10 S
+ /4 ST
+ 5 W1
+ 4 P
+ /5 ST
+ 4 F
+ 5 P
+ 4 W1
+ 5 F
+ 4 H
+ 7 LAB1
+ 0 P
+ /4 ST-1
+ 0 H
+ /1 ST
+ /5 ST
+LAB1 4 P
+ 1 V2
+ 11 LFIND
+ 8 FIND
+ 0 W
+ /4 ST
+ 9 JUMPIFMARKED
+ 4 W
+ 1 V1
+ 5 C
+ 8 START
+JUMPIFMARKED 2 V0
+ 5 1
+SWI /8 SWI
+ 8 DEF
+ 8 VAL
+ 8 UPDATE
+ 8 BIN
+ 8 DEC
+ 8 BAR
+LOADARG 4 P
+ 7 TEST
+ 11 LNEXTCH
+ 8 NEXTCH
+ 4 P
+ 1 V2
+ 5 W
+ 4 LIT0
+ 2 A
+ 5 W1
+ 9 MON3
+ 4 VM1
+ 5 R
+LAB2 10 R
+ 4 R
+ 2 W1
+ 7 LAB3
+ 0 W
+ /4 ST
+ 1 W
+ 5 W
+ 0 W
+ /4 ST
+ 2 MARKER
+ 7 MON4
+ 8 LAB2
+TEST 4 H
+ 7 COPY
+ 8 MON2
+
+
+LAB3 4 V0
+ 5 R
+LAB4 10 R
+ 4 R
+ 0 W
+ /2 ST
+ 7 START
+ 4 W
+ 1 R
+ 5 1
+ /4 ST
+ 5 A
+ 11 LLOAD
+ 8 LOAD
+ 8 LAB4
+ENDFN 4 F
+ 2 P
+ 9 MON5
+ 0 S
+ 4 E
+ /5 ST
+ 4 S
+ 5 A
+LAB5 0 P
+ /4 ST-1
+ 1 P
+ 2 V1
+ 0 A
+  /1 ST
+ 9 LAB6
+ 0 P
+ /4 ST-1
+ 0 A
+ /2 ST
+ 5 W
+ /4 ST
+ 5 A
+ 4  W
+ /5 ST
+ 8 LAB5
+LAB6 /4 ST
+ 5 W
+LAB8 4 P
+ 2 W
+ 9 LAB7
+ 0 W
+ /4 ST
+ 5 W
+ 8 LAB8
+LAB7 4 W
+ 0 A
+ /5 ST
+ 0 S
+ /4 ST
+ 5 E
+ 4 H
+ 7 LAB9
+ 0 P
+ 2 P
+ 9 LAB10
+ /4 ST-1
+ 0 H
+ /2 ST
+ /5 ST
+ 8 LAB9
+LAB10 /4 ST-1
+ 2 H
+ 5 H
+LAB9 4 P
+ 1 VM1
+ 5 A
+ 0 P
+ /1 ST-1
+ 5 W
+ /4 ST+1
+ 5 C
+ /4 ST-1
+ 2 S
+ 5 S
+ /4 ST
+ 5 P
+LAB11 4 A
+ 2 S
+ 7 START
+ 0 W
+ /4 ST
+ 0 A
+ /5 ST
+ 10 A
+ 10 W
+ 8 LAB11
+EXIT 4 C
+ 7 EL
+ 8 MON8
+EL 4 H
+ 7 WAIT
+ 8 MON8
+DEF 4 H
+ 7 LAB12
+ 0 P
+ /4 ST-1
+ 2 V6
+ 0 H
+ /1 ST
+ /5 ST
+LAB12 0 P
+ 4 V6
+ /5 ST-1
+ 4 E
+ /5 ST+5
+ 4 P
+ 1 V5
+ 5 E
+ 8 ENDFN
+VAL 4 P
+ 1 V6
+ 11 LFIND
+ 8 FIND
+LAB13 0 W
+ /4 ST+1
+ 2 MARKER
+ 7 ENDFN
+ /4 ST+1
+ 5 A
+ 10 W
+ 11 LLOAD
+ 8 LOAD
+ 8 LAB13
+UPDATE 4 P
+ 1 V9
+ 11 LFIND
+ 8 FIND
+ 0 P
+ 4 P
+ 1 V9
+ /1 ST+9
+ 5 A
+ 0 A
+ /4 ST
+ 0 W
+ /2 ST
+ 9  MON9
+ 4 V0
+ 5 R
+LAB14 10 R
+ 4 R
+0 A
+ /2 ST
+ 9 ENDFN
+ 4 W
+ 1 R
+ 5 T
+ 4 A
+ 1 R
+ 5 1
+ /4 ST
+ 0 T
+ /5 ST
+ 8 LAB14
+
+
+BIN 4 V0
+ 5 W
+ 0 P
+ /4 ST+7
+ 2 LITPLUS
+ 7 LAB15
+ /4 ST+7
+ 2 LITMIN
+ 7 LAB15
+ 4 V7
+ 8 LAB16
+LAB15 4 V8
+LAB16 1 P
+ 5 A
+LAB17 0 A
+ /4 ST
+ 2 MARKER
+ 7 LAB18
+ 4 LIT0
+ /2 ST
+ 5 T
+ 9 MON10
+ 2 V9
+ 9 MON10
+ 10 A
+ 4 W
+ 12 V10
+  14 17
+ 1 T
+
+ 5 W
+ 8 LAB17
+LAB18 0 P
+ /4 ST+7
+ 2 LITMIN
+ 7 LAB20
+ 4 W
+ 8 LAB19
+LAB20 4 W
+ 2 V0
+LAB19 5 A
+ 11 LLOAD
+ 8 LOAD
+ 8 ENDFN
+DEC 0 P
+ /4 ST+7
+ 5 W
+ 9 LAB21
+ 8 LAB22
+LAB21 2 V0
+  5 W
+ 4 LITMIN
+ 5 A
+ 11 LLOAD
+ 8 LOAD
+LAB22 4 V1
+ 5 W1
+LAB23 4 W1
+ 12 V10
+ 14 17
+ 5 T
+ 2 W
+ 9 LAB24
+ 4 T
+ 5 W1
+ 8 LAB23
+LAB24 4 W
+ 5 X
+ 4 W1
+ 5 Y
+ 11 LQUOT
+ 8 QUOT
+ 1 LIT0
+ 5 A
+  11 LREM
+ 8 REM
+ 5 W
+ 4 W1
+ 5 X
+ 4 V10
+ 5 Y
+  11 LQUOT
+ 8 QUOT
+ 5 W1
+ 11 LLOAD
+ 8 LOAD
+ 4 V1
+ 2 W1
+ 9 ENDFN
+ 8 LAB24
+X >1
+Y >1
+LQUOT >1
+QUOT 4 X
+ 0 V0
+
+ 14 8176
+ 13 Y
+ 14 8191
+ 0 LQUOT
+ /8 1
+LREM >1
+REM 11 LQUOT
+ 8 QUOT
+ 12 Y
+ 14 17
+ 2 X
+ 0 LREM
+ /8 1
+BAR 0 P
+ /4 ST+9
+ 5 X
+ /4 ST+11
+ 5 Y
+ /4 ST+7
+ 2 LITPLUS
+ 7 LAC1
+ 1 V2
+ 7 LAC2
+ 1 V2
+ 7 LAC3
+ 1 VM5
+ 7 LAC4
+ 11 LREM
+ 8 REM
+ 8 LAC5
+LAC1 4 X
+ 1 Y
+ 8 LAC5
+LAC2 4 Y
+ 2 X
+ 8 LAC5
+LAC3 11 LQUOT
+ 8 QUOT
+ 8 LAC5
+LAC4 4 X
+ 12 Y
+ 14 17
+LAC5 5 A
+ 11 LLOAD
+ 8 LOAD
+ 8 ENDFN
+MON10 10 EF
+MON9 10 EF
+MON8 10 EF
+MON7 10 EF
+MON6 10 EF
+MON5 10 EF
+MON4 10 EF
+MON3 10 EF
+MON2 10 EF
+
+
+
+MON1 4 A
+ 5 Y
+ 4 VM5
+ 5 R
+ 4 EF
+ 5 X
+ 1 LIT0
+LAC6 5 A
+ 11 LWRITECH
+ 8 WRITECH
+ 4 R
+ 7 LAC7
+ 10 R
+ 4 V42
+ 8 LAC6
+LAC7 5 EF
+ 4 Y
+ 5 A
+ 4 V2
+ 2 X
+ 9 COPY
+
+LAC8 8 LAC8
+EF >1
+A >1
+CO >1
+W >1
+
+W1 >1
+R >1
+H >1
+P >1
+F >1
+C >1
+E >1
+Q >1
+S >1
+T >1
+MARKER
+WARC -128
+ +20
+SQC +62
+ +91
+ +63
+ +58
+ +93
+SQO +60
+LIT0 +48
+LITPLUS +43
+LITMIN +45
+V0 +0
+V1 +1
+V2 +2
+V4 +4
+
+V5 +5
+V6 +6
+V7 +7
+V8 +8
+V9 +9
+V10 +10
+V20 +20
+
+V33 +33
+V39 +39
+V42 +42
+V127 +127
+VM1 -1
+VM2 -2
+VM5 -5
+ST -1
+ +4
+ +68
+ +69
+ +70
+ -1
+ +0
+ +4
+ +86
+ +65
+ +76
+ -2
+ +6
+ +7
+ +85
+ +80
+ +68
+ +65
+ +84
+ +69
+ -3
+ +12
+ +4
+ +66
+ +73
+ +78
+ -4
+ +21
+ +4
+ +68
+ +69
+ +67
+ -5
+ +27
+ +4
+ +66
+ +65
+ +82
+ -6
+%
+<! Halt !>

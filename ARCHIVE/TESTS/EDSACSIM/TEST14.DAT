@@ -1,0 +1,121 @@
+﻿C Read in and sum positive fractions.
+
+on 903
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+c Clear store
+j 35
+
+c Load coordinating orders first, using Initial Orders 1.
+nonstop on
+at ptr file ../../MASTERS/EDSACSIM/COORDINATING_ORDERS.900
+
+c Select IO1
+j 36
+c START
+j 32
+
+c Continue with summation example.
+at ptr inline
+..PK
+T56K
+
+[M3]
+PFGKIFAFRDLFUFOFE@A6FG@E8FEZPF
+
+@&*SUMMATION@&#
+
+..PZ
+T56K
+
+[R1]
+GKT45KP32@P47@TZ
+A3NU4@A4NT9HAFTHTDT4DA5NT13@H2N
+S6NT4@IFAFS6NE4HT6FV4DL8F
+ADT4DA4@A7NG12@H4DNNR128FR128FV1N
+LDYFTFAHA3NE5@S6NE42@A7NE44@
+T6FEFS4DT4DA2NT13@E22@
+P610DZ1523DTFP2FU1FIFP5DPD
+
+..PZ
+[P1]
+GK
+A18@U17@S20@T5@H19@PFT5@VDUFOFFFSF
+L4FTDA5@A2FG6@EFU3FJFM1F
+
+
+..PZ
+
+[Summation Master]			
+GK			
+T47K			
+P	32		@
+TZ			
+X			F
+A	1		@
+G	56		F
+T	200		D
+			
+T			F
+A	200		D
+U			D
+A	6		#M
+T	6		#M
+O	3		M
+O	4		M
+O	2		M
+A	12		@
+G	111		F
+P	10		F
+A	5		@
+A	1		M
+U	5		@
+S	0		M
+G	4		@
+O	3		M
+O	4		M
+O	4		M
+O	2		M
+T			F
+A	6		#M
+T			D
+A	27		@
+G	111		F
+P	10		F
+Z 			F
+P			F
+			
+A	240		D
+P	2		F
+M			F
+@			F
+&			F
+P			F
+P			F
+P			F
+
+EZPF
+
+
+5+
+1+
+01+
+001+
+0001+
+00001+
+000001+
+0000001+
+00000001+
+000000001+
+0000000001+
+2+
+F
+
+<!!>
+
+Restart
+
+
+sh t

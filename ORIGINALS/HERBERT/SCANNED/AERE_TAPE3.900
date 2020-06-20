@@ -1,0 +1,646 @@
+﻿         /0   TABENTRY
+         /2   0
+         2    W1
+         0    DIFFRACT
+         9    ON
+
+         /4   TABENTRY
+         /2   POINT
+         1    -6
+         9    TOOFAR
+
+         /4   MAX
+         9    ;+4
+
+         4    -1
+         /5   MAX
+         8    TWO
+
+         /1   TABENTRY
+         /5   POINT
+         4    +0
+         /5   MAX
+         11   TILTCOM
+         8    TILTCOM+1
+
+         0    DIFFRACT
+         /5   BACKP
+         4    ELINK
+         /5   LINK
+
+    4   +178        (2*89)
+         8    BACKSPACE
+ELINK    8    ;+1
+         0    DIFFRACT
+         4    +1
+         /5   STATE
+         4    +2
+         /5   MAXMUM
+         /4   BASE
+         /5   LOCBASE
+         /4   PEAK
+         /5   LOCPEAK
+         4    +0
+         /5   BASE
+         4    -10
+         /5   PEAK
+         8    NEXT
+Q        11   GETCOUNT
+         8    GETCOUNT+1
+         7    ;+4
+         0    DIFFRACT
+
+         /0   POINT
+         /5   0
+         0    DIFFRACT
+         /4   POINT
+         1    -18
+         /2   TABENTRY
+         9    ;+3
+
+    4   +16         (2*8)
+         8    TWO+1
+         4    WAITSTATE
+         9    ;-3
+         10   WAIT
+         4    -1
+         /5   STATE
+         1    NUMBER
+         5    NUMBER
+         0    WAIT
+         4    DIFFRACT
+         /5   WAIT
+         8    NEXT
+END      /4   LOCBASE
+         /5   BASE
+         /4   LOCPEAK
+         /5   PEAK
+         4    -1
+         /1   TABENTRY
+         /5   POINT
+         11   TILTCOM
+         8    TILTCOM+1
+         0    DIFFRACT
+         /5   BACKP
+         4    ZLINK
+         /5   LINK
+         /4   TOTAL1
+         14   8187
+         9    OH
+
+    2   +320        (2*160)
+         9    OH
+         8    BACKSPACE
+ZLINK    8    ;+1
+         4    +2
+         /5   STATE
+         8    NEXT
+OH       /10  POINT
+         8    TWO
+
+LOCBASE  +0
+         +0
+LOCPEAK  +0
+         +0
+TOOFAR   11   TILTCOM
+         8    TILTCOM+1
+         0    DIFFRACT
+         /5   BACKP
+         4    FLINK
+         /5   LINK
+
+
+    4   +128        (2*64)
+         8    BACKSPACE
+
+FLINK    8    ;+1
+
+         0    DIFFRACT
+         /4   TABENTRY
+         /5   POINT
+         4    +1
+         /5   STATE
+         /0   POINT
+         4    +0
+         /5   0
+
+
+TWO 4   +12         (2*6)
+         11   INCSTATE
+         8    INCSTATE+1
+         11   TILTCOM
+         8    TILTCOM+1
+
+         1    P
+         5    P
+              0        DIFFRACT
+4        -2048
+         /5   STCOUNT
+         8    NEXT
+
+TILTCOM  +0
+         4    DIFFRACT
+         2    +1
+         9    FAIL-4
+         7    ;+2
+         4    +30
+         2    +32
+         0    TILTCOM
+         /8   1
+
+[ BACKSPACE  MOVCOUNT  BACK  BACKP  MASK  P
+  STATE  MARK  MOTLIT  MOTMASK  NEXT  DIFFRACT
+  RSF  GENMOVE  BOSELY  FAIL ]
+
+EXCESS   +0
+         +0
+         +0
+         +0
+
+BACKSPACE 9    FIX
+RETURN   2    -128
+         9    ;+2
+
+         8    SPLIT
+
+         /5   MOVCOUNT
+         4    +1
+         /5   MARK
+ON       4    +3
+         /5   STATE
+         4    -1
+         5    BOSELY+1
+
+         4    BOSELY
+         /1   BACKP
+         5    BOSELY
+         /6   BACKP
+         /2   BACKP
+         7    ;+2
+         8    FAIL-7
+
+         /4   BACKP
+         1    P
+         5    P
+
+         /6   MASK
+         7    NEXT
+         4    MOTLIT
+         /6   MOTMASK
+         14   2
+         /1   RSF
+         14   8190
+         5    MOTLIT
+         5    MOTLIT+1
+         8    NEXT
+
+FIX      /5   MARK
+         6    =15  8191
+         /5   EXCESS
+         4    =/0  0
+         /5   MOVCOUNT
+         8    ON
+
+SPLIT    1    +128
+         /5   MOVCOUNT
+         /5   MARK
+         4    +0
+         /5   EXCESS
+         8    ON
+
+BACK     0    DIFFRACT
+         /4   MOVCOUNT
+         9    GENMOVE
+         /4   MARK
+
+         7    END
+         9    AGAIN
+
+         4    +0
+         /5   MARK
+         4    -128
+         /5   MOVCOUNT
+         4    -1
+         5    BOSELY+1
+         /4   BACKP
+         2    BOSELY
+         5    BOSELY
+         /6   BACKP
+         7    ;+2
+         8    FAIL-7
+
+         /4   BACKP
+         1    P
+         5    P
+
+         /6   MASK
+         7    NEXT
+         4    MOTLIT
+         /6   MOTMASK
+         /1   RSF
+         5    MOTLIT
+         5    MOTLIT+1
+
+         8    NEXT
+
+END      4    +7
+         /5   STATE
+         8    NEXT
+
+AGAIN    /4   EXCESS
+         8    RETURN
+
+[ BACKP  BACKSPACE  DIFFRACT  ENHANS  FORWARD  GETCOUNT
+  INCSTATE  LINK  LOCPAT  NEXT  NUMBER  P
+  POINT  POSN  RUN  SIZE  STATE  STCOUNT
+  SUM  TABENTRY  TENSEC  TYPE  VALORD  W
+  SAVEN
+TRIAL STSAVE SHL CTSAVE
+  WAIT  WAITSTATE ]
+
+RUN      0    DIFFRACT
+         /4   POINT
+         1    +1
+         /2   TABENTRY
+         7    FIR
+
+         11   GETCOUNT
+         8    GETCOUNT+1
+         0    DIFFRACT
+         /4   POINT
+         /2   TABENTRY
+         1    +299
+         9    LABEL
+ACC      /4   ENHANS
+         9    ;+5
+         4    +0
+         /0   POINT
+         /5   0
+         0    DIFFRACT
+         4    W
+         /0   POINT
+         /1   0
+         /5   0
+         8    CONT
+
+LABEL    1    +700
+         9    CONT
+         4    DIFFRACT
+         2    +3
+         7    ACC
+CONT     0    DIFFRACT
+         4    DIFFRACT
+         2    +1
+          9           PD1
+         4    W
+
+         /0   TABENTRY
+
+         /2   0
+         0    DIFFRACT
+         9    FIRST
+         7    FIRST
+
+          4           DIFFRACT         (WARRANT 14)
+          2           +1
+          9           GOON
+         /4   TABENTRY
+
+       /1   FORCED
+         /2   POINT
+         9    FIRST
+INCWAIT  4    WAITSTATE
+         9    FIRST
+         10   WAIT
+         4    -1
+         /5   STATE
+
+         1    NUMBER
+         5    NUMBER
+         0    WAIT
+         4    DIFFRACT
+         /5   WAIT
+         8    NEXT
+
+PD1       /4          TYPE             (WARRANT 14)
+          2           +1
+          7           POSS
+          /4          ENHANS
+          /2          SAVEN-2
+          7           CONT+4
+          8           POSS
+GOON      /4          TABENTRY
+
+       /1   FORCED
+          /2          POINT
+          9           FIRST
+          /4          TABENTRY
+          /2          POINT
+          /5          SUM
+          8           POSS+8
+FIR      4    DIFFRACT
+         2    +1
+         9    PHI
+FIRST    /4   LOCPAT
+         1    P
+         5    P
+         /4   SIZE
+BACK     11   INCSTATE
+         8    INCSTATE+1
+         0    DIFFRACT
+   4   DIFFRACT
+   2   +1
+   9   ;+2
+   8   APEX
+  /4   TRIAL-2
+   7   APEX
+  /4   CTSAVE-2
+   8   ;+2
+APEX
+
+
+         /4   TENSEC
+
+         /5   STCOUNT
+         8    NEXT
+
+
+FORCED +48
+       +48
+        +9
+        +9
+
+
+POSS     /4   TABENTRY
+         /1   SUM
+         /2   POINT
+         9    FIRST
+         7    ;+4
+         /2   POINT
+         /5   POINT
+         8    INCWAIT
+         /4   ENHANS
+         9    ;+3
+         2    +0
+         /5   ENHANS
+         /10  ENHANS
+         /4   ENHANS
+         7    INCWAIT
+
+         4    RUNLINK
+         /5   LINK
+         4    -1
+         /5   FORWARD
+         /4   LOCPAT
+         /5   BACKP
+         /4   SUM
+
+         /12  SIZE
+         14   17
+         /1   SIZE
+         8    BACKSPACE
+RUNLINK  8    ;+1
+         0    DIFFRACT
+         4    +1
+         /5   FORWARD
+         /5   STATE
+         /10  STATE
+         4    +256
+         /2   POSN
+         /5   POSN
+         /4   TABENTRY
+         1    -1
+         /5   POINT
+         8    FIRST
+
+PHI
+/4 STCOUNT
+9 TEST
+/4 TYPE
+2 +1
+7 JOIN
+4 +1
+/5 TRIAL-2
+RETURN
+4 +1
+/2 POINT
+/5 POINT
+8 JOIN
+TEST
+/4 TRIAL-2
+7 FIRST
+11 GETCOUNT
+8 GETCOUNT+1
+0 DIFFRACT
+       /2   SHL-2
+9 FOUND
+/4 STSAVE-2
+/5 STCOUNT
+8 RETURN
+FOUND
+4 +0
+/5 STATE
+/5 TRIAL-2
+8 FIRST
+JOIN
+/4 LOCPAT
+
+         1    P
+         5    P
+         /4   STCOUNT
+         8    BACK
+
+
+[ STATE8  TABENTRY  POINT  P  LOCPAT
+  INITIAL  DIFFRACT  ANS  STATE  REENT ]
+STATE8   4    +0
+         0    DIFFRACT
+         /5   STATE
+         /0   TABENTRY
+         /5   0
+         0    DIFFRACT
+         /4   LOCPAT
+         1    P
+         5    P
+         /10  INITIAL
+         /4   TABENTRY
+         /5   POINT
+         4    +512
+         /2   ANS
+         8    REENT
+
+[ STATE9  NEXT  DIFFRACT  PAT  P  BOSELY  ANGLE  INCSTATE  STATE  STCOUNT ]
+STATE9   0    DIFFRACT
+         /4   PAT
+         1    BOSELY
+         5    BOSELY
+         4    -1
+         5    BOSELY+1
+         /4   PAT
+         1    P
+         5    P
+
+         4    +0
+         /5   STCOUNT
+         /4   ANGLE
+         /10  STATE
+         11   INCSTATE
+         8    INCSTATE+1
+
+         8    NEXT
+
+[ STATE10  DIFFRACT  P  POSN  STATE
+  ANGLE  INITVAL   INCSTATE  NEXT  ]
+STATE10  0    DIFFRACT
+         /4   ANGLE
+         14   2
+         /1   POSN
+         /5   POSN
+
+         /5   INITVAL
+         /10  STATE
+         4    DIFFRACT
+         7    ;+2
+         4    +60
+         1    +4
+         1    P
+         5    P
+         /4   ANGLE
+         14   2
+         /2   ANGLE
+         2    +0
+         11   INCSTATE
+         8    INCSTATE+1
+         8    NEXT
+
+[  STATE20  DIFFRACT  PRELINK  INITIAL  STATE  ANGLE
+   PAT  ANS  BOSELY  NEXT ]
+
+STATE20  0    DIFFRACT
+         4    +0
+         /5   INITIAL
+         /5   STATE
+         /4   PAT
+         2    BOSELY
+         5    BOSELY
+         4    -1
+         5    BOSELY+1
+         /4   ANGLE
+         14   2
+         /2   ANS
+         1    +512
+         9    NEXT
+         8    PRELINK
+[ BRAD  DIFFRACT  LOCPAT  BACKP  LINK  FORWARD
+  OFFP  ANS  PEAKWIDTH  BACKSPACE  INITIAL  POSN  REENT
+  STATE  TABENTRY  TOTAL1  POINT  P  FAIL ]
+
+BRAD     0    DIFFRACT
+         /4   LOCPAT
+         /5   BACKP
+         4    LNK
+         /5   LINK
+         4    -1
+         /5   FORWARD
+         /4   TOTAL1
+         /1   PEAKWIDTH
+         8    BACKSPACE
+
+LNK      8    ;+1
+
+         0    DIFFRACT
+         4    +256
+         /2   POSN
+         /5   POSN
+         4    +1
+         /5   FORWARD
+         /5   INITIAL
+         /4   TABENTRY
+         /5   POINT
+         4    +0
+         /5   STATE
+         /0   TABENTRY
+         /5   0
+         4    DIFFRACT
+         2    +1
+         9    FAIL-4
+         7    ;+2
+         4    -15
+         1    +16
+         1    P
+         5    P
+         0    DIFFRACT
+         /4   OFFP
+         8    REENT
+
+[  BACKP  BACKSPACE  BOSELY  DIFFRACT  FAIL FORWARD  INCSTATE  INITIAL
+   INITSAVE  INITVAL  LINK  LOCPAT  MASK  NEXT  OFFP
+   OFFPAT  OFFSAVE  P  PEAKWIDTH  POSN  STAT16
+
+BFLAG BSAVE K SAVDIF STAT24
+STAT25 STAT26 GOBACK MOTMOV MOTNO
+   STAT17  STAT18  STAT19  STAT23  STATE  STCOUNT TOTAL1  ]
+STAT16  0   DIFFRACT    (MOVE OFFSET BY OFFP)
+   /4  LOCAL
+   6   BOSELY
+   7   ;+2
+   8   FAIL-10
+  /4   LOCAL
+   1   BOSELY
+   5   BOSELY
+   4   -1
+   5   BOSELY+1          (SET OFFSET MOTOR TO REVERSE)
+   /4  LOCAL
+   6   P
+   7   ;+2
+   8   FAIL-11
+  /4   LOCAL
+   1   P
+   5   P
+   4   +0                 (SET OFFSET MOTOR TO GO)
+  /5   STCOUNT
+  /4   OFFP
+ /10   STATE
+  11   INCSTATE
+   8   INCSTATE+1
+   8   NEXT
+
+STAT17  0   DIFFRACT    (MOVE MAIN BY OFFP*4)
+  /4   LOCAL
+   2   BOSELY            (SET OFFSET MOTOR TO FORWARD)
+   5   BOSELY
+   4   -1
+   5   BOSELY+1
+ /10   STATE
+  /4   MASK
+   6   P
+   7   ;+2
+   8   FAIL-12
+  /4   MASK
+   1   P
+   5   P
+  /4   OFFP
+  14   2
+  11   INCSTATE
+   8   INCSTATE+1
+   8   NEXT
+
+STAT18   0   DIFFRACT       (MOVE COUNTER AND)
+  /4   LOCPAT               (CRYSTAL BACK AND)
+  /5   BACKP                (ALLOW FOR BACKLASH)
+   4   LNK
+  /5   LINK
+  /4   TOTAL1
+  /1   PEAKWIDTH
+PM
+5 W
+4 +256
+/2 POSN
+/5 POSN
+4 -1
+/5 FORWARD
+4 W
+8 BACKSPACE
+W +0
+
+<! Halt !>

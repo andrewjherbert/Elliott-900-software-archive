@@ -1,0 +1,308 @@
+﻿
+((900-SERIES TELECODE STORE PRINT, 3/8/70)
+
+[C2 QCHECK]
+
+C2 QCHECK
+          4     -1
+          5     ADDRESS
+
+(+2)      11    CI900L
+          8     CI900E
+          7     HALT
+          11    INTIPL
+          8     INTIPE
+          8     ;-5
+          5     FIRST
+
+          11    FORML
+          8     FORME
+          11    CI900L
+          8     CI900E
+          7     ERROR
+          11    INTIPL
+          8     INTIPE
+          8     ;-7
+
+          11    FORML
+          8     FORME
+          11    CI900L
+          8     CI900E
+          7     ERROR
+          8     ;-5
+
+FORME     4     +0
+          5     FORMAT
+          0     FORMAT
+          /4    LETTER
+          0     FORML
+          /7    1
+          1     CI900
+          7     ;+3
+          10    FORMAT
+          8     ;-7
+
+          4     FIRST
+          2     ADDRESS
+          7     ADDROP
+
+          4     +141
+          15    6144
+          4     +10
+          15    6144
+          4     +222
+          15    6144
+          4     FIRST
+          5     ADDRESS
+          11    INTOPL
+          8     INTOPE
+          4     +141
+          15    6144
+          4     +10
+          15    6144
+
+ADDROP    4     +40
+          15    6144
+          4     ADDRESS
+          11    INTOPL
+          8     INTOPE
+          4     +169
+          15    6144
+
+          4     +160
+          15    6144
+          4     +9
+          15    6144
+
+          4     -6
+          5     COUNT
+          0     ADDRESS
+          /4    0
+          5     WORD
+
+          0     FORMAT
+          /8    ;+1
+
+          8     ORDER
+          8     FRACTION
+          8     OCTAL
+
+(INTGR)   9     ;+3
+          4     +43
+          8     ;+4
+          2     +0
+          5     WORD
+          4     +45
+          15    6144
+
+          4     WORD
+          8     ENDORD
+
+ORDER     9     ;+2
+          8     ;+3
+          4     +175
+          15    6144
+
+          4     WORD
+          6     =15 0
+          14    8179
+          11    INTOPL
+          8     INTOPE
+
+          4     +160
+          15    6144
+          4     +9
+          15    6144
+
+          4     WORD
+          6     =0 8191
+ENDORD    11    INTOPL
+          8     INTOPE
+          8     BOOST
+
+FRACTION  9     ;+3
+          4     +43
+          8     ;+5
+          2     +0
+          9     OCTAL
+          5     WORD
+          4     +45
+          15    6144
+
+          4     +46
+          15    6144
+
+FRACLP    4     WORD
+          12    +10
+          3     WORD
+
+          5     W
+          0     W
+          /4    DIGITS
+          15    6144
+
+          10    COUNT
+          4     COUNT
+          9     FRACLP
+          8     BOOST
+
+OCTAL     4     +166
+          15    6144
+
+OCTLP     2     WORD
+          4     WORD
+          14    3
+          5     WORD
+          6     &7
+
+          5     W
+          0     W
+          /4    DIGITS
+          15    6144
+
+          10    COUNT
+          4     COUNT
+          9     OCTLP
+
+BOOST     4     +141
+          15    6144
+          4     +10
+          15    6144
+
+          10    ADDRESS
+          4     ADDRESS
+          2     LAST
+          9     QCHECK+2
+          8     ADDROP
+
+HALT      4     +20
+          15    6144
+          8     ;+0
+
+ERROR     15    6144
+          8     ;-1
+
+INTOPE    5     INTGR
+          4     -5
+          5     COUNT
+          4     +0
+          5     ZERMKR
+
+NEXTDG    4     +0
+          5     W
+          0     COUNT
+          4     INTGR
+          /1    TENS+5
+          9     ;+5
+          5     INTGR
+          10    W
+          10    ZERMKR
+          8     ;-5
+
+          4     ZERMKR
+          7     ;+4
+          0     W
+          /4    DIGITS
+          15    6144
+
+          10    COUNT
+          4     COUNT
+          9     NEXTDG
+          10    ZERMKR
+          7     NEXTDG
+          0     INTOPL
+          /8    1
+
+INTIPE    4     +0
+          5     COUNT
+          5     INTGR
+
+(+3)      4     CI900
+          2     +57
+          9     ENDINT
+          2     +9
+          9     ENDINT
+
+          10    COUNT
+          14    8191
+          1     INTGR
+          14    8190
+          1     INTGR
+          5     W
+          14    3
+          5     INTGR
+
+          11    CI900L
+          8     CI900E
+          7     ERROR
+          8     INTIPE+3
+
+ENDINT    4     COUNT
+          0     INTIPL
+          /7    1
+          2     +6
+          9     ERROR
+
+          4     W
+          2     &037777
+          9     ERROR
+
+          4     INTGR
+          5     LAST
+          /8    2
+
+CI900E    4     +0
+          15    2048
+          5     CI900
+
+          14    8188
+          1     =14 1
+          5     TOTAL
+          4     +0
+          14    4
+          1     =14 1
+          5     TOTAL+3
+          2     &323130
+TOTAL     >1
+          5     TOTAL
+          2     &323130
+          >1
+          1     TOTAL
+          14    17
+          9     ERROR
+
+          4     CI900
+          6     &177
+          5     CI900
+          7     CI900E
+          1     -13
+          7     CI900E
+          1     -114
+          7     CI900E
+          1     +107
+          0     CI900L
+          /8    1
+
+LETTER    -79 -70 -66 -73 +0
+
+DIGITS    +48 +177 +178 +51 +180
+          +53 +54 +183 +184 +57
+
+TENS      -100000 -10000 -1000 -100 -10 -1
+
+ADDRESS   >1
+FIRST     >1
+LAST      >1
+FORMAT    >1
+WORD      >1
+
+FORML
+INTIPL
+INTOPL    >1
+INTGR     >1
+COUNT     >1
+W         >1
+ZERMKR
+CI900L    >1
+CI900     >1
+<! Halt !>

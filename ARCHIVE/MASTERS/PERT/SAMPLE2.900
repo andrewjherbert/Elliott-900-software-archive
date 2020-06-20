@@ -1,0 +1,8 @@
+This folder contains files relating to PERT.
+
+PERT(ISS2)     ASCII   PERT Issue 2 source
+PER(ISS2)      SCB     PERT Issue 2 binary
+PERT(ISS2P)    ASCII   PERT Issue 2 source, patched to fix heading layout error
+PERT(ISS2P)    SCB     PERT Issue 2 binary, patched to fix heading layout error
+
+

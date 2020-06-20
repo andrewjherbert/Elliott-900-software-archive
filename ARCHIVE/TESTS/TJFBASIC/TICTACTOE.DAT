@@ -1,0 +1,14 @@
+﻿c demonstrate Eric Baiger's TICTACTOE in BASIC
+c
+on 903 16K
+nonstop on
+nonewline on
+at ptr file ../../MASTERS/TJFBASIC/BASIC16K.BIN
+at tty inline
+OLD
+RUN<!!>
+j 8181
+at ptr file ../../MASTERS/TJFBASIC/TICTACTOE.900
+r
+at tty console
+r

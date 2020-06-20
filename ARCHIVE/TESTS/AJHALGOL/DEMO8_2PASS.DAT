@@ -1,0 +1,346 @@
+﻿ON 903 16K
+AT PTR FILE ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+J 8181
+
+C Set optimize, no call by name
+J 18
+C Translate
+AT PTR INLINE
+
+Sunset;
+"begin"
+   "comment" 17-MAY-1996.
+             Astronomy on the Personal Computer
+             O. Montenbruck and T. Pfleger. 
+             Springer Verlag 
+             ISBN 0-387-52754-0 1991
+             ISBN 3-540-52754-0 1994
+             Gives times of Moon and Sun, rise and set;
+   "comment" Modified by AJH to use new version of unsigned;
+   "code" "procedure" unsigned; "algol";
+   "code" "procedure" leadzero; "algol"
+   "code" "procedure" revrtu; "algol";
+   "code" "procedure" revrtl; "algol"
+   "code" "real" "procedure" floor(x);
+          "value" x; "real" x;  "algol";
+   "real" "array" sinh0[1:3];
+   "boolean" above, rise, sett;
+   "integer" day, month, year, i, j, iobj, nz;
+   "real" lambda, zone, phi, sphi, cphi, tstart, date, hour,
+          utrise, utset, ym, y0, yp, z1, z2, xe, ye, p2,
+          rho, dec, ra, x, y, z;
+   "real" "procedure" cs(x); "value" x; "real" x;
+      cs := cos(x * 0.017453293);
+   "real" "procedure" sn(x); "value" x; "real" x;
+      sn := sin(x * 0.017453293);
+   "real" "procedure" frac(x); "value" x; "real" x;
+      frac := x - entier(x);
+   "procedure" quad(ym, y0, yp); "value" ym, y0, yp; 
+                                 "real"  ym, y0, yp;
+   "begin"
+      "real" a, b, c, dis, dx;
+      nz := 0;
+      a := 0.5 * (ym + yp) - y0;
+      b := 0.5 * (yp - ym);
+      c := y0;
+      xe := -b / (2.0 * a);
+      ye := (a * xe + b) * xe + c;
+      dis := b * b - 4.0 * a * c;
+      "if" dis "ge" 0.0 "then"
+      "begin"
+         dx := 0.5 * sqrt(dis) / abs(a);
+         z1 := xe - dx;
+         z2 := xe + dx;
+         "if" abs(z1) "le" 1.0 "then" nz := nz + 1;
+         "if" abs(z2) "le" 1.0 "then" nz := nz + 1;
+         "if" z1 < -1.0 "then" z1 := z2
+      "end"
+   "end" of quad;
+   "real" "procedure" mjd;
+   "begin"
+      "real" a; "integer" b, m, y;
+      m := month;
+      y := year;
+      a := 10000.0 * y + 100.0 * m + day;
+      "if" m "le" 2 "then"
+      "begin"
+         m := m + 12;
+         y := y - 1
+      "end";
+      "if" a "le" 15821004.1 "then"
+      "begin"
+         b := -2 + ((y +4716) "div" 4) - 1179
+      "end" 
+      "else" b := (y "div" 400) - (y "div" 100) + (y "div" 4);
+      a := 365.0 * y - 679004.0;
+      mjd := a + b + entier(30.6001 * (m + 1)) + day + hour / 24.0
+   "end" of mjd;
+   "procedure" caldat(mjd); "value" mjd; "real" mjd;
+   "begin"
+      "integer" b, d, f; 
+      "real" jd, jd0, c, e;
+      jd := mjd + 2400000.5;
+      jd0 := floor(jd + 0.5);
+      "if" jd0 < 2299161.0 "then"
+      "begin"
+         b := 0;
+         c := jd0 + 1524.0
+      "end"
+      "else"
+      "begin"
+         b := entier((jd0 - 1867216.25) / 36524.25);
+         c := jd0 + b - (b "div" 4) + 1525.0
+      "end";
+      d := entier((c - 122.1) / 365.25);
+      e := 365.0 * d + (d "div" 4);
+      f := entier((c - e) / 30.6001);
+      day := entier(c - e + 0.5) - entier(30.6001 * f);
+      month := f - 1 - 12 * (f "div" 14);
+      year := d - 4715 - ((7 + month) "div" 10)
+   "end" of caldat;
+   "real" "procedure" lmst(mjd); "value" mjd; "real" mjd;
+   "begin"
+      "real" mjd0, t, ut, gmst;
+      mjd0 := entier(mjd);
+      ut := (mjd - mjd0) * 24.0;
+      t := (mjd0 - 51544.5) / 36525.0;
+      gmst := 6.6973746 + 1.0027379 * ut + (8640184.8 +
+              (0.093104 - 6.2?-6 * t) * t) * t / 3600.0;
+      lmst := 24.0 * frac((gmst - lambda / 15.0) / 24.0)
+   "end" of lmst;
+   "procedure" q;
+   "begin"
+      rho := "if" z "ge" 1.0
+             "then" 0.0 "else" sqrt(1.0 - z * z);
+      dec := "if" rho = 0.0
+             "then" 90.0 * sign(z)
+             "else" (360.0 / p2) * arctan(z / rho);
+      ra  := "if" x + rho = 0.0
+             "then" 12.0 * sign(y)
+             "else" (48.0 /p2) * arctan(y / (x + rho));
+      "if" ra < 0.0 "then" ra := ra + 24.0
+   "end" of q;
+   "procedure" sun(t); "value" t; "real" t;
+   "begin"
+      "real" L, m, dl,sl;
+      m := p2 * frac(0.993133 + 99.997361 * t);
+      dl := 6893.0 * sin(m) + 72.0 * sin(2.0 * m);
+      L := p2 * frac(0.7859453 + m / p2 + (6191.2 * t + dl) / 1296.0?3);
+      sl := sin(L);
+      x  := cos(L);
+      y  := 0.91748 * sl;
+      z  := 0.39778 * sl;
+      q
+   "end" of sun;
+   "procedure" moon(t); "value" t; "real" t;
+   "begin"
+      "real" L0, L, ls, f, d, h, s, n, dl, cb, lm, bm, v, w;
+      L0 := frac(0.606433 + 1336.8552 * t);
+      L  := p2 * frac(0.374897 + 1325.5524 * t);
+      ls := p2 * frac(0.993133 + 99.997361 * t);
+      d  := p2 * frac(0.827361 + 1236.8531 * t);
+      f  := p2 * frac(0.259086 + 1342.2278 * t);
+      dl := 22640.0 * sin(L) - 4586.0 * sin(L - 2.0 * d) +
+            2370.0 * sin(2.0 * d) + 769.0 * sin(2.0 * L) -
+            668.0 * sin(ls) - 412.0 * sin(2.0 * f) -
+            212.0 * sin(2.0 * (L - d)) - 206.0 * sin(L + ls - 2.0 * d) +
+            192.0 * sin(L + 2.0 * d) - 165.0 * sin(ls - 2.0 * d) -
+            125.0 * sin(d) - 110.0 * sin(L + ls) + 148.0 * sin(L - ls) -
+            55.0 * sin(2.0 * (f - d));
+      s := f +(dl + 412.0 * sin(2.0 * f) + 541.0 * sin(ls)) / 206264.81;
+      h := f - 2.0 * d;
+      n := -526.0 * sin(h) + 44.0 * sin(L + h) - 31.0 * sin(h - L) -
+           23.0 * sin(ls + h) + 11.0 * sin(h - ls) -
+           25.0 * sin(f - 2.0 * L) + 21.0 * sin(f - L);
+      lm := p2 * frac(L0 + dl / 1296.0?3);
+      bm := (18520.0 * sin(s) + n) / 206264.81;
+      cb := cos(bm);
+      x  := cb * cos(lm);
+      v  := cb * sin(lm);
+      w  := sin(bm);
+      y  := 0.91748 * v - 0.39778 * w;
+      z  := 0.39778 * v + 0.91748 * w;
+      q
+   "end" of moon;
+   "real" "procedure" sinalt(iobj, mjd0, hour);
+      "value" iobj, mjd0, hour; 
+      "integer" iobj; "real" mjd0, hour;
+   "begin"
+      "real" mjd, t, tau;
+      mjd := mjd0 + hour / 24.0;
+      t   := (mjd - 51544.5) / 36525.0;
+      "if" iobj = 1 "then" moon(t) "else" sun(t);
+      tau := 15.0 * (lmst(mjd) - ra);
+      sinalt := sphi * sn(dec) + cphi * cs(dec) * cs(tau)
+   "end" of sinalt;
+   "procedure" whm(ut); "value" ut; "real" ut;
+   "begin"
+      "integer" h, m;
+      ut := entier(ut * 60.0 + 0.5) / 60.0;
+      h  := entier(ut);
+      m  := entier(60.0 * (ut - h) + 0.5);
+      "print" digits(6), same line, h, ':`, leadzero, digits(2), m, revrtl;
+   "end" of whm;
+   "comment" program start;
+   sinh0[1] := sn(8.0 / 60.0);
+   sinh0[2] := sn(-50.0 /60.0);
+   sinh0[3] := sn(-6.0);
+   punch(3);
+   j := 0;
+   "read" year, month, day, lambda, phi, zone;
+   hour := 0.0;
+   "print" ''L`FIRST DATE (YYYY MM DD)'S15`... `, same line,
+           digits(5), year, digits(2), month, day,
+           ''L2`OBSERVING SITE:  LONGITUDE (L<0 EAST) ... `,
+           aligned(3, 1), lambda, ''LS17`LATITUDE'S13`... `, phi,
+           ''LS17`LOCAL TIME - UT (H)  ... `, zone,
+           ''L2S5`DATE'S12`MOON'S14`SUN'S13`TWILIGHT`,
+           ''LS19`RISE/SET'S10`RISE/SET'S8`END/BEGINNING'L``;
+   zone := zone / 24.0;
+   tstart := mjd - zone;
+   sphi := sn(phi);
+   cphi := cs(phi);
+   p2 := 6.2831853;
+   unsigned;
+   "for" i := 0 "step" 1 "until" 10 "do"
+   "begin"
+      date := tstart + i;
+      caldat(date + zone);
+      "print" digits(6), year, same line, '/`,
+              digits(2), leadzero, month, '/`, day, revrtl;
+      "for" iobj := 1 "step" 1 "until" 3 "do"
+      "begin"
+         hour := 1.0;
+         ym := sinalt(iobj, date, hour - 1.0) - sinh0[iobj];
+         above := ym > 0.0;
+         rise := sett := "false";
+         "for" j := j "while" ("not" (abs(hour - 25.0) < 0.1
+                               "or" (rise "and" sett))) "do"
+         "begin"
+            y0 := sinalt(iobj, date, hour) - sinh0[iobj];
+            yp := sinalt(iobj, date, hour + 1.0) - sinh0[iobj];
+            quad(ym, y0, yp);
+            "if" nz = 1 "then"
+            "begin"
+               "if" ym < 0.0 "then"
+               "begin"
+                  utrise := hour + z1;
+                  rise := "true"
+               "end" "else"
+               "begin"
+                  utset := hour + z1;
+                  sett := "true"
+               "end"
+            "end"
+            "else" "if" nz = 2 "then"
+            "begin"
+               "if" ye < 0.0 "then"
+               "begin"
+                  utrise := hour + z2;
+                  utset := hour + z1
+               "end" "else"
+               "begin"
+                  utrise := hour + z1;
+                  utset := hour + z2
+               "end";
+               rise := sett := "true"
+            "end" 
+            "else" "if" nz "ne" 0 "then" "print" 'X`, stop;
+            ym := yp;
+            hour := hour + 2.0
+         "end";
+         "if" rise "or"sett "then"
+         "begin"
+            "if" rise "then" whm(utrise)
+                      "else" "print" '    -----`;
+            "if" sett "then" whm(utset)
+                      "else" "print" '    -----`
+         "end" "else"
+         "begin"
+            "if" above "then"
+            "begin"
+               "if" iobj = 1 "or" iobj = 2 "then"
+               "print" '   ALWAYS VISIBLE ` "else"
+               "if" iobj = 3 "then"
+               "print" '    ALWAYS BRIGHT` "else"
+               "print" 'Y`, stop 
+            "end" "else"
+            "begin"
+               "if" iobj = 1 "or" iobj = 2 "then"
+               "print" '  ALWAYS INVISIBLE` "else"
+               "if" iobj = 3 "then"
+               "print" '    ALWAYS DARK` "else"
+               "print" 'Z`, stop
+            "end" of if above
+         "end" of if rise or sett
+      "end" of loop of three
+   "end" of loop of ten days;
+   "print" ''L2`ALL TIMES IN LOCAL TIME ( = UT `;
+   "if" zone "ge" 0.0 "then" "print" '+`;
+   "print" aligned(2, 1), same line , zone * 24.0, ' H)`
+"end"
+<! halt !>
+<!!>
+c translate
+at ptp file TEST.RLB
+j 14
+de ptp
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+
+nonprinting off
+select out tty
+
+at ptr file TEST.RLB
+j 8
+
+C Add pre-compiled procedures
+AT PTR INLINE BIN
+
+
+   0   0   0   0   0   0   0   0   0   0   (floor)
+  73  86  47  27 121   0   0   0   0   0
+  31   0   1  16   0   0  20  63 127  16
+   0   0  16   0   0  18  63 127  26  64
+   0  26  64   1  26  64   2  32   0   1
+  28   0   1  18  63 127  26  64   0  34
+   0   5  36   0   7  26   0   3  26  64
+   0  26   0   4  26  64   1  26   0   5
+  26  64   2  36   0   9  48   0   2   0
+   0   0   0   0   0   0  16   1  10  26
+   0   3  35  64   5  26   0   5  36  64
+  29  35  64  29  36   0  32  26   0   3
+  36  64  11  36   0   5  26   0   5  17
+  63 127  36  64  15  26   0   3  34  64
+   3  26   0   4  34  64   4  26   0   5
+  16 127 127  34  64  48  26   0   5  17
+  63 127  34  64  49  32   0   4  23   0
+   1  34   0   3  16   0   0  16   0   0
+  34  64   3  33  64   4  16   1  10  34
+   0   3  26  64   3  34   0   4  26  64
+   4  36   0  15  48   0  13   0   0   0
+   0   0   0   0  16   0   0   0   0   0
+   0  48   0  11   0   0   0   0   0   0
+   0  24   0   0   0   0   0   0  48   0
+  33   0   0   0   0   0   0   0  16   0
+  34   0   0   0   0  48   0  40   0   0
+   0   0   0   0   0  23  63  93   0   0
+   0   0  48   0  43   0   0   0   0   0
+   0   0  23   0  35   0   0   0   0  96
+  43  43   0   0   0   0   0   0   0   0
+   0   0   0   0   0   0   0   0   0   0
+
+ 112   0   0                              (loader halt code)
+<!!>
+J 11
+
+at ptr file ../../SCRIPTS/AJHALGOL/UNSIGNED.RLB
+j 11
+
+AT PTR INLINE
+ 2014 8 28 -0.13 52.03 0.0                (data)
+<!!>
+j 10
+delete TEST.RLB
+SHOW TIMES

@@ -1,0 +1,190 @@
+﻿
+ CHESS  4574
+ QACODL 5613
+ QAVNDA 5676
+FIRST  NEXT
+ 4574   5723
+
+
+ CHESS
+
+
+                            BLACK
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BR I BN I BB I BQ I BK I    I    I BR I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BP I BP I BP I BP I BP I BP I BP I BP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I WQ I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I WP I WP I WP I WP I WP I WP I WP I WP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I WR I    I    I    I WK I WB I WN I WR I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+                            WHITE
+            X       MC      MV     MSI     MST
+           800       0       1      13      29
+           750       0       1      12      28
+           700       0       1      14      30
+           600       0       1      11      27
+           595       0       1      15      31
+           500       0       2       2      19
+           500       0       2       7      24
+           425       0       2       7      22
+           425       0       1      13      21
+           425       0       1      10      26
+           300       0       2       2      17
+           300       0       1      12      20
+           205       0       1      11      19
+           205       0       1      16      32
+           175       0       1      15      23
+           150       0       1      14      22
+           105       0       1       9      25
+            60       0       1      10      18
+             9       0       1      16      24
+             7       0       1       9      17
+
+                            BLACK
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BR I BN I BB I BQ I BK I    I    I BR I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BP I BP I BP I BP I BP I BP I BP I BP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I WP I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I WQ I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I WP I WP I WP I WP I    I WP I WP I WP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I WR I    I    I    I WK I WB I WN I WR I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+                            WHITE
+            X       MC      MV     MSI     MST
+           700       0      59       0       0
+           650       0       5      19      18
+
+                            BLACK
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BR I BN I BB I BQ I BK I    I    I BR I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BP I BP I BP I BP I    I BP I BP I BP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I BP I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I WP I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I WQ I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I WP I WP I WP I WP I    I WP I WP I WP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I WK I WR I    I WB I WN I WR I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+                            WHITE
+            X       MC      MV     MSI     MST
+           650       0       5      18      50
+           601       0       4       6       5
+           100       0       1      16      24
+
+                            BLACK
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BR I BN I BB I BQ I    I BR I BK I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I BP I WQ I BP I BP I    I BP I BP I BP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I BP I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I    I    I WP I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I WQ I    I    I    I    I    I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I WP I WP I WP I WP I    I WP I WP I WP I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+          I    I    I    I    I    I    I    I    I
+          I    I    I WK I WR I    I WB I WN I WR I
+          I    I    I    I    I    I    I    I    I
+          -----------------------------------------
+                            WHITE
+
+
+
+                             END OF PROGRAM
+
+FINISH
+
+<! Bell !><! Bell !><! Bell !><! Bell !><! Bell !><! Bell !><! Bell !><! Bell !><! Halt !>

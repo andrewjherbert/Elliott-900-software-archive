@@ -1,0 +1,331 @@
+﻿C Build 16K Load and Go ALGOL System (Hunter)
+
+c The load and go system consists of the 2-pass system Tape 2 
+c in store module 0 and Tape 1 in module 1 patched to 
+c enable ALGOL intermediate code to be passed from translator to 
+c interpreter directly without being punched out.
+
+c The basic principle is to load each of the two 903 ALGOL
+c Issue 6 binary tapes, apply Don Hunter's patches containing
+c ALGOL extensions, as for the 2-pass system, then use a 
+c "module 1" patch tape to relocate the Tape 1 system to module 1 
+c and a "module 0" patch tape to set up Tape 2.
+
+c The two module patch tapes are co-dependent as they set up the
+c links between entry points, translator and interpreter.
+
+c Note 1) the load and go system embodies more additional extensions to
+c the Hunter 2 pass system - in particular a patch to remove the
+c need to declare labels in a switch declaration and some refinements
+c of the earlier patches.
+
+c Note 2) several of the patches require an "initialization" step be run
+c immediately after assembly to move code to locations occupied by the 
+c assembler before the patch is dumped out using T22-23.  T22-23 is given
+c a steering tape to ensure only the final patch locations are dumped.
+
+c Note 3) for both Tape 1 and Tape 2 the standard dump routine gets overwritten
+c by various patches.  Therefore a customer dumper is loaded at location
+c 6144 to output each patched tape.  When loaded, the dumped tape is entered at
+c 10, to allow further initialization - for example, when entered at 10, Tape 1
+c is copied to module 1.
+
+
+on 903 16K
+
+c construct images of ALG16KLG(HUNTER) for verifying results
+at ptr file ../../MASTERS/HUNTER/ALG16KLG(HUNTER).BIN
+j 8181
+st 5124
+du 16384 ALG16KLG(HUNTER).IMG
+
+c check against module files
+lm 0 ../../MASTERS/HUNTER/M0.DAT
+lm 1 ../../MASTERS/HUNTER/M1.DAT
+vi ALG16KLG(HUNTER).IMG
+
+c differences 5120^0-5126^0 are remains of MOD0PATCH (not in M0.DAT)
+c differences 0^1-7^1 are insignificant
+c differences 8180^1-8191^1 are insignificant - initial orders
+
+C **********TRANSLATOR PATCHES**********
+
+c assemble module patch tape
+select out tty
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HUNTER/MOD1PATCH(0878).900
+j 8
+st 6927
+
+c run updates to patch high store
+j 1024
+st 1064
+
+c dump with t22-23
+select out auto
+at ptp file MOD1PATCH(0878).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
++9
++19
++26
++29
++1640
++1640
++5364
++5367
++5371
++5371
++5398
++5398
++5516
++5516
++5753
++5758
++5816
++5816
++6800
++6827
+<! halt !><!!>
+j 8179
+de ptp
+st 8113
+
+c assemble switch list patch
+select out tty
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HUNTER/LABELPATCH(151083).900
+j 8
+st 6927
+
+c run updates to patch high store
+j 1024
+st 1039
+
+c dump with t22-23
+select out auto
+at ptp file LABELPATCH(151083).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+
+at ptr inline
++10
++10
++67
++67
++742
++742
++2268
++2268
++2432
++2432
++2980
++2980
++2990
++2990
++3178
++3178
++3243
++3244
++3374
++3376
++3396
++3396
++3416
++3417
++3498
++3498
++4328
++4328
++5050
++5050
++7000
++7166
+<! Halt !><!!>
+j 8179
+de ptp
+st 8113
+
+C **********INTERPRETER PATCHES**********
+
+c assemble module patch tape
+select out tty
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HUNTER/MOD0PATCH(0878).900
+j 8
+st 6927
+
+c run updates to patch high store
+j 5120
+st 5124
+
+c dump with t22-23
+select out auto
+at ptp file MOD0PATCH(0878).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
++9
++14
++16
++27
++1412
++1414
++1922
++1922
++2298
++2298
++2522
++2526
++2535
++2538
++2546
++2546
++3952
++3959
++4540
++4697
++5120
++5126
++7589
++7589
++7831
++7831
+<! Halt !><!!>
+j 8179
+de ptp
+st 8113
+
+c assemble formal parameter patch
+select out tty
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HUNTER/FORPATCH(230978).900
+j 8
+st 6927
+
+c dump with t22-23
+select out auto
+at ptp file FORPATCH(230978).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
++34
++34
+<! Halt !><!!>
+j 8179
+de ptp
+st 8113
+
+c assemble 15 Oct 83 patch
+select out tty
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HUNTER/TAPE2PATCH(151083).900
+j 8
+st 6927
+
+c dump with t22-23
+select out auto
+at ptp file TAPE2PATCH(151083).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
++51
++62
+<! Halt !><!!>
+j 8179
+de ptp
+st 8113
+
+C **********BUILD SYSTEM**********
+
+clear
+
+at ptp file ALG16KLG(HUNTER).BIN
+
+c Translator
+
+c load 903 ALGOL Tape 1 Issue 6
+at ptr file ../../MASTERS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+st 8171
+
+c apply patches
+at ptr file TAPE1PATCH(301276).BIN
+j 8181
+st 8171
+at ptr file MOD1PATCH(0878).BIN
+j 8181
+st 8171
+at ptr file LABELPATCH(151083).BIN
+j 8181
+st 8171
+
+c frig MOD1PATCH to trigger initial instructions
+e 6824 =8 8181
+
+c frig label patch to initialize mod1patch
+e 7009 =8 9
+
+c dump
+at ptr file DUMP(HUNTER).BIN
+j 8181
+st 8171
+j 6144
+
+c Interpreter
+
+c load 903 ALGOL Tape 2 Issue 6
+at ptr file ../../MASTERS/903ALGOL/ALG2(ISS6).BIN
+j 8181
+st 8171
+
+c apply patches 
+at ptr file TAPE2PATCH(301276).BIN
+j 8181
+st 8171
+at ptr file TAPE2PATCH(151083).BIN
+j 8181
+st 8171
+at ptr file FORPATCH(230978).BIN
+j 8181
+st 8171
+at ptr file MOD0PATCH(0878).BIN
+j 8181
+st 8171
+
+c dump
+at ptr file DUMP(HUNTER).BIN
+j 8181
+st 8171
+j 6144
+
+de ptp
+
+c load new binary
+at ptr file ALG16KLG(HUNTER).BIN
+j 8181
+st 5124
+
+c verify against image
+c differences in checksum (8175, 8176, 8176^0) are not significant
+vi ALG16KLG(HUNTER).IMG
+
+c delete ALG16KLG(HUNTER).IMG
+
+sh t

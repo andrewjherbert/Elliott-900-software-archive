@@ -1,0 +1,76 @@
+﻿
+fibonacci;
+"begin"
+
+   "code" "procedure" unsigned; "algol";
+   "code" "procedure" leadzero; "algol";
+   "code" "procedure" revrtu;  "algol";
+   "code" "procedure" revrtl;  "algol";
+
+   "integer" "array" fn, fn1 [1:100];
+   "integer" cycles, d, ndigit, carry, power;
+
+   "comment" fn, fn1 and fn2 hold digits of fn, fn+1
+             respectively, ls to ms "digits". 
+             carry is carry in from previous addition.
+             ndigit counts how many "digits" have
+             been filled in.
+             power is the modulus for digits: it
+             must be a power of ten.
+             cycles is used to count the number of
+             Fibonacci numbers produced;
+
+   "comment" cycles = 118 takes 29.966secs compute time;
+
+   fn[1] := fn1[1] := 1;
+   ndigit := 1;
+   power := 10000;
+
+   punch(3); sameline; "print" {{L2}};
+
+   "for" cycles := 3 "step" 1 "until" 118 "do" "begin"
+
+      "comment" calculate cycle-th Fibonacci number;
+
+      carry := 0; "comment" no carry for first digit;
+
+      "for" d := 1 "step" 1 "until" ndigit "do" "begin"
+
+         "comment" process each "digit" from ls to ms;
+         "integer" sum;
+         sum := fn[d]+fn1[d]+carry;
+         fn[d] := fn1[d];
+
+         "if" sum "ge" power "then" "begin"
+            "integer" d1;
+            "comment" deal with carry;
+            d1 := d+1;
+            carry := 1;
+            fn1[d]  := sum-power;
+
+            "comment" check if number of digits has increased;
+            "if" d1 > ndigit "then" ndigit := d1;
+
+            "end" 
+
+         "else" "begin"
+
+            "comment" no carry;
+            carry := 0;
+            fn1[d] := sum; 
+
+            "end"
+
+      "end" d;
+
+      "end" cycles;
+      digits(6);
+      "print" fn1[ndigit];
+      digits(4); leadzero; unsigned;
+      "for" d := ndigit-1 "step" -1 "until" 1 "do" "print" fn1[d];
+      "print" {{L}}
+
+"end" fibonacci
+<! halt !>
+         
+             

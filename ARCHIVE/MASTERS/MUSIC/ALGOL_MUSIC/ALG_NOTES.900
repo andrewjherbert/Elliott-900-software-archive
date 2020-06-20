@@ -1,0 +1,83 @@
+﻿notes;
+"begin"
+
+"comment" Program to analyze 'Algol' music tapes.  These start with two
+	  integers, the firstspecifying the number of notes to read in, the
+	  second the time of a unit beat.  These are followed by pairs of 
+	  integers, the first being a "frequency", the second being a "duration". 
+	  Produces a histogram of the "frequencies" used in the music tape and
+	  duration of each note in 0.1 second intervals;
+
+    "integer" "array" name [1:20], note [1:40], count [1: 40];
+    "integer" total, unit, lo, hi, mid, i, j, freq, dur, next;
+    "real" r;
+
+    "comment" Output to teleprinter;
+    punch(3);
+
+    "comment" Set next to first free element in note / count;
+    next := 1;
+
+    "comment" Read in data;
+    i := 1; instring (name, i);
+    i := 1; outstring(name, i); "print" {{l3}};
+
+    "read" total, unit; 
+
+    "print" digits(4), sameline, {{L2}Notes=}, total, { Beats=}, unit, {{L2}};
+
+    "for" j := 1 "step" 1 "until" total "do" "begin"
+
+	"read" freq; "if" freq < 0 "then" "goto" Results;
+    	"read" dur;
+
+    	"comment" See if we have seen this note already;
+    	lo := 1; hi := next-1;
+
+    	"comment" Binary search;
+Search:  
+
+    	"if" lo > hi "then" "begin"
+	    mid := lo; "goto" Insert
+    	"end";
+ 
+    	mid := (lo+hi)"div"2;
+
+    	"if" note[mid] = freq "then" "begin"
+	    count[mid] := count[mid]+1; "goto" Print 
+    	"end";
+
+    	"if" note[mid] < freq "then" 
+            lo := mid+1
+    	"else"
+	    hi := mid-1;
+
+    	"goto" Search;
+
+    	"comment" Need to insert new entry in list;
+Insert:
+
+    	"for" i := next "step" -1 "until" mid+1 "do" "begin"
+	    note[i] := note[i-1]; count[i] := count[i-1]
+    	"end";
+    	note[mid] := freq; count[mid] := 1;
+        next := next+1;
+Print:
+
+    "end";
+
+    "comment" print out results;
+Results:
+
+    "print" {{l2}   Note  Count{l}};
+
+    "for" i := 1 "step" 1 "until" next-1 "do"
+	"print" note[i], sameline, count[i];
+
+"end"
+<! halt !>
+
+
+
+    
+

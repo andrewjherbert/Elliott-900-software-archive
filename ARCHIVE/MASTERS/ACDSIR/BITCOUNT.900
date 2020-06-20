@@ -1,0 +1,24 @@
+﻿
+((FAST BIT-COUNTING SUBROUTINE, 1/4/70))
+
+[BITCTL BITCTE]
+
+(Places the parity of the character in the
+Acctr. on entry in the Acctr.)
+
+BITCTE    0     BITCTL
+          14    8188
+          1     =14 1
+          5     ;+6
+          4     +0
+          14    4
+          1     =14 1
+          5     ;+5
+          2     &323130   (Set Q-register)
+TOTAL     >1
+          5     TOTAL
+          2     &323130   (Set Q-register)
+BITCTL    >1
+          1     TOTAL
+          /8    1
+<! Halt !>

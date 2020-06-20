@@ -1,0 +1,70 @@
+﻿C Build LOWL Tests
+
+on 905 16K
+
+C Generate ALGEBRA GPM from LOWL
+at ptr file LOWL2GPM.BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/LOWL/ALGEBRA_MILOGIC.900
+at ptp file ALGEBRA_GMILOGIC.900
+j 8
+de ptp
+
+C Generate ALGEBRA MASIR from GPM
+
+C use LOWL Translator to convert GPM formatted LOWL to MASIR
+at ptr file LOWL_GPM.BIN
+j 8181
+c st 1141
+
+at ptr file ../../MASTERS/LOWL/LOWL_TRANSLATOR.900
+c read in warning characters
+select out tty
+j 34
+st 86
+c read in macros
+j 32
+
+c macrogenerate ALGEBRA MI-LOGIC from  ML/I LOWL to MASIR
+select out auto
+at ptr file ALGEBRA_GMILOGIC.900
+at ptp file ALGEBRA_MILOGIC.900
+j 32
+st 1482
+j 35
+st 37
+de ptp
+
+C assemble with MASIR, adding in EXEC and MD-LOGIC
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j 8181
+st 8164
+at tty inline
+O4MCCC<!!>
+at ptr file ../../MASTERS/LOWL/EXEC.900
+at ptp file ALGEBRA.RLB
+nonstop on
+j 16
+at ptr file ../../MASTERS/LOWL/ALGEBRA_MDLOGIC.900
+r
+at ptr file ../../MASTERS/LOWL/ALGEBRA_REFS.900
+r
+at ptr file ALGEBRA_MILOGIC.900
+r
+de ptp
+reverse ALGEBRA.RLB
+
+c Generate binary with loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+at tty inline
+O134LM<!!>
+at ptr file ALGEBRA.RLB
+at ptp file ALGEBRA.BIN
+j 16
+de ptp
+delete ALGEBRA.RLB
+
+sh t

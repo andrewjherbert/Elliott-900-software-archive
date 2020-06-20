@@ -1,0 +1,302 @@
+﻿
+*PROG SORT
+*LISTLA
+*NOMEM
+
+
+(SHELLSORT ISSUE 3 -- MODIFIED TO RUN AS 905 FORTRAN SUBROUTINE)
+(  MUST BE IN SAME MODULE AS ARRAY                             )
+(  SUBROUTINE SORT [A, N]                                      )
+(  INTEGER A[3, N] WHERE N IS NUMBER OF RECORDS TO SORT IN A   )
+
+SORT	  >1			(LINK)
+
+	  5     ADJA		(ADDRESS ADJUSTMENT)
+          0     SORT
+	  /4    1       	(FIRST PARAMETER - ADDRESS OF ARRAY)
+	  9     STPA1		(DIRECT)
+	  1     ADJA		(INDIRECT)
+          5     W
+          0     W
+          /4    0
+STPA1	  6     &377777
+          1	ADJA
+	  5	SORTTABLE+2
+
+          0     SORT
+     	  /4    2		(SECOND PARAMETER - SIZE OF ARRAY)
+	  9     STPA2		(DIRECT)
+          1     ADJA		(INDIRECT)
+          5     W
+	  0     W
+          /4    0
+STPA2	  6     &377777
+          1	ADJA
+          5	W		(ADDRESS OF SECOND PARAMETER)
+	  0	W
+          /4    0
+	  5     SORTTABLE
+	 
+
+	  11    SHELLSORT
+	  8     SHELLSORT+1
+          0 SORTTABLE
+	  0     SORT
+          /8    3
+
+SORTTABLE >+1			(NUMBER OF RECORDS)
+	  +3
+	  >+1			(WORDS PER RECORD)
+	  0 LIST
+	  +1			(KEYS - WORD/MASK)
+          &777777
+          +2
+          &777777
+          +0
+ 	  
+
+LIST	  +1			(ASCENDING)
+	  +1  			(SORT ON KEY 1)
+          +2			(THEN ON KEY 2)
+          +0
+
+ADJA	  >+1
+W         >+1
+	
+
+
+TEMP      +0
+PARTADD   +0
+NREC      +0
+WPREC     +0
+FILADD    +0
+SORTLIST  +0
+UPDOWN    +0
+NEGPERMIS +0
+TEMP1     +0
+WSP       +0
+GAP       +0
+J         +0
+MAXJ      +0
+I         +0
+OFFPT     +0
+OFF1
+SHIFTS    >+10
+SAVEI
+COLLS     >+10
+
+PART      +0
+          1     SORTLIST
+          5     TEMP
+          0     TEMP
+          /4    0
+          0     PART
+          /8    1
+
+PICKUP    +0
+          5     WSP
+          4     OFF1
+          5     NEGPERMIS
+          9     SETNEG
+SGNOK     5     TEMP1
+          1     TEMP1
+          1     PARTADD
+          5     TEMP
+          0     TEMP
+          /4    0
+          1     -1
+          5     TEMP
+          4     WSP
+          12    WPREC
+          14    17
+          1     FILADD
+          1     TEMP
+          5     TEMP
+          0     TEMP
+          /4    0
+          0     TEMP1
+          /0    SHIFTS
+          /14   0
+          0     TEMP1
+          /6    COLLS
+          5     TEMP
+          4     NEGPERMIS
+          9     MAKENEG
+EXITPU    4     TEMP
+PUEXIT    0     PICKUP
+          /8    1
+MAKENEG   /4    COLLS
+          1     +1
+          7     EXITPU
+          1     TEMP
+SHLOOP    9     SHEXIT
+          14    1
+          8     SHLOOP
+SHEXIT    14    1
+          /0    SHIFTS
+          /14   0
+          8     PUEXIT
+SETNEG    2     +0
+          8     SGNOK
+EXCHAY    +0
+          4     I
+          12    WPREC
+          14    17
+          1     FILADD
+          5     TEMP
+          4     I
+          1     GAP
+          12    WPREC
+          14    17
+          1     FILADD
+          5     TEMP1
+          4     WPREC
+          2     +0
+          5     WSP
+EXLOOP    0     TEMP
+          /4    0
+          5     SAVEI
+          0     TEMP1
+          /4    0
+          0     TEMP
+          /5    0
+          4     SAVEI
+          0     TEMP1
+          /5    0
+          10    WSP
+          10    TEMP
+          10    TEMP1
+          4     WSP
+          9     EXLOOP
+          0     EXCHAY
+          /8    1
+
+
+
+
+
+SHELLSORT       +0
+
+          0     SHELLSORT
+          /4    1
+          5     TEMP
+          1     +2
+          5     PARTADD
+          0     TEMP
+          /4    0
+          5     NREC
+          /4    1
+          5     WPREC
+          /4    2
+          5     FILADD
+          /4    3
+
+          5     SORTLIST
+          0     SORTLIST
+          /4    0
+          5     UPDOWN
+
+          4     PARTADD
+          1     +2
+          5     TEMP
+          4     +0
+          5     TEMP1
+CLOOP     0     TEMP1
+          4     +0
+          /5    SHIFTS+1
+          0     TEMP
+          /4    1
+          5     WSP
+BLOOP     6     +1
+          7     RTSHIFT
+          4     WSP
+          0     TEMP1
+          /5    COLLS+1
+          10    TEMP1
+          10    TEMP
+          10    TEMP
+          /4    SHIFTS+1
+          7     SOK
+          2     +8192
+          /5    SHIFTS+1
+SOK       0     TEMP
+          /4    0
+          7     EXITSH
+          8     CLOOP
+RTSHIFT   4     WSP
+          14    8191
+          6     =15       8191
+          5     WSP
+          0     TEMP1
+          /10   SHIFTS+1
+          8     BLOOP
+EXITSH    4     +1
+          5     GAP
+          4     NREC
+RTSH1     14    8191
+          7     DIV2
+          5     TEMP
+          4     GAP
+          1     GAP
+          1     +1
+          5     GAP
+          4     TEMP
+          8     RTSH1
+DIV2      4     GAP
+          14    8191
+          5     GAP
+          0     SHELLSORT
+          /7    2
+          4     +0
+          5     J
+          4     GAP
+          2     NREC
+          1     -1
+          5     MAXJ
+IJEQ      4     J
+          5     I
+OFF1SET   4     +1
+          5     OFFPT
+          11    PART
+          8     PART+1
+          5     OFF1
+LOOPD     4     I
+          11    PICKUP
+          8     PICKUP+1
+          5     SAVEI
+          4     I
+          1     GAP
+          11    PICKUP
+          8     PICKUP+1
+          2     SAVEI
+          5     SAVEI
+          4     UPDOWN
+          9     DOWN
+UP        4     SAVEI
+          7     INCOFF
+          9     INCJ
+          11    EXCHAY
+          8     EXCHAY+1
+          4     GAP
+          2     I
+          5     I
+          9     INCJ
+          8     OFF1SET
+DOWN      4     SAVEI
+          2     +0
+          5     SAVEI
+          8     UP
+INCOFF    10    OFFPT
+          4     OFFPT
+          11    PART
+          8     PART+1
+          7     INCJ
+          5     OFF1
+          8     LOOPD
+INCJ      10    J
+          4     J
+          2     MAXJ
+          9     DIV2
+          8     IJEQ
+%
+<! halt !>

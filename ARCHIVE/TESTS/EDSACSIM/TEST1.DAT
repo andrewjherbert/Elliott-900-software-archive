@@ -1,0 +1,18 @@
+﻿C Simple "Hello World".
+
+on 903
+
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+at ptr inline
+..T64KGKZFO6@O7@O8@O6@ZF*FHFIFEZPF
+<!!>
+c START
+j 32
+
+c RESET
+j 34
+
+sh t

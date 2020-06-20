@@ -1,0 +1,68 @@
+﻿c
+C McCracken A Guide to FORTRAN IV Programming Case Study 11A
+C GRAPHING DAMPED OSCILLATION
+C
+C Load Fortran system
+on 905 16K
+at ptr file ../../MASTERS/905FORTRAN/905FORT(ISS6).BIN
+j 8181
+
+C compile program
+
+nonstop on
+
+at ptp file DAMPEDIV_RLB.BIN
+at ptr file ../../MASTERS/HERBERT/DAMPEDIV.900
+
+at tty inline
+O0R
+<!!>
+
+j 16
+
+c run out of tty input
+de ptp
+
+reverse DAMPEDIV_RLB.BIN
+
+c load loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+c load program
+at ptr file DAMPEDIV_RLB.BIN
+at ptp file DAMPEDIV.BIN
+at tty inline
+O34L<!!>
+j 16
+
+c read unloads, load library tape 1
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB1(ISS4).BIN
+at tty inline
+O37L<!!>
+j 16
+
+c reader unloads, load library tape 2
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB2(ISS5).BIN
+r
+
+c reader unloads
+at tty inline
+M<!!>
+j 16
+
+de ptp
+
+at ptr file DAMPEDIV.BIN
+j 8181
+st 8164
+j 16
+de ptp
+
+sh t
+
+
+
+
+

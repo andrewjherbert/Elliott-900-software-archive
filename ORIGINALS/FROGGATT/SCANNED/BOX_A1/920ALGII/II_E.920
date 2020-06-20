@@ -1,0 +1,373 @@
+﻿
+( PARTICULAR TO 920 CODE VERSION )
+
+CHADD    +0
+CHPSN    +0
+         >+40
+INBUF    +0
+
+
+
+OTCHA    +0
+OTCHA1   5  SBW
+OTCHA2   4  ODEV
+         2  +4 ( IF DEVICE NO. >4 )
+         9  OTCHA5 ( JUMP TO BE USED FOR SPECIAL DEVICES)
+         4  SBW
+         9  OTCHA6
+         0  SBW
+         /4 TABLE
+         6  =1 0
+         7  OTCHA4
+         0  ODEV
+         /0 ODEVTB-1
+         4  VBARCH ( PUNCHVERT BAR BEFORE CHAR.)
+         /15 0
+OTCHA4   0  SBW
+         /0 TABLE+64 ( PICK UP TRANSLATED CHAR )
+         14 8
+
+OTCHA6   0  ODEV
+         /0 ODEVTB-1
+         /15 0
+         4  SBW
+         1  -1
+         7  ;+3 ( IF NEWLINE JUMP )
+OTCHA5   0  OTCHA ( EXIT )
+         /8 1
+
+         4  LFCH ( OUTPUT LINEFEED OR BLANK )
+         /15 0
+         4  +0
+         /15 0 ( OUTPUT BLANK )
+         4  ODEV
+         2  +1
+         9  OTCHA5 (IF OUTPUT TO PUNCH )
+         /15 0
+         /15 0 ( OUTPUT FURTHER BLANKS )
+         8  OTCHA5
+
+
+
+
+GECHAR   +0
+GECH     4  SBLNK
+         5  GECHAR
+
+GECHEN   0  IDEV
+         /4 BUFFER-1
+         5  NEXTCH
+         4  BUFLAG
+         9  GECH3
+GECH26   0  CHADD
+         /4 INBUF
+         0  CHPSN
+         /14 0
+         6  +63 ( PICK OUT NEXT CHAR. FROM BUFFER)
+         0  IDEV
+         /5 BUFFER-1
+         4  CHPSN
+         7  GECH27 ( WORD EXAUSTED )
+              1  +6
+GECH28   5  CHPSN
+         /4 BUFFER-1
+         1  -1 ( IS IT NEWLINE )
+         7  GECH1
+GECH2    0  NEXTCH ( PICK UP GROUPCODE )
+         /4  TABLE
+         0  GECHAR
+
+         /8 1 (  EXIT )
+
+GECH27   10 CHADD ( SET FOR NEXT 3 CHARS.)
+         4  -12
+         8  GECH28
+
+
+GECH1    4  =/0 0 ( SET BUFFER EMPTY )
+         5  BUFLAG
+         4  HALTMK
+         9  ;+2
+         8  GECH2 ( IF ORIGONALLY NEWLINE EXIT )
+         11 PAUSRT ( IF ORIGONALLY HALT WAIT )
+         8  SWAIT
+
+
+         8  GECH+2
+
+
+GECH3    4  +0
+         5  BUFLAG
+         5  SBW1 (  SET NO ERROR )
+         5  HALTMK ( CLEAR )
+         4  -40
+         5  CHADD ( SET INTIAL ADDRESS FOR INPUT BUFFER)
+         5  SBW
+         4  -12
+         5  CHPSN
+         4  -3
+         5  SBW2 ( SET POSITION COUNT FOR INPUT )
+
+GECH4    4  +0
+         0  IDEV
+         /0 IDEVTB-1
+         /15 0 ( INPUT FROM CURRENT DEVICE )
+         5  SBW4
+         6  +127
+         5  SBW5 (CHARACTER WITHOUT PARITY )
+         0  SBW5
+         2  SBW4
+         /2 TABLE ( COMPARE PARITY WIT GIVEN )
+         6  +128
+         7  GECH8
+         4  FLNS14 ( WRONG PARITY )
+         8  GECH15
+
+GECH8    /4 TABLE
+         6  +127 ( PICK OUT INTERNAL CODE )
+         1  -64
+         9  GECH13 ( JUMP IF NOT SPECIAL CHAR.)
+         5  SBW4
+         0  SBW4
+         /8  ;+1 (SPECIAL CODES )
+         8  GECH9 ( 0 ILLEGAL CHAR.)
+         8  GECH11 ( 1 NEWLINE )
+         8  GECH9 ( 2 NOT USED )
+         8  GECH4 ( 3 IGNORE BL. ERASE CR )
+         8  GECH10 ( 4 VERTICAL BAR )
+         4  -3 ( 5 HALT )
+         5  HALTMK ( SET -VE HALTMARKER )
+GECH11   10 HALTMK ( IF NEWLINE SET +VE )
+         4  +1 ( INTERNAL CODE NEWLINE )
+         8  GECH13
+
+
+GECH18   1  +25 ( CLOSEQUOTE )
+         1  +3 ( OPENQUOTE )
+         1  +1 ( DOLLAR )
+         1  +3 ( HALF )
+
+GECH13   6  +63
+         5  SBW5
+GECH22   0  +0
+         4  SBW3
+         14  6
+         1  SBW5
+         5  SBW3 ( ADD CHAR INTO WORD )
+         10 SBW2
+         4  SBW2
+         9  GECH30 ( WORD NOT FULL )
+         4  -3
+         5  SBW2
+         0  SBW
+         4  SBW3
+         /5  INBUF ( STORE WORD IN INPUT BUFFER )
+         10 SBW
+         4  SBW
+         9  GECH23
+         4  -40
+         5  SBW
+         5  BUFLAG ( SET TO IGNORE LINE IF )
+         4  FLNS16 ( INPUT BUFFER OVERFLOWS )
+         5  SBW1 ( SET ERROR )
+GECH23   4  HALTMK
+         7  GECH4 ( IF NOT HALT OR NEWLN REPEAT )
+GECH24   4  SBW1
+         7  GECH26 ( IF NO ERROR IN LINE JUMP )
+         11 PAUSRT ( PRINT ERROR )
+         8 FAILEN
+         8 GECH+2
+
+GECH30   4 HALTMK
+         7 GECH4
+         8  GECH25 ( IF END OF LINE ADD ZEROS TO FILL WORD )
+GECH10   4 +0
+         0 IDEV
+         /0 IDEVTB-1
+         /15 0
+         6  +127
+         5  SBW4
+         0  SBW4 ( TEST CHAR. AFTER VBAR )
+         /4 TABLE ( LOOK UP INTERNAL CODE )
+         6  +127
+         1  -18
+         7  GECH18+3 ( IS IT 2 )
+         1  -12
+         7  GECH18 ( > )
+         1  +2
+         7  GECH18+1 ( < )
+         1  -23
+         7  GECH18+2 ( S )
+         1  -16
+         7  GECH10 ( IGNORABLE CHAR.)
+GECH9    4  FLNS15 ( ILLEGAL CHAR )
+GECH15   5 SBW1 ( SET ERROR LOCN. )
+GECH25   4  +0 ( STORE SPACE )
+         8  GECH13
+
+
+
+
+LFCH     +0
+
+         /0 18
+
+ALRMCH   /0 156
+HALTCH   /0 156
+
+
+
+
+VBARCH   +126
+
+
+
+
+
+TABLE    /0   67
+         /0   64
+         2    65
+
+         3    64
+         3    0
+         2    64
+         2    64
+         3    2112
+
+         2    2056
+         2    2057
+         2    2572
+         2    2620
+         2    2074
+         2    2566
+         2    4106
+         2    2575
+
+         8    16       (DIGITS)
+         8    17
+         8    18
+         8    19
+         8    20
+         8    21
+         8    22
+         8    23
+
+         8    24
+         8    25
+         2    2112
+         2    2112
+         2    2333
+         2    2315
+         2    2317
+         2    4110
+
+         3    27
+         4    33       (LETTERS)
+         4    34
+         4    35
+         4    36
+         4    37
+         4    38
+         4    39
+
+         4    40
+         4    41
+         4    42
+         4    43
+         4    44
+         4    45
+         4    46
+         4    47
+
+         4    48
+         4    49
+         4    50
+         4    51
+         4    52
+         4    53
+         4    54
+         4    55
+
+         4    56
+         4    57
+         4    58
+         2    2112
+         2    64
+         2    2112
+         2    2628     ( VBAR )
+         2    64
+
+         /2   0        (SECOND HALF)
+         2    2112
+         /7   6208
+         4    2112
+         12   3136
+         /5   7232
+         3    5184
+         /7   3136
+
+         3    64
+         1    1088
+         3    6208
+         5    5184
+         1    2117
+         5    6208
+         7    7232
+         1    7232
+
+         6    64
+         4    1088
+         4    2112
+         6    3136
+         4    4160
+         6    5184
+         6    6208
+         4    7232
+
+         5    59
+         7    1085
+         1    4127
+         10   28
+         /7   3102
+         7    4158
+         /5   4098
+         /5   2053
+
+         /5   4159
+         8    1057
+         8    2082
+         10   3107
+         8    4132
+         10   5157
+         10   6182
+         8    7207
+
+         9    40
+         11   1065
+         11   2090
+         9    3115
+         11   4140
+         9    5165
+         9    6190
+         11   7215
+
+         12   48
+         14   1073
+         14   2098
+         12   3123
+         14   4148
+         12   5173
+         12   6198
+         14   7223
+
+         15   56
+         13   1081
+         13   2106
+         /7   64
+         3    3136
+         /5   1088
+         /7   5184
+         /8   67       ( ERASE )
+
+
+<! Halt !>

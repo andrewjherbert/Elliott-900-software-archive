@@ -1,0 +1,94 @@
+﻿c T22-23(ISS3)  @ 6144 REVERSE ENGINEEERED FROM T22-T23.
+c A J HERBERT 21 AUG 13
+
+on 903 8K
+
+nonprinting off
+
+c load SIR in low store
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
+j 8181
+
+at ptr inline
+	
+^6144				(QSCBOUT @ 6144)
+*35				(load & go, labels)
+
+[QSCBOUT QBINOUT]
+
+QSCBOUT	8	QBINOUT		(use QBINOUT to punch loader)
+
+( see end for patch that makes QBINOUT transfer control to )
+( T23+1 to read parameter tape and punch application       )
+
+<! H !>
+<!!>
+j 8
+st 1939
+
+at ptr file ../../MASTERS/HERBERT/T23.900
+j 9
+st 1939
+
+at ptr file ../../MASTERS/HERBERT/T22.900
+j 9
+st 1939
+
+at ptr file ../../MASTERS/903UTILITIES/QBINOUT(ISS1).900
+j 9
+st 1939
+
+at ptr inline
+
+(use QBINOUT to output T23 [loader] )
+
+[ T22 T23 QBINOUT ]
+
+^QBINOUT+39
+	-45			(size  of T23)
+	0 T23			(start of T23)
+
+^QBINOUT+18
+	7	T22+47		(after output of loader, run T22)	
+
+$
+
+%
+<! H !>
+<!!>
+j 9
+st 1939
+
+c use standard T22-23 to dump T22-23 @ 6144
+
+at ptp file T22_23(6144).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+
+c parameter tape
+at ptr inline
++6144
++6369
+<! H !>
+<!!>
+j 8179
+st 8113
+de ptp
+
+leg T22_23(6144).BIN T22 23 (6144) 21/08/13 SCB
+
+c verify with C.4
+
+at ptr file ../../MASTERS/903UTILITIES/C4(ISS1).BIN
+j 8181
+st 8179
+
+at ptr file T22_23(6144).BIN
+j 8
+st 8155
+
+sh t
+
+
+

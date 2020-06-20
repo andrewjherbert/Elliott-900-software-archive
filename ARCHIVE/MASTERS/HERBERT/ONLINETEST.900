@@ -1,0 +1,72 @@
+﻿
+*19
+((ONLINE ADAPTOR TEST)
+
+(Enter at 8 to run test.  Outputs an A then echos tty input)
+(until a newline [CTL-J] is typed, then types Y if polling )
+(detected, otherwise N, then stops.                        )
+
+[ADAPT]
+ADAPT	4	+0
+	5	COUNT
+	4	+0	(set hold up)
+	15	6145
+	4	+141	(output newline)
+	15	6148
+	4	+10
+	15 	6148
+	4	+170	(output a '*')
+	15	6148
+	4	+1	(set no hold up)
+	15 	6145
+POLL1	15	2049	(read status)
+	6	&4	(bit 3 for ttyin)
+	7	WAIT1	(loop until tty ready)
+	4	+0
+	15	2052
+	7	;+0	(should not get a blank)
+	5	CH
+POLL2	15	2049	(read status)
+	6	&10	(bit 4 for tty out)
+	7	WAIT2	(loop until tty ready)
+	4	CH
+	1	-10
+	7	RESULT	(show results on NEWLINE)
+	1	-131
+	7 	RESULT	(or RETURN)
+	4 	CH
+	15	6148	(echo back)
+	8 	POLL1
+
+WAIT1	10	COUNT
+	8	POLL1
+WAIT2	10 	COUNT
+	8	POLL2
+
+RESULT	4	+0	(set hold up)
+	15	6145
+	4	+141	(output newline)
+	15	6148
+	4	+10
+	15 	6148
+	4	COUNT
+	7 	ZERO
+OUT	4	+89	(output Y if polling detected)
+	15	6148
+	4	+141	(output newline)
+	15	6148
+	4	+10
+	15 	6148
+	8	;+0
+ZERO	4	+78	(output N if no polling detected)
+	8	OUT
+
+COUNT 	>1
+CH	>1
+	
+%
+
+<! Halt !>
+
+
+

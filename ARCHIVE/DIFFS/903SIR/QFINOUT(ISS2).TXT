@@ -1,0 +1,44 @@
+﻿11d10
+< 
+475,476c474
+< (AJH replaced 13 TENPWR[DIVIDE BY 10*2^-4 OR 100*2^-7])
+<           13 TENPWR    (DIVIDE BY 10*2^-4 OR 100*2^-7)
+---
+>           13 TENPWR(DIVIDE BY 10*2^-4 OR 100*2^-7)
+538c536
+< DECML2    6 =15 8191      ( CARRY BIT  )
+---
+> DECML2    6 =15 8191( CARRY BIT  )
+569,570c567
+< (AJH replaced 8  OTCHA1[OUTPUT NEWLINE OR SPACE])
+<           8  OTCHA1      (OUTPUT NEWLINE OR SPACE)
+---
+>           8  OTCHA1(OUTPUT NEWLINE OR SPACE)
+714,715c711,712
+< OPRL11     4  ADPART      (CHANGED TO CORRECT ROUNDING ERROR 21.2.72)
+<            9  OPRL20      (AVOID ADDING ROUNDING*2)
+---
+> OPRL11     4  ADPART    (CHANGED TO CORRECT ROUNDING ERROR 21.2.72)
+>            9  OPRL20    (AVOID ADDING ROUNDING*2)
+727c724
+<            5  SBW1             (TOTAL SIGNIF DIGITS)
+---
+>            5  SBW1    (TOTAL SIGNIF DIGITS)
+738,739c735
+< (AJH replaced 8   DECML4[ ADD IN ROUNDING ])
+<           8   DECML4   ( ADD IN ROUNDING )
+---
+>           8   DECML4( ADD IN ROUNDING )
+761,762c757
+< (AJH replaced 8  OTCHA1[ PRINT ? ])
+<           8  OTCHA1    ( PRINT ? )
+---
+>           8  OTCHA1( PRINT ? )
+1110a1106,1112
+> 
+> 
+> 
+> 
+> 
+> 
+> 

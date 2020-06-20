@@ -1,0 +1,232 @@
+﻿
+((FUNCTION TIMING TEST, 15/9/72)
+
+(Using the level 2 interrupts, this routine checks
+that the instruction times are all within 10 percent
+of their nominal value. This permitted 20 percent
+variation is mainly caused by the computer clock
+which affects all instructions simultaneously. Accordingly
+a more rigorous test is performed on the SPREAD
+of the departures of the instruction times from nominal.
+Function 0 is not tested since interrupt is not
+possible after this function)
+
+(Table of instructions to be tested & correct times for
+fast 920M. The sign of the time column is used to indicate
+the significance of the instruction address column)
+
+TIMTAB   1    FTDAT    +106
+         2    FTDAT    +126
+         3    FTDAT    +116
+         4    FTDAT    +106
+         5    FTDAT    +116
+         6    FTDAT    +106
+         7    0        -104
+         7    1        -126
+         7    2        -114
+         8    1        -106
+         9    0        -106
+         9    1        -94
+         9    2        -94
+         10   FTDAT    +106
+         11   FTDAT    +178
+         12   FTDAT    +296
+         13   FTDAT    +306
+         14   2        +124
+         14   8190     +124
+         /4   FTDAT    +138
+
+         +0   (End-of-table marker)
+
+(Address constants)
+
+ABUFF    0    BUFF
+ASKIP    0    SKIP
+
+(Workspaces)
+
+FTTIM    >1   (Timing count)
+FTMAX    >1   (Maximum result)
+FTMIN    >1   (Minimum result)
+FTRES    >1   (Correct time & current result)
+FTICT    >1   (Timing table modifier)
+FTMOD    >1   (Buffer modifier)
+FTINS    >1   (Current instruction)
+FTDAT    >1   (Data for jump instructions)
+FTCOM    >1   (Interlevel communication)
+
+(Level 4: Initialisations)
+
+FTIME4   4    -12      (Adjust for 1 min.)
+         5    FTTIM
+         4    +0
+         5    FTMAX
+         4    +100000
+         5    FTMIN
+
+FTJ1     4    +0
+         5    FTICT
+
+(Level 4: Tests if all functions have been timed, and,
+if not, stores instruction to be timed and accumulator
+value for jumps)
+
+FTJ2     0    FTICT
+         /4   TIMTAB
+         7    FTJ5
+
+         5    FTINS
+
+         6    =0 8191
+         1    -1
+         5    FTDAT
+
+(Level 4: Initialises buffer modifier and chooses
+appropriate buffer-filling routine)
+
+         4    +0
+         5    FTMOD
+
+         /4   TIMTAB+1
+         9    FTJ3
+
+(Level 4: For non-jump instructions: stores correct
+instruction time, and fills array with instruction)
+
+         5    FTRES
+
+         0    FTMOD
+         10   FTMOD
+         4    FTINS
+         /5   BUFF
+
+         4    FTMOD
+         1    -2400
+         9    ;-6
+         8    FTJ4
+
+(Level 4: For jump instructions: stores correct instruction
+time, and fills array with suitably incremented instructions)
+
+FTJ3     2    +0
+         5    FTRES
+
+         4    FTINS
+         6    =/15 0
+         1    ABUFF
+         5    FTINS
+
+         0    FTMOD
+         10   FTMOD
+         4    FTINS
+         1    FTMOD
+         /5   BUFF
+
+         4    FTMOD
+         1    -2400
+         9    ;-7
+
+(Level 4: Waits for level 2 interrupt)
+
+FTJ4     4    -1
+         5    FTCOM
+         4    +3
+         5    INTAC
+         4    FTCOM
+         9    ;-1
+
+(Level 4: Obeys buffer of instructions)
+
+         4    FTDAT
+BUFF     >2400
+
+(Level 4: If not interrupted whilst obeying
+buffer, interrupts or instruction are faulty)
+
+         4    +0
+         5    INTAC
+         8    FAIL
+
+(Level 2: When first entered, indicates interrupt
+by changing communicator from -1 to 0)
+
+FTIME2   4    FTCOM
+         9    ;+3
+         7    ;+4
+         8    L2T
+
+         10   FTCOM
+         8    L2T
+
+(Level 2: When next entered, records number of
+level 4 instructions obeyed in communicator,
+and jumps level 4 to SKIP)
+
+         4    ABUFF
+         2    6
+         5    FTCOM
+         4    ASKIP
+         5    6
+         8    L2T
+
+(Level 4: Ignores further interrupts)
+
+SKIP     4    +0
+         5    INTAC
+
+(Level 4: Calculates apparent time taken between interrupts.
+The result will lie between 0 and 2400*306/8 = 91800,
+and 25000 represents the correct answer of 20 millisec.)
+
+         4    FTRES    (Instruction time, 10^-7 sec/bit)
+         12   FTCOM    (Number of instructions obeyed)
+         14   14       (Maximum safe shift)
+         5    FTRES
+
+(Level 4: Checks number of instructions obeyed is within 10 percent
+of correct figure either way)
+
+         1    -22500
+         9    FAIL
+         2    +5000
+         9    FAIL
+
+(Level 4: Adjusts Max. or Min. if passed by this result)
+
+         4    FTMAX
+         2    FTRES
+         9    ;+3
+         4    FTRES
+         5    FTMAX
+
+         4    FTRES
+         2    FTMIN
+         9    ;+3
+         4    FTRES
+         5    FTMIN
+
+(Level 4: Checks that the spread of instruction speeds
+is within 10 percent, for example 5 percent either way)
+
+         4    FTMAX
+         2    FTMIN
+         7    ;+5
+
+         4    FTMIN
+         13   FTMAX
+         1    -.9
+         9    FAIL
+
+(Level 4: Returns for next instruction)
+
+         10   FTICT
+         10   FTICT
+         8    FTJ2
+
+(Level 4: Exits if 1 minute complete, otherwise repeats)
+
+FTJ5     10   FTTIM
+         4    FTTIM
+         9    FTJ1
+         8    OK
+<! Halt !>

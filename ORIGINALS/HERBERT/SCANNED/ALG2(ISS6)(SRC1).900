@@ -1,0 +1,707 @@
+﻿
+*+8
+ (903 ALGOL INTERPRETER 29-11-67)
+
+ ^+8
+ [OTCHA GECHAR GECHEN GECH OTCHA1 OTCHA2
+ TABLE ALRMCH HALTCH FAILEN PAUSRT BUFFER
+ NEXTCH PCHLNK IDEV ODEV INSLOT OUTSLT
+ SBLNK HALTMK SBW4 SBW3 SBW W3 W4 FLNS14 FLNS15
+  WS SBW5 LFCH OUTPA INPA
+ DLDIV FPA DLMULT
+
+READAL SP NXPORD
+ SERIES ]
+      8   READAL
+       8   HALTCH+5
+ 8 EXECUT
+ 8 7775
+ 8 READLB
+ 8 READOL
+       8   HALTCH+13
+       8   ;+0
+
+ 8 ;+0
+ 8 ;+0
+ 8 ;+0
+        8   ;+0
+        0   ;+1
+        8   ;+0
+        8   ;+0
+        8   ;+0
+        8   ;+0
+        8   ;+0
+
+ STKMOD +0
+STKEND +8177
+WARNAD +7350
+PDADD +0
+STACKADD +0
+
+
+       8   ;+0
+       >+99
+BASE   +3960
+       +8191
+ +8191
+ WARN +1
+PP +0
+SP +0
+EP +0
+FP +0
+BN +0
+ 0 PBA
+
+
+
+
+
+
+
+
+
+
+
+
+ 0 PRIM31
+ 0 PRIM33
+ 0 PRIM35
+ 0 PRIM37
+ 0 PRIM59
+ 0 DLMULT
+ 0 DLDIV
+ 0 RRES
+ 0 SERIES
+
+
+ 0 STAND
+ 0 TABLE
+ 0 OTCHA
+ 8 GECH
+ 0 OSTSB
+ -1
+ STIM -1
+ 0 SBLNK1
+ 8 RICONV
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+
+PAUSRT 0 STOP
+ 8 FAILEN
+SBLNK2 +0
+ 0 ODEV
+ 0 GLOPMD
+IOLNK +0
+ 0 OUTI
+ 0 OUTR
+NEXTCH +0
+ 0 STSUBRT
+ -1
+ +0
+ +0
+ +0
+ +0
+
+
+W +74
+W1
+TENPWR +0
+W2
+NSIGNF +0
+FPA
+W3 +0
+W4 +0
+W5 +0
+FPB
+W6 +0
+
+
+
+
+
+
+
+
+W7
+BEFPT +0
+W8
+AFTPT +0
+W9
+DECPWR +0
+
+WS +0
+WS1 +0
+WS2 +0
+WS3 +0
+WS4 +0
+WS5 +0
+WS6 +0
+WS7 +0
+WS8 +0
+ODEV
+WS9 +0
+DIGM
+WS10 +0
+DIGN
+WS11 +0
+OPMD
+WS12 +0
+PKDADD
+WS13 +0
+UNPACKED
+WS14 +0
+WS15 +0
+WS16 +0
+WS17 +0
+WS18 +0
+WS19 +0
+WS20 +0
+WS21 +0
+WS22 +0
+WS23 +0
+WS24 +0
+WS25 +0
+WS26 +0
+ +0
+WS28 +0
+WS29 +0
+
+WS30 +0
+ +0
+WS32 +0
+WS33 +0
+SBW +0
+NXPDAD 0 NXPORD
+ +0
+ +0
+ +0
+
+PCHLNK   +0
+         +0
+BUFFER >+10
+INSLOT >+10
+OUTSLT
+ 0 OUTPA+4
+
+
+
+
+
+
+
+
+
+
+
+ 0 OUTPA+4
+ 0 OUTPA+2
+ 0 OUTPA+4
+ 0 OUTPA+4
+ 0 OUTPA+4
+ 0 OUTPA+4
+ 0 OUTPA+4
+ 0 OUTPA+4
+ 0 OUTPA+4
+
+COUNT +0
+N +0
+MKR7 +0
+SINGLE +0
+ 0 W
+ /4 0
+ 5 W3
+ /4 1
+ 5 W4
+ /4 2
+ 5 W5
+ 0 SINGLE
+ /8 1
+FAIL +0
+ 11 PAUSRT
+ 8 FAILEN
+ 4 W3
+ 9 ;+9
+ 4 =15 8191
+ 5 W3
+ 4 &377600
+ 5 W4
+ 4 +63
+ 5 W5
+ 0 FAIL
+ /8 1
+ 4 =/0 0
+ 5 W3
+ 4 +0
+ 8 ;-8
+
+
+
+
+
+
+
+
+
+
+
+
+
+RSTACK +0
+ 0 W
+ /4 0
+ 5 W3
+ /4 1
+ 5 W4
+ /4 2
+ 5 W5
+ /4 3
+ 5 W6
+ /4 4
+ 5 W7
+ /4 5
+ 5 W8
+ 0 RSTACK
+ /8 1
+
+RRES +0
+ 0 W
+ 4 W3
+ /5 0
+ 4 W4
+ /5 1
+ 4 W5
+ /5 2
+ 0 RRES
+ /8 1
+PRIM30 +0
+ 0 W
+ /4 0
+ 9 ;+8
+ /4 3
+ 9 ;+8
+ /1 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 9 ;+10
+ /5 0
+ 0 PRIM30
+ /8 1
+ /4 3
+ 9 ;+3
+ /1 0
+ 8 ;-6
+ /1 0
+ 9 ;-8
+ 8 INTOVR
+
+PRIM32 +0
+0 W
+ /4 3
+ 2 +0
+ /5 3
+ 1 =/0 0
+ 7 ;+4
+ 4 PRIM32
+ 5 PRIM30
+ 8 PRIM30+2
+
+ /4 0
+ 9 ;+2
+ 8 PRIM30+17
+ /1 3
+ /5 0
+ 0 PRIM32
+ /8 1
+
+PRIM34 +0
+ 0 W
+ /4 0
+ /12 3
+ 3 WS1
+ 7 ;+4
+ 1 +1
+ 7 ;+6
+ 8 PRIM30+17
+ 4 WS1
+
+
+
+
+
+
+
+
+
+
+ /5 0
+ 0 PRIM34
+ /8 1
+ 4 WS1
+ 1 =/0 0
+ 8 ;-5
+
+PRIM38 +0
+ 0 W
+ /4 0
+ 7 ;+23
+ 5 WS1
+ /4 3
+ 9 SPARE
+ 7 ;+21
+ 2 +0
+ 5 COUNT
+CALC 10 COUNT
+ 4 COUNT
+ 7 ;+12
+ 4 WS1
+ /12 0
+ 3 WS1
+ 7 CALC
+ 1 +1
+ 7 ;+2
+ 8 INTOVR
+ 4 WS1
+ 1 =/0 0
+ 5 WS1
+ 8 CALC
+ 4 WS1
+ /5 0
+ 0 PRIM38
+ /8 1
+ 4 +1
+ 8 ;-4
+
+SET +0
+ 4 +0
+ 0 W
+ /5 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 0 SET
+ /8 2
+ 4 +1
+ 8 ;-5
+PRIM41 +0
+ 0 W
+ /4 3
+ /2 0
+ 11 SET
+ 9 SET+6
+ 8 SET+1
+ 0 PRIM41
+ /8 1
+
+PRIM43 +0
+ 0 W
+ /4 0
+ /2 3
+ 11 SET
+ 9 SET+1
+ 8 SET+6
+ 0 PRIM43
+ /8 1
+
+PRIM45 +0
+ 0 W
+ /4 0
+ /2 3
+ 11 SET
+ 7 SET+6
+ 8 SET+1
+ 0 PRIM45
+ /8 1
+
+
+
+
+
+
+
+
+
+
+
+PRIM47 +0
+ 0 W
+ /4 0
+ /2 3
+ 11 SET
+ 7 SET+1
+ 8 SET+6
+ 0 PRIM47
+ /8 1
+
+PRIM49 +0
+ 0 W
+ /4 0
+ /2 3
+ 11 SET
+ 9 SET+6
+ 8 SET+1
+ 0 PRIM49
+ /8 1
+
+PRIM51 +0
+ 0 W
+ /4 3
+ /2 0
+ 11 SET
+ 9 SET+1
+ 8 SET+6
+ 0 PRIM51
+ /8 1
+
+SBLNK
+STAND +0
+ 4 +0
+ 5 SBW
+ 4 W3
+ 7 STAND3
+
+
+
+
+
+
+
+
+
+
+ 9 STAND4
+STAND1 14 1
+ 9 STAND2
+ 10 SBW
+ 8 STAND1
+STAND7 4 +0
+ 5 W3
+ 5 W4
+STAND5 5 W5
+ 8 STAND6
+STAND3 4 +17
+ 5 SBW
+ 4 W4
+ 7 STAND5
+ 8 STAND1
+
+STAND4 1 +1
+ 7 ;+3
+ 4 W3
+ 8 ;+5
+ 4 +16
+ 5 SBW
+ 4 W4
+ 10 SBW
+ 14 1
+ 9 ;-2
+STAND2 4 SBW
+SHIFTD 5 SBW
+ 2 W5
+ 5 W5
+ 1 +64
+ 9 STAND7
+ 1 -128
+ 9 ;+5
+ 4 SBLNK
+ 5 FAIL
+ 4 +9
+ 8 FAIL+1
+ 4 SBW
+ 7 STAND6
+ 6 +8191
+ 1 SHFT1
+ 5 SHIFTN
+ 0 W4
+ 14 1
+ 4 W3
+
+
+
+
+
+
+
+
+
+SHIFTN +0
+ 3 W4
+ 5 W3
+ STAND6 0 SBLNK
+ /8 1
+SHFT1 14 0
+SHIFT1 +0
+ 0 W4
+ 14 1
+ 4 W3
+ 14 8191
+ 5 W3
+ 3 W4
+ 0 W7
+ 14 1
+ 4 W6
+ 14 8191
+ 5 W6
+ 3 W7
+ 10 W5
+ 10 W8
+ 0 SHIFT1
+ /8 1
+
+PRIM31 +0
+ 11 RSTACK
+ 8 RSTACK+1
+ 4 W3
+ 7 EXTRAT
+ 4 W6
+ 7 EXIT31+2
+ 11 SHIFT1
+ 8 SHIFT1+1
+ 4 W5
+ 2 W8
+ 9 NEG5
+ 2 +0
+ 1 =15 0
+ 6 =14 8191
+ 5 ;+6
+
+
+
+
+
+
+
+
+
+
+
+
+ 4 W8
+ 5 W5
+ 0 W4
+ 14 1
+ 4 W3
+ +0
+ 3 W4
+ 1 W6
+ 5 W3
+ 4 W4
+ 1 W7
+ 9 ;+8
+ 5 W4
+EXIT31 11 STAND
+ 8 STAND+1
+ 11 RRES
+ 8 RRES+1
+ 0 PRIM31
+ /8 1
+ 6 =15 8191
+ 10 W3
+ 8 ;-9
+NEG5 6 =14 8191
+ 5 ;+4
+ 0 W7
+ 14 1
+ 4 W6
+ +0
+ 3 W7
+ 1 W3
+ 5 W3
+ 4 W7
+ 1 W4
+ 9 ;+2
+ 8 EXIT31-1
+ 10 W3
+ 6 =15 8191
+ 8 EXIT31-1
+
+EXTRAT 4 W6
+ 5 W3
+ 4 W7
+ 5 W4
+ 4 W8
+ 5 W5
+ 8 EXIT31
+
+
+
+
+
+
+
+
+PRIM33 +0
+ 11 RSTACK
+ 8 RSTACK+1
+ 4 W6
+ 9 ;+16
+ 4 W7
+ 7 ;+11
+ 2 +0
+ 6 =15 8191
+ 5 W7
+ 4 W6
+ 2 +0
+ 1 =/15 8191
+ 5 W6
+ 4 PRIM33
+ 5 PRIM31
+ 8 PRIM31+3
+ 4 W6
+ 2 +0
+ 8 ;-6
+ 1 =/0 0
+ 7 ;+2
+ 8 ;-17
+ 4 W7
+ 7 ;+2
+ 8 ;-18
+ 4 =8 0
+ 10 W8
+ 8 ;-15
+
+DLMULT +0
+ 4 W6
+ 12 W3
+ 5 WS10
+ 3 WS11
+ 4 W7
+ 12 W3
+ 14 8175
+ 3 WS12
+ 1 WS10
+ 5 W3
+ 4 WS11
+ 1 WS12
+ 9 ;+19
+ 5 WS11
+ 4 W6
+ 12 W4
+
+<! Halt !>

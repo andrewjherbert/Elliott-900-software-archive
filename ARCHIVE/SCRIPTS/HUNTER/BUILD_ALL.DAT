@@ -1,0 +1,7 @@
+﻿c Build all version of HUnter ALGOL
+c N.B. needs 903 ALGOL Issue 6 to have been built previously.
+
+do BUILD_DUMP(HUNTER).DAT
+do build_alg2pass(hunter)
+do BUILD_ALG16KLG(HUNTER).DAT
+do BUILD_COMPACT.DAT

@@ -1,0 +1,119 @@
+﻿c Compare ALMAT package in Issue 6 and AJH LP ALgol.
+
+c AJH LP Algol (normal)
+
+on 903 16K
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptp file TEST.BIN
+c read matrix package in checking mode
+at ptr file ../../MASTERS/ALMAT/ALMAT(ISS2).900
+j 11
+
+c read test program
+at ptr file ../../MASTERS/AJHALGOL/ALMAT.900
+j 9
+de ptp
+
+c run program
+c read in 16K large program interpreter 
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+tidy
+
+at ptr file TEST.BIN 
+sel out tty
+at tty inline
+R
+<!!>
+C will run out of tty input....
+nonstop on
+sh t
+j 8
+
+delete TEST.BIN
+sh t
+
+c AJH Algol - optimized
+
+on 903 16K
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+c turn off call-by-name extensions
+j 18 
+
+at ptp file TEST.BIN
+c read matrix package in checking mode
+at ptr file ../../MASTERS/ALMAT/ALMAT(ISS2).900
+j 11
+
+c read test program
+at ptr file ../../MASTERS/AJHALGOL/ALMAT.900
+j 9
+de ptp
+
+c run program
+c read in 16K large program interpreter 
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+tidy
+
+at ptr file TEST.BIN 
+sel out tty
+at tty inline
+R
+<!!>
+C will run out of tty input....
+nonstop on
+sh t
+j 8
+
+delete TEST.BIN
+sh t
+
+c Issue 6 903 Algol
+
+on 903 16K
+
+at ptr file ../../MASTERS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+
+
+at ptp file TEST.BIN
+c read matrix package in checking mode
+at ptr file ../../MASTERS/ALMAT/ALMAT(ISS2).900
+j 11
+
+c read test program
+at ptr file ../../MASTERS/AJHALGOL/ALMAT.900
+j 9
+de ptp
+
+
+c run program
+c read in 16K large program interpreter 
+at ptr file ../../MASTERS/903ALGOL/ALG16KLP(ISS6).BIN
+j 8181
+
+tidy
+
+at ptr file TEST.BIN 
+sel out tty
+nonprinting off
+at tty inline
+R
+<!!>
+C will run out of tty input....
+nonstop on
+sh t
+j 8
+
+delete TEST.BIN
+sh t
+

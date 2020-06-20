@@ -1,0 +1,1172 @@
+﻿
+((PARTS OF BOWDLER, 2/8/76))
+
+[SFREE EFREE START
+STOPL STOPC STOPZ STOPE
+CHIPF CHIPL CHIPE CHIP
+CHOPC CHOPF CHOPL CHOPE LISFLG
+ERRORL ERRORE]
+
+(BOWDLER ENTRY POINTS)
+
+(8)      8    STEER
+(9)      8    EDITX
+(10)     8    CONTIN
+(11)     8    PCOUNT
+(12)     8    CHECKX
+(13)     8    STEER
+(14)     8    EDITY
+
+FLAG     >1
+
+EDITX    4    +1
+         8    ;+2
+EDITY    4    +0
+         5    CHOPC
+
+         4    +0
+         5    FLAG
+         8    EDIT
+
+CHECKX   4    FLAG
+         7    ;+2
+         8    CHECK
+         10   FLAG
+         8    EVEN
+
+PAUSEL   0    CONTIN
+
+CONTIN   0    PAUSEL
+         /8   1
+
+(BOWDLER DATA AREAS)
+
+LIST1    £DNL
+         £DSP
+         £DHT
+         £DSC
+         £DVT
+         £DBE
+         £PNL
+         £PSP
+         £PHT
+         £PSC
+         £PVT
+         £PBE
+         £TIC
+         £TIM
+         £TIS
+         £LOF
+         £LON
+         £CAD
+         £CAM
+         £ERS
+         £COS
+         £WTS
+         £ESC
+         £REP
+         £CAN
+         £END
+         £INS
+         £CIE
+         £CII
+         £DIE
+         £DII
+         £RTI
+         £CSE
+         £CSI
+         £DSE
+         £DSI
+         £RTS
+         £CLE
+         £CLI
+         £DLE
+         £DLI
+         £RTL
+         £CHE
+         £CHI
+         £DHE
+         £DHI
+         £RTH
+         £WAI
+         £COP
+         £INB
+         £SPE
+         £PCR
+         £PBL
+         £DCR
+         £DBL
+         £903
+         £920
+         £ISO
+         +0
+
+LIST2    &04020
+         &04020
+         &04020
+         &04020
+         &04020
+         &04020
+         &00014
+         &00014
+         &00014
+         &00014
+         &00014
+         &00014
+         &00010
+         &00010
+         &00010
+         &00010
+         &00010
+         &00010
+         &00010
+         &00010
+         &00010
+         &00010
+         &02000
+         &37070
+         &33064
+         &24062
+         &00200
+         &11055
+         &11455
+         &05054
+         &05454
+         &15355
+         &11051
+         &11451
+         &05050
+         &05450
+         &15351
+         &11045
+         &11041
+         &05044
+         &05040
+         &15345
+         &10035
+         &10031
+         &04034
+         &04030
+         &14335
+         &00004
+         &20025
+         &00000
+         &00000
+         &00000
+         &00000
+         &00000
+         &00000
+         &40000
+         &40000
+         &40000
+
+LIST3    +10
+         +32
+         +9
+         +20
+         +11
+         +7
+         +10
+         +32
+         +9
+         +20
+         +11
+         +7
+         0    TITFLG
+         1    TITFLG
+         2    TITFLG
+         0    LISFLG
+         1    LISFLG
+         0    CASFLG
+         1    CASFLG
+         0    HLTFLG
+         1    HLTFLG
+         2    HLTFLG
+
+TITFLG   >1
+LISFLG   >1
+CASFLG   >1
+HLTFLG   >1
+ESCWID   >1
+ESCSEQ   >4
+ERRNO    >1
+INSTCT   >1
+REPSCT   >1
+REPSFG   >1
+REPNUM   >1
+TEMP     >1
+INSDES   >1
+INSTNO   >1
+MAINCT   >1
+MAINP    >2
+FAILP    >2
+WIDTH    >1
+DONE     >1
+SPACES   >1
+TABS     >1
+CHOP     >1
+LEFT     >1
+RIGHT    >1
+MFLAG    >1
+SCHAR    >1
+MCHAR    >1
+LINK     >1
+LINE     >122
+REPLI1   >32
+REPLI2   >32
+REPLI3   >32
+REPLI4   >32
+
+(BOWDLER STEER MODULE)
+
+STEER    4    +0
+         5    ERRNO
+         5    INSTCT
+         4    SFREE
+         5    STOPP
+         4    +0
+         5    STOPP+1
+         4    +0
+         5    CHIPF
+         8    START
+
+(BOWDLER EDIT MODULE)
+
+EDIT     4    +0
+         5    TITFLG
+         5    LISFLG
+         5    CASFLG
+         5    HLTFLG
+         5    ERRNO
+         5    INSTCT
+         5    REPSCT
+         5    REPSFG
+         4    SFREE
+         5    STIPP
+         4    +0
+         5    STIPP+1
+         5    CHOPF
+         5    SPACES
+         5    TABS
+EDIT0    4    +0
+         5    CHIPF
+         5    WIDTH
+         5    DONE
+
+EDIT1    4    STIPP
+         5    FAILP
+         4    STIPP+1
+         5    FAILP+1
+
+         4    +0
+         5    MFLAG
+
+         11   STIPL
+         8    STIPE
+         5    TEMP
+         0    TEMP
+         /4   LIST3
+         5    INSTNO
+         /4   LIST2
+         5    INSDES
+
+         6    &00074
+         14   8190
+         5    TEMP
+         0    TEMP
+         4    DONE
+         /8   ;+1
+
+         8    EDIT10
+         8    EDWAI
+         8    EDSET
+         8    EDPCH
+         8    EDDCH
+         8    EDCOP
+         8    EDHTI
+         8    EDHTE
+         8    EDLNI
+         8    EDLNE
+         8    EDST
+         8    EDID
+         8    EDEND
+         8    EDCAN
+         8    EDREP
+
+EDWAI    10   INSTCT
+(+1)     11   PAUSEL
+         8    ;+0
+         8    EDIT0
+
+EDSET    4    INSTNO
+         6    =0 8191
+         5    TEMP
+         4    INSTNO
+         14   8179
+         0    TEMP
+         /5   0
+         8    EDIT10
+
+EDPCH    4    INSTNO
+         11   LINK
+         8    PUNCH
+         8    EDIT10
+
+EDDCH    2    WIDTH
+         7    EDIT2
+         0    DONE
+         /4   LINE
+         1    -33
+         9    ;+2
+         8    EDIT10
+         /4   LINE
+         2    INSTNO
+         7    ;+2
+         8    EDIT2
+         10   DONE
+         8    EDIT10
+
+EDCOP    4    +0
+         5    REPSCT
+         4    DONE
+
+EDHTI    1    -1
+EDHTE    5    LEFT
+         1    +1
+         5    RIGHT
+         2    WIDTH
+         7    ;+2
+         8    EDIT2
+         0    LEFT
+         /4   LINE
+         1    -20
+         7    EDIT10
+         8    EDIT2
+
+EDLNI    2    WIDTH
+EDLNE    7    ;+2
+         8    EDIT2
+         10   MFLAG
+         11   LINK
+         8    MATCH
+         4    WIDTH
+         5    RIGHT
+         8    EDIT10
+
+EDST     11   LINK
+         8    MATCH
+         8    EDIT10
+
+EDID     11   LINK
+         8    MATCH
+         4    LEFT
+         7    ;+5
+         1    -1
+         5    TEMP
+         11   LINK
+         8    IDTES
+         4    RIGHT
+         5    TEMP
+         2    WIDTH
+         7    ;+3
+         11   LINK
+         8    IDTES
+         8    EDIT10
+
+MATCH    5    LEFT
+         5    RIGHT
+
+MATCH1   11   STIPL
+         8    STIPE
+         0    LINK
+         /7   1
+         5    SCHAR
+
+MATCH2   4    INSDES
+         6    &00400
+         7    MATCHF
+
+(MATCHB) 4    LEFT
+         7    EDIT2
+         1    -1
+         5    LEFT
+         0    LEFT
+         8    MATCH3
+
+MATCHF   4    RIGHT
+         2    WIDTH
+         7    EDIT2
+         0    RIGHT
+         10   RIGHT
+
+MATCH3   /4   LINE
+         5    MCHAR
+         4    MFLAG
+         10   MFLAG
+         7    ;+4
+         4    MCHAR
+         1    -33
+         9    MATCH2
+
+         4    CASFLG
+         7    MATCH4
+
+         4    SCHAR
+         1    -96
+         9    ;+3
+         1    +64
+         5    SCHAR
+         4    MCHAR
+         1    -96
+         9    ;+3
+         1    +64
+         5    MCHAR
+
+MATCH4   4    SCHAR
+         2    MCHAR
+         7    MATCH1
+         8    EDIT2
+
+IDTES    0    TEMP
+         /4   LINE
+         0    LINK
+         1    -48
+         /9   1
+         1    -10
+         9    EDIT2
+         1    -7
+         /9   1
+         1    -26
+         9    EDIT2
+         1    -6
+         /9   1
+         1    -26
+         9    EDIT2
+         /8   1
+
+EDIT2    4    FAILP
+         5    STIPP
+         4    FAILP+1
+         5    STIPP+1
+
+         4    INSDES
+         6    &00001
+         7    EDIT4
+
+         0    REPSFG
+         /8   ;+1
+         8    EDNOT
+         8    EDTRY
+         8    EDIT3
+
+EDNOT    4    INSTCT
+         5    MAINCT
+         4    STIPP
+         5    MAINP
+         4    STIPP+1
+         5    MAINP+1
+
+         10   REPSFG
+         4    +0
+         5    REPNUM
+         8    ;+2
+EDTRY    10   REPNUM
+
+         4    REPNUM
+         2    REPSCT
+         7    EDTRY1
+
+         0    REPNUM
+         /4   REPLI2
+         5    INSTCT
+         /4   REPLI3
+         5    STIPP
+         /4   REPLI4
+         5    STIPP+1
+         8    EDIT1
+
+EDTRY1   5    REPSFG
+
+         4    MAINCT
+         5    INSTCT
+         4    MAINP
+         5    STIPP
+         4    MAINP+1
+         5    STIPP+1
+
+EDIT3    4    DONE
+         2    WIDTH
+         7    EDIT6
+
+         0    DONE
+         /4   LINE
+         11   LINK
+         8    PUNCH
+         8    EDIT5
+
+EDIT4    4    DONE
+         2    WIDTH
+         7    EDIT6
+
+EDIT5    10   DONE
+         8    EDIT1
+
+EDIT6    4    CHIPF
+         7    EDIT7
+         4    CHIP
+         1    -20
+         7    ;+2
+         8    EDIT7
+
+         0    HLTFLG
+         /8   ;+1
+         8    HLTWMA
+         8    EDIT0
+         8    EDWAI+1
+
+EDIT7    4    +0
+         5    WIDTH
+         5    DONE
+         5    TEMP
+
+EDIT8    11   CHIPL
+         8    CHIPE
+         1    -10
+         7    EDIT9
+         1    -10
+         7    EDIT9
+
+         1    -20
+         7    ;+4
+         1    -1
+         7    ;+4
+         8    ;+6
+         10   TEMP
+         8    ;+4
+         4    TEMP
+         1    -1
+         5    TEMP
+
+         4    WIDTH
+         1    -120
+         7    LINFUL
+
+         0    WIDTH
+         4    CHIP
+         /5   LINE
+         10   WIDTH
+         8    EDIT8
+
+EDIT9    4    -2
+         1    WIDTH
+         5    WIDTH
+         9    EDTIC
+         0    WIDTH
+
+         4    LINE
+         1    -40
+         7    ;+2
+         8    EDTIC
+         4    LINE+1
+         1    -40
+         7    ;+2
+         8    EDTIC
+         /4   LINE+1
+         1    -41
+         7    ;+2
+         8    EDTIC
+
+         4    TITFLG
+         1    -1
+         9    EDTIC
+         7    EDTIM
+
+(EDTIS)  4    TEMP
+         7    ;+2
+         8    EDTIC
+         /4   LINE
+         1    -41
+         7    EDTIC+1
+         8    EDTIC
+
+EDTIM    4    TEMP
+         1    -1
+         7    ;+2
+         8    EDTIC
+         4    +41
+         /5   LINE+2
+
+(-1)     10   WIDTH
+EDTIC    10   WIDTH
+(+1)     10   WIDTH
+         0    WIDTH
+         4    CHIP
+         /5   LINE
+         10   WIDTH
+         8    EDIT1
+
+EDREP    11   STIPL
+         8    STIPE
+         0    REPSCT
+         /5   REPLI1
+         10   INSTCT
+         4    INSTCT
+         /5   REPLI2
+         4    STIPP
+         /5   REPLI3
+         4    STIPP+1
+         /5   REPLI4
+         10   REPSCT
+
+EDREP1   11   STIPL
+         8    STIPE
+         5    TEMP
+         0    TEMP
+         /4   LIST2
+         5    TEMP
+
+         6    &03000
+         2    &01000
+         7    ;+2
+         8    ;+5
+
+         11   STIPL
+         8    STIPE
+         7    ;+2
+         8    ;-3
+
+         4    TEMP
+         6    &00200
+         7    ;+5
+
+         11   STIPL
+         8    STIPE
+         7    ;+2
+         8    ;-3
+
+         4    TEMP
+         6    &00100
+         7    ;+3
+         10   INSTCT
+         10   INSTCT
+         10   INSTCT
+
+         4    TEMP
+         6    &00002
+         7    EDREP1
+         8    EDIT12
+
+EDCAN    11   STIPL
+         8    STIPE
+         5    SCHAR
+
+         4    +0
+         5    TEMP
+         0    TEMP
+         /4   REPLI1
+         2    SCHAR
+         7    ;+3
+         10   TEMP
+         8    ;-5
+
+         4    -1
+         1    REPSCT
+         5    REPSCT
+
+         0    REPSCT
+         /4   REPLI1
+         0    TEMP
+         /5   REPLI1
+         0    REPSCT
+         /4   REPLI2
+         0    TEMP
+         /5   REPLI2
+         0    REPSCT
+         /4   REPLI3
+         0    TEMP
+         /5   REPLI3
+         0    REPSCT
+         /4   REPLI4
+         0    TEMP
+         /5   REPLI4
+         8    EDIT10
+
+EDEND    4    +0
+         5    REPSFG
+
+         4    MAINCT
+         5    INSTCT
+         4    MAINP
+         5    STIPP
+         4    MAINP+1
+         5    STIPP+1
+         8    EDIT1
+
+EDIT10   4    INSDES
+         6    &00200
+         7    EDIT11
+
+         11   STIPL
+         8    STIPE
+         7    EDIT11
+         11   LINK
+         8    PUNCH
+         8    ;-5
+
+EDIT11   4    INSDES
+         6    &00100
+         7    ;+5
+         4    RIGHT
+         5    DONE
+         10   INSTCT
+         10   INSTCT
+         10   INSTCT
+
+EDIT12   4    REPSFG
+         1    -1
+         7    ;+2
+         8    EDIT1
+         10   REPSFG
+         8    EDIT1
+
+PUNCH    5    CHOP
+         1    -9
+         7    PUTAB
+         1    -23
+         7    PUSPAC
+         9    PUNL
+         8    PUPRI
+
+PUSPAC   10   SPACES
+         8    PUEXIT
+
+PUTAB    4    +0
+         5    SPACES
+         10   TABS
+         8    PUEXIT
+
+PUNL     4    +0
+         5    SPACES
+         5    TABS
+         8    PUCHAR
+
+PUPRI    4    TABS
+         7    ;+7
+         1    -1
+         5    TABS
+         4    +9
+         11   CHOPL
+         8    CHOPE
+         8    ;-7
+
+         4    SPACES
+         7    ;+7
+         1    -1
+         5    SPACES
+         4    +32
+         11   CHOPL
+         8    CHOPE
+         8    ;-7
+
+PUCHAR   4    CHOP
+         11   CHOPL
+         8    CHOPE
+
+PUEXIT   0    LINK
+         /8   1
+
+(STRING PACK & UNPACK SUBROUTINES)
+
+STOPP    >2
+STIPP    >2
+STOPL
+STIPL    >1
+STCHAR   >1
+
+STOPC    5    INSDES
+         10   INSTCT
+
+         4    +0
+         5    STCHAR
+         0    STCHAR
+         /4   LIST1
+         7    UNRECO
+         2    INSDES
+         7    STOPE+1
+         10   STCHAR
+         8    ;-6
+
+STOPZ    4    +0
+STOPE    5    STCHAR
+(+1)     4    STOPP
+         2    EFREE
+         7    STEFUL
+
+         4    STOPP+1
+         1    =14 0
+         5    STOP2
+         5    STOP3
+         2    =/13 0
+         6    =14 8191
+         5    STOP1
+
+         0    STOPP
+         /4   0
+STOP1    >1
+         4    STCHAR
+STOP2    >1
+         /5   0
+
+         2    STCHAR
+STOP3    >1
+         /5   1
+
+         4    STOPP+1
+         1    -11
+         9    ;+3
+         10   STOPP
+         8    ;+2
+         1    +18
+         5    STOPP+1
+
+         0    STOPL
+         /8   1
+
+STIPE    4    STIPP
+         2    STOPP
+         7    ;+2
+         8    ;+4
+         4    STIPP+1
+         2    STOPP+1
+         7    ;+0
+
+         4    STIPP+1
+         2    =14 18
+         5    STIP1
+
+         0    STIPP
+         /4   1
+         /0   0
+STIP1    >1
+         6    &177
+         5    STCHAR
+
+         4    STIPP+1
+         1    -11
+         9    ;+3
+         10   STIPP
+         8    ;+2
+         1    +18
+         5    STIPP+1
+
+         4    STCHAR
+         0    STIPL
+         /8   1
+
+(BOWDLER ERROR INDICATIONS)
+
+HLTIRE   10   ERRNO    (A: Haltcode found whilst declaring repeditive group,
+                           possibly because an END is missing)
+
+RENCAN   10   ERRNO    (B: Not all repeditive groups have been cancelled,
+                           some REP has no matching CAN)
+
+HLTICT   10   ERRNO    (C: Haltcode found whilst in comment,
+                           possibly because a closing bracket is missing)
+
+HLTICO   10   ERRNO    (D: Haltcode found within a command,
+                           possibly because an insert string
+                           is incorrectly terminated)
+
+UNRECO   10   ERRNO    (E: Unrecognised command mnemonic)
+
+LINFUL   10   ERRNO    (F: More than 120 characters
+                           in matching string or in line of main tape,
+                           there are no such limits on insert strings)
+
+TELECO   10   ERRNO    (G: Telecode commands not at start of steering tape)
+
+REPIRE   10   ERRNO    (H: Another REP found nested in repeditive group,
+                           possibly because an END is missing)
+
+CANIRE   10   ERRNO    (I: A CAN found in a repeditive group,
+                           could cause edit-time suicide,
+                           perhaps END was intended)
+
+COPIRE   10   ERRNO    (J: A COP found in a repeditive group,
+                           COP cancels all repeditive groups,
+                           so would cause edit-time suicide)
+
+ENDORE   10   ERRNO    (K: An END found outside a repeditive group,
+                           perhaps COP or PSC was intended)
+
+EMPREP   10   ERRNO    (L: Repeditive group contains no instructions,
+                           END directly follows REP)
+
+REFINC   10   ERRNO    (M: First instruction inside a repeditive group
+                           is not a copy instruction)
+
+LOOREP   10   ERRNO    (N: Repeditive group does not cause input to advance,
+                           and so will be executed repeatedly)
+
+NEXONE   10   ERRNO    (O: Not exactly one label character following REP or CAN)
+
+RLUNLO   10   ERRNO    (P: Label following CAN has never been declared by a REP,
+                           or has already been CANcelled)
+
+RLTWIC   10   ERRNO    (Q: Label following REP has been used in an earlier REP,
+                           and has not yet been CANcelled)
+
+REPSFL   10   ERRNO    (R: More than 32 repeditive groups active at once)
+
+STONCL   10   ERRNO    (S: Spurious characters on same line as command mnemonic,
+                           where none is expected)
+
+NSTONC   10   ERRNO    (T: No string on same line as command mnemonic,
+                           where one is expected)
+
+ESCFUL   10   ERRNO    (U: More than 3 characters in escape sequence)
+
+STAINS   10   ERRNO    (V: Spurious characters following the terminating
+                           sequence of an insertion string)
+
+HLTWMA   10   ERRNO    (W: Haltcode found whilst attempting a match,
+                           steering tape string not found in main tape)
+
+STEFUL   10   ERRNO    (X: Steering tape command buffer full)
+
+         4    &400000
+         5    CHOPC
+         4    +0
+         5    CHOPF
+
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +69
+         11   CHOPL
+         8    CHOPE
+         4    +32
+         11   CHOPL
+         8    CHOPE
+
+         4    ERRNO
+         2    +89
+         11   CHOPL
+         8    CHOPE
+
+         10   INSTCT
+         8    ;+5
+
+PCOUNT   4    &400000
+         5    CHOPC
+         4    +0
+         5    CHOPF
+
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +73
+         11   CHOPL
+         8    CHOPE
+         4    +32
+         11   CHOPL
+         8    CHOPE
+
+         4    INSTCT
+         5    INTGR
+         4    +0
+         5    DIGICT
+         5    ZERMKR
+
+NXTDIG   4    +48
+         5    SUBCT
+         0    DIGICT
+         4    INTGR
+         /1   TENS
+         9    ;+5
+         5    INTGR
+         10   SUBCT
+         10   ZERMKR
+         8    ;-5
+
+         4    ZERMKR
+         7    ;+4
+         4    SUBCT
+         11   CHOPL
+         8    CHOPE
+
+         10   DIGICT
+         4    DIGICT
+         1    -5
+         9    NXTDIG
+         10   ZERMKR
+         7    NXTDIG
+
+         4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+
+TENS     -100000 -10000 -1000 -100 -10 -1
+
+INTGR    >1
+DIGICT   >1
+ZERMKR   >1
+SUBCT    >1
+
+(IMPROVED Q-COPY PROGRAM)
+
+EVEN     4    -1
+         8    ;+2
+ANY      4    +0
+         5    MASK
+         4    +0
+         5    C1
+         5    C1+1
+         5    B1
+         5    S1
+         8    CHECK+1
+
+QCOPY    4    -46080
+         15   6144
+         1    +256
+         9    ;-2
+         4    +1
+         8    CHECK+1
+
+CHECK    4    -1
+(+1)     5    MODE
+
+         4    +20
+         5    C2
+         5    B2
+         4    +0
+         5    C2+1
+         5    S2
+
+         15   2048
+         7    ;-1
+
+QLOOP    5    CHIP
+
+         14   8188
+         1    =14 1
+         5    TOTAL
+         4    +0
+         14   4
+         1    =14 1
+         5    TOTAL+3
+         2    &323130
+TOTAL    >1
+         5    TOTAL
+         2    &323130
+(+3)     >1
+         1    TOTAL
+         6    MASK
+         14   17
+         9    QE1
+
+         4    MODE
+         7    QJ1
+
+         9    ;+3
+         4    CHIP
+         15   6144
+
+         4    CHIP
+         7    ;+4
+         1    S2
+         5    S2
+         8    ;+2
+         10   B2
+
+         4    C1
+         2    C2
+         7    ;+2
+         8    ;+4
+         4    C1+1
+         2    C2+1
+         7    CHECKS
+
+         10   C2
+         4    C2
+         7    ;+2
+         8    ;+2
+         10   C2+1
+         8    QJ2
+
+QJ1      4    CHIP
+         7    ;+6
+         1    S1
+         5    S1
+         4    +0
+         5    ENDCT
+         8    ;+7
+         10   B1
+         10   ENDCT
+         4    ENDCT
+         1    -20
+         11   PAUSEL
+         7    ;+0
+
+         10   C1
+         4    C1
+         7    ;+2
+         8    ;+2
+         10   C1+1
+
+QJ2      4    +0
+         15   2048
+         8    QLOOP
+
+CHECKS   4    S1
+         2    S2
+         7    ;+2
+         8    ;+4
+         4    B1
+         2    B2
+         7    OK
+
+(QE2)    4    +2
+         8    ;+2
+QE1      4    +1
+
+         0    +0
+         14   12
+         1    £0.
+         5    QENO
+         11   ERRORL
+         8    ERRORE
+         £QCO
+         £PY
+         £ERR
+         £OR
+QENO     >1
+
+OK       4    MODE
+         9    ;+5
+
+         4    -46080
+         15   6144
+         1    +256
+         9    ;-2
+
+         11   ERRORL
+         8    ERRORE
+         £QCO
+         £PY
+         £OK.
+
+C1       >2
+B1       >1
+S1       >1
+
+C2       >2
+B2       >1
+S2       >1
+
+ENDCT    >1
+MODE     >1
+MASK     >1
+<! Halt !>

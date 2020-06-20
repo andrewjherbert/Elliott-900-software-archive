@@ -1,0 +1,639 @@
+﻿
+[ F5 SCHED M3 M3DPAC ALARM2 ]
+
+F5    +0
+ARG   +0
+      +0
+ANS   +0
+      +0
+
+START 11  M3
+       8  M3+1
+       4  ARG
+       7  EASY
+       9  ERROR
+       4  ONE
+       5  ANS
+       2  ARG
+       7  EXIT
+LOOP   4  ARG
+      13  ANS
+       1  ANS
+       9  NEG
+       1  EPS
+      14  8191
+BACK   5  WORK
+       2  ANS
+       7  EXIT
+       9  EXIT
+       4  WORK
+       5  ANS
+       8  LOOP
+
+NEG   +0
+       6  ONE
+       5  M3DPAC
+      11  M3
+       8  M3+1
+       1  EPS
+      14  8191
+       1  HALF
+       8  BACK
+EASY   5  ANS
+
+EXIT  +0
+       0  F5
+      /8  1
+
+WORK  +0
+      +0
+ONE   15  8191
+      15  8191
+EPS   +0
+      +1
+HALF   8  0
+      +0
+
+ERROR +0
+       4  ALARM2
+       6  &777775
+       1  +2
+       5  ALARM2
+       8  EXIT+1
+
+[M3 M3DPAC M3VW3 M3VW4 ALARM2
+M3DVW1 M3DVW2 M3DVW3 M3DVW4 M3DVW5 ]
+
+
+
+FUNC    8   SETB
+        8   ADD
+        8   NADD
+        8   STQ
+        8   READ
+        8   STORE
+        8   ERROR
+        8   JZER
+        8   JMP
+        8   JNEG
+        8   CIST
+        8   STSCR
+        8   MULT
+        8   DIV
+        8   SHIFT
+        8   ERROR
+
+
+
+
+M3 LINK     +0
+
+M3VW3     ENTRY   4   1
+                  5   WS7
+                  5   PBREG
+
+    0 LINK
+    /4 1
+    7 TERM
+    9 MOD
+FRED  5 WS1
+    6 +8191
+    5 PARWS
+    4 WS1
+    6 =15 0
+    14 8179
+5 INT
+    0 INT
+    10 LINK
+    4  M3DPAC
+    /8 0;
+MOD    5 WS4
+    1 PBREG
+    6 +8191
+    5 WS5
+    4 WS4
+    6 =15 0
+    1 WS5
+    8  FRED
+
+
+TERM    4   WS7
+M3VW4   5   1
+END      4   LINK
+
+         6    &77777
+         1    =8  2
+         5    END+5
+         4    M3DPAC
+M3DVW5   +0
+
+
+
+
+
+
+
+
+
+
+
+
+ADD    0 PARWS
+    /4 0
+    1         M3DPAC
+    5 M3DPAC
+    /4 1
+    1 M3DPAC+1
+    9 ;+3
+
+    5 M3DPAC+1
+         8 ENTRY+3
+    10 M3DPAC
+    6 =15 8191
+    8 ;-4
+
+
+
+
+
+
+NADD     0 PARWS
+   4 M3DPAC
+   /2 0
+   5 M3DPAC
+   4 M3DPAC+1
+   /2 1
+   9 ;+3
+    5 M3DPAC+1
+   8 ENTRY+3
+   6  =15 8191
+   5 M3DPAC+1
+   4 =/15 8191
+   1 M3DPAC
+   5 M3DPAC
+   8 ENTRY+3
+
+
+
+
+READ   0 PARWS
+   /4 1
+   5 M3DPAC+1
+      /4 0
+    5 M3DPAC
+    8 ENTRY+3
+
+
+
+
+    STORE    0 PARWS
+    4 M3DPAC
+    /5 0
+    4 M3DPAC+1
+    /5 1
+    8 ENTRY+3
+
+
+
+
+MULT    0 PARWS
+    /4 0
+    12 M3DPAC
+    5  STO
+    3 STO+1
+    /4 1
+
+12 M3DPAC
+    14 8175
+    3 STO+2
+
+
+    1 STO
+    5 M3DPAC
+    4 STO+1
+    1 STO+2
+    9 ;+16
+    5 STO+1
+    /4 0
+    12 M3DPAC+1
+    14 8175
+    3 STO+2
+    1 M3DPAC
+    5 M3DPAC
+    4 STO+2
+    1 STO+1
+  9 ;+3
+    5 M3DPAC+1
+    8 ENTRY+3
+    6 =15 8191
+    10 M3DPAC
+    8 ;-4
+    6 =15 8191
+    10 M3DPAC
+    8 ;-17
+
+
+
+
+
+SHIFT    4 WS1
+    5 M3DVW4
+    0 M3DPAC+1
+    14 1
+    4 M3DPAC
+M3DVW4 +0
+
+    3 M3DPAC+1
+    5 M3DPAC
+    8 ENTRY+3
+ERROR  4   ALARM2
+       6   &777776
+       1   &000001
+       5   ALARM2
+       8   ENTRY+3
+
+
+
+SETB     0     PARWS
+         /4    0
+         5     PBREG
+         8     ENTRY+3
+
+
+
+
+ JZER  7  ;+2
+       8  ENTRY+3
+       4  M3DPAC+1
+       7  JMP
+       8  ENTRY+3
+
+
+
+
+
+
+
+
+
+JMP    4   PARWS
+       1   -1
+       5   LINK
+      8   ENTRY+3
+
+
+
+JNEG   9   JMP
+       8   ENTRY+3
+
+
+
+CIST   0   PARWS
+      /10  0
+       8   ENTRY+3
+
+
+STSCR  0   PARWS
+       4   LINK
+       1   +1
+       6   +8191
+       /5  0
+       8   ENTRY+3
+
+
+STQ    0   PARWS
+       4   M3DPAC+1
+       /5  0
+       8   ENTRY+3
+
+
+
+DIV    4   M3DPAC
+       9   ;+2
+       8   ;+2
+       2   +0
+       5   WS5
+
+
+
+       0   PARWS
+       /4  1
+       5   WS4
+       /4  0
+       5   WS1
+       9   ;+2
+       8   ;+2
+       2   +0
+       5   WS6
+
+
+       4   +0
+       5   STO
+       5   STO+1
+
+
+      RET    4   WS5
+       14  1
+        5  WS5
+       9   ON1
+       10  STO
+
+       4   STO
+       2   +8
+       7   ON1
+       8   RET
+
+ON1    4   WS6
+       14   1
+       5   WS6
+        9   ON2
+       10   STO+1
+       4   STO+1
+       2   +8
+       7   ON2
+       8   ON1
+
+
+ON2    4   STO
+       1   -1
+       5   STO
+       2   STO+1
+       6   &17777
+       1   =14 0
+       5   M3DVW3
+
+       4   STO
+       6   &17777
+       1   =14 0
+       5   M3DVW2
+
+       4   STO+1
+       6   &17777
+       1   =14 0
+       5   M3DVW1
+
+       2   WS4
+       14   1
+       4   WS1
+M3DVW1    14   0
+        5   WS6
+       2   M3DPAC+1
+       14   1
+       4   M3DPAC
+M3DVW2 14   0
+       13   WS6
+       5    WS1
+
+
+
+ M3DVW3   14   0
+       5   M3DPAC
+       3   M3DPAC+1
+     9 TEST
+     4 WS1
+     9 ERR
+     8 ENTRY+3
+
+TEST 4 WS1
+     9 ENTRY+3
+     4 &377777
+     5 M3DPAC
+     8 ENTRY+3
+
+ERR  4 &400001
+     5 M3DPAC
+     8 ENTRY+3
+
+
+
+M3DPAC   +0
+         +0
+PBREG    +0
+PARWS    +0
+WS1      +0
+WS4      +0
+WS5      +0
+WS6      +0
+STO      +0
+         +0
+         +0
+INT      +0
+WS7      +0
+
+
+
+[M5  M5SIN M5COS M5VW1 M5DVW1  ]
+
+M5    +0
+MSBX    +0
+LSBX    +0
+MSBA    +0
+LSBA    +0
+COUNT   +0
+WS1     +0
+WS2     +0
+WS3     +0
+WS4     +0
+WS5     +0
+
+M5SIN  8    ON1
+M5COS  4    3
+    5    WS4
+    4    7
+    5    WS5
+    4    MSBX
+    1    &200000
+    5    MSBX
+    4    MSBX
+    9    ;+4
+    4    VWSTO1
+    5    M5VW1
+    8    ;+3
+    4    VWSTO2
+    5    M5VW1
+    4    LSBX
+    7    ;+2
+    8    ;+3
+    1    +1
+    5    LSBX
+    4    MSBX
+    14    1
+    9    ;+2
+    8    HERE
+    4    MSBX
+    2    -1
+    5    MSBX
+    4    LSBX
+    2    +0
+    6    &377777
+    5    LSBX
+HERE    0    LSBX
+    14    1
+    4    MSBX
+    5    MSBA
+    14    4
+    3    LSBX
+    6    &377777
+    5    MSBX
+    14    1
+    1    &400000
+    5    WS3
+    4    MSBA
+    14    8182
+    6    &000070
+    5    COUNT
+    0    COUNT
+    4    MSBX
+   /12   M5PARAM+2
+    5    MSBA
+    3    LSBA
+    4    MSBX
+   /12   M5PARAM+3
+    1    LSBA
+    9    ;+2
+    8    ;+3
+    6    &377777
+    10    MSBA
+    5    LSBA
+    4    LSBX
+   /12   M5PARAM+2
+    1    LSBA
+    9    ;+2
+    8    ;+3
+    6    &377777
+    10   MSBA
+   /1    M5PARAM+1
+    9    ;+2
+    8    ;+3
+    6    &377777
+    10   MSBA
+    5    LSBA
+    4    MSBA
+    /1    M5PARAM
+    5    MSBA
+    /4    M5PARAM+5
+    12    WS3
+    /1    M5PARAM+6
+    12    WS3
+    /1    M5PARAM+7
+    12    WS3
+    12    WS3
+    14    8185
+    3    WS2
+    5    WS1
+    4    WS2
+    1    LSBA
+    9    ;+2
+    8    ;+3
+    6    &377777
+    10    MSBA
+        5    LSBA
+    4    MSBA
+    1    WS1
+    5    MSBA
+M5VW1    4    MSBA
+    2    -1
+    5    MSBA
+    4    LSBA
+    7    SON
+    2    +0
+    6    &377777
+    5    LSBA
+THERE  4 WS4
+    5    3
+    4    WS5
+    5    7
+    4    M5
+    6    &17777
+    1    =8 1
+    5    ;+1
+M5DVW1  +0
+
+
+ON1    4 3
+5 WS4
+    4    7
+    5    WS5
+    8    LSBA+15
+SON    4    MSBA
+    1    +1
+    5    MSBA
+    8    THERE
+
+
+M5PARAM    +41
++38143
++25612
++2703
++0
++6
+-2633
+-7924
++25734
++41851
++24627
++99228
++0
++18
+-2531
+-23470
++50438
++49518
++22697
++9734
++0
++30
+-2333
+-38113
++73204
++15607
++19894
++20098
++0
++41
+-2045
+-51291
++93156
++88034
++16326
++93006
++0
++50
+-1678
+-62499
++109529
++34297
++12131
++110463
++0
++57
+-1247
+-71304
++121692
++92218
++7470
++98801
+VWSTO1    8 THERE
++62
+-768
+-77370
++129179
++74643
++2522
++73685
+VWSTO2    4 MSBA
++64
+-259
+-80462
+
+
+
+
+
+[ALARM2 SCHED]
+ALARM2  +0
+SCHED 8 ;+0
+      8  ;+0
+<! Halt !>
+%
+<! Halt !>

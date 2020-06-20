@@ -1,0 +1,300 @@
+﻿
+[WWG Page 61 Example by Don Hunter.
+
+ Converted and annotated by Andrew Herbert 07/11/2013.
+
+ Tape label: page 61 example using Q2 and multiplying the result 
+ by xsinX 11 Nov 89.
+
+ Page 61 Example:
+
+ Evaluation of a definite integral relating to to the ionization of
+ an exponential atmosphere by solar radiation.
+
+ Tabulated as a function of chi and x for chi =90(-1)50 degrees
+ and x =200(20)280 (i.e., 5 columns).
+
+ This program is essentially PG61C with Q1 replaced by Q2 and
+ the integral multiplied  by x sin chi. i.e., the full Chapman integral:
+ 	x sin chi int (0 to chi) exp(x - xsin chi/sin lambda) 
+		cosec^2 lambda dlamba.]
+
+...
+[R9]
+PKT56KGKT20FVDL8FA40DUDTFI40F
+A40FS39FG@S2FG23FA5@T5@E4@
+...
+...
+	PK		[Load M1 at 84]
+	T84K
+[M1]
+GKH2FTFA42FC42FU42FA8FU22FA15@
+AFH8FT45FA10@A2FT10@E34FNFT44K
+	P76F		[Routine table at 76]
+	T100K		[Program at 100]
+...
+	PZGK
+	E84K		[H sequence]
+	TD
+	G10K		[leave space for 10 long numbers]
+	E84K
+	TF		[N sequence]
+	P200F
+	P50F
+	P200F
+	P900F
+	P10F
+	P500F
+	P5F
+	PF
+	P448F
+	PF
+	P15F
+	PF
+...
+	PZGK
+	T94KT!		[Signal start of routines]
+	E84KIF
+[Master routine]
+	GK
+	A@		[Call in R1 to read 3 constants]
+	G7!
+	T70D
+	S6N		[Plant column counter]
+	T7N
+	TH
+[ 5]	T11N
+	A3N
+	S10N
+[ 9]	U9N
+	T64D
+	A10N
+	T66D
+[13]	A13@		[Call in Q2]
+	G2!
+	AD
+	AD
+	AD
+	AH
+	TH
+	A11N
+	G26@
+	A9N
+	S10N
+	G68@
+	E9@
+[26]	TF
+	H74D
+	V3N
+	L8F
+	YF
+	T4D
+[32]	A32@		[Call in T7, which places 0.5 sin chi in 4D]
+	G5!
+	H4D
+	V70D
+	LD
+	YF
+	TD
+	HD		[Place x sin chi in 0D]
+	V2N
+	L16F
+	YF
+	TD
+	H74D
+	VD
+	YF
+	TD
+	HD
+	VH
+	L128F
+	YF
+	TD
+[53]	A53@		[Call in P11, which prints value of integral]
+	G4!
+	A7N		[Column count]
+	A2F
+	E63@
+	T7N
+	A2N		[Increase x]
+	A1N
+	T2N
+	E5@
+[63]	A3N		[Increase chi]
+	S4N
+	U3N
+	S5N
+	E69@
+[68]	ZF
+[69]	TF		[Reset x]
+	AN
+	T2N
+	E3@
+...
+	PZGK
+	E84KPF
+[Auxiliary routine]
+	GK
+	G5@
+	ZF
+	T11N
+	TD
+	E1@
+	A3F
+	T1@
+	H74D
+	VD
+	L8F
+	YF
+	T4D
+	A12@
+	G5!
+	A4D
+	T2H
+	H74D
+	V3N
+	L8F
+	YF
+	T4D
+	A21@
+	G5!
+	A4D
+	T4H
+	A2H
+	S4H
+	TD
+	A2H
+	T4D
+	AD
+	E34@
+	T6D
+	SD
+	T8H
+	A4D
+	E39@
+	T6D
+	S4D
+	S8H
+	G2@
+	T6D
+	A42@
+	G6!
+	A2N
+	L8F
+	T4D
+	H4D
+	VD
+	A8N
+	G2@
+	S8N
+	L16F
+	T6H
+	H6H
+	A55@
+	G3!
+	AD
+	R1F
+	YF
+	TD
+	H2H
+	V2H
+	L1F
+	N2H
+	YF
+	T4D
+	AD
+	E71@
+	T6D
+	SD
+	T8H
+	A4D
+	E76@
+	T6D
+	S4D
+	S8H
+	G82@
+	T6D
+	A79@
+	G6!
+	E1@
+	ZF
+...
+	PZG
+	KE84KPF
+	T45K
+	P64D		[H parameter for Q2]
+	G1!		[N parameter for Q2]
+[Q2]
+E69KT32#@
+805908987F
+3964518438F
+8589934592F
+13215350746F
+16373960197F
+2035186446F
+4111388973F
+4886718346F
+4111388973F
+2035186446#
+TZA3FT27@
+T4HS28@A30@U9@A28@T15@AHPFV2HYFTDA13@PNPFVDA4HYFT4HA9@S29@G4@H2H
+V4HYFTDZFP10FH40#@H42#@T52Z
+...
+	PZGK
+	E84KPF
+[Parameter for E3]
+	T45K
+	P4F
+[E3]
+TZT20FVDL8FA40DUDTFI40FA40FS39FG@S2FG23FA5@T5@E4@E13ZT30#@
+41F430F4734F47343F426088F3408704F23860929F143165577F715827883F
+2863311531F8589934592F17179869183F17179869183#TZA3FT25@A30#@TD
+S26@A28@T8@VDADYFTDA8@S27@G5@S29@T4FHDVDYFYFYFTDA4FA2FG15@ZFP24F
+A54#@A56#@PHT56Z
+...
+	PZGK
+	E84KPF
+[Parameters for P11]
+	T45K
+	A72D
+	P25F
+	P46@
+	P1024F
+TZA3FTMA20@G11@O1MO2MS2FEJ@O2MA7MS19@A7MT20@ADE21@TDSDO@E22@PNPF
+O5MPHTDA6MH4MGKT4FVDUFOFFFSFG9@S3MGJ@O2MA3ML4FTDA4FLDE@O5MLDG@O5M
+O5MO5MO40K#FT22KTM@F&FQFJF!FP&P5F
+...
+	PZGK
+	E84KPF
+[T7]
+GKE69KT26#@
+11453246086F
+2290648539F
+218152390F
+12105378F
+419996#
+TZA3FT25@H4DV4DYFTDHDN34#@A32#@TDNDA30#@
+TDNDA28#@TDNDA26#@TDNDTDHDV4DA4DT4DEFT36Z
+...
+	PZGK
+	E84KPF
+[D7]
+GKA3FT25@SDTDS4DE13@T4DE2@T4DADLDTDA4DLDE8@
+RDT4DH4DNDADYFTDN4DYFG16@ZF
+...
+	PZGK
+	E84KPF
+[R1]
+GKT45KP32@P47@TZA3NU4@A4NT9HAFTHTDT4DA5NT13@H2NS6NT4@IFAFS6NE4H
+T6FV4DL8FADT4DA4@A7NG12@H4DNNR128FR128FV1NLDYFTFAHA3NE5@S6NE42@
+A7NE44@T6FEFS4DT4DA2NT13@E22@P610DZ1523DTFP2FU1FIFP5DPD
+...
+	PK
+	E25K
+	E!PF
+[COnstants to be read in]
+64+
+000005+		[Round off number]
+893608577+	[COnvert degrees to radians]
+F
+<! Halt !>

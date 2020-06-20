@@ -1,0 +1,68 @@
+﻿C Test HIGHSTOR
+
+on 903 16K
+
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+at ptp file errors.txt legible
+at ptr inline
+
+CHE
+WAI
+CHE
+WAI
+CHE
+WAI
+CHE
+WAI
+COP
+<! halt !><!!>
+j 13
+de ptp
+st 490
+print errors.txt
+
+at ptp file HISTOR.900
+at ptr inline
+
+*17
+<! halt !><!!>
+j 9
+st 822
+at ptr file ../../MASTERS/HERBERT/HISTOR.900
+j 10
+st 822
+at ptr file ../../MASTERS/ACDSIR/CHIOL.900
+j 10
+st 822
+at ptr file ../../MASTERS/ACDSIR/SLOP.900
+j 10
+st 822
+at ptr inline
+
+%
+<! halt !><!!>
+j 10
+st 1274
+de ptp
+
+c Assemble
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+select out tty
+at ptr file HISTOR.900
+j 12
+st 562
+rewind
+select out auto
+at ptp file HISTOR.BIN
+rewind
+j 10
+st 587
+de ptp
+
+delete HISTOR.900
+delete errors.txt

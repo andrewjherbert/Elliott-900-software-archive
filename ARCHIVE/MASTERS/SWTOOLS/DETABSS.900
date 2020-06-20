@@ -1,0 +1,74 @@
+﻿
+((DETABS - Detabulate SIR format - Andrew Herbert - 19/09/2014)
+
+[ DETABS CHIPL CHIPE CHIP CHIPF CHOPL CHOPE CHOPF CHOPC ]
+
+DETABS
+          4     +0        (Initialize CHIO)
+          5     CHIPF
+          5     CHOPF
+          4     +1        (Select 900 telecode)
+          5     CHOPC
+          4     -121      (Clear TAB)
+          5     I
+          0     I
+          4     +0
+          /5    TAB+121
+          10    I
+          4     I
+          9     ;-5
+          4     +1        (Set SIR tab columns)
+          5     TAB+11
+          5     TAB+17
+          5     TAB+27
+          5     TAB+37
+          5     TAB+47
+          5     TAB+57
+          5     TAB+67
+          5     TAB+77
+          5     TAB+87
+          5     TAB+97
+          5     TAB+107
+          5     TAB+117
+(-2)      4     +1
+          5     COL
+GETC
+          11    CHIPL
+          8     CHIPE
+          1     -9        (Test for tab)
+          7     TABCH
+          1     -1        (Test for newline)
+          7     NEWLIN
+          1     -10       (Test for halt code)
+          7     HALT
+          1     +20       (Output character)
+          11    CHOPL
+          8     CHOPE
+          10    COL
+          8     GETC      (Get next character)
+TABCH
+          4     +32       (Spaces to next column position)
+          11    CHOPL
+          8     CHOPE
+          10    COL
+          0     COL
+          /4    TAB
+          7     TABCH
+          8     GETC
+NEWLIN
+          4     +10
+          11    CHOPL
+          8     CHOPE
+          8     GETC-2
+HALT
+          4     CHIP      (Output halt codee and stop)
+          11    CHOPL
+          8     CHOPE
+          8     ;+0
+
+COL       >1
+I         >1
+TAB       +0
+          >120
+
+<! Halt !>

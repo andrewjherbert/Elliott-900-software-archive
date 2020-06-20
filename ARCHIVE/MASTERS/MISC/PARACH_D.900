@@ -1,0 +1,29 @@
+﻿<! Legible Header OOOO   OOO  OOOO   OOO    OO  O   O       OOOO   OOO  OOOOO  OOO         OOO     O  OOOOO  OOO  OOOOO  !>
+<! Legible Header O   O O   O OOOOO O   O  O  O O   O       O   O O   O OOOOO O   O       O   O  OOO      O OOOOO     O  !>
+<! Legible Header O   O O   O O   O O   O O     O   O       O   O O   O   O   O   O           O  OOO     O  O        O   !>
+<! Legible Header OOOO  OOOOO OOOOO OOOOO O     OOOOO       O   O OOOOO   O   OOOOO         OOO    O    O   OOOO    O    !>
+<! Legible Header O     O   O OO    O   O       O   O       O   O O   O   O   O   O                O        O   O        !>
+<! Legible Header O           O O         O     O   O       O   O         O               OO       O   O    O   O  O     !>
+<! Legible Header O     O   O O  O  O   O  O    O   O       O   O O   O   O   O   O       O        O        O   O        !>
+<! Legible Header O     O   O O   O O   O   OOO O   O       OOOO  O   O   O   O   O       OOOOO    O  O      OOO  O      !>
+
+PARACHUTE MOTION DATA
+
+FIRST CASE
+
+
+
+250=V
+-20=F
+200=W
+10 =C
+250=C ONE
+0=  T
+0  =X
+180=H
+3.0=T TWO
+.0023 =R
+0.1=T ONE
+2  =N ONE
+26 =N
+)

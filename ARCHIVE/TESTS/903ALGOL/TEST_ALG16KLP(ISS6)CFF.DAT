@@ -1,0 +1,27 @@
+﻿C Test 903 ALGOL 16K Large Program System
+
+c Check use of library routine as a procedure parameter.
+
+c Generates error 108 as sqrt has a value parameter.
+
+on 903 16k
+
+c translate trivial program
+at ptr file ../../SCRIPTS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+st 8171
+at ptr inline
+formal;
+"begin"
+    "procedure" p(pp, r); "value" r; "real" r;
+	"real" "procedure" pp;
+	"print" pp(r);
+   p(sqrt, 2)
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+delete TEST.RLB
+sh t

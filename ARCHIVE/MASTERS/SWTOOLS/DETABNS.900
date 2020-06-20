@@ -1,0 +1,72 @@
+﻿
+((DETABN - Detabulate NOTEPAD format - Andrew Herbert - 19/09/2014)
+
+[ DETABN CHIPL CHIPE CHIP CHIPF CHOPL CHOPE CHOPF CHOPC ]
+
+DETABN
+          4     +0        (Initialize CHIO)
+          5     CHIPF
+          5     CHOPF
+          4     +1        (Select 900 telecode)
+          5     CHOPC
+          4     -121      (Clear TAB)
+          5     I
+          0     I
+          4     +0
+          /5    TAB+121
+          10    I
+          4     I
+          9     ;-5
+          4     +9        (Set NOTEPAD tab columns)
+          5     I
+SET       0     I
+          4     +1
+          /5    TAB
+          4     I
+          1     +8
+          5     I
+          2     +120
+          9     ;+2
+          8     SET
+(-2)      4     +1
+          5     COL
+GETC
+          11    CHIPL
+          8     CHIPE
+          1     -9        (Test for tab)
+          7     TABCH
+          1     -1        (Test for newline)
+          7     NEWLIN
+          1     -10       (Test for halt code)
+          7     HALT
+          1     +20       (Output character)
+          11    CHOPL
+          8     CHOPE
+          10    COL
+          8     GETC      (Get next character)
+TABCH
+          4     +32       (Spaces to next column position)
+          11    CHOPL
+          8     CHOPE
+          10    COL
+          0     COL
+          /4    TAB
+          7     TABCH
+          8     GETC
+NEWLIN
+          4     +10
+          11    CHOPL
+          8     CHOPE
+          8     GETC-2
+HALT
+          4     CHIP      (Output halt codee and stop)
+          11    CHOPL
+          8     CHOPE
+          8     ;+0
+
+COL       >1
+I         >1
+TAB       +0
+          >120
+
+<! Halt !>

@@ -1,0 +1,55 @@
+﻿
+CHESS;
+"COMMENT" THE FOLLOWING IS A PROCEDURE FOR THE PRINTING OF THE POSITION
+          OF EACH PIECE ON THE BOARD IN DIAGRAMATIC FORM;
+  "BEGIN""REAL"I,J,C,D;
+"ARRAY"WHM,BLM[1:65];
+"SWITCH"SS:=AA,AB,AC,AD,AS,AT,AU,AV;
+"SWITCH"LIST:=P,N,B,R,Q,K;
+"READ"C;
+AT:"READ"I;
+"READ"WHM[I];
+C:=C-1;
+"IF"C=0"THEN""GOTO"AS"ELSE""GOTO"AT;
+AS:"READ"D;
+AV:"READ"I;
+"READ"BLM[I];
+D:=D-1;
+"IF"D=0"THEN""GOTO"AU"ELSE""GOTO"AV;
+AU:"PRINT"''L1S10@-----------------------------------------'L1@@;
+C:=1;
+"FOR"I:=56"STEP"-8"UNTIL"0"DO"
+  "BEGIN";
+  "IF"C=1"THEN""GOTO"AD"ELSE"
+  "PRINT"''L1S10@I    I    I    I    I    I    I    I    I'L1S10@@,
+  '-----------------------------------------'L1@@;
+AD:  "PRINT"''S10@I    I    I    I    I    I    I    I    I'L1S10@I@;
+  C:=C+1;
+  "FOR"J:=1"STEP"1"UNTIL"8"DO"
+    "BEGIN";
+    "IF"WHM[I+J]=0"THEN""GOTO"AA"ELSE"
+      "BEGIN";
+      "PRINT"' W@;
+      "GOTO"LIST[WHM[I+J]];
+      "END";
+ AA:"IF"BLM[I+J]=0"THEN""GOTO"AB"ELSE"
+      "BEGIN";
+      "PRINT"' B@;
+      "GOTO"LIST[BLM[I+J]];
+      "END";
+    P:"PRINT"'P@;"GOTO"AC;
+    N:"PRINT"'N@;"GOTO"AC;
+    B:"PRINT"'B@;"GOTO"AC;
+    R:"PRINT"'R@;"GOTO"AC;
+    Q:"PRINT"'Q@;"GOTO"AC;
+    K:"PRINT"'K@;"GOTO"AC;
+   AB:"PRINT"'   @;
+   AC:"PRINT"' I@;
+      "IF"I=0"AND"J=8"THEN"
+      "BEGIN";
+"PRINT"''L1S10@I    I    I    I    I    I    I    I    I'L1S10@@,
+      '-----------------------------------------'L1@@;
+      "END";
+    "END";
+  "END";
+"END";

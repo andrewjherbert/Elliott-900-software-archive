@@ -1,0 +1,296 @@
+﻿C Build 2-Pass ALGOL System (Hunter)
+
+c The two pass system consists of two tapes:
+c TAPE1 (sumchecked binary)  contains the ALGOL translator
+c TAPE2 (sumchecked binary)  contains the ALGOL interpreter.
+c
+c These are patched versions of the ALGOL Issue 6 system. 
+
+
+on 903 8K
+
+c construct images of TAPE 1 and TAPE 2 for verifying results
+at ptr file ../../MASTERS/HUNTER/ALG1(HUNTER).BIN
+j 8181
+st 8171
+du 8192 ALG1(HUNTER).IMG
+at ptr file ../../MASTERS/HUNTER/ALG2(HUNTER).BIN
+j 8181
+st 8171
+du 8192 ALG2(HUNTER).IMG
+
+C **********TAPE 1 / TRANSLATOR**********
+
+c TAPE 1 is as per 903 ALGOL Issue 6, but with a patch that 
+c enables use of recursive procedures and for procedures 
+c passed as parameters to take formal value parameters.
+
+c assemble patch tape
+select out tty
+clear
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HUNTER/TAPE1PATCH(301276).900
+j 8
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+
+c run updates to patch high store
+j 256
+st 260
+j 512
+st 533
+
+c dump with t22-23
+select out auto
+at ptp file TAPE1PATCH(301276).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
++21
++24
++32
++84
++86
++104
++106
++108
++111
++123
++129
++129
++1577
++1577
++1632
++1632
++1996
++1996
++2002
++2002
++2078
++2079
++2111
++2111
++2118
++2118
++2120
++2120
++2173
++2173
++2183
++2183
++2199
++2199
++2215
++2215
++2224
++2224
++2228
++2228
++2230
++2230
++2241
++2241
++2247
++2247
++2251
++2251
++2260
++2260
++2263
++2270
++2311
++2311
++2322
++2340
++2343
++2343
++2348
++2357
++2503
++2506
++2659
++2659
++2706
++2708
++2712
++2712
++4173
++4176
++4407
++4407
++4802
++4802
++4808
++4808
++4951
++4951
++6085
++6088
++7723
++7732
+<! halt !><!!>
+j 8179
+de ptp
+st 8113
+
+c load 903 ALGOL Tape 1 Issue 6
+at ptr file ../../MASTERS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+st 8171
+
+c patch 
+at ptr file TAPE1PATCH(301276).BIN
+j 8181
+st 8171
+
+c the following is just to fool the dump utility 
+c to output locations 2-7 to match ALGOL Issue 6 TAPE 1
+e 3 +4096
+e 4 +15212
+e 5 +5415
+e 6 +15976
+e 7 +6721
+
+c make tape using ALGOL dump utility
+at ptp file ALG1(HUNTER).BIN
+j 8001
+st 8097
+de ptp
+
+c load new tape 1 and verify
+clear
+at ptr file ALG1(HUNTER).BIN
+j 8181
+st 8171
+vi ALG1(HUNTER).IMG
+
+
+C **********TAPE 2**********
+
+c TAPE 2 is as per 903 ALGOL Issue 6, but with a patch that 
+c provids the run time implementation of the new language
+c features added to the translator.
+
+c assemble patch tape
+select out tty
+clear
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HUNTER/TAPE2PATCH(301276).900
+j 8
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+
+c run updates to patch high store
+j 512
+st 518
+
+c dump with t22-23
+select out auto
+at ptp file TAPE2PATCH(301276).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
++15
++15
++32
++75
++78
++105
++107
++127
++407
++413
++416
++422
++443
++449
++451
++458
++1351
++1351
++1740
++1740
++1749
++1749
++1756
++1756
++1784
++1784
++1841
++1841
++1915
++1915
++1947
++1947
++1990
++1990
++2005
++2005
++2012
++2021
++2049
++2057
++2063
++2063
++2287
++2287
++2387
++2407
++2424
++2440
++2455
++2455
++2558
++2558
++3847
++3950
++7793
++7793
++7879
++7879
+<! halt !><!!>
+j 8179
+de ptp
+st 8113
+
+c load 903 ALGOL Tape 2 Issue 6 
+at ptr file ../../MASTERS/903ALGOL/ALG2(ISS6).BIN
+j 8181
+st 8171
+
+c apply patch
+at ptr file TAPE2PATCH(301276).BIN
+j 8181
+st 8171
+
+c use interpreter dump facility to create a new tape 2
+at ptp file ALG2(HUNTER).BIN
+j 14
+de ptp
+
+c load new tape 2 and verify
+at ptr file ALG2(HUNTER).BIN
+j 8181
+st 8171
+vi ALG2(HUNTER).IMG
+
+delete ALG1(HUNTER).IMG
+delete ALG2(HUNTER).IMG
+delete SYMBOLS.BIN
+sh t

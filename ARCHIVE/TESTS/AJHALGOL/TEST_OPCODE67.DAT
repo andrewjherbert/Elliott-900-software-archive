@@ -1,0 +1,48 @@
+﻿c Test call by name with subscripted variables
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin" 
+    "integer" "array" a[1:2]; "integer" k, l;
+    "procedure" exchange (i, j); "integer" i, j;
+    "begin" "integer" w;
+        w := i; i := j; j := w
+    "end";
+    a[1] := k := 1; a[2] := l := 2; 
+    exchange(a[k], a[l]);
+    "print" sameline, a[1], a[2];
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t
+

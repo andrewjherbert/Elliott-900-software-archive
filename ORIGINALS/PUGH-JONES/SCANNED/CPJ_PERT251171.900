@@ -1,0 +1,130 @@
+﻿
+PROJECT NETWORK ANALYSIS;
+"BEGIN""INTEGER"N,M,I,J,K,START,LAST,TOTAL,X,L;
+<! Halt !>       "INTEGER""ARRAY"PERT[1:100,1:9];
+  <! Halt !>     "SWITCH"SS:=AA,AB,AC,AD,AE,AF,AG,AH,AI;
+
+"PROCEDURE"SORT(PERT,N1);
+       "INTEGER""ARRAY"PERT;
+       "INTEGER"N1;
+             "BEGIN"
+             "INTEGER"PEN,N2,I,J,E,A;
+             "SWITCH"SSS:=SA;
+             N2:=N1;
+             J:=I:=1;
+         SA: E:=PERT[I,J]-PERT[I+1,J];
+             "IF"E>0"THEN"
+             "BEGIN";
+             "FOR"J:=1"STEP"1"UNTIL"3"DO"
+                   "BEGIN"
+                   A:=PERT[I,J];
+                   PERT[I,J]:=PERT[I+1,J];
+                   PERT[I+1,J]:=A;
+                   PEN:=1;
+                   "END";
+             "END""ELSE"
+                   "IF"E=0"THEN"
+                   "BEGIN"
+                   J:=2;
+                   "GOTO"SA;
+                   "END";
+             J:=1;
+             I:=I+1;
+             "IF"I<N1"THEN""GOTO"SA"ELSE"
+                   "IF"PEN=1"THEN"
+                         "BEGIN"
+                         N1:=N1-1;
+                         I:=1;
+                         PEN:=0;
+                         "GOTO"SA;
+                         "END";
+             "END"OF SORT;
+
+       "READ"N;
+       "READ"START;
+       M:=N;
+       "FOR"I:=1"STEP"1"UNTIL"N"DO"
+       "FOR"J:=1"STEP"1"UNTIL"3"DO"
+       "READ"PERT[I,J];
+       "READ"X;
+       "IF"X=1"THEN""GOTO"AE;
+       SORT(PERT,M);
+   AE: PERT[1,4]:=START;
+       I:=2;
+       PERT[1,5]:=START+PERT[1,3];
+   AA: "IF"PERT[I,1]=1"THEN"
+             "BEGIN"
+            PERT[I,4]:=START;
+             PERT[I,5]:=START+PERT[I,3];
+             I:=I+1;
+             "GOTO"AA;
+             "END";
+
+   AC: K:=PERT[I,1];
+       "FOR"J:=1"STEP"1"UNTIL"I-1"DO"
+             "BEGIN";
+             "IF"PERT[J,2]=K"THEN"
+                   "BEGIN"
+                   "IF"PERT[J,5]>PERT[I,4]
+                   "THEN"PERT[I,4]:=PERT[J,5];
+                   "END";
+             "END";
+       PERT[I,5]:=PERT[I,4]+PERT[I,3];
+       "IF"I=N"THEN""GOTO"AB"ELSE"
+             "BEGIN"
+             I:=I+1;
+             "GOTO"AC;
+             "END";
+
+   AB: I:=1;
+       LAST:=PERT[I,5];
+   AG: "IF"LAST<PERT[I+1,5]"THEN"LAST:=PERT[I+1,5];
+       I:=I+1;
+       "IF"I=N"THEN""GOTO"AI"ELSE""GOTO"AG;
+   AI: "FOR"I:=1"STEP"1"UNTIL"N-1"DO"
+       PERT[I,7]:=LAST+1;
+       PERT[N,7]:=LAST;
+       I:=N-1;
+       PERT[N,6]:=LAST-PERT[N,3];
+   AD: "IF"PERT[I,2]=PERT[N,2]"THEN"
+             "BEGIN"
+             PERT[I,7]:=LAST;
+             PERT[I,6]:=LAST-PERT[I,3];
+            I:=I-1;
+            "GOTO"AD;
+                   "END";
+
+   AH: L:=PERT[I,2];
+       "IF"L=PERT[N,2]"THEN"PERT[I,7]:=LAST;
+       "FOR"J:=N"STEP"-1"UNTIL"I+1"DO"
+       "IF"PERT[J,1]=L"THEN"
+             "BEGIN"
+             "IF"PERT[J,6]<PERT[I,7]"THEN"
+             PERT[I,7]:=PERT[J,6];
+             "END";
+       PERT[I,6]:=PERT[I,7]-PERT[I,3];
+       "IF"I=1"THEN""GOTO"AF"ELSE"
+             "BEGIN"
+             I:=I-1;
+             "GOTO"AH;
+             "END";
+   AF: "FOR"I:=1"STEP"1"UNTIL"N"DO"
+             "BEGIN"
+             PERT[I,8]:=PERT[I,7]-PERT[I,5];
+             "IF"PERT[I,8]=0"THEN"
+                   "BEGIN"
+                   PERT[I,9]:=1;
+                   TOTAL:=TOTAL+PERT[I,3];
+                   "END";
+             "END";
+ <! Halt !>      "FOR"I:=1"STEP"1"UNTIL"N"DO""BEGIN""PRINT"''L1@@;
+       "FOR"J:=1"STEP"1"UNTIL"8"DO"
+"PRINT"DIGITS(5),SAMELINE,PERT[I,J];
+       "IF"PERT[I,9]=1"THEN""PRINT"SAMELINE,''S4@*@;
+ "END";
+
+       "PRINT"''L3S4@NUMBER OF ACTIVITIES = @,SAMELINE,DIGITS(4),N,
+       ''L1S4@NUMBER OF EVENTS = @,SAMELINE,PERT[N,2],
+       ''L1S4@TOTAL DURATION OF CRITICAL PATH=@,SAMELINE,TOTAL-START;
+"END";
+<! Halt !>

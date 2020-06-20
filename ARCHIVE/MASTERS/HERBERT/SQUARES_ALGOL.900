@@ -1,0 +1,7 @@
+﻿square;
+"begin" "integer" x;
+    punch(3); "comment" teleprinter output;
+    "for" x := 0 "step" 1 "until" 10 "do"
+        "print" x, sameline, x*x
+"end"
+<! halt !>

@@ -1,0 +1,276 @@
+﻿c Was Hunter EXAM3 example - with LP system cannot use
+c separate compilation as loader will treat Algol as
+c code procedure and make addresses absolute.
+
+on
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+
+EXAM3;
+"begin"
+   "comment" 04-MAR-1998. With parts written in 1963 
+             by TJ Dekker, Matematisch Centrum,
+             (det was AP204, sol was AP205), and this
+             "normal equations" program was originally
+             written in 1986;
+
+   "comment" This is adapted from AP204 written by T.J. Dekker 
+             at the Matematisch Centrum in 1963.
+             DET := determinant on the N-th order matrix given in
+             array A[1:N,1:N]. The first index of the array 
+             elements is the row, the second is the column index 
+             as usual. The method is triangular decomposition
+             according to Crout with row interchanges. This process
+             yields a lower triangle L and a unit upper triangle
+             U such that L*U equals matrix A with interchanged
+             rows. Together with each row interchange the sign of
+             the non-pivotal row is reversed, so that the
+             determinant equals the product of the diagonal
+             elements of L. At each stage the pivot is chosen in a
+             column of L such that its modulus divided by the
+             Euclidean norm of the corresponding row of A is 
+             maximal. The integer array P[1:N] is an output vector
+             in which the pivotal row indices are recorded. The
+             elements of A are replaced by the corresponding
+             calculated elements of L and U. So enough information
+             is retained for subsequent solution of linear systems
+             and for matrix inversion;
+
+   "real" "procedure" det(a,n,p);
+   "value" n; "integer" n;
+   "array" a; "integer" "array" p;
+
+      "begin"
+         "integer" i,j,k,l;
+         "real" d,r,s,sum;
+         "array" v[1:n];
+         "for" i:=1 "step" 1 "until" n "do"
+         "begin"
+            d:=0;
+            "for" j:=1 "step" 1 "until" n "do"
+                  d:=d+a[i,j]*a[i,j];
+            v[i]:=sqrt(d)
+         "end";
+         d:=1;
+         "for" k:=1 "step" 1 "until" n "do"
+         "begin"
+            r:= -1;
+            "for" i:=k "step" 1 "until" n "do"
+            "begin"
+               sum:=0;
+               "for" l:=1 "step" 1 "until" k-1 "do"
+                     sum:=sum+a[i,l]*a[l,k];
+               a[i,k]:=a[i,k]-sum;
+               s:=abs(a[i,k])/v[i];
+               "if" s>r "then"
+               "begin"
+                  r:=s;
+                  p[k]:=i
+               "end"
+            "end" lower;
+            v[p[k]]:=v[k];
+            "for" j:=1 "step" 1 "until" n "do"
+            "begin"
+               r:=a[k,j];
+               "if" j "le" k 
+               "then" a[k,j]:=a[p[k],j]
+               "else"
+               "begin"
+                  sum:=0;
+                  "for" l:=1 "step" 1 "until" k-1 "do"
+                        sum:=sum+a[k,l]*a[l,j];
+                  a[k,j]:=(a[p[k],j]-sum)/a[k,k]
+               "end";
+               "if" p[k] "ne" k 
+               "then" a[p[k],j]  := -r
+            "end" upper;
+            d:=a[k,k]*d
+         "end" LU;
+         det:=d
+      "end" of AP204;
+
+   "comment" This is adapted from AP205 written by T.J. Dekker at 
+             the Matematisch Centrum in 1963. SOL replaces the vector
+             given in array B[1:N] by the solution vector X of the
+             linear system L*U*X = B with interchanged (and possibly
+             sign reversed) elements. Here L is the lower triangle
+             and U the unit upper triangle which are given in array
+             LU[1:N,1:N] such that the elements with first index <
+             second index are elements of U and the other elements of
+             LU are elements of L. The integer array P[1:N] defines
+             the interchanges with sign reversals of the elements
+             of B in correspondence with the pivoting administration
+             in DET. Hence a call DET(A,N,P), followed by a call
+             SOL(A,B,N,P), has the effect that B is replaced by the
+             solution vector X of the linear system
+             SIGMA(A[I,J]) * X[J]) = B[I]. 
+             The procedure SOL leaves the elements of LU and P 
+             unaltered;
+
+   "procedure" sol(lu,b,n,p);
+   "value" n; "integer" n;
+   "array" lu,b; "integer" "array" p;
+
+   "begin"
+      "integer" k,l;
+      "real" r,sum;
+
+      "for" k:=1 "step" 1 "until" n "do"
+      "begin"
+         r:=b[k];
+         sum:=0;
+         "for" l:=1 "step" 1 "until" k-1 "do"
+                 sum:=sum+lu[k,l]*b[l];
+         b[k]:=(b[p[k]]-sum)/lu[k,k];
+         "if" p[k] "ne" k "then" b[p[k]]:= -r
+      "end";
+
+      "for" k:=n "step" -1 "until" 1 "do"
+      "begin"
+         sum:=0;
+         "for" l:=k+1 "step" 1 "until" n "do"
+                sum:= sum+lu[k,l]*b[l];
+         b[k]:=b[k]-sum
+      "end"
+   "end" of sol;
+
+   "real" "procedure" sigma(j,n,z);
+      "value" n;
+      "integer" j,n;
+      "real" z;
+   "begin"
+      "procedure" local(s); "value" s; "real" s;
+      "begin"
+         "for" j:=1 "step" 1 "until" n "do" s:=s+z; 
+         sigma:=s
+      "end" of local;
+      local(0)
+   "end" of sigma; 
+
+
+   "procedure" copy(j,m,n,z,v);
+      "value" m,n;
+      "integer" j,m,n;
+      "real" z,v;
+   "begin"
+      "for" j:=m "step" 1 "until" n "do" z:=v;
+   "end" of copy; 
+   
+   "integer" c,n;
+
+   "real" "procedure" read; "read" read;
+
+
+   "print" '04-MAR-1998'L``;
+   "read" c, n; 
+   "begin"
+      "real" "array" alpha[1:c,1:n],a[1:n,1:n],
+                     b[1:n],beta[1:c];
+      "integer" "array" p[1:n];
+      "real" deter, plot; "integer" ast,i,j,k;      
+                        
+      "comment" get input data;
+      "for" k:=1 "step" 1 "until" c "do" 
+      "begin"
+         copy(j,1,n,alpha[k,j],read); beta[k]:=read
+      "end";
+ 
+      "comment" form normal equations;
+      "for" i:=1 "step" 1 "until" n "do"
+      "begin"
+         copy(j,i,n,a[i,j],sigma(k,c,alpha[k,i]*alpha[k,j]));
+         copy(j,i+1,n,a[j,i],a[i,j]);
+         b[i]:=sigma(k,c,alpha[k,i]*beta[k])
+      "end";
+ 
+      "comment" solve them;
+      deter:=det(a,n,p); sol(a,b,n,p);
+
+      "comment" print fit of results and errors;
+      "for" j:=1 "step" 1 "until" n "do"
+      "begin"
+         "print" ''L`X`, same line, digits(1), j,
+         ' = `, aligned(3,2), b[j], '  secs. per `;
+         "if" j=1 "then" "print" 'attempted` "else"
+         "if" j=2 "then" "print" 'generated` "else"
+         "if" j=3 "then" "print" 'daytime generated`;
+         "print" ' invoice`
+      "end";
+      "print" ''L2`ACTUAL      ERR %'L`------      -----`;
+      "for" k:=1 "step" 1 "until" c "do" 
+      "begin"
+         plot:=100*((beta[k]-sigma(j,n,alpha[k,j]*b[j]))/beta[k]);
+         "print" '  `, digits(5), entier(100*beta[k] + 0.5),
+         same line, '     `, aligned(3,1), plot;
+         "if" alpha[k,3] > 0 "then" "print" '  **`
+                             "else" "print" '    `;
+         ast:=(30 + entier(0.5 + (plot/5)));
+         "for" j:=1 "step" 1 "until" ast "do" "print" ' `;
+         "print" '*`;
+         "for" j:=ast+2 "step" 1 "until" 30 "do" "print" ' `;
+         "if" ast < 30 "then" "print" '.`
+      "end"
+   "end"
+"end";
+
+   (input data)
+   34  3
+  1.52    .18     0     1.94
+  1.40    .14     0     2.24
+ 12.61  10.95     0   128.15
+  2.73    .81     0     7.69
+  2.23    .21     0     3.33
+  2.19    .16     0     3.18
+  2.12    .48     0     5.89
+  1.74    .15     0     2.74
+  1.71    .17     0     2.14
+  5.02   2.78   2.78   24.55
+  2.74    .50     0     7.48
+  2.77    .57     0     6.53
+  2.68    .42     0     4.70
+ 15.08  12.60     0    93.65
+  3.45    .62     0     7.25
+  3.06    .60     0     7.37
+  2.65    .32     0     6.37
+  3.05    .30     0     5.31
+  3.39    .64     0     9.92
+  3.05    .29     0     5.01
+  2.94    .53     0     7.58
+ 13.97  11.19     0   140.16
+
+  (these go faster)
+  3.04    .29     0     3.23
+  2.89    .37     0     3.51
+  2.58    .24     0     3.09
+  2.70    .26     0     2.74
+ 28.90  25.96  25.96  348.61
+  3.98    .83    .83   15.02
+ 21.53  18.06     0   139.47
+  4.22    .76     0     7.25
+  3.63    .34     0     4.02
+  3.38    .31     0     3.23
+  3.23    .35     0     3.70
+ 15.32  11.83     0   102.54
+<! halt !>
+<!!>
+at ptp file TEST.RLB
+j 8
+j 9
+de ptp
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+at ptr file TEST.RLB
+select out tty
+at tty inline
+R<!!>
+nonstop on
+j 8
+
+sh t
+
+

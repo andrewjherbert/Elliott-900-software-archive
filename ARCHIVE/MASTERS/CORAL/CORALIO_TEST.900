@@ -1,0 +1,82 @@
+﻿
+'coral'
+'program' coralio test
+
+'library' 'procedure' 
+   outchar    / 2 ('value''integer', 'value''integer'),
+   outnewline / 3 ('value''integer'),
+   outstring  / 4 ('value''integer', 'value''integer'),
+   outinteger / 5 ('value''integer', 'value''integer',
+                   'value''integer', 'value''integer'),
+   outoctal   / 6 ('value''integer', 'value''integer');
+
+'segment' test
+
+'begin'
+
+   'integer' dev := 3;
+
+   outoctal(dev, -1); outoctal(dev, 131071);
+   outchar (dev, 'literal'(A));
+   outchar (dev, 'literal'(J));
+   outchar (dev, 'literal'(H));
+   outnewline (dev); 
+   outinteger (dev, 6, 'literal'(+), +0);
+   outnewline (dev);
+   outinteger (dev, 6, 'literal'(+), +1);
+   outnewline (dev);
+   outinteger (dev, 6, 'literal'(+), +12);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+) ,+123);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), +1234);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), +12345);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), +123456);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), -1);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), -12);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), -123);
+   outnewline (dev);
+   outinteger (dev, 6, 'literal'(+), -1234);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), -12345);
+   outnewline (dev);
+   outinteger (dev, 6,  'literal'(+), -123456);
+   outnewline (dev);
+   outinteger (dev, 6, 'literal'(+), 'octal'(400000));
+   outnewline (dev);
+   outinteger (dev, 5, 'literal'(+), 'octal'(400000));
+   outnewline (dev);
+   outinteger (dev, 4, 'literal'(+), 'octal'(400000));
+   outnewline (dev);
+   outinteger (dev, 3, 'literal'(+), 'octal'(400000));
+   outnewline (dev);
+   outinteger (dev, 2, 'literal'(+), 'octal'(400000));
+   outnewline (dev);
+   outinteger (dev, 1, 'literal'(+), 'octal'(400000));
+   outnewline (dev);
+   outoctal (dev, 'octal'(1));
+   outnewline (dev);
+   outoctal (dev, 'octal'(12));
+   outnewline (dev);
+   outoctal (dev, 'octal'(123));
+   outnewline (dev);
+   outoctal (dev, 'octal'(1234));
+   outnewline (dev);
+   outoctal (dev, 'octal'(12345));
+   outnewline (dev);
+   outoctal (dev, 'octal'(123456));
+   outnewline (dev);
+   outoctal (dev, 'octal'(777777));
+
+   outnewline (dev); outnewline (dev);
+
+
+'end'
+
+'finish'
+<! halt !>

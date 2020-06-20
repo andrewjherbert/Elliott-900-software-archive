@@ -1,0 +1,76 @@
+﻿         7    ;+2
+         8    STAR
+         4    XNO
+        /5  EXPNO
+
+        /4  GETCO
+        5   ;+1
+        +0
+T       4   DNO
+        2   +3
+      5   7
+        15  259
+        /14 14
+        9   ;+2
+        8   OK2
+         4    TAMARK
+         11   TAM
+         9    TAM+1
+         4    -1
+         5    TAMARK
+         4    DNO
+         5    TAMARK+1
+         4    +0
+         5    TAMARK+2
+         4    +1
+         5    TA
+         5    TA+6
+         11   TAM
+         8    TAM+1
+         8    T
+OK2      4    DNO
+         2    +1
+         9    PHI
+         0    DNO
+         /4   TAB
+         1    -40
+NOTHER   5    7
+         4    +0
+         /5   0
+         10   7
+         4    7
+         5    LOCAL1
+         0    DNO
+         /2   TAB
+         7    ;+3
+         4    LOCAL1
+         8    NOTHER
+
+LAB         5          WW        (B01 REPETITION)
+            0          DNO
+            /4         RPT
+            7          ;+3
+            4          +16
+            8          ;+4
+            4          WW
+            8          ;+2
+WW        +0
+         /5   TRIGST
+         4    +0
+         5    FOURIN
+         /5   POSN+4
+         /5   SECOND
+         /5   ANS
+         /5   OFF
+         /5   MAXMUM
+         /5   MAXMUM+4
+         4    TRIG
+         9    ;+2
+         8    ;-2
+        4   DNO
+        5   TRIG
+        8   LEV4
+
+LISOUT   +0
+         +0
+LI

@@ -1,0 +1,56 @@
+﻿c Lissajous figures
+
+on 903 16K
+
+nonprinting off
+
+c translate program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+st 8175
+at ptr file ../../masters/herbert/lissajous.txt
+
+c translate in library mode
+j 12
+st 1715
+
+at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
+j 9
+st 8000
+
+c plot lengthways, reduced to one third size
+
+at plt
+
+swapxy
+scale 3
+at ptr inline
+1 2 3 4 5
+<! halt !><!!>
+j 10
+de plt
+at plt
+
+swapxy
+scale 3
+j 10
+de plt
+at plt
+
+swapxy
+scale 3
+j 10
+de plt
+at plt
+
+swapxy
+scale 3
+j 10
+de plt
+at plt
+
+swapxy
+scale 3
+j 10
+de plt
+sh t

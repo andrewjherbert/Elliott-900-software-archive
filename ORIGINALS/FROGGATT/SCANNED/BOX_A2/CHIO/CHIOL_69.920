@@ -1,0 +1,554 @@
+﻿
+((PAPER TAPE INPUT & OUTPUT SUBROUTINE, 15/12/69)
+
+[CHIP CHIPF CHIPL CHIPE CHOPF CHOPL CHOPE CHOPC
+ERRORL ERRORE]
+
+(TELECODE INPUT SUBROUTINE)
+
+(Appears, to the users programme, to read one 903/ISO or 920
+Telecode character from tape, and convert to internal
+code, but reads tape in one line at a time)
+
+CHIPE    4    CHIPF
+         7    FILBUF   (Test if first entry)
+         4    CHIP
+         1    -10      (C-10, test if <N>)
+         7    FILBUF
+         1    -10      (C-20, test if <H>)
+         7    ;+0
+
+READBF   0    BUFCT
+         4    BUFCT
+         1    -61
+         9    ;+4
+         /4   LINE-61  (Read character from m.s. end)
+         14   8185
+         8    ;+3
+         /4   LINE     (Read character from l.s. end)
+         6    &177
+         5    CHIP
+         10   BUFCT
+
+         0    CHIPL
+         /8   1
+
+FILBUF   5    BUFCT
+
+(+1)     4    +0
+         5    BAR
+(+3)     15   2048
+         5    CHIP
+         11   BITCTL
+         8    BITCTE
+         5    TOTAL
+
+         0    +0       (Clear Q-register)
+         8    ;+1      (Set Q-register nonzero on 920A)
+         14   18
+         7    NOTA
+
+(A)      4    CHIP
+         14   8188
+         5    CHIP
+         4    TOTAL    (Insert parity in track 5)
+         14   8191
+         4    CHIP
+         14   5
+         8    WASA
+
+NOTA     4    TOTAL
+         14   17
+         9    CH1      (Parity error)
+
+         4    CHIP
+WASA     7    FILBUF+3 (Ignore blanks)
+         6    &177     (Delete parity from track 8)
+         5    CHIP
+         1    -127     (Ignore erases)
+         7    FILBUF+3
+
+         4    CHIPF    (Read first charater)
+         7    ;+2      (Jump iff first entry)
+         8    ;+3
+         4    CHIP
+         5    CHIPF    (Store first character)
+
+         1    -13      (Test if 903/ISO C.R.)
+         7    IN903
+         1    +3       (Test if 903/ISO L.F./N.L.)
+         7    IN903
+         1    -8       (Test if 920 N.L.)
+         7    IN920
+         8    CH2      (1st character not newline)
+
+IN920    4    BAR
+         7    SIP
+
+         4    CHIP
+         1    -99      (Test if S)
+         7    ;+6
+         1    +40      (Test if <)
+         7    ;+5
+         1    +15      (Test if >)
+         7    ;+4
+         8    CH3      (Illegal character after vert. bar)
+         4    -3
+         1    -57
+         1    +96
+         8    DIP
+
+SIP      4    CHIP
+         1    -126     (Test if vertical bar)
+         7    ;+2
+         8    ;+3
+         10   BAR
+         8    FILBUF+3
+
+         0    CHIP
+         /4   CODTAB
+         6    &177
+         7    CH3      (Jump iff illegal character)
+
+DIP      5    CHIP
+         8    ;+4
+
+IN903    4    CHIP
+         1    -13      (C-13, test if C.R.)
+         7    FILBUF+3
+
+         0    BUFCT
+         4    BUFCT
+         1    -61
+         9    ;+7
+         /4   LINE-61
+         14   8185
+         4    CHIP
+         14   7
+         /5   LINE-61  (Store character in m.s. end)
+         8    ;+3
+         4    CHIP
+         /5   LINE     (Store character in l.s. end)
+         10   BUFCT
+
+         4    CHIP
+         1    -10      (C-10, test if <N>)
+         7    CLECT
+         1    -10      (C-20, test if <H>)
+         7    CLECT
+
+         4    BUFCT
+         1    -121
+         7    CH4      (Jump iff line too long)
+         8    FILBUF+1
+
+CLECT    5    BUFCT
+         8    READBF
+
+(TELECODE OUTPUT SUBROUTINE)
+
+(Prints one or several internal code
+characters in 903/ISO or 920 Telecode;
+or in legible tape form)
+
+CHOPE    5    CHOP
+         6    +127
+         5    OPC
+
+         4    CHOPF
+         7    BLANKS   (Test for 1st entry)
+
+TESCOD   4    CHOPC
+         7    OP920    (Test output telecode)
+         9    OPLEG
+
+(OP903)  4    OPC
+         1    -9       (C-9,  test if <T>)
+         7    ;+4
+         1    -1       (C-10, test if <N>)
+         7    ;+3
+         8    INSPTY
+         4    +19      (Prefix <T> by <S>)
+         1    +141     (Carriage Return)
+         15   6144
+         8    INSPTY
+
+OP920    0    OPC
+         /4   CODTAB
+         9    ;+4
+         4    +126     (Vertical Bar)
+         15   6144
+         /4   CODTAB
+         14   8185
+         6    &177
+         7    CH3      (Jump iff illegal character)
+         5    OPC
+
+INSPTY   4    OPC
+         11   BITCTL
+         8    BITCTE
+         2    +0
+         14   7
+         1    OPC
+         15   6144
+
+         4    CHOP
+         6    &177
+         1    -10      (C-10, test if <N>)
+         7    NL
+         1    -10      (C-20, test if <H>)
+         7    BLANKS
+         8    OUTEND
+
+OPLEG    4    OPC
+         1    -20      (C-20, test if <H>)
+         7    BLANKS
+
+         1    -12
+         9    ;+4      (Values below 32: Set to 0)
+         1    -64
+         9    ;+3      (32 to 95: Subtract 32)
+         8    ;+3      (96 onwards: Subtract 64)
+         4    -64
+         1    +32
+         1    +32
+
+         14   8191
+         5    B
+         14   18
+         0    B
+
+         9    ;+3
+         /4   LTAB1
+         8    ;+4
+         /4   LTAB1
+         /0   LTAB1+1
+         14   9
+
+         14   8174
+         4    +0
+         14   9
+         5    FIRST
+         4    +0
+         14   9
+         5    LAST
+
+LOOP     4    FIRST
+         14   8191
+         5    B
+         14   18
+         0    B
+
+         9    ;+4
+         /4   LTAB2
+         14   8184
+         8    ;+2
+         /4   LTAB2
+         15   6144
+
+         10   FIRST
+         4    LAST
+         2    FIRST
+         9    LOOP
+         8    ;+3
+
+NL       15   6144
+         15   6144
+
+         15   6144
+         15   6144
+
+OUTEND   4    CHOP
+         1    +128
+         9    CHOPE
+
+CHOPX    0    CHOPL
+         /8   1
+
+BLANKS   4    -46080   (-180*256)
+         15   6144
+         1    +256
+         9    ;-2
+
+         4    CHOPF
+         2    -1
+         5    CHOPF
+         9    TESCOD
+         8    OUTEND
+
+(FAST BIT-COUNTING SUBROUTINE)
+
+(Places the parity of the character in the
+Acctr. on entry in the Acctr.)
+
+BITCTE   0    BITCTL
+         14   8188
+         1    =14 1
+         5    ;+6
+         4    +0
+         14   4
+         1    =14 1
+         5    ;+5
+         2    &323130  (Set Q-register)
+TOTAL    >1
+         5    TOTAL
+         2    &323130  (Set Q-register)
+BITCTL   >1
+         1    TOTAL
+         /8   1
+
+(WORKSPACES)
+
+CHIPF    >1   (+0 on first entry to CHIPE S/R)
+CHIPL    >1   (Link)
+CHIP     >1   (Last character read in)
+CHOPF    >1   (+0 on first entry to CHOPE S/R)
+CHOPL    >1   (Link)
+CHOPC    +1   (Output telecode: +0=920, +1=903, &400000=legible)
+BUFCT    >1   (Line buffer pointer)
+B BAR
+OPC      >1
+FIRST    >1   (Address of next character)
+LAST     >1   (Address of last character)
+LINE     >61  (Line buffer)
+CHOP     >1
+
+(CODE TABLE)
+
+(A table for converting 920 Telecode to & from
+an internal 7-bit code. The internal code is basically
+903/ISO code, and is given below.)
+
+CODTAB   &400000 (0)
+         &400000 (1)
+         &400000 (2)
+         &400013 (3)
+         &400000 (4)
+         &400000 (5)
+         &400000 (6)
+         &400000 (7,     Bell)
+         &400000 (8)
+         &405051 (9,     Horizontal tab, <T>)
+         &404454 (10,     New line or Line feed, <N>)
+         &400600 (11,     Vertical tab or Throw)
+         &400072 (12)
+         &400000 (13)
+         &400000 (14)
+         &400057 (15)
+         &400040 (16)
+         &400000 (17)
+         &400012 (18)
+         &400000 (19)
+         &407011 (20,     Stopcode, <H>)
+         &400000 (21)
+         &400000 (22)
+         &400000 (23)
+         &400050 (24)
+         &400000 (25)
+         &400000 (26)
+         &400043 (27)
+         &400024 (28)
+         &400046 (29)
+         &400052 (30)
+         &400000 (31)
+
+         &404000 (32,     Space, <S>)
+         &400061 (33,     Exclamation mark)
+         &417462 (34,  ~  Tilde or Ditto)
+         &406600 (35,  £  Sterling sign or 1/2)
+         &030664 (36,  $  Dollar sign)
+         &413600 (37,     Percentage sign)
+         &407200 (38,  &)
+         &016667 (39,  '  Acute accent or Apostrophe)
+         &406070 (40,     Open round bracket)
+         &402335 (41,     Close round bracket)
+         &407477 (42,  *)
+         &413340 (43,  +)
+         &402476 (44,  ,)
+         &413453 (45,  -)
+         &417655 (46,  .)
+         &403645 (47,  /)
+         &414060 (48,  0)
+         &410200 (49,  1)
+         &410400 (50,  2)
+         &414663 (51,  3)
+         &411000 (52,  4)
+         &415265 (53,  5)
+         &415466 (54,  6)
+         &411600 (55,  7)
+         &412133 (56,  8)
+         &416271 (57,  9)
+         &403047 (58,  :)
+         &424074 (59,  ;)
+         &416675 (60,  <)
+         &417136 (61,  =)
+         &413042 (62,  >)
+         &412456 (63,  ❿  Suffix 10 or Question mark)
+
+         &013077 (64,  `  Grave accent or AT symbol)
+         &420301 (65,  A)
+         &420502 (66,  B)
+         &424743 (67,  C)
+         &421104 (68,  D)
+         &425345 (69,  E)
+         &425546 (70,  F)
+         &421707 (71,  G)
+         &422110 (72,  H)
+         &426351 (73,  I)
+         &426552 (74,  J)
+         &422713 (75,  K)
+         &427154 (76,  L)
+         &423315 (77,  M)
+         &423516 (78,  N)
+         &427757 (79,  O)
+         &430073 (80,  P)
+         &434341 (81,  Q)
+         &434542 (82,  R)
+         &430703 (83,  S)
+         &435144 (84,  T)
+         &431305 (85,  U)
+         &431506 (86,  V)
+         &435747 (87,  W)
+         &436150 (88,  X)
+         &432311 (89,  Y)
+         &432512 (90,  Z)
+         &416153 (91,  [)
+         &406714 (92,  £  Sterling sign or Reverse /)
+         &412355 (93,  ])
+         &417356 (94,  ↑)
+         &400117 (95,     Left-pointing arrow)
+
+         &013120 (96,  `  Grave accent or AT symbol)
+         &424361 (97,  a)
+         &424562 (98,  b)
+         &420723 (99,  c)
+         &425164 (100,  d)
+         &421325 (101,  e)
+         &421526 (102,  f)
+         &425767 (103,  g)
+         &426170 (104,  h)
+         &422331 (105,  i)
+         &422532 (106,  j)
+         &426600 (107,  k)
+         &423000 (108,  l)
+         &427200 (109,  m)
+         &427400 (110,  n)
+         &423600 (111,  o)
+         &434160 (112,  p)
+         &430321 (113,  q)
+         &430522 (114,  r)
+         &434763 (115,  s)
+         &431124 (116,  t)
+         &435365 (117,  u)
+         &435566 (118,  v)
+         &431727 (119,  w)
+         &432130 (120,  x)
+         &436371 (121,  y)
+         &436572 (122,  z)
+         &400000 (123)
+         &400000 (124)
+         &400000 (125)
+         &400000 (126)
+         &400000 (127)
+
+(ERROR INDICATIONS)
+
+CH1      4    +1
+         8    ;+6
+CH2      4    +2
+         8    ;+4
+CH3      4    +3
+         8    ;+2
+CH4      4    +4
+
+         0    +0
+         14   6
+         1    £ 0.
+         5    ERRNO
+         11   ERRORL
+         8    ERRORE
+         £CH
+         £I/O
+         £ ER
+         £ROR
+ERRNO    >1
+
+(LEGIBLE TAPE TABLES)
+
+LTAB1    &000007 &010013 &021027 &040046 &051054 &057066 &075077 &106110
+         &121130 &133141 &147155 &163171 &200206 &214216 &220225 &234241
+         &247252 &260266 &274302 &307314 &323331 &334343 &351357 &366375
+         &404412 &421427 &435444 &452461 &470477 &506515 &521527 &533540
+         &547000
+
+LTAB2    &000000 &000000 &000000 &000277 &003400 &003630 &177231 &114602
+         &100106 &104777 &177611 &071207 &042447 &010010 &000344 &121341
+         &073211 &110646 &040240 &002002 &000474 &041201 &100502 &036102
+         &022020 &177420 &022102 &004010 &004176 &004010 &004260 &070010
+         &004010 &004010 &004010 &140300 &100100 &020020 &004000 &002002
+         &000474 &041201 &100601 &041074 &101377 &100302 &120621 &104601
+         &103102 &100611 &104611 &073010 &004014 &005377 &004217 &104611
+         &104611 &070576 &104611 &104611 &071003 &100501 &020421 &004407
+         &073211 &104611 &104566 &043211 &104611 &104576 &143306 &133166
+         &004020 &022102 &100444 &022044 &022044 &022044 &100502 &022020
+         &004370 &000160 &104210 &070001 &001004 &177011 &004411 &004776
+         &177611 &104611 &104566 &077201 &100601 &100502 &177601 &100601
+         &100576 &177611 &104611 &100777 &004411 &004401 &077201 &100601
+         &110562 &010377 &004010 &004010 &177601 &177601 &040601 &100577
+         &000401 &000777 &004020 &022102 &100777 &100200 &100200 &100377
+         &001004 &004004 &001377 &177404 &000010 &010040 &177576 &100601
+         &100601 &100576 &177411 &004411 &004406 &036102 &100601 &120502
+         &136377 &004431 &024511 &103106 &104611 &104611 &071001 &000401
+         &177401 &000401 &077600 &100200 &100177 &017440 &040200 &040040
+         &017577 &100100 &020100 &100177 &141444 &010010 &010044 &141401
+         &001004 &174004 &001001 &140641 &110611 &100605 &101777 &100601
+         &100630 &177231 &114602 &100201 &100601 &177404 &001377 &001004
+         &004030 &026010 &004010 &004000
+
+((ERROR ROUTINE)
+
+[ERRORL ERRORE CHOPF CHOPL CHOPE CHOPC]
+
+(Prints out the error message following the entry
+instructions in alphanumeric group form, until
+a full-stop is found, then stops. The message
+is given in legible tape form)
+
+ERRORL   >1
+
+ERRORE   4    +0
+         5    CHOPF
+         4    &400000
+         5    CHOPC
+
+NEXTWD   4    -2
+         5    COUNT
+         10   ERRORL
+         0    ERRORL
+         /4   0
+
+NEXTCH   5    WORD
+         14   8180
+         6    &77
+         1    -14      (6-bit code test if .)
+         7    STOP
+         1    +46      (Restore 7-bit code)
+         11   CHOPL
+         8    CHOPE
+
+         4    COUNT
+         7    NEXTWD
+         10   COUNT
+
+         4    WORD
+         14   6
+         8    NEXTCH
+
+STOP     4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+
+COUNT    >1
+WORD     >1
+<! Halt !>

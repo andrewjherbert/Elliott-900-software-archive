@@ -1,0 +1,827 @@
+﻿
+
+((MASIR ISSUE  3  TAPE 6))
+   [ PERIPH CHARNUM CHARAC BUFPOS BR BUFFER NEXCHAR ILLEGAL
+   QCHINX ENTRYX STACKSEARCH E26 POINTER BYTE GETCHAR  E5   ]
+
+   GETCHAR  +0
+            8     ENTRY1      (EXIT WITH NEXT CHARACTER)
+            8     ENTRY2      (EXIT WITH NEXT NON SPACE CHTR.)
+   ENTRY3   10    ENTMK       (EXIT WITH NEXT NON SEPARATOR)
+            10    ENTMK
+   ENTRY2   10    ENTMK
+   ENTRY1   4     PERIPH
+            7     INSTOR      (TEXT IN STORE)
+ENTRYX 4 PERIPH
+7 INSTOR+3
+
+
+            0     PERIPH
+            /4    CHARNUM-1
+            7     IPLINE      (LINE BUFFER EMPTY)
+
+   READ     /4    CHARAC-1
+            /10   CHARAC-1      (=NO. OF CHTRS. READ +1)
+            /10   CHARNUM-1     (=-NO. OF CHTRS STILL TO BE READ)
+            11    BUFPOS
+            8     BUFPOS+1
+            0     BR
+            /4    BUFFER      (PICK UP NEXT CHTR,)
+            5     NEXCHAR
+            8     EXIT
+
+   IPLINE   5     ILLEGAL     (INPUT NEXT LINE OF TEXT)
+            /5    CHARAC-1
+
+   INP      11    QCHINX
+            8     QCHINX+1
+            0     PERIPH
+            /4    CHARNUM-1
+            2     +120
+            7     E5          (LINE BUFFER OVERFLOW)
+            /10   CHARNUM-1
+
+            4     NEXCHAR
+            1     -1
+            7     LF          (END OF LINE)
+            1     -63
+            9     STORE       (LEGAL CHARACTER)
+            4     +1
+            5     ILLEGAL     (LINE CONTAINS ILLEGAL CHTR.)
+                              (REMAINS SET UNTIL NEXT LINE READ)
+
+            4     +64
+            5     NEXCHAR     (MARK POSITION IN LINE OF TEXT)
+
+   STORE    /4    CHARNUM-1
+            11    BUFPOS
+            8     BUFPOS+1
+            4     NEXCHAR
+            0     BR
+            /5    BUFFER-1    (STORE CHTR. IN BUFFER)
+            0     PERIPH
+            4     NEXCHAR
+            1     -1
+            7     READ        (END OF LINE GO TO PICK UP 1ST.CHTR.)
+            8     INP
+
+   LF       /4    CHARNUM-1
+            2     +0
+            /5    CHARNUM-1     (SET CHTR COUNT NEGATIVE)
+2 +0
+            8     STORE+1
+
+   INSTOR   11    STACKSEARCH (MUST BE MACRO TEXT)
+            8     STACKSEARCH+1
+            8     E26         (IF NOT ASSEMBLER CORRUPT)
+
+            4     POINTER
+            1     -4
+            5     BR
+            0     BR
+            /4    1
+            6     =/15 0
+            5     BYTE        (=BIT NO*8192)
+
+            /0    3
+            1     -16384
+            9     ONE
+            7     TWO
+ 8 THREE
+ ONE /4 0
+ 14 8186
+ 8 ;+2
+TWO /4 0
+ 14 8186
+ 8 ;+2
+THREE /4 0
+
+            6     &77
+            5     NEXCHAR
+
+            0     BR
+            4     BYTE
+            1     -24576
+            9     UPBYTE
+            /10   3           (+1 TO TEXT WORD ADDRESS)
+            5     BYTE        (=0 AT THIS STAGE)
+
+   UPBYTE   /4    1
+            6     +8191
+            1     BYTE
+            1     +8192
+            /5    1           (UPDATE BYTE COUNT IN STACK)
+                              (NOTE BYTE IS NOT UPDATED)
+
+   EXIT     4     ENTMK
+            9     EXOUT       (EXIT WITH CHTR.)
+            1     NEXCHAR
+            7     ENTRY1      (ENTMK=0 CHTR=SPACE)
+            4     ENTMK
+            2     NEXCHAR
+            9     ENTRY1      (ENTMK=2 CHAR=SPACE OR LINE FEED)
+
+   EXOUT    4     -1
+            5     ENTMK
+            4     NEXCHAR
+            0     GETCHAR
+            /8    1
+
+   ENTMK  -1
+
+   [ GETNAME COUNT1 MOD X NEXCHAR E10 GETCHAR ASTRSK STARMK
+   NAME1 REDUCE  MASK  MSKSEP   ]
+
+GETNAME     +0
+            4     +0
+            5     COUNT1      (LETTER COUNTER)
+            5     MOD         (TEXT POINTER)
+            4     +1
+            5     X           (BYTE POINTER)
+
+            4     NEXCHAR     (1ST.CHTR.MUST BE LETTER)
+            1     -33
+            9     E10
+            2     +25
+            9     E10
+            8     ADDIN
+
+   NEXT     11    GETCHAR
+            8     GETCHAR+1
+            5   REFCHT
+            2     ASTRSK
+            5     STARMK      (TERMINATOR=* STARMK=0)
+
+            4   NEXCHAR     (TESTS FOR NAME TERMINATOR)
+            1     -16
+            9     END
+            1     -10
+            9     ADDIN
+            1     -7
+            9     END
+            1     -26
+            9     ADDIN
+            8     END
+
+   ADDIN    10    COUNT1
+
+   NOTEND   4     MOD
+            2     +5
+            9     TIDY        (NAME1-NAME6 FULL > 18 CHTRS)
+ 0 X
+ 4 NEXCHAR
+ /8 ;+0
+ 8 ONE
+ 8 TWO
+ 8 THREE
+ONE 14 6
+TWO 14 6
+THREE
+
+/6 MSKSEP-1
+5 CHTR
+/4 MASK-1
+0 MOD
+/6 NAME1
+1 CHTR
+
+            /5    NAME1
+
+            4     X
+            1     -3
+            9     UPX
+            10    MOD
+            5     X           (X=0 AT THIS STAGE)
+
+   UPX      10    X
+            4     NEXCHAR
+            7     END         (FILLING UP WITH SPACES)
+            8     NEXT        (STILL PACKING CHTRS.)
+
+   END      4     +0         (AFTER NAME FILL UP REST OF SPACE)
+            5     NEXCHAR     (WITH BLANKS)
+            8     NOTEND
+
+   TIDY     4     NEXCHAR
+            7     EXIT
+            8     NEXT        (>18 CHTRS. IN NAME, CONTINUE)
+                              (READ AND SKIP TILL TERMINATOR)
+                              (REACHED)
+
+   EXIT     11    REDUCE      (SET TO READ TERMINATOR AGAIN)
+            8     REDUCE+1
+            4  REFCHT
+            5     NEXCHAR
+            0     GETNAME
+            /8    1
+
+   CHTR     +0
+ REFCHT +0
+
+   [ REDUCE ENTRYS PERIPH CHARAC CHARNUM STACKSEARCH E26 POINTER
+   BR BYTE ]
+   REDUCE   +0
+            4     PERIPH
+            7     STORED
+ENTRYS 4 PERIPH
+7 STORED+3
+
+
+            0     PERIPH
+            /4    CHARAC-1
+            1     -1
+            /5    CHARAC-1
+            /4    CHARNUM-1
+            1     -1
+            /5    CHARNUM-1
+            8     OUT
+
+   STORED   11    STACKSEARCH
+            8     STACKSEARCH+1
+            8     E26
+            4     POINTER
+            1     -4
+            5     BR
+            0     BR
+            /4    1
+            6     =/15 0
+            1     -8192
+            7     DEDUCT
+
+   REDBIT
+            5     BYTE
+            /4    1
+            6     +8191
+            1     BYTE
+            /5    1
+
+   OUT      0     REDUCE
+            /8    1
+
+   DEDUCT   /4    3
+            1     -1
+            /5    3
+            4     +24576
+            8     REDBIT
+
+
+
+
+(( OUTEXT S/R TO OUTPUT A STRING OF TEXT ))
+
+[  OUTEXT NEXCHAR QCHOPX COUNT BYTE Y SPARE ]
+
+
+
+OUTEXT          +0
+           0  +0
+            3  Y
+            8  ;+3
+
+TEMP        +0
+            5  Y                   (SET FOR SPACES OUTPUT)
+           6 =15 8191
+           5  POINTER         (SET TEXT POINTER)
+           0  +0              (CLEAR SPACE AND BYTE COUNTER)
+           3  MARK
+           3  BYTE
+           4  NEXCHAR          (PRESERVE NEXT CHARACTER)
+           5  SPARE
+           0  POINTER         (SET NEGATIVE COUNT)
+          /4  0
+           5  COUNT
+
+NEXTWD     8  OUT13           (BRANCH TO COLLECT NEXT WORD)
+          14  8180            (SHIFT TO BOTTOM 8 BITS)
+           8  OUT
+           14  8186
+           8  OUT             (BRANCH TO PRINT AND COLLECT NEXT)
+           8  OUT
+
+MARK          +0
+          10  POINTER
+          10  COUNT           (TEST ALL WORDS PRINTED)
+           4  COUNT
+           9  OUT9
+           4  SPARE
+           5  NEXCHAR
+           0  OUTEXT
+          /8  1
+
+OUT        6  &77
+           5  TEMP
+           7  TEST
+           4  MARK
+           9  PUSH
+           4  TEMP
+           5  NEXCHAR
+          11  QCHOPX
+           8  QCHOPX+1
+
+OUT9       4  BYTE
+           1  +2
+           6  &7
+           5  BYTE
+
+OUT13      0  POINTER
+          /4  1
+           0  BYTE
+          /8  NEXTWD+1
+
+PUSH       4  +0
+          11  QCHOPX
+           5  NEXCHAR
+          10  MARK
+           4  MARK
+            9  QCHOPX+1
+           11  QCHOPX
+           7  QCHOPX+1
+           8  OUT+5
+
+TEST       4  Y
+           7  OUT9
+           9  ;+2
+           8  OUT+5
+           4  MARK
+           1  -1
+           5  MARK
+           8  OUT9
+POINTER +0  ( LOCAL POINTER)
+
+[  BUFPOS BR PERIPH ]
+
+
+
+BUFPOS          +0
+             5  BR
+             0  +0
+             4  PERIPH
+1 -1
+            14  7               ( X128 )
+             1  BR
+             5  BR
+             4  PERIPH
+1 -1
+            14  3               ( X8 )
+             2  BR
+             5  BR              ( BR + PERIPH X 120 )
+             0  BUFPOS
+            /8  1
+
+
+(( QCHINX S/R CHARACTER INPUT ROUTINE ))
+
+[  QCHINX PERIPH NEXCHAR E7 MOD PARITY QDIN QCHIN ]
+
+
+
+QCHINX          +0
+             0  PERIPH
+            /4  LSTDI-1
+             5  QDIN
+
+CALLG(QCHIN)
+              5  NEXCHAR
+             0  QCHINX
+            /8  1
+
+LSTDI           +1
+                +3
+
+
+[  QCHOPX NEXCHAR OUTPER QDOUT QCHOP ]
+
+
+
+QCHOPX          +0
+             0  OUTPER
+            /4  LSTDO
+             5  QDOUT
+             4  NEXCHAR
+
+MQCHOP       0  QCHOPX
+            /8  1
+
+LSTDO           +1
+                +3
+
+
+((MASIR ISSUE  3  TAPE 7))
+
+
+
+(( STORE TEXT S/R TO STORE MACRO TEXT UP TO ] ))
+
+[  STORTEXT NEXCHAR GETCHAR ADDNEW MACOFLO ENTRY2
+   PERIPH TESTACK NAME POINTER COUNT STACK MAC STORE1
+   STORE2 BR STARNUM SPACES ]
+
+
+
+STORTEXT        +0
+             4  NEXCHAR         ( ENTRY1 )
+             2  +59
+             7  ;+4             ( [ READ )
+            11  GETCHAR
+             8  GETCHAR+1
+             8  STORTEXT+1
+             4  ADDNEW
+             7  ;+4             ( [ TO BE STORED )
+             4  +0
+             5  ADDNEW
+             8  NEXT
+             4  +59             ( [ STORED )
+            11  MACOFLO
+             8  MACOFLO+1
+             4  +1
+             5  COUNT
+             5  STARNUM         ( +1 TO BRACKET COUNTER )
+
+NEXT        11  GETCHAR
+             8  GETCHAR+1
+             8  BRACKET
+
+ENTRY2       4  +59
+            11  MACOFLO         ( [ STORED )
+             8  MACOFLO+1
+             4  +1
+             5  COUNT
+             5  STARNUM         ( +1 TO BRACKET COUNTER )
+             4  PERIPH
+             5  STORE1
+             4  NEXCHAR
+             5  STORE2
+             4  +0
+             5  PERIPH
+             4  SPACES
+             7  ;+7
+             4  +0
+             5  NEXCHAR
+            11  STORCHAR
+             8  STORCHAR+1
+            10  SPACES
+             8  ;-7
+             4  =1 0
+            11  TESTACK
+             8  TESTACK+1
+             4  +0
+            11  TESTACK
+             8  TESTACK+1
+             4  NAME
+            11  TESTACK
+             8  TESTACK+1
+             4  +0
+            11  TESTACK
+             8  TESTACK+1
+             4  =/8 0
+            11  TESTACK
+             8  TESTACK+1
+
+AGAIN       11  GETCHAR
+             8  GETCHAR+1
+             4  NEXCHAR
+             7  DECR
+            11  STORCHAR
+             8  STORCHAR+1
+             4  POINTER
+             1  -1
+             5  BR
+             0  BR
+            /4  0
+             6  +8191
+             2  NAME+2
+             7  DECR
+             8  AGAIN
+
+DECR         4  STACK
+             1  -5
+             5  STACK
+             4  STORE1
+             5  PERIPH
+             4  STORE2
+             5  NEXCHAR
+
+      BRACKET      4  NEXCHAR
+             1  -59
+             7  ;+2
+             8  ;+2
+            10  STARNUM
+             1  -2
+             7  EXIT
+
+STOR        11  STORCHAR
+             8  STORCHAR+1
+             8  NEXT
+
+EXIT         4  -1
+             1  STARNUM
+             7  OUT
+             5  STARNUM
+             8  STOR
+
+OUT          0  STORTEXT
+            /8  1
+
+STORCHAR        +0
+             4  COUNT
+             7  ZERO
+             0  MAC
+            /4  0
+            14  6
+              6  &777700
+             1  NEXCHAR
+            /5  0
+             4  COUNT
+             1  -2
+             9  INCR            ( COUNT = 0 OR 1 )
+             5  COUNT           ( COUNT = 2 SET TO 0 )
+             8  END
+
+ZERO         4  NEXCHAR
+            11  MACOFLO
+             8  MACOFLO+1
+
+INCR        10  COUNT
+END          0  STORCHAR
+            /8  1
+
+[  ENDTEXT COUNT MAC MACOFLO NUMBER ]
+
+
+
+ENDTEXT         +0
+             4  COUNT
+             7  ZERO
+             0  MAC
+             1  -1
+             7  ONE
+            /4  0
+            14  6
+             6  &777700
+             1  +61
+             8  END-1
+
+ZERO         4  =/14 4096
+            11  MACOFLO
+             8  MACOFLO+1
+             8  END
+
+ONE          /4  0
+            14  12
+              6  &770000
+             1  +3904
+            /5  0
+
+END          4  NUMBER
+             1  +1
+            11  MACOFLO
+             8  MACOFLO+1
+             0  ENDTEXT
+            /8  1
+
+(( DELETE S/R TO DELETE MACRO DICTIONARY ENTRY AND SHIFT UP ))
+
+[  DELETE POSITN X MAC POINTER BR STACK BEGSTACK ]
+
+
+
+DELETE          +0
+             4  POSITN
+             1  X
+             1  +1
+             5  POINTER
+
+NEXT         4  POINTER
+             2  MAC
+             9  END
+             4  X
+             2  POINTER
+             5  BR
+             0  POINTER
+            /4  0
+             0  BR
+            /5  0
+            10  POINTER
+             8  NEXT
+
+END          4  X
+             2  MAC
+             5  MAC
+             4  STACK
+
+MORE         5  BR
+             2  BEGSTACK
+             9  ;+2
+             8  OUT
+             0  BR
+            /4  0
+             9  ;+2
+             8  ;+4
+             4  BR
+             1  -1
+             8  MORE
+             4  BR
+             1  -4
+             5  BR
+             0  BR
+            /4  4
+             2  POSITN
+             1  +1
+             9  ADJUST
+             8  SKIP
+
+ADJUST       4  X
+            /2  4
+            /5  4
+             4  X
+            /2  3
+            /5  3
+
+SKIP        /4  2
+             2  POSITN
+             1  +1
+             9  ;+2
+             8  ;+4
+             4  X
+            /2  2
+            /5  2
+             4  BR
+             8  MORE+1
+
+OUT          0  DELETE
+            /8  1
+
+
+(( CHKNAM S/R TO CHECK LIST OF MACRO FACILITY OR FUNCTION NAMES ))
+
+[  CHKNAM FIRST LAST WORDS NAME1 NAME2 POINTER ]
+
+
+
+CHKNAM          +0
+             4  FIRST
+
+NOTFND       5  POINTER
+             2  LAST
+             9  EXIT2           ( POINTER > LAST )
+             0  POINTER
+            /4  0
+             2  NAME1
+             7  OK              ( "(POINTER" = NAME1 )
+
+INCR         4  POINTER
+             1  WORDS
+             8  NOTFND
+
+OK           4  WORDS
+             1  -1
+             7  FOUND           ( WORDS = 1 NAME FOUND )
+            /4  1
+             2  NAME2
+             7  FOUND           ( "(POINTER" = NAME2 )
+             8  INCR
+
+FOUND        4  FIRST
+             2  POINTER
+             5  POINTER         ( POS. OF FOUND WORD IN LIST )
+             4  WORDS
+             1  -1
+             7  ;+4
+             4  POINTER         ( WORDS = 2 DIVIDE BY 2 )
+            14  8191
+             5  POINTER         ( SET POINTER FOR REQ. ROUTINE ON EXIT )
+             0  CHKNAM
+            /8  2               ( EXIT FOUND )
+
+EXIT2        0  CHKNAM
+            /8  1               ( EXIT NOT FOUND )
+
+
+
+(( MACSEARCH S/R TO SEARCH MACRO DICTIONARY FOR MACRO NAME ))
+
+[  MACSEARCH MAC MACDIC POSITN NAME1 NAME2 X ]
+
+
+
+MACSEARCH       +0
+             4  MAC
+             5  POSITN
+             4  MACDIC
+             2  POSITN
+             9  EXIT2
+             0  POSITN
+            /4  0
+             5  X
+             2  POSITN
+             5  POSITN
+             0  POSITN
+            /4  1
+             2  NAME1
+             7  ;+2             ( OK )
+             8  MACSEARCH+3
+            /4  2
+             2  NAME2
+             7  EXIT1
+             8  MACSEARCH+3
+
+EXIT1        0  MACSEARCH
+            /8  2               ( FOUND )
+
+EXIT2        0  MACSEARCH
+            /8  1               ( NOT FOUND )
+
+
+
+(( MACOFLO S/R TO TEST FOR MACRO DICTIONARY OVERFLOW ))
+
+[  MACOFLO MAC E3 NUMBER Y MACTOP BD ]
+
+
+
+MACOFLO         +0
+             5  Y
+             4  MACTOP
+             2  MAC
+             1  +1
+             7  E3              ( MACRO DICTIONARY FULL )
+           4  BD
+           2  MAC
+           1  +1
+           7  E3
+             0  MAC
+             4  Y
+            /5  1
+            10  MAC
+            10  NUMBER
+             0  MACOFLO
+            /8  1
+
+(( TESTACK S/R TO TEST FOR STACK OVERFLOW ))
+
+[  TESTACK ENDSTACK STACK E4 Y ]
+
+
+
+TESTACK         +0
+             5  Y
+             4  ENDSTACK
+             2  STACK
+             1  +1
+             7  E4              ( STACK FULL )
+             0  STACK
+             4  Y
+            /5  1
+            10  STACK
+             0  TESTACK
+            /8  1
+
+(( STACKSEARCH S/R TO FIND STACK ENTRY FOR CURRENT MACRO ))
+
+[  STACKSEARCH STACK BEGSTACK POINTER ]
+
+
+
+STACKSEARCH     +0
+             4  BEGSTACK
+             2  STACK
+             9  EXIT1-2
+             4  STACK
+             5  POINTER
+             0  POINTER
+            /4  0
+             9  ;+2
+             8  EXIT1
+             4  POINTER
+             1  -1
+             5  POINTER
+             2  BEGSTACK
+             9  STACKSEARCH+6
+             0  STACKSEARCH
+            /8  1               ( NOT FOUND )
+
+EXIT1        0  STACKSEARCH
+            /8  2               ( FOUND )
+
+
+[  MSREND ]
+
+
+MSREND     8  ;+0
+
+
+
+
+
+£CHANGE *,()
+
+%
+
+
+
+
+
+
+
+
+<! Halt !>

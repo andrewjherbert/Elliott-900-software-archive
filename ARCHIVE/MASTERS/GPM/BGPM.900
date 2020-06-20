@@ -1,0 +1,2650 @@
+﻿
+*16403
+
+(( BGPM - Andrew Herbert - 28/0713/08/2019 )
+
+( This program is transliterated from Martin Richard's BCPL program "bgpm". 
+
+  It is an implementation of Christopher Strachey’s GPM macrogenerator.
+ 
+  It reads input from paper tape and outputs the macrogenerated result to
+  the paper tape punch. 
+
+  16K store is assumed.
+
+  A macro call is enclosed in square brackets [..] and contains arguments 
+  separated by backslash [\] characters. The arguments are macro expanded as 
+  they are read in. To avoid macro expansion text can be enclosed within 
+  nested curly brackets { }. On reaching the closing square bracket at 
+  the end of a macro call, the zeroth argument is looked up in the environment 
+  of defined macros and macrogeneration continues from the beginning of its 
+  value. When the end of this value is reached the expansion of the call is 
+  complete and macrogeneration continues from just after the closing square 
+  bracket. While a macro call is being expanded, a parameter of the form
+  ^n [caret n] is replaced by a copy of the nth argument of the current call. The 
+  number n is given as a sequence of decimal digits. The character ` [grave]  
+  introduces a comment consisting of all remaining characters of the current line 
+  followed by all white space characters including new lines up to but not including 
+  the next non white space character.
+  
+
+  The following macros are predefined:
+  [def\name\value\padding]
+      This causes a macro with the given name and value to be declared.
+  [set\name\value]
+      This updates a named macro with a new value which may be truncated 
+      if necessary.
+  [eval\expression]
+      This evaluate the given integer expression consisting of numbers and the    
+      numeric operators *, /, <percent>, + and -. Parentheses may be used for 
+      grouping and spaces may appear anywhere except within numbers.
+  [lquote]
+  [rquote]
+      These macros expand to the curly left and right brackets respectively.
+  [eof]
+      This macro generates the end of file symbol and can be used to terminate 
+      input.
+
+  A halt code stops processing.  A new tape may be loaded and macrogeneration
+  continued. 
+
+  Uses ACD CHIP and CHOP, and ACD internal code so ASCII £ and \
+  are indistinguishable, as are ` [grave] and @.  All tapes must start with
+  at least one new line character. )
+
+( Entry points
+	 8	Normal macrogeneration
+ 	 9	Continue after halt code
+	10	Enable tracing
+	11 	Disable tracing
+        12      Punch halt code and trailer)
+	
+
+( Initialisation and housekeeping)
+[ BREG BASE TOP TOS TRACE BGPM CHIPF CHOPF CHOPC CHOPL CHOPE WRS STOP ]
+
+BREG=7					( run at level 4 )
+
+	8	START			( normal macrogeneration )
+	8	;+0			( continue after halt )
+	8	TRACON			( enable tracing )
+	8	NOTRAC			( disable tracing )
+	4	+20			( punch halt code )
+        11      CHOPL
+        8       CHOPE
+STOP	8	;+0
+
+TRACE	+0
+
+TRACON	10	TRACE			( turn on tracing )
+	8	STOP
+
+NOTRAC	4	+0			( turn off tracing )
+	5	TRACE
+	8	STOP
+	
+START	11	6			( drop to level 4 )
+	15 	7168
+	4 	+2350			( start of free store )
+	5	BASE	
+	4	TOS			( top of free store )
+	5	TOP
+	4	+0			( initialize CHIP and CHOP )
+	5	CHIPF
+        5       CHOPF
+	4	+1			( select 900 telecode )
+	5	CHOPC
+	8	BGPM
+
+( Global state
+	BASE, TOP: define free store for stacks
+	S: macro expansion stack pointer - grows upwards
+	T: environment stack pointer - grows downwards
+	E: environment chain pointer
+	F, P, H, C: pointers in S
+	CH: last character input
+	CHPOS: position of last character output
+	in error output
+
+	SDEF etc: internal symbols, e.g, end of file
+	CAPPLY etc: special characters
+	N.B. input decoding depends on these
+	being in lexicographical order.
+
+	TRACE = 0 if tracing on <> 0 otherwise )
+
+
+[ BASE C CH CHPOS E F H P S T TOP TOS
+  SYM SDEF SEOF SEOM SEVAL SLQUOT SRQUOT SSET SVAL
+  CAPPLY CCALL CLQUOT CRQUOT CSEP CSKIP ]
+
+( global state )
+BASE	>1
+C	>1
+CH	>1
+CHPOS	>1
+E	>1
+F	>1
+H	>1
+P	>1
+S	>1
+T	>1
+TOP	>1
+TOS     +16383	(Default 16K store)
+
+( next 17 constants must stay in order given )
+
+( internal symbols )
+SYM	-9
+SVAL	-8			( padding )
+SRQUOT	-7
+SLQUOT	-6
+SEVAL	-5
+SSET	-4
+SDEF	-3
+SEOM	-2
+sEOF	-1
+
+( warning characters )
+CCALL	+91			( open square bracket )
+CSEP	+92			( reverse stroke )
+CAPPLY	+93			( close square bracket )
+CARG	+94			( caret )
+CLQUOT	+123			( open curly bracket )
+CRQUOT 	+125			( close curly bracket )
+	+255			( padding )
+
+CSKIP	+96			( grave )
+
+
+( PUTCH: output a macrogenerated character, either 
+  to output stream or stack as required. )
+
+[ PUTCH H PUSH WRCH ]
+
+CH	>1
+
+PUTCH	>1			( LET putch[ch] BE )
+	5	CH
+	4	H	
+	7	THEN1		( TEST h=0 )
+ELSE1	0	PUSHAD		( ELSE push [ch] )
+	8	;+2
+THEN1	0	WRCHAD		( THEN wrch [ch] )
+	4	CH	
+	/11	0
+	/8	1
+	0	PUTCH
+	/8	1
+WRCHAD	0 WRCH
+PUSHAD	0 PUSH
+
+
+( WRCH: output a character to paper tape, using CHOP. )
+
+[ WRCH CHOPL CHOPE ]
+
+WRCH	>1
+	11	CHOPL
+	8	CHOPE
+	0	WRCH
+	/8	1
+
+
+( PUSH: push a word on to stack.  Signal error if S and T
+  collide. )
+
+[ PUSH ERROR S T ]
+
+CH	>1
+
+PUSH	>1			( LET push[ch] = VALOF )
+	5	CH
+	4	T
+	2	S
+	7	ERR		( IF t=s DO error [...] )
+	10	S		( 	s := s + 1 )
+	0	S		( 	\s := ch )
+	4	CH
+	/5	0
+	4	S		( RESULTIS s )
+	0	PUSH
+	/8	1
+
+ERR	4	;+2
+	8	ERROR
+	0 ;+1
+	\Ins
+	\uff
+	\ici
+	\ent
+	\ wo
+	\rks
+	\pac
+	\e\
+
+
+( RDCH: read next character from paper tape.  Stop on halt code.
+  Resume reading on entry at 9. )
+
+[ RDCH CHIPL CHIPE CHIPF STOP ]
+RDCH	>1
+	11	CHIPL		( read next character )
+	8	CHIPE
+	2	+20		( halt code )
+	7	HALT		( stop on halt code )
+	2	+20		( restore )		
+	0	RDCH		( return )
+	/8	1
+HALT	4	JMP		( set up continue )
+	5	9
+	8	STOP
+JMP 	8	;+1
+	4	=8 9		( remove continue )
+	5	9
+	11	6		( back to level 4 )
+	15	7168
+	4	+0
+	5	CHIPF
+	8	RDCH+1		( retry reading )
+
+
+( GETCH: read next macrogenerated character from input stream using
+  CHIP, or from macro stack as appropriate. )
+
+[ GETCH C CSKIP RDCH ]
+
+CH 	>1
+
+GETCH	>1			( LET getch[] = VALOF)
+	4	C		( IF c=0 )
+	7	THEN1
+	10	C		( DO [ c:= c+1; RESULTIS \c] )
+	0	C
+	/4	0
+	8	RETURN
+THEN1	11	RDCH		( ch := rdch[] )
+	8	RDCH+1
+WHILE1	2	CSKIP		( WHILE ch=c_skip DO )
+	7	REPUN1
+	2	CSKIP		( restore ch )
+	5	CH		( RESULTIS ch )
+RETURN	0	GETCH
+	/8	1
+REPUN1	( skip to end of line )
+	11	RDCH		( ch := rdch[] )
+	8	RDCH+1
+	1	-10		( REPEATUNTIL ch='*n' )
+	7	;+2
+	8	REPUN1
+	( skip white space )
+WHILE2	11	RDCH
+	8	RDCH+1
+	5	CH
+	1	-32		( WHILE ... DO )	
+	7	WHILE2		( ch='*s' )
+	1	+22
+	7	WHILE2		( ch='*n' )
+	1	+1
+	7	WHILE2		( ch='*t' )
+	4	CH
+	8	WHILE1
+
+
+( ARG: extract n-th argument of macro at position a on stack. )
+
+[ ARG ERROR ]
+
+A	>1
+N	>1
+
+ARG	>1			( LET arg[a, n] = VALOF )
+IF1	0	A		( [ IF \a<0 )
+	/4	0
+	9	THEN1		(   DO error["..."] )
+	8	FI1
+THEN1	4	;+2	
+	8	ERROR
+	0 ;+1
+	\Too
+	\ fe
+	\w a
+	\rgu
+	\men
+	\ts\
+FI1	4	N		(   IF n=0 RESULTIS a )
+	7	THEN2
+        8	FI2
+THEN2	4	A		( RESULTIS a )
+	0	ARG
+	/8	1
+FI2	1	-1		(   n := n-1 )
+	5	N
+	0	A		(   a:= a+\a+1 )
+	/4	0
+	1	A
+	1	+1
+	5	A
+	8	IF1		( ] REPEAT )
+
+( LOOKUP: find a macro definition in current enviroment. 
+  Name is in form: size, ch1, ch2, ... as consecutive words. )
+
+[ LOOKUP E ERROR ]
+
+	W1	>1
+	W2	>1
+	A 	>1
+	Q	>1
+	I	>1
+	LEN	>1
+
+LOOKUP	>1			( LET lookup[a] = VALOF )
+	5	A
+	0	A		( LET q, i, len = e, 0, \a )
+	/4	0
+	5	LEN
+	4	+0
+	5	I
+	4	E
+	5	Q
+UNTIL1	7	OD1		( UNTIL q = 0 OR i>len )
+	4	I
+	2	LEN
+	9	OD1
+IF1	4	A		( TEST q\[i+2]=a\i )
+	1	I
+	5	W1
+	4	Q
+	1	I
+	5	W2
+	0	W1
+	/4	0
+	0	W2
+	/2	2
+	7	THEN1
+ELSE1	0 	Q		( ELSE q, i := \q, 0 )
+	/4	0
+	5	Q
+	4	+0
+	5	I
+	8	FI1
+THEN1	10	I		( THEN i := i+1 )
+FI1	4	Q
+	8	UNTIL1
+OD1
+IF2	4	Q		( IF q=0 DO error[...] )
+	7	THEN2
+ELSE2	0	LOOKUP		( RESULTIS q )
+	/8 	1
+THEN2	4	;+2
+	8	ERROR
+	0 ;+1
+	\Mac
+	\ro
+	\not
+	\ de
+	\fin
+	\ed\
+
+( DEFINE: set up enviroment entry for a built in macro. )
+
+[ DEFINE BREG E PUSH S SEOM T ]
+
+S1	>1
+I	>1
+
+NAME	>1
+CODE	>1
+DEFINE	>1			( LET define[name, code] BE )
+	4	S		( LET s1 = s )
+	5	S1
+	4	E		( push[e]; push[t] )
+	11	PUSH
+	8	PUSH+1
+	4	T
+	11	PUSH
+	8	PUSH+1		
+FOR1	4	+0		( FOR i = 0 TO name\0 DO )
+	5	I
+DO1	0	NAME
+	/2	0
+	9	OD1
+	4 	NAME		(	push[name\i] )
+	1	I
+	5	BREG
+	/4	0
+	11	PUSH
+	8	PUSH+1
+STEP1	10	I
+	4	I
+	8	DO1
+OD1	4	+1		( push[1]; push[code]; push[s_eom] )
+	11	PUSH
+	8	PUSH+1
+	4	CODE
+	11	PUSH
+	8	PUSH+1
+	4	SEOM
+	11	PUSH
+	8	PUSH+1
+UNTIL2	4	S		( UNTIL s=s1 DO [ )
+	2	S1
+	7	OD2
+	0	S		(	\t := \s )
+	/4	0
+	0	T
+	/5	0
+	4	T		(	t, s := t-1, s-1 ] )
+	1	-1
+	5	T
+	4	S
+	1	-1
+	5	S
+	8	UNTIL2+1
+OD2	4	T		( e := t+1 )
+	1	+1
+	5	E
+	0	DEFINE
+	/8	1
+
+
+( BGPM: macrogeneration engine.  Reads next character from
+  input or current macro as appropriate and tests to see if
+  it is a special character.  If so update internal state as
+  required, otherwise copy character to current output, either
+  paper tape punch or stack, as appropriate. )
+
+[ BGPM BASE C CH E F H P S T TOP TRACE 
+  SYM SDEF SEOF SEOM SEVAL SLQUOT SRQUOT SSET SVAL
+  CLQUOT CRQUOT 
+  ARG DEFINE ERROR EXP GETCH LOOKUP PUSH PUTCH RDN RET
+  NCH WRARG WRC WRN WRS ]
+
+( Names of built in macros as "word strings". )
+
+DEFAD	0 ;+1
+	+3			( "def" )
+	+100
+	+101
+	+102
+SETAD	0 ;+1
+	+3			( "set" )
+	+115
+	+101
+	+116
+EVALAD	0 ;+1
+	+4			( "eval" )
+	+101
+	+118
+	+97
+	+108
+LQOTAD	0 ;+1
+	+6			( "lquote" )
+	+108
+	+113
+	+117
+	+111
+	+116
+	+101
+RQOTAD	0 ;+1
+	+6			( "rquote" )
+	+114
+	+113
+	+117
+	+111
+	+116
+	+101
+EOFAD	0 ;+1
+	+3			( "eof" )
+	+101
+	+111
+	+102
+
+W1	>1
+W2	>1
+W3	>1			( workspaces)
+
+( Initialisation. )
+
+BGPM	4	+0		( s, t, h, p, f, e, c := )
+	5	H		( base-1, top, 0, 0, 0, 0 )
+	5	P
+	5	F
+	5	E
+	5	C
+	4	BASE
+	1	-1
+	5	S
+	4	TOP
+	5	T
+	4	LQOTAD		( define["lquote", s_lquote] )
+	5	DEFINE-2
+	4	SLQUOT
+	5	DEFINE-1
+	11	DEFINE
+	8	DEFINE+1
+	4	RQOTAD		( define["rquote", S_rquote] )
+	5	DEFINE-2
+	4	SRQUOT
+	5	DEFINE-1
+	11	DEFINE
+	8	DEFINE+1
+	4	EOFAD		( define["eof", s_eof] )
+	5	DEFINE-2
+	4	SEOF
+	5	DEFINE-1
+	11	DEFINE
+	8	DEFINE+1
+	4 	DEFAD		( define["def", s_def] )
+	5	DEFINE-2
+	4	SDEF
+	5	DEFINE-1
+	11	DEFINE
+	8	DEFINE+1
+	4	SETAD		( define["set", s_set] )
+	5	DEFINE-2
+	4	SSET
+	5	DEFINE-1
+	11	DEFINE
+	8	DEFINE+1
+	4	EVALAD		( define["eval", s_eval] )
+	5	DEFINE-2
+	4	SEVAL
+	5	DEFINE-1
+	11	DEFINE
+	8	DEFINE+1
+
+( Start of main scanning loop. )
+
+LOOP1	11	GETCH		( ch := getch[] )				
+	8	GETCH+1
+	5	CH
+SW	4	+8		( SWITCHON ch INTO )
+	5	W1		
+	4	+0
+	5	W2
+BCHOP	1	W1		( binary chop )
+	5	W3
+	0	W3
+	/4	SYM
+	2	CH
+	7	FOUND
+	9	LOWER
+	4	W1
+	14	8191
+	7	DEFAUL		( not in table of symbols )
+	5	W1	
+	4	W3
+	5	W2
+	8	BCHOP
+LOWER	4	W1
+	14	8191
+	7	DEFAUL
+	5	W1
+	4	W2
+	8	BCHOP
+FOUND	/8	JTAB
+JTAB	8	;+0		( padding )
+	8	VALUE
+	8	RQUOTS
+	8	LQUOTS
+	8	EVAL
+	8	SET
+	8	DEF
+	8	EOM
+	8	EOF
+	8	CALL
+	8	SEP
+	8	APPLY
+	8	ARGMNT
+	8	LQUOTE		
+	8	DEFAUL		( unpaired right quote )
+	8	;+0		( padding )
+
+D	>1
+
+( Here is next character is neither special nor an
+  internal symbol. )
+
+DEFAUL	4	CH		( DEFAULT: putch[ch]; LOOP )
+	11	PUTCH
+	8	PUTCH+1
+	8	LOOP1	
+
+
+( Left quote special character, scan to matching right quote.)
+
+LQUOTE				( CASE c_lquote: )
+	4	+1		( LET d = 1 )
+	5	D
+RPT1	11	GETCH		( [ 	ch := getch[] )
+	8	GETCH+1
+	5	CH
+	9	THEN1		(	IF ch<0 DO ... )
+	8	IF2
+THEN1	4	;+2		(	... DO error["..."] )
+	8	ERROR
+	0 ;+1
+	\Non
+	\ ch
+	\ara
+	\cte
+	\r i
+	\n q
+	\uot
+	\ed
+	\str
+	\ing
+	\\
+IF2	2	CLQUOT		(	IF ch=c_lquote DO ... )
+	7	THEN2
+	8	IF3
+THEN2	10	D		(	... DO d := d+1 )
+	8	FI3
+IF3	4	CH		(	IF ch=c_rquote DO ... )
+	2	CRQUOT
+	7	THEN3
+	8	FI3
+THEN3	4	D		(	... DO d := d-1; IF d = 0 BREAK )
+	1	-1
+	5	D
+	7	LOOP1
+FI3	4	CH		( putch[ch] )
+	11	PUTCH
+	8	PUTCH+1
+	8	RPT1		( REPEAT )
+
+
+( Macro call special symbol, stack current input and switch to 
+  input from macro body. )
+
+CALL				( CASE c_call: )
+	4	F		( f := push[f]; ... )
+	11	PUSH
+	8	PUSH+1
+	5	F
+	4	H		( ... push[h]; ... )
+	11	PUSH
+	8	PUSH+1
+        4	E		( ... push[e]; ... )
+       	11	PUSH
+	8	PUSH+1
+	4	T		( ... push[t]; ... )
+	11	PUSH
+	8	PUSH+1
+	11	PUSH		( h := push[?] )
+	8	PUSH+1
+	5	H
+	8	LOOP1		( LOOP )
+
+
+( Parameter seperator, close off last parameter and prepare
+  for next one, or apply special character. )
+
+SEP				( CASE c_sep: )
+	4	H		( IF h = 0 DO ... )
+	7	THEN4
+ELSE4	2	S		( \h := s-h )
+	0	H
+	/5	0
+	11	PUSH		( h := push[?] )
+	8	PUSH+1
+	5	H
+	8	LOOP1		( LOOP )
+THEN4	4	CH		( ... DO [putch[ch]; LOOP] )
+	11	PUTCH
+	8	PUTCH+1
+	8	LOOP1	
+
+A	>1
+Q	>1
+
+
+( Argument special character, read argument number and substiute
+  current value. )
+
+ARGMNT				( CASE c_arg: )
+	4	P		( IF p=0 DO ... )
+	7	THEN5
+	11	GETCH		( ch := getch[] )
+	8	GETCH+1
+	5	CH
+	4	P		( LET a = arg[p+4, rdn[]] )
+	1	+4
+	5	ARG-2
+	11	RDN
+	8	RDN+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+FOR2	5	A
+	1	+1		( FOR q = a+1 TO a+\a DO ... )
+	5	Q
+	4	A
+	0	A
+	/1	0
+	5	W1
+TO2	4	Q
+	2	W1
+	9	SW
+DO2	0	Q		( ... DO putch[\q] )
+	/4	0
+	11	PUTCH
+	8	PUTCH+1
+STEP2	10	Q
+	8	TO2
+
+
+( Apply special character, expand macro just assembled. )
+
+APPLY				( CASE c_apply: )
+	4	F		( LET a = f )
+	5	A	
+	4	H		( IF h=0 DO ... )
+	7	THEN5
+	8	FI5
+THEN5	4	CH		( ... DO putch[ch]; LOOP )
+	11	PUTCH
+	8	PUTCH+1
+	8	LOOP1
+FI5	2	S		( \h := s-h )
+	0	H
+	/5	0
+	4	SEOM		( push[s_eom] )
+	11	PUSH
+	8	PUSH+1
+	0 	A		( f, h := a\0, a\1 )
+	/4 	0
+	5	F
+	/4	1
+	5	H
+	4	P		( a\0, a\1 := ... )
+	/5	0		( ... p, c )
+	4	C
+	/5 	1
+RPT3	0	S		( [ \t := \s; ... )
+	/4	0
+	0	T
+	/5	0
+	4	T		( ... t, s := t-1, s-1 )
+	1	-1
+	5	T
+	4	S
+	1	-1
+	5	S
+	4	A
+	2	S		( ... REPEATUNTIL s<a )
+	9	OD3
+	8	RPT3
+OD3	4	T		( p := t+1 )
+	1	+1
+	5	P
+	1	+4		(  c := arg[lookup[p+4]+2, 1] )
+	11	LOOKUP
+	8	LOOKUP+1
+	1	+2
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	C
+
+( Macro call tracing. 
+  N.B. Sets NCH-1 to make WRN use WRC for output. )
+
+	4	TRACE		( If tracing DO )
+	7	LOOP1
+	10	NCH-1		( select WRN output mode )
+	4	+0		( LET i = 0 )
+	5	I
+	4	P		( a := p+4 )
+	1	+4
+	5	A
+	4	STR1
+	11	WRS		( writef[...] )
+	8	WRS+1
+UNTIL1	0	A		( UNTIL \a<0 )
+	/4	0
+	9	ENDTRA		
+	4	STR2		( writef[...] )
+	11	WRS
+	8	WRS+1
+	4	I
+	11	WRN
+	8	WRN+1
+	4	STR3
+	11	WRS
+	8	WRS+1
+	4	A
+	11	WRARG		( wrarg[a] )
+	8	WRARG+1
+	4	+10
+	11	WRC
+	8	WRC+1
+	0	A		( a:= a + \a + 1 )
+	/4	0
+	1	A
+	1	+1
+	5	A
+	10 	I
+	8	UNTIL1
+ENDTRA	4	+0		( reset WRN output mode )
+	5	NCH-1
+	8	LOOP1
+
+STR1	0 ;+1
+	\^Ca
+	\lli
+	\ng
+	\mac
+	\ro^
+	\\
+STR2	0 ;+1
+	\arg
+	\ \
+STR3	0 ;+1
+	\: \
+
+
+( built in macro "lquote"- output a left quote. )
+
+LQUOTS				( CASE s_lquote: )
+	4	CLQUOT		( putch[c_lquote]; LOOP )
+	11	PUTCH
+	8	PUTCH+1
+	8	LOOP1
+
+
+( built in macro "rquote" - output a right quote. )
+
+RQUOTS				( CASE s_rquote: )
+	4	CRQUOT		( putch[s_rquote]; LOOP )
+	8	LQUOTS+1
+
+
+( eof built in macro - terminate macro processing. )
+
+EOF	8	;+0		( CASE s_eof: RETURN )
+
+( eom marker - macro expansion complete, unstack macro call. )
+
+N	>1
+NA	>1
+
+EOM				( CASE s_eom: )
+RET	4	P		( IF p=0 LOOP )
+	7	LOOP1
+	4	T		( LET a = t )
+	5	A
+	4	P		( LET q = p-1 )
+	1	-1
+	5	Q
+	4	P		( LET n = p\3 - p + 1 )
+	0	P
+	/2	3
+	1	+1
+	5	N
+	4	E		( \a := e )
+	0	A
+	/5	0
+RPT4				( [ LET na = \a )
+	5	NA
+	2	P		( IF na>p BREAK )
+	9	BRK4
+	4	NA
+	1	N		( \a := na + n )
+	/5	0
+	4	NA		( a := na )
+	5	A
+	0	A
+	/4	0
+	8	RPT4
+BRK4 	0 	P		( \a := p\2 )
+	/4	2
+	0	A
+	/5	0
+	0	T		( e := \t )
+	/4	0
+	5	E
+	4	T		( a := t )
+	5	A
+	0	P		( t := p\3 )
+	/4 	3
+	5	T
+	/4	1		( c := p\1 )
+	5	C
+	/4 	0		( p := p\0 )
+	5	P
+UNTIL5	4	Q		( UNTIL q<=a DO [ )
+	2	A
+	9	;+2
+	8	LOOP1		( LOOP )
+	0	Q		(     \t := \q )
+	/4	0
+	0	T
+	/5	0
+	4	Q		(     t, q := t-1, q-1 ] )
+	1	-1
+	5	Q
+	4	T
+	1	-1
+	5	T
+	8	UNTIL5
+
+B	>1
+LEN	>1
+MAX	>1
+NAME	>1
+VAL	>1
+I	>1
+
+
+( built in macro "set" - update macro body in enviroment. )
+
+SET				( CASE s_set: )
+	4	P		( LET name = arg[p+4, 1] )
+	1	+4
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	NAME
+	4	P
+	1	+4
+	5	ARG-2
+	4	+2		( LET val = arg[p+4, 2] )
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	VAL
+	0	VAL		( LET len = \val )
+	/4	0
+	5	LEN
+	4	NAME		( LET a = lookup[name] )
+	11	LOOKUP
+	8	LOOKUP+1
+	5	A
+	1	+2		( LET b = arg[a+2, 1] )
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	B
+	0	A		( LET max = a\1 - b - 1 )
+	/2	1
+	1	-1
+	5	MAX
+	2	LEN		( IF len>max DO ... )
+	9 	FI6
+	7	FI6
+	4	;+2		( ...DO error [...] )
+	8	ERROR
+	0 ;+1
+	\New
+	\ va
+	\lue
+	\ to
+	\o l
+	\ong
+	\\
+FI6	4	+0		( FOR i = 0 TO len DO b\i := val\i )
+	5	I
+FOR5	2	LEN
+	9	OD5
+	4	VAL
+	1	I
+	5	W1
+	4	B
+	1	I
+	5	W2
+	0	W1
+	/4	0
+	0	W2
+	/5	0
+	10	I
+	4	I
+	8	FOR5
+OD5	4	B		( b\[len+1] := s_eom )
+	1	LEN
+	5	W1
+	0	W1
+	4	SEOM
+	/5	1
+	8	RET		( GOTO ret)
+	
+
+A1	>1
+A2	>1
+NE	>1
+
+
+( built in macro "def" - add macro defintion to enviroment. )
+	
+DEF				( CASE s_def: )
+	4	P		( LET a1 = arg[p+4, 1] )
+	1	+4
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	A1
+	1	-2		( LET ne = a1-2 )
+	5	NE
+	4	P
+	1	+4
+	5	ARG-2
+	4	+2		 ( LET a2 = arg[p+4, 2] )
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	A2
+	4	P		( LET q = p+4 )
+	1	+4
+	5	Q
+UNTIL6	0	Q		( UNTIL \q<0 DO ... )
+	/4	0
+	9	OD6
+	1	Q		( ... q := q+\q+1 )
+	1	+1
+	5	Q
+	8	UNTIL6		
+OD6	0	A2		( a2\[\a2+1] := s_eom )
+	/4	0
+	1	+1
+	1	A2
+	5	W1
+	0	W1
+	4	SEOM
+	/5 	0
+	0	NE		( ne\0, ne\1 := e, q )
+	4	E
+	/5	0
+	4	Q
+	/5	1
+	4	NE		( e := ne )
+	5	E
+	1	-1		( c, t := p\1, e-1 )
+	5	T
+	0	P
+	/4	1
+	5	C
+	/4	0		( p := p\0 )
+	5	P
+	8	LOOP1		( LOOP )
+
+
+( Built in macro "val" - value of name )
+
+VALUE	4	P		( LET a = lookup[arg[p+4, 1]] )
+	1	+4
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1		
+	11	LOOKUP		
+	8	LOOKUP+1
+	5	A
+	1	+2		( LET b = arg[a+2, 1] )
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	B
+	0	B		( FOR i = 1 TO b\0 DO putch[b\i] )
+	/4	0
+	7	RET
+	1	B
+	5	W1
+FOR6	10	B
+	0	B
+	/4	0
+PUT	11	PUTCH
+	8	PUTCH+1
+	4	B
+	2	W1
+	7	RET
+	8	FOR6	
+
+( Built in macro "eval" - evaluate arithmetic expression. )
+
+EVAL	4	+0		( ensure NCH uses PUTCH )
+	5	NCH
+	4	P		( c := arg[p+4, 1] )
+	1	+4
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	5	C
+	4	+0		( wrn[exp[0]] )
+	11	EXP
+	8	EXP+1
+	11	WRN
+	8	WRN+1
+	8	RET		( GOTO ret )
+
+
+( RDN: read decimal number from current input. )
+
+[ RDN CH GETCH ]
+
+VAL	>1
+W	>1
+
+RDN	>1			( LET rdn[] = VALOF )
+	4	+0
+	5	VAL		( LET val = 0 )
+	4	CH		( WHILE '0' <=ch<='9' DO )
+WHILE	1	-48		( '0' )
+	9	EXIT
+	1	-10
+	9	;+2
+	8	EXIT
+	1	+10
+	5	W
+	4	VAL		( val := 10*val + ch - '0' )
+	12	+10
+	14	17
+	1	W
+	5	VAL
+	11	GETCH		( ch := getch[] )
+	8	GETCH+1
+	5	CH
+	8	WHILE
+EXIT	4	VAL		( RESULTIS val )
+	0	RDN
+	/8	1
+
+
+( BEXP: decode basic arithmetic expression: 
+  bexp ::=  n 
+  bexp ::= -n 
+  bexp ::= [exp] - n.b. bra and ket )
+
+[ BEXP BADEXP CH S ERROR EXP GETCH PUSH RDN ]
+	
+RES	>1
+OPCODE 	>1
+
+BEXP	>1			( LET bexp[] = VALOF )
+	11	GETCH		( ch := getch [] )
+	8	GETCH+1
+	5	CH
+	1	-48		( SWITCHON ch INTO )	
+	9	NOTDIG
+	1	-10
+	9	DIGIT		( 0...9 )
+BADEXP	4	STR1		( DEFAULT: error[...] )
+	8	ERROR
+DIGIT	11	RDN		( RESULTIS rdn[] )
+	8	RDN+1
+RETURN	0	BEXP
+	/8	1
+NOTDIG	1	+5		( 43 = '+' )
+	7	PLUS
+	1	-2		( 45 = '-' )
+	7	MINUS
+	1	+5		( 40 = '(' )
+	7	BRA
+	1	+8		( 32 = space )
+	7	BEXP+1
+	1	+22		( 10 = newline )
+	7	BEXP+1
+	1	+1		( 9 = tab )
+	7	BEXP+1
+	8	BADEXP
+
+PLUS 	4	+0
+	8	;+2
+MINUS	4	+1
+	5	OPCODE
+	4	BEXP		( LET res = exp[1] )
+	11	PUSH		( recursive call )
+	8	PUSH+1
+	4	OPCODE
+	11	PUSH
+	8	PUSH+1
+	4	+2		
+	11	EXP
+	8	EXP+1
+	5	RES
+	4	S
+	1	-2
+	5	S
+	0	S
+	/4	2		( stacked OPCODE )
+	7	;+4
+	4	RES		( RESULTIS -exp[2] )
+	2	+0		
+	8	;+2
+	4	RES		( RESULTIS  exp[2] )
+	0	BEXP
+	/8	1
+
+BRA 	4	BEXP		( LET res = exp[1] )
+	11	PUSH		( recursive call )
+	8	PUSH+1
+	4	+1		( LET res = exp[1]  )
+	11	EXP
+	8	EXP+1
+	5	RES
+	4	S		( unstack )
+	1	-1
+	5	S
+	0	S
+	/4	1
+	5	BEXP
+	11	GETCH		( ch := getch[] )
+	8	GETCH+1
+	5	CH
+	4	RES
+	0	BEXP
+	/8	1	
+
+STR1	0 ;+1
+	\Bad
+	\ ex
+	\pre
+	\ssi
+	\on\
+
+
+( EXP: decode arithmetic expression:
+  exp ::= exp * exp
+  exp ::= exp / exp
+  exp ::= exp percent exp - remainder 
+  exp ::= exp + exp
+  exp ::= exp - exp )
+
+[ EXP CH S SEOM BADEXP BEXP GETCH PUSH ]
+
+( EXP is recursive. Initially we stack EXP link and A.
+  After a := bexp[] we then stack A.  On all exits we
+  unstack as appropriate. )
+
+GET	11	GETCH
+	8	GETCH+1
+	5	CH
+	8	DECODE
+
+N	>1
+A	>1
+RES	>1
+
+EXP	>1			( LET exp[n] = VALOF )
+	5	N
+	4	EXP		( prepare for recursive calls )
+	11	PUSH
+	8	PUSH+1
+	4	N
+	11	PUSH
+	8	PUSH+1
+	11	BEXP		( LET a = bexp[] )
+	8	BEXP+1
+	5	A
+LOOP	4	S		( restore N )
+	1	-1
+	5	N
+	0	N
+	/4	1
+	5	N	
+	4	CH		( SWITCHON ch INTO )
+DECODE	1	-42		( 42 = '*' )
+	7	MULT
+	1	-5		( 47 = / )
+	7	DIV
+	1	+10		( 37 = percent )
+	7	REM
+	1	-6		( 43 = '+' )
+	7	ADD
+	1	-2		( 45 = '-' )
+	7	SUB
+	1	+13		( 32 = space )
+	7	GET
+	1	+22		( 10 = newline )
+	7	GET
+	1	+1
+	7	GET		( 9 = tab )
+
+DEFAUL	4	N		( IF n>1 ... )
+	2	+1
+	9	RESA
+	2	+1		( ... OR n=0 & ch=s_eom ) 
+	7	NZERO		
+	1	-1		( ... OR n=1 & ch='ket' ... )
+	7	NEQ1		
+	8	ERR
+NZERO	4	CH
+	2	SEOM
+	7	RESA		
+	8	ERR		
+NEQ1	4	CH
+	1	-41		( 41 = 'ket' )
+	7	;+2
+	8	ERR
+RESA	4	S		( unstack EXP )
+	1	-2
+	5	S
+	0	S
+	/4	1
+	5	EXP
+	4	A		( RESULTIS a )
+	0	EXP
+	/8	1
+ERR	4	S
+	1	-2
+	5	S
+	8	BADEXP		( error[...] )
+
+( operators )
+MULT	4	+0
+	8	PRI3
+DIV	4	+1
+	8	PRI3
+REM	4	+2
+	8	PRI3
+ADD	4	+3
+	8	PRI2
+SUB	4	+4
+	8	PRI2
+
+( shared code for priority 3 operators, * / percent )
+PRI3	5	OPCODE
+	4	+3		( IF n<3 DO ... )
+	8	;+3		( join priority 2 )
+
+( shared code for priority 2 operators, + - )
+PRI2	5	OPCODE
+	4	+2		( IF n<2 DO ... )
+	2	N
+	9	;+2
+	8	RESA		( RESULTIS a )
+
+( shared code for all operators )	
+DOOP	4	A		( prepare for recursive call )
+	11	PUSH
+	8	PUSH+1
+	4	OPCODE
+	11	PUSH
+	8	PUSH+1
+	0	OPCODE
+	/4	OPPRIO		( a := a OP exp[OPRIO]; LOOP )
+	11	EXP
+	8	EXP+1
+	5	RES
+	4	S		( unstack )
+	1	-2
+	5	S
+	0	S
+	/4	1
+	5	A
+	/0	2		( stacked OPCODE )
+	/8	OPACT	
+
+OPCODE 	>1
+
+	( operator priority - indexed by OPCODE )
+OPPRIO	+3			( * )
+	+3			( / )
+	+3			( percent )
+	+2			( + )
+	+2			( - )
+
+	( operator action, indexed by OPCODE )
+OPACT	8	OPMUL
+	8	OPDIV
+	8	OPREM
+	8	OPADD
+	8	OPSUB
+
+OPMUL	4	RES		( a := a * res )
+	12	A
+	14	17
+	5	A
+	8	LOOP
+
+OPDIV	4	A		( a := a / res )
+	14	8176
+	13	RES
+	14	8191
+	5	A
+	8	LOOP
+
+OPREM	4	A		( a := a REM res )
+	14	8176
+	13	RES
+	14	8191
+	0	+0
+	12	RES
+	14	17
+	2	A
+	5	A
+	8	LOOP
+
+OPADD  	4	A		( a := a + res )
+	1	RES
+	5	A
+	8	LOOP
+
+OPSUB	4	RES		( a := a - res )
+	2	A
+	5	A
+	8	LOOP	
+
+
+( NCH: auxiliary subroutine to WRN. Depending upon NCH-1 value outputs
+  to current output [punch or stack] using PUTCH, or as part of error 
+  or trace output using WRC. )
+[ NCH WRC PUTCH ]
+
+CH	>1
+WRCA	0 WRC
+PUTCHA	0 PUTCH
+FLAG	+0			( 0 = PUTCH otherwise WRC )	
+
+NCH	>1
+	5	CH
+	4	FLAG		
+	7	;+3
+	0	WRCA
+	8	;+2
+	0	PUTCHA
+	4	CH
+	/11	0
+	/8	1
+	0	NCH
+	/8	1	
+
+
+( WRN: output decimal number with minus sign if required.
+  Does not handle -131072. )
+
+[  WRN NCH PUSH WRC ]
+
+N	>1
+S	-1			( local stack pointer )
+STK	>5			( local stack for N )
+
+WRN	>1			( LET wrn[n] BE )
+	5	N
+	9	THEN1		( IF n < 0 DO ... )
+	8	FI1
+THEN1	2	+0		( n := -n )
+	5	N
+	4	+45		( wrc['-'] )
+	11	NCH
+	8	NCH+1
+	4	N
+FI1	2	+9		( if N>9 DO ... )
+	9	THEN2
+	4	N		( output N as digit )
+NEXT	14	8175		( wrch[n REM 10] + '0' )
+	13	+5
+	14	8191
+	12	+10
+	14	17
+	2	N
+	1	+48
+	11	NCH
+	8	NCH+1
+	4	S		( unstack recursive calls )
+	9	RETURN
+	1	-1
+	5	S
+	0	S
+	/4	STK+1
+	5	N
+	8	NEXT
+RETURN	0	WRN
+	/8	1
+THEN2	10	S		( stack recursive call )
+	0	S
+	4	N	
+	/5	STK		( stk\s := n )		
+	14	8175		( wrn[n/10] )
+	13	+5
+	14	8191
+	5	N
+	8	FI1		
+
+	
+
+( WRC: output character to paper tape punch with wrapping at
+  column 70, and ? substituted for non-characters.  Used for
+  error and tracing output. )
+	
+[ WRC CHPOS CHOPL CHOPE ]
+
+CH	>1
+
+WRC	>1			( LET wrc[ch] BE )
+	5	CH
+	2	+10		( IF ch='*n' DO ... )
+	7	THEN1
+	8	FI1
+THEN1	5	CHPOS		( ... DO newline[]; chpos := 0; RETURN )
+	4	+10		
+	11	CHOPL
+	8	CHOPE
+RETURN	0	WRC
+	/8	1
+FI1	4	CHPOS		( IF chpos > 70 DO ... )
+	2	+70
+	9	THEN2		
+	8	FI2
+THEN2	4	+10		( ... DO  wrc['*n'] )	
+	11	CHOPL
+	8	CHOPE
+	4	+0
+	5	CHPOS
+FI2	4	+32		( UNLESS '*s'<=ch<=127 DO ... )
+	2	CH
+	9	THEN3
+	1	+95
+	9	THEN3
+	4	CH
+	8	FI3
+THEN3	4	+63		( ... DO ch := '?' +63 )
+FI3	11	CHOPL
+	8	CHOPE
+	10	CHPOS		( chpos := chpos+1 )
+	0	WRC
+	/8	1
+	
+
+( ERROR: report an error and punch out diagnostic information. )
+
+[ ERROR E F H P S T BTRACE PRCALL RET WRENV WRS ]
+
+ERRSTR	0 ;+1
+	\^Er
+	\ror
+	\: \
+
+MESS	>1
+
+ERROR	5	MESS		( LET error[mess] BE )
+	4	ERRSTR		( wrs[...] )
+	11	WRS
+	8	WRS+1
+	4	MESS		( wrs[mess] )	
+	11	WRS
+	8	WRS+1
+	4	T		( no trace if stack overflow  )
+	2	S
+	7	RET		
+	4	STR1		( wrs[...] )
+	11	WRS
+	8	WRS+1
+	4	F		( TEST f=0 )
+	7	THEN2
+	5	PRCALL-3	( prcall [20, f, h, s] )
+	4	+20
+	5	PRCALL-4
+	4	H
+	5	PRCALL-2
+	4	S
+	5	PRCALL-1
+	11	PRCALL
+	8	PRCALL+1
+	8	FI2
+THEN2	4	STR2
+	11	WRS
+	8	WRS+1
+FI2	4	STR3		( wrs[...] )
+	11	WRS
+	8	WRS+1
+	4	P		( btrace[p, 20] )
+	5	BTRACE-2
+	4	+20	
+	5	BTRACE-1
+	11	BTRACE
+	8	BTRACE+1
+	4	STR4		( wrs[...] )
+	11	WRS
+	8	WRS+1
+	4	E		( wrenv[e, 4] )
+	5	WRENV-2
+	4	+4
+	5	WRENV-1
+	11	WRENV
+	8	WRENV+1
+	4	STR5		( wrs[...] )
+	11	WRS
+	8	WRS+1
+	8 	RET		( longjump [rec_p, rec_l] )
+
+STR1	0 ;+1
+	\^In
+	\com
+	\ple
+	\te
+	\cal
+	\ls:
+	\ \
+STR2	0 ;+1
+	\non
+	\e\
+STR3	0 ;+1
+	\^Ac
+	\tiv
+	\e c
+	\all
+	\s:^
+	\\
+STR4	0 ;+1
+	\Env
+	\iro
+	\nme
+	\nt:
+	\^\
+STR5	0 ;+1
+	\End
+	\ of
+	\ er
+	\ror
+	\ me
+	\ssa
+	\ge^
+	\\
+
+
+( PRCALL: Auxiliary routine to ERROR.  Outputs current incomplete 
+  calls on stack. )
+
+[ PRCALL S PUSH WRCALL WRS ]
+
+N	>1
+F	>1
+H	>1
+SS	>1
+
+PRCALL	>1			( LET prcall[n, f, h, s] BE )
+	4	F
+	7	RETURN		( UNLESS f = 0 )
+	4	N		( TEST n=0 )
+	7	THEN1
+	4	SS		( stack current state )
+	11	PUSH		( n.b. n not saved )
+	8	PUSH+1
+	4	H
+	11	PUSH
+	8	PUSH+1
+	4	F
+	11	PUSH
+	8	PUSH+1
+	4	PRCALL
+	11	PUSH
+	8	PUSH+1
+	4	N
+	1	-1		( prcall[n-1, \f, f\1, f-1] )
+	5	PRCALL-4
+	0	F
+	/4	0
+	5	PRCALL-3	
+	/4	1
+	5	PRCALL-2
+	4	F
+	1	-1
+	5	PRCALL-1
+REC	11	PRCALL
+	8	PRCALL+1
+	4	+4		( unstack previous state )
+	2	S
+	5	S
+	0	S
+	/4	1
+	5	SS
+	/4	2
+	5	H		( \h := s-h )
+	2	SS
+	0	H
+	/5	0
+	0	S
+	/4 	4
+	5	PRCALL
+	/4 	3
+	5	F		( wrcall[f+4, s] )
+	1	+4
+	5	WRCALL-2
+	4	SS
+	5	WRCALL-1
+	11 	WRCALL
+	8	WRCALL+1
+	8	FI1
+THEN1	4	STR1
+	11	WRS
+	8	WRS+1
+FI1
+RETURN	0 	PRCALL
+	/8	1
+
+STR1 	0 ;+1
+	\...
+	\\
+
+
+( BTRACE: Auxiliary routine of ERROR.  Outputs a back trace
+  of active macro calls from point p to depth n. )
+
+[ BTRACE CAPPLY WRC WRCALL WRS ]
+
+P	>1
+N	>1
+
+BTRACE 	>1			( LET btrace[p, n] BE )
+	4	N		( IF n=0 DO ... )
+	7	;+2
+	8	FI1
+	4	STR1		( ... wrs[...] )
+	11	WRS
+	8	WRS+1
+FI1	4	P		( IF p=0 OR n=0 RETURN )
+	7	RETURN
+	4	N
+	7	RETURN
+	4	P		( wrcall[p+4, p\3] )
+	1	+4
+	5	WRCALL-2
+	0	P
+	/4	3
+	5	WRCALL-1
+	11	WRCALL
+	8	WRCALL+1
+	4	CAPPLY		( wrc[c_apply] )
+	11	WRC
+	8	WRC+1
+	4	+10		( wrc[*n] )
+	11	WRC
+	8	WRC+1
+	0	P		( p, n := \p, n-1 )
+	/4	0
+	5	P
+	4	N
+	1 	-1
+	5	N
+	8	BTRACE+2	( REPEAT )
+RETURN	0	BTRACE
+	/8	1
+
+STR1	0 ;+1
+	\...
+	\^\
+
+
+( WRCALL: Auxiliary routine to ERROR and tracing. Outputs a macro call 
+  stacked at a. )
+
+[ WRCALL CCALL CSEP WRC WRARG ]
+
+SEP	>1
+A	>1
+B	>1
+
+WRCALL	>1			( LET wrcall[a, b] BE )
+	4	CCALL		( sep := c_call )
+	5	SEP
+UNTIL1	4	A		( UNTIL a>= b DO ... )
+	2	B
+	9	OD1
+	7	OD1
+	4	SEP		( ... wrc[sep] )
+	11	WRC
+	8	WRC+1
+	4	A		( ... wrarg[a] )
+	11	WRARG
+	8	WRARG+1
+	0	A		( ... a := a + \a + 1 )
+	/4	0
+	1	A
+	1	+1
+	5	A
+	4	CSEP		( ... sep := c_sep )
+	5	SEP
+	8	UNTIL1
+OD1	0	WRCALL
+	/8	1
+
+
+( Auxiliary routine to WRCALL.  Outputs an argument stacked at a. )
+
+[ WRARG WRC ]
+
+A	>1
+PTR	>1
+TO	>1
+	
+WRARG	>1			( LET wrarg[a] BE )
+	5	A
+	1	+1		( FOR ptr = a+1 TO a + \a DO ... )
+	5	PTR
+	0	A
+	/4	0
+	1	A
+	5	TO
+FOR	4	PTR
+	2	TO
+	9	OD
+	0	PTR		( ... wrc[\ptr] )
+	/4	0
+	11	WRC
+	8	WRC+1
+	10	PTR
+	8	FOR
+OD	0	WRARG
+	/8	1	
+
+
+( WRENV: Auxiliary routine to ERROR.  OUtput the top n entries
+  of the environment chain e. )
+
+[ WRENV ARG WRARG WRC WRS ]
+
+EPLS2	>1
+E	>1
+N	>1
+
+WRENV	>1			( LET wrenv[e, n] BE )
+	4	N		( UNLESS n = 0 OR e = 0 DO ... )
+UNLESS	7	FI
+	4	E
+	7	FI
+	4	STR1		( wrs[...] )
+	11	WRS
+	8	WRS+1
+	4	E		( wrarg[arg[e+2, 0]] )
+	1	+2
+	5	EPLS2
+	5	ARG-2
+	4	+0
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	11	WRARG
+	8	WRARG+1
+	4	STR2		( wrs[...] )
+	11	WRS
+	8	WRS+1
+	4	EPLS2		( wrarg[arg[e+2, 1]] )
+	5	ARG-2
+	4	+1
+	5	ARG-1
+	11	ARG
+	8	ARG+1
+	11	WRARG
+	8	WRARG+1
+	4	+10		( wrc['*n'] )
+	11	WRC
+	8	WRC+1
+	0	E		( wrenv[\e, n-1] )
+	/4	0
+	5	E
+	4	N
+	1	-1
+	5	N
+	8	UNLESS
+FI 	0	WRENV
+	/8	1
+
+STR1	0 ;+1
+	\Nam
+	\e: 
+	\\
+STR2	0 ;+1
+	\  V
+	\alu
+	\e:
+	\\
+
+
+( WRS: Auxiliary routine to ERROR.  Output a string in
+  SIR internal code using WRC.  String is terminated by 
+  \ character. [N.B. Terminating \ is not output,
+  ^ indicates newline.] )
+
+[ WRS WRC ]
+
+
+STR	>1
+I	>1
+W	>1
+	
+WRS	>1	(link)
+	5	STR		( save address of string )
+NXTWD	4	-3		( set up next word of string )
+	5	I
+	0	STR
+	/4	0
+	5	W
+	14	8180		( top character )
+NXTCH	3	W
+	6	+63		( 6 bit SIR internal code )
+	1	-1
+	7	NL		( newline )
+	1	-2
+	7	EXIT		( 03 = \ terminates )
+	1	+35		( ACD code to output )
+OUTPUT	11	WRC
+	8	WRC+1
+	10	I		( count off chs in w )
+	4	I
+	9	;+3
+	10	STR
+	8	NXTWD		( start a new word )
+	4	W
+	14 	8181
+	8	NXTCH		( extract next ch )
+NL	4	+10
+	8	OUTPUT
+EXIT	0 	WRS
+	/8 	1
+
+((PAPER TAPE INPUT & OUTPUT SUBROUTINE, 22/5/72)
+
+[CHIP CHIPF CHIPL CHIPE CHOPF CHOPL CHOPE CHOPC ERRORL ERRORE]
+
+(TELECODE INPUT SUBROUTINE)
+(Appears, to the users programme, to read one 903/ISO or 920
+ Telecode character from tape, and convert to internal
+ code, but reads tape in one line at a time)
+CHIPE    4       CHIPF
+         7       FILBUF          (Test if first entry)
+         4       CHIP
+         1       -10             (C-10, test if <N>)
+         7       FILBUF
+         1       -10             (C-20, test if <H>)
+         7       ;+0
+READBF   0       BUFCT
+         4       BUFCT
+         1       -61
+         9       ;+4
+         /4      LINE-61         (Read character from m.s. end)
+         14      8185
+         8       ;+3
+         /4      LINE            (Read character from l.s. end)
+         6       &177
+         5       CHIP
+         10      BUFCT
+         0       CHIPL
+         /8      1
+FILBUF   5       BUFCT
+(+1)     4       +0
+         5       BAR
+(+3)     15      2048
+         5       CHIP
+         11      BITCTL
+         8       BITCTE
+         14      17
+         9       CH1             (Parity error)
+         4       CHIP
+         7       FILBUF+3        (Ignore blanks)
+         6       &177            (Delete parity from track 8)
+         5       CHIP
+         1       -127            (Ignore erases)
+         7       FILBUF+3
+         4       CHIPF           (Read first charater)
+         7       ;+2             (Jump iff first entry)
+         8       ;+3
+         4       CHIP
+         5       CHIPF           (Store first character)
+         1       -13             (Test if 903/ISO C.R.)
+         7       IN903
+         1       +3              (Test if 903/ISO L.F./N.L.)
+         7       IN903
+         1       -8              (Test if 920 N.L.)
+         7       IN920
+         8       CH2             (1st character not newline)
+IN920    4       BAR
+         7       SIP
+         4       CHIP
+         1       -99             (Test if S)
+         7       ;+6
+         1       +40             (Test if <)
+         7       ;+5
+         1       +15             (Test if >)
+         7       ;+4
+         8       CH3             (Illegal character after vert. bar)
+         4       -3
+         1       -57
+         1       +96
+         8       DIP
+SIP      4       CHIP
+         1       -126            (Test if vertical bar)
+         7       ;+2
+         8       ;+3
+         10      BAR
+         8       FILBUF+3
+         0       CHIP
+         /4      CODTAB
+         6       &177
+         7       CH3             (Jump iff illegal character)
+DIP      5       CHIP
+         8       ;+4
+IN903    4       CHIP
+         1       -13             (C-13, test if C.R.)
+         7       FILBUF+3
+         0       BUFCT
+         4       BUFCT
+         1       -61
+         9       ;+7
+         /4      LINE-61
+         14      8185
+         4       CHIP
+         14      7
+         /5      LINE-61         (Store character in m.s. end)
+         8       ;+3
+         4       CHIP
+         /5      LINE            (Store character in l.s. end)
+         10      BUFCT
+         4       CHIP
+         1       -10             (C-10, test if <N>)
+         7       CLECT
+         1       -10             (C-20, test if <H>)
+         7       CLECT
+         4       BUFCT
+         1       -121
+         7       CH4             (Jump iff line too long)
+         8       FILBUF+1
+CLECT    5       BUFCT
+         8       READBF
+(TELECODE OUTPUT SUBROUTINE)
+(Prints one or several internal code
+ characters in 903/ISO or 920 Telecode;
+ or in legible tape form)
+CHOPE    5       CHOP
+         6       +127
+         5       OPC
+         4       CHOPF
+         7       BLANKS          (Test for 1st entry)
+TESCOD   4       CHOPC
+         7       OP920           (Test output telecode)
+         9       OPLEG
+(OP903)  4       OPC
+         1       -9              (C-9,  test if <T>)
+         7       ;+4
+         1       -1              (C-10, test if <N>)
+         7       ;+3
+         8       INSPTY
+         4       +19             (Prefix <T> by <S>)
+         1       +141            (Carriage Return)
+         15      6144
+         8       INSPTY
+OP920    0       OPC
+         /4      CODTAB
+         9       ;+4
+         4       +126            (Vertical Bar)
+         15      6144
+         /4      CODTAB
+         14      8185
+         6       &177
+         7       CH3             (Jump iff illegal character)
+         5       OPC
+INSPTY   4       OPC
+         11      BITCTL
+         8       BITCTE
+         2       +0
+         14      7
+         1       OPC
+         15      6144
+         4       CHOP
+         6       &177
+         1       -10             (C-10, test if <N>)
+         7       NL
+         1       -10             (C-20, test if <H>)
+         7       BLANKS
+         8       OUTEND
+OPLEG    4       OPC
+         1       -20             (C-20, test if <H>)
+         7       BLANKS
+         1       -12
+         9       ;+4             (Values below 32: Set to 0)
+         1       -64
+         9       ;+3             (32 to 95: Subtract 32)
+         8       ;+3             (96 onwards: Subtract 64)
+         4       -64
+         1       +32
+         1       +32
+         14      8191
+         5       B
+         14      18
+         0       B
+         9       ;+3
+         /4      LTAB1
+         8       ;+4
+         /4      LTAB1
+         /0      LTAB1+1
+         14      9
+         14      8174
+         4       +0
+         14      9
+         5       FIRST
+         4       +0
+         14      9
+         5       LAST
+LOOP     4       FIRST
+         14      8191
+         5       B
+         14      18
+         0       B
+         9       ;+4
+         /4      LTAB2
+         14      8184
+         8       ;+2
+         /4      LTAB2
+         15      6144
+         10      FIRST
+         4       LAST
+         2       FIRST
+         9       LOOP
+         8       ;+3
+NL       15      6144
+         15      6144
+         15      6144
+         15      6144
+OUTEND   4       CHOP
+         1       +128
+         9       CHOPE
+         6       &177
+         0       CHOPL
+         /8      1
+BLANKS   4       -46080          (-180*256)
+         15      6144
+         1       +256
+         9       ;-2
+         4       CHOPF
+         2       -1
+         5       CHOPF
+         9       TESCOD
+         8       OUTEND
+(FAST BIT-COUNTING SUBROUTINE)
+(Places the parity of the character in the
+ Acctr. on entry in the Acctr.)
+BITCTE   0       BITCTL
+         14      8188
+         1       =14 1
+         5       ;+6
+         4       +0
+         14      4
+         1       =14 1
+         5       ;+5
+         2       &323130         (Set Q-register)
+TOTAL    >1
+         5       TOTAL
+         2       &323130         (Set Q-register)
+BITCTL   >1
+         1       TOTAL
+         /8      1
+(WORKSPACES)
+CHIPF    >1                      (+0 on first entry to CHIPE S/R)
+CHIPL    >1                      (Link)
+CHIP     >1                      (Last character read in)
+CHOPF    >1                      (+0 on first entry to CHOPE S/R)
+CHOPL    >1                      (Link)
+CHOPC    +1                      (Output telecode: +0=920, +1=903, &400000=legib
+le)
+BUFCT    >1                      (Line buffer pointer)
+B
+BAR
+OPC      >1
+FIRST    >1                      (Address of next character)
+LAST     >1                      (Address of last character)
+LINE     >61                     (Line buffer)
+CHOP     >1
+(CODE TABLE)
+(A table for converting 920 Telecode to & from
+ an internal 7-bit code. The internal code is basically
+ 903/ISO code, and is given below.)
+CODTAB   &400000                 (0)
+         &400000                 (1)
+         &400000                 (2)
+         &400013                 (3)
+         &400000                 (4)
+         &400000                 (5)
+         &400000                 (6)
+         &400000                 (7,     Bell)
+         &400000                 (8)
+         &405051                 (9,     Horizontal tab, <T>)
+         &404454                 (10,     New line or Line feed, <N>)
+         &400600                 (11,     Vertical tab or Throw)
+         &400072                 (12)
+         &400000                 (13)
+         &400000                 (14)
+         &400057                 (15)
+         &400040                 (16)
+         &400000                 (17)
+         &400012                 (18)
+         &400000                 (19)
+         &407011                 (20,     Stopcode, <H>)
+         &400000                 (21)
+         &400000                 (22)
+         &400000                 (23)
+         &400050                 (24)
+         &400000                 (25)
+         &400000                 (26)
+         &400043                 (27)
+         &400024                 (28)
+         &400046                 (29)
+         &400052                 (30)
+         &400000                 (31)
+         &404000                 (32,     Space, <S>)
+         &400061                 (33,     Exclamation mark)
+         &417462                 (34,  "  Tilde or Ditto)
+         &406600                 (35,  \  Sterling sign or 1/2)
+         &030664                 (36,  $  Dollar sign)
+         &413600                 (37,     Percentage sign)
+         &407200                 (38,  &)
+         &016667                 (39,  `  Acute accent or Apostrophe)
+         &406070                 (40,     Open round bracket)
+         &402335                 (41,     Close round bracket)
+         &407477                 (42,  *)
+         &413340                 (43,  +)
+         &402476                 (44,  ,)
+         &413453                 (45,  -)
+         &417655                 (46,  .)
+         &403645                 (47,  /)
+         &414060                 (48,  0)
+         &410200                 (49,  1)
+         &410400                 (50,  2)
+         &414663                 (51,  3)
+         &411000                 (52,  4)
+         &415265                 (53,  5)
+         &415466                 (54,  6)
+         &411600                 (55,  7)
+         &412133                 (56,  8)
+         &416271                 (57,  9)
+         &403047                 (58,  :)
+         &424074                 (59,  ;)
+         &416675                 (60,  <)
+         &417136                 (61,  =)
+         &413042                 (62,  >)
+         &412456                 (63,  ?  Suffix 10 or Question mark)
+         &013077                 (64,  `  Grave accent or AT symbol)
+         &420301                 (65,  A)
+         &420502                 (66,  B)
+         &424743                 (67,  C)
+         &421104                 (68,  D)
+         &425345                 (69,  E)
+         &425546                 (70,  F)
+         &421707                 (71,  G)
+         &422110                 (72,  H)
+         &426351                 (73,  I)
+         &426552                 (74,  J)
+         &422713                 (75,  K)
+         &427154                 (76,  L)
+         &423315                 (77,  M)
+         &423516                 (78,  N)
+         &427757                 (79,  O)
+         &430073                 (80,  P)
+         &434341                 (81,  Q)
+         &434542                 (82,  R)
+         &430703                 (83,  S)
+         &435144                 (84,  T)
+         &431305                 (85,  U)
+         &431506                 (86,  V)
+         &435747                 (87,  W)
+         &436150                 (88,  X)
+         &432311                 (89,  Y)
+         &432512                 (90,  Z)
+         &416153                 (91,  [)
+         &406714                 (92,  \  Sterling sign or Reverse /)
+         &412355                 (93,  ])
+         &417356                 (94,  ^)
+         &400117                 (95,     Left-pointing arrow)
+         &013120                 (96,  `  Grave accent or AT symbol)
+         &424361                 (97,  a)
+         &424562                 (98,  b)
+         &420723                 (99,  c)
+         &425164                 (100,  d)
+         &421325                 (101,  e)
+         &421526                 (102,  f)
+         &425767                 (103,  g)
+         &426170                 (104,  h)
+         &422331                 (105,  i)
+         &422532                 (106,  j)
+         &426600                 (107,  k)
+         &423000                 (108,  l)
+         &427200                 (109,  m)
+         &427400                 (110,  n)
+         &423600                 (111,  o)
+         &434160                 (112,  p)
+         &430321                 (113,  q)
+         &430522                 (114,  r)
+         &434763                 (115,  s)
+         &431124                 (116,  t)
+         &435365                 (117,  u)
+         &435566                 (118,  v)
+         &431727                 (119,  w)
+         &432130                 (120,  x)
+         &436371                 (121,  y)
+         &436572                 (122,  z)
+         &400000                 (123)
+         &400000                 (124)
+         &400000                 (125)
+         &400000                 (126)
+         &400000                 (127)
+(ERROR INDICATIONS)
+CH1      11      ERRORL
+         8       ERRORE
+         \PAR
+         \ITY
+         \ ER
+         \ROR
+         \.
+CH2      11      ERRORL
+         8       ERRORE
+         \1ST
+         \ CH
+         \ARA
+         \CTE
+         \R N
+         \OT
+         \NEW
+         \LIN
+         \E.
+CH3      11      ERRORL
+         8       ERRORE
+         \ILL
+         \EGA
+         \L C
+         \HAR
+         \ACT
+         \ER.
+CH4      11      ERRORL
+         8       ERRORE
+         \OVE
+         \R 1
+         \20
+         \CHA
+         \RAC
+         \TER
+         \S O
+         \N L
+         \INE
+         \.
+(LEGIBLE TAPE TABLES)
+LTAB1    &000007
+         &010013
+         &021027
+         &040046
+         &051054
+         &057066
+         &075077
+         &106110
+         &121130
+         &133141
+         &147155
+         &163171
+         &200206
+         &214216
+         &220225
+         &234241
+         &247252
+         &260266
+         &274302
+         &307314
+         &323331
+         &334343
+         &351357
+         &366375
+         &404412
+         &421427
+         &435444
+         &452461
+         &470477
+         &506515
+         &521527
+         &533540
+         &547000
+LTAB2    &000000
+         &000000
+         &000000
+         &000277
+         &003400
+         &003630
+         &177231
+         &114602
+         &100106
+         &104777
+         &177611
+         &071207
+         &042447
+         &010010
+         &000344
+         &121341
+         &073211
+         &110646
+         &040240
+         &002002
+         &000474
+         &041201
+         &100502
+         &036102
+         &022020
+         &177420
+         &022102
+         &004010
+         &004176
+         &004010
+         &004260
+         &070010
+         &004010
+         &004010
+         &004010
+         &140300
+         &100100
+         &020020
+         &004000
+         &002002
+         &000474
+         &041201
+         &100601
+         &041074
+         &101377
+         &100302
+         &120621
+         &104601
+         &103102
+         &100611
+         &104611
+         &073010
+         &004014
+         &005377
+         &004217
+         &104611
+         &104611
+         &070576
+         &104611
+         &104611
+         &071003
+         &100501
+         &020421
+         &004407
+         &073211
+         &104611
+         &104566
+         &043211
+         &104611
+         &104576
+         &143306
+         &133166
+         &004020
+         &022102
+         &100444
+         &022044
+         &022044
+         &022044
+         &100502
+         &022020
+         &004370
+         &000160
+         &104210
+         &070001
+         &001004
+         &177011
+         &004411
+         &004776
+         &177611
+         &104611
+         &104566
+         &077201
+         &100601
+         &100502
+         &177601
+         &100601
+         &100576
+         &177611
+         &104611
+         &100777
+         &004411
+         &004401
+         &077201
+         &100601
+         &110562
+         &010377
+         &004010
+         &004010
+         &177601
+         &177601
+         &040601
+         &100577
+         &000401
+         &000777
+         &004020
+         &022102
+         &100777
+         &100200
+         &100200
+         &100377
+         &001004
+         &004004
+         &001377
+         &177404
+         &000010
+         &010040
+         &177576
+         &100601
+         &100601
+         &100576
+         &177411
+         &004411
+         &004406
+         &036102
+         &100601
+         &120502
+         &136377
+         &004431
+         &024511
+         &103106
+         &104611
+         &104611
+         &071001
+         &000401
+         &177401
+         &000401
+         &077600
+         &100200
+         &100177
+         &017440
+         &040200
+         &040040
+         &017577
+         &100100
+         &020100
+         &100177
+         &141444
+         &010010
+         &010044
+         &141401
+         &001004
+         &174004
+         &001001
+         &140641
+         &110611
+         &100605
+         &101777
+         &100601
+         &100630
+         &177231
+         &114602
+         &100201
+         &100601
+         &177404
+         &001377
+         &001004
+         &004030
+         &026010
+         &004010
+         &004000
+
+((ERROR ROUTINE)
+
+[ERRORL ERRORE CHOPF CHOPL CHOPE CHOPC]
+
+(Prints out the error message following the entry
+ instructions in alphanumeric group form, until
+ a full-stop is found, then stops. The message
+ is given in legible tape form)
+ERRORL   >1
+ERRORE   4       +0
+         5       CHOPF
+         4       &400000
+         5       CHOPC
+NEXTWD   4       -2
+         5       COUNT
+         10      ERRORL
+         0       ERRORL
+         /4      0
+NEXTCH   5       WORD
+         14      8180
+         6       &77
+         1       -14             (6-bit code test if .)
+         7       STOP
+         1       +46             (Restore 7-bit code)
+         11      CHOPL
+         8       CHOPE
+         4       COUNT
+         7       NEXTWD
+         10      COUNT
+         4       WORD
+         14      6
+         8       NEXTCH
+STOP     4       +20
+         11      CHOPL
+         8       CHOPE
+         8       ;+0
+COUNT    >1
+WORD     >1
+
+
+%
+
+<! halt !>
+	
+	
+
+
+	
+	
+	
+	
+
+
+
+	
+	
+
+
+
+
+
+
+	
+	

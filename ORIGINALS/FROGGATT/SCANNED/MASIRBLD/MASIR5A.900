@@ -1,0 +1,992 @@
+﻿
+
+((MASIR ISSUE 3  TAPE 5A))
+
+
+
+
+[  TD BEGSTACK    QES  GETELMT  DEXCON   NAME NAME1 NAME2 TESTACK
+   GETCHAR NEXCHAR GETNAME CHKNAM MACSEARCH STACK
+   POINTER POSITN PARAM NUMBER COUNT PERIPH STARNUM
+   MARKER STACKSEARCH ADDR1 ADDR2 ADDR3 ADDR4 ADDR5
+   SPARE STORE1 STORE2 FIRST LAST WORDS IF CHARAC
+   CHARNUM BUFFER BR X Y MACOFLO MAC ENDTEXT DELETE
+   STORTEXT ADDNEW OUTEXT QCHOPX BUFPOS PER IPH
+   ENTRY2 OPNUMBER OPNAME MACALL MACDEL BRKCTR SPACES
+   LF MEMMKR ENDSTACK STK QCHINX DECODE PUNAME LISTMK
+   CHEKWD CONT TOTENT CLRDICT E1 E2 E3 E4 E5 E6
+   E7 E8 E9 E10 E11 E12 E13 E14 E15 E16 E17 E18
+   E19 E20 E21 E22 E23 E24 E25 E26 E27 E28 E29 E30
+   E31 E32 E33 E34 E35 E36 E37 E38 E39 E40 E41 PCLOCK
+   NENT NXCHAR NUMBR MACSTD MACTOP LD BD ERR ERR1
+   ERR2 ERR3 ERR4 ERR5 ERR6 ERR7 ERR8 ERR9 ERR10
+   ERR11 ERR12 ERR13 ERR14 ERR15 ERR16 ERR17 ERR18
+   ERR19 ERR20 ERR21 ERR22 ERR23 ERR24 ERR25 ERR26
+   ERR27 ERR28 ERR29 ERR30 ERR31 ERR32 ERR33 ERR34
+   ERR35 ERR36 ERR37 ERR38 ERR39 OUTPER ERR40 ERR41
+   LNKSQ SQROP SQRCL MACDIC CLRSGM LOCLOC REDUCE
+   ASTRSK COMMA BRAKOP BRAKCL INPUT LENGTH ERRCNT
+   JWTITLE MSGDEV OPLINE VSM GODECODE JWDS  HDOVER NUMB   COUNT1   ]
+
+
+GETELMT       +0
+           4  =/8 0
+          11  TESTACK
+           8  TESTACK+1
+
+INPUT      4  +0
+           5  NAME1
+           5  NAME2
+           5  SPARE
+          11  GETCHAR
+           8  GETCHAR+1
+           1  -33
+           9  NOTLET          ( < 33 )
+           2  +25
+           9  NOTLET          ( > 58 )
+          11  GETNAME         ( LETTER )
+           8  GETNAME+1
+           4  STARNUM
+           7  NOTFN           ( PREVIOUS CHAR. NOT SEPARATOR )
+           4  NAME2
+           7  ;+2
+           8  NOTFN           ( >3 LETTERS )
+           4  ADDR3
+           5  FIRST
+           4  ADDR4
+           5  LAST
+           4  +1
+           5  WORDS
+           4  MEMMKR
+           7  ;+2
+           8  NOTFN
+          11  CHKNAM          ( CHECK FOR FUNCTION NAME )
+           8  CHKNAM+1
+           8  NOTFN           ( NOT FOUND )
+           4  -1
+           5  SPARE           ( SET FOR MNEMONIC )
+           8  EXIT
+
+NOTFN     11  MACSEARCH
+           8  MACSEARCH+1     ( NOT FUNCTION NAME )
+           8  EXIT            ( NOT MACRO NAME )
+11 STACKSEARCH
+8 STACKSEARCH+1
+8 CALLIT    (ORDINARY MACRO CALL)
+
+0 POINTER
+/0 0
+/4 2
+6 +1
+7 CALLIT    (ORDINARY NESTED MACRO CALL)
+0 POSITN
+/4 4
+14 8182
+1 -1
+7 NOTPRM
+2 +0
+5 PARAM
+LOCATE 0 POSITN
+/4 0
+2 POSITN
+5 POSITN
+10 PARAM
+4 PARAM
+9 LOCATE
+
+NOTPRM 11 MACSEARCH
+8 MACSEARCH+3
+8 SRCHMR   (PARAMETER WAS IN THE SAME LIST)
+            (OR NO PARAMETERS OF THIS NAME)
+0 POSITN
+/4 3
+6 +1
+7 NOTPRM  (FOUND,BUT NOT PARAMETER TRY AGAIN)
+8 CALLIT
+
+SRCHMR 4 MAC
+5 POSITN
+11 MACSEARCH
+8 MACSEARCH+3
+8 EXIT  ( PARAMETER MUST HAVE BEEN IN THE SAME LIST)
+0 POSITN
+/4 3
+6 +1
+7 CALLIT
+8 SRCHMR+2  ( FOUND,BUT A PARAMETER)
+CALLIT
+
+          11  MACALL
+           8  MACALL+1
+           4  =/8 0
+          11  TESTACK
+           8  TESTACK+1
+           4  +0
+           5  SPARE
+           8  INPUT
+
+NOTLET     4  IF
+           7  ;+2
+           8  E16
+           4  +0
+           5  STARNUM
+           4  NEXCHAR
+           1  -2              (SEP)
+           9  SET
+           1  -13             (/)
+           7  SET
+           1  -14             (=)
+           7  SET
+           1  -30             ([)
+           7  OP
+           1  -2              (])
+           7  CL
+           4  NEXCHAR
+           2  ASTRSK
+           7  FACILY
+           8  ;+2
+
+SET       10  STARNUM
+           8  EXIT
+
+OP        11  LNKSQ
+           8  SQROP
+           8  EXIT
+
+CL        11  LNKSQ
+           8  SQRCL
+           4  STACK
+           2  BEGSTACK
+           7  EXIT
+
+TSTDEL     4  STACK
+           1  -2
+           5  X
+           1  -3
+           5  Y
+           0  X
+          /4  1
+           9  DECRES
+           0  Y
+          /4  1
+
+DECRES     6  &17777
+           7  DELT
+           8  EXIT
+
+DELT      /4  1
+           9  DIF
+          11  MACDEL
+           8  MACDEL+1
+           8  INPUT
+
+DIF        4  X
+           5  STACK
+           8  INPUT
+
+FACILY    11  GETCHAR
+           8  GETCHAR+1
+           1  -33
+           9  DOLLAR          ( < 33 )
+           2  +25             ( > 58 )
+           9  DOLLAR
+          11  GETNAME         ( LETTER )
+           8  GETNAME+1
+           4  ADDR1
+           5  FIRST
+           4  ADDR2
+           5  LAST
+           4  +2
+           5  WORDS           ( FOR FACILITY NAMES )
+          11  CHKNAM
+           8  CHKNAM+1
+           8  E11             ( NAME NOT A MACRO FACILITY )
+           0  POINTER
+          /8  ;+1
+           8  ASTIF           ( ENTER APPROPRIATE ROUTINE )
+           8  ASTIFN
+           8  ASTDEF
+           8  GLOBLE
+           8  DELTEL
+           8  LSTLAB
+           8  CHKWRD
+           8  TITLE
+           8  NOTMEM
+           8  CHNGE
+           8  SETD
+            8  MEM
+            8  SUPLIST
+            8  EARL
+             8  NOEARL
+           8  ASTADD
+   DOLLAR     4          NEXCHAR
+              2          +4
+              7          ASTDOL
+
+   NOSDOL     11         REDUCE
+              8          REDUCE+1
+              4          ASTRSK
+              5          NEXCHAR
+              8          EXIT
+
+   ASTDOL     11         STACKSEARCH
+              8          STACKSEARCH+1
+              8          NOSDOL
+              0          POINTER
+              /0         0
+              /4         3
+              6          &1777
+              5          SPARE
+              11         OPNUMBER
+              8          OPNUMBER+2
+4 MAC
+5 POSITN
+
+
+              0          MAC
+              4          +0
+/5  1
+              /5  2         (NO NAME MACRO)
+              /5  3
+              /5  4
+              4          +59
+              /5  5
+
+              4          NAME1
+              /5  6
+              4          NAME2
+              /5  7
+              4          COUNT1
+              1          -3
+              9          LESTRE
+              5          COUNT1
+              4          +8
+              /5  8
+              10         MAC
+8 ;+3
+
+   LESTRE     4          +7
+              /5  7
+ 0 COUNT1
+ 4 +61
+ /8 ;+1
+ 8 THREE
+ 8 WAHID
+ 8 TWO
+THREE 0 +0
+ 14 6
+ 8 ;+2
+WAHID 0 +0
+ 14 6
+TWO
+
+
+              0          MAC
+              /1  6
+              /5  6
+              4          MAC
+              1          +7
+              5          MAC
+4 +0
+5 NAME1
+
+              11         MACALL
+              8          MACALL+1
+              4          =/8 0
+              11         TESTACK
+              8          TESTACK+1
+              11         GETCHAR
+              8          GETCHAR+1
+
+
+EXIT       4  STACK
+           1  -1
+           5  STACK
+           0  GETELMT
+          /8  1
+
+ASTIF      4  +1
+           8  ;+2             ( *IF READ SET MARKER = 1 )
+
+ASTIFN     4  +0              ( *IFNOT SET MARKER = 0 )
+           5  MARKER          ( MARKER FOR IF STATEMENT )
+
+BACK1      4  NEXCHAR
+           1  -2
+           9  SEP1
+           8  LET1
+
+SEP1      11  GETCHAR
+           8  GETCHAR+3
+           8  BACK1
+
+LET1       1  -31
+           9  E16
+           2  +25
+           9  E16
+          11  GETNAME
+           8  GETNAME+1
+          11  MACSEARCH
+           8  MACSEARCH+1
+           8  IGSEP           ( = IDENTIFIER )
+
+RECALL    11  MACALL
+           8  MACALL+1
+           4  =/8 0
+          11  TESTACK
+           8  TESTACK+1
+          11  GETCHAR
+           8  GETCHAR+3
+           1  -33
+           9  E13
+           2  +25
+           9  E13
+          11  GETNAME
+           8  GETNAME+1       ( PICK UP SINGLE WORD TEXT )
+          11  MACSEARCH
+           8  MACSEARCH+1
+           8  BACK2
+           8  RECALL
+
+BACK2      4  NEXCHAR
+           1  -2
+           9  SEP2
+           8  LET2
+
+SEP2      11  GETCHAR
+           8  GETCHAR+3
+
+LET2       1  -59
+           7  ;+2             ( ] )
+           8  E13             ( ILLEGAL TEXT FOR COMPARISON )
+
+GETRID    11  LNKSQ
+           8  SQRCL
+          11  MACDEL
+           8  MACDEL+1
+
+IGSEP      4  ADDR3
+           5  FIRST
+           4  ADDR4
+           5  LAST
+           4  +1
+           5  WORDS
+           4  MEMMKR
+           7  ;+2
+           8  ;+5
+          11  CHKNAM
+           8  CHKNAM+1
+           8  ;+2
+           8  E15
+          11  GETCHAR
+           8  GETCHAR+3
+1 -29
+           7  EQUALS
+           1  -32
+           7  GETRID
+           8  E13
+
+EQUALS     4  NAME1
+           5  STORE1
+           4  NAME2
+           5  STORE2
+          11  GETCHAR
+           8  GETCHAR+3
+1 -33
+           9  E27
+           2  +25
+           9  E27
+          11  GETNAME
+           8  GETNAME+1
+11 MACSEARCH
+8 MACSEARCH+1
+
+8 GTNXCH
+8 RECL
+GTNXCH 11 GETCHAR
+8 GETCHAR+1
+8 LABEL
+
+
+RECL      11  MACALL
+           8  MACALL+1        ( CALL MACRO )
+           4  =/8 0
+          11  TESTACK
+           8  TESTACK+1
+          11  GETCHAR
+           8  GETCHAR+3
+1 -33
+           9  E13
+           2  +25
+           9  E13
+          11  GETNAME
+           8  GETNAME+1       ( PICK UP SINGLE WORD TEXT )
+          11  MACSEARCH
+           8  MACSEARCH+1
+           8  BACK3
+           8  RECL
+
+BACK3      4  NEXCHAR
+           1  -2
+           9  SEP3
+           8  LET3
+
+SEP3      11  GETCHAR
+           8  GETCHAR+1
+           8  BACK3
+
+LET3       1  -59
+           7  ;+2             ( =] )
+           8  E13
+
+GETOUT    11  LNKSQ
+           8  SQRCL
+          11  MACDEL
+           8  MACDEL+1
+          11  GETCHAR
+           8  GETCHAR+3
+1 -61
+           7  GETOUT
+
+LABEL      4  ADDR3
+           5  FIRST
+           4  ADDR4
+           5  LAST
+           4  +1
+           5  WORDS
+           4  MEMMKR
+           7  ;+2
+           8  ;+5
+          11  CHKNAM
+           8  CHKNAM+1
+           8  ;+2
+           8  E15
+           4  NAME1
+           2  STORE1
+           7  ;+2             ( FIRST WORD OF NAME SAME )
+           8  ZERO
+           4  NAME2
+           2  STORE2
+           7  ONE             ( NAMES EQUAL )
+
+ZERO       4  +0              ( SET 0 IF NAMES DIFFERENT )
+           8  ;+2
+
+ONE        4  +1
+           2  MARKER          ( SET 1 IF NAMES EQUAL )
+           7  ASSEMBLE        ( CONDITION TRUE )
+
+IGNORE     4  NEXCHAR         ( IGNORE TEXT )
+           2  +59
+           7  CONTIN          ( [ )
+          11  GETCHAR
+           8  GETCHAR+3
+           8  IGNORE          ( INPUT UNTIL [ )
+
+CONTIN     4  +1
+           5  BRKCTR
+          11  GETCHAR
+           8  GETCHAR+1
+           1  -59
+           7  PL
+           1  -2
+           7  DL
+           8  CONTIN+2
+
+PL        10  BRKCTR
+           8  CONTIN+2
+
+DL         4  BRKCTR
+           1  -1
+           7  INPUT
+           5  BRKCTR
+           8  CONTIN+2
+
+ASSEMBLE   4  NEXCHAR
+           2  +1
+           9  ;+4             ( ASSEMBLE TEXT )
+          11  GETCHAR         ( SEPARATOR )
+           8  GETCHAR+2       ( INPUT NEXT CHARACTER )
+           8  ASSEMBLE
+           1  +5
+           7  AND             ( & )
+
+WAIT       4  NEXCHAR
+           2  +59
+           7  ;+7             ( [ )
+4 NEXCHAR
+2 +1
+9 E13
+
+          11  GETCHAR
+           8  GETCHAR+1
+           8  WAIT            ( INPUT UNTIL [ )
+           4  =/0 0
+          11  TESTACK         ( SET STACK ENTRY TO IGNORE ] )
+           8  TESTACK+1
+           4  =/8 0
+          11  TESTACK
+           8  TESTACK+1
+          11  LNKSQ
+           8  SQROP
+           8  INPUT
+
+AND       11  GETCHAR
+           8  GETCHAR+1       ( MORE THAN ONE CONDITION TO SATISFY )
+           2  ASTRSK
+           7  AND
+          11  GETNAME
+           8  GETNAME+1
+           4  ADDR1
+           5  FIRST
+           4  ADDR5           ( FOR FACILITY *IF,*IFNOT ONLY )
+           5  LAST
+           4  +2
+           5  WORDS
+          11  CHKNAM
+           8  CHKNAM+1
+           8  E17             ( WRONG NAME )
+           0  POINTER
+          /8  ;+1             ( ENTER APPROPRIATE ROUTINE )
+           8  ASTIF
+           8  ASTIFN
+
+ASTDEF
+4 +0
+8 ;+2
+GLOBLE 4 &200000
+5 MARKER
+11 GETCHAR
+
+           8  GETCHAR+3
+          11  GETNAME
+           8  GETNAME+1
+           4,NAME1 2,\QPA 7,;+2 8,;+4
+           4,NAME2 2,\RAM 7,E41
+          11  MACSEARCH
+           8  MACSEARCH+1
+           8  UNDEF           ( MACRO ALREADY DEFINED )
+           0  POSITN
+          /4  3
+           9  E2              ( MACRO ALREADY IN USE )
+6 +1
+7 ;+2
+8 E2
+
+          11  DELETE
+           8  DELETE+1        ( DELETE ORIGINAL MACRO )
+
+UNDEF      4  +0
+           5  NUMBER          ( FOR NO. OF WORDS IN ENTRY )
+           4  NAME1
+          11  MACOFLO
+           8  MACOFLO+1
+           4  NAME2
+          11  MACOFLO
+           8  MACOFLO+1       ( STORE MACRO NAME IN DICTIONARY )
+           4  MARKER
+          11  MACOFLO
+           8  MACOFLO+1       ( RESERVE 2 WORDS FOR INDICATORS )
+           4  +0
+          11  MACOFLO
+           8  MACOFLO+1
+
+READ      11  GETCHAR
+           8  GETCHAR+3
+           4  +0
+           5  PARAM           ( FOR NO. OF PARAMETERS )
+           4  NEXCHAR
+           2  BRAKOP
+           7   STPAR             ( ( )
+4 NEXCHAR
+2 +59
+7 TEXTIN
+8 READ
+
+
+STPAR     11  GETCHAR
+           8  GETCHAR+3
+          11  GETNAME
+           8  GETNAME+1       ( INPUT NAME OF PARAMETER )
+           4  NAME1
+          11  MACOFLO
+           8  MACOFLO+1       ( STORE PARAMETER IN DICTIONARY )
+           4  NAME2
+          11  MACOFLO
+           8  MACOFLO+1
+          10  PARAM
+
+ENDPAR    11  GETCHAR
+           8  GETCHAR+3
+           4  NEXCHAR
+           2  COMMA
+           7  STPAR
+           4  NEXCHAR
+           2  BRAKCL
+           7  TEXTIN          ( ALL PARAMETERS STORED )
+           8  E18             ( WRONG CHAR. IN PARAMETER LIST )
+
+TEXTIN     4  PARAM           ( NUMBER OF PARAMETERS )
+           0  +0
+          14  1
+           2  MAC
+           5  BR
+           4  PARAM           ( BR = INDICATOR FOR LOC. HOLDING NO OF PARAMS. )
+           0  +0
+          14  10
+           0  BR
+          /5  0
+           4  +0
+           5  NAME1
+           5  NAME2           ( IN CASE NO NAME READ AFTER [ )
+
+READTEXT   4  NEXCHAR         (GIVE CONTEXT ERROR HERE FOR CHARS)
+                              (OTHER THAN SPACE OR LINEFEED OR ])
+           2  +59
+           7  ;+4             ( [ )
+          11  GETCHAR
+           8  GETCHAR+3
+           8  READTEXT        ( INPUT UNTIL [ )
+           4  +0
+           5  SPACES
+INSPAC
+          11  GETCHAR
+           8  GETCHAR+1
+           7  ;+2
+           8  ;+3
+          10  SPACES
+           8   INSPAC
+           1  -33
+           9  INSTR           ( < 33 )
+           2  +25
+           9  INSTR           ( > 58 )
+          11  GETNAME         ( LETTER )
+           8  GETNAME+1       ( INPUT NAME )
+          11  GETCHAR
+           8  GETCHAR+1
+           4  NAME1
+           2  PER
+           7  ;+2             ( FIRST WORD OK )
+           8  INSTR           ( NAME NOT = TO PERIPH )
+           4  NAME2
+           2  IPH
+           7  ;+2             ( NAME INPUT = PERIPH )
+           8  INSTR
+
+ONPER      4  NEXCHAR
+           2  +1
+           9  ;+4
+          11  GETCHAR
+           8  GETCHAR+1       ( SEPARATOR )
+           8  ONPER
+1 +16
+7 PEROK
+1 +2
+7 ;+2
+8 E22
+1 -1
+1 NEXCHAR
+5 NEXCHAR
+PEROK
+
+           4  PARAM           ( PERIPH = 0 - 4 )
+           0  +0
+          14  1
+           2  MAC
+           1  -1
+           5  BR              ( ADDRESS OF INDICATOR HOLDING PERIPH NO.)
+           4  NEXCHAR
+           1  -16
+           0  +0
+          14  1
+           0  BR
+          /1  0
+          /5  0
+           4  NUMBER          ( STORE PERIPH NO. )
+           1  +1
+          11  MACOFLO         ( STORE NUMBER OF WORDS IN ENTRY )
+           8  MACOFLO+1
+          11  GETCHAR
+           8  GETCHAR+3
+           2  +61
+           7  INPUT           ( ] )
+           8  ;-4             ( INPUT UNTIL ] )
+
+INSTR      4  SPACES
+           2  +0
+           5  SPACES
+          11  STORTEXT        ( STORE [ , NAME , AND CHAR. )
+           8  ENTRY2          ( READ AND STORE TEXT UP TO ] )
+          11  ENDTEXT         ( STORE ] AND NO. OF WORDS IN ENTRY )
+           8  ENDTEXT+1
+           8  INPUT
+
+ASTADD    11  GETCHAR
+           8  GETCHAR+3
+          11  GETNAME
+           8  GETNAME+1       ( INPUT NAME )
+          11  MACSEARCH
+           8  MACSEARCH+1
+           8  UNDEF           ( TREAT AS *DEFINE )
+           0  POSITN
+/4 3
+6 +1
+7 ;+2
+8 E2
+
+          /4  3
+          14  8191
+           6  &77777         ( PERIPHERAL NO. )
+           7  ;+2             ( =5 )
+           8  E21             ( TEXT ON PERIPHERAL )
+          /4  3
+           9  ;+2
+           8  NOTUSED         ( NOT USED )
+           4  STACK           ( MACRO IN USE STORE STACK )
+           5  Y
+
+TRYAGAIN  11  STACKSEARCH
+           8  STACKSEARCH+1
+           8  E26
+           0  POINTER
+           4  POSITN
+           1  +1
+          /2  0
+           7  FOUND           ( CORRECT MACRO FOUND )
+           4  POINTER         ( NO )
+           1  -4
+           5  STACK
+           8  TRYAGAIN        ( START SEARCHING BELOW MACRO FOUND )
+
+FOUND      4  Y
+           5  STACK           ( RESET STACK )
+           4  POINTER
+           1  -4
+           5  BR
+           0  BR
+           4  POSITN          ( DIFFERENCE BETWEEN OLD AND NEW )
+           2  MAC             ( POSITIONS OF MACRO IN DICT. )
+           5  BR
+          /1  3               ( ADJUST FIRST WORD OF STACK ENTRY )
+          /5  3
+           4  BR
+          /1  4
+          /5  4               ( ADJUST SECOND WORD FOR ADDRESS TEXT )
+
+NOTUSED    4  +0
+           5  NUMBER          ( NO. OF WORDS IN ENTRY )
+           0  POSITN
+          /4  1
+          11  MACOFLO         ( COPY FIRST 4 WORDS OF DICT. ENTRY)
+           8  MACOFLO+1
+           0  POSITN
+          /4  2
+          11  MACOFLO
+           8  MACOFLO+1
+           0  POSITN
+          /4  3
+          11  MACOFLO
+           8  MACOFLO+1
+           0  POSITN
+          /4  4
+          11  MACOFLO
+           8  MACOFLO+1
+           0  POSITN
+          /4  4
+          14  8182
+           6  &377            ( NO. OF PARAMETERS )
+           2  +0
+           5  PARAM           ( NEGATIVE COUNT )
+           2  +1
+           5  COUNT
+
+CPYPAR     4  PARAM
+           7  ALLIN           ( NO MORE PARAMETERS )
+           1  COUNT
+           0  +0
+          14  1
+           1  POSITN
+           5  BR
+           0  BR
+          /4  3
+          11  MACOFLO         ( COPY PARAMETER )
+           8  MACOFLO+1
+           0  BR
+          /4  4
+          11  MACOFLO
+           8  MACOFLO+1
+          10  PARAM
+           8  CPYPAR
+
+ALLIN      4  NEXCHAR
+           5  STORE1
+           4  PERIPH
+           5  STORE2
+           4  +0
+           5  NEXCHAR
+           4  =1 0
+          11  TESTACK         ( SET STACK ENTRY FOR MACRO )
+           8  TESTACK+1
+           4  MAC
+          11  TESTACK
+           8  TESTACK+1
+           4  COUNT
+           0  +0
+          14  1
+           1  POSITN
+           1  =0 3            ( =1 ADDRESS TEXT )
+          11  TESTACK
+           8  TESTACK+1
+           4  POSITN
+           1  +1
+          11  TESTACK
+           8  TESTACK+1
+           4  =/8 0
+          11  TESTACK
+           8  TESTACK+1
+4 +0
+           5  PERIPH
+          11  STORTEXT        ( READ AND STORE TEXT )
+           8  STORTEXT+1      ( UP TO ] )
+           4  STORE1
+           5  NEXCHAR
+           4  STORE2
+           5  PERIPH
+           4  STACK
+           1  -5
+           5  STACK           ( REMOVE STACK ENTRY )
+           4  +1
+           5  ADDNEW
+          11  STORTEXT        ( STORE NEW TEXT UP TO ] )
+           8  STORTEXT+1
+          11  ENDTEXT         ( STORE ] AND NO. WORDS IN ENTRY )
+           8  ENDTEXT+1
+          11  DELETE          ( DELETE OLD DEFINITION )
+           8  DELETE+1
+           8  INPUT
+
+SETD       4  NENT
+ 7 ;+2
+           8  E41
+           4  +0
+           5  L
+           5  L1
+           5  L2
+           5  L3
+
+NXTC1     11  GETCHAR
+           8  GETCHAR+3
+           4  NEXCHAR
+           1  -16
+           9  NXTC1
+           2  +9
+           9  NXTC1
+          11  NUMB
+           8  NUMB+1
+           0  L
+          /5  L1
+          10  L
+           4  NEXCHAR
+           1  -1
+           7  STUP
+           4  +4
+           2  L
+           9  NXTC1
+           8  E41
+
+STUP       4  +2
+           2  L
+           9  E41
+           4  L3
+           7  NOSTK
+           4  STK
+           5  X
+           4  L1
+           5  Y
+          11  FITS
+           8  FITS+1
+           4  X
+           5  BEGSTACK
+           5  STACK
+           0  STACK
+           4  =/8 0
+          /5  0
+           4  Y
+           5  ENDSTACK
+           4  L2
+           8  MACS
+
+NOSTK      4  L1
+MACS       5  Y
+           4  ENDSTACK
+           5  X
+          11  FITS
+           8  FITS+1
+           4  X
+           5  MACDIC
+           1  -1
+           5  MAC
+           4  Y
+           5  MACTOP
+           5  BD
+           4  L3
+           7  NILSTK
+           8  DICT
+
+NILSTK     4  L2
+DICT       5  Y
+           4  MACTOP
+           5  X
+          11  FITS
+           8  FITS+1
+           4  Y
+           5  TD
+           2  X
+           5  LENGTH
+           4  X
+           5  LD
+           5  CONT
+           2  Y
+          14  8190
+           5  TOTENT
+           4  +0
+           5  IF
+
+£IF ISSUE=RADOS
+[          4  SETD+2
+           5  SETD    ]
+
+           8  INPUT
+
+L             +0
+L1            +0
+L2            +0
+L3            +0
+FITS          +0
+           4  IF
+           9  RITE
+           4  X               (BASE)
+           6  &17777          (DEL. MULTS. OF 8192)
+           1  Y
+           1  +82
+           6  &760000
+           7  RITE
+           4  X
+           1  +8192
+           6  &760000
+           5  X
+           4  -1
+           5  IF
+
+RITE       4  X
+           1  Y
+           5  Y
+           0  FITS
+          /8  1
+
+
+
+
+
+
+<! Halt !>

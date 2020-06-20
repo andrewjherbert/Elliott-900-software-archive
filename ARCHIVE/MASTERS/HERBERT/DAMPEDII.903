@@ -1,0 +1,122 @@
+﻿
+      GLOBAL, DAMPED, SQRT, EXP, SIN]
+
+C  DAMPED OSCILLATION WITH GRAPHING
+
+C  COMPUTE COMMONLY USED FACTORS
+
+      TWOPI = 2.0 * 3.141593
+      REC2PI = 1 / TWOPI
+
+C  READ PARAMETERS
+      
+      READ (1) Q, R, C, ZL, ICYCLE, NPERCY
+
+C  CHECK FOR INVALID DATA
+
+C     ... Q <= 0
+      IF (Q)             999, 999,  10
+C     ... ICYCLE <= 0
+      IF (ICYCLE)        999, 999,  10
+C     ... NPERCY <= 0
+      IF (NPERCY)        999, 999,  10
+C     ... R**2 >= 4L/C
+      IF (R*R - 4.0*ZL/C)  10, 999, 999
+
+  10  WRITE (3, 115) ICYCLE, NPERCY, Q, R, C, ZL
+
+C  PRINT A LINE OF DOTS
+      WRITE (3, 111)
+      DO 200 I = 1, 61, 1
+         WRITE  (3, 110)
+ 200  CONTINUE
+
+C  COMPUTE INTERMEDIATE VARIABLES
+
+      F0 = REC2PI / SQRT(ZL * C)
+      F1 = REC2PI * SQRT(1.0 / (ZL * C) - R * R / (4.0 * ZL * ZL))
+      TEMP = NPERCY
+      DELTAT = 1.0 / (TEMP * F0)
+      RIM = TWOPI * F0 * F0 * Q / F1
+      C1 = R / (2.0 * ZL)
+      C2 = TWOPI * F1
+
+C  START AT ZERO BEFORE ENTERING LOOP
+
+      T = 0.0
+
+C  COMPUTE NUMBER OF POINTS NEEDED
+      
+      LIMIT = ICYCLES * NPERCY
+
+C  COMPUTING LOOP - DO COUNTS NUMBER OF EXECUTIONS
+
+      DO 70 J1 = 1, LIMIT
+         CURRENT = RIM * EXP(-C1 * T) * SIN(C2 * T)
+  
+C  COMPUTE DESIRED LOCATION OF PLOTTING SYMBOL
+
+         J = 30.0 * (CURRENT / RIM + 1.0) + 1.5
+
+C  START A NEWLINE OF OUTPUT
+
+         WRITE (3, 111)
+
+C  DECIDE HOW TO PRINT LINE
+
+         IF (J - 31) 30, 40, 50
+
+C  POINT IS BEFORE AXIS
+  30     DO 31 K = 1, J-1
+            WRITE (3, 112)
+  31     CONTINUE
+  32     WRITE (3, 113)
+         DO 33 K = J+1, 30
+            WRITE (3, 112)
+  33     CONTINUE
+         WRITE (3, 110)
+         GOTO 60
+
+C  POINT IS ON AXIS
+
+  40     DO 41 K = 1, 30
+            WRITE (3, 112) 
+  41     CONTINUE
+         WRITE (3, 113)
+         GOTO 60
+
+C  POINT IS AFTER AXIS
+
+  50     DO 51 K = 1, 30
+            WRITE (3, 112) 
+  51     CONTINUE
+         WRITE (3, 110)
+         DO 52 J = 32, J-1
+            WRITE (3, 112)
+  52     CONTINUE
+         WRITE (3, 113)
+
+  60     T = T + DELTAT
+
+  70  CONTINUE
+     
+ 999  STOP
+ 110  FORMAT (Z, 1H.)
+ 111  FORMAT (5X)
+ 112  FORMAT (Z, 1H )
+ 113  FORMAT (Z, 1HX)
+ 115  FORMAT (17HCYCLES         = , I3,                    /,
+£             17HDOTS PER CYCLE = , I3,                    ///,
+£             17HINITIAL CHARGE = , F10.6, 10H   COULOMB,  /,
+£             17HRESISTANCE     = , F7.3,   9H      OHM,   /,
+£             17HCAPACITANCE    = , F10.6,  8H   FARAD,    /,
+£             17HINDUCTANCE     = , F7.3,  11H      HENRY, ///)           
+      END
+<! Halt !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !><! R !>
+0.00001
+1.000
+0.00001
+0.0020
+3
+30
+<! Halt !>

@@ -1,0 +1,50 @@
+﻿<! Legible Header OOOO   OOO  OOOO   OOO    OO  O   O       OOOO  OOOO   OOO    OO  OOOO   OOO  O   O        OOO     O  OOOOO  OOO  OOOOO  !>
+<! Legible Header O   O O   O OOOOO O   O  O  O O   O       O   O OOOOO O   O  O OO OOOOO O   O OO OO       O   O  OOO      O OOOOO     O  !>
+<! Legible Header O   O O   O O   O O   O O     O   O       O   O O   O O   O O     O   O O   O OOOOO           O  OOO     O  O        O   !>
+<! Legible Header OOOO  OOOOO OOOOO OOOOO O     OOOOO       OOOO  OOOOO O   O O     OOOOO OOOOO O O O         OOO    O    O   OOOO    O    !>
+<! Legible Header O     O   O OO    O   O       O   O       O     OO    O   O       OO    O   O O   O                O        O   O        !>
+<! Legible Header O           O O         O     O   O       O     O O   O   O O  OO O O         O   O       OO       O   O    O   O  O     !>
+<! Legible Header O     O   O O  O  O   O  O    O   O       O     O  O  O   O  O  O O  O  O   O O   O       O        O        O   O        !>
+<! Legible Header O     O   O O   O O   O   OOO O   O       O     O   O  OOO    OOO O   O O   O O   O       OOOOO    O  O      OOO  O      !>
+
+PARACHUTE MOTION;
+"BEGIN" "INTEGER" N,N1,J,I;
+      "REAL"V,F,W,C,C1,T,X,T2,H,R,T1,Z,Z1,Z2,H1,X1,C2,V1,A,F1,F2;
+      PUNCH(3);
+      "PRINT" ‘
+PARACHUTE OPENING MOTION
+
+
+ TIME   VELOCITY    ANGLE ACCELERATION  DISTANCE    HEIGHT
+ SEC     FT/SEC      DEG        G            FT        FT@;
+      "READ" V,F,W,C,C1,T,X,H,T2,R,T1,N1,N;
+      F:=3.1415927*F/180.0;
+      R:=R/2.0;
+      N:=N*N1;
+      J:=N1;
+      "FOR" I := 0 "STEP" 1 "UNTIL" N "DO"
+      "BEGIN" Z:=V*T1;
+            Z1:=COS(F);
+            Z2:=SIN(F);
+            X1:=Z1*Z;
+            H1:=Z2*Z;
+            F1:=(-32.18/V)*Z1*T1;
+            C2:="IF" T>T2 "THEN" C1+C "ELSE" (T/T2)*C1+C;
+            A:=-Z2-(C2*R*V^2)/W;
+            V1:=T1*A*32.18;
+            "IF "  J=N1 "THEN"
+               "BEGIN" J:=1;   F2:=F*180.0/3.1415927;
+                     "PRINT" ALIGNED(1,2),T,‘‘S@@,ALIGNED(3,1),
+                           PREFIX(‘  @),V,‘‘S2@@,F2,‘‘S2@@,
+                           ALIGNED(2,2),A,‘‘S4@@,ALIGNED(3,1),X,‘‘S2@@,H
+               "END"
+               "ELSE" J:=J+1;
+                     T:=T+T1;
+                     V:=V+V1;
+                     X:=X+X1;
+                     H:=H+H1;
+                     F:=F+F1;
+      "END"
+"END";
+
+

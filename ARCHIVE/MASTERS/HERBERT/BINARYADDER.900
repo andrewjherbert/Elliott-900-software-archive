@@ -1,0 +1,80 @@
+﻿<! Legible Header OOOOO    OOO   O     O    OOOO    OOOOO    O     O            OOOO    OOOOO    OOOOO    OOOOO   OOOOO              OOO      O            O     OOO     OOOOOOO           O    OOOO      OOO      O     OOOO             OOOO      OOO     OOOOOO           OOOOO    OOOOO    OOOOO    OOOOOOO   OOOOO     OOOO    O     O !>
+<! Legible Header O    O    O    O     O   O    O   O    O    O   O            O    O   O    O   O    O   O       O    O            O   O    OO           O     O   O    O     O          O    O    O    O   O    OO    O    O           O    O    O   O    O                O       O     O   O    O      O      O    O   O    O   O     O !>
+<! Legible Header O    O    O    OO    O   O    O   O    O     O O             O    O   O    O   O    O   O       O    O           O     O    O          O     O     O         O         O          O   O     O    O         O           O    O   O     O   O                O       O     O   O    O      O      O    O   O    O   OO    O !>
+<! Legible Header OOOOO     O    O  O  O   OOOOOO   OOOOO       O              OOOOOO   O    O   O    O   OOOO    OOOOO            O     O    O        O       O     O        O        O          O     O     O    O       O              OOOOO   O     O   OOOOO            OOOO    O     O   OOOOO       O      OOOOO    OOOOOO   O  O  O !>
+<! Legible Header O    O    O    O   O O   O    O   O O         O              O    O   O    O   O    O   O       O O              O     O    O       O        O     O       O        O          O      O     O    O      O                   O   O     O        O           O       O     O   O O         O      O O      O    O   O   O O !>
+<! Legible Header O    O    O    O    OO   O    O   O  O        O              O    O   O    O   O    O   O       O  O             O     O    O      O         O     O      O        O          O       O     O    O     O                    O   O     O        O           O       O     O   O  O        O      O  O     O    O   O    OO !>
+<! Legible Header O    O    O    O     O   O    O   O   O       O              O    O   O    O   O    O   O       O   O             O   O     O     O           O   O      O        O          O         O   O     O    O                O    O    O   O         O           O       O     O   O   O       O      O   O    O    O   O     O !>
+<! Legible Header OOOOO    OOO   O     O   O    O   O    O      O              O    O   OOOOO    OOOOO    OOOOO   O    O             OOO     OOO   O             OOO      O        O           OOOOOO     OOO     OOO   OOOOOO            OOOO      OOO     OOOOO            O        OOOOO    O    O      O      O    O   O    O   O     O !>
+
+C D.D. MCCRACKEN "A GUIDE TO FORTRAN PROGRAMMING" CASE STUDY 7
+C LOGICAL DESIGN INVESTIGATION OF A BINARY ADDER
+C
+C
+      LOGICAL A1, A2, B1, B2, K2, C1, C2, C4, R, S, T, W, X
+      INTEGER A1OUT, A2OUT, B1OUT, B2OUT, C1OUT, C2OUT, C4OUT
+C
+C
+      WRITE (3, 900)
+ 900  FORMAT (///12HBINARY ADDER///)
+C
+C  THE NEXT FOUR STATEMENTS ARE PART OF THE SCHEME FOR OBTAINING ALL
+C    COMBINATIONS OF VALUES FOR THE FOUR INPUT VARIABLES.
+  10  A2 = .FALSE.
+  20  A1 = .FALSE.
+  30  B2 = .FALSE.
+  40  B1 = .FALSE.
+C
+C THE NEXT NINE STATEMENTS ARE ALL LOGICAL ASSIGNMENT STATEMENTS,
+C    COMPUTING THE VALUES OF THE SUM DIGITS.
+  50  K2 = A1 .AND. B1
+      C1 = .NOT. K2 .AND. (A1 .OR. B1)
+      X  = A2 .AND. B2 .AND. K2
+      W  = A2 .OR. B2 .OR. K2
+      T  = B2 .AND. K2
+      S  = A2 .AND. K2
+      R  = A2 .AND. B2
+      C4 = R .OR. S .OR. T
+      C2 = X .OR. (W .AND. .NOT. C4)
+C
+C  THE NEXT GROUP OF STATEMENTS CONVERT FROM LOGICAL VALUES TO
+C    ZEROS AND ONES, ZERO FOR FALSE AND ONE FOR TRUE, FOR OUTPUT
+      A2OUT = 0
+      A1OUT = 0
+      B2OUT = 0
+      B1OUT = 0
+      C4OUT = 0
+      C2OUT = 0
+      C1OUT = 0
+      IF ( A2 ) A2OUT = 1
+      IF ( A1 ) A1OUT = 1
+      IF ( B2 ) B2OUT = 1
+      IF ( B1 ) B1OUT = 1
+      IF ( C4 ) C4OUT = 1
+      IF ( C2 ) C2OUT = 1
+      IF ( C1 ) C1OUT = 1
+C
+C  WRITE OUTPUT, WITH SPACING AND H-FIELD TEXT
+      WRITE (3, 100) A2OUT, A1OUT
+      WRITE (3, 110) B2OUT, B1OUT
+      WRITE (3, 120) C4OUT, C2OUT, C1OUT
+ 100  FORMAT (2H  , 2I2)
+ 110  FORMAT (2H+ , 2I2/, 6H -----)
+ 120  FORMAT (3I2/)
+C
+C  THE REMAINING STATEMENTS ARE PART OF THE SCHEME FOR OBTAINING
+C    ALL COMBINATIONS OF VALUES OF THE INPUT VARIABLES.
+      IF ( B1 ) GO TO 60
+      B1 = .TRUE.
+      GO TO 50
+  60  IF ( B2 ) GO TO 70
+      B2 = .TRUE.
+      GO TO 40
+  70  IF ( A1 ) GO TO 80
+      A1 = .TRUE.
+      GO TO 30
+  80  IF ( A2) STOP
+      A2 = .TRUE.
+      GO TO 20
+      END
+<! Halt !>

@@ -1,0 +1,514 @@
+﻿C Build AJH 2-Pass ALGOL System
+
+C Needs 903 Algol to be have built previously.
+
+c The two pass system consists of three tapes:
+c TAPE1 (sumchecked binary)  contains the ALGOL translator
+c TAPE2 (sumchecked binary)  contains the ALGOL interpreter
+c TAPE3 (relocatable binary) contains the ALGOL library.
+c
+c TAPE1 and TAPE2 are build by compiling the 903 Algol
+c issue 6 sources edited to include Don Hunter's patches and
+c my corrections to them as initially developed for the
+c AJH version of the Algol Large Program System.
+
+c Note we use a 64K machine to allow BOWDLER to handle a very
+c long steering tape.
+
+on 903 64K
+
+C **********TAPE 1 / TRANSLATOR**********
+
+c TAPE 1 store map:
+c
+c The assembled translator  in locations    8-6229
+c W, INBUF, Stack	       		 6230-6376
+c CODL                                        6377           
+c A pre-loaded symbol table in locations 7733-8000
+c The ALGOL dump utility    in locations 8001-8101
+c The ALGOL T23 loader      in locations 8124-8179
+c
+
+c edit 903 Algol issue 6 translator package
+
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+c edit translator
+at ptp file errors.txt legible
+c steering tape
+at ptr file EDIT_TRANSLAT(2PASS).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptp file TEMP_T.900
+at ptr file ../903ALGOL/TRANSLAT(ISS6).900
+j 9
+de ptp
+st 1274
+
+c edit symbols
+at ptp file errors.txt legible
+c steering tape
+at ptr file EDIT_SYMBOLS(2PASS).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptp file TEMP_S.900
+at ptr file ../../MASTERS/903ALGOL/ALG1_SYMBOLS.900
+j 9
+de ptp
+st 1274
+
+c prettify
+at ptr file ../../MASTERS/SWTOOLS/SIRTIDYS.BIN
+j 8181
+st 8175
+at ptr file TEMP_T.900
+at ptp file TRANSLAT(2PASS).900
+j 8
+de ptp
+st 676
+at ptr file TEMP_S.900
+at ptp file ALG1_SYMBOLS(2PASS).900
+j 8
+de ptp
+
+c assemble translator using ACD 2-pass SIR
+
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j  8181
+st 8175
+at ptr file TRANSLAT(2PASS).900
+select out tty
+j 12
+st 562
+rewind
+select out auto
+at ptp file TRANSLAT(2PASS).BIN
+j 10
+de ptp
+st 587
+
+c build ALGOL symbol table, dump and loader
+c  using SIR in low store & QBINOUT
+
+clear
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
+j 8181
+select out tty
+at ptr inline
+
+^4096
+*35		( dictionary below program, load & go, labels )
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903UTILITIES/QBINOUT(ISS1).900
+j 9
+st 1939
+at ptr inline
+
+( set up QBINOUT parameters)
+^QBINOUT+39
+	-447		( size = 8180-7733  )	
+	+7733		( symbol table base )
+
+^8177	8	8177
+
+%
+<! halt !><!!>
+j 9
+st 1939
+at ptr inline
+
+^4096 (put dictionary under QBINOUT)
+*35
+<! halt !> <!!>
+j 8
+st 1939
+at ptr file ALG1_SYMBOLS(2PASS).900
+j 9
+st 1939
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 1939
+at ptr inline
+
+^4096 ( put dictionary under QBINOUT )
+*35
+
+<! halt !><!!>
+j 8
+st 1939
+at ptr inline
+
+<! halt !><!!>
+j 9
+st 1939
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_DUMP.900
+j 9
+st 1939
+at ptr inline
+
+^4096 (put dictionary under QBINOUT)
+*35
+
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_T23.900
+j 9
+st 1939
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 1939
+
+c output package using QBINOUT
+select out auto
+at ptp file ALG1_TOS.BIN
+j 4096
+st 4114
+de ptp
+
+c load compiled translator, symbol table, dump utility and T23
+clear
+at ptr file TRANSLAT(2PASS).BIN
+j 8181
+st 8175
+at ptr file ALG1_TOS.BIN
+nonstop on
+j 8181
+c runs off tape
+nonstop on
+
+c make tape using ALGOL dump utility
+at ptp file ALG1(AJH).BIN
+j 8001
+st 8097
+de ptp
+
+C **********TAPE 2**********
+
+c TAPE 2 store map:
+c
+c The assembled interpreter in locations    8-3905
+c The built-in library      in locations 3906-4490
+c The RLB loader            in locations 7543-8000
+c The ALGOL dump utility    in locations 8001-8101
+c The ALGOL T23 loader      in locations 8124-8179
+c
+c The dump utility allows a new TAPE 2 to be made after
+c additional procedures have been loaded into the library
+c table.  It outputs a binary clear store, then a T23 like 
+c loader followed by a store image in T22-23 like format. The
+c dump utility is essentially a specialized version of T22.
+c 
+c The build sequence is as follows:
+c
+c 1.    Edit RLB of 903 Algol Issue 7 Tape 3 to create built-in
+c       library source and assemble to RLB using SIR in
+c	high store.
+c 2.	Assemble the dump utility and ALGOL T23 loader using 
+c       SIR in low store.
+c 3.	Dump out the dump utility and T23 as using QBINOUT
+c 4.	Assemble the interpreter and RLB loader using ACD 2-pass
+c       MASIR.
+c 5.	Assemble the built-in library
+c 6.	Load in sequence, interpreter and RLB loader, dump & ALGOL 
+c        T23 loader.
+c 7.	Load the built-in library at 12
+c 8.	Enter at 14 to run the dump utility and produce a
+c	new TAPE 2. 
+c
+
+C **********LIBRARY**************
+
+c generate SIR of 903 Algol Issue 7 tape 3 and extract
+c built-in functions, then assemble.
+
+rlbtosir ../../MASTERS/903ALGOL/ALG3(ISS7).RLB TEMP.900
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptp file errors.txt legible
+c steering tape
+at ptr inline
+
+
+REP1
+RTS DECODE
+^%,
+END
+REP2
+RTS ADVANC
+^%,
+END
+REP3
+RTS BUFFER
+^%,
+END
+
+CLI ]
+DLI DECODE
+DLI ]
+DLI ADVANC
+DLI ]
+DLI BUFFER
+DLI ]
+CLI %
+
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+st 490
+at ptp file LIBRARY(AJH).900
+at ptr file TEMP.900
+j 9
+de ptp
+st 1274
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file LIBRARY(AJH).900
+at ptp file LIBRARY(AJH).RLB
+j 8
+de ptp
+st 6239
+
+C ********** DUMP & ALGOL T23**********
+
+
+c build ALGOL dump and ALGOL T23 using SIR in low 
+c store & QBINOUT
+clear 
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
+j 8181
+st 8171
+at ptr inline
+
+^4096
+*35
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903UTILITIES/QBINOUT(ISS1).900
+j 9
+st 1939
+at ptr inline
+
+( set up QBINOUT parameters)
+^QBINOUT+39
+	-179		( size = 8180-7542  )	
+	+8001		( symbol table base )
+
+
+%
+<! halt !><!!>
+j 9
+st 1939
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 1939
+at ptr inline
+
+^4096 (put dictionary under QBINOUT)
+*35
+^8001
+
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_DUMP.900
+j 9
+st 1939
+at ptr inline
+
+^4096 (put dictionary under QBINOUT)
+*35
+^8124
+
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_T23.900
+j 9
+st 1939
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 1939
+c output package using QBINOUT
+at ptp file ALG2_TOS.BIN
+j 4096
+st 4114
+de ptp
+
+C **********INTERPRETER AND LOADER**********
+
+c edit 903 Algol Issue 6 interpreter.
+
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c patch for long steering tape
+e 1231 8200
+e 1232 64000
+at ptp file errors.txt legible
+c first steering tape
+at ptr file EDIT_INTERPR(2PASS).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptr file ../903ALGOL/INTERPR(ISS6).900
+at ptp file TEMP_INT.900
+j 9
+de ptp
+st 1274
+
+c edit 903 Issue 6 Algol loader
+
+at ptp file errors.txt legible
+c steering tape
+at ptr file EDIT_LOADER(2PASS).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptr file ../../SCRIPTS/903ALGOL/LOADER(ISS6).900
+at ptp file TEMP_LDR.900
+j 9
+de ptp
+st 1274
+
+c pretty print
+at ptr file ../../MASTERS/SWTOOLS/SIRTIDYS.BIN
+j 8181
+st 8175
+at ptr file TEMP_INT.900
+at ptp file INTERPR(2PASS).900
+j 8
+de ptp
+st 676
+at ptr file TEMP_LDR.900
+at ptp file LOADER(2PASS).900
+j 8
+de ptp
+st 676
+
+c assemble interpreter and loader using MASIR
+
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j  8181
+st 8164
+
+at ptr file INTERPR(2PASS).900
+
+C MASIR commands
+c O4 - punch loader halt code, normal assembly
+c O0 - normal assembly
+c M  - assemble
+at tty inline
+O4M<!!>
+
+at ptp file TAPE2.RLB
+nonstop on
+j 16
+c falls off tape
+
+at ptr file LOADER(2PASS).900
+at tty inline
+O0M<!!>
+r
+c falls off tty 
+
+de ptp
+nonstop off
+
+reverse TAPE2.RLB
+
+c load output rlb tape by LOADER at 16, input loader commands by teleprinter
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+at ptr file TAPE2.RLB
+at ptp file TAPE2.BIN
+
+c LOADER commands
+c O134 - set options
+c option 004 - output program to tape or backing store
+c option 010 - select paper tape
+c option 020 - no built-in routines required
+c option 100 - list labels
+c L read tape
+at tty inline
+O34LM<!!>
+nonstop on
+j 16
+
+c falls off end of teleprinter input
+de ptp
+nonstop off
+c load TAPE2 contents: interpreter, library, loader and dictionary
+clear
+at ptr file TAPE2.BIN
+j 8181
+st 8164
+
+at ptr file ALG2_TOS.BIN
+nonstop on
+j 8181
+nonstop off
+
+c load ALGOL library
+at ptr file LIBRARY(AJH).RLB
+select out tty
+nonprinting off
+j 12
+select out auto
+nonprinting on
+st 7944
+
+c use interpreter dump facility to create a new tape 2
+at ptp file ALG2(AJH).BIN
+j 14
+de ptp
+st 8097
+
+c **** tidy up ****
+
+delete ALG1_TOS.BIN
+delete ALG2_TOS.BIN
+delete errors.txt
+delete TEMP.900
+delete TRANSLAT(2PASS).BIN
+delete INTERPR(2PASS).BIN
+delete LOADER(2PASS).BIN
+delete TEMP_T.900
+delete TEMP_S.900
+delete TEMP_INT.900
+delete TEMP_LDR.900
+delete TAPE2.RLB
+delete TAPE2.BIN
+
+c **** all done  ****
+sh t

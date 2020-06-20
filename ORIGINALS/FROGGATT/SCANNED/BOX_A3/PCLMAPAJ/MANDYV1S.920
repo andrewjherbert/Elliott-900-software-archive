@@ -1,0 +1,219 @@
+﻿
+((CONVERSION PROGRAM FOR MANDY, 15/2/71)
+
+[CHIPF CHIPL CHIPE CHIP
+CHOPC CHOPF CHOPL CHOPE
+ERRORL ERRORE]
+
+(ENTRY POINTS)
+
+(8)      8    FR8TO5   (900 or 920 to 803)
+(9)      8    ;+3      (803 to 900)
+(10)     4    +0       (803 to 920)
+         8    ;+2
+         4    +1
+         5    CHOPC
+         8    FR5TO8
+
+(FROM-5-TO-8-ROUTINE)
+
+FR5TO8   4    +0
+         5    CHOPF
+
+         8    ;+2
+(-1)     4    -1
+SCASE    5    CASE
+
+READ5    15   2048
+         6    &37
+         5    CHAR
+
+         7    READ5    (Blank)
+         1    -29
+         7    READ5    (C.R.)
+
+         1    -2
+         7    SCASE-1  (Letter Shift)
+         1    +4
+         7    SCASE    (Figure Shift)
+
+         1    -3
+         7    ADD64+2  (L.F.)
+         1    +2
+         7    ADD64+3  (Space)
+
+         4    CASE
+         9    ADD64
+
+         0    CHAR
+         /4   TA5TO8-1
+         8    PUNCH8
+
+ADD64    4    CHAR
+         1    +54
+(+2)     1    -22
+(+3)     1    +32
+
+PUNCH8   11   CHOPL
+         8    CHOPE
+
+         1    -20
+         7    ;+0
+         8    READ5
+
+(FROM-8-TO-5 ROUTINE)
+
+FR8TO5   4    +0
+         5    CHIPF
+         4    +1
+         5    CASE
+
+BLANKS   4    -46080   (-180*256)
+         15   6144
+         1    +256
+         9    ;-2
+
+READ8    11   CHIPL
+         8    CHIPE    (Stops when re-entered after Haltcode)
+
+         1    -96
+         9    ;+2      (Change l.c. to u.c.)
+         1    -32
+         1    +96
+         5    CHAR
+
+         1    -20
+         7    ;+4      (Change Haltcode)
+         1    -72
+         7    ;+3
+         8    ;+4
+         4    +6
+         1    +35
+         5    CHAR
+
+         4    CHAR
+         1    -10
+         7    NL       (Newline)
+         1    -23
+         9    SPACE    (Space, Tab, etc.)
+
+         1    -32
+         9    FIGS     (Figures, etc.)
+         1    -26
+         9    LETTS    (Letters)
+
+ERROR    11   ERRORL
+         8    ERRORE
+         £MAN
+         £DY
+         £ERR
+         £OR.
+
+FIGS     0    CHAR
+         /4   TA8TO5-33
+         7    ERROR
+
+         4    CASE
+         7    ;+5
+         4    +27
+         15   6144
+         4    +0
+         5    CASE
+
+         /4   TA8TO5-33
+         8    PUNCH5
+
+LETTS    4    CASE
+         9    ;+5
+         4    +31
+         15   6144
+         4    -1
+         5    CASE
+
+         4    CHAR
+         1    -64
+         8    PUNCH5
+
+NL       4    +29
+         15   6144
+         4    +30
+         8    PUNCH5
+
+SPACE    4    +28
+
+PUNCH5   15   6144
+
+         4    CHIP
+         1    -20
+         7    BLANKS
+         8    READ8
+
+(WORKSPACE)
+
+CASE     >1
+CHAR     >1
+
+(FROM-5-TO-8 TABLE)
+
+TA5TO8   +49  (1)
+         +50  (2)
+         +42  (*)
+         +52  (4)
+         +36  ($)
+         +61  (=)
+         +55  (7)
+         +56  (8)
+         +59  (')
+         +44  (,)
+         +43  (+)
+         +58  (:)
+         +45  (-)
+         +46  (.)
+         +37  (Percent)
+         +48  (0)
+         +40  (Open Bracket)
+         +20  (Close Bracket)
+         +51  (3)
+         +63  (❿)
+         +53  (5)
+         +54  (6)
+         +47  (/)
+         +96  (`)
+         +57  (9)
+         +35  (£)
+
+(FROM-8-TO-5 TABLE)
+
+TA8TO5   +0   (Exclamation)
+         +0   (~)
+         +26  (£)
+         +5   ($)
+         +15  (Percent)
+         +0   (&)
+         +9   (')
+         +17  (Open Bracket)
+         +18  (Close Bracket)
+         +3   (*)
+         +11  (+)
+         +10  (,)
+         +13  (-)
+         +14  (.)
+         +23  (/)
+         +16  (0)
+         +1   (1)
+         +2   (2)
+         +19  (3)
+         +4   (4)
+         +21  (5)
+         +22  (6)
+         +7   (7)
+         +8   (8)
+         +25  (9)
+         +12  (:)
+         +9   (;)
+         +0   (<)
+         +6   (=)
+         +0   (>)
+         +20  (❿)
+         +24  (`)
+<! Halt !>

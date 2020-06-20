@@ -1,0 +1,185 @@
+﻿
+(Edited output from DUMPASSIR 09/05/2015 A.J. Herbert)
+
+
+*8192
+*16 (clear 8K, start at 8)
+
+[MUSIC QIN1 QOUT1 QCHOP QCHIN]
+
+BUFFER=692
+^32
+(Translate tune)
+	8 L68
+
+(Read in tune)
+L33
+MUSIC	4 +0
+	5 INDEX
+	5 OUTDEX
+L36	11 QIN1
+	8 QIN1+1
+	9 L48
+	0 INDEX
+	/5 BUFER
+	11 QIN1
+	8 QIN1+1
+	0 INDEX
+	/5 BUFFER+1
+	10 INDEX
+	10 INDEX
+	8 L36
+
+(Play tune)
+L48	0 OUTDEX
+	/4 L692
+	1 =14 0
+	5 ;+4
+	/4 L693
+	2 +0
+	5 COUNT
+	+0		(Patched location)
+	10 COUNT
+	4 COUNT
+	9 ;-3
+	10 OUTDEX
+	10 OUTDEX
+	4 INDEX
+	2 OUTDEX
+	9 L48
+	8 L33
+L65	+0		(Duration)
+COUNT
+L66
+INDEX	+0		(Count of notes)
+L67
+OUTDEX	+0	       	(Index)
+
+(Read score)
+L68	11 QCHIN	(Scan for newline)
+	8 QCHIN+1
+	1 -1
+	7 ;+2
+	8 ;-4
+	11 QCHIN
+	8 QCHIN+1
+	1 -50
+	7 LETR
+	1 -1
+	7 LETS
+	1 +18
+	5 WS
+	0 WS
+	/4 NOTES
+	5 NOTE
+L84	11 QCHIN
+	8 QCHIN+1
+	7 ;-2
+	1 -62
+	7 LETUP
+	1 +30
+	7 LETAT
+	1 +25
+	7 LETC
+	1 -9
+	5 DUR
+	0 NOTE
+	/4 PITCH
+	5 SHIFTS
+	11 QOUT1
+	8 QOUT1+1
+	/4 0
+	0 +0
+	4 SHIFTS
+	1 SHIFTS
+	1 SHIFTS
+	1 +96
+	5 WS
+	4 +70000
+	14 8176
+	13 WS
+	14 8191
+	0 +0
+	12 DUR
+	14 17
+	11 QOUT1
+	8 QOUT1+1
+	1 0
+	8 L68
+
+LETUP
+L118	4 NOTE
+	1 +12
+	5 NOTE
+	8 L84
+
+LETAT
+L122	4NOTE
+	1 -1
+	8 ;-4
+
+LETAC
+L125	10 L173
+	8 L84
+LETR
+L127	4 +900
+	11 QOUT1
+	8 QOUT1+1
+	/3 0
+	4 +40
+	11 QOUT1
+	8 QOUT1+1
+	3 0
+	8 L68
+
+LETS
+L136	4 -1
+	11 QOUT1
+	8 QOUT1+1
+	/0 0
+	4 +1
+	11 QCHOP
+	8 QCHOP+1
+	8 L33
+
+PITCH	+110
+	+100
+	+90
+	+80
+	+73
+	+66
+	+58
+	+51
+	+45
+	+40
+	+36
+	+31
+	+27
+	+23
+	+19
+	+16
+	+13
+	+10
+	+7
+	+4
+	+1
+NOTES
+L165	+0
+	+2
+	+3
+	+5
+	+7
+	+8
+	+10
+
+WS
+L172	+0
+NOTE
+L173	+0
+SHIFTS
+L174	+0
+DUR
+L175	+0
+
+%
+<! Halt !>

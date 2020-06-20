@@ -1,0 +1,14 @@
+﻿C Convert Carols from TJF to AJH format.
+C Andrew Herbert 29/12/2013
+on 903 
+
+nonstop on
+at ptr file ../../MASTERS/MUSIC/TJF_MUSIC/TJF_TRANS.BIN
+j 8181
+
+at ptr file ../../MASTERS/MUSIC/TJF_MUSIC/TJF_CAROLS.900
+at ptp file AJH_CAROLS.900
+r
+de ptp
+st 61
+sh t

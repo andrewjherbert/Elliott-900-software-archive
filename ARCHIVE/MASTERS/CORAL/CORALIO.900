@@ -1,0 +1,131 @@
+﻿
+'coral'
+'library' coralio
+
+'comment' -----------------------------------------------------------------
+ -
+ -
+ -     Basic output procedures for Coral programs.
+ -
+ -     Written for Elliott 920C CAP Coral by Andrew Herbert 5/7/2017.
+ -
+ --------------------------------------------------------------------------;
+
+   'comment'  -------------
+              ---outchar---
+              -------------;
+
+   'comment' output 8 bit character char to device dev
+             device 1 is paper tape punch
+             device 3 is teleprinter;
+
+   'procedure' outchar / 2 ('value''integer' dev, char);
+   'begin'
+      'integer' p; p := char;
+      'for' p := p 'while' p > 0 'do' 'begin'
+         p := p 'mask' 'integer'(p-1);
+         char := char 'differ' 128;
+      'end';
+      'if' dev = 1 'then' 
+         'code''begin' 4, char; 15, 6144; 'end' 
+      'else' 
+         'code''begin' 4, char; 15, 6148; 'end'
+   'end' outchar;
+
+
+   'comment'  ----------------
+              -- outnewline --
+              ----------------;
+
+   'comment' output CRLF sequence to device dev;
+
+   'procedure' outnewline / 3 ('value''integer' dev);
+   'begin'
+       outchar (dev, 13);
+       outchar (dev, 10)
+   'end' outnewline;
+
+
+   'comment' ---------------
+             -- outstring --
+             ---------------;
+
+   'procedure' outstring / 4 ('value''integer' dev, item);
+   'begin'
+      'integer' i;
+
+      'for' i := 0 'while' [item + i] <> 0 'do'
+      'begin'
+         'if' [item + i] = 'literal'(^) 'and'
+              [item + i + 1] = 'literal'(n) 'then'
+            outnewline (dev)
+         'else'
+            'begin'
+               outchar (dev, [item + i]);
+               i := i + 1;
+            'end'
+      'end';
+   'end' outstring;
+
+
+   'comment' ----------------
+             -- outinteger --
+             ----------------;
+
+   'comment' output item as an integer to device  
+             digits is number of digits to print
+             plus is symbol to print for positive number -
+             should be space or plus symbol;
+
+   'procedure' outinteger / 5 ('value''integer' dev, digits, plus, item);
+   'begin'
+      'integer' Max := 5;
+      'integer''array' Buf [0 : 5];
+      'integer' d;
+      'integer' i, j;
+
+      d := item;
+
+      'if' d > 0 'then' d := -d; (use - item so that can print -131072)
+
+      'for' i := Max, i - 1 'while' d <> 0 'do'
+      'begin'
+         'integer' quotient, remainder;
+         quotient := (d + 9) / 10; (force correct rounding)
+         remainder := - (d - quotient * 10);
+         Buf[i] := 'literal'(0) + remainder;
+         d := quotient
+      'end';
+
+      'for' j := 1 'step' 1 'until' digits - Max + i 'do'
+         outchar (dev, 32); (ASCII space)
+
+      'if' item < 0 'then' 
+         outchar (dev, 'literal'(-))
+      'else'
+         outchar (dev, plus);
+
+      'for' i := i + 1, i + 1 'while' i <= Max 'do'
+         outchar (dev, Buf[i])
+
+   'end' outinteger;
+
+
+   'comment' ---------------
+             -- outoctal ---
+             ---------------;
+
+
+   'procedure' outoctal / 6 ('value''integer' dev, item);
+   'begin' 'integer' mask, i, d := 7;
+      'for' i := -15 'step' 3 'until' 0 'do''begin'
+         'code''begin' 4, item; 0, i; /14 ,0; 6, mask; 5, d; 'end';
+         outchar (dev, 'literal'(0) + d)
+         'end'
+      'end' outoctal;
+
+
+
+'finish'
+
+<! halt !>

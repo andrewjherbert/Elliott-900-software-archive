@@ -1,0 +1,62 @@
+﻿C Print table of cubes.
+
+on 903
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+at ptr inline
+
+[Cubes]
+..PK
+T56K
+[P6]
+GKA3FT25@H29@VFT4DA3@TFH30@S6@T1F
+V4DU4DAFG26@TFTFO5FA4DF4FS4F
+L4FT4DA1FS3@G9@EFSFO31@E20@J995FJF!F
+..PZ
+[Cubes Master]
+G			K
+Z			F
+O	33		@
+O	34		@
+O	35		@
+A	28		@
+T			F
+A	6		@
+G	56		F
+A	27		@
+T			F
+A	10		@
+G	56		F
+T	27		@
+A	28		@
+A	31		@
+T	28		@
+S	28		@
+T	30		@
+A	29		@
+A	32		@
+U	29		@
+A	27		@
+T	27		@
+A	30		@
+A	31		@
+G	17		@
+E	2		@
+P			D
+P			D
+P			D
+P			F
+P			D
+P	1		F
+#			F
+@			F
+&			F
+EZPF
+<!!>
+j 32
+
+j 34
+
+sh t

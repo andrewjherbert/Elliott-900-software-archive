@@ -1,0 +1,215 @@
+﻿
+"PROCEDURE" FILL(A,L); "VALUE" L; "INTEGER" "ARRAY" A; "INTEGER"L;
+"BEGIN"
+   "INTEGER" "ARRAY" B[1:N]; "INTEGER" J,K;
+   "FOR" K:=0 "STEP" 1 "UNTIL" L "DO"
+   "BEGIN"
+      READNUM(B,G,1); "IF" BUFFER(1,'M@) "THEN" SUB(B,ZERO,B);
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" A[J,K]:=B[J]
+   "END"
+"END";
+
+"PROCEDURE" FETCH(A,B,L); "VALUE" L; "INTEGER" "ARRAY" A,B; "INTEGER" L;
+"BEGIN"
+   "INTEGER" J;
+   "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" A[J]:=B[J,L]
+"END";
+
+"PROCEDURE" IMPY(A,K); "VALUE" K; "INTEGER" "ARRAY" A; "INTEGER" K;
+"IF" A[1]<0 "THEN"
+   "BEGIN"
+      SUB(A,ZERO,A); MPY(A,K); SUB(A,ZERO,A)
+   "END" "ELSE" MPY(A,K);
+
+
+"PROCEDURE" TCHEBI(X,TABLE,LIMIT,ODD); "VALUE" LIMIT,ODD;
+            "INTEGER" "ARRAY" X,TABLE; "INTEGER" LIMIT; "BOOLEAN" ODD;
+"BEGIN"
+   "INTEGER" J; "INTEGER" "ARRAY" AR,B0,B1,B2,Y[1:N];
+   "IF" ODD "THEN"
+   "BEGIN"
+      FMULT(Y,X,X); MPY(Y,2); Y[1]:=Y[1]-1
+   "END" "ELSE" ADD(Y,ZERO,X);
+   ADD(B2,ZERO,ZERO); ADD(B1,ZERO,ZERO);
+   "FOR" J:=LIMIT "STEP" -1 "UNTIL" 0 "DO"
+   "BEGIN"
+      FETCH(AR,TABLE,J); FMULT(B0,Y,B1); IMPY(B0,2);
+      SUB(B0,B0,B2); ADD(B0,B0,AR);
+      "IF" ODD "THEN"
+      "BEGIN"
+         ADD(B2,B1,ZERO);
+         "IF" J>0 "THEN" ADD(B1,B0,ZERO)
+      "END" "ELSE"
+      "BEGIN"
+         "IF" J>0 "THEN" ADD(B2,B1,ZERO);
+         ADD(B1,B0,ZERO)
+      "END"
+   "END";
+   "IF" ODD "THEN"
+   "BEGIN"
+      SUB(AR,B0,B1); FMULT(X,X,AR)
+   "END" "ELSE"
+   "BEGIN"
+      SUB(X,B0,B2); IDIV(X,2)
+   "END"
+"END";
+<! Halt !>
+"PROCEDURE" LSQRT(X); "INTEGER" "ARRAY" X;
+"BEGIN"
+   "INTEGER" J,L,N2;
+   "INTEGER" "ARRAY" RES,TWICE,NEW,LONG1[1:2*N],R[1:2*N+1];
+   "IF" X[1]<0 "THEN"
+   "BEGIN"
+      "PRINT" PUNCH(3),''L@SQRT ARG NEG@,X[1];
+      ADD(X,ZERO,ZERO); "GOTO" EXIT
+   "END";
+   N2:=2*N; ADD(LONG1,ZERO2,ZERO2); LONG1[N2]:=1; L:=17*N-9;
+   ADD(RES,ZERO2,ZERO2); ADD(TWICE,ZERO2,ZERO2);
+   "FOR" J:=1 "STEP" 1 "UNTIL" N2+1 "DO" R[J]:= "IF" J=1 "THEN" 0
+      "ELSE" ("IF" J>N+1 "THEN" 0 "ELSE" X[J-1]);
+   DIV(R,2);
+   "FOR" J:=1 "STEP" 1 "UNTIL" L "DO"
+   "BEGIN"
+      MPY(RES,4); MPY(R,4); ADD(W2,ZERO2,ZERO2);
+      W2[N2]:=R[1]; R[1]:=0;
+      ADD(RES,RES,W2); MPY(TWICE,2); ADD(TWICE,TWICE,LONG1);
+      SUB(NEW,RES,TWICE);
+      "IF" NEW[1] "GE" 0 "THEN"
+      "BEGIN"
+         ADD(RES,ZERO2,NEW); ADD(TWICE,TWICE,LONG1)
+      "END" "ELSE" SUB(TWICE,TWICE,LONG1)
+   "END";
+   "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" X[J]:=TWICE[J+N];
+EXIT:
+"END";
+<! Halt !>
+"INTEGER" "ARRAY" CARCTAN[1:6,0:23];
+"PROCEDURE" LARCTAN(X); "INTEGER" "ARRAY" X;
+"BEGIN"
+   "BOOLEAN" MINUS,BIG;
+   "IF" CARCTAN[2,0] "NE" 108583 "THEN"
+   "BEGIN"
+      "PRINT" PUNCH(3),''L@OFFER CARCTAN@; WAIT; FILL(CARCTAN,23)
+   "END";
+   MINUS:=X[1]<0; "IF" MINUS "THEN" SUB(X,ZERO,X);
+   BIG:=X[1]>0; "IF" BIG "THEN"
+   "BEGIN"
+      EXTEND(W2,ONE,0); FDIV(X,W2,X)
+   "END";
+   TCHEBI(X,CARCTAN,23,"TRUE");
+   "IF" BIG "THEN"
+   "BEGIN"
+      ADD(W,ZERO,PI); DIV(W,2); SUB(X,W,X)
+   "END";
+   "IF" MINUS "THEN" SUB(X,ZERO,X)
+"END";
+<! Halt !>
+"INTEGER" "ARRAY" CEXP[1:6,0:13];
+"PROCEDURE" LEXP(X); "INTEGER" "ARRAY" X;
+"BEGIN"
+   "INTEGER" J,K,N; "BOOLEAN" MINUS;
+   "IF" CEXP[2,0] "NE" 59899 "THEN"
+   "BEGIN"
+      "PRINT" PUNCH(3),''L@OFFER CEXP@; WAIT; FILL(CEXP,13)
+   "END";
+   MINUS:=X[1]<0; "IF" MINUS "THEN" SUB(X,ZERO,X);
+   "IF" MINUS "THEN"
+   "BEGIN"
+      "IF" X[1]>46 "OR" (X[1]=46 "AND" X[2]>6776) "THEN"
+      "BEGIN"
+         "PRINT" PUNCH(3),''L@EXP ARG TOO SMALL@,-X[1];
+         ADD(X,ZERO,ZERO); "GOTO" EXIT
+      "END"
+   "END" "ELSE"
+   "IF" X[1]>11 "OR" (X[1]=11 "AND" X[2]>102695) "THEN"
+   "BEGIN"
+      "PRINT" PUNCH(3),''L@EXP ARG TOO LARGE@,X[1];
+      ADD(X,ZERO,ZERO); X[1]:=MAXINT; "GOTO" EXIT
+   "END";
+   FMULT(X,X,L2E); ADD(W,ZERO,ZERO); W[1]:=N:=X[1];
+   "IF" MINUS "THEN" SUB(X,X,W) "ELSE"
+   "BEGIN"
+      W[1]:=N:=N+1; SUB(X,W,X)
+   "END";
+   MPY(X,2); X[1]:=X[1]-1; TCHEBI(X,CEXP,13,"FALSE");
+   K:=N "DIV" 10;
+   "FOR" J:=1 "STEP" 1 "UNTIL" K "DO"
+      "IF" MINUS "THEN" DIV(X,1024) "ELSE" MPY(X,1024);
+   K:=N-K*10;
+   "FOR" J:=1 "STEP" 1 "UNTIL" K "DO"
+      "IF" MINUS "THEN" DIV(X,2) "ELSE" MPY(X,2);
+EXIT:
+"END";
+<! Halt !>
+"INTEGER" "ARRAY" CLN[1:6,0:25];
+"PROCEDURE" LLN(X); "INTEGER" "ARRAY" X;
+"BEGIN"
+   "INTEGER" J,M;
+   "IF" X[1]<0 "THEN"
+L0:
+   "BEGIN"
+      "PRINT" PUNCH(3), ''L@NEG OR ZERO LN ARG = @, X[1]; "GOTO" EXIT
+   "END"; IF(X,ZERO,L0);
+
+   "IF" CLN[2,0] "NE" 98684 "THEN"
+   "BEGIN"
+      "PRINT" PUNCH(3), ''L@OFFER CLN@; WAIT; FILL(CLN,25)
+   "END";
+
+   M:=0;
+L7:
+   SUB(W,X,ONE);
+   "IF" W[1]<0 "THEN" "GOTO" L2;
+   "IF" "NOT" DIFFER(X,ONE,G) "THEN"
+   "BEGIN"
+      ADD(X,ZERO,ZERO); "GOTO" L4
+   "END";
+L1:
+   ADD(W,ONE,ONE);
+   "IF" "NOT" DIFFER(W,X,G) "THEN" "GOTO" L5;
+   SUB(W,X,W);
+   "IF" W[1]<0 "THEN" "GOTO" L3 "ELSE" "GOTO" L6;
+L5:
+   ADD(X,LN2,ZERO); "GOTO" L4;
+L6:
+   DIV(X,2); M:=M+1; "GOTO" L1;
+L2:
+   MPY(X,2); M:=M-1; "GOTO" L7;
+L3:
+   MPY(X,2); X[1]:=X[1]-3; TCHEBI(X,CLN,25,"FALSE");
+L4:
+   ADD(W,LN2,ZERO);
+   "IF" M "NE" 0 "THEN"
+   "BEGIN"
+      "IF" M>0 "THEN"
+      "BEGIN"
+         MPY(W,M); ADD(X,X,W)
+      "END" "ELSE"
+      "BEGIN"
+         MPY(W,-M); SUB(X,X,W)
+      "END"
+   "END";
+EXIT:
+"END";
+<! Halt !>
+"INTEGER" "ARRAY" CSIN[1:6,0:11];
+"PROCEDURE" LSIN(X); "INTEGER" "ARRAY" X;
+"BEGIN"
+   "BOOLEAN" MINUS;
+   "IF" CSIN[2,0] "NE" 74610 "THEN"
+   "BEGIN"
+      "PRINT" PUNCH(3), ''L@OFFER CSIN@; WAIT; FILL(CSIN,11)
+   "END";
+
+   MINUS:=X[1]<0; "IF" MINUS "THEN" SUB(X,ZERO,X);
+   FMULT(X,X,INVPI);
+   "IF" AND(X[1],1)=1 "THEN" MINUS:= "NOT" MINUS;
+   X[1]:=0; TCHEBI(X,CSIN,11,"TRUE");
+   "IF" MINUS "THEN" SUB(X,ZERO,X)
+"END";
+
+"PROCEDURE" LCOS(X); "INTEGER" "ARRAY" X;
+"BEGIN"
+   ADD(W,ZERO,PI); DIV(W,2); ADD(X,X,W); LSIN(X)
+"END";
+<! Halt !>

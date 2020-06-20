@@ -1,0 +1,343 @@
+﻿   "PROCEDURE" GET(A,N,CHAN,S); "VALUE" N,CHAN;
+               "INTEGER" "ARRAY" A; "INTEGER" N,CHAN; "STRING" S;
+   "BEGIN"
+      "INTEGER" J,K; "INTEGER" "ARRAY" WORK[1:N];
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" A[J]:=WORK[J]:=0;
+
+      "FOR" J:=J "WHILE" "NOT" BUFFER(CHAN,S) "DO"
+      "BEGIN"
+         MPY(A,100000);
+         "READ" READER(CHAN),WORK[N];
+         ADD(A,A,WORK)
+      "END";
+   "END" OF GET;
+
+
+<! Halt !>   "PROCEDURE" PUT(A,N,CHAN,S); "VALUE" N,CHAN;
+               "INTEGER" "ARRAY" A; "INTEGER" N,CHAN; "STRING" S;
+   "BEGIN"
+      "INTEGER" J,K,L,M,P,R; "BOOLEAN" ZERO;
+      "INTEGER" "ARRAY" WORK[1:2*N+1];
+      "BOOLEAN" "PROCEDURE" FIN;
+      "BEGIN" "INTEGER" K;
+      FIN:="TRUE";
+      "IF" WORK[N] "NE" 0 "THEN" FIN:="FALSE"
+                          "ELSE"
+         "FOR" K:=1 "STEP" 1 "UNTIL" N "DO"
+            "IF" WORK[K] "NE" 0 "THEN" FIN:="FALSE"
+      "END" OF FIN;
+
+
+      "PROCEDURE" GROUP;
+      "BEGIN" "INTEGER" S;
+         S:=10^R; MPY(WORK,S);
+         "IF" ZERO "THEN" "PRINT" PUNCH(CHAN),' @;
+         "PRINT" DIGITS(5),SAME LINE,PUNCH(CHAN),WORK[N];
+         WORK[N]:=0
+      "END" OF GROUP;
+
+      "FOR" J:=1 "STEP" 1 "UNTIL" 2*N+1 "DO" WORK[J]:=
+                 "IF" J "LE" N "THEN" A[J] "ELSE" 0;
+
+      WORK[N+1]:=MAX INT "DIV" 2 +1;
+
+      "FOR" J:=-5,J+5 "WHILE" "NOT" FIN "DO" DIV(WORK,100000);
+      MPY(WORK,100000);
+      "FOR" J:=J,J+1 "WHILE" "NOT" FIN "DO" DIV(WORK,10);
+
+      L:=((J-1) "DIV" 50)+1; M:=J-(L-1)*50; P:=((M-1) "DIV" 5)+1;
+
+      "PRINT" PUNCH(CHAN),''L@@;
+      "FOR" K:=1 "STEP" 1 "UNTIL" 10-P "DO" "PRINT" PUNCH(CHAN),''S6@@;
+      R:=M-(P-1)*5;
+      ZERO:="FALSE"; GROUP; LEADZERO; UNSIGNED; ZERO:="TRUE"; R:=5;
+      "FOR" K:=1 "STEP" 1 "UNTIL" P-1 "DO" GROUP;
+      "FOR" J:=2 "STEP" 1 "UNTIL" L "DO"
+      "BEGIN"
+         "PRINT" PUNCH(CHAN),''L@@;
+         "FOR" K:=1 "STEP" 1 "UNTIL" 10 "DO" GROUP
+      "END";
+      LEADBLANK; REVERT; "PRINT" PUNCH(CHAN),S,''LR6@@;
+   "END" OF PUT;
+<! Halt !>      "PROCEDURE" GEN(X); "INTEGER" "ARRAY" X;
+      "BEGIN"
+         "INTEGER" K;
+         "FOR" K:=1 "STEP" 1 "UNTIL" N "DO" X[K]:=131071*RANDOM;
+         X[1]:= AND(X[1],511);
+         X[N]:= AND(X[N],131070)+1
+      "END" OF GEN;
+
+
+<! Halt !>      "PROCEDURE" GEN(X); "INTEGER" "ARRAY" X;
+      "BEGIN"
+         "INTEGER" K;
+         "FOR" K:=1 "STEP" 1 "UNTIL" N "DO" X[K]:=131071*RANDOM;
+         X[1]:= AND(X[1],32767);
+         X[N]:= AND(X[N],131070)+1
+      "END" OF GEN;
+
+<! Halt !>      "PROCEDURE" GEN(X); "INTEGER" "ARRAY" X;
+      "BEGIN"
+         "INTEGER" K;
+         "FOR" K:=1 "STEP" 1 "UNTIL" N "DO" X[K]:=131071*RANDOM;
+         X[1]:= AND(X[1],32767)+32768;
+         X[N]:= AND(X[N],131070)+1
+      "END" OF GEN;
+
+<! Halt !>   "PROCEDURE" DUMMY MULTIPLY;
+   "BEGIN" EXTEND(ZERO,ZERO,N); RSHIFT(ZERO) "END";
+<! Halt !>      "PROCEDURE" DIVIDE(X,Y,A,B); "VALUE" B; "INTEGER" "ARRAY" A,B,X,Y;
+      "COMMENT" X:= A MOD B,   Y:= ENTIER(A/B), FOR +VE NOS.;
+      "BEGIN"
+         "INTEGER" J,K;
+         IF(B,ZERO,D1); "GOTO" D2;
+D1:
+         "PRINT" PUNCH(3),''L@ZERO DIVISOR@; STOP;
+D2:
+         K:=0; ADD(Y,ZERO,ZERO);
+         "IF" A[1]>65535 "THEN"
+         "BEGIN"
+D3:
+            "IF" B[1]<65536 "THEN"
+            "BEGIN"
+               MPY(B,2); K:=K+1; "GOTO" D3
+            "END";
+            SUB(X,A,B);
+            "IF" X[1]<0 "THEN" "GOTO" D5
+                        "ELSE"
+            "BEGIN"
+               ADD(Y,Y,ONE);  SUB(X,X,B); "GOTO" D5
+            "END"
+         "END";
+         ADD(X,A,ZERO);
+D4:
+         SUB(X,X,B);
+         "IF" X[1] "GE" 0 "THEN"
+         "BEGIN"
+            ADD(X,X,B); MPY(B,2); K:=K+1; "GOTO" D4
+         "END";
+D5:
+         ADD(X,X,B);
+
+         "FOR" J:=1 "STEP" 1 "UNTIL" K "DO"
+         "BEGIN"
+            DIV(B,2);
+            SUB(X,X,B); MPY(Y,2);
+            "IF" X[1]<0 "THEN" ADD(X,X,B) "ELSE" ADD(Y,Y,ONE)
+         "END"
+      "END" OF DIVIDE;
+
+<! Halt !>   "PROCEDURE" MOD(X,A,B); "VALUE" B; "INTEGER" "ARRAY" A,B,X;
+   "COMMENT" X:=A MOD B;
+
+   "BEGIN"
+      "INTEGER" J,K;
+      IF(B)EQUALS:(ZERO)THEN GO TO:(L1);
+      "GOTO" L2;
+L1:
+      "PRINT" PUNCH(3),''L@B ZERO@; STOP;
+L2:
+      K:=0;
+      "IF" A[1]>65535 "THEN"
+      "BEGIN"
+L3:
+         "IF" B[1]<65536 "THEN"
+         "BEGIN"
+            MPY(B,2); K:=K+1; "GOTO" L3
+         "END";
+         SUB(X,A,B);
+         "IF" X[1]<0 "THEN" "GOTO" L5
+                     "ELSE"
+        "BEGIN"
+            SUB(X,X,B); "GOTO" L5
+         "END"
+      "END";
+      ADD(X,A,ZERO);
+L4:
+      SUB(X,X,B);
+      "IF" X[1] "GE" 0 "THEN"
+      "BEGIN"
+         MPY(B,2); K:=K+1; "GOTO" L4
+      "END";
+L5:
+      ADD(X,X,B);
+      "FOR" J:=0 "STEP" 1 "UNTIL" K "DO"
+      "BEGIN"
+         SUB(X,X,B);
+         "IF" X[1]<0 "THEN" ADD(X,X,B);
+         DIV(B,2)
+      "END"
+   "END" OF MOD;
+
+
+<! Halt !>
+      "PROCEDURE" POWER(X,M,E,NN); "INTEGER" "ARRAY" X,M,E,NN;
+      "COMMENT" X:= M^E MOD NN;
+
+      "BEGIN"
+         "INTEGER" J,K;
+         "INTEGER" "ARRAY" C,Z[1:N];
+
+         ADD(X,ZERO,ZERO);
+         X[1]:=65536;
+         K:=-1;
+         "FOR" K:=K+1 "WHILE" NN[1]<65536 "DO" MPY(NN,2);
+P1:
+         "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" Z[J]:= AND(X[J],E[J]);
+         IF(Z,ZERO,P2);
+         "GOTO" P3;
+P2:
+         DIV(X,2);
+         "GOTO" P1;
+P3:
+         ADD(C,ONE,ZERO);
+P4:
+         MULTIPLY(D,C,C,N);
+         MOD2(C,D,NN);
+         "FOR" J:=1 "STEP" 1 "UNTIL" N "DO"
+                    "IF" AND(Z[J],E[J]) "NE"  0 "THEN" "GOTO" P6;
+P5:
+         IF(Z,ONE,P7);
+         DIV(Z,2);
+         "GOTO" P4;
+P6:
+         MULTIPLY(D,C,M,N);
+         MOD2(C,D,NN);
+         "GOTO" P5;
+P7:
+         "FOR" J:=1 "STEP" 1 "UNTIL" K "DO" DIV(NN,2);
+         ADD(X,C,ZERO);
+         MOD(X,X,NN)
+      "END";
+
+<! Halt !>
+"PROCEDURE" PWER(X,M,E,NN); "VALUE" M,E;
+            "INTEGER" "ARRAY" X,NN; "INTEGER" M,E;
+"COMMENT" X:=M^E MOD NN;
+"BEGIN"
+   "INTEGER" KX,Z; "INTEGER" "ARRAY" C[1:N];
+   KX:=65536;
+   "IF" E<0 "THEN" "PRINT" ''L@E = @,SAME LINE,E,STOP;
+   "IF" E=0 "THEN"
+   "BEGIN"
+      ADD(X,ONE,ZERO); "GOTO" FIN
+   "END";
+P1:
+   Z:=AND(KX,E);
+   "IF" Z=0 "THEN"
+   "BEGIN"
+      KX:=KX "DIV" 2; "GOTO" P1
+   "END";
+   ADD(C,ONE,ZERO);
+P4:
+   MULTIPLY(D,C,C,N); MOD2(C,D,NN);
+   "IF" AND(Z,E) "NE" 0 "THEN" "GOTO" P6;
+P5:
+   "IF" Z=1 "THEN" "GOTO" P7;
+   Z:=Z "DIV" 2; "GOTO" P4;
+P6:
+   EXTEND(D,C,N); MPY(D,M); MOD2(C,D,NN); "GOTO" P5;
+P7:
+   MOD(X,C,NN);
+FIN:
+"END";
+<! Halt !>   "PROCEDURE" GCD(X,U,V,N); "VALUE" U,V,N;
+               "INTEGER" "ARRAY" X,U,V; "INTEGER" N;
+   "COMMENT" X:=GCD(U,V);
+
+   "BEGIN"
+L1:
+      IF(V,ZERO,L2);
+      MOD(X,U,V);
+      ADD(U,V,ZERO);
+      ADD(V,X,ZERO);
+      "GOTO" L1;
+L2:
+      ADD(X,U,ZERO)
+   "END" OF GCD;
+<! Halt !>
+   "PROCEDURE" GCD(X,U,V,N); "VALUE" U,V,N;
+               "INTEGER" "ARRAY" X,U,V; "INTEGER" N;
+   "COMMENT" X:=GCD(U,V);
+
+   "BEGIN"
+      "INTEGER" J; "INTEGER" "ARRAY" ZERO[1:N];
+
+      "PROCEDURE" MOD(X,A,B); "VALUE" B; "INTEGER" "ARRAY" A,B,X;
+      "COMMENT" X:=A MOD B;
+
+      "BEGIN"
+         "INTEGER" J,K;
+         IF(B)EQUALS:(ZERO)THEN GO TO:(L1);
+         "GOTO" L2;
+L1:
+         "PRINT" PUNCH(3),''L@B ZERO@; STOP;
+L2:
+         K:=0;
+         "IF" A[1]>65535 "THEN"
+         "BEGIN"
+L3:
+            "IF" B[1]<65536 "THEN"
+            "BEGIN"
+               MPY(B,2); K:=K+1; "GOTO" L3
+            "END";
+            SUB(X,A,B);
+            "IF" X[1]<0 "THEN" "GOTO" L5
+                        "ELSE"
+           "BEGIN"
+               SUB(X,X,B); "GOTO" L5
+            "END"
+         "END";
+         ADD(X,A,ZERO);
+L4:
+         SUB(X,X,B);
+         "IF" X[1] "GE" 0 "THEN"
+         "BEGIN"
+            MPY(B,2); K:=K+1; "GOTO" L4
+         "END";
+L5:
+         ADD(X,X,B);
+         "FOR" J:=0 "STEP" 1 "UNTIL" K "DO"
+         "BEGIN"
+            SUB(X,X,B);
+            "IF" X[1]<0 "THEN" ADD(X,X,B);
+            DIV(B,2)
+         "END"
+      "END" OF MOD;
+
+<! Halt !>      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" ZERO[J]:=0;
+L1:
+      IF(V,ZERO,L2);
+      MOD(X,U,V);
+      ADD(U,V,ZERO);
+      ADD(V,X,ZERO);
+      "GOTO" L1;
+L2:
+      ADD(X,U,ZERO)
+   "END" OF GCD;
+<! Halt !>     "INTEGER" "PROCEDURE" JACOBI(A,B); "VALUE" A,B;
+                "INTEGER" "ARRAY" A,B;
+      "BEGIN"
+         "INTEGER" J,K,R,S;
+         K:=1;
+J1:
+         IF(A,ONE,J3);
+         "IF" AND(A[N],1) = 0 "THEN" "GOTO" J2;
+         R:= AND(A[N]-1,7);
+         S:= AND(B[N]-1,7);
+         "IF" AND(R*S,4) = 4 "THEN" K:=-K;
+         MOD(C,B,A);
+
+         ADD(B,A,ZERO);
+         ADD(A,C,ZERO);
+         "GOTO" J1;
+J2:
+         R:= AND(B[N],15);
+         "IF" AND(R*R-1,8) = 8 "THEN" K:=-K;
+         DIV(A,2);
+         "GOTO" J1;
+J3:
+         JACOBI:=K
+      "END" OF JACOBI;
+
+<! Halt !>

@@ -1,0 +1,12 @@
+﻿C Demonstrate L1 ADA - 8 Queens Problem
+
+on 903 16K
+c load Ada system
+at ptr file ../../MASTERS/ADA/L1ADA.BIN
+j 8181
+c run program
+at ptr file ../../MASTERS/ADA/ADA8QUEENS.900
+select out tty
+j 8
+sh t
+st 34

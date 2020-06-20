@@ -1,0 +1,18 @@
+﻿C Convert Auld Lang Syne from 903 to AJH format.
+C Andrew Herbert 29/12/2013
+on 903 16K
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+at ptr file ../../MASTERS/MUSIC/903_MUSIC/903_TRANS.900
+j 8
+
+c initialize
+j 10
+at ptp file AJH_AULD.900
+at ptr file ../../MASTERS/MUSIC/PF_MUSIC/PF_AULD.900
+j 9
+de ptp
+
+sh t

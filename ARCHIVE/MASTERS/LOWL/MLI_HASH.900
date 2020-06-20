@@ -1,0 +1,406 @@
+﻿
+
+((ML/I HASH TABLE GENERATOR - ANDREW HERBERT 24/07/2015)
+
+(
+This program generates an ML/I hash table for a stream
+of input identifiers.
+
+Enter at 32 to read in identifiers and generate macros
+for chain heads.
+
+Then re-enter at 33 to dump out hash table.
+)
+
+
+[ HASH IDPT MDOUCH MDFIND MDREAD OUTIDX OUTSTR QCHOP SPT ]
+
+START     8     READID
+
+(Dump out hash table)
+          11    OUTSTR
+	  8	OUTSTR+1
+	  \:DE
+	  \F,T
+	  \HAS
+	  \H,^
+	  \"
+	  4	-6
+	  5 	IDX
+          4	-32
+	  5	KEY
+TLOOP	  0	KEY
+	  /4	COUNT+32
+	  9	NOENT
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \0 M
+	  \"
+	  4	KEY
+	  1	+32
+	  11	OUTIDX
+	  8	OUTIDX+1
+	  4	\  A
+	  11	QCHOP
+	  8	QCHOP+1
+TCONT	  10	IDX
+	  4	IDX
+	  9	NOT5
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \ ("
+	  4     KEY
+	  1	+32
+	  11	OUTIDX
+	  8	OUTIDX+1
+	  4	\  )
+	  11	QCHOP
+	  8	QCHOP+1
+	  4	-5
+	  5	IDX
+NOT5	  4	+1
+	  11	QCHOP
+	  8	QCHOP+1
+	  10	KEY
+	  4	KEY
+	  9	TLOOP
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \;"
+	  4	+33
+	  15	6144
+	  4	+1
+	  11	QCHOP
+	  8	QCHOP+1
+
+
+(Plug up end of chains)
+          4     -32
+	  5	KEY
+CLOOP	  0	KEY
+	  /4	COUNT+32
+	  9	NXKEY	  (No chain for this entry)
+
+(Output end of chain macro)
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \:DE
+	  \F,M
+	  \" 
+	  4     KEY
+	  1	+32
+	  11	OUTIDX
+	  8	OUTIDX+1
+	  0	KEY
+	  /4	COUNT+32
+	  1	\  B
+	  11	QCHOP
+	  8	QCHOP+1
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \,0;
+	  \"
+	  4	+33	  (ASCII 33 exclamation)
+	  15	6144
+	  4	+1
+	  11	QCHOP
+	  8	QCHOP+1
+NXLINK          0	KEY
+	  /4	COUNT+32
+	  1	-1
+	  9	NXKEY
+
+(Output intermediate link macro - e.g., :DEF,M2A,M2A;)
+	  /5	COUNT+32
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \:DE
+	  \F,M
+	  \" 
+	  4     KEY
+	  1	+32
+	  11	OUTIDX
+	  8	OUTIDX+1
+	  0	KEY
+	  /4	COUNT+32
+	  1	\  B
+	  11	QCHOP
+	  8	QCHOP+1
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \,M"
+	  4     KEY
+	  1	+32
+	  11	OUTIDX
+	  8	OUTIDX+1
+	  0	KEY
+	  /4	COUNT+32
+	  1	\  B
+	  11	QCHOP
+	  8	QCHOP+1
+	  4	+27	  (27 semicolon)
+	  11	QCHOP
+	  8	QCHOP+1
+	  4	+33	  (ASCII 33 exclamation)
+	  15	6144
+	  4	+1	  (1 newline)
+	  11	QCHOP
+	  8	QCHOP+1
+	  8	NXLINK
+
+NXKEY	  10	KEY
+	  4	KEY
+	  9	CLOOP
+
+(All done)
+          4	+20
+	  15	6144
+	  8	;+0
+
+NOENT	  11	OUTSTR
+	  8	OUTSTR+1
+	  \+0"
+	  8	TCONT
+
+IDX	  >1
+
+(Read in table of ids)
+READID    4     -32       (Clear COUNT)
+          5     KEY
+          4     -1
+          0     KEY
+          /5    COUNT+32
+          10    KEY
+          4     KEY
+          9     ;-5
+
+HASH      4     IDPT      (Reset string pointer)
+          5     SPT
+
+NEXTID    11    MDREAD    (Look for next identifier)
+          8     MDREAD+1
+          0     SPT
+          /5    0
+          2     &500001   (Skip new lines)
+          7     SKIP
+
+(Start of next id)
+          11   OUTSTR
+	  8    OUTSTR+1
+	  \:DE 
+	  \F,"
+NEXTCH	  0    SPT       (Accept character into buffer)
+          /4    0
+          11    MDOUCH    (And output)
+          8     MDOUCH+1
+          11    MDREAD    (Then read next)
+          8     MDREAD+1
+	  10    SPT
+          0     SPT
+          /5    0
+          2     &500001
+          7     NEWLNE    (New line trminates identifier)
+          8     NEXTCH
+
+SKIP      4     +1        (Echo skipped new line)
+          11    QCHOP
+          8     QCHOP+1
+          8     NEXTID
+
+NEWLNE     11	OUTSTR
+	  8	OUTSTR+1
+	  \,<M 
+	  \"
+	  11    MDFIND    (Calculate hash)
+          8     MDFIND+1
+          6     +63
+          14    8191
+          5     KEY
+          11    OUTIDX
+          8     OUTIDX+1
+          0     KEY
+          /10   COUNT
+          /4    COUNT
+	  1	\  A
+	  11	QCHOP
+	  8	QCHOP+1
+	  11	OUTSTR
+	  8	OUTSTR+1
+          \ 0
+	  \:M"
+	  4	KEY
+	  11	OUTIDX
+	  8	OUTIDX+1
+	  0	KEY
+	  /4	COUNT
+	  1	\  B
+	  11	QCHOP
+	  8	QCHOP+1
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \;>;
+	  \"
+	  4	+33	  (Exclamation mark)
+	  15    6144
+	  4	+1
+	  11	QCHOP
+	  8	QCHOP+1
+	  8     HASH
+
+
+IDPT      0     IDBUF
+IDBUF     >32              (Buffer for identifier)
+COUNT     >32
+SPT       >1
+KEY       >1
+
+(Print hash table index)
+
+[ OUTIDX QCHOP]
+
+OUTIDX    >1
+	  1	-10
+	  9	ZERO
+	  1	-10
+	  9	ONE
+	  1	-10	
+	  9	TWO
+	  5	UNITS
+	  4	\  3
+OUT1	  11	QCHOP
+	  8	QCHOP+1
+	  4	UNITS
+OUT2	  1	\  0
+	  11	QCHOP
+	  8	QCHOP+1
+	  0	OUTIDX
+	  /8	1
+ZERO	  1	+10
+	  8	OUT2
+ONE	  1	+10
+	  5	UNITS
+	  4	\  1
+	  8	OUT1	
+TWO	  1	+10
+	  5	UNITS
+	  4	\  2
+	  8	OUT1
+
+UNITS	  >1
+
+(Output a string)
+
+[ OUTSTR QCHOP ]
+ 
+OUTSTR    >1
+	  4	-3
+	  5	COUNT
+	  0	OUTSTR
+	  /4	1
+	  14	8180
+	  6	&77
+OUTS1	  3	STR
+	  2	\  "
+	  7	OUTEX
+	  2	\  "
+	  11	QCHOP
+	  8	QCHOP+1
+	  10	COUNT
+	  4	COUNT
+	  9	NXCHAR
+	  10	OUTSTR
+	  8	OUTSTR+1
+NXCHAR	  4	STR
+	  14	8181
+	  8	OUTS1
+OUTEX	  0	OUTSTR
+	  /8	2	
+
+STR	  >1
+COUNT	  >1
+	  
+
+(The next three routines come from the ML/1 system)
+
+(Read character routine)
+
+[ MDREAD MDCH QCHIN ]
+
+MDREAD    >1              ( INPUT SINGLE CHARACTER )
+          11    QCHIN
+          8     QCHIN+1
+          1     -9
+          7     RBRA      ( RIGHT BRACKET )
+          5     LASTCH
+          1     -7
+          9     CSPEC     ( PUNCTUATION )
+          1     -10
+          9     CDIG      ( DIGIT )
+          1     -7
+          9     CSPEC
+          1     -26
+          9     CLET      ( LETTER )
+CSPEC     4     &500011
+          8     ADCH
+
+CDIG      4     -7        ( -9-7 = -SIR 0 )
+          8     ADCH
+
+CLET      4     &600011
+
+ADCH      1     LASTCH
+ENDRD     5     MDCH
+          0     MDREAD
+          /8    1
+
+RBRA      4     &500011   ( CODE RBRACKET )
+          8     ENDRD
+
+LASTCH    >1
+
+(Hash algorithm)
+
+[ MDFIND IDPT MASKMS MDCH SPT ]
+MDFIND    >1
+          0     IDPT
+          /4    0
+          5     MASKMS
+          4     IDPT
+          2     SPT
+          7     SETHAF
+          4     IDPT
+          5     MDCH
+HASHF     10    MDCH
+          0     MDCH
+          4     MASKMS
+          1     MASKMS
+          /1    0
+          5     MASKMS
+          4     MDCH
+          2     SPT
+          7     SETHAS
+          8     HASHF
+SETHAF    10    MASKMS
+SETHAS    4     MASKMS
+          0     MDFIND
+          /8    1
+
+MASKMS    >1
+
+(Output routine)
+
+[ MDOUCH MDCH QCHOP ]
+MDOUCH    +0              ( CHAR OUTPUT )
+          9     NONDIG
+          1     \  0
+OUTC      11    QCHOP
+          8     QCHOP+1
+EXIT      0     MDOUCH
+          /8    1
+
+NONDIG    6     &77
+          8     OUTC
+
+MDCH      >1
+
+<! Halt !>

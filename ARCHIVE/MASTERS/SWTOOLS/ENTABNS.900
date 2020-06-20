@@ -1,0 +1,89 @@
+﻿
+((ENTABN: NOTEPAD ENTABULATE - ANDREW HERBERT - 18/09/2014)
+
+[ ENTABN CHIP CHIPL CHIPE CHIPF CHOPL CHOPE CHOPF CHOPC ]
+
+ENTABN
+          4     +0        (Initialize CHIO)
+          5     CHIPF
+          5     CHOPF
+          4     +1        (Select 900 telecode)
+          5     CHOPC
+          4     -121      (Clear TAB)
+          5     I
+          0     I
+          4     +0
+          /5    TAB+121
+          10    I
+          4     I
+          9     ;-5
+          4     +9        (Set NOTEPAD tab columns)
+          5     I
+SET       0     I
+          4     +1
+          /5    TAB
+          4     I
+          1     +8
+          5     I
+          2     +120
+          9     ;+2
+          8     SET
+          4     +1
+          5     COL       (Set initial column)
+REPEAT
+          5     NEWCOL    (NEWCOL := COL)  
+GETC      11    CHIPL     (Get next character)
+          8     CHIPE
+          1     -32       (Test for SPACE)
+          7     ;+2
+          8     NOTSPC
+          10    NEWCOL    (Collect spaces replacing with tabs)
+          0     NEWCOL
+          /4    TAB       (Are we at a tab stop?)
+          7     GETC
+          4     COL       (Yes, test NEWCOL = COL+1)
+          1     +1
+          2     NEWCOL
+          7     ;+3
+          4     +9        (No, output TAB)
+          8     ;+2
+          4     +32       (Yes, output BLANK)
+          11    CHOPL
+          8     CHOPE
+          4     NEWCOL    (Update COL to current position)
+          5     COL
+          8     GETC
+NOTSPC
+          4     NEWCOL    (Non-space encountered)
+          2     COL       (Output NEWCOL-COL spaces)
+PUTBLK    9     ;+2
+          8     ENDSPC
+          5     I
+          4     +32       (SPACE)
+          11    CHOPL
+          8     CHOPE
+          10    I
+          4     I
+          8     PUTBLK
+ENDSPC
+          4     CHIP
+          11    CHOPL
+          8     CHOPE
+          4     CHIP      (Stop on halt code)
+          1     -20
+          7     ;+0
+          1     +10       (Reset COL on newline)
+          7     ;+4
+          10    COL       (Otherwise advance COL)
+          4     COL
+          8     REPEAT
+          4     +1
+          5     COL
+          8     REPEAT
+
+COL       >1
+I         >1
+NEWCOL    >1
+TAB       +0
+          >120
+<! Halt !>

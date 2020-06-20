@@ -1,0 +1,198 @@
+﻿<! Legible Header  OOOO    O        O     O    OOOO    OOOOOOO           OOOOO    OOOOO   O     O    OOOOO             OOOO      OOO             O     OOO      OOOO            O    OOOO      OOO      O     O             OOOO      OOO      OOOO             OOOO    O         OOOO      OOOOO    O      !>
+<! Legible Header O    O   O        OO   OO   O    O      O              O    O   O       OO   OO   O     O           O    O    O   O           O     O   O    O    O          O    O    O    O   O    OO    OO            O    O    O   O    O    O           O    O   O        O    O    O     O   O      !>
+<! Legible Header O    O   O        O O O O   O    O      O              O    O   O       O O O O   O     O                O   O     O         O     O     O        O         O          O   O     O    O     O            O    O   O     O        O           O    O   O        O         O     O   O      !>
+<! Legible Header OOOOOO   O        O  O  O   OOOOOO      O              O    O   OOOO    O  O  O   O     O             OOO    O     O       O       O     O     OOO        O          O     O     O    O     O             OOOOO   O     O     OOO            OOOOOO   O        O         O     O   O      !>
+<! Legible Header O    O   O        O     O   O    O      O              O    O   O       O     O   O     O                O   O     O      O        O     O        O      O          O      O     O    O     O                 O   O     O        O           O    O   O        O   OOO   O     O   O      !>
+<! Legible Header O    O   O        O     O   O    O      O              O    O   O       O     O   O     O                O   O     O     O         O     O        O     O          O       O     O    O     O                 O   O     O        O           O    O   O        O    O    O     O   O      !>
+<! Legible Header O    O   O        O     O   O    O      O              O    O   O       O     O   O     O           O    O    O   O     O           O   O    O    O    O          O         O   O     O     O            O    O    O   O    O    O           O    O   O        O    O    O     O   O      !>
+<! Legible Header O    O   OOOOOO   O     O   O    O      O              OOOOO    OOOOO   O     O    OOOOO             OOOO      OOO     O             OOO      OOOO    O           OOOOOO     OOO     OOO   OOO            OOOO      OOO      OOOO            O    O   OOOOOO    OOOO      OOOOO    OOOOOO !>
+
+"comment" ALMAT DEMONSTRATION: 30-MAR-2011;
+
+"integer" x, y, z; "comment" random seeds - could read these in later;
+
+"real" "procedure" Wichmann;
+"begin"
+	"comment" The Wichmann-Hill portable random number
+                  generator. B. A. Wichmann and I. D. Hill,
+                  An Efficient and Portable Pseudo-Random Number
+                  Generator, Applied Statistics, 31 (No. 2),
+                  188-190 (1982) ;
+         "real" w;
+         x := 171 * (x - (x "div" 177) * 177) -  2 * (x "div" 177);
+         y := 172 * (y - (y "div" 176) * 176) - 35 * (y "div" 176);
+         z := 170 * (z - (z "div" 178) * 178) - 63 * (z "div" 178);
+         "if" x < 0 "then" x := x + 30269;
+         "if" y < 0 "then" y := y + 30307;
+         "if" z < 0 "then" z := z + 30323;
+         w := x/30269.0 + y/30307.0 + z/30323.0;
+         Wichmann := w - entier(w) 
+"end" of Wichmann;
+
+"integer" n; 
+
+"print" {Elliott Algol Matrix package{L}};
+
+"comment" read in parameters;
+
+"read" reader(1), n, x, y, z;
+
+checks ({N = }); n := checki (n);
+checks ({X, Y, Z = }); x := checki (x); y := checki (y); z := checki (z); 
+
+"if"   checkb (N "LE" 0 "OR" X "LE" 0 "OR" Y "LE" 0 "OR" Z "LE" 0)
+"then"	"begin"
+		"print" {{L2}INPUT ERROR, N, X, Y, Z MUST BE GREATER THAN 0{L2}};
+		stop;
+	"end";	
+
+
+"begin"
+	"real" "array" A, B, C, M [1:n, 1:n], T, U, V [1:n, 1:1], 
+		       in [1:2,1:2];
+	"integer" i, j;
+
+
+	"comment" set formatting;
+	freepoint (5);
+
+	"comment" read in a 2*2 matrix;
+	readmx (in);
+	"print" {{L10}READMX <<1,2>,<3,4>>{L}};
+	mxoutput (in, 80, 7);
+	
+	
+	"comment" fill M and V with random mumbers;
+	"for" i := 1 "step" 1 "until" n "do"
+	"begin"
+		"real" sum; sum := 0;
+		"for" j := 1 "step" 1 "until" n "do" 
+		"begin"
+			"real" r;
+			r := Wichman;
+			M[i,j] :=r;
+			sum := sum+r;
+		"end";
+		V[i,1] := sum;
+	"end";
+
+	"comment" M := random;
+	"print" {{L10}Random Matrix A{L}};
+	mxoutput (M, 80, 7);
+
+	"comment" B:=M;
+	"print" {{L10}MXCOPY (B) BECOMES: (M){L}};
+	mxcopy (B) becomes: (M);
+        mxoutput (B, 80, 7);
+
+	"comment" C:=-B;
+	"print" {{L10}MXNEG (C) BECOMES MINUS: (B){L}};
+	mxneg (C) becomes minus: (B);
+	mxoutput (C, 80, 7);
+
+	"comment" C:=C+B (=0);
+	"print" {{L10}MXSUM (C) BECOMES: (C) PLUS: (B) [SHOULD BE 0]{L}};
+	mxsum (C) becomes: (C) plus: (B);
+	mxoutput (C, 80, 7);
+
+	"comment" C:=M-M (= O);
+	"print" {{L10}MXDIFF (C) BECOMES: (M) MINUS (M) [SHOULD BE 0]{L}};
+	mxdiff (C) becomes: (M) minus: (M);
+	mxoutput (C, 80, 7);
+
+
+	"comment" C:=M*M;
+	"print" {{L10}MXPROD (C) BECOMES: (M) TIMES: (M) [SHOULD BE M^2]{L}};
+	mxprod (C) becomes: (M) times: (M);
+	mxoutput (C, 80, 7);	
+
+	"comment" C:=TRANSPOSE(M);
+	"print" {{L10}MXTRANS(C) BECOMES TRANSPOSE OF (M){L}};
+	mxtrans (C) becomes transpose of: (M);
+	mxoutput (C, 80, 7);		
+
+	"comment" B:=TRANSPOSE(C);
+	"print" {{L10}MXTRANS(B) BECOMES TRANSPOSE OF (C) [SHOULD BE M]{L}};
+	mxtrans (B) becomes transpose of: (C);
+	mxoutput (B, 80, 7);	
+
+	"comment" C:=C*2;
+	"print" {{L10}SCPROD (C) BECOMES M TIMES THE SCALAR: (2) [SHOULD BE M*2]{L}};
+	mxcopy (C) becomes: (M);
+	scprod (C) becomes a times the scalar: (2.0);
+	mxoutput (C, 80, 7);	
+
+	"comment" C:=INV(C);
+	"print" {{L10}INVMX (C){L}};
+	invmx (C);
+	mxoutput (C, 80, 7);
+
+	"comment" C:=A*INV(A) (= I);
+	"print" {{L10}C:=A*INV(A) [SHOULD BE I]{L}};
+	mxcopy (A) becomes: (M);
+	mxcopy (B) becomes: (M);
+	invmx (A);
+	mxprod (C) becomes: (A) times: (B);
+	mxoutput (C, 80, 7);	
+
+	"comment" solve MX=V (=<1,1,1....>);
+	"print" {{L10}SOLVMX MX=V [SHOULD BE <1,1,...,1>]{L}};
+	mxcopy (U) becomes: (V);
+	mxcopy (A) becomes: (M);
+	solvmx (A, U);
+	"print" {{l2}SOLUTION VECTOR:};
+	printcol (U);
+	"print" {{L2}END OF VECTOR{L3}M{L2}};
+	printmx (M);
+	"print" {{L3}A (SHOULD NOT EQUAL M){L2}};
+	printmx (A);
+	prefix ({L});
+
+	"comment" solve MX=V (=<1,1,1....>);
+	"print" {{L4}MXQUOT AB=C (=<1,1,1,...>){L}};
+	mxcopy (T) becomes: (V);
+	mxcopy (U) becomes: (V);
+	mxcopy (A) becomes: (M);
+	mxquot (T, A, U);
+	"print" {{l2}SOLUTION VECTOR:};
+	printcol (T);
+	"print" {{L3}END OF VECTOR};
+	"print" {{L3}MATRIX M{L2}};
+	printmx (M);
+	"print" {{L3}MATRIX A (SHOULD EQUAL M){L2}};
+	printmx (A);
+	"print" {{L3}VECTOR V{L2}};
+	printmx (V);
+	"print" {{L3}VECTOR U (SHOULD EQUAL V){L2}};	
+	printmx (U);
+	"print" {{L10}INVERT LARGE MATRICES{L5}};
+
+	n := 52; "comment" largest array that fits 16K;
+	"begin" "real" "array" A [1:n, 1:n];
+		checks ({Matrix size});
+		i := checki (n);
+		checks ({Words});
+		j := checki (n*n*2);
+		"for" i := 1 "step" 1 "until" n "do"
+			"for" j := 1 "step" 1 "until" n "do"
+				A[i,j] := Wichmann;
+		checks ({inverting matrix...});
+		invmx (A);
+		checks ({...inverted});		
+	"end";
+
+"end";
+
+"end";
+
+
+"end" ALMAT
+
+exploit facility to copy data after algol source
+
+n (size of matrices) = 7 x = 123 y = 67 z = 83
+
+
+test matrix for READMX: 1.0 2.0 3.0 4.0
+
+<! Halt !>

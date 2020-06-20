@@ -1,0 +1,43 @@
+﻿
+SORT;
+"BEGIN""REAL"A,B,C,D,E,F,PEN,N,N1,I;
+"SWITCH"SS:=AE,AF;
+"READ"N;
+N1:=N;
+"BEGIN""ARRAY"X,Y[1:N];
+"FOR"I:=1"STEP"1"UNTIL"N"DO"
+ "READ"X[I],Y[I];
+I:=1;
+AF: E:=X[I]-X[I+1];
+"IF"E<0"THEN"
+   "BEGIN";
+   A:=X[I];B:=X[I+1];X[I]:=B;X[I+1]:=A;
+   C:=Y[I];D:=Y[I+1];Y[I]:=D;Y[I+1]:=C;
+   PEN:=1;
+   "END"
+"ELSE""IF"E=0"THEN"
+   "BEGIN";
+   F:=Y[I]-Y[I+1];
+   "IF"F=0"OR"F>0"THEN""GOTO"AE"ELSE"
+      "BEGIN";
+      A:=X[I];B:=X[I+1];X[I]:=B;X[I+1]:=A;
+      C:=Y[I];D:=Y[I+1];Y[I]:=D;Y[I+1]:=C;
+      PEN:=1;
+      "END";
+   "END";
+AE: I:=I+1;
+"IF"I<N"THEN""GOTO"AF"ELSE""IF"PEN=1"THEN"
+      "BEGIN";
+      N:=N-1;
+      I:=1;
+      PEN:=0;
+      "GOTO"AF;
+      "END"
+   "ELSE"
+      "BEGIN";
+      "PRINT"''S7@X'S8@Y@;
+      "FOR"I:=1"STEP"1"UNTIL"N1"DO"
+         "PRINT"ALIGNED(6,1),X[I],SAMELINE,Y[I];
+      "END";
+"END";
+"END";

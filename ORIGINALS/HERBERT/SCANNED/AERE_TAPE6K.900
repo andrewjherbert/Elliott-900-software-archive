@@ -1,0 +1,145 @@
+﻿         0    DNO
+         /5   STCOUNT
+         /0   LISOUT-2
+         /4   1
+         0    DNO
+         2    +8
+         9    ;+3
+         4    +9
+         8    ;+2
+         2    +8
+         /5   SUM
+         14   8191
+         /5   BASE
+         4    +0
+         /5   PEAK
+         /0   LISOUT-2
+         /4   2
+         0    DNO
+         /5   SIZE
+/5 STEP
+/4 LSHIFT (STEP:=SIZE*2^LSHIFT)
+5 ;+2
+/4 STEP
++0
+/5 STEP
+
+         /0   LISOUT-2
+         /4   3
+         0    DNO
+         2    +0
+         /5   TENSEC
+         /0   LISOUT-2
+         /4   4
+5 W
+0 DNO
+4 +0
+/5 FLAG-2
+       /5   CORECT-2
+       /5   TRIAL-2
+       /0   LISOUT-2
+       /4   3
+        5   WKT
+       /4   5
+       5   WKC
+       /4   6
+        5   WKL
+
+        0   DNO
+        4   +1000
+        2   W
+        9   HD
+       /5   FACTOR-2
+       /4   TYPE
+       /5   HTYP-2
+        4   WKT
+       /5   HT-2
+        4   +1
+       /5   FLAG-2
+       /5   TYPE
+
+       /5   ENHANS
+       /5   SAVEN-2
+        8   OUT2
+
+HD      4   W
+       /5   ENHANS
+       /5   SAVEN-2
+        4   +0
+        5   WKA
+       /4   LIST-2
+        5   WKB
+
+LOOP    4   +1000
+        0   WKB
+       /2   4
+        9   ;+2
+       10   WKA
+        0   DNO
+       /4   LISOUT-2
+        2   WKB
+        7   ;+5
+
+        4   WKB
+        1   +7
+        5   WKB
+        8   LOOP
+
+        4   WKA
+        7   ;+2
+        8   PT
+
+FILL    4   WKC
+       /5   CORECT-2
+        4   WKL
+       /5   LEVEL+4
+        8   HF
+
+HE      4   WKC
+        7   ;+2
+        8   FILL
+        4   WKL
+        7   ;+2
+        8   FILL
+
+HF     /4   RSHIFT
+        5   ;+8
+       /4   SENSE-2
+        9   ;+4
+       /4   CORECT-2
+       /2   LEVEL+4
+        8   ;+3
+       /4   LEVEL+4
+       /2   CORECT-2
+       +0
+       /5   LEVEL
+OUT2    4   +7
+
+         /1   LISOUT-2
+         /5   LISOUT-2
+         /2   LIST
+
+            5   W                (C23/D23 REPETITION)
+  /4   OFFP
+   2   +0
+  /5   OFFSAVE-2
+   7   NORMAL
+  /4   RPT
+   7   ;+2
+   8   GOBAK
+   4   W
+   9   REPEAT
+RETURN  4  +2             (USUAL PATH)
+COM  5   W
+   4   -1
+  /1   TABENTRY
+  /5   POINT
+   4   W
+   8   LAB
+NORMAL  4   W             (NO REPEATS)
+   9   LEV4
+   8   RETURN
+REPEAT  /4   LIST-2       (EXTRACT 5 TABLE VALUES)
+  /5   LISOUT-2
+   4   +1
+  /5   R

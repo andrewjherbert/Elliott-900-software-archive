@@ -1,0 +1,432 @@
+﻿C DEMONSTRATE USE OF CARD READER & LINE PRINTER IN ALGOL
+
+on 903 16K
+
+c assemble lprint code procedure
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptp file DEMO13.RLB
+
+at ptr inline
+*0
+
+(card reader code procedure - assumes running in level 4)
+[ CARDIN QCARDIN QCINCH L2A ]
+FP=138
+ICHLNK=229
+BUFFER=231
+INSLOT=241
+
+CARDIN	/14 	1		(one parameter)
+	>+1			(link)
+
+	4	L2A
+	5	2		(set level 2 s-reg to interrupt handler)
+
+	0	FP
+	/0	3
+	/4	0
+	5	QCARDIN+3	(parameter is buffer address)
+
+	4	INSLOT+5	(check device not already set up)
+	2	ENTRYA
+	0	CARDIN+1
+	/7	1	
+	
+	4	ENTRYA		(store device routine address)
+	5	INSLOT+5	(card reader device number 6)
+	4	+0		(clear interpreter input buffer)
+	5	BUFFER+5
+	4	-1
+	5	QCARDIN+2	(initialize QCARDIN)
+	4	-1
+	5	QCARDIN+4	(no second buffer)
+	4	DECOAD		(decode table)
+	5	QCARDIN+5
+	4	+100		(force card to be read)
+	5	QCINCH+2
+	/8	1
+
+ENTRYA	0 ENTRY
+
+ENTRY	
+	11	QCINCH		(Device routine)
+	8	QCINCH+1
+	5	BUFFER+5	(Required to make "read" work)
+	5	173		(Required to make instring work)
+	0	ICHLNK
+	/8	1
+
+(card decode table)
+DECOAD	0 DECODE
+DECODE	&000000        (     +0  )
+        &000106        (    +70 &)
+        &000215        (   +141 -)
+        &000420        (   +272 0)
+        &001021        (   +529 1)
+        &001141        (   +609 A)
+        &001252        (   +682 J)
+        &001417        (   +783 /)
+        &002022        (  +1042 2)
+        &002142        (  +1122 B)
+        &002253        (  +1195 K)
+        &002463        (  +1331 S)
+        &004023        (  +2067 3)
+        &004143        (  +2147 C)
+        &004254        (  +2220 L)
+        &004464        (  +2356 T)
+        &010024        (  +4116 4)
+        &010144        (  +4196 D)
+        &010255        (  +4269 M)
+        &010465        (  +4405 U)
+        &020025        (  +8213 5)
+        &020145        (  +8293 E)
+        &020256        (  +8366 N)
+        &020466        (  +8502 V)
+        &040026        ( +16406 6)
+        &040146        ( +16486 F)
+        &040257        ( +16559 O)
+        &040467        ( +16695 W)
+        &100027        ( +32791 7)
+        &100147        ( +32871 G)
+        &100260        ( +32944 P)
+        &100470        ( +33080 X)
+        &200030        ( +65560 8)
+        &200150        ( +65640 H)
+        &200261        ( +65713 Q)
+        &200471        ( +65849 Y)
+        &202032        ( +66586 :)
+        &202173        ( +66683 [)
+        &202475        ( +66877 ])
+        &204003        ( +67587 #)
+        &204116        ( +67662 .)
+        &204204        ( +67716 $)
+        &204414        ( +67852 ,)
+        &210040        ( +69664 @)
+        &210134        ( +69724 <)
+        &210212        ( +69770 *)
+        &210405        ( +69893 %)
+        &220007        ( +73735 ')
+        &220110        ( +73800 open bracket)
+        &220211        ( +73865 close bracket)
+        &220477        ( +74047 _)
+        &240035        ( +81949 =)
+        &240113        ( +81995 +)
+        &240233        ( +82075 ;)
+        &240436        ( +82206 >)
+        &300002        ( +98306 ")
+        &300176        ( +98430 ^)
+        &300274        ( +98492 \)
+        &300437        ( +98591 ?)
+        &400031        (+131097 9)
+        &400151        (+131177 I)
+        &400262        (+131250 R)
+        &400472        (+131386 Z)
+        &777701        (+262081 exclamation)
+        
+
+(line printer code procedure - assumes running in level 4)
+[ LPRINT QLPOUT L2A ]
+
+PCHLNK=230
+OUTSLT=251
+
+LPRINT	/14	0		(no parameters)
+	>+1			(link)
+	4	L2A
+	5	2		(set level 2 s-reg to interrupt handler)
+	4	ENTRYA		(store line printer routine address)
+	5	OUTSLT+3	(line printer device number 4)
+	4	+1		(initialize QLPOUT)
+	5	QLPOUT+4
+	0	LPRINT+1
+	/8	1
+
+
+ENTRYA	0 ENTRY
+ENTRY	9	BIN		(binary or internal code?)
+	11	QLPOUT		(character to output is in A)
+	8	QLPOUT+1
+EXIT	0	PCHLNK
+	/8	1
+BIN	1	+131062		(binary newline)
+	7	NL
+	8	EXIT		(ignore all others)
+NL	4	+1
+	8	ENTRY+1		(print newline)
+
+[ L2A QL2ENT ]
+
+L2A	0 QL2ENT
+
+(SSYS2 modular interrupt system)
+
+[ QLEV2 QL2ENT QLPT2 QLPT3 QCARD2 QCARD3 QL2ENT ]
+
+(level 2 interrupt routine)
+L2A	>1
+L2Q	>1
+W	>1
+
+L2E	2	L2Q		(load q-reg)
+	14	1
+	4	L2A		(load a-reg)
+	15	7168		(terminate)
+QL2ENT	5	L2A		(start of level 2 interrupt routine)
+	3	L2Q		(save A and Q)
+QLEV2	15	1600		(read 4100 IMU status)
+	2	-1		(invert)
+	5	W
+	6	+3
+	7	NOINT		(no 4100 interrupt)
+	6	+2
+	7	QCARD2		(channel 1 interrupt: card reader)
+	8	QLPT2		(channel 2 interrupt: line printer)
+NOINT	4	W
+	6	&001400
+	7	L2E		(no 4100 attention, terminate)
+	6	&001000
+	7	QCARD3		(channel 1 attention: card reader)
+	8	QLPT3		(channel 2 attention: line printer)
+
+
+[ QERROR ]
+
+(QERROR FROM SSYS1 TRIMMED DOWN)
+W +0
+W1 +0
+PA +0
+SAFE +0
+
+PW +0
+PW1 +0
+CH +0
+
+PARITY
+ +0
+ 0 +0
+ 3 PW
+P1
+ 7 P2
+ 10 PW
+ 5 PW1
+ 1 -1
+ 6 PW1
+ 8 P1
+P2
+ 4 PW
+ 0 PARITY ( PARITY BIT IS L.S. ACC)
+/8 1
+
+
+QCHOP
+ +0
+ 8 ;+1
+ 6 =/0 255
+ 9 SPEC  ( OUTPUT BINARY PATTERN )
+ 1 -1
+ 7 NL ( TEST FOR NEWLINE )
+ 1 +33
+ 5 CH
+ 11 PARITY
+ 8 PARITY+1
+ 14 7
+ 6 +128
+ 1 CH ( ADD CORRECT PARITY BIT )
+SPEC
+ 15 6148 ( OUTPUT TO TTY)
+EXIT
+ 0 QCHOP
+ 6 &377400
+/7 1
+ 14 8184
+ 1 -1 ( FORM NEXT CHARACTER IN NEWLINE SEQUENCE)
+ 8 SPEC
+
+NL
+ 4 &205615 ( SEQUENCE FOR NEWLINE )
+
+ 8 SPEC
+
+QERROR
+ +0
+ 5 W
+ 4 +1
+ 11 QCHOP ( OUTPUT NEWLINE )
+ 8 QCHOP+1
+ 4 +10
+ 11 QCHOP ( OUTPUT * )
+
+ 8 QCHOP+1
+ 0 QERROR
+/0 1
+/4 2
+PNAM
+ 5 W1
+ 14 8180
+ 6 +63 (OUTPUT 3 INTERNAL CODE CHARS)
+
+ 11 QCHOP
+ 8 QCHOP+1
+
+ 4 W1
+ 0 +0
+ 14 6
+ 7 ;+2
+8 PNAM
+ 11 QCHOP ( SPACE )
+ 8 QCHOP+1
+ 4  -5
+ 5 W1
+OCTAL
+ 4 W
+ 14 3
+ 5 W
+ 14 8177
+ 6 +7
+ 1 +16
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 W1
+ 4 W1
+ 9 OCTAL
+ 4 +1
+ 11 QCHOP ( NL )
+ 8 QCHOP+1
+
+ 11 QPAUSE
+ 8 QPAUSE+1
+ 0 QERROR
+/8 2
+
+QPAUSE +0
+ 11 W
+ 14 18
+ 6 =7 0
+ 2 +0    ( FOR ONE MODULE THIS )
+ 5 W     ( COULD BE  :  )
+ 2 +0   ( 4 QPAUSE)
+ 1 QPAUSE (1 +1 )
+
+ 1 +1     ( 5 20 )
+ 0 W
+/5 20    ( 8 ;+0 )
+4 W
+9 QSTOP
+ 4 CONT
+ 5 9
+QSTOP
+ 8 ;+0
+CONT 8 ;+1
+
+ 4 20
+ 5 6
+ 15 7168
+ 8 ;-1 (DUMMY LEVEL 1 PROGRAM )
+
+<! halt !><!!>
+j 8
+st 6927
+
+at ptr file ../../MASTERS/903SIR/QLPOUT(ISS1).900
+j 9
+st 6927
+
+at ptr file ../../MASTERS/903SIR/CARDIN(ISS1).900
+j 9
+st 6927
+
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 6239
+
+de ptp
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptp file TEST.RLB
+at ptr inline
+lpcr;
+"begin"
+	"code" "procedure" lprint; "algol";
+        "code" "procedure" cardin (buffer); "integer" "array" buffer; "algol";
+	"integer" "array" buffer [1:80], m [1:100]; 
+	"integer" i; "real" x, y, z;
+
+	"comment" set up line printer; lprint; punch (4);
+
+	"print" 'Using Elliott 4100 card Reader and Line Printer'L3@@;
+
+	"print" 'Printing'L3@@;
+
+	"print" 'Special codes: 'Q2S3U2L3@(end)'L3@@;
+
+	"print" ''S10@Trig Tables'L@@;
+	"for" y := 0 "step" 5 "until" 85 "do"
+	"begin"
+		x := 0.01745329*y;
+		"print" sameline, sin(x), ''S6@@, cos(x), 
+			''S6@@, sin(x)/cos(x), ''L@@
+	"end";
+
+	"print" ''L3@Reading cards'L3@@;
+
+	"comment" waste time to allow printer to complete;
+
+	"comment" set up card reader;  cardin (buffer); reader (6);
+
+	"read" x, y, z;
+	"print" x, sameline, {{S2}}, y, {{S2}}, Z, {{L3}};
+	
+	digits (2);
+	"for" i := 0, decode (6) "while" i "ne" 7 "do" advance (6);
+	"for" i := 7, decode (6) "while" i "ne" 32 "do"
+	"begin"
+		"print" sameline, i;
+		advance (6)
+	"end";
+	"print" sameline, 32, {{L3}};
+	i := 1; instring  (m, i); 
+	i := 1; outstring (m, i);
+	"print" {{L}}
+"end"
+<! halt !><!!>
+j 12
+
+at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
+j 9
+de ptp
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+
+c read in program
+select out tty
+at ptr file TEST.RLB
+j 13
+delete TEST.RLB
+
+c load code procedures
+
+at ptr file DEMO13.RLB
+j 11
+delete DEMO13.RLB
+
+c set up devices
+at lpr
+at crd inline
+26.4 -102
++71  
+'Card Reader Test One@
+'Card Reader
+Test two@
+<!!>
+j 10
+sh t

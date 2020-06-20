@@ -1,0 +1,197 @@
+﻿
+Simple examples from Strachey's Computer Journal Paper
+------------------------------------------------------
+
+<[DEF:A:<A?1A>]>[DEF:A:<A?1A>]
+<[DEF:B:<B[A:X?1X]B>]>[DEF:B:<B[A:X?1X]B>]
+<[DEF:APA:<P?1?1P>]>[DEF:APA:<P?1?1P>]
+
+<[A:C]>       = [A:C]
+<[A:ACA]>     = [A:ACA]
+<[A:[A:C]]>   = [A:[A:C]]
+<[A:XDX]>     = [A:XDX]
+<[B:D]>       = [B:D]
+<[A:P]>       = [A:P]
+<[APA:Y]>     = [APA:Y]
+<[[A:P]:Y]>   = [[A:P]:Y]
+
+<Q<[A:C]>R>   = Q<[A:C]>R
+<[A:<[A:X]>]> = [A:<[A:X]>]
+<[B:<[A:X]>]> = [B:<[A:X]>]
+<Q<[>R<]>>    = Q<[>R<]>
+<Q<<[A:C]>>R> = Q<<[A:C]>>R
+
+<[A:X:U:[DEF:A:<?1?2?1>]]> = [A:X:U:[DEF:A:<?1?2?1>]]
+
+Summation example.
+<[DEF:Suc:<[1:2:3:4:5:6:7:8:9:10:[DEF:1:<?>?1]]>]>[DEF:Suc:<[1:2:3:4:5:6:7:8:9:10:[DEF:1:<?>?1]]>]
+
+Suc(0) = [Suc:0]
+Suc(1) = [Suc:1]
+Suc(2) = [Suc:2]
+Suc(3) = [Suc:3]
+Suc(4) = [Suc:4]
+Suc(5) = [Suc:5]
+Suc(6) = [Suc:6]
+Suc(7) = [Suc:7]
+Suc(8) = [Suc:8]
+Suc(9) = [Suc:9]
+
+<[DEF:Suc2:<[?2:[DEF:?2:?1<<:>[Suc:>?2<]>]
+               [DEF:9:<[Suc:>?1<]<:>0>]]>]>[DEF:Suc2:<[?2:[DEF:?2:?1<<:>[Suc:>?2<]>]
+               [DEF:9:<[Suc:>?1<]<:>0>]]>]
+
+Suc2(1,0) = [Suc2:1:0]
+Suc2(1,1) = [Suc2:1:1]
+Suc2(1,2) = [Suc2:1:2]
+Suc2(1,3) = [Suc2:1:3]
+Suc2(1,4) = [Suc2:1:4]
+Suc2(1,5) = [Suc2:1:5]
+Suc2(1,6) = [Suc2:1:6]
+Suc2(1,7) = [Suc2:1:7]
+Suc2(1,8) = [Suc2:1:8]
+Suc2(1,9) = [Suc2:1:9]
+
+<[DEF:Sum:<[S:?1:?2:0:[DEF:S:<[?3:[DEF:?3:<[S:>[Suc2:?1:?2]<:>[Suc:?3]<]>][DEF:>?3<:?1<:>?2]]>]]>]>
+[DEF:Sum:<[S:?1:?2:0:[DEF:S:<[?3:[DEF:?3:<[S:>[Suc2:?1:?2]<:>[Suc:?3]<]>][DEF:>?3<:?1<:>?2]]>]]>]
+Sum(2,1,0)=[Sum:2:1:0]
+Sum(2,1,1)=[Sum:2:1:1]
+Sum(2,1,2)=[Sum:2:1:2]
+Sum(2,1,3)=[Sum:2:1:3]
+Sum(2,1,4)=[Sum:2:1:4]
+Sum(2,1,5)=[Sum:2:1:5]
+Sum(2,1,6)=[Sum:2:1:6]
+Sum(2,1,7)=[Sum:2:1:7]
+Sum(2,1,8)=[Sum:2:1:8]
+Sum(2,1,9)=[Sum:2:1:9]
+
+Functional Product
+<[DEF:FNPROD:<[DEF:?1?2:<[>?1<:[>?2<:?1]]>]>]>[DEF:FNPROD:<[DEF:?1?2:<[>?1<:[>?2<:?1]]>]>]
+<[FNPROD:Log:Sin]>[FNPROD:Log:Sin]
+[DEF:Log:<L?1>] [DEF:Sin:<S?1>][DEF:Log:<L?1>] [DEF:Sin:<S?1>]
+<[LogSin:x]> = [LogSin:x]
+
+Conditional
+<[DEF:IF:<[?1:[DEF:?1:?4][DEF:?2:?3]]>]>[DEF:IF:<[?1:[DEF:?1:?4][DEF:?2:?3]]>]
+IF X=X => [IF:X:X:T:F]
+IF X=Y => [IF:X:Y:T:F]
+
+<! halt !><! halt !>>$~,;<
+
+Note change of warning characters to match original Strachey syntax
+-------------------------------------------------------------------
+
+<$DEF,S1,<$1,2,3,4,5,6,7,8,9,10,$DEF,1,<~>~1;;>;>$DEF,S1,<$1,2,3,4,5,6,7,8,9,10,$DEF,1,<~>~1;;>;
+<$DEF,S2,<$~2,$DEF,~2,~1<<,>$S1,>~2<;>;$DEF,9,<$S1,>~1<;<,>0>;;>;>$DEF,S2,<$~2,$DEF,~2,~1<<,>$S1,>~2<;>;$DEF,9,<$S1,>~1<;<,>0>;;>;
+<$DEF,Sum,<$S,~1,~2,0,$DEF,S,<$~3,$DEF,~3,<$S,>$S2,~1,~2;<,>$S1,~3;<;>;$DEF,>~3<,~1<,>~2;;>;;>;>$DEF,Sum,<$S,~1,~2,0,$DEF,S,<$~3,$DEF,~3,<$S,>$S2,~1,~2;<,>$S1,~3;<;>;$DEF,>~3<,~1<,>~2;;>;;>;
+Sum,3,4+0=$Sum,3,4,0;
+Sum,3,4+1=$Sum,3,4,1;
+Sum,3,4+2=$Sum,3,4,2;
+Sum,3,4+3=$Sum,3,4,3;
+Sum,3,4+4=$Sum,3,4,4;
+Sum,3,4+5=$Sum,3,4,5;
+Sum,3,4+6=$Sum,3,4,6;
+Sum,3,4+7=$Sum,3,4,7;
+Sum,3,4+8=$Sum,3,4,8;
+Sum,3,4+9=$Sum,3,4,9;
+
+Arithmetic
+
+<$DEF,+,<$DEC,$BAR,+,$BIN,~1;,$BIN,~2;;;>;>$DEF,+,<$DEC,$BAR,+,$BIN,~1;,$BIN,~2;;;>;
+<$DEF,-,<$DEC,$BAR,-,$BIN,~1;,$BIN,~2;;;>;>$DEF,-,<$DEC,$BAR,-,$BIN,~1;,$BIN,~2;;;>;
+<$DEF,*,<$DEC,$BAR,*,$BIN,~1;,$BIN,~2;;;>;>$DEF,*,<$DEC,$BAR,*,$BIN,~1;,$BIN,~2;;;>;
+<$DEF,Quot,<$DEC,$BAR,/,$BIN,~1;,$BIN,~2;;;>;>$DEF,Quot,<$DEC,$BAR,/,$BIN,~1;,$BIN,~2;;;>;
+<$DEF,Rem,<$DEC,$BAR,R,$BIN,~1;,$BIN,~2;;;>;>$DEF,Rem,<$DEC,$BAR,R,$BIN,~1;,$BIN,~2;;;>;
+
+<$+,10,12;>   = $+,10,12;
+<$-,24,6;>    = $-,24,6;
+<$*,8,12;>    = $*,8,12;
+<$Quot,20,5;> = $Quot,20,5;
+<$Rem,21,5;>  = $Rem,21,5;
+
+<! halt !><! halt !>}[^\]{
+
+Illustrate GPM Quirks
+---------------------
+
+Demonstate spurious output if a parameter containing a DEF is referenced.
+
+[DEF\args\{arg0=^0 arg1=^1 arg2=^2 arg3=^3}]
+[args\aaa[DEF\junk\junkbody]xxx\bbbyyy\ccczzz]
+[args\aaaxxx\bbbyyy\ccczzz[DEF\junk\junkbody]]
+[args\aaaxxx\bbbyyy\ccczzz\[DEF\junk\junkbody]]
+
+End of spurious output.
+
+Demonstrate problem with BIN being applied to a number equal to internal warning character.
+
+{[DEC\[BAR\+\[BIN\-128]\[BIN\1]]]} => [DEC\[BAR\+\[BIN\-128]\[BIN\1]]]
+{[DEF\x\-128][DEC\[BAR\+\[BIN\[x]]\[BIN\1]]]} => [DEF\x\-128][DEC\[BAR\+\[BIN\[x]]\[BIN\1]]]
+{[DEF\x\[BIN\-128]][DEC\[BAR\+\[x]\[BIN\1]]]} => [DEF\x\[BIN\-128]][DEC\[BAR\+\[x]\[BIN\1]]]
+{[DEF\x\[BIN\-128]][DEC\[BAR\+\[val\x]\[BIN\1]]]} => [DEF\x\[BIN\-128]][DEC\[BAR\+\[VAL\x]\[BIN\1]]]
+
+Similar problem with internal macro codes.
+[DEF\y\YYY][[BIN\-3]\y\ZZZ]
+{[DEF\x\[BIN\-3]][DEC\[BAR\+\[x]\[BIN\1]]]} => [DEF\x\[BIN\-3]][DEC\[BAR\+\[x]\[BIN\1]]]
+{[DEF\x\[BIN\-3]][DEC\[BAR\+\[val\x]\[BIN\1]]]} => [DEF\x\[BIN\-3]][DEC\[BAR\+\[VAL\x]\[BIN\1]]]
+
+End of BIN example.
+
+This is to demonstrate that GPM macros can leave definitions
+behind.
+
+[DEF\defs\{
+Defining ^1a[DEF\^1a\{Macro ^0 called with argument ^1}]
+Defining ^1b[DEF\^1b\{Macro ^0 called with argument ^1}]
+Defining ^1c[DEF\^1c\{Macro ^0 called with argument ^1}]
+}]`
+
+{[defs\A]} => [defs\A]
+{[defs\B]} => [defs\B]
+{[defs\C]} => [defs\C]
+
+{[Aa\xxx]} => [Aa\xxx]
+{[Bb\yyy]} => [Bb\yyy]
+{[Cc\zzz]} => [Cc\zzz]
+
+End of test.
+
+Further name binding example.
+
+{Calling [DEF\a\{[DEF\b\[c]xxx[d]]}]}  [DEF\a\{[DEF\b\[c]xxx[d]]}]
+
+{Calling [DEF\c\old c][DEF\d\old d]} [DEF\c\old c][DEF\d\old d]
+
+{Calling [a\[DEF\c\ccc][DEF\d\ddd]]}  [a\[DEF\c\ccc][DEF\d\ddd]]
+{Calling [b]} => [b]
+{Calling [c]} => [c]
+{Calling [d]} => [d]
+
+End of test.
+
+
+Martin Richards Examples
+------------------------
+
+Towers of Hanoi
+
+[DEF\-\{[DEC\[BAR\-\[BIN\^1]\[BIN\^2]]]}]
+[DEF\H\{[^1\^2\^3\^4\
+           [DEF\^1\{[H\[-\^0\1]\^1\^3\^2]    Move disc ^0 from tower ^1 to tower ^2
+[H\[-\^0\1]\^3\^2\^1]}][DEF\0\]]}]
+
+{[H\1\A\B\C]} =>
+[H\1\A\B\C]
+
+{[H\2\A\B\C]} =>
+[H\2\A\B\C]
+
+{[H\3\A\B\C]} =>
+[H\3\A\B\C]
+
+{[H\4\A\B\C]} =>
+[H\4\A\B\C]
+
+End of output.
+
+<! halt !>

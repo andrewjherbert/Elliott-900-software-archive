@@ -1,0 +1,12 @@
+﻿
+0 LOCAL1
+/4 POSN+4
+11 QOUT1
+8 QOUT1+1
+/0 0
+0 LOCAL1
+
+         /4   TOTAL1
+         11   QOUT1
+         8    QOUT1+1
+<! Halt !>

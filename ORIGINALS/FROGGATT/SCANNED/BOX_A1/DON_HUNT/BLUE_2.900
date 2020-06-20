@@ -1,0 +1,124 @@
+﻿
+
+
+*+6
+[ADPART CF CFF EP FBAJ
+FINDFP GTFS GTL5 INDFS INDS
+PE SP TA W1]
+
+SP=136
+EP=137
+W1=181
+ADPART=1315
+FBAJ=1756
+
+FINDFP=1772
+TA=1842
+PE=1902
+CFF=1987
+GTFS=2026
+
+GTL5=2030
+INDFS=2205
+INDS=2208
+CF=2287
+
+^FBAJ
+  8  P1
+^PE+13
+  8  P3
+^CFF+3
+  8  P4
+^GTFS+2
+  8  P5
+^INDFS+2
+  8  P6
+^CF
+  8  P7
+^FINDFP+18
+
+   8  P22
+
+^FINDFP+32
+   8   P2
+^+32
+ /4 0
+ 2 30     (STACKADD)
+ 7 P1+4    (CANNOT BE A FORMAL PROCEDURE)
+ /0 0
+ 8 ;+2
+P1 0 EP
+ /4 2
+ 9 P1-5
+  /4  4
+   0  SP
+  /5  2
+   4  ADPART
+   8  TA+1
+
+P22  /4 2
+   9  ;+4
+   /4 4
+   /0 4
+   8  FINDFP+10
+   /4 0
+   8  FINDFP+19
+
+P2 /4 2
+   9  ;+3
+   /0 4
+   8  FINDFP+22
+   /0  0
+   8  FINDFP+22
+
+
+P3  10  SP
+  10  SP
+   4  EVN
+  /5  2
+   8  PE+14
+
+P4  0  W1
+  /4  2
+   8  JOIN
+
+P5  0  W1
+  /4  2
+   5  EP
+  /4  0
+   8  GTL5
+
+P6  0  W1
+  /4  2
+  5  EP
+  /4  0
+   8  INDS+1
+
+P7  4  EP
+JOIN
+   5  EVN
+   0  SP
+   8  CF+1
+
+EVN  +0
+%
+<! Halt !>
++32
++80
++1756
++1756
++1790
++1790
++1804
++1804
++1915
++1915
++1990
++1990
++2028
++2028
++2207
++2207
++2287
++2287
+<! Halt !>

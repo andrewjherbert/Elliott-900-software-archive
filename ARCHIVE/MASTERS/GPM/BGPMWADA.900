@@ -1,0 +1,714 @@
+﻿
+***Towers of Hanoi***
+
+[def\result\]`
+
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\`
+[def\-1\{^}^1]]}]`
+[def\hanoi\{[^4\`
+[def\^4\{[hanoi\}^1{\}^3{\}^2{\[1-\}^4{]]`
+ +}^1{-}^3{+`
+[hanoi\}^2{\}^1{\}^3{\[1-\}^4{]]}]`
+[def\0\{}^1{-}^3{}]]}]`
+
+{[hanoi\a\b\c\0]=>}[hanoi\a\b\c\0]`	
+	[result\a-c]
+{[hanoi\a\b\c\1]=>}[hanoi\a\b\c\1]`
+	[result\a-b+a-c+b-c]
+{[hanoi\a\b\c\2]=>}[hanoi\a\b\c\2]`
+	[result\a-c+a-b+c-b+a-c+b-a+b-c+a-c]
+
+[eof]
+
+***Fibonacci number***
+
+[def\result\]`
+
+fibonacci number
+(define (fib n)
+ (cond ((= n 0) 0)
+       ((= n 1) 1)
+       (else (+ (fib (- n 1)) (fib (- n 2))))))
+(define (+ x y)
+  (if (= x 0) y
+   (+ (+ (- x 1) y) 1)))
+
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\[def\1\{^}^1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\+\{[^1\
+ [def\^1\{[1+\[+\[1-\}^1{]\}^2{]]}]\[def\0\^2]]}]`
+[def\fib\`
+    {[^1\`
+     [def\^1\{[+\[fib\[1-\}^1{]]\[fib\[1-\[1-\}^1{]]]]}]\`
+     [def\1\1]\`
+     [def\0\0]`
+     ]}]`
+
+{[fib\0]=>}[fib\0]`
+	[result\0]
+{[fib\1]=>}[fib\1]`
+	[result\1]
+{[fib\2]=>}[fib\2]`  
+[result\1]
+{[fib\6]=>}[fib\6]`  
+	[result\8]
+
+[eof]
+
+***Factorial***
+
+[def\result\]`
+
+factorial
+(define (factorial n)
+  (if (= n 0) 1
+    (* n (factorial (- n 1)))))
+
+multiplication
+(define (* x y)
+  (if (= x 0) 0
+   (+ (* (- x 1) y) y)))
+
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\[def\1\{^}^1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\+\{[^1\`
+ [def\^1\{[1+\[+\[1-\}^1{]\}^2{]]}]\[def\0\^2]]}]`
+[def\*\{[^1\`
+ [def\^1\{[+\[*\[1-\}^1{]\}^2{]\}^2{]}]`
+ [def\0\0]]}]`
+[def\!\{[^1\`
+ [def\^1\{[*\}^1{\[!\[1-\}^1{]]]}]`
+ [def\0\1]]}]`
+
+{[!\0]=>}[!\0]`
+	[result\1]
+{[!\1]=>}[!\1]`
+	[result\1]
+{[!\2]=>}[!\2]`
+	[result\2]
+{[!\3]=>}[!\3]`
+	[result\6]
+
+[eof]
+
+***Median (in fact this is a sorting program)***
+
+[def\result\]`
+
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\`
+ [def\-1\{^}^1]]}]`
+[def\lt\{[^1\`
+ [def\^1\{[lt\[1-\}^1{]\}^2{]}]\`
+ [def\-1\t]\[def\^2\f]]}]`
+[def\med\{[[lt\^2\^1]\`
+ [def\t\[[lt\^3\^1]\`
+   [def\t\[[lt\^3\^2]\[def\t\^2]\`
+                      [def\f\^3]]]\`
+   [def\f\^1]]]\`
+ [def\f\[[lt\^3\^2]\`
+   [def\t\[[lt\^3\^1]\[def\t\^1]\`
+                      [def\f\^3]]]\`
+   [def\f\^2]]]]}]`
+
+{[med\0\0\0]\[med\0\0\1]\[med\0\0\2]\[med\0\1\0]\[med\0\1\1]=>}`
+ [med\0\0\0]\[med\0\0\1]\[med\0\0\2]\[med\0\1\0]\[med\0\1\1]`   	
+	[result\{0\0\0\0\1}]
+{[med\0\1\2],[med\0\2\0],[med\0\2\1]\[med\0\2\2]\[med\1\0\0]=>}`   
+ [med\0\1\2]\[med\0\2\0]\[med\0\2\1]\[med\0\2\2]\[med\1\0\0]`	
+	[result\{0\0\0\0\1}]
+{[med\1\0\1]\[med\1\0\2]\[med\1\1\0]\[med\1\1\1]\[med\1\1\2]=>}`   
+ [med\1\0\1]\[med\1\0\2]\[med\1\1\0]\[med\1\1\1]\[med\1\1\2]`	
+	[result\{\0\0\0\0\1}]
+{[med\1\2\0]\[med\1\2\1]\[med\1\2\2]\[med\2\0\0]\[med\2\0\1]=>}`   
+ [med\1\2\0]\[med\1\2\1]\[med\1\2\2]\[med\2\0\0]\[med\2\0\1]`	
+	[result\{1\1\2\0\1}]
+{[med\2\0\2]\[med\2\1\0]\[med\2\1\1]\[med\2\1\2]\[med\2\2\0]=>}`
+ [med\2\0\2]\[med\2\1\0]\[med\2\1\1]\[med\2\1\2]\[med\2\2\0]`   ` 
+	[result\{\2\1\1\2\2}]
+{[med\2\2\1]\[med\2\2\2]=>}[med\2\2\1]\[med\2\2\2]`	
+	[result\{2\2}]
+
+***GCD***
+
+[def\result\]`
+
+gcd
+(define (gcd a b)
+  (cond ((= a b) b)
+        ((< a b) (gcd a (- b a)))
+        ((> a b) (gcd (- a b) b))))
+
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\lt\{[^1\`
+ [def\^1\{[p\}^1{\}^2{\[def\p\[lt\[1-\}^1{]\}^2{]]]}]`
+ [def\-1\t][def\^2\f]]}]`
+[def\-\{[^2\[def\^2\{[-\[1-\}^1{]\[1-\}^2{]]}]\[def\0\^1]]}]`
+[def\gcd\{[^2\`
+[def\^2\`
+ {[[lt\}^1{\}^2{]\`
+ [def\f\`
+  {[gcd\[-\}}^1{{\}}^2{{]\}}^2{{]}]\`
+ [def\t\`
+  {[gcd\}}^1{{\[-\}}^2{{\}}^1{{]]}]]}]\`
+[def\^1\^1]]}]`
+
+{[gcd\2\4]\[gcd\5\3]\[gcd\6\3]=>}[gcd\2\4]\[gcd\5\3]\[gcd\6\3]`
+	[result\{2\1\3}]
+
+[eof]
+
+***Radix 2***
+
+[def\result\]`
+
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\[def\1\{^}^1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\lt\{[^1\`
+ [def\^1\{[p\}^1{\}^2{\[def\p\[lt\[1-\}^1{]\}^2{]]]}]`
+ [def\-1\t][def\^2\f]]}]`
+[def\b\{[[lt\^1\2]\`
+[def\t\{[}^2{\`
+ [def\}^2{\{[b\}}^2{{\0]}}^1{]\`
+ [def\0\}^1{]]}]\`
+[def\f\`
+ {[b\[1-\[1-\}^1{]]\[1+\}^2{]]}]]}]`
+
+{[b\0\0]\[b\1\0]\[b\2\0]\[b\3\0]\[b\4\0]=>}`
+[b\0\0]\[b\1\0]\[b\2\0]\[b\3\0]\[b\4\0]`
+   [result\{0\1\10\11\100\}]
+{[b\5\0]\[b\6\0]\[b\7\0]\[b\8\0]\[b\9\0]=>}`
+[b\5\0]\[b\6\0]\[b\7\0]\[b\8\0]\[b\9\0]`
+    [result\{101\110\111\1000\1001}]
+
+[eof]
+
+
+***Binomial***
+
+[def\result\]`
+
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\`
+[def\1\{^}^1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\`
+[def\-1\{^}^1]]}]`
+[def\+\{[^1\`
+[def\^1\{[1+\[+\[1-\}^1{]\}^2{]]}]\`
+[def\0\^2]]}]`
+[def\b\{[^2\`
+[def\^2\{[+\[b\[1-\}^1{]\}^2{]\`
+ [b\[1-\}^1{]\[1-\}^2{]]]}]\`
+[def\0\1]\[def\^1\1]]}]`
+[def\binom\{[bb\0\`
+[def\bb\{[^1\`
+ [def\^1\{[b\}}^1{{\}^1{]\`
+ [bb\[1+\}^1{]]}]\`
+ [def\}^1{\1]]}]]}]`
+
+{[b\4\0]\[b\4\1]\[b\4\2]\[b\4\3]\[b\4\4]=>}`
+[b\4\0]\[b\4\1]\[b\4\2]\[b\4\3]\[b\4\4]	[result\{1\4\6\4\1}]
+{[binom\3]=>}[binom\3] [result\{1\3\3\1}]
+
+[eof]
+
+***Primality Test***
+
+[def\result\]`
+
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\[def\1\{^}^1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\lt\{[^1\[def\^1\{[lt\[1-\}^1{]\}^2{]}][def\-1\t][def\^2\f]]}]`
+[def\-\{[^2\[def\^2\{[-\[1-\}^1{]\[1-\}^2{]]}]\[def\0\^1]]}]`
+[def\r\{[[lt\^1\^2]\[def\t\^1]\[def\f\{[r\[-\}^1{\}^2{]\}^2{]}]]}]`
+[def\p?\{[p\2\`
+[def\p\{[^1\`
+ [def\^1\{[[r\}}^1{{\}^1{]\`
+  [def\[r\}}^1{{\}^1{]\`
+   {[p\[1+\}}^1{{]]}]\`
+  [def\0\f]]}]\`
+ [def\}^1{\t]]}]]}]`
+
+{[p?\2]\[p?\3]\[p?\4]\[p?\5]\[p?\6]\[p?\7]\[p?\8]\[p?\9]=>}`
+	[p?\2]\[p?\3]\[p?\4]\[p?\5]\[p?\6]\[p?\7]\[p?\8]\[p?\9]`
+		[result\{t\t\f\t\f\t\f\f}]
+
+[eof]
+
+***Tarai function***
+
+[def\result\]`
+
+(define (tarai x y z)
+  (if (<= x y) y
+  (tarai (tarai (- x 1) y z)
+         (tarai (- y 1) z x)
+         (tarai (- z 1) x y))))
+
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\lt\{[^1\`
+ [def\^1\{[p\}^1{\}^2{\[def\p\[lt\[1-\}^1{]\}^2{]]]}]\`
+ [def\-1\t][def\^2\f]]}]`
+[def\tarai\{[[lt\^2\^1]\`
+[def\f\^2]\`
+[def\t\{[tarai\`
+ [tarai\[1-\}^1{]\}^2{\}^3{]\`
+ [tarai\[1-\}^2{]\}^3{\}^1{]\`
+ [tarai\[1-\}^3{]\}^1{\}^2{]]}]]}]
+
+{[tarai\4\3\2]=>}[tarai\4\3\2]`
+	[result\4]
+{[tarai\4\2\0]=>}[tarai\4\2\0]`
+ 	[result\4]
+
+[eof]
+
+
+***Ackermann function***
+
+[def\result\]`
+
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\[def\1\{^}^1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\a\{[^1\`
+[def\^1\{[}^2{\`
+ [def\}^2{\{[a\[1-\}}^1{{]\`
+  [a\}}^1{{\[1-\}}^2{{]]]}]\`
+ [def\0\{[a\[1-\}}^1{{]\1]}]]}]\`
+[def\0\{[1+\}^2{]}]]}]`
+
+{[a\0\0]\[a\0\1]\[a\0\2]\[a\0\3]\=>}[a\0\0]\[a\0\1]\[a\0\2]\[a\0\3]`   
+	[result\{1\2\3\4}]
+{[a\1\0]\[a\1\1]\[a\1\2]\[a\1\3]\=>}[a\1\0]\[a\1\1]\[a\1\2]\[a\1\3]`   
+	[result\{2\3\4\5}]
+{[a\2\0]\[a\2\1]\[a\2\2]\[a\2\3]\=>}[a\2\0]\[a\2\1]\[a\2\2]\[a\2\3]`   
+	[result\{3\5\7\9}]
+{[a\3\0]=>}[a\3\0]`
+	[result\5]
+
+[eof]
+
+***Logical functions***
+
+[def\result\]`
+
+[def\&\{[^1\[def\^1\f]\[def\t\^2]]}]`
+[def\|\{[^1\[def\^1\t]\[def\f\^2]]}]`
+[def\~\{[^1\[def\f\t]\[def\t\f]]}]`
+[def\maj\{[|\[|\[&\^1\^2]\`
+ [&\^2\^3]]\[&\^3\^1]]}]`
+[def\xor\{[|\[&\^1\[~\^2]]\`
+ [&\[~\^1]\^2]]}]`
+{[&\f\f]\[&\f\t]\[&\t\f]\[&\t\t]=>}[&\f\f]\[&\f\t]\[&\t\f]\[&\t\t]` 
+	[result\{f\f\f\t   and}]
+{[|\f\f]\[|\f\t]\[|\t\f]\[|\t\t]=>}[|\f\f]\[|\f\t]\[|\t\f]\[|\t\t]`  
+	[result\{f\t\t\t   or}]
+{[~\f]\[~\t]=>}[~\f]\[~\t]`   
+	[result\{t\f  not}]
+{[maj\f\f\f]\[maj\f\f\t]\=>}[maj\f\f\f]\[maj\f\f\t]\`   
+	[result\{f\f\  majority}]
+{[maj\f\t\t]\[maj\t\t\t]=>}[maj\f\t\t]\[maj\t\t\t]`
+	[result\{t\t}]
+{[xor\f\f]\[xor\f\t]\[xor\t\f]\[xor\t\t]=>}`
+	[xor\f\f]\[xor\f\t]\[xor\t\f]\[xor\t\t]`  
+	[result\{f\t\t\f xor}]
+
+[eof]
+
+***Hilbert curve***
+
+[def\result\]`
+
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\`
+ [def\-1\{^}^1]]}]`
+[def\~\{[1\2\3\0\[def\1\{^}^1]]}]`
+[def\_\{[3\0\1\2\[def\3\{^}^1]]}]`
+[def\f\{[^1\`
+[def\0\{l 0 rlineto 
+}]\`
+[def\1\{0 l rlineto 
+}]\`
+[def\2\{l neg 0 rlineto 
+}]\`
+[def\3\{0 l neg rlineto 
+}]]}]`
+[def\p\{[^1\`
+[def\^1\`
+{[q\[1-\}^1{]\[~\}^2{]][f\[~\}^2{]]`
+ [p\[1-\}^1{]\}^2{][f\}^2{]`
+ [p\[1-\}^1{]\}^2{][f\[_\}^2{]]`
+ [q\[1-\}^1{]\[_\}^2{]]}]\`
+[def\0\]]}]`
+[def\q\{[^1\`
+[def\^1\`
+{[p\[1-\}^1{]\[_\}^2{]][f\[_\}^2{]]`
+ [q\[1-\}^1{]\}^2{][f\}^2{]`
+ [q\[1-\}^1{]\}^2{][f\[~\}^2{]]`
+ [p\[1-\}^1{]\[~\}^2{]]}]\`
+[def\0\]]}]`
+/l 20 def 100 100 moveto 
+[p\3\0]`
+stroke
+
+`/l 20 def 100 100 moveto 
+`0 l rlineto 
+`l 0 rlineto 
+`0 l neg rlineto 
+`l 0 rlineto 
+`
+`etc
+`
+`0 l neg rlineto 
+`stroke
+
+[eof]
+
+***12 Days of Christmas***
+
+[def\result\]
+
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\9\10\[def\-1\{^}^1]]}]`
+[def\getn\{[11th\10th\9th\8th\7th\6th\5th\4th\3rd\2nd\1st\`
+[def\11th\{^}^1]]}]`
+[def\gets\{[11 Pipers Piping
+\10 Lords-a-Leaping
+\9 Ladies Dancing
+\8 Maids-a-Milking
+\7 Swans-a-Swimming
+\6 Geese-a-laying
+\5 Gold Rings
+\4 Calling Birds
+\3 French Hens
+\2 Turtle Doves
+\a Partridge in a Pear Tree
+\[def\11 Pipers Piping
+\{^}^1]]}]`
+[def\doc\Day of Christmas my True Love Gave to Me]`
+[def\song\
+{[^1\`
+[def\^1\{On the [getn\}^1{] [doc]
+[gets\}^1{]}^2{
+[song\[1-\}^1{]\[gets\}^1{]}^2{]}]\
+[def\-1\{On the 12th [doc]
+12 Drummers Drumming}
+^2]]}]`
+[song\10\]
+
+`On the 1st day
+`a Partridge
+`
+`On the 2nd day
+`2 Turtle Doves
+`a Partridge
+`
+`etc.
+
+[eof]
+
+***RGB for Colour Ring***
+
+[def\result\]
+
+`Used in JavaScript program
+`<html lang="ja">
+`<head>
+` <meta charset="utf-8">
+` <title>Color Scale</title>
+` <style>
+`canvas {
+` border: solid 1px #999;
+`}
+` </style>
+`</head>
+`<body>
+` <canvas id="mycanvas" width="600" height="600"></canvas>
+` <script>
+`var canvas = document.getElementById("mycanvas");
+`var context = canvas.getContext("2d");
+`
+`var cs = new Array (
+`<insert gpm output here>
+`var r=80,R=250;
+`context.translate(300,300);
+`for(i=0; i<180; i++) {
+`var ang0=-i*Math.PI/90-Math.PI/180;
+`var ang1=-i*Math.PI/90+Math.PI/180;
+`context.beginPath();
+`context.moveTo(r*Math.cos(ang1),r*Math.sin(ang1));
+`context.lineTo(R*Math.cos(ang1),R*Math.sin(ang1));
+`context.arc(0,0,R,ang1,ang0,true);
+`context.lineTo(r*Math.cos(ang0),r*Math.sin(ang0));
+`context.closePath();
+`context.fillStyle=cs[i];
+`context.fill();}
+`</script>
+`</body>
+`</html>}]
+
+[def\00%\09][def\09%\11][def\11%\1a][def\1a%\22][def\22%\2b]`
+[def\2b%\33][def\33%\3c][def\3c%\44][def\44%\4d][def\4d%\55]`
+[def\55%\5e][def\5e%\66][def\66%\6f][def\6f%\77][def\77%\80]`
+[def\80%\89][def\89%\91][def\91%\9a][def\9a%\a2][def\a2%\ab]`
+[def\ab%\b3][def\b3%\bc][def\bc%\c4][def\c4%\cd][def\cd%\d5]`
+[def\d5%\de][def\de%\e6][def\e6%\ef][def\ef%\f7][def\f7%\ff]`
+[def\09_\00][def\11_\09][def\1a_\11][def\22_\1a][def\2b_\22]`
+[def\33_\2b][def\3c_\33][def\44_\3c][def\4d_\44][def\55_\4d]`
+[def\5e_\55][def\66_\5e][def\6f_\66][def\77_\6f][def\80_\77]`
+[def\89_\80][def\91_\89][def\9a_\91][def\a2_\9a][def\ab_\a2]`
+[def\b3_\ab][def\bc_\b3][def\c4_\bc][def\cd_\c4][def\d5_\cd]`
+[def\de_\d5][def\e6_\de][def\ef_\e6][def\f7_\ef][def\ff_\f7]`
+[def\next\{[^1%]}]`
+[def\last\{[^1_]}]`
+[def\f\{[^2\`
+[def\^2\{"#}^1^2^3{"\[f\}^1{\[next\}^2{]\}^3{]}]\`
+[def\ff\]]}]`
+[def\b\{[^2\`
+[def\^2\{"#}^1^2^3{"\[b\}^1{\[last\}^2{]\}^3{]}]\`
+[def\00\]]}]`
+[f\ff\00\00]`
+[b\ff\ff\00]`
+
+[result\{
+"#ff0000"\"#ff0900"\"#ff1100"\"#ff1a00"\"#ff2200"\"#ff2b00"\
+"#ff3300"\"#ff3c00"\"#ff4400"\"#ff4d00"\"#ff5500"\"#ff5e00"\
+etc}]
+
+[eof]
+
+***2015 Calendar***
+
+[def\result\]
+
+[def\0+\{[0\1\2\3\4\5\6\0\1\2\[def\0\{^}^1]]}]`
+[def\1+\{[1\2\3\4\5\6\0\1\2\3\[def\1\{^}^1]]}]`
+[def\2+\{[2\3\4\5\6\0\1\2\3\4\[def\2\{^}^1]]}]`
+[def\3+\{[3\4\5\6\0\1\2\3\4\5\[def\3\{^}^1]]}]`
+[def\4+\{[4\5\6\0\1\2\3\4\5\6\[def\4\{^}^1]]}]`
+[def\5+\{[5\6\0\1\2\3\4\5\6\0\[def\5\{^}^1]]}]`
+[def\6+\{[6\0\1\2\3\4\5\6\0\1\[def\6\{^}^1]]}]`
+[def\cal\{[^1^2\`
+[def\01\{[cal1\}^3{\}^4{\3]}]\`
+[def\02\{[cal1\}^3{\}^4{\6]}]\`
+[def\03\{[cal1\}^3{\}^4{\6]}]\'
+[def\04\{[cal1\}^3{\}^4{\2]}]\`
+[def\05\{[cal1\}^3{\}^4{\4]}]\`
+[def\06\{[cal1\}^3{\}^4{\0]}]\`
+[def\07\{[cal1\}^3{\}^4{\2]}]\`
+[def\08\{[cal1\}^3{\}^4{\5]}]\`
+[def\09\{[cal1\}^3{\}^4{\1]}]\`
+[def\10\{[cal1\}^3{\}^4{\3]}]\`
+[def\11\{[cal1\}^3{\}^4{\6]}]\`
+[def\12\{[cal1\}^3{\}^4{\1]}]]}]`
+[def\cal1\{[^1\`
+[def\0\{[cal2\}^2{\}^3{]}]\`
+[def\1\{[cal2\}^2{\[}^3{+\3]]}]\`
+[def\2\{[cal2\}^2{\[}^3{+\6]]}]\`
+[def\3\{[cal2\}^2{\[}^3{+\2]]}]]}]`
+[def\cal2\{[sun\mon\tue\wed\thu\fri\sat\`
+[def\sun\{^}[^2+\^1]]]}]`
+
+{[cal\0\1\1\0]=>}[cal\0\1\1\0]	[result\sat]
+{[cal\0\6\0\1]=>}[cal\0\6\0\1]  [result\mon]
+{[cal\0\4\0\4]=>}[cal\0\4\0\4]  [result\sat]
+
+[eof]
+
+***PCal - Print Calendar***
+
+[def\result\]
+
+{[pcal\3\2\4]} is for April 2015. The parameters a, b, c of
+{[pcal\a\b\c]} are as follows:
+
+a is a number of spaces on the first row of the calendar, b is the
+spaces on the last row. c is a number of rows - 1. These must be
+calculate from a pair of year and month with other program like
+
+(define (ym2pcal y m)
+(let* ((p (lambda (n) (= (modulo y n) 0)))
+ (q (lambda (n) (quotient y n)))
+ (s `(0 3 ,(if (if (p 100) (p 400) (p 4)) 1 0) 3 2 3 2 3 3 2 3 2 3))
+ (d (modulo (- (+ 1 y (q 4) (q -100) (q 400))
+  (apply + (list-tail s m))) 7))
+ (z (+ (list-ref s m) 28)))
+ (list d (modulo (- 42 (+ d z)) 7) (quotient (- (+ d z) 1) 7))))
+(ym2pcal 2015 4) => (3 2 4)
+
+[def\pcal\{`
+[def\1+\{[^1\`
+[def\^1\{[1\2\3\4\5\6\7\8\9\10\[def\1\{^}}^1{]]}]\`
+[def\ \1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\-\{[^2\[def\^2\{[-\[1-\}^1{]\[1-\}^2{]]}]\[def\0\^1]]}]`
+[def\nn\
+]`
+[def\ss\   ]`
+[def\dd\{^1^2 }]`
+[def\r\{[^1\`
+[def\^1\{[dd\}^2{\}^3{][}^3{\`
+ [def\}^3{\{[r\[1-\}}^1{{]\}}^2{{\[1+\}}^3{{]]}]\`
+ [def\9\{[r\[1-\}}^1{{]\[1+\}}^2{{]\0]}]]}]\`
+[def\0\]]}]`
+[def\q\{[^1\`
+[def\^1\{[dd\}^3{\}^4{][}^2^4{\`
+ [def\}^2^4{\{[q\}}^1{{\[1-\}}^2{{]\}}^3{{\[1+\}}^4{{]]}]\`
+ [def\}^2{9\{[q\}}^1{{\[1-\}}^2{{]\[1+\}}^3{{]\0]}]\`
+ [def\0}^4{\{[nn][q\[1-\}}^1{{]\6\}}^3{{\[1+\}}^4{{]]}]\`
+ [def\09\{[nn][q\[1-\}}^1{{]\6\[1+\}}^3{{]\0]}]]}]\`
+[def\0\{[r\[-\7\}}^2{{]\}^3{\}^4{]}]]}]`
+[def\p\{[^1\`
+[def\^1\{[ss][p\[1-\}^1{]]}]\`
+[def\0\{[q\}}^3{{\[-\6\}}^1{{]\ \1]}]]}]`
+[p\^1]`
+}]`
+{[pcal\3\2\4]=>}
+
+[pcal\3\2\4]`
+
+[eof]
+
+
+***Four Queens****
+
+[def\result\]
+
+`Here is a four queens puzzle macro. The eight queens macro will
+`become too large. Since GPM does not allow array variables,
+`partial solutions must be carried around as the actual
+`parameters.
+`
+`After much ado, we get only a pair of congruent solutions 1,3,0,2
+`and 2,0,3,1.
+`
+`Macro `|' is logical or. Macro `$? a b c;' checks if 
+`(= (abs (- a b)) c).
+`'q0' tries to place a queen in the first column. `q1' in the
+`second column etc. `q4' prints the solution. `q4' (and `q5', ...)
+`may be modified to enhance this to the eight queens version. This
+`modification can be done by writing GPM macros (An exercise for
+`the graduate students.)
+`
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\`
+[def\1\{^}^1]]}]`
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\`
+[def\-1\{^}^1]]}]`
+[def\-\{[^2\`
+[def\^2\{[-\[1-\}^1{]\[1-\}^2{]]}]\[def\0\^1]]}]`
+[def\lt\{[^1\`
+[def\^1\{[lt\[1-\}^1{]\}^2{]}][def\-1\t][def\^2\f]]}]`
+[def\|\{[^1\[def\^1\t]\[def\f\^2]]}]`
+[def\?\`
+{[[lt\^1\^2]\`
+ [def\t\{[[-\}^2{\}^1{]\`
+  [def\[-\}^2{\}^1{]\f]\`
+  [def\}^3{\t]]}]\`
+ [def\f\{[[-\}^1{\}^2{]\`
+  [def\[-\}^1{\}^2{]\f]\`
+  [def\}^3{\t]]}]]}]`
+
+[def\q4\{^1\^2\^3\^4
+}]`
+
+[def\q3\{[z\0\`
+[def\z\{[^1\`
+[def\^1\{[`
+ [|\[?\}}^1{{\}^1{\0]\`
+ [|\[?\}}^1{{\}^1{\3]\`
+ [|\[?\}}^2{{\}^1{\0]\`
+ [|\[?\}}^2{{\}^1{\2]\`
+ [|\[?\}}^3{{\}^1{\0]\`
+ [?\}}^3{{\}^1{\1]]]]]]\`
+ [def\f\{[q4\}}}^1{{{\}}}^2{{{\}}}^3{{{\}}^1{{\}}}^3{{{]`
+  [z\[1+\}}^1{{]]}]\`
+ [def\t\{[z\[1+\}}^1{{]]}]]}]\`
+[def\}^4{\]]}]]}]`
+
+[def\q2\{[y\0\`
+[def\y\{[^1\`
+[def\^1\{[`
+ [|\[?\}}^1{{\}^1{\0]\`
+ [|\[?\}}^1{{\}^1{\2]\`
+ [|\[?\}}^2{{\}^1{\0]\`
+ [?\}}^2{{\}^1{\1]]]]\`
+ [def\f\{[q3\}}}^1{{{\}}}^2{{{\}}^1{{\}}}^3{{{]`
+  [y\[1+\}}^1{{]]}]\`
+ [def\t\{[y\[1+\}}^1{{]]}]]}]\`
+[def\}^3{\]]}]]}]`
+
+[def\q1\{[x\0\`
+[def\x\{[^1\`
+[def\^1\{[`
+ [|\[?\}}^1{{\}^1{\0]\`
+ [?\}}^1{{\}^1{\1]]\`
+ [def\f\{[q2\}}}^1{{{\}}^1{{\}}}^2{{{]`
+  [x\[1+\}}^1{{]]}]\`
+ [def\t\{[x\[1+\}}^1{{]]}]]}]\`
+[def\}^2{\]]}]]}]`
+
+[def\q0\{[w\0\`
+[def\w\{[^1\`
+[def\^1\{[q1\}^1{\}}^1{{]`
+ [w\[1+\}^1{]]}]\`
+[def\}^1{\]]}]]}]`
+
+[q0\4]`
+
+[result\{1\3\0\2`
+2\0\3\1}]
+
+[eof]
+
+
+***Permutation***
+
+[def\p2\{^1^2^3}]`
+[def\p3\{[p2\^1\^2\^3]
+[p2\^1\^3\^2]}]`
+[def\p4\{[p3\^1^2\^3\^4]
+[p3\^1^3\^2\^4]
+[p3\^1^4\^2\^3]}]`
+[def\p5\{[p4\^1^2\^3\^4\^5]
+[p4\^1^3\^2\^4\^5]
+[p4\^1^4\^2\^3\^5]
+[p4\^1^5\^2\^3\^4]}]`
+
+[p5\\a\b\c\d]    `permutation of a b c d
+
+` =}
+`abcd
+`abdc
+
+`etc.
+
+[eof]
+
+
+***Catalan Triangle***
+
+[def\result\]`
+
+[def\1-\{[-1\0\1\2\3\4\5\6\7\8\[def\-1\{^}^1]]}]`
+[def\1+\{[1\2\3\4\5\6\7\8\9\10\[def\1\{^}^1]]}]`
+[def\+\{[^1\[def\^1\{[1+\[+\[1-\}^1{]\}^2{]]}]\[def\0\^2]]}]`
+[def\lt\{[^1\`
+[def\^1\{[lt\[1-\}^1{]\}^2{]}][def\-1\t][def\^2\f]]}]`
+[def\|\{[^1\[def\^1\t]\[def\f\^2]]}]`
+[def\c\{[^1^2\`
+[def\^1^2\{[[|\[lt\}^1{\0]\[lt\}^2{\}^1{]]\`
+ [def\t\0]\`
+ [def\f\{[+\[c\}}^1{{\[1-\}}^2{{]]\[c\[1-\}}^1{{]\}}^2{{]]}]]}]\`
+[def\00\1]]}]`
+[c\0\0]\[c\1\1]\[c\2\2]`
+  [result\ 1\1\2]
+[c\0\3]\[c\1\3]\[c\2\3]\[c\3\3]`
+  [result\1\3\5\5]
+[c\0\4]\[c\1\4]\[c\2\4]`
+ [result\1\4\9]
+
+`Catalan triangle is defined in D. Knuth, The Art of Computer Programming,
+ `Eq.7.2.1.6-(22).
+
+`Examples in the last 3 lines are of single digit result. 
+`Other c\p\q's are larger.
+
+[eof]
+
+<! halt !>

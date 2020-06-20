@@ -1,0 +1,76 @@
+﻿
+GLOBAL, COLINS, TRUNC]
+
+C  CALCULATE SUCCESSIVE DIGITS OF PI;
+
+       IDIGIT = 4
+       S = 10.0 ** IDIGIT
+       F = 4.0 * S
+       IADD = 0
+       PI = TRUNC(3.141592653589793 * S)
+5      APPROX = 0.0
+       RN = -1.0
+
+10     RN = RN + 2.0
+       IF (PI-TRUNC(APPROX)) 20,90,20
+20     IF (IADD) 40,30,40
+30     APPROX = APPROX + F / RN
+       IADD = 1
+       GOTO 10
+40     APPROX = APPROX - F / RN
+       IADD = 0
+       GOTO 10
+
+90     WRITE(2,99) IDIGIT, RN-2.0, PI,  APPROX
+99     FORMAT(X, //, 7HPLACES:, I8, 9H CYCLES: , F10.0, 5H PI: , F10.2, 
+\      9H APPROX: , F10.2, //)
+       STOP
+       END
+
+GLOBAL, TRUNC]
+       FUNCTION TRUNC (X)
+       W = X
+CODE
+          4     W+1      (UNPACK W)
+          6     &377600
+          5     WS+1
+          4     W+1
+          14    11
+          14    8181
+          5     WS+2
+          4     W
+          5     WS
+          7     SAVE      (RESULT IS ZERO)
+          4     WS+2      (EXPONENT)
+          9     ;+4
+          1     -34
+          9     ;+3
+          8     SAVE      (EXPONENT>= 34 IMPLIES INTEGER)
+          4     -34       (NEGATIVE EXPONENT - SHIFT OUT FRACTION)
+          6     =0 8191   (EXPONENT LESS THAN 34 - SHIFT OUT FRACTION)
+          1     =14 0
+          5     ;+4
+          0     WS+1      (LSB OF MANTISSA)	
+          14    1
+          4     WS        (MSB OF MANTISSA)
+          >1              (CALCULATED SHIFT)
+          3     WS+1
+          5     WS
+          4     +34
+          5     WS+2      (SET NEW EXPONENT)
+SAVE      11    QF
+          8     QF+2
+          4     WS         (STANDARDIZE)
+          14    0
+          6     1
+          5     W
+          +0
+FORTRAN
+       TRUNC = W
+       RETURN   
+CODE
+WS        >3
+FORTRAN
+       END      
+
+<! halt !>

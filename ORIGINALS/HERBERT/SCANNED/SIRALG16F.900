@@ -1,0 +1,85 @@
+﻿<! Legible Header OOO  O      OOO    O           O    OOO        OOOOO   O    !>
+<! Legible Header    O O     O   O  OO          O    O   O       O        O   !>
+<! Legible Header    O O     O     O O         O     O           O         O  !>
+<! Legible Header OOOO O     O  OO   O         O     OOOO        OOOO      O  !>
+<! Legible Header    O O     O   O   O               O   O       O            !>
+<! Legible Header    O O   O O   O   O          O    O   O   OO  O        O   !>
+<! Legible Header    O OOOOO  OOO  OOOOO         O    OOO    OO  O       O    !>
+<! Legible Header                                                             !>
+
+(CONTROL PROG FOR 903 ALGOL TAPE1 ISS.6F 9/1/77)
+*+18
+^+15
+ 8 8181
+^+32
+ 8 ALG1
+ 0 +0
+ /4 HEAD
+ 9 ALG1
+ 15 6148
+ 14 8183
+ 15 6148
+ 10 1
+ 8 ;-6
+HEAD &012215
+ &071000
+ &063060
+ &101240
+ &107314
+ &314317
+ &261240
+ &012215
+-1
+ALG1 4 &012215  (LF CR)
+ 15 6148
+ 7 ;+3
+ 14 8183
+ 8 ;-3
+ 4 +170   (*)
+ 15 6148
+READ1 0 +0
+ 4 +0
+ 15 2052
+ 5 X
+ 2 +129   (^A)
+ 7 ALG1
+BACK /4 TEXT
+ 9 READ1
+ 2 X
+ 7 READ2
+ 10 1
+ 8 BACK
+READ2 4 +0
+ 15 2052
+ 2 +129   (^A)
+ 7 ALG1
+ 2 +129
+ 2 +141   (CR)
+/7 8
+ 8 READ2
+TEXT +65  (A LOAD)
+ +195     (C CONTINUE)
+ +210     (R REPORT)
+ +75      (K CHECK)
+ +201     (I LIBRARY)
+ +77      (M LCM)
+ +215     (W NWR)
+ +216     (X EXIT)
+ +68      (D DUMP)
+-1
+
+
+X +0
+
+^5368
+ 8 32      (STOP WITH CONTINUE)
+
+^5796
+ 8 32      (FINAL STOP)
+
+^X+1
+
+
+%
+
+<! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !>

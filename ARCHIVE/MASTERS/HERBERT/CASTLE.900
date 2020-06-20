@@ -1,0 +1,95 @@
+﻿
+((CASTLE PLOT - Andrew Herbert - 10/08/2015)
+
+[ CASTLE QPLOT QCHOP ]
+
+CASTLE 4   +0		  (Set origin at margin)
+       5   QPLOT+4
+       5   QPLOT+6
+       4   +4000
+       5   QPLOT+3
+       5   QPLOT+5
+       11  QPLOT	  (Set pen lowered and select raise)
+       8   QPLOT+1
+       +2
+       4   -10		  (Move pen to margin, pen raised)
+       5   QPLOT+3
+       11  QPLOT
+       8   QPLOT+1
+       +1
+       4   +100		  (Move pen to origin, just clear of margin)
+       5   QPLOT+3
+       4   +100
+       5   QPLOT+4
+       11  QPLOT
+       8   QPLOT+1
+       +1
+       4   +0		  (Position to 100,100 and reset origin)
+       5   QPLOT+3
+       5   QPLOT+4
+       5   QPLOT+5
+       5   QPLOT+6
+       11  QPLOT
+       8   QPLOT+1
+       +1
+
+       4   -64
+       5   CHARS
+       
+(Start reading tape)
+READ   4   +0
+       15  2048
+       7   ;-1		  (Skip blank tape)
+       6   +127		  (Ignore parity)
+       5   CH
+       1   -10		  (10 Line feed)
+       7   LINEFD
+       1   -3		  (13 Carriage return)
+       7   RETURN
+       1   -7		  (20 Halt)
+       7   ;+0		  (Stop on halt)
+       1   -12		  (32 Space)
+       7   OK
+       1   -10		  (42 *)
+       7   OK
+       1   -4		  (46 .)
+       7   OK
+       1   -1		  (47 /)
+       7   OK
+       1   -32		  (79 O)
+       7   OK
+       1   -9		  (88 X)
+       7   OK
+       4   +0		  (Substitute space for others)
+       8   OK+2
+
+OK     4   CH		  (Plot character in current line)
+       1   -32		  (Convert to SIR code)
+(+2)   11  QPLOT
+       8   QPLOT+2
+SIZE   +15
+       10  CHARS
+       4   CHARS
+       9   READ
+       
+LINEFD 4   -64		  (Reset character count)
+       5   CHARS
+       4   QPLOT+4	  (Move one line down)
+       1   SIZE
+       5   QPLOT+4
+MOVE   4   +0
+       5   QPLOT+3
+       11  QPLOT	  (Move to new line)
+       8   QPLOT+1
+       +1
+       8   READ
+
+RETURN 4   -64		  (Reset character count)
+       5   CHARS
+       8   MOVE		  (Move back to start of line)
+
+CH     >1
+CHARS  >1                (Count of characters read)
+
+<! halt !>
+

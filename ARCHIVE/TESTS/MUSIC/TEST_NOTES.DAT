@@ -1,0 +1,15 @@
+﻿C Test notes
+
+on 903 16K
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+at ptr file ../../MASTERS/MUSIC/903_MUSIC/903_NOTES.900
+j 8
+at ptr inline
+
+{MOS MUSIC HORNPIPE}
+<! halt !><!!>
+j 10
+at ptr file ../../MASTERS/MUSIC/MOS_MUSIC/HORNPIPE_TUNE.900
+j 9
+sh t

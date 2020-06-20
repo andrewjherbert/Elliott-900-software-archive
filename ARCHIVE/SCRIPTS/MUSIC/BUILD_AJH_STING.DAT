@@ -1,0 +1,47 @@
+﻿C Convert The Sting from 903 to AJH format.
+C Andrew Herbert 16/01/2014.
+on 903 16K
+
+c Edit input tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+c add STINGHDR, correct wrong note
+
+at ptr inline
+INS
+363 2
+^%,
+RTS 77
+7^%,
+CLI 21 64
+PSC
+<! halt !><!!>
+at ptp file errors.txt legible
+j 13
+de ptp
+print errors.txt
+st 490
+delete errors.txt
+
+at ptr file ../../MASTERS/MUSIC/ALGOL_MUSIC/ALG_STING.900
+at ptp file AJH_STING.900
+j 9
+de ptp
+st 1274
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+at ptr file ../../MASTERS/MUSIC/ALGOL_MUSIC/ALG_TRANS.900
+j 8
+
+c initialize
+j 10
+at ptr file AJH_STING.900
+at ptp file AJH_STING.900
+j 9
+de ptp
+
+sh t

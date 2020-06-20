@@ -1,0 +1,637 @@
+﻿<! Legible Header OOO   OOO   OOO         OOO  O     O   O  OOO  OOOOO       OOOOO  OOO   OOO  O   O OOOOO        OOO   !>
+<! Legible Header    O O   O O   O       O   O O     OO OO O   O OOOOO         O   O   O O   O O   O O           O   O  !>
+<! Legible Header    O O   O O   O       O   O O     OOOOO O   O   O           O   OO    OO    O   O O               O  !>
+<! Legible Header OOOO O   O O   O       OOOOO O     O O O OOOOO   O           O    OO    OO   O   O OOOO          OOO  !>
+<! Legible Header    O O   O O   O       O   O O     O   O O   O   O           O               O   O O                  !>
+<! Legible Header    O O   O O   O             O     O   O         O           O      O     O  O   O O           OO     !>
+<! Legible Header OOOO O   O O   O       O   O OOOOO O   O O   O   O           O   O   O O   O OOOOO O           O      !>
+<! Legible Header OOO   OOO   OOO        O   O OOOOO O   O O   O   O         OOOOO OOOO  OOOO  OOOOO OOOOO       OOOOO  !>
+MATRIX PACKAGE;
+"BEGIN""REAL"DET,INNSUM;
+"PROCEDURE"ERROR;
+           STOP;
+"PROCEDURE"PRINT1;
+          "PRINT"PUNCH(3),'  DIMENSIONS NOT COMPATIBLE'L@DIMENSIONS@;
+"PROCEDURE"PRINT2;
+         "PRINT"PUNCH(3),'  MATRICES NOT DISTINCT'L@DIMENSIONS@;
+
+
+
+
+
+"PROCEDURE"MXDIFF(A) BECOMES : (B) MINUS : (C);
+    "ARRAY"A,B,C;
+    "BEGIN""INTEGER"I,J,L,M,L2,M2,LBA1,LBA2,LBB2,LBC2,RAA1,RAA2;
+         RAA1:=RANGE(A,1);  RAA2:=RANGE(A,2);
+            "IF"(RAA1-RANGE(B,1))"NE"0"OR"(RAA2-RANGE(B,2))"NE"0
+             "OR"(RAA1-RANGE(C,1))"NE"0"OR"(RAA2-RANGE(C,2))"NE"0
+            "THEN""BEGIN""PRINT"PUNCH(3),''L@MXDIFF ERROR@;
+                       PRINT1;
+                     "PRINT"PUNCH(3),SAMELINE,DIGITS(3),RAA1,'*@,RAA2,',@,RANGE(B,1),'*@,
+                            RANGE(B,2),',@,RANGE(C,1),'*@,RANGE(C,2);
+                    ERROR;
+          "END";
+           LBA1:=LOWBOUND(A,1);  LBA2:=LOWBOUND(A,2);
+           LBB2:=LOWBOUND(B,2);  LBC2:=LOWBOUND(C,2);
+           RAA1:=RAA1-1+LBA1;    RAA2:=RAA2-1+LBA2;
+           L:=LOWBOUND(B,1);      M:=LOWBOUND(C,1);
+           "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+           "BEGIN"L2:=LBB2;
+                  M2:=LBC2;
+                  "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+                  "BEGIN"A[I,J]:=B[L,L2]-C[M,M2];
+                       L2:=L2+1;
+                       M2:=M2+1;
+           "END";
+            L:=L+1;
+            M:=M+1;
+            "END"
+    "END"MXDIFF;
+
+
+
+
+
+"PROCEDURE"MXCOPY(A) BECOMES : (B);
+     "ARRAY"A,B;
+     "BEGIN""INTEGER"I,J,L,M,LBA1,LBA2,LBB2,RAA1,RAA2;
+             RAA1:=RANGE(A,1);   RAA2:=RANGE(A,2);
+            "IF"(RAA1-RANGE(B,1))"NE"0"OR"(RAA2-RANGE(B,2))"NE"0
+            "THEN""BEGIN""PRINT"PUNCH(3),''L@MXCOPY ERROR@;
+                       PRINT1;
+                      "PRINT"PUNCH(3),SAMELINE,DIGITS(3),RAA1,'*@,RAA2,',@,
+                              RANGE(B,1),'*@,RANGE(B,2);
+                        ERROR;
+             "END";
+             LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2);
+             LBB2:=LOWBOUND(B,2);
+             RAA1:=RAA1-1+LBA1;     RAA2:=RAA2-1+LBA2;
+             L:=LOWBOUND(B,1);
+          "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+            "BEGIN"M:=LBB2;
+                  "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+                 "BEGIN"A[I,J]:=B[L,M];
+                        M:=M+1;
+                  "END";
+                  L:=L+1;
+            "END"
+      "END"MXCOPY;
+
+
+
+
+
+"PROCEDURE"MXNEG(A) BECOMES MINUS : (B);
+     "ARRAY"A,B;
+     "BEGIN""INTEGER"I,J,L,M,LBA1,LBA2,LBB2,RAA1,RAA2;
+             RAA1:=RANGE(A,1);    RAA2:=RANGE(A,2);
+            "IF"(RAA1-RANGE(B,1))"NE"0"OR"(RAA2-RANGE(B,2))"NE"0
+            "THEN""BEGIN""PRINT"PUNCH(3),''L@MXNEG ERROR@;
+                          PRINT1;
+                         "PRINT"PUNCH(3),DIGITS(3),SAMELINE,RAA1,'*@,RAA2,',@,
+                            RANGE(B,1),'*@,RANGE(B,2);
+                      ERROR;
+         "END";
+         LBA1:=LOWBOUND(A,1);   LBA2:=LOWBOUND(A,2);
+         LBB2:=LOWBOUND(B,2);
+         RAA1:=RAA1-1+LBA1;     RAA2:=RAA2-1+LBA2;
+         L:=LOWBOUND(B,1);
+        "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+        "BEGIN"M:=LBB2;
+                "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+                "BEGIN"A[I,J]:=-B[L,M];
+                       M:=M+1;
+                "END";
+                 L:=L+1;
+         "END"
+       "END"MXNEG;
+
+
+
+
+
+"PROCEDURE"MXSUM(A) BECOMES : (B) PLUS : (C);
+       "ARRAY" A,B,C;
+       "BEGIN""INTEGER" I,J,L,M,L2,M2,LBA1,LBA2,LBB2,LBC2,RAA1,RAA2;
+             RAA1:=RANGE(A,1);    RAA2:=RANGE(A,2);
+            "IF"(RAA1-RANGE(B,1))"NE"0"OR"(RAA2-RANGE(B,2))"NE"0
+            "OR"(RAA1-RANGE(C,1))"NE"0"OR"(RAA2-RANGE(C,2))"NE"0
+          "THEN""BEGIN""PRINT"PUNCH(3),''L@MXSUM ERROR@;
+                      PRINT1;
+                     "PRINT"PUNCH(3),SAMELINE,DIGITS(3),RAA1,'*@,RAA2,',@,RANGE(B,1),
+                            '*@,RANGE(B,2),',@,RANGE(C,1),'*@,RANGE(C,2);
+                     ERROR;
+           "END";
+            LBA1:=LOWBOUND(A,1);   LBA2:=LOWBOUND(A,2);
+            LBB2:=LOWBOUND(B,2);   LBC2:=LOWBOUND(C,2);
+            RAA1:=RAA1-1+LBA1;   RAA2:=RAA2-1+LBA2;
+            L:=LOWBOUND(B,1);      M:=LOWBOUND(C,1);
+           "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+           "BEGIN"L2:=LBB2;
+                  M2:=LBC2;
+                 "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+                 "BEGIN"A[I,J]:=B[L,L2]+C[M,M2];
+                       L2:=L2+1;
+                       M2:=M2+1;
+                 "END";
+                  L:=L+1;
+                  M:=M+1;
+           "END"
+   "END"MXSUM;
+
+
+
+
+
+"PROCEDURE"MXPROD(A) BECOMES : (B) TIMES : (C);
+   "ARRAY"A,B,C;
+   "COMMENT"A MUST NOT EQUAL B OR C;
+   "BEGIN""INTEGER"L,M,M2,RAA1,RAA2,RAB2,LBA1,LBA2,LBB1,LBB2,LBC1,LBC2,I,J,K;
+          "REAL"SUM,II,WS,JJ;
+           RAA1:=RANGE(A,1);    RAA2:=RANGE(A,2);
+           RAB2:=RANGE(B,2);
+          "IF"(RAB2-RANGE(C,1))"NE"0
+          "OR"(RANGE(B,1)-RAA1)"NE"0
+          "OR"(RANGE(C,2)-RAA2)"NE"0
+          "THEN""BEGIN""PRINT"PUNCH(3),''L@MXPROD ERROR@;
+                     PRINT1;
+                    "PRINT"PUNCH(3),SAMELINE,DIGITS(3),RAA1,'*@,RAA2,',@,RANGE(B,1),
+                           '*@,RAB2,',@,RANGE(C,1),'*@,RANGE(C,2);
+                     ERROR;
+          "END";
+           LBA1:=LOWBOUND(A,1);     LBA2:=LOWBOUND(A,2);
+           LBB1:=LOWBOUND(B,1);     LBB2:=LOWBOUND(B,2);
+           LBC1:=LOWBOUND(C,1);     LBC2:=LOWBOUND(C,2);
+           II:=B[LBB1,LBB2];         JJ:=C[LBC1,LBC2];
+          "IF"(A[LBA1,LBA2]-II)=0"OR"(A[LBA1,LBA2]-JJ)=0"THEN"
+          "BEGIN"A[LBA1,LBA2]:=A[LBA1,LBA2]+1;
+                "IF"(II-B[LBB1,LBB2])+(JJ-C[LBC1,LBC2])"NE"0"THEN"
+                "BEGIN""PRINT"PUNCH(3),''L@MXPROD ERORR@;
+                        PRINT2;
+                       "PRINT"PUNCH(3),SAMELINE,DIGITS(3),RAA1,'*@,RAA2,',@,RANGE(B,1),
+                              '*@,RAB2,',@,RANGE(C,1),'*@,RANGE(C,2);
+                        ERROR;
+          "END"
+         "END"CHECKED THAT MATRICES ARE COMPATIBLE AND A IS DISTINCT FROM BOTH B AND C;
+          RAA1:=RAA1-1+LBA1;     RAA2:=RAA2-1+LBA2;
+          L:=LBB1;               RAB2:=RAB2-1+LBB2;
+        "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+        "BEGIN"M2:=LBC2;
+              "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+             "BEGIN"M:=LBC1-LBB2;
+                     WS:=0.0;
+                   "FOR"K:=LBB2"STEP"1"UNTIL"RAB2"DO"
+                    WS:=WS+B[L,K]*C[M+K,M2];
+                    A[I,J]:=WS;
+                    M2:=M2+1;
+            "END";
+            L:=L+1;
+       "END";
+"END"MXPROD;
+
+
+
+
+
+"PROCEDURE"MXTRANS(A)BECOMES TRANSPOSE OF : (B);
+    "ARRAY"A,B;
+    "COMMENT"TRANSPOSE OF B IS STORED IN A, WHICH MUST BE A DISTINCT MATRIX FROM B;
+    "BEGIN""INTEGER" RAB1,RAB2,LBA1,LBA2,LBB1,LBB2,I,J,L,M;
+          "REAL"II;
+           RAB1:=RANGE(B,1);    RAB2:=RANGE(B,2);
+         "IF"(RAB2-RANGE(A,1))"NE"0"OR"(RAB1-RANGE(A,2))"NE"0
+         "THEN""BEGIN""PRINT"PUNCH(3),''L@MXTRANS ERROR@;
+                    PRINT1;
+                   "PRINT"PUNCH(3),SAMELINE,DIGITS(3),RANGE(A,1),'*@,RANGE(A,2),',@,
+                          RAB1,'*@,RAB2;
+                    ERROR;
+         "END";
+          LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2);
+          LBB1:=LOWBOUND(B,1);     LBB2:=LOWBOUND(B,2);
+          II:=B[LBB1,LBB2];
+         "IF"(A[LBA1,LBA2]-II)=0"THEN"
+       "BEGIN"A[LBA1,LBA2]:=A[LBA1,LBA2]+1;
+              "IF"(II-B[LBB1,LBB2])"NE"0"THEN"
+                  "BEGIN""PRINT"PUNCH(3),''L@MXTRANS ERROR@;
+                      PRINT2;
+                     "PRINT"PUNCH(3),SAMELINE,DIGITS(3),RANGE(A,1),'*@,RANGE(A,2),
+                          ',@,RAB1,'*@,RAB2;
+                      ERROR;
+                  "END";
+          "END"CHECKED THAT A AND B ARE COMPATIBLE AND A DISTINCT FROM B;
+           RAB1:=RAB1-1+LBB1;    RAB2:=RAB2-1+LBB2;
+           M:=LBA2;
+          "FOR"I:=LBB1"STEP"1"UNTIL"RAB1"DO"
+          "BEGIN"L:=LBA1;
+                "FOR"J:=LBB2"STEP"1"UNTIL"RAB2"DO"
+                "BEGIN"A[L,M]:=B[I,J];
+                     L:=L+1;
+                "END";
+                 M:=M+1;
+          "END";
+   "END"MXTRANS;
+
+
+
+
+
+"PROCEDURE"SCPROD(A)BECOMES A TIMES THE SCALAR : (X);
+   "VALUE"X;
+   "REAL"X;
+   "ARRAY"A;
+   "BEGIN""INTEGER"RAA1,RAA2,LBA1,LBA2,I,J;
+           LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2);
+           RAA1:=RANGE(A,1)-1+LBA1;    RAA2:=RANGE(A,2)-1+LBA2;
+          "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+          "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+           A[I,J]:=X*A[I,J];
+   "END"SCPROD;
+
+
+
+
+
+"PROCEDURE"PERMROWS(A,R,LBA1,LBA2,N,M);    "VALUE"N,M,LBA1,LBA2;
+   "ARRAY"A;    "INTEGER""ARRAY"R;    "INTEGER"N,M,LBA1,LBA2;
+   "COMMENT"REARRANGES THE ELEMENTS OF (N*M) MATRIX A WITH LOWBOUNDS LBA1,LBA2,SUCH THAT
+            A[LBA1+1,LBA2+J]:=A[R[I]+LBA1,LBA2+J]FOR I:=1,2 N AND J:=1,2 M;
+   "BEGIN""INTEGER"L,I,J,K,L1;    "REAL"SWAP;
+         M:=LBA2+M-1;    L1:=LBA1-1;
+         "FOR"J:=LBA2"STEP"1"UNTIL"M"DO"
+         "BEGIN"L:=LBA1+N-1;
+              "FOR"I:=N"STEP"-1"UNTIL"2"DO"
+            "BEGIN" "SWITCH"SS:=LABEL;
+                     K:=R[I];
+LABEL:               "IF"K-I"NE"0"THEN"
+                     "BEGIN""IF"K-I>0"THEN""BEGIN"K:=R[K];
+                                                 "GOTO"LABEL;
+                                           "END";
+                              SWAP:=A[L,J];   A[L,J]:=A[K+L1,J];    A[K+L1,J]:=SWAP;
+                     "END";
+                      L:=L-1;
+             "END"
+         "END"
+    "END"PERMROWS;
+"PROCEDURE"CROUT(A,ENTRY,LBA1,LBA2,N,R);
+    "VALUE"LBA1,LBA2,N;
+    "ARRAY"A;
+    "STRING"ENTRY;
+    "INTEGER"LBA1,LBA2,N;
+    "INTEGER""ARRAY"R;
+    "COMMENT"PERFORMS AN IN SITU REDUCTION OF A MATRIX A INTO QUASI TRIANGULAR
+             MATRICES L,A LOWER TRIANGLE AND U,A STRICTLY UPPER TRIANGLE,
+            BY CROUTS METHOD WITH PARTIAL PIVOTING- THE PIVOTS BEING ALONG
+             THE DIAGONAL OF L- SUCH THAT A=L(U+1).
+             NO PERMUTATIONS OF ROWS OR COLS OF A ARE PERFORMED AND THE PIVOTAL
+             ROW SUBSCRIPTS ARE RECORDED IN THE NONLOCAL VECTOR R[1:RANGE(A,1)].
+             BECAUSE OF THIS, THIS PROCEDURE IS NOT RECOMMENDED FOR USE SEPARATELY,
+             BUT IS CALLED BY INVMX,SOLVMX, AND MXQUOT;
+    "BEGIN""INTEGER"I,J,K,PIV,RI,J1,L1,M1,L,M,INT;
+        "REAL"PIVOT,PIVGR,PIVLESS,WS,ARIJ;
+        "SWITCH"SSS:=THERE;
+         INT:=0;
+        "FOR"I:=1"STEP"1"UNTIL"N"DO"
+         R[I]:=I;
+         L:=LBA1;    M:=LBA2+N-1;    L1:=L-1;    M1:=LBA2-1;
+        "FOR"J:=LBA2"STEP"1"UNTIL"M"DO"
+       "BEGIN"PIVOT:=0.0;    PIV:=J-LBA2+1;    J1:=PIV-1;
+              "FOR"I:=PIV"STEP"1"UNTIL"N"DO"
+              "BEGIN"RI:=R[I]+L1;
+                     ARIJ:=0;
+                       "FOR"K:=1"STEP"1"UNTIL"J1"DO"
+                     ARIJ:=ARIJ+A[RI,K+M1]*A[R[K]+L1,J];
+                     ARIJ:=A[RI,J]:=A[RI,J]-ARIJ;
+                    "IF"(ABS(ARIJ)-ABS(PIVOT))>0"THEN"
+                    "BEGIN"PIV:=I;
+                           PIVOT:=ARIJ;
+             "END"
+          "END";
+          "IF"(J-LBA2)=0"THEN"
+          "BEGIN"PIVLESS:=PIVGR:=PIVOT;
+             "IF"PIVOT=0"THEN"
+             "BEGIN""PRINT"PUNCH(3),''L@@,ENTRY,':FIRST PIVOT ZERO   SIZE=@,
+                DIGITS(3),SAMELINE,N;
+              WAIT;
+                     DET:=0.0
+             "END"
+          "END"
+          "ELSE""BEGIN""IF"(ABS(PIVOT)-ABS(PIVLESS))<0"THEN"PIVLESS:=PIVOT
+                                       "ELSE""IF"(ABS(PIVOT)-ABS(PIVGR))>0
+                                            "THEN"PIVGR:=PIVOT;
+                        ARIJ:=PIVLESS/PIVGR;
+                       "IF"(ABS(ARIJ)-1.0?-06)<0"THEN"
+                       "BEGIN""PRINT"PUNCH(3),''L@@,ENTRY,':SINGULAR  STAGE@,SAMELINE,
+                                   DIGITS(3),(J-LBA2+1),'  SIZE@,N,'  PIVRATIO@,SCALED(4),ARIJ;
+                              WAIT;
+                                 DET:=0.0
+                       "END"
+          "END";
+           J1:=J1+1;
+         "IF"(PIV-J1)"NE"0"THEN"
+         "BEGIN"RI:=R[PIV];    R[PIV]:=R[J1];    R[J1]:=RI;
+                INT:=INT+1;    RI:=RI+L1;
+         "END"
+         "ELSE"RI:=R[J1]+L1;
+          J1:=J1-1;
+         "FOR"K:=J+1"STEP"1"UNTIL"M"DO"
+"BEGIN"
+          WS:=0;
+         "FOR"I:=1"STEP"1"UNTIL"J1"DO"
+           WS:=WS+A[RI,I+M1]*A[R[I]+L1,K];
+           A[RI,K]:=(A[RI,K]-WS)/PIVOT
+"END";
+        "END"FOR J;
+        "IF"DET=0"THEN""ELSE"
+        "IF"((INT"DIV"2)*2-INT)=0"THEN"DET:=1.0"ELSE"DET:=-1.0;
+         M:=LBA2;
+        "FOR"I:=1"STEP"1"UNTIL"N"DO"
+        "BEGIN"L:=R[I]+L1;
+               DET:=DET*A[L,M];
+               M:=M+1;
+        "END"
+      "END"CROUT;
+
+
+
+
+
+"PROCEDURE"INVMX(A);
+    "ARRAY"A;
+    "COMMENT"INVERTS A MATRIX IN SITU. CALLS THE PROCEDURES, PERMROWS,CROUT;
+   "BEGIN""INTEGER"I,J,K,LBA1,LBA2,N,I1,J1,M,L,M1,L1;
+         "REAL"AII,WS;
+          N:=RANGE(A,1);    M:=RANGE(A,2);
+         "IF"(N-M)"NE"0"THEN"
+         "BEGIN""PRINT"PUNCH(3),''L@INVMX ERROR@;
+                  PRINT1;
+                  "PRINT"PUNCH(3),SAMELINE,DIGITS(3),N,'*@,M;
+                  ERROR;
+         "END";
+          L:=LBA1:=LOWBOUND(A,1);    M:=LBA2:=LOWBOUND(A,2);
+          M1:=LBA2-1;    L1:=L-1;
+         "BEGIN""INTEGER""ARRAY"R,C[1:N];
+              CROUT(A,'INVMX@,LBA1,LBA2,N,R);
+              PERMROWS(A,R,LBA1,LBA2,N,N);
+             "FOR"I:=1"STEP"1"UNTIL"N"DO"
+             "BEGIN"I1:=I-1;
+                 AII:=A[L,M];
+                 M:=LBA2;
+                "FOR"J:=1"STEP"1"UNTIL"I1"DO"
+                "BEGIN"
+                 WS:=0;
+                "FOR"K:=J"STEP"1"UNTIL"I1"DO"
+                   WS:=WS+A[L,K+M1]*A[K+L1,M];
+                   A[L,M]:=-WS/AII;
+                        M:=M+1
+                "END";
+                 M:=LBA2+I-1;
+                 A[L,M]:=1.0/AII;
+                 L:=L+1;
+                 M:=M+1;
+             "END";
+              L:=LBA1+N-2;
+            "FOR"I:=N-1"STEP"-1"UNTIL"1"DO"
+            "BEGIN"I1:=I+1;
+                M:=LBA2+N-1;
+               "FOR"J:=N"STEP"-1"UNTIL"I1"DO"
+              "BEGIN"J1:=J-1;
+                  WS:=0;
+                 "FOR"K:=I1"STEP"1"UNTIL"J1"DO"
+                   WS:=WS+A[L,K+M1]*A[K+L1,M];
+                   A[L,M]:=-(A[L,M]+WS);
+                       M:=M-1
+              "END";
+               L:=L-1
+            "END";
+             I1:=N-1;
+             L:=LBA1;
+            "FOR"I:=1"STEP"1"UNTIL"I1"DO"
+            "BEGIN"M:=LBA2;
+                  "FOR"J:=1"STEP"1"UNTIL"I"DO"
+                  "BEGIN"
+                   WS:=0;
+                  "FOR"K:=I+1"STEP"1"UNTIL"N"DO"
+                   WS:=WS+A[L,K+M1]*A[K+L1,M];
+                   A[L,M]:=A[L,M]+WS;
+                       M:=M+1;
+                  "END";
+                   M:=LBA2+I;
+                  "FOR"J:=I+1"STEP"1"UNTIL"N"DO"
+                  "BEGIN"
+                   WS:=0;
+                  "FOR"K:=J"STEP"1"UNTIL"N"DO"
+                    WS:=WS+A[L,K+M1]*A[K+L1,M];
+                    A[L,M]:=WS;
+                        M:=M+1
+                   "END";
+                    L:=L+1;
+             "END";
+             "COMMENT"SWAP COLUMNS OF A,FIRST DEFINE THE REQUIRED PERM VECTOR C
+                      FROM ITS INVERSE PERM R;
+              "FOR"I:=1"STEP"1"UNTIL"N"DO"
+               C[R[I]]:=I;
+               L:=LBA1;
+              "FOR"I:=1"STEP"1"UNTIL"N"DO"
+              "BEGIN"M:=LBA2+N-1;
+                   "FOR"J:=N"STEP"-1"UNTIL"2"DO"
+                   "BEGIN""SWITCH"SS:=THERE;
+                        K:=C[J];
+       THERE:            "IF"(K-J)"NE"0"THEN"
+                         "BEGIN""IF"(K-J)>0"THEN"
+                            "BEGIN"K:=C[K];
+                                   "GOTO"THERE
+                            "END";
+                             AII:=A[L,M];    A[L,M]:=A[L,K+M1];    A[L,K+M1]:=AII
+                        "END";
+                         M:=M-1;
+                "END";
+                 L:=L+1;
+             "END";
+          "END";
+       "END"INVMX;
+
+
+
+
+
+"PROCEDURE"SOLVMX(A,B);
+       "ARRAY"A,B;
+       "COMMENT"SOLVES THE EQUATION AX=B WRITING THE RESULT IN B.ALSO A IS DESTROYED
+             A BEING LEFT IN THE CROUT REDUCTION FORM. CALLS PERMROWS, CROUT;
+       "BEGIN""INTEGER"I,J,K,RI,RIA,I1,M,M1,L1,P1,Q1,LBA1,LBA2,LBB1,LBB2,N;
+              "REAL"II,WS;
+              "SWITCH"SSS:=ENDSOLVMX;
+               N:=RANGE(A,1);
+              "IF"(N-RANGE(A,2))"NE"0"OR"(N-RANGE(B,1))"NE"0"THEN"
+              "BEGIN""PRINT"PUNCH(3),''L@SOLVMX ERROR@;
+                      PRINT1;
+                     "PRINT"PUNCH(3),SAMELINE,DIGITS(3),N,'*@,RANGE(A,2),',@,RANGE(B,1),
+                            '*@,RANGE(B,2);
+                      ERROR;
+              "END";
+               LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2);
+               LBB1:=LOWBOUND(B,1);    LBB2:=LOWBOUND(B,2);
+               II:=B[LBB1,LBB2];
+                "IF"(A[LBA1,LBA2]-II)=0"THEN"
+               "BEGIN"A[LBA1,LBA2]:=A[LBA1,LBA2]+1;
+                      "IF"(II-B[LBB1,LBB2])"NE"0"THEN"
+                      "BEGIN""PRINT"PUNCH(3),''L@SOLVMX ERROR@;
+                               PRINT2;
+                            "PRINT"PUNCH(3),SAMELINE,DIGITS(3),N,'*@,N;
+                         ERROR;
+                      "END"
+                      "ELSE"A[LBA1,LBA2]:=A[LBA1,LBA2]-1;
+               "END";
+               "BEGIN""INTEGER""ARRAY"R[1:N];
+                       CROUT(A,'SOLVMX@,LBA1,LBA2,N,R);
+                       L1:=LBA1-1;    M1:=LBA2-1;
+                       P1:=LBB1-1;    Q1:=LBB2+RANGE(B,2)-1;
+                      "FOR"J:=LBB2"STEP"1"UNTIL"Q1"DO"
+                      "BEGIN"M:=LBA2;
+                          "FOR"I:=1"STEP"1"UNTIL"N"DO"
+                          "BEGIN"RI:=R[I]+P1;
+                                 RIA:=R[I]+L1;
+                                 I1:=I-1;
+                                 WS:=0;
+                                "FOR"K:=1"STEP"1"UNTIL"I1"DO"
+                                 WS:=WS+A[RIA,K+M1]*B[R[K]+P1,J];
+                                B[RI,J]:=  (B[RI,J]-WS)/A[RIA,M];
+                                 M:=M+1;
+                          "END";
+                          "FOR"I:=N-1"STEP"-1"UNTIL"1"DO"
+                          "BEGIN"I1:=I+1;
+                              RI:=R[I]+P1;
+                              RIA:=R[I]+L1;
+                              WS:=0;
+                             "FOR"K:=I1"STEP"1"UNTIL"N"DO"
+                              WS:=WS+A[RIA,K+M1]*B[R[K]+P1,J];
+                              B[RI,J]:=B[RI,J]-WS;
+                          "END"
+                       "END"FOR J;
+                        Q1:=Q1-LBB2+1;
+                        PERMROWS(B,R,LBB1,LBB2,N,Q1);
+                 "END";
+ENDSOLVMX: "END"SOLVMX;
+
+
+
+
+
+"PROCEDURE"MXQUOT(B,A,C);
+    "VALUE"A;
+    "ARRAY"A,B,C;
+    "COMMENT"SOLVES THE EQUATION AB=C WITH THE RESULT IN B SO THAT A AND B ARE
+              PRESERVED. CALLS MXCOPY,SOLVMX AND THUS PERMROWS AND CROUT;
+    "BEGIN"MXCOPY(B,C);
+            SOLVMX(A,B);
+    "END"MXQUOT;
+"PROCEDURE"READMX(A);
+       "ARRAY"A;
+       "BEGIN""INTEGER"I,J,LBA1,LBA2,RAA1,RAA2;
+                LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2);
+                RAA1:=RANGE(A,1)+LBA1-1;    RAA2:=RANGE(A,2)+LBA2-1;
+               "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+                      "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+                      "READ"A[I,J];
+       "END"READMX;
+
+
+
+
+
+"PROCEDURE"PRINTMX(A);
+       "ARRAY"A;
+       "BEGIN""INTEGER"I,J,LBA1,LBA2,RAA1,RAA2;
+               LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2);
+               RAA1:=RANGE(A,1)-1+LBA1;    RAA2:=RANGE(A,2)-1+LBA2;
+               SAMELINE;
+              "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+              "BEGIN""PRINT"''L2@@;
+                     "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+                     "PRINT"A[I,J];
+               "END";
+       "END"PRINTMX;
+DET:=0.0;
+"BEGIN"
+
+
+
+
+
+"PROCEDURE"PRINTCOL(A);
+    "ARRAY"A;
+    "BEGIN""INTEGER"I,J,LBA2,LBA1,RAA1,RAA2;
+            LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2);
+             RAA1:=RANGE(A,1)-1+LBA1;    RAA2:=RANGE(A,2)-1+LBA2;
+             PREFIX(''L@@);
+            "FOR"J:=LBA2"STEP"1"UNTIL"RAA2"DO"
+            "BEGIN""PRINT"''L2@@;
+                    "FOR"I:=LBA1"STEP"1"UNTIL"RAA1"DO"
+                    "PRINT"A[I,J];
+            "END";
+     "END"PRINTCOL;
+
+
+
+
+
+"PROCEDURE"SPACES(T);
+    "VALUE"T;    "INTEGER"T;
+    "BEGIN""INTEGER"I;
+           "FOR"I:=1"STEP"1"UNTIL"T"DO"
+           "PRINT"' @;
+    "END"SPACES;
+"PROCEDURE"MXOUTPUT(A,M,N);
+    "VALUE"N,M;
+    "INTEGER"M,N;
+    "ARRAY"A;
+    "COMMENT"THIS PROCEDURE PRINTS A MATRIX TOGETHER WITH ITS ROW AND COLUMN NUMBERS.
+             THE PARAMETERS OF THE PROCEDURE ARE
+             A                   A REAL ARRAY
+             M                   THE NUMBER OF CHARACTERS AVAILABLE ACROSS THE OUTPUT SHEET.
+             N                   THE NUMBER OF CHARACTERS OCCUPIED BY EACH ELEMENT.
+             THE FORMAT FOR PRINTING IS SET BY THE PROGRAMMER. FROM THIS NUMBER
+             OF CHARACTERS PER ELEMENT CAN BE CALCULATED    E.G.
+             FREEPOINT(T)    T+2 CHARACTERS ARE REQUIRED FOR EACH ELEMENT.
+             ALIGNED(R,S)    R+S+2 CHARACTERS ARE REQUIRED FOR EACH ELEMENT.
+             FOR FURTHER DETAILS OF THE CHARACTERS REQUIREMENTS OF OUTPUT FORMATS
+             SEE 2.1.3.2 OF THE 503 TECHNICAL MANUAL;
+    "BEGIN""INTEGER"I,J,RA1,RA2,LBA1,LBA2,P,Q,Z,AA,S,F,G;
+          "SWITCH"SS:=L,EXIT;
+           RA1:=RANGE(A,1);    RA2:=RANGE(A,2);
+           LBA1:=LOWBOUND(A,1);    LBA2:=LOWBOUND(A,2)-1;
+           P:=Q:=Z:=0;
+           AA:=(M-4)"DIV"(N+3);
+           RA1:=RA1-1+LBA1;
+     L:   "PRINT"''L10@@;
+           Z:=Z+AA;
+          "IF"Z<RA2"THEN"
+          "BEGIN"P:=Q+1;
+                 Q:=Z;
+          "END"
+           "ELSE"
+          "BEGIN"P:=Q+1;
+                 Q:=RA2;
+          "END";
+          "PRINT"'ROW/COL@;
+         "FOR" J:=P"STEP"1"UNTIL"Q"DO"
+         "BEGIN"SAMELINE;
+              "PRINT"DIGITS(3),J;
+               SPACES(N-1);
+         "END";
+           S:=0;
+          "FOR"I:=LBA1"STEP"1"UNTIL"RA1"DO"
+         "BEGIN""PRINT"''L2@@;
+                  S:=S+1;
+                "PRINT"SAMELINE,DIGITS(3),S;
+                 F:=LBA2+P;
+                 G:=LBA2+Q;
+                "FOR"J:=F"STEP"1"UNTIL"G"DO"
+                "BEGIN"PREFIX('   @);
+                      "PRINT"A[I,J];
+                "END";
+          "END";
+                "IF"Q=RA2"THEN""GOTO"EXIT
+               "ELSE""GOTO"L;
+    EXIT:      "PRINT"''L4@END OF MATRIX'L2@@;
+    "END"MXOUTPUT;

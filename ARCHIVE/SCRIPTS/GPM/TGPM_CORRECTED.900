@@ -1,0 +1,1092 @@
+
+*17
+
+^32
+
+((GPM ORIGINALLY BY HAROLD THIMBLEBY))
+
+((RESURRECTED BY ANDREW HERBERT 16 MAY 2015))
+
+[HGPM]
+
+B=1
+
+ST=10
+HGPM    8  RESTART
+        8  M11
+       11  WRITE
+        8  WRITE+1
+\^WA \RNI \NG  \CHA \RAC \TER \S ^
+\STA \NDA \RD/ \CUR \REN \T/N \EW"
+        4  -6
+        5  X
+LOOPWC 11  WRITE
+        8  WRITE+1
+\^"
+        0  X
+       /4  WCNORM+6
+       11  LINK
+        8  OUTWC
+        0  X
+       /4  WCTAB+6
+       11  LINK
+        8  OUTWC
+        4  +0
+       15  2048
+        7  ;-1
+        5  A
+        1  -20
+        7  ;-3
+        1  -235
+        7  ;-2
+        0  X
+        4  A
+       /5  WCTAB+6
+       11  LINK
+        8  OUTWC
+        4  X
+       10  X
+        9  LOOPWC
+       11  WRITE
+        8  WRITE+1
+\^^"
+        8  ;+0
+
+OUTWC   5  Y
+        1  -10
+        7  WLINE
+        1  -131
+        7  WNULL
+        1  -19
+        7  WSPACE
+        4  Y
+       15  6148
+       11  WRITE
+        8  WRITE+1
+\    \    \  "
+        8  EXWC
+WLINE  11  WRITE
+        8  WRITE+1
+\NEW \LIN \E   \"
+        8  EXWC
+WSPACE 11  WRITE
+        8  WRITE+1
+\SPA \CE  \    \"
+        8  EXWC
+WNULL  11  WRITE
+        8  WRITE+1
+\NON \E   \    \"
+EXWC    0  LINK
+       /8  1
+WCNORM  +60 +172 +221 +63 +33 +190 +219
+
+RESTART 4  A
+        1  -20
+        7  HALT+1
+        4  +0
+        5  H
+        5  P
+        5  F
+        5  C
+        5  Q
+        4  SETE
+<       5  E
+        4  SETS
+        5  S
+        8  START
+
+
+NEXTITEM
+        4  H
+        7  COPY
+        4  +0
+        0  S
+       /5  ST
+        0  H
+       /4  ST
+        1  H
+        2  S
+       /5  ST
+        4  S
+        5  H
+       10  S
+START  11  NEXTCH
+        8  NEXTCH+1
+        9  WARN
+COPY   11  LOAD
+        8  LOAD+2
+        4  Q
+        7  START
+Q2     11  NEXTCH
+        8  NEXTCH+1
+        1  +8
+        7  SKIP2
+        1  -5
+        7  ;+2
+        8  COPY
+        4  Q
+        1  -1
+        5  Q
+        7  START
+        8  COPY
+SKIP0  11  NEXTCH
+        8  NEXTCH+1
+        1  -10
+        7  NEXTCH+1
+        4  A
+        8  START+2
+SKIP1  10  Q
+        8  Q2
+SKIP2  10  Q
+        8  COPY
+
+
+WARN    5  B
+       /8  ;+10
+        8  ENDFN
+        8  SKIP1
+        8  NEXTITEM
+        8  APPLY
+        8  LOADARG
+        8  SKIP0
+        8  EXIT
+        4  +0
+        0  S
+       /5  ST+3
+       /5  ST+2
+        4  F
+       /5  ST+1
+        4  H
+       /5  ST
+        4  S
+        1  +1
+        5  F
+        1  +2
+        5  H
+        1  +1
+        5  S
+        8  START
+
+
+APPLY   4 P
+        2  F
+        9  M1
+        4  H
+        7  COPY
+        4  MARKER
+        0  S
+       /5  ST
+        0  H
+        4  H
+        2  S
+       /5  ST
+        0  F
+        4  C
+       /5  ST+1
+       /4  ST-1
+        5  H
+        4  F
+        2  S
+        1  +2
+       /5  ST-1
+       /4  ST
+        5  F
+        4  P
+       /5  ST
+        4  B
+        5  P
+       10  S
+        4  H
+        7  ;+6
+        0  P
+       /4  ST-1
+        0  H
+       /1  ST
+       /5  ST
+        4  P
+       11  FIND
+        8  FIND+1
+        0  W
+       /4  ST
+        5  B
+        9  CHECKARG
+        4  W
+        1  +1
+        5  C
+        8  START
+        8  NOTE
+        8  BAR
+        8  LEG
+        8  UPDATE
+        8  VAL
+JIM     0  P
+        4  H
+        7  ;+7
+       /4  ST-1
+        0  H
+       /2  ST
+        1  +6
+       /5  ST
+        0  P
+        4  E
+       /5  ST+5
+        4  +6
+       /5  ST-1
+        4  P
+        1  +5
+        5  E
+        8  ENDFN
+
+
+
+LOADARG 4  P
+        7  M2
+       11  NEXTCH
+        8  NEXTCH+1
+        6  +127
+        1  -48
+        9  M3
+        2  +9
+        9  M3
+        2  +8
+STZ     5  Z
+        4  P
+        1  +2
+        5  W
+        4  Z
+        9  ELOOP1
+        4  +0
+        5  R
+LOOP1   0  W
+       /4  ST
+        1  W
+        5  W
+        0  W
+       /4  ST
+        9  M4
+       10  R
+        4  R
+        2  Z
+        9  ELOOP1
+        8  LOOP1
+ELOOP1  4  +1
+        5  R
+        0  W
+       /4  ST
+        1  -1
+        5  Z
+        7  START
+LOOP2   9  START
+        4  W
+        1  R
+       10  R
+        5  B
+       /4  ST
+       11  LOAD
+        8  LOAD+1
+        4  R
+        2  Z
+        8  LOOP2
+
+
+
+ENDFN   4  F
+        2  P
+        9  M5
+        0  P
+       /4  ST-1
+        5  X
+        1  P
+        1  -1
+        5  K
+        4  S
+        5  B
+        5  A
+        4  E
+       /5  ST
+LOOP3   4  K
+       /2  ST
+        9  ELOOP3
+       /4  ST
+        5  A
+        4  X
+       /2  ST
+       /5  ST
+        0  A
+        8  LOOP3
+ELOOP3 /4  ST
+        5  W
+LOOP4   4  P
+        2  W
+        9  ELOOP4
+        0  W
+       /4  ST
+        5  W
+        8  LOOP4
+ELOOP4  4  W
+        0  A
+       /5  ST
+        0  S
+       /4  ST
+        5  E
+
+
+        4  H
+        0  P
+        7  UH
+        2  P
+        9  THGP
+       /4  ST-1
+        0  H
+       /2  ST
+       /5  ST
+        0  P
+        8  UH
+THGP   /4  ST-1
+        2  H
+        5  H
+UH      4  P
+        1  -1
+        5  A
+       /1  ST-1
+        5  W
+       /4  ST-1
+        2  S
+        5  S
+       /4  ST+1
+        5  C
+       /4  ST
+        5  P
+LOOP5   4  A
+        2  S
+        7  START
+        0  W
+       /4  ST
+        0  A
+       /5  ST
+       10  A
+       10  W
+        8  LOOP5
+
+
+
+VAL     4  P
+        1  +4
+       11  FIND
+        8  FIND+1
+        0  W
+       /4  ST
+       11  LOAD
+        9  M13
+        0  W
+       /4  ST+1
+        5  A
+        1  +9
+        7  ENDFN
+N
+       10  W
+        8  LOAD+2
+
+
+
+
+UPDATE  4  P
+        1  +9
+       11  FIND
+        8  FIND+2
+        0  P
+       /4  ST+9
+        1  +9
+        1  P
+        5  A
+        0  A
+       /4  ST
+        0  W
+       /2  ST
+        9  M9
+        0  A
+       /4  ST
+        5  X
+        4  +1
+        5  R
+LOOP7   2  X
+        9  ENDFN
+
+        4  A
+        1  R
+        5  B
+       /4  ST
+        5  Y
+        4  W
+        1  R
+        5  B
+        4  Y
+       10  R
+       /5  ST
+        4  R
+        8  LOOP7
+
+
+SIGNED 10  Z
+PLUSS   4  R
+        7  LOOP8
+        8  M10
+        4  X
+BIN     5  Y
+        5  B
+       /4  ST
+        1  Y
+        5  X
+        4  +0
+        5  Z
+        5  W
+        5  R
+LOOP8  10  Y
+        4  Y
+        2  X
+        7  ELOOP8
+        0  Y
+       /4  ST
+        6  +127
+        1  -45
+        7  SIGNED
+        1  -3
+        9  PLUSS
+        2  +9
+        9  LOOP8
+       10  R
+        2  +9
+        5  A
+        4  W
+       12  +10
+       14  17
+        1  A
+        5  W
+        8  LOOP8
+ELOOP8  4  R
+        7  M10
+        4  Z
+        6  +1
+        7  POS
+        4  W
+        2  +0
+        5  W
+POS     4  W
+        0  LINK
+       /8  1
+
+
+NEG     4  +45
+       11  LOAD
+        8  LOAD+1
+        4  W
+        2  +0
+DEC     5  W
+        9  NEG
+SW1     4  +1
+        5  X
+LOOP9  12  +10
+       14  17
+        5  Y
+        2  W
+        9  ELOOP9
+        4  Y
+        5  X
+        8  LOOP9
+ELOOP9  4  W
+       14  8176
+       13  X
+       14  8191
+        5  B
+       /4  CHAR
+        5  A
+        4  B
+       12  X
+       14  17
+        2  W
+        5  W
+        4  X
+       14  8176
+       13  +10
+       14  8191
+        5  X
+       11  LOAD
+        8  LOAD+2
+        4  X
+        7  ENDFN
+        8  ELOOP9
+CHAR      +48  +177  +178  +51   +180  +53   +54   +183   +184  +57
+
+
+
+
+BAR     0  P
+       /4  ST+6
+        1  +6
+        1  P
+       11  LINK
+        8  BIN
+        5  K
+       11  LINK
+        8  BIN-1
+        0  P
+       /4  ST+7
+        1  -45
+        7  MINUS
+        1  +2
+        7  PLUS
+        1  -127
+        7  MULT
+        4  W
+        7  M13
+       /4  ST+7
+        1  -175
+        7  DIV
+        1  -35
+        7  REM
+M13    11  MONITOR
+        8  MONITOR+1
+\INV \ALI \D C \ALL \"
+        8  M11
+REM     4  K
+       14  8176
+       13  W
+       14  8191
+       12  W
+       14  17
+        2  K
+        8  DEC
+PLUS    4  W
+        1  K
+        8  DEC
+MINUS   4  W
+        2  K
+        8  DEC
+MULT    4  W
+       12  K
+       14  17
+        8  DEC
+DIV     4  K
+       14  8176
+       13  W
+       14  8191
+        8  DEC
+
+
+
+
+
+
+
+
+
+NOTE   11  MONITOR
+        8  MONITOR+1
+\"
+        4  P
+        1  +5
+       11  ITEM
+        8  ITEM+1
+        8  ENDFN
+
+
+
+
+
+
+
+
+
+
+LEG     4  P
+        1  +6
+       11  LINK
+        8  BIN
+        9  LT
+        7  EQ
+GT      0  X
+       /4  ST
+        1  X
+        5  X
+EQ      0  X
+       /4  ST
+        1  X
+        5  X
+LT      0  X
+       /4  ST
+        1  X
+       11  LOAD
+        5  Y
+       10  X
+        4  X
+        2  Y
+        7  ENDFN
+        0  X
+       /4  ST
+        8  LOAD+1
+
+
+
+M0     11  MONITOR
+        8  MONITOR+1
+\STA \CK  \OVE \RFL \OW"
+        8  M11
+
+M1     11  MONITOR
+        8  MONITOR+1
+\UNM \ATC \HED \ ]  \IN  \DEF \INI \TIO \N O \F "
+        8  ITEMP
+
+M2      4  H
+        7  COPY
+       11  MONITOR
+        8  MONITOR+1
+\UNQ \UOT \ED  \"
+        0  A
+       /4  WCTAB+8
+       15  6148
+       11  WRITE
+        8  WRITE+1
+\ IN \ CA \LL  \FOR \ "
+        4  F
+       11  ITEM
+        8  ITEM+1
+        8  M11
+
+CHECKAR 5  W
+      /4  ARGS+1
+        5  Y
+        5  Z
+        0  P
+       /4  ST+2
+        1  P
+CONT    5  X
+        4  Z
+        0  W
+       /7  JIM+1
+        0  X
+       /4  ST+2
+        2  MARKER
+        7  ERROR
+       10  Z
+        0  X
+       /4  ST+2
+        1  X
+        8  CONT
+
+         -1  ( NOTE )
+         -3  ( BAR )
+         -4  ( LEG )
+         -2  ( UPDATE )
+         -1  ( VAL )
+ARGS     -2  ( DEF )
+
+ERROR   4  Y
+        2  Z
+        5  B
+       /4  CHAR+1
+        5  A
+M4     11  MONITOR
+        8  MONITOR+1
+\NO  \ARG \UME \NT  \"
+        4  A
+       15  6148
+       11  WRITE
+        8  WRITE+1
+\ IN \ CA \LL  \FOR \ "
+ITEMP   4  P
+       11  ITEM
+        8  ITEM+1
+        8  M11
+
+M5     11  MONITOR
+        8  MONITOR+1
+\INC \OMP \LET \E C \ALL \^]  \MIS \SIN \G F \ROM \ "
+        8  ITEMP
+
+
+M3     11  MONITOR
+        8  MONITOR+1
+\BAD \ AR \GUM \ENT \ NU \MBE \R I \N "
+        8  ITEMP
+
+EXIT    4  C
+        7  ;+2
+        8  M8
+        4  H
+        7  M12
+
+M8     11  MONITOR
+        8  MONITOR+1
+\UNM \ATC \HED \ >"
+        8  M11
+
+M7     11  MONITOR
+        8  MONITOR+1
+\UND \EFI \NED \ NA \ME  \"
+        8  M11
+
+M9     11  MONITOR
+        8  MONITOR+1
+\UPD \ATE \ TO \O L \ONG \"
+        8  M11
+
+M10    11  MONITOR
+        8  MONITOR+1
+\BAD \ NU \MBE \R"
+M11     4  +20
+        5  W
+        4  F
+        5  Y
+        4  P
+        5  Z
+       11  WRITE
+        8  WRITE+1
+\^TR \ACE \--"
+LOOP10  4  Z
+        7  ;+2
+        8  NIP
+        4  Y
+        7  M12
+NIP     4  Z
+        2  Y
+        9  FALSE
+        0  Y
+       /4  ST
+        5  Y
+        4  B
+        5  X
+       11  WRITE
+        8  WRITE+1
+\^NO \T E \NTE \RED \: "
+        8  OKT
+FALSE   0  Z
+       /4  ST
+        5  Z
+        4  B
+        5  X
+       11  WRITE
+        8  WRITE+1
+\^   \  E \NTE \RED \: "
+OKT     4  +1
+        5  R
+LOOP11  4  X
+       11  ITEM
+        8  ITEM+1
+        0  X
+       /4  ST+2
+        7  BREAK
+        1  X
+        5  X
+        0  X
+       /4  ST+2
+        9  BREAK
+        4  R
+        2  +20
+        7  DOT
+        4  W
+        2  R
+        7  BREAK
+       11  WRITE
+        8  WRITE+1
+\^AR \G:  \"
+INCR   10  R
+        8  LOOP11
+DOT    11  WRITE
+        8  WRITE+1
+\^.^ \.^. \^."
+BREAK   4  +1
+        5  W
+        8  LOOP10
+M12    11  MONITOR
+        8  MONITOR+1
+ \GPM \ AB \ORT \ED^ \CUR \REN \T M \ACR \OS: \"
+        4  E
+DUMP    5  X
+        9  ABORT
+       10  X
+        4  X
+       11  FIND
+        8  FIND+2
+        4  A
+        2  X
+        9  MARKD
+       11  WRITE
+        8  WRITE+1
+\^ - \-   \"
+        4  X
+       11  ITEM
+        8  ITEM+2
+        0  X
+       /4  ST
+        1  X
+        5  Y
+        0  Y
+       /4  ST
+        9  MARKD
+       11  WRITE
+        8  WRITE+1
+\^VA \L:  \"
+        4  Y
+       11  ITEM
+        8  ITEM+2
+MARKD   0  X
+       /4  ST-1
+        8  DUMP
+ABORT  11  WRITE
+        8  WRITE+1
+\^^"
+        8  ;+0
+MONITOR  +0
+       11  WRITE
+        8  WRITE+1
+\^** \MON \ITO \R:  \ "
+        4  MONITOR
+        5  WRITE
+WRITE    +0
+LOOP13  4  &770000
+LOOP14  5  MASK
+        0  WRITE
+       /4  1
+        6  MASK
+        7  SPACE
+       14  8186
+        3  COUNT
+        6  &7777
+        7  ;+2
+        8  ;-4
+        0  COUNT
+       14  7
+        1  -1
+        7  NEWL
+        1  -1
+        7  ENDS
+        0  +0
+        3  COUNT
+        1  +34
+        5  CH
+LOOP15  9  INC
+        7  ELOP15
+       14  1
+        8  LOOP15
+INC    10  COUNT
+        8  LOOP15+2
+ELOP15  4  COUNT
+       14  7
+        1  CH
+       10  CHARS
+        9  AWC0
+OP     15  6148
+        4  CHARS
+        2  +68
+        9  NEWL
+        4  MASK
+        7  ENDS
+       14  8186
+        6  &7777
+        7  ;+2
+        8  LOOP14
+       10  WRITE
+        8  LOOP13
+
+
+AWC0    5  B
+       /4  WCTAB+8
+        8  OP
+
+NEWL    4  +0
+        5  CHARS
+        4  &5215
+       15  6148
+       14  8184
+       15  6148
+SPACE   4  +160
+        8  OP
+ENDS    0  WRITE
+       /8  2
+CHARS    +0
+MASK     +0
+COUNT    +0
+ITP      +0
+ITEM    +0
+       1  +2
+       5  ITP
+       4  +40
+      15  6148
+      10  CHARS
+       4  +0
+      11  WRITE
+       5  MASK
+LP4    5  K
+       0  ITP
+      /4  ST
+       7  POLIM
+QOLIM 10  K
+       2  K
+       7  EKLO
+       4  ITP
+       1  K
+       5  B
+      /4  ST
+       1  -10
+       7  NEWL
+      /4  ST
+       8  OP-2
+EKLO   4  +169
+      15  6148
+       0  ITP
+      /4  ST
+       7  INCOM
+RTN    0  ITEM
+      /8  1
+POLIM  4  ITP
+       2  S
+       8  QOLIM
+INCOM 11  WRITE
+       8  WRITE+1
+\ .. \. I \NCO \MPL \ETE \"
+       8  RTN
+
+
+
+FIND    +0
+       1  +2
+       5  W
+       4  E
+       5  A
+       0  W
+      /4  ST
+       5  K
+LOOP16 4  +0
+       5  R
+LOOP17 1  W
+       5  B
+      /4  ST
+       5  Z
+       4  A
+       1  R
+       5  B
+      /4  ST+1
+       2  Z
+       7  CONT2
+       0  A
+      /4  ST
+       5  A
+       9  M7
+       8  LOOP16
+CONT2 10  R
+       4  R
+       2  K
+       7  ;+3
+       4  R
+       8  LOOP17
+       0  W
+      /4  ST
+       1  A
+       5  W
+      10  W
+       0  FIND
+      /8  1
+LOAD    +0
+       5  A
+       4  H
+       7  HEX
+       4  A
+       0  S
+      /5  ST
+       4  S
+       2  STACKSIZE
+       9  M0
+      10  S
+XLD    0  LOAD
+      /8  1
+HEX    4  A
+       9  AWC1
+       1  -10
+       7  ;+4
+       4  A
+OUT   15  6144
+       8  XLD
+       4  &5215
+      15  6144
+      14  8184
+       8  ;-5
+
+
+
+AWC1   5  B
+      /4  WCTAB+8
+       8  OUT
+
+
+NEXTCH  +0
+       4  C
+       7  CEZ
+       0  C
+      /4  ST
+       5  A
+      10  C
+XNT    0  NEXTCH
+      /8  1
+CEZ    4  +0
+      15  2048
+       7  ;-1
+       5  A
+       1  -20
+HALT   7  HALT
+       1  -121
+       7  CEZ
+       1  -114
+       7  CEZ
+       0  -6
+LP5   /4  WCTAB+6
+       2  A
+       7  AWC2
+       4  B
+      10  B
+       9  LP5
+       4  A
+       8  XNT
+AWC2   4  B
+       1  -2
+       5  A
+       8  XNT
+
+
+LINK +0
+MARKER -9
+WCTAB  +60  +172  +221  +63  +33  +190    +219
+W +0  X +0  Y +0  Z +0
+R +0  H +0  P +0  A +0
+F +0  C +0  Q +0  K +0
+E 0 EP
+S 0 SP
+CH +0
+
+SETE    0  EP-10
+SETS    0  SP-10
+
+   STDEF  -1  +4  +68  +197  +198  -1
+   STVAL  0  STDEF-10  +4  +86  +65  +204  -2
+   STUPD  0  STVAL-10  +7  +85  +80  +68  +65  +212  +197  -3
+   STLEG  0  STUPD-10  +4  +204  +197  +71  -4
+   STBAR  0  STLEG-10  +4  +66  +65  +210  -5
+
+EP STNOT  0  STBAR-10  +5  +78  +207  +212  +197  -6
+
+SP <    4  SETE
+        5  E
+       11  WRITE
+        8  WRITE+1
+\^^N \EW  \GPM \: 7 \6/1 \/27 \ ^
+\ENT \RY  \POI \NTS \:^
+\32  \- R \UN^
+\ 33 \ -  \TRA \CEB \ACK
+\^ 3 \4 - \ CH \ANG \E C \HAR \ACT \ERS \^^
+\MAC \HIN \E M \ACR \OS: \^"
+        8  DUMP-1
+EOP     >+3000
+STACKS 0 ;-12
+%
+
+<! Halt !>

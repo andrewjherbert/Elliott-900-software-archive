@@ -1,0 +1,133 @@
+﻿
+((SINGLE-LENGTH OUTPUT SUBROUTINE, 9/8/71)
+
+(Outputs the contents of the accumulator as an
+unsigned integer, signed integer, signed fraction,
+octal number, or alphanumeric group)
+
+[SLOPL SLOPE CHOPL CHOPE]
+
+SLOPL    >1   (Link)
+INTGR    >1   (Remainder of number being printed)
+FLAG     >1   (Indicates format)
+DIGCT    >1   (Count of digits printed)
+SUBCT    >1   (Count of subtractions)
+ZERMK    >1   (+0 until nonzero digit found)
+
+SLOPT    -100000 -10000 -1000 -100 -10 -1
+
+SLOPE    8    UINT
+(+1)     8    SINT
+(+2)     8    FRAC1
+(+3)     8    OCTA1
+
+(+4)     7    SINT
+         5    INTGR
+         4    -35      (-[£])
+         8    ALPH1
+
+UINT     5    INTGR
+         4    +0
+         5    FLAG
+         8    MEET1+2
+
+SINT     5    INTGR
+         4    +0
+         8    ;+3
+
+FRAC1    5    INTGR
+         4    +46      ([.])
+         5    FLAG
+
+         4    INTGR
+         9    ;+3
+         4    +43      ([+])
+         8    ;+5
+         2    +0
+         9    OCTA1    (Jump iff &400000)
+         5    INTGR
+         4    +45      ([-])
+         11   CHOPL
+         8    CHOPE    (Print sign)
+
+         4    FLAG
+         7    MEET1+2
+         8    MEET1
+
+OCTA1    5    INTGR
+         4    -38      (-[&])
+ALPH1    5    FLAG
+         2    +0
+
+MEET1    11   CHOPL
+         8    CHOPE    (Print [.], [&], or [£])
+
+(+2)     5    ZERMK
+         4    -5
+         5    DIGCT
+
+NEXT     4    FLAG
+         9    OCALP
+         7    INT2
+
+(FRAC2)  4    INTGR
+         12   +10
+         3    INTGR
+         8    MEET2
+
+OCALP    2    -35
+         7    ALPH2
+
+(OCTA2)  2    INTGR
+         4    INTGR
+         14   3
+         5    INTGR
+         6    +7
+         8    MEET2
+
+ALPH2    4    INTGR
+         7    EXIT
+         5    ZERMK
+         0    +0
+         14   6
+         5    INTGR
+
+         4    ZERMK
+         14   8180
+         6    &77
+         1    -1
+         7    ;+2
+         1    -61
+         1    +94
+         8    MEET2+1
+
+INT2     5    SUBCT
+         0    DIGCT
+         4    INTGR
+         9    ;+4      (Jump iff > 131071)
+         /1   SLOPT+5
+         9    ;+7
+         8    ;+2
+         /1   SLOPT+5
+         5    INTGR
+         10   SUBCT
+         10   ZERMK
+         8    ;-8
+
+         4    ZERMK
+         7    ;+5
+         4    SUBCT
+
+MEET2    1    +48      (Number+48 = [Number])
+(+1)     11   CHOPL
+         8    CHOPE    (Print digit, <S>, or Alphanumeric)
+
+         10   DIGCT
+         4    DIGCT
+         9    NEXT
+         10   ZERMK
+         7    NEXT
+
+EXIT     0    SLOPL
+         /8   1
+<! Halt !>

@@ -1,0 +1,38 @@
+﻿C test irandom routine
+
+on 903 16k
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+st 8175
+
+at ptr inline
+irtest;
+"begin"
+
+"code" "integer" "procedure" irandom; "algol";
+
+"integer" i;
+
+reader(3); punch(3);
+
+"for" i := 1 "step" 1 "until" 100 "do" "print" sameline, i, irandom, ''l@@;
+
+"end"
+<! halt !><!!>
+j 8
+st 8000
+
+at ptr file ../../MASTERS/HERBERT/IRANDOM.RLB
+j 14
+st 8000
+
+
+select out tty
+select in tty
+
+
+j 10
+st 1727
+
+sh t

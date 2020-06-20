@@ -1,0 +1,11 @@
+﻿
+on 903 16k
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLGLPR(AJH).BIN
+j 8181
+at ptr file ../../MASTERS/WOOD/DV51DD.900
+at lpr
+j 8
+j 10
+
+sh t

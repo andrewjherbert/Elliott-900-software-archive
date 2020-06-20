@@ -1,0 +1,1956 @@
+﻿
+*19
+
+((COUNTDOWN NUMBERS GAME SOLVER, 14/12/13))
+
+[CNTDWN ERRORP CARD TARGET DEPTH OPS VRS
+TRY5L TRY5E NDOPL NDOPE SLOPL SLOPE MESOPL MESOPE
+CHIPF CHIPL CHIPE CHIP CHOPF CHOPL CHOPN CHOPE]
+
+(Type Announcement & Prompt)
+
+<
+CNTDWN    4     +0
+          5     CHIPF
+          5     CHOPF
+          11    MESOPL
+          8     MESOPN
+          #COU #NTD #OWN # NU #MBE #RS  #GAM #E S #OLV #ER.
+          11    MESOPL
+          8     MESOPN
+          #TER #RY  #FRO #GGA #TT, # DE #CEM #BER # 20 #13.
+
+RESTAR    11    MESOPL
+          8     MESOPN
+          #INP #UT  #6 C #ARD #S & # TA #RGE #T.
+          11    CHOPL
+          8     CHOPN
+
+(Input 6 CARDs & TARGET)
+
+          4     -7
+          5     ARGI
+NXTARG    4     +0
+          5     ARGV
+          11    CHIPL
+          8     CHIPE
+          1     -33
+          9     CHIPE     (Ignore leading separators)
+NXTDIG    1     -15
+          9     ERRORD    (Error iff CHIP < [0])
+          2     +9
+          9     ERRORD    (Error iff CHIP > [9])
+          4     ARGV
+          2     +13106
+          9     ERRORB    (Error iff number > 131069)
+          4     ARGV
+          12    +81920
+          14    4
+          1     CHIP
+          1     -48       (ARGV*10 + CHIP-[0])
+          5     ARGV
+          11    CHIPL
+          8     CHIPE
+          1     -33
+          9     ;+2       (Exit on trailing separator)
+          8     NXTDIG
+          4     ARGV
+          7     ERRORZ    (Error iff number < 1)
+          0     ARGI
+          /5    CARD+7
+          10    ARGI
+          4     ARGI
+          9     NXTARG
+
+(Echo 6 CARDs & TARGET)
+
+          4     CHIP
+          1     -10
+          7     ;+3
+          11    CHOPL
+          8     CHOPN
+          4     -7
+          5     ARGI
+NXTECH    0     ARGI
+          /4    CARD+7
+          11    SLOPL
+          8     SLOPE
+          10    ARGI
+          4     ARGI
+          7     ;+5
+          4     +32
+          11    CHOPL
+          8     CHOPE
+          8     NXTECH
+          11    CHOPL
+          8     CHOPN
+
+(Test for 1-card solution)
+
+          4     -6
+          5     ARGI
+          0     ARGI
+          /4    CARD+6
+          2     TARGET
+          7     ;+5
+          10    ARGI
+          4     ARGI
+          7     NOTONE
+          8     ;-7
+
+(Report 1-card solution)
+
+          4     TARGET
+          11    SLOPL
+          8     SLOPE
+          11    MESOPL
+          8     MESOPE
+          # =  #.
+          4     TARGET
+          11    SLOPL
+          8     SLOPE
+          8     RESTAR
+
+(Clear OPS for incrementing)
+
+NOTONE    5     OPS
+          5     OPS+1
+          5     OPS+2
+          5     OPS+3
+          5     OPS+4
+
+(Test for N-card solutions)
+
+          4     -6
+          5     DEPTH
+NXTDEP    10    DEPTH
+          2     +0
+          4     DEPTH
+          14    12
+          1     #6-C
+          5     ;+4
+          11    MESOPL
+          8     MESOPE
+          #NO  >1 #ARD # SO #LUT #ION #.
+          4     DEPTH
+          7     RESTAR
+          11    CHOPL
+          8     CHOPN
+          11    TRY5L     (For DEPTH from -5 to -1)
+          8     TRY5E
+          8     ;+2       (TRY pass exit)
+          8     NXTDEP    (TRY fail exit)
+
+(Report N-card solution)
+
+          4     DEPTH     (Was < 0 for quick testing)
+          2     -1
+          5     DEPTH     (Now points to root node)
+          0     DEPTH
+          4     TARGET
+          /5    VRS       (This VR not previously set)
+          11    NDOPL
+          8     NDOPE
+          8     RESTAR
+
+(Local Workspace)
+
+ARGI      >1
+ARGV      >1
+
+(Error Messages)
+
+ERRORD    11    MESOPL
+          8     MESOPT
+          #NOT # A  #DIG #IT.
+          8     RESTAR
+
+ERRORB    11    MESOPL
+          8     MESOPT
+          #TOO # BI #G.
+          8     RESTAR
+
+ERRORZ    11    MESOPL
+          8     MESOPT
+          #MUS #T B #E > # 0.
+          8     RESTAR
+
+ERRORP    11    MESOPL
+          8     MESOPT
+          #PAR #ITY # ER #ROR #.
+          8     RESTAR
+
+MESOPT    4     CHIP
+          1     -10
+          7     MESOPE
+MESOPN    11    CHOPL
+          8     CHOPN
+          8     MESOPE
+
+[CARD VX VY TARGET DEPTH
+OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+
+(Global Items)
+
+(CARD: array [0..6] of INTEGER;
+ TARGET, DEPTH: INTEGER;
+ type NODE_TYPE is record
+    OP: CHARACTER; IX,VX,IY,VY,IR,VR: INTEGER;
+ end record;
+ NODE: array [0..4] of NODE_TYPE;)
+
+CARD                      (A 6-word array)
+VX        >1              (Overlays CARD[0])
+VY        >1              (Overlays CARD[1])
+          >4              (Remaining CARDs)
+TARGET    >1              (Must be at CARD+6)
+DEPTH     >1
+
+OPS       >5
+IXS       >5
+VXS       >5
+IYS       >5
+VYS       >5
+IRS       >5
+VRS       >5
+
+Q         >1              (Shareable Workspace)
+TOGGLE    +1 +0           (For B := +1-B)
+
+[CARD TARGET DEPTH TRY5L TRY5E TRY4L TRY4E
+OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+
+TRY5L     >1
+IX        >1
+IY        >1
+VX        >1
+VY        >1
+VR        >1
+
+(function TRY5 return BOOLEAN is begin)
+
+TRY5E     4     -5
+          5     IX
+          2     DEPTH
+          7     NEXTXQ
+
+(Select 2 cards out of 6, which will be replaced
+ by the end card & the new value in deeper TRYs)
+
+NEXTXS    0     IX
+          /4    CARD+5
+          5     VX
+          4     IX
+          5     IY
+NEXTYS    10    IY
+          0     IY
+          /4    CARD+5
+          5     VY
+          4     CARD+5
+          /5    CARD+5
+
+(VR := VX+VY; CARD[IX] := VR;
+ if TRY4 then
+    NODE[4] := ['+',IX,VX,IY,VY,IX,VR];
+    return TRUE;
+ end if;
+ if VX > 1 and then VY > 1 then
+    VR := VX*VY; CARD[IX] := VR;
+    if TRY4 then
+       NODE[4] := ['*',IX,VX,IY,VY,IX,VR];
+       return TRUE;
+    end if;
+ end if;)
+
+          4     VX
+          1     VY
+          9     ENDMUS
+          5     VR
+          0     IX
+          11    TRY4L
+          8     TRY4E
+          8     ADDXY
+
+          4     VX
+          14    8191
+          7     ENDMUS
+          4     VY
+          14    8191
+          7     ENDMUS
+          4     VX
+          12    VY
+          3     VR
+          7     ;+2
+          8     ENDMUS
+          4     VR
+          0     IX
+          11    TRY4L
+          8     TRY4E
+          8     MULXY
+
+(if VX >= VY then)
+
+ENDMUS    4     VY
+          2     VX
+          9     REVERS
+
+(   VR := VX-VY; CARD[IX] := VR;
+    if VR /= 0 then
+       if TRY4 then
+          NODE[4] := ['-',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+    if VY > 1 and then VX rem VY = 0 then
+       VR := VX/VY; CARD[IX] := VR;
+       if TRY4 then
+          NODE[4] := ['/',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ else)
+
+          7     ENDSUS
+          5     VR
+          0     IX
+          11    TRY4L
+          8     TRY4E
+          8     SUBXY
+
+ENDSUS    4     VY
+          14    8191
+          7     ENDOPS
+          2     VX
+          4     +0
+          14    2
+          13    VY
+          14    8191
+          5     VR
+          12    VY
+          3     Q
+          4     Q
+          2     VX
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          11    TRY4L
+          8     TRY4E
+          8     DIVXY
+          8     ENDOPS
+
+(   VR := VY-VX; CARD[IX] := VR;
+    if TRY4 then
+       NODE[4] := ['-',IY,VY,IX,VX,IX,VR];
+       return TRUE;
+    end if;
+    if VX > 1 and then VY rem VX = 0 then
+       VR := VY/VX; CARD[IX] := VR;
+       if TRY4 then
+          NODE[4] := ['/',IY,VY,IX,VX,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ end if;)
+
+REVERS    2     +0
+          5     VR
+          0     IX
+          11    TRY4L
+          8     TRY4E
+          8     SUBYX
+
+          4     VX
+          14    8191
+          7     ENDOPS
+          2     VY
+          4     +0
+          14    2
+          13    VX
+          14    8191
+          5     VR
+          12    VX
+          3     Q
+          4     Q
+          2     VY
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          11    TRY4L
+          8     TRY4E
+          8     DIVYX
+
+(Loop until all 6*5/2 pairs tested)
+
+ENDOPS    4     VY
+          0     IY
+          /5    CARD+5
+          4     IY
+          9     NEXTYS
+          4     VX
+          0     IX
+          /5    CARD+5
+          10    IX
+          4     IX
+          9     NEXTXS
+          0     TRY5L
+          /8    2
+
+(Select 2 cards out of 6, no deeper TRYs currently requested)
+
+NEXTXQ    0     IX
+          /4    CARD+5
+          5     VX
+          4     IX
+          5     IY
+NEXTYQ    10    IY
+          0     IY
+          /4    CARD+5
+          5     VY
+
+(if VX+VY = TARGET then
+    NODE[4] := ['+',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ elsif VX*VY = TARGET then
+    NODE[4] := ['*',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ end if;)
+
+          1     VX
+          2     TARGET
+          7     ADDXY
+
+          4     VX
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDMUQ
+          4     Q
+          2     TARGET
+          7     MULXY
+
+(if VX >= VY then)
+
+ENDMUQ    4     VY
+          2     VX
+          9     REVERQ
+
+(   if VX-VY = TARGET then
+       NODE[4] := ['-',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    elsif VX = VY*TARGET then
+       NODE[4] := ['/',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    end if;
+ else)
+
+          2     TARGET
+          7     SUBXY
+
+          4     TARGET
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VX
+          7     DIVXY
+          8     ENDOPQ
+
+(   if VY-VX = TARGET then
+       NODE[4] := ['-',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    elsif VY = VX*TARGET then
+       NODE[4] := ['/',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    end if;
+ end if;)
+
+REVERQ    1     TARGET
+          7     SUBYX
+
+          4     TARGET
+          12    VX
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VY
+          7     DIVYX
+
+(Loop until all 6*5/2 pairs tested)
+
+ENDOPQ    4     IY
+          9     NEXTYQ
+          10    IX
+          4     IX
+          9     NEXTXQ
+          0     TRY5L
+          /8    2
+
+(Record successful node details)
+
+SUBYX     10    OPS+4
+DIVYX     0     +1
+          8     SETCOM
+ADDXY     10    OPS+4
+MULXY     10    OPS+4
+SUBXY     10    OPS+4
+DIVXY     0     +0
+SETCOM    /4    IX        (IX or IY)
+          1     +5
+          5     IXS+4
+          /4    VX        (VX or VY)
+          5     VXS+4
+          /0    TOGGLE    (B := +1-B)
+          /4    IX        (IY or IX)
+          1     +5
+          5     IYS+4
+          /4    VX        (VY or VX)
+          5     VYS+4
+          4     IX
+          1     +5
+          5     IRS+4
+          4     VR        (Whether valid or not)
+          5     VRS+4
+          0     TRY5L
+          /8    1
+
+[CARD TARGET DEPTH TRY4L TRY4E TRY3L TRY3E
+OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+
+TRY4L     >1
+IX        >1
+IY        >1
+VX        >1
+VY        >1
+VR        >1
+
+(function TRY4 return BOOLEAN is begin)
+
+TRY4E     /5    CARD+5
+
+          4     -4
+          5     IX
+          2     DEPTH
+          7     NEXTXQ
+
+(Select 2 cards out of 5, which will be replaced
+ by the end card & the new value in deeper TRYs)
+
+NEXTXS    0     IX
+          /4    CARD+4
+          5     VX
+          4     IX
+          5     IY
+NEXTYS    10    IY
+          0     IY
+          /4    CARD+4
+          5     VY
+          4     CARD+4
+          /5    CARD+4
+
+(VR := VX+VY; CARD[IX] := VR;
+ if TRY3 then
+    NODE[3] := ['+',IX,VX,IY,VY,IX,VR];
+    return TRUE;
+ end if;
+ if VX > 1 and then VY > 1 then
+    VR := VX*VY; CARD[IX] := VR;
+    if TRY3 then
+       NODE[3] := ['*',IX,VX,IY,VY,IX,VR];
+       return TRUE;
+    end if;
+ end if;)
+
+          4     VX
+          1     VY
+          9     ENDMUS
+          5     VR
+          0     IX
+          11    TRY3L
+          8     TRY3E
+          8     ADDXY
+
+          4     VX
+          14    8191
+          7     ENDMUS
+          4     VY
+          14    8191
+          7     ENDMUS
+          4     VX
+          12    VY
+          3     VR
+          7     ;+2
+          8     ENDMUS
+          4     VR
+          0     IX
+          11    TRY3L
+          8     TRY3E
+          8     MULXY
+
+(if VX >= VY then)
+
+ENDMUS    4     VY
+          2     VX
+          9     REVERS
+
+(   VR := VX-VY; CARD[IX] := VR;
+    if VR /= 0 then
+       if TRY3 then
+          NODE[3] := ['-',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+    if VY > 1 and then VX rem VY = 0 then
+       VR := VX/VY; CARD[IX] := VR;
+       if TRY3 then
+          NODE[3] := ['/',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ else)
+
+          7     ENDSUS
+          5     VR
+          0     IX
+          11    TRY3L
+          8     TRY3E
+          8     SUBXY
+
+ENDSUS    4     VY
+          14    8191
+          7     ENDOPS
+          2     VX
+          4     +0
+          14    2
+          13    VY
+          14    8191
+          5     VR
+          12    VY
+          3     Q
+          4     Q
+          2     VX
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          11    TRY3L
+          8     TRY3E
+          8     DIVXY
+          8     ENDOPS
+
+(   VR := VY-VX; CARD[IX] := VR;
+    if TRY3 then
+       NODE[3] := ['-',IY,VY,IX,VX,IX,VR];
+       return TRUE;
+    end if;
+    if VX > 1 and then VY rem VX = 0 then
+       VR := VY/VX; CARD[IX] := VR;
+       if TRY3 then
+          NODE[3] := ['/',IY,VY,IX,VX,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ end if;)
+
+REVERS    2     +0
+          5     VR
+          0     IX
+          11    TRY3L
+          8     TRY3E
+          8     SUBYX
+
+          4     VX
+          14    8191
+          7     ENDOPS
+          2     VY
+          4     +0
+          14    2
+          13    VX
+          14    8191
+          5     VR
+          12    VX
+          3     Q
+          4     Q
+          2     VY
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          11    TRY3L
+          8     TRY3E
+          8     DIVYX
+
+(Loop until all 5*4/2 pairs tested)
+
+ENDOPS    4     VY
+          0     IY
+          /5    CARD+4
+          4     IY
+          9     NEXTYS
+          4     VX
+          0     IX
+          /5    CARD+4
+          10    IX
+          4     IX
+          9     NEXTXS
+          0     TRY4L
+          /8    2
+
+(Select 2 cards out of 5, no deeper TRYs currently requested)
+
+NEXTXQ    0     IX
+          /4    CARD+4
+          5     VX
+          4     IX
+          5     IY
+NEXTYQ    10    IY
+          0     IY
+          /4    CARD+4
+          5     VY
+
+(if VX+VY = TARGET then
+    NODE[3] := ['+',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ elsif VX*VY = TARGET then
+    NODE[3] := ['*',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ end if;)
+
+          1     VX
+          2     TARGET
+          7     ADDXY
+
+          4     VX
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDMUQ
+          4     Q
+          2     TARGET
+          7     MULXY
+
+(if VX >= VY then)
+
+ENDMUQ    4     VY
+          2     VX
+          9     REVERQ
+
+(   if VX-VY = TARGET then
+       NODE[3] := ['-',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    elsif VX = VY*TARGET then
+       NODE[3] := ['/',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    end if;
+ else)
+
+          2     TARGET
+          7     SUBXY
+
+          4     TARGET
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VX
+          7     DIVXY
+          8     ENDOPQ
+
+(   if VY-VX = TARGET then
+       NODE[3] := ['-',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    elsif VY = VX*TARGET then
+       NODE[3] := ['/',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    end if;
+ end if;)
+
+REVERQ    1     TARGET
+          7     SUBYX
+
+          4     TARGET
+          12    VX
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VY
+          7     DIVYX
+
+(Loop until all 5*4/2 pairs tested)
+
+ENDOPQ    4     IY
+          9     NEXTYQ
+          10    IX
+          4     IX
+          9     NEXTXQ
+          0     TRY4L
+          /8    2
+
+(Record successful node details)
+
+SUBYX     10    OPS+3
+DIVYX     0     +1
+          8     SETCOM
+ADDXY     10    OPS+3
+MULXY     10    OPS+3
+SUBXY     10    OPS+3
+DIVXY     0     +0
+SETCOM    /4    IX        (IX or IY)
+          1     +4
+          5     IXS+3
+          /4    VX        (VX or VY)
+          5     VXS+3
+          /0    TOGGLE    (B := +1-B)
+          /4    IX        (IY or IX)
+          1     +4
+          5     IYS+3
+          /4    VX        (VY or VX)
+          5     VYS+3
+          4     IX
+          1     +4
+          5     IRS+3
+          4     VR        (Whether valid or not)
+          5     VRS+3
+          0     TRY4L
+          /8    1
+
+[CARD TARGET DEPTH TRY3L TRY3E TRY2L TRY2E
+OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+
+TRY3L     >1
+IX        >1
+IY        >1
+VX        >1
+VY        >1
+VR        >1
+
+(function TRY3 return BOOLEAN is begin)
+
+TRY3E     /5    CARD+4
+
+          4     -3
+          5     IX
+          2     DEPTH
+          7     NEXTXQ
+
+(Select 2 cards out of 4, which will be replaced
+ by the end card & the new value in deeper TRYs)
+
+NEXTXS    0     IX
+          /4    CARD+3
+          5     VX
+          4     IX
+          5     IY
+NEXTYS    10    IY
+          0     IY
+          /4    CARD+3
+          5     VY
+          4     CARD+3
+          /5    CARD+3
+
+(VR := VX+VY; CARD[IX] := VR;
+ if TRY2 then
+    NODE[2] := ['+',IX,VX,IY,VY,IX,VR];
+    return TRUE;
+ end if;
+ if VX > 1 and then VY > 1 then
+    VR := VX*VY; CARD[IX] := VR;
+    if TRY2 then
+       NODE[2] := ['*',IX,VX,IY,VY,IX,VR];
+       return TRUE;
+    end if;
+ end if;)
+
+          4     VX
+          1     VY
+          9     ENDMUS
+          5     VR
+          0     IX
+          11    TRY2L
+          8     TRY2E
+          8     ADDXY
+
+          4     VX
+          14    8191
+          7     ENDMUS
+          4     VY
+          14    8191
+          7     ENDMUS
+          4     VX
+          12    VY
+          3     VR
+          7     ;+2
+          8     ENDMUS
+          4     VR
+          0     IX
+          11    TRY2L
+          8     TRY2E
+          8     MULXY
+
+(if VX >= VY then)
+
+ENDMUS    4     VY
+          2     VX
+          9     REVERS
+
+(   VR := VX-VY; CARD[IX] := VR;
+    if VR /= 0 then
+       if TRY2 then
+          NODE[2] := ['-',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+    if VY > 1 and then VX rem VY = 0 then
+       VR := VX/VY; CARD[IX] := VR;
+       if TRY2 then
+          NODE[2] := ['/',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ else)
+
+          7     ENDSUS
+          5     VR
+          0     IX
+          11    TRY2L
+          8     TRY2E
+          8     SUBXY
+
+ENDSUS    4     VY
+          14    8191
+          7     ENDOPS
+          2     VX
+          4     +0
+          14    2
+          13    VY
+          14    8191
+          5     VR
+          12    VY
+          3     Q
+          4     Q
+          2     VX
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          11    TRY2L
+          8     TRY2E
+          8     DIVXY
+          8     ENDOPS
+
+(   VR := VY-VX; CARD[IX] := VR;
+    if TRY2 then
+       NODE[2] := ['-',IY,VY,IX,VX,IX,VR];
+       return TRUE;
+    end if;
+    if VX > 1 and then VY rem VX = 0 then
+       VR := VY/VX; CARD[IX] := VR;
+       if TRY2 then
+          NODE[2] := ['/',IY,VY,IX,VX,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ end if;)
+
+REVERS    2     +0
+          5     VR
+          0     IX
+          11    TRY2L
+          8     TRY2E
+          8     SUBYX
+
+          4     VX
+          14    8191
+          7     ENDOPS
+          2     VY
+          4     +0
+          14    2
+          13    VX
+          14    8191
+          5     VR
+          12    VX
+          3     Q
+          4     Q
+          2     VY
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          11    TRY2L
+          8     TRY2E
+          8     DIVYX
+
+(Loop until all 4*3/2 pairs tested)
+
+ENDOPS    4     VY
+          0     IY
+          /5    CARD+3
+          4     IY
+          9     NEXTYS
+          4     VX
+          0     IX
+          /5    CARD+3
+          10    IX
+          4     IX
+          9     NEXTXS
+          0     TRY3L
+          /8    2
+
+(Select 2 cards out of 4, no deeper TRYs currently requested)
+
+NEXTXQ    0     IX
+          /4    CARD+3
+          5     VX
+          4     IX
+          5     IY
+NEXTYQ    10    IY
+          0     IY
+          /4    CARD+3
+          5     VY
+
+(if VX+VY = TARGET then
+    NODE[2] := ['+',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ elsif VX*VY = TARGET then
+    NODE[2] := ['*',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ end if;)
+
+          1     VX
+          2     TARGET
+          7     ADDXY
+
+          4     VX
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDMUQ
+          4     Q
+          2     TARGET
+          7     MULXY
+
+(if VX >= VY then)
+
+ENDMUQ    4     VY
+          2     VX
+          9     REVERQ
+
+(   if VX-VY = TARGET then
+       NODE[2] := ['-',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    elsif VX = VY*TARGET then
+       NODE[2] := ['/',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    end if;
+ else)
+
+          2     TARGET
+          7     SUBXY
+
+          4     TARGET
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VX
+          7     DIVXY
+          8     ENDOPQ
+
+(   if VY-VX = TARGET then
+       NODE[2] := ['-',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    elsif VY = VX*TARGET then
+       NODE[2] := ['/',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    end if;
+ end if;)
+
+REVERQ    1     TARGET
+          7     SUBYX
+
+          4     TARGET
+          12    VX
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VY
+          7     DIVYX
+
+(Loop until all 4*3/2 pairs tested)
+
+ENDOPQ    4     IY
+          9     NEXTYQ
+          10    IX
+          4     IX
+          9     NEXTXQ
+          0     TRY3L
+          /8    2
+
+(Record successful node details)
+
+SUBYX     10    OPS+2
+DIVYX     0     +1
+          8     SETCOM
+ADDXY     10    OPS+2
+MULXY     10    OPS+2
+SUBXY     10    OPS+2
+DIVXY     0     +0
+SETCOM    /4    IX        (IX or IY)
+          1     +3
+          5     IXS+2
+          /4    VX        (VX or VY)
+          5     VXS+2
+          /0    TOGGLE    (B := +1-B)
+          /4    IX        (IY or IX)
+          1     +3
+          5     IYS+2
+          /4    VX        (VY or VX)
+          5     VYS+2
+          4     IX
+          1     +3
+          5     IRS+2
+          4     VR        (Whether valid or not)
+          5     VRS+2
+          0     TRY3L
+          /8    1
+
+[CARD TARGET DEPTH TRY2L TRY2E TRY1L TRY1E
+OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+
+TRY2L     >1
+IX        >1
+IY        >1
+VX        >1
+VY        >1
+VR        >1
+
+(function TRY2 return BOOLEAN is begin)
+
+TRY2E     /5    CARD+3
+
+          4     -2
+          5     IX
+          2     DEPTH
+          7     NEXTXQ
+
+(Select 2 cards out of 3, which will be replaced
+ by the end card & the new value in deeper TRYs)
+
+NEXTXS    0     IX
+          /4    CARD+2
+          5     VX
+          4     IX
+          5     IY
+NEXTYS    10    IY
+          0     IY
+          /4    CARD+2
+          5     VY
+          4     CARD+2
+          /5    CARD+2
+
+(VR := VX+VY; CARD[IX] := VR;
+ if TRY1 then
+    NODE[1] := ['+',IX,VX,IY,VY,IX,VR];
+    return TRUE;
+ end if;
+ if VX > 1 and then VY > 1 then
+    VR := VX*VY; CARD[IX] := VR;
+    if TRY1 then
+       NODE[1] := ['*',IX,VX,IY,VY,IX,VR];
+       return TRUE;
+    end if;
+ end if;)
+
+          4     VX
+          1     VY
+          9     ENDMUS
+          5     VR
+          0     IX
+          /5    CARD+2
+          11    TRY1L
+          8     TRY1E
+          8     ADDXY
+
+          4     VX
+          14    8191
+          7     ENDMUS
+          4     VY
+          14    8191
+          7     ENDMUS
+          4     VX
+          12    VY
+          3     VR
+          7     ;+2
+          8     ENDMUS
+          4     VR
+          0     IX
+          /5    CARD+2
+          11    TRY1L
+          8     TRY1E
+          8     MULXY
+
+(if VX >= VY then)
+
+ENDMUS    4     VY
+          2     VX
+          9     REVERS
+
+(   VR := VX-VY; CARD[IX] := VR;
+    if VR /= 0 then
+       if TRY1 then
+          NODE[1] := ['-',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+    if VY > 1 and then VX rem VY = 0 then
+       VR := VX/VY; CARD[IX] := VR;
+       if TRY1 then
+          NODE[1] := ['/',IX,VX,IY,VY,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ else)
+
+          7     ENDSUS
+          5     VR
+          0     IX
+          /5    CARD+2
+          11    TRY1L
+          8     TRY1E
+          8     SUBXY
+
+ENDSUS    4     VY
+          14    8191
+          7     ENDOPS
+          2     VX
+          4     +0
+          14    2
+          13    VY
+          14    8191
+          5     VR
+          12    VY
+          3     Q
+          4     Q
+          2     VX
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          /5    CARD+2
+          11    TRY1L
+          8     TRY1E
+          8     DIVXY
+          8     ENDOPS
+
+(   VR := VY-VX; CARD[IX] := VR;
+    if TRY1 then
+       NODE[1] := ['-',IY,VY,IX,VX,IX,VR];
+       return TRUE;
+    end if;
+    if VX > 1 and then VY rem VX = 0 then
+       VR := VY/VX; CARD[IX] := VR;
+       if TRY1 then
+          NODE[1] := ['/',IY,VY,IX,VX,IX,VR];
+          return TRUE;
+       end if;
+    end if;
+ end if;)
+
+REVERS    2     +0
+          5     VR
+          0     IX
+          /5    CARD+2
+          11    TRY1L
+          8     TRY1E
+          8     SUBYX
+
+          4     VX
+          14    8191
+          7     ENDOPS
+          2     VY
+          4     +0
+          14    2
+          13    VX
+          14    8191
+          5     VR
+          12    VX
+          3     Q
+          4     Q
+          2     VY
+          7     ;+2
+          8     ENDOPS
+          4     VR
+          0     IX
+          /5    CARD+2
+          11    TRY1L
+          8     TRY1E
+          8     DIVYX
+
+(Loop until all 3*2/2 pairs tested)
+
+ENDOPS    4     VY
+          0     IY
+          /5    CARD+2
+          4     IY
+          9     NEXTYS
+          4     VX
+          0     IX
+          /5    CARD+2
+          10    IX
+          4     IX
+          9     NEXTXS
+          0     TRY2L
+          /8    2
+
+(Select 2 cards out of 3, no deeper TRYs currently requested)
+
+NEXTXQ    0     IX
+          /4    CARD+2
+          5     VX
+          4     IX
+          5     IY
+NEXTYQ    10    IY
+          0     IY
+          /4    CARD+2
+          5     VY
+
+(if VX+VY = TARGET then
+    NODE[1] := ['+',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ elsif VX*VY = TARGET then
+    NODE[1] := ['*',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ end if;)
+
+          1     VX
+          2     TARGET
+          7     ADDXY
+
+          4     VX
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDMUQ
+          4     Q
+          2     TARGET
+          7     MULXY
+
+(if VX >= VY then)
+
+ENDMUQ    4     VY
+          2     VX
+          9     REVERQ
+
+(   if VX-VY = TARGET then
+       NODE[1] := ['-',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    elsif VX = VY*TARGET then
+       NODE[1] := ['/',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    end if;
+ else)
+
+          2     TARGET
+          7     SUBXY
+
+          4     TARGET
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VX
+          7     DIVXY
+          8     ENDOPQ
+
+(   if VY-VX = TARGET then
+       NODE[1] := ['-',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    elsif VY = VX*TARGET then
+       NODE[1] := ['/',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    end if;
+ end if;)
+
+REVERQ    1     TARGET
+          7     SUBYX
+
+          4     TARGET
+          12    VX
+          3     Q
+          7     ;+2
+          8     ENDOPQ
+          4     Q
+          2     VY
+          7     DIVYX
+
+(Loop until all 3*2/2 pairs tested)
+
+ENDOPQ    4     IY
+          9     NEXTYQ
+          10    IX
+          4     IX
+          9     NEXTXQ
+          0     TRY2L
+          /8    2
+
+(Record successful node details)
+
+SUBYX     10    OPS+1
+DIVYX     0     +1
+          8     SETCOM
+ADDXY     10    OPS+1
+MULXY     10    OPS+1
+SUBXY     10    OPS+1
+DIVXY     0     +0
+SETCOM    /4    IX        (IX or IY)
+          1     +2
+          5     IXS+1
+          /4    VX        (VX or VY)
+          5     VXS+1
+          /0    TOGGLE    (B := +1-B)
+          /4    IX        (IY or IX)
+          1     +2
+          5     IYS+1
+          /4    VX        (VY or VX)
+          5     VYS+1
+          4     IX
+          1     +2
+          5     IRS+1
+          4     VR        (Whether valid or not)
+          5     VRS+1
+          0     TRY2L
+          /8    1
+
+[VX VY TARGET TRY1L TRY1E
+OPS IXS VXS IYS VYS Q]
+
+TRY1L=1                   (Link directly into B)
+
+(function TRY1 return BOOLEAN is begin)
+
+(Optimised to use remaining 2 cards)
+
+(if VX+VY = TARGET then
+    NODE[0] := ['+',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ elsif VX*VY = TARGET then
+    NODE[0] := ['*',IX,VX,IY,VY,IX,TARGET];
+    return TRUE;
+ end if;)
+
+TRY1E     4     VX
+          1     VY
+          2     TARGET
+          7     ADDXY
+
+          4     VX
+          12    VY
+          3     Q
+          7     ;+2
+          8     ENDMUQ
+          4     Q
+          2     TARGET
+          7     MULXY
+
+(if VX >= VY then)
+
+ENDMUQ    4     VY
+          2     VX
+          9     REVERQ
+
+(   if VX-VY = TARGET then
+       NODE[0] := ['-',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    elsif VX = VY*TARGET then
+       NODE[0] := ['/',IX,VX,IY,VY,IX,TARGET];
+       return TRUE;
+    end if;
+ else)
+
+          2     TARGET
+          7     SUBXY
+
+          4     TARGET
+          12    VY
+          3     Q
+          7     ;+2
+          /8    2
+          4     Q
+          2     VX
+          7     DIVXY
+          /8    2
+
+(   if VY-VX = TARGET then
+       NODE[0] := ['-',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    elsif VY = VX*TARGET then
+       NODE[0] := ['/',IY,VY,IX,VX,IX,TARGET];
+       return TRUE;
+    end if;
+ end if;)
+
+REVERQ    1     TARGET
+          7     SUBYX
+
+          4     TARGET
+          12    VX
+          3     Q
+          7     ;+2
+          /8    2
+          4     Q
+          2     VY
+          7     DIVYX
+          /8    2
+
+(Record successful node details)
+
+SUBYX     10    OPS
+DIVYX     4     VY
+          5     VXS
+          4     VX
+          5     VYS
+          4     +1        (IX := 1, IY := 0)
+          8     SETCOM
+ADDXY     10    OPS
+MULXY     10    OPS
+SUBXY     10    OPS
+DIVXY     4     VX
+          5     VXS
+          4     VY
+          5     VYS
+          4     +0        (IX := 0, IY := 1)
+SETCOM    5     IXS
+          2     +1
+          5     IYS
+          /8    1
+
+[NDOPL NDOPE SLOPL SLOPE MESOPL MESOPE
+DEPTH OPS IXS VXS IYS VYS IRS VRS]
+
+NDOPL     >1
+TEMP      >1
+THIS      >1
+THAT      >1
+THISS     >5
+THATS     >5
+LINKS     >5
+SP        >1
+
+SYMBOL    # /
+          # -
+          # *
+          # +
+
+(procedure PUTNODE [THIS: INTEGER=>DEPTH] is begin)
+
+NDOPE     4     +0        (Root entry)
+          5     SP
+          4     DEPTH
+NDOPR     5     TEMP      (Recursive entry)
+          0     SP
+          4     THIS
+          /5    THISS
+          4     THAT
+          /5    THATS
+          4     NDOPL
+          /5    LINKS
+          10    SP
+
+(for THAT in THIS+1..NODE'LAST loop
+    if NODE[THAT].IR = NODE[THIS].IX then
+       PUT ["[ "]; PUTNODE [THAT]; PUT [" ]"];
+       NODE[THAT].IR := -1; goto EXITX;
+    end if;
+ end loop;
+ IIO.PUT [NODE[THIS].VX, WIDTH=>0];
+ <<EXITX>>)
+
+          4     TEMP
+          5     THIS
+NEXTX     1     +1
+          5     THAT
+          1     -5
+          0     THIS
+          7     LASTX
+          /4    IXS
+          0     THAT
+          /2    IRS
+          7     ;+3
+          4     THAT
+          8     NEXTX
+          11    MESOPL
+          8     MESOPE
+          #( .
+          4     THAT
+          11    NDOPL
+          8     NDOPR
+          11    MESOPL
+          8     MESOPE
+          # ).
+          4     -1
+          0     THAT
+          /5    IRS
+          8     EXITX
+LASTX     /4    VXS
+          11    SLOPL
+          8     SLOPE
+
+(PUT [' ' & NODE[THIS].OP & ' '];)
+
+EXITX     0     THIS
+          /0    OPS
+          /4    SYMBOL
+          5     ;+3
+          11    MESOPL
+          8     MESOPE
+          >1 #.
+
+(for THAT in THIS+1..NODE'LAST loop
+    if NODE[THAT].IR = NODE[THIS].IY then
+       PUT ["[ "]; PUTNODE [THAT]; PUT [" ]"];
+       NODE[THAT].IR := -1; goto EXITY;
+    end if;
+ end loop;
+ IIO.PUT [NODE[THIS].VY, WIDTH=>0];
+ <<EXITY>>)
+
+          4     THIS
+NEXTY     1     +1
+          5     THAT
+          1     -5
+          0     THIS
+          7     LASTY
+          /4    IYS
+          0     THAT
+          /2    IRS
+          7     ;+3
+          4     THAT
+          8     NEXTY
+          11    MESOPL
+          8     MESOPE
+          #( .
+          4     THAT
+          11    NDOPL
+          8     NDOPR
+          11    MESOPL
+          8     MESOPE
+          # ).
+          4     -1
+          0     THAT
+          /5    IRS
+          8     EXITY
+LASTY     /4    VYS
+          11    SLOPL
+          8     SLOPE
+
+(PUT [" = "];
+ IIO.PUT [NODE[THIS].VR, WIDTH=>0];)
+
+EXITY     11    MESOPL
+          8     MESOPE
+          # =  #.
+          0     THIS
+          /4    VRS
+          11    SLOPL
+          8     SLOPE
+
+(end PUTNODE;)
+
+          4     SP
+          1     -1
+          5     SP
+          0     SP
+          /4    THISS
+          5     THIS
+          /4    THATS
+          5     THAT
+          /0    LINKS
+          /8    1
+
+((SINGLE-LENGTH OUTPUT SUBROUTINE, 9/8/71))
+
+(Outputs the contents of the accumulator as an
+unsigned integer, signed integer, signed fraction,
+octal number, or alphanumeric group)
+
+[SLOPL SLOPE CHOPL CHOPE]
+
+SLOPL     >1    (Link)
+INTGR     >1    (Remainder of number being printed)
+FLAG      >1    (Indicates format)
+DIGCT     >1    (Count of digits printed)
+SUBCT     >1    (Count of subtractions)
+ZERMK     >1    (+0 until nonzero digit found)
+
+SLOPT     -100000 -10000 -1000 -100 -10 -1
+
+SLOPE     8     UINT
+(+1)      8     SINT
+(+2)      8     FRAC1
+(+3)      8     OCTA1
+
+(+4)      7     SINT
+          5     INTGR
+          4     -35       (-[#])
+          8     ALPH1
+
+UINT      5     INTGR
+          4     +0
+          5     FLAG
+          8     MEET1+2
+
+SINT      5     INTGR
+          4     +0
+          8     ;+3
+
+FRAC1     5     INTGR
+          4     +46       ([.])
+          5     FLAG
+
+          4     INTGR
+          9     ;+3
+          4     +43       ([+])
+          8     ;+5
+          2     +0
+          9     OCTA1     (Jump iff &400000)
+          5     INTGR
+          4     +45       ([-])
+          11    CHOPL
+          8     CHOPE     (Print sign)
+
+          4     FLAG
+          7     MEET1+2
+          8     MEET1
+
+OCTA1     5     INTGR
+          4     -38       (-[&])
+ALPH1     5     FLAG
+          2     +0
+
+MEET1     11    CHOPL
+          8     CHOPE     (Print [.], [&], or [#])
+
+(+2)      5     ZERMK
+          4     -5
+          5     DIGCT
+
+NEXT      4     FLAG
+          9     OCALP
+          7     INT2
+
+(FRAC2)   4     INTGR
+          12    +10
+          3     INTGR
+          8     MEET2
+
+OCALP     2     -35
+          7     ALPH2
+
+(OCTA2)   2     INTGR
+          4     INTGR
+          14    3
+          5     INTGR
+          6     +7
+          8     MEET2
+
+ALPH2     4     INTGR
+          7     EXIT
+          5     ZERMK
+          0     +0
+          14    6
+          5     INTGR
+
+          4     ZERMK
+          14    8180
+          6     &77
+          1     -1
+          7     ;+2
+          1     -61
+          1     +94
+          8     MEET2+1
+
+INT2      5     SUBCT
+          0     DIGCT
+          4     INTGR
+          9     ;+4       (Jump iff > 131071)
+          /1    SLOPT+5
+          9     ;+7
+          8     ;+2
+          /1    SLOPT+5
+          5     INTGR
+          10    SUBCT
+          10    ZERMK
+          8     ;-8
+
+          4     ZERMK
+          7     ;+5
+          4     SUBCT
+
+MEET2     1     +48       (Number+48 = [Number])
+(+1)      11    CHOPL
+          8     CHOPE     (Print digit, <S>, or Alphanumeric)
+
+          10    DIGCT
+          4     DIGCT
+          9     NEXT
+          10    ZERMK
+          7     NEXT
+
+EXIT      0     SLOPL
+          /8    1
+
+((MESSAGE OUTPUT ROUTINE, 4/11/13))
+
+[MESOPL MESOPE CHOPF CHOPL CHOPE]
+
+(Prints out the message following the entry
+instructions in alphanumeric group form,
+until a full-stop is found, then returns)
+
+MESOPL    >1
+COUNT     >1
+WORD      >1
+
+MESOPE    4     -2
+          5     COUNT
+          10    MESOPL
+          0     MESOPL
+          /4    0
+
+NEXTCH    5     WORD
+          14    8180
+          6     &77
+          1     -14       (6-bit code test if .)
+          0     MESOPL
+          /7    1
+          1     +46       (Restore 7-bit code)
+          11    CHOPL
+          8     CHOPE
+
+          4     COUNT
+          7     MESOPE
+          10    COUNT
+
+          4     WORD
+          14    6
+          8     NEXTCH
+
+((TELEPRINTER INPUT & OUTPUT SUBROUTINE, 14/12/13))
+
+[CHIP CHIPF CHIPL CHIPE CHOPF CHOPL CHOPN CHOPE CHOPC
+PARITL PARITE ERRORP]
+
+(TELECODE INPUT SUBROUTINE)
+
+CHIPE     4     +0
+          15    2052
+          7     CHIPE     (Ignore blanks)
+          5     CHIP
+          1     -255      (Ignore erases)
+          7     CHIPE
+
+          4     CHIP
+          11    PARITL
+          8     PARITE
+          8     ERRORP    (Parity error)
+
+          4     CHIP
+          6     &177      (Delete parity from track 8)
+          5     CHIP
+
+          1     -9
+          7     TAB       (If <T> input, output <S>)
+          1     -1
+          7     LF        (If L.F. input, output C.R.)
+          1     -3
+          7     CR        (If C.R. input, output L.F.)
+          1     -7
+          7     ;+0       (If <H> input, dynamic stop)
+          8     CHIPX
+
+CR        4     +10       (Set internal value to <N>)
+          5     CHIP
+          8     ;+3
+
+TAB       4     +19
+LF        1     +141
+          15    6148
+
+CHIPX     4     CHIP
+          0     CHIPL
+          /8    1
+
+(TELECODE OUTPUT SUBROUTINE)
+
+CHOPN     4     +10
+CHOPE     5     CHOP
+          6     +127
+          5     OPC
+
+          1     -9        (C-9,  test if <T>)
+          7     ;+4
+          1     -1        (C-10, test if <N>)
+          7     ;+3
+          8     ;+4
+          4     +19       (Prefix <T> by <S>)
+          1     +141      (Carriage Return)
+          15    6148
+
+          4     OPC
+          11    PARITL
+          8     PARITE
+          4     +128
+          1     OPC
+          15    6148
+
+          4     CHOP
+          1     +128
+          9     CHOPE
+
+          6     &177
+          0     CHOPL
+          /8    1
+
+(WORKSPACES)
+
+CHIPF     >1    (+0 on first entry to CHIPE S/R, unused in this version)
+CHIPL     >1    (Link)
+CHIP      >1    (Last character read in)
+CHOPF     >1    (+0 on first entry to CHOPE S/R, unused in this version)
+CHOPL     >1    (Link)
+CHOPC     +1    (Output telecode, ignored in this version)
+CHOP      >1
+OPC       >1
+
+((PARITY DETERMINATION SUBROUTINE, 29/1/81))
+
+[PARITC PARITL PARITE]
+
+(Entered with character in Acctr., exit Acctr. clear;
+1st exit odd parity, 2nd exit even parity; link corrupted)
+
+PARITC    >1
+PARITL    >1
+
+(-1)      5     PARITC    (Not used internally)
+
+PARITE    0     PARITL
+          /7    2
+          5     PARITL
+          1     -1
+          6     PARITL
+          /7    1
+          5     PARITL
+          1     -1
+          6     PARITL
+          8     ;-8
+
+%

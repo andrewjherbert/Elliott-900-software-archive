@@ -1,0 +1,46 @@
+﻿c Algol function codes: recursive call by name
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin" 
+    "procedure" p1(i); "integer" i;
+    "begin"
+        "print" i;
+        "if" i > 1 "then" p1(checki(i)-1);
+    "end";
+    p1(5)
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 11
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t
+

@@ -1,0 +1,2121 @@
+﻿
+ 	('LOWLTEST')
+
+ 	(LOWL statements to test LOWL macros)
+
+ 	AA +0
+ 	BB +0
+ 	PARNM +0
+
+ 	(THE FOLLOWING MUST BE STORED CONTIGUOUSLY)
+
+ 	PVNUM +0
+ 	PVARPT +0
+
+ 	(END OF CONTIGUOUS BLOCK OF VARIABLES)
+
+ 	ENDPT +0
+ 	FFPT +0
+ 	LFPT +0
+
+ 	*DEFINE KK [AA]
+
+ 	SRCPT +0
+ 	DSTPT +0
+
+ 	(THE FOLLOWING MUST BE STORED CONTIGUOUSLY)
+
+ 	CC +0
+ 	DD +0
+ 	EE +0
+ 	FF +0
+ 	GG +0
+ 	HH +0
+ 	II +0
+ 	JJ +0
+
+ 	(END OF CONTIGUOUS BLOCK OF VARIABLES)
+
+ 	LINKPT +0
+ 	SPT +0
+ 	IDLEN +0
+ 	IDPT +0
+ 	ERNOB +0
+ 	ERNOD +0
+ 	ERNOG +0
+ 	ERNOH +0
+ 	LOTEMP +0
+
+ 	*DEFINE SEVTH [73]
+
+TABFST  	+0
+LLKK  	+27
+TBCH  	&600070
+
+TBNUM  	-6
+LL34  	&500001
+ 	&600041
+&600042
+&600043
+&600044
+&600045
+&600046
+&600047
+&600050
+&600051
+&600052
+&600053
+&600054
+&600055
+&600056
+&600057
+&600060
+&600061
+&600062
+&600063
+&600064
+&600065
+&600066
+&600067
+&600070
+&600071
+&600072
+
+ 	&500000
+NUMS  	&000000
+&000001
+&000002
+&000003
+&000004
+&000005
+&000006
+&000007
+&000010
+&000011
+
+ 	&500001
+ 	&500016
+&500014
+&500033
+&500032
+&500010
+&500011
+&500012
+&500017
+&500015
+&500013
+&500035
+
+ 	TABCD
+ 	&500002
+ 	&500001
+LL35  	+10
+ 	&600047
+&600057
+&600063
+&600065
+&600042
+
+
+BEGIN  	11 MESS
+8 MESS+1
+\^Te
+\st 
+\of 
+\LOW
+\L"
+ 	11 MESS
+8 MESS+1
+\ ma
+\ppi
+\ng^
+\...
+\Mar
+\ 19
+\74"
+ 	11 MESS
+8 MESS+1
+\,re
+\vis
+\ed 
+\Nov
+\ 19
+\76,
+\Mar
+\ 19
+\86^
+\^"
+ 	11 MESS
+8 MESS+1
+\...
+\Tes
+\tin
+\g f
+\orw
+\ard
+\ GO
+\..^
+\"
+ 	8 LL1
+ 	11 MESS
+8 MESS+1
+\+++
+\For
+\war
+\d G
+\O h
+\as 
+\no 
+\eff
+\ect
+\^"
+LL99  	11 MESS
+8 MESS+1
+\OK^
+\...
+\Tes
+\tin
+\g l
+\ong
+\ GO
+\..^
+\"
+ 	8 LL98
+LL1  	11 MESS
+8 MESS+1
+\OK^
+\...
+\Tes
+\tin
+\g b
+\ack
+\war
+\d G
+\O..
+\^"
+ 	8 LL99
+ 	11 MESS
+8 MESS+1
+\+++
+\Bac
+\kwa
+\rd 
+\GO 
+\has
+\ no
+\ ef
+\fec
+\t^"
+LL98  	8 LL27
+LL28  	11 MESS
+8 MESS+1
+\OK^
+\...
+\Tes
+\tin
+\g L
+\AL,
+\CAL
+\,GO
+\NE,
+\GOE
+\Q,S
+\TV,
+\LAV
+\..^
+\"
+ 	4 +0
+
+ 	(Test LAL and CAL zero)
+
+ 	2 +0
+ 	7 ;+2
+8 ER1
+ 	4 +0
+LL29  	2 +0
+ 	7 LL2
+ 	11 MESS
+8 MESS+1
+\+++
+\GOE
+\Q n
+\ot 
+\bra
+\nch
+\ing
+\^"
+LL2  	4 +0
+ 	5 AA
+ 	4 AA
+ 	2 +0
+ 	7 ;+2
+8 ER2
+ 	4 AA
+ 	5 AA
+ 	2 +0
+ 	7 ;+2
+8 ER3
+LL17  	4 AA
+ 	2 +0
+ 	7 ;+2
+8 ER4
+LL18  	4 +8
+ 	2 +8
+ 	7 ;+2
+8 ER5
+ 	4 +64
+ 	
+ 	5 BB
+ 	4 BB
+ 	2 +64
+ 	7 ;+2
+8 ER6
+LL19  	4 +0
+ 	5 ERNOB
+ 	4 +0
+ 	5 ERNOD
+ 	4 +0
+ 	5 ERNOG
+ 	4 +0
+ 	5 ERNOH
+ 	4 +64
+ 	2 BB
+ 	7 ;+2
+8 ER7
+LL93  	11 MESS
+8 MESS+1
+\OK^
+\...
+\Tes
+\tin
+\g a
+\rit
+\hme
+\tic
+\ an
+\d c
+\ond
+\iti
+\ona
+\l G
+\Os.
+\.^"
+ 	4 +0
+ 	1 BB
+ 	2 +64
+ 	7 ;+2
+8 ER8
+LL92  	4 BB
+ 	1 -64
+ 	2 +0
+ 	7 ;+2
+8 ER9
+LL91  	4 +64
+ 	2 BB
+2 +0
+ 	2 +0
+ 	7 ;+2
+8 ER10
+LL20  	4 +65
+ 	2 +64
+ 	9 LL3
+ 	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\GOG
+\R^"
+LL3  	4 +65
+ 	2 +64
+ 	7 LL4
+9 LL4
+ 	11 MESS
+8 MESS+1
+\+++
+\GOG
+\E e
+\rro
+\r, 
+\GR 
+\fai
+\ls^
+\"
+LL4  	4 +64
+ 	2 +64
+ 	7 LL5
+9 LL5
+ 	11 MESS
+8 MESS+1
+\+++
+\GOG
+\E e
+\rro
+\r, 
+\EQ 
+\fai
+\ls^
+\"
+LL5  	4 +64
+ 	2 +65
+ 	7 LL6
+2 +0
+9 LL6
+ 	11 MESS
+8 MESS+1
+\+++
+\GOL
+\E e
+\rro
+\r, 
+\LT 
+\fai
+\ls^
+\"
+LL6  	4 +64
+ 	2 +64
+ 	7 LL7
+2 +0
+9 LL7
+ 	11 MESS
+8 MESS+1
+\+++
+\GOL
+\E e
+\rro
+\r, 
+\EQ 
+\fai
+\ls^
+\"
+LL7  	4 +64
+ 	2 +65
+ 	2 +0
+9 LL8
+ 	11 MESS
+8 MESS+1
+\+++
+\GOL
+\T e
+\rro
+\r^"
+LL8  	11 MESS
+8 MESS+1
+\OK^
+\...
+\Tes
+\tin
+\g G
+\OSU
+\B a
+\nd 
+\EXI
+\T 1
+\..^
+\"
+ 	11 SR1
+8 SR1+1
+ 	11 MESS
+8 MESS+1
+\K^.
+\..t
+\est
+\ing
+\ EX
+\ITs
+\ 2,
+\3 a
+\nd 
+\4..
+\^"
+LL96  	11 SR2
+8 SR2+1
+ 	8 ER11
+ 	8 LL39
+ 	8 ER11
+ 	8 ER11
+LL39  	11 MESS
+8 MESS+1
+\O"
+LL21  	4 +0
+ 	5 BB
+ 	11 SR2
+8 SR2+1
+ 	8 ER56
+ 	8 ER56
+ 	8 LL47
+ 	8 ER56
+LL47  	11 MESS
+8 MESS+1
+\K"
+LL56  	4 +8
+ 	5 BB
+ 	11 SR2
+8 SR2+1
+ 	8 ER57
+ 	8 ER57
+ 	8 ER57
+ 	11 MESS
+8 MESS+1
+\^"
+LL57  	11 CSSUB
+8 CSSUB+1
+ 	8 ERCSS
+LLCSS  	
+ 	4 +65
+ 	5 BB
+ 	11 SR2
+8 SR2+1
+ 	8 LL9
+ 	8 ER58
+ 	8 ER58
+ER58  	11 MESS
+8 MESS+1
+\+++
+\EXI
+\T 1
+\ er
+\ror
+\ fr
+\om 
+\SR2
+\^"
+LL9  	4 +65
+ 	11 SR3
+8 SR3+1
+ 	4 +0
+ 	11 SR4
+8 SR4+1
+LL94  	4 +15
+ 	5 AA
+ 	4 +102
+ 	6 AA
+ 	2 +6
+ 	7 ;+2
+8 ER12
+ 	4 AA
+ 	2 +15
+ 	7 ;+2
+8 ER26
+LL22  	4 +15
+ 	6 +102
+ 	2 +6
+ 	7 ;+2
+8 ER13
+LL24  	4 +0
+5 AA
+ 	4 AA
+ 	2 +0
+ 	7 ;+2
+8 ER15
+LL25  	4 AA
+1 +65
+5 AA
+ 	4 AA
+1 +8
+5 AA
+ 	4 AA
+ 	2 +SEVTH
+ 	7 ;+2
+8 ER16
+LL46  	4 +3
+ 	5 CC
+ 	11 MESS
+8 MESS+1
+\...
+\Tes
+\tin
+\g G
+\OAD
+\D..
+\^"
+ 	0 CC
+/8 ;+1
+ 	8 ER37
+ 	8 ER37
+ 	8 ER37
+ 	8 LL10
+ 	8 ER37
+LL10  	11 MESS
+8 MESS+1
+\OK^
+\"
+ 	4 +65
+ 	1 +8
+ 	2 +73
+ 	7 ;+2
+8 ER17
+LL90  	4 +2
+ 	2 +2
+ 	7 ;+2
+8 ER18
+ 	4 +2
+ 	1 -1
+ 	2 +1
+ 	7 ;+2
+8 ER19
+ 	4 +4
+ 	1 -1
+ 	2 +3
+ 	7 ;+2
+8 ER18
+ 	4 +0
+ 	2 +0
+ 	7 ;+2
+8 ER20
+LL88  	4 ERNOD
+ 	2 +0
+ 	7 ;+2
+8 LL86
+ 	4 RTABFST
+ 	1 +1
+ 	5 AA
+ 	4 RLLKK
+ 	2 AA
+ 	7 ;+2
+8 ER22
+ 	4 RLLKK
+ 	5 BB
+ 	0 BB
+/4 0
+ 	2 +27
+ 	7 ;+2
+8 ER23
+LL84  	0 BB
+ 	/4 0
+ 	2 +27
+ 	7 ;+2
+8 ER24
+LL83  	4 ERNOB
+ 	2 +0
+ 	7 ;+2
+8 LL81
+ 	4 +19
+ 	1 -58
+ 	5 AA
+ 	4 +1
+ 	1 -40
+ 	2 AA
+ 	7 ;+2
+8 ER59
+ 	4 +1
+ 	1 -39
+ 	2 AA
+ 	7 ER59
+2 +0
+9 ER59
+ 	4 AA
+ 	2 +0
+ 	7 ER59
+9 ER59
+ 	4 +0
+ 	2 AA
+ 	7 ER59
+2 +0
+9 ER59
+LL61  	4 ERNOG
+ 	2 +0
+ 	7 ;+2
+8 LL81
+ 	4 FFPT
+ 	5 PVARPT
+ 	4 LFPT
+ 	5 ENDPT
+ 	4 +69
+ 	5 PVNUM
+ 	11 MESS
+8 MESS+1
+\...
+\Tes
+\tin
+\g F
+\STK
+\..^
+\"
+ 	4 PVNUM
+ 	11 STKL
+8 FSTK+1
+ 	4 FFPT
+ 	1 -1
+ 	5 CC
+ 	0 CC
+/4 0
+ 	2 PVNUM
+ 	7 ;+2
+8 ER25
+ 	11 MESS
+8 MESS+1
+\OK^
+\...
+\Tes
+\tin
+\g B
+\STK
+\..^
+\"
+LL82  	4 PVNUM
+ 	11 STKL
+8 BSTK
+ 	0 LFPT
+/4 0
+ 	2 PVNUM
+ 	7 ;+2
+8 ER27
+ 	4 LFPT
+ 	1 +1
+ 	5 LFPT
+ 	4 LFPT
+ 	2 ENDPT
+ 	7 ;+2
+8 ER28
+ 	11 MESS
+8 MESS+1
+\OK^
+\"
+ 	4 ERNOB
+ 	2 +0
+ 	7 ;+2
+8 LL81
+ 	4 LFPT
+ 	1 -1
+ 	5 LFPT
+ 	11 STKL
+8 UNSTK
+5 CC
+ 	4 CC
+ 	2 PVNUM
+ 	7 ;+2
+8 ER29
+ 	4 LFPT
+ 	2 ENDPT
+ 	7 ;+2
+8 ER30
+LL81  	4 RCC
+ 	5 SRCPT
+ 	4 +1
+ 	5 CC
+ 	4 +2
+ 	5 DD
+ 	4 +3
+ 	5 EE
+ 	4 RHH
+ 	5 DSTPT
+ 	4 +3
+ 	11 STKL
+8 FMOVE
+ 	4 HH
+ 	2 +1
+ 	7 ;+2
+8 ER31
+ 	4 II
+ 	2 +2
+ 	7 ;+2
+8 ER31
+ 	4 JJ
+ 	2 +3
+ 	7 ;+2
+8 ER31
+LL77  	4 RHH
+ 	5 SRCPT
+ 	4 RFF
+ 	5 DSTPT
+ 	4 +3
+ 	11 STKL
+8 FMOVE
+ 	4 FF
+ 	2 +1
+ 	7 ;+2
+8 ER32
+ 	4 GG
+ 	2 +2
+ 	7 ;+2
+8 ER32
+ 	4 HH
+ 	2 +3
+ 	7 ;+2
+8 ER32
+LL76  	4 FFPT
+ 	5 SRCPT
+ 	5 GG
+ 	4 RLL34
+ 	5 KK
+ 	0 KK
+/4 0
+ 	11 STKL
+8 FSTK+1
+ 	4 FFPT
+ 	5 DSTPT
+ 	5 HH
+ 	4 RTBCH
+ 	5 KK
+ 	0 KK
+/4 0
+ 	11 STKL
+8 FSTK+1
+ 	4 &500000
+ 	11 STKL
+8 FSTK+1
+ 	4 +2
+ 	11 STKL
+8 BMOVE
+ 	0 GG
+/4 0
+ 	2 &500001
+ 	7 ;+2
+8 ER33
+ 	0 HH
+/4 0
+ 	2 &500001
+ 	7 ;+2
+8 ER33
+ 	0 HH
+ 	/4 1
+ 	2 &600070
+
+ 	7 ;+2
+8 ER33
+LL86  	4 CC
+ 	12 +0
+14 17
+ 	2 +0
+ 	7 ;+2
+8 ER34
+LL44  	4 +64
+ 	
+ 	2 +64
+ 	7 ;+2
+8 ER35
+LL45  	4 +28
+ 	12 +3
+14 17
+ 	2 +84
+ 	7 ;+2
+8 ER36
+LL85  	4 ERNOD
+ 	2 +0
+ 	7 ;+2
+8 END
+ 	4 +3
+ 	5 CC
+ 	11 STKL
+8 FSTK+1
+ 	4 FFPT
+ 	5 JJ
+ 	4 DD
+ 	11 STKL
+8 FSTK+1
+ 	10 FFPT
+ 	4 FF
+ 	11 STKL
+8 FSTK+1
+ 	4 ERNOH
+ 	2 +0
+ 	7 ;+2
+8 LL80
+ 	0 JJ
+ 	/4 2
+ 	2 FF
+ 	7 ;+2
+8 ER38
+LL80  	4 +10
+ 	5 DD
+ 	0 JJ
+/5 0
+ 	4 DD
+ 	2 +10
+ 	7 ;+2
+8 ER39
+LL75  	4 +20
+ 	0 JJ
+/5 0
+ 	2 +20
+ 	7 ;+2
+8 ER40
+LL74  	4 ERNOH
+ 	2 +0
+ 	7 ;+2
+8 LL54
+ 	0 JJ
+ 	LDAB
+1 -1
+LDBA
+ 	/4 0
+ 	2 +3
+ 	7 ;+2
+8 ER42
+LL52  	4 +2
+ 	5 II
+ 	0 JJ
+ 	LDAB
+ 1 II
+ LDBA
+ 	/4 0
+ 	2 FF
+ 	7 ;+2
+8 ER43
+LL53  	4 +1
+ 	5 II
+ 	0 JJ
+ 	LDAB
+2 II
+2 +0
+LDBA
+ 	/4 0
+ 	2 CC
+ 	7 ;+2
+8 ER44
+LL54  	4 +20
+ 	0 JJ
+/2 0
+ 	7 ;+2
+8 ER45
+LL101  	4 RLL34
+ 	5 CC
+ 	11 ADVNCE
+8 ADVNCE+1
+ 	0 SPT
+/4 0
+DUMA  	2 &500001
+ 	7 ;+2
+8 ER47
+ 	0 SPT
+/4 0
+ 	2 &500000
+ 	7 ER47
+ 	0 SPT
+/4 0
+ 	2 &500001
+ 	7 CCNOK
+ 	8 ER47
+CCNOK  	4 +0
+ 	5 IDLEN
+ 	4 FFPT
+ 	5 DD
+ 	0 SPT
+/4 0
+ 	11 STKL
+8 FSTK+1
+ 	0 DD
+/4 0
+ 	2 &500001
+ 	7 ;+2
+8 ER51
+ 	4 DD
+ 	1 +1
+ 	2 FFPT
+ 	7 ;+2
+8 ER52
+LL32  	4 &500001
+ 	2 &500001
+ 	7 ;+2
+8 ER53
+LL33  	11 ADVNCE
+8 ADVNCE+1
+ 	0 SPT
+/4 0
+DUMB  	2 &600041
+
+ 	7 ;+2
+8 ER48
+ 	0 SPT
+/4 0
+ 	2 &600042
+
+ 	7 ER48
+ 	0 SPT
+/4 0
+ 	2 &600041
+
+ 	7 CCLOK
+ 	8 ER48
+CCLOK  	0 SPT
+/4 0
+ 	6 &100000
+7 ;+2
+8 ER48
+ 	11 MESS
+8 MESS+1
+\...
+\Sea
+\rch
+\ing
+\ fo
+\r C
+\..^
+\"
+LL13  	11 ADVNCE
+8 ADVNCE+1
+ 	0 SPT
+/4 0
+ 	2 &600043
+
+ 	7 ;+2
+8 LL13
+ 	11 MESS
+8 MESS+1
+\fou
+\nd^
+\...
+\Sea
+\rch
+\ing
+\ fo
+\r z
+\ero
+\..^
+\"
+LL14  	11 ADVNCE
+8 ADVNCE+1
+ 	0 SPT
+/4 0
+ 	2 &000000
+
+ 	7 ;+2
+8 LL14
+ 	11 MESS
+8 MESS+1
+\fou
+\nd^
+\...
+\Sea
+\rch
+\ing
+\ fo
+\r p
+\unc
+\t w
+\ith
+\ GO
+\PC.
+\.^"
+ 	4 SPT
+ 	5 SRCPT
+ 	4 JJ
+ 	5 DSTPT
+ 	4 +1
+ 	11 STKL
+8 FMOVE
+ 	0 SPT
+/4 0
+ 	0 JJ
+/2 0
+ 	7 ;+2
+8 ER49
+LL16  	11 ADVNCE
+8 ADVNCE+1
+ 	0 SPT
+/4 0
+ 	6 &100000
+7 ;+2
+8 LL15
+ 	8 LL16
+LL15  	11 MESS
+8 MESS+1
+\fou
+\nd^
+\...
+\Sea
+\rch
+\ing
+\ fo
+\r N
+\LRE
+\P..
+\^"
+ 	0 SPT
+/4 0
+ 	2 &500001
+ 	7 ;+2
+8 ER48
+LL26  	11 ADVNCE
+8 ADVNCE+1
+ 	0 SPT
+/4 0
+ 	2 &500001
+ 	7 ;+2
+8 LL26
+ 	11 MESS
+8 MESS+1
+\fou
+\nd^
+\"
+ 	4 ERNOH
+ 	2 +0
+ 	7 ;+2
+8 LL60
+ 	0 JJ
+ 	/4 0
+ 	2 &000000
+
+ 	7 ;+2
+8 ER50
+LL60  	4 RNUMS
+ 	5 SPT
+ 	0 SPT
+/4 0
+ 	9 GONDER
+ 	2 +0
+ 	7 ;+2
+8 GONDER
+ 	0 SPT
+ 	/4 9
+ 	9 GONDER
+ 	2 +9
+ 	7 ;+2
+8 GONDER
+ 	0 SPT
+ 	/4 10
+ 	9 TSCON
+GONDER  	11 MESS
+8 MESS+1
+\+++
+\GON
+\D o
+\r S
+\TR 
+\err
+\or^
+\"
+
+ 	(Now test CON)
+
+TSCON  	4 ERNOG
+ 	2 +0
+ 	7 ;+2
+8 TSAL
+ 	4 RLL35
+ 	5 CC
+ 	0 CC
+/4 0
+ 	2 +10
+ 	7 ;+2
+8 ER54
+TSAL  	4 RTBCH
+ 	1 +1
+ 	
+ 	5 IDPT
+ 	0 IDPT
+/4 0
+ 	1 +6
+ 	2 +0
+ 	7 ;+2
+8 ER55
+ 	4 IDPT
+ 	
+ 	2 IDPT
+ 	7 ;+2
+8 ER55
+LL37  	4 RLL34
+ 	5 IDPT
+ 	4 +0
+ 	5 JJ
+LL41  	0 IDPT
+/4 0
+ 	11 MDOUCH
+8 MDERCH
+ 	4 JJ
+ 	1 +1
+ 	5 JJ
+ 	4 IDPT
+ 	1 +1
+ 	5 IDPT
+ 	4 JJ
+ 	2 IDLEN
+ 	7 ;+2
+8 LL41
+ 	11 MESS
+8 MESS+1
+\^Sh
+\oul
+\d b
+\e t
+\he 
+\sam
+\e a
+\s^A
+\BCD
+\EFG
+\HIJ
+\KLM
+\NOP
+\QRS
+\TUV
+\WX"
+ 	11 MESS
+8 MESS+1
+\YZ 
+\012
+\345
+\678
+\9^.
+\,;:
+\()*
+\/-+
+\= T
+\AB 
+\and
+\ qu
+\ote
+\ si
+\gn^
+\"
+ 	11 MDQUIT
+8 MDQUIT+1
+
+
+ 	SR1 +0
+
+
+ 	11 MESS
+8 MESS+1
+\O"
+ 	0 SR1
+/8 1
+ 	11 MESS
+8 MESS+1
+\+++
+\Pos
+\sib
+\ly 
+\EXI
+\T n
+\ot 
+\tra
+\nsf
+\err
+\ing
+\ co
+\ntr
+\ol^
+\"
+ 	8 LL96
+
+
+ 	SR2 +0
+
+
+ 	4 BB
+ 	2 +64
+ 	7 ;+2
+8 SS1
+ 	0 SR2
+/8 2
+SS1  	4 BB
+ 	2 +0
+ 	7 ;+2
+8 SS2
+ 	0 SR2
+/8 3
+SS2  	4 BB
+ 	2 +8
+ 	7 ;+2
+8 SS3
+ 	0 SR2
+/8 4
+SS3  	0 SR2
+/8 1
+ 	11 MESS
+8 MESS+1
+\+++
+\Pos
+\sib
+\ly 
+\EXI
+\T n
+\ot 
+\tra
+\nsf
+\err
+\ing
+\ co
+\ntr
+\ol^
+\"
+ 	8 LL21
+
+
+ 	SR3 +0
+5 PARNM
+
+ 	5 AA
+ 	4 AA
+ 	2 +65
+ 	7 ;+2
+8 ER100
+ 	4 PARNM
+ 	2 +65
+ 	7 ;+2
+8 ER101
+ 	0 SR3
+/8 1
+ 	8 LL94
+ER100  	11 MESS
+8 MESS+1
+\+++
+\A c
+\lob
+\ber
+\ed 
+\whe
+\n e
+\nte
+\rin
+\g s
+\ubr
+\out
+\ine
+\^"
+ 	0 SR3
+/8 1
+ 	8 LL94
+ER101  	11 MESS
+8 MESS+1
+\+++
+\A n
+\ot 
+\sto
+\red
+\ in
+\ PA
+\RNM
+\ on
+\ SU
+\BR 
+\ent
+\ry^
+\"
+ 	0 SR3
+/8 1
+ 	8 LL94
+
+
+ 	SRNEST +0
+
+
+ 	4 +2
+ 	5 IDLEN
+ 	0 SRNEST
+/8 1
+
+
+ 	SR4 +0
+5 PARNM
+
+ 	2 +0
+ 	7 ;+2
+8 ER1
+ 	10 PARNM
+10 PARNM
+ 	11 SRNEST
+8 SRNEST+1
+ 	4 PARNM
+ 	2 IDLEN
+ 	7 S4EX
+ 	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\nes
+\ted
+\ su
+\bro
+\uti
+\ne 
+\cal
+\l^"
+S4EX  	0 SR4
+/8 1
+
+
+ 	CSSUB +0
+
+
+ 	8 LLCSS
+ 	0 CSSUB
+/8 1
+
+
+ 	BUMPFF +0
+5 PARNM
+
+ 	2 +0
+ 	7 ER1
+ 	4 FFPT
+ 	1 +1
+ 	5 FFPT
+ 	4 FFPT
+ 	2 LFPT
+ 	7 ERLSO
+9 ERLSO
+ 	0 BUMPFF
+/8 1
+
+
+ 	DECLF +0
+5 PARNM
+
+ 	4 LFPT
+ 	1 -1
+ 	5 LFPT
+ 	4 FFPT
+ 	2 LFPT
+ 	7 ERLSO
+9 ERLSO
+ 	0 DECLF
+/8 1
+
+
+ 	ADVNCE +0
+
+
+ 	4 CC
+ 	5 SPT
+ 	4 CC
+ 	1 +1
+ 	5 CC
+ 	4 IDLEN
+ 	1 +1
+ 	5 IDLEN
+ 	0 ADVNCE
+/8 1
+
+
+
+LL27  	8 LL28
+
+ER1  	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\LAL
+\ or
+\ CA
+\L w
+\ith
+\ ze
+\ro 
+\arg
+\ or
+\ GO
+\NE^
+\"
+ 	8 END
+ER2  	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\STV
+\ V,
+\X o
+\r L
+\AV^
+\"
+ 	8 END
+ER3  	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\STV
+\ V,
+\P  
+\ A 
+\not
+\ pr
+\ese
+\rve
+\d^"
+ 	8 LL17
+ER4  	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\STV
+\ V,
+\P  
+\ (n
+\ot 
+\sto
+\rin
+\g)^
+\"
+ 	8 LL18
+ER5  	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\LAL
+\ or
+\ CA
+\L w
+\ith
+\ no
+\n-z
+\ero
+\ ar
+\g^"
+ 	8 END
+ER6  	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\AAL
+\ wi
+\th 
+\zer
+\o a
+\rg^
+\"
+ 	8 LL19
+ER7  	11 MESS
+8 MESS+1
+\+++
+\CAV
+\ er
+\ror
+\^"
+ 	4 +4
+ 	5 ERNOD
+ 	8 LL93
+ER8  	11 MESS
+8 MESS+1
+\+++
+\AAV
+\ er
+\ror
+\^"
+ 	8 LL92
+ER9  	11 MESS
+8 MESS+1
+\+++
+\SAL
+\ er
+\ror
+\^"
+ 	4 +2
+ 	5 ERNOB
+ 	8 LL91
+ER10  	11 MESS
+8 MESS+1
+\+++
+\SAV
+\ er
+\ror
+\^"
+ 	8 LL20
+ER11  	11 MESS
+8 MESS+1
+\+++
+\EXI
+\T 2
+\ er
+\ror
+\^"
+ 	8 LL21
+ER56  	11 MESS
+8 MESS+1
+\+++
+\EXI
+\T 3
+\ er
+\ror
+\^"
+ 	8 LL56
+ER57  	11 MESS
+8 MESS+1
+\+++
+\EXI
+\T 4
+\ er
+\ror
+\^"
+ 	8 LL57
+ER12  	11 MESS
+8 MESS+1
+\+++
+\AND
+\V e
+\rro
+\r^"
+ 	8 LL22
+ER26  	11 MESS
+8 MESS+1
+\+++
+\Val
+\ue 
+\of 
+\V c
+\lob
+\ber
+\ed 
+\in 
+\AND
+\V^"
+ 	8 LL22
+ER13  	11 MESS
+8 MESS+1
+\+++
+\AND
+\L e
+\rro
+\r^"
+ 	8 LL24
+ER15  	11 MESS
+8 MESS+1
+\+++
+\CLE
+\AR 
+\err
+\or^
+\"
+ 	4 +0
+ 	5 AA
+ 	8 LL25
+ER16  	11 MESS
+8 MESS+1
+\+++
+\BUM
+\P o
+\r I
+\DEN
+\T  
+\err
+\or^
+\"
+ 	8 LL46
+ER17  	11 MESS
+8 MESS+1
+\+++
+\AAL
+\ er
+\ror
+\^"
+ 	4 +4
+ 	5 ERNOD
+ 	8 LL90
+ER18  	11 MESS
+8 MESS+1
+\+++
+\OF 
+\err
+\or,
+\ * 
+\or 
+\+^"
+ 	8 END
+ER19  	11 MESS
+8 MESS+1
+\+++
+\OF 
+\err
+\or,
+\ ad
+\dit
+\ion
+\^"
+ 	8 END
+ER20  	11 MESS
+8 MESS+1
+\+++
+\OF 
+\err
+\or,
+\ su
+\btr
+\act
+\ion
+\^"
+ 	8 END
+ER22  	11 MESS
+8 MESS+1
+\+++
+\LAA
+\ L,
+\D e
+\rro
+\r o
+\r v
+\alu
+\e o
+\f L
+\NM 
+\inc
+\orr
+\ect
+\^"
+ 	4 +4
+ 	5 ERNOD
+ 	8 LL86
+ER23  	11 MESS
+8 MESS+1
+\+++
+\LAI
+\ er
+\ror
+\^"
+ 	4 +7
+ 	5 ERNOG
+ 	8 LL84
+ER24  	11 MESS
+8 MESS+1
+\+++
+\LBV
+\ or
+\ LA
+\M 0
+\ er
+\ror
+\^"
+ 	4 +8
+ 	5 ERNOH
+ 	8 LL83
+ER25  	11 MESS
+8 MESS+1
+\+++
+\FST
+\K e
+\rro
+\r "
+ 	4 PVARPT
+ 	1 +1
+ 	2 FFPT
+ 	7 ;+2
+8 LL79
+ 	11 MESS
+8 MESS+1
+\but
+\ FF
+\PT 
+\bum
+\ped
+\ co
+\rre
+\ctl
+\y^"
+ 	8 LL82
+LL79  	11 MESS
+8 MESS+1
+\FFP
+\T i
+\nco
+\rre
+\ct^
+\"
+ 	4 PVARPT
+ 	1 +1
+ 	5 FFPT
+ 	8 LL82
+ER27  	11 MESS
+8 MESS+1
+\+++
+\BST
+\K e
+\rro
+\r "
+ 	4 LFPT
+ 	1 +1
+ 	2 ENDPT
+ 	7 ;+2
+8 LL78
+ 	11 MESS
+8 MESS+1
+\but
+\ LF
+\PT 
+\cor
+\rec
+\t^"
+ 	8 LL81
+LL78  	11 MESS
+8 MESS+1
+\LFP
+\T i
+\nco
+\rre
+\ct^
+\"
+ 	8 LL81
+ER28  	11 MESS
+8 MESS+1
+\+++
+\LFP
+\T n
+\ot 
+\deb
+\ump
+\ed 
+\cor
+\rec
+\tly
+\ in
+\ BS
+\TK^
+\"
+ 	8 LL81
+ER29  	11 MESS
+8 MESS+1
+\+++
+\UNS
+\TK 
+\err
+\or^
+\"
+ 	8 LL81
+ER30  	11 MESS
+8 MESS+1
+\+++
+\LFP
+\T n
+\ot 
+\bum
+\ped
+\ co
+\rre
+\ctl
+\y i
+\n U
+\NST
+\K^"
+ 	8 LL81
+ER31  	11 MESS
+8 MESS+1
+\+++
+\FMO
+\VE 
+\err
+\or 
+\(no
+\n-o
+\ver
+\lap
+\pin
+\g c
+\ase
+\)^"
+ 	8 LL77
+ER32  	11 MESS
+8 MESS+1
+\+++
+\FMO
+\VE 
+\err
+\or(
+\ove
+\rla
+\ppi
+\ng 
+\cas
+\e)^
+\"
+ 	8 LL76
+ER33  	11 MESS
+8 MESS+1
+\+++
+\BMO
+\VE 
+\err
+\or^
+\"
+ 	8 LL86
+ER34  	11 MESS
+8 MESS+1
+\+++
+\MUL
+\TL 
+\err
+\or 
+\wit
+\h z
+\ero
+\ ar
+\g^"
+ 	8 LL44
+ER35  	11 MESS
+8 MESS+1
+\+++
+\MUL
+\TL 
+\err
+\or 
+\wit
+\h o
+\ne 
+\as 
+\arg
+\^"
+ 	8 LL45
+ER36  	11 MESS
+8 MESS+1
+\+++
+\MUL
+\TL 
+\err
+\or 
+\wit
+\h 3
+\ as
+\ ar
+\g^"
+ 	8 LL85
+ER37  	11 MESS
+8 MESS+1
+\+++
+\GOA
+\DD 
+\err
+\or^
+\"
+ 	8 LL10
+ER38  	11 MESS
+8 MESS+1
+\+++
+\LAM
+\ er
+\ror
+\^"
+ 	8 LL80
+ER39  	11 MESS
+8 MESS+1
+\+++
+\STI
+\ er
+\ror
+\^"
+ 	8 LL75
+ER40  	11 MESS
+8 MESS+1
+\+++
+\A n
+\ot 
+\pre
+\ser
+\ved
+\ in
+\ ST
+\I V
+\,P^
+\"
+ 	8 LL74
+ER42  	11 MESS
+8 MESS+1
+\+++
+\SBL
+\ er
+\ror
+\^"
+ 	8 LL52
+ER43  	11 MESS
+8 MESS+1
+\+++
+\ABV
+\ er
+\ror
+\^"
+ 	8 LL53
+ER44  	11 MESS
+8 MESS+1
+\+++
+\SBV
+\ er
+\ror
+\^"
+ 	8 LL54
+ER45  	11 MESS
+8 MESS+1
+\+++
+\CAI
+\ er
+\ror
+\^"
+ 	8 LL101
+ER47  	11 MESS
+8 MESS+1
+\+++
+\NCH
+\,LC
+\I o
+\r C
+\CN 
+\err
+\or^
+\"
+ 	8 END
+ER48  	11 MESS
+8 MESS+1
+\+++
+\CCL
+\ or
+\ GO
+\PC 
+\err
+\or^
+\"
+ 	8 END
+ER49  	11 MESS
+8 MESS+1
+\+++
+\CCI
+\ er
+\ror
+\^"
+ 	8 LL16
+ER50  	11 MESS
+8 MESS+1
+\+++
+\LCM
+\ er
+\ror
+\^"
+ 	8 LL60
+ER51  	11 MESS
+8 MESS+1
+\+++
+\CFS
+\TK 
+\err
+\or^
+\"
+ 	8 LL32
+ER52  	11 MESS
+8 MESS+1
+\+++
+\FFP
+\T n
+\ot 
+\bum
+\ped
+\ co
+\rre
+\ctl
+\y i
+\n C
+\FST
+\K. 
+\Pos
+\sib
+\ly"
+ 	11 MESS
+8 MESS+1
+\ LC
+\H v
+\alu
+\e i
+\s w
+\ron
+\g^"
+ 	4 CC
+ 	1 +1
+ 	5 FFPT
+ 	8 LL32
+ER53  	11 MESS
+8 MESS+1
+\+++
+\LCN
+\ NL
+\REP
+\ er
+\ror
+\^"
+ 	8 LL33
+ER54  	11 MESS
+8 MESS+1
+\+++
+\CON
+\ er
+\ror
+\^"
+ 	8 TSAL
+ER55  	11 MESS
+8 MESS+1
+\+++
+\Ali
+\gnm
+\ent
+\ er
+\ror
+\^"
+ 	8 LL37
+ER59  	11 MESS
+8 MESS+1
+\+++
+\Err
+\or 
+\in 
+\mov
+\ing
+\ or
+\ co
+\mpa
+\rin
+\g"
+ 	11 MESS
+8 MESS+1
+\ ne
+\gat
+\ive
+\ in
+\teg
+\ers
+\^"
+ 	8 LL61
+ 	0 SPT
+/4 0
+ 	2 &500034
+
+ 	7 ;+2
+8 LL29
+ERCSS  	11 MESS
+8 MESS+1
+\+++
+\CSS
+\ er
+\ror
+\^"
+ 	8 END
+
+ERLSO  	11 MESS
+8 MESS+1
+\+++
+\Sta
+\ck 
+\ove
+\rfl
+\ow^
+\"
+
+END  	11 MESS
+8 MESS+1
+\...
+\Cor
+\rec
+\t a
+\bov
+\e e
+\rro
+\r(s
+\) a
+\nd 
+\run
+\ ag
+\ain
+\^"
+ 	11 MDQUIT
+8 MDQUIT+1
+ 	
+
+%
+<! Halt !>

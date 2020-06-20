@@ -1,0 +1,125 @@
+﻿
+(MODULE 1 PATCH, AUG.  1978)
+
+(ASSEMBLE; ENTER AT 1024; DUMP;)
+(INPUT BEFORE SWITCH LIST PATCH; ENTER AT 9 AFTER)
+(INPUT OF SWITCH LIST PATCH)
+
+*3
+^9
+          8     6800
+(10)      -1
+(11)      4     188       (+0)
+          5     10
+          8     236       (START TRANSLATOR)
+(14)      -8192
+          4     10        (FROM PUNGRP+7)
+          0     14
+          /9    8044
+          4     211
+          8     5399      (TO PUNGRP+8)
+
+^26
+          5     6090      (FROM BLANKS+2)
+          4     10
+          9     5377      (TO BLANKS+8)
+          8     5372      (TO BLANKS+3)
+
+^5364
+          4     14
+          2     5363
+          0     14
+          /8    3739
+
+^5371
+          8     26	  ( corrected, was 8 6 )
+^5398
+          8     15
+
+^1640
+          8     5392
+^1024
+          4     A
+          5     5516      (_FACILITY)
+          4     B
+          5     5816      (NO TRAILER IN REPORT MODE)
+          8     LOOP1
+A         8     5754
+B         8     5816
+
+TO1       0     5753
+LAST1     0     5759
+DATA1     8     5775      (5753)
+          4     5420      (RW+3)
+          2     5758
+          7     5459      (FILBUF)
+          8     5512      (VOID)
+          +95
+
+FROM1     0     DATA1
+
+LOOP1     0     FROM1     ( copy DATA1... to 5753..5758 )
+          /4    0
+          0     TO1
+          /5    0
+          10    FROM1
+          10    TO1
+          4     TO1
+          2     LAST1
+          7     ;+2
+          8     LOOP1
+
+          4     DAT2AD	  ( copy DATA2... to 6800..6827 )
+          5     FROM2
+          4     FIRST2
+          5     TO2
+LOOP2     0     FROM2
+          /4    0
+          0     TO2
+          /5    0
+          10    FROM2
+          10    TO2
+          4     TO2
+          2     LAST2
+          7     ;+2
+          8     LOOP2
+          8     ;+0
+DAT2AD    0     DATA2
+FROM2     +0
+FIRST2    0     6800
+TO2       +0
+LAST2     0     6828
+
+DATA2     4     6810      (CLEAR JUNK FROM 7000-7162)
+          5     6811
+          0     6811
+          4     6813
+          /5    0
+          10    6811
+          4     6811
+          2     6812
+          7     6814
+          8     6802
+
+(6810)    0     7000      
+(6811)    +0		  (Location to write)
+(6812)    0     7162
+(6813)    +0
+
+(6814)    0     6825	  (Copy 8-8180  to module 1)
+          /4    0
+          0     6826
+          /5    0
+          10    6825
+          10    6826
+
+          4     6825      
+          2     6827
+          7     6824
+          8     6814
+          8     6824	  ( dynamic stop )
+(6825)    +8
+(6826)    +8200
+(6827)    +8180
+%
+<! Halt !>

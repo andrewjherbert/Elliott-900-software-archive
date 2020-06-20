@@ -1,0 +1,21 @@
+﻿C Build XSTORE
+
+on 903
+
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+select out tty
+nonprinting off
+at ptr file ../../MASTERS/TEST/XSTORE.900
+j 12
+st 562
+rewind
+select out auto
+at ptp file XSTORE.BIN
+j 10
+de ptp
+st 587
+
+sh t 

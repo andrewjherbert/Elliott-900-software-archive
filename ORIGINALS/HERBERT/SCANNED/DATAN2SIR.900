@@ -1,0 +1,189 @@
+﻿
+(DATAN2 22 DEC 1975 CAP DGNH)
+*+0
+[ALARM2 B DATAN2 J M3
+ OCTFLG QUFLAG T WS X
+ Y ZERO]
+DATAN2
+  +0
+  11  M3
+   8  M3+1
+   4  ZERO
+   5  T           (HOLDS ARCTAN AT END)
+   5  B
+   5  OCTFLG      (OCTFLG:=1 IF MOD[X]>MOD[Y])
+   4  X           (CHECKSPECIAL CASES)
+   7  XZERO
+   9  XNEG
+   8  XPOS
+XNEG
+   1  MINONE
+   7  XMINUN      (X= -1.0)
+CHECKX
+   4  X
+   9  ;+2
+XPOS
+   2  ZERO        (NEGATE)
+   5  WS          (STORE -MOD[X])
+   4  Y
+   7  YZERO
+   9  ;+2
+   2  ZERO
+   2  WS          (MOD[Y] - MOD[X])
+   9  XGRY        (X>Y IN MAGNITUDE)
+   7  XEQY        (X=Y)
+   4  X
+  13  Y           (X/Y)
+   8  STXY
+XGRY
+   4  Y
+  13  X           (Y/X)
+  10  OCTFLG      (NOTE INVERSE)
+STXY
+   5  QUFLAG      (-VE IF SIGNS DIFFER; 2ND OR 4TH QUADRANT)
+   9  ;+2
+   8  ;+2
+   2  ZERO        (MODULUS)
+   5  WS          (MOD[X/Y] OR MOD[Y/X])
+  12  C1
+   1  C2          (MOD[X/Y]*C1+C2)
+   5  T
+   4  C2
+   2  WS
+  13  T
+   5  WS          ([MOD[X/Y]-C2]/[MOD[X/Y]*C1+C2])
+  12  WS          (SQUARE)
+   5  B
+   4  K1          (FORM SERIES, K1*B^6+K2*B^5+...+K7)
+   5  T
+  +0              (ENTER MACHINE CODE)
+   4  -12         (SET COUNT FOR 6 LOOPS)
+   5  J
+LOOP11
+  11  M3          (ENTER DL WORKING)
+   8  M3+1
+   0  J
+   4  T
+  12  B           (POWER SERIES)
+  /1  TABLE+12
+   5  T
+  +0
+  10  J
+  10  J
+   4  J
+   9  LOOP11      (REPEAT LOOP 6 TIMES)
+  11  M3
+   8  M3+1
+   4  T
+  12  WS
+   1  EIGHTH      (ADD 0.125)
+   5  T
+   4  OCTFLG      (WAS X/Y USED QUERY)
+   7  CHECKY
+ADJUST
+   4  T           (IF Y/X USED)
+   2  HALF
+   5  T
+CHECKY
+   4  Y
+   9  ;+2
+   8  YPOS
+   4  T           (Y<0)
+   1  MINONE
+   5  T           (T:=T-1.0)
+YPOS
+   4  QUFLAG      (X/Y OR Y/X)
+   9  ;+2
+   8  FORMB
+   4  T           (SIGNS DIFFER)
+   2  ZERO
+   5  T           (T:=-T;)
+FORMB
+   4  T           (B:=T/2;)
+HALVE
+  14  8191
+   5  B
+  +0
+   6  +131071     (MAKE B +VE REGARDLESS)
+   5  B
+   0  DATAN2
+  /8  1
+XZERO
+   5  QUFLAG      (X=0; SET "SIGNS EQUAL")
+   4  Y
+   7  ERROR       (X=Y=0, SO ERROR)
+   8  CHECKY
+
+
+ERROR
+  +0
+   4  ALARM2      (SET ERROR BIT)
+   6  &577777
+   1  &200000
+   5  ALARM2
+  11  M3
+   8  M3+1
+   8  FORMB       (RESULT TIMREF := 0)
+XMINUN
+   4  Y           (X=-1.0, CHECK Y)
+   1  MINONE
+   7  ;+2         (Y=-1.0)
+   8  CHECKX
+   4  MPT75       (X=Y=-1.0)
+   5  T           (T:=-0.75;)
+   8  HALVE       (TIMREF:= +5/8 AFTER COLLATING)
+YZERO
+   4  X           (Y=0)
+   5  QUFLAG      (T:= -0.5 IF X<0)
+   8  ADJUST      (T:=0.5;)
+
+XEQY
+   4  X           (MOD[X]=MOD[Y])
+   1  Y
+   7  ;+3         (X=-Y)
+   4  ZERO        (X=Y, SET 1ST OR 3RD QUADRANT)
+   8  ;+2         (X=-Y, SET 2ND OR 4TH QUADRANT)
+   4  MINONE
+   5  QUFLAG
+   4  HALF
+  14  8191
+   5  T           (T:=0.25;)
+   8  CHECKY
+
+K1
+  +0
+   0  2630
+TABLE
+ /15  8191
+  12  4584
+  +1
+  10  3349
+ /15  8179
+   8  4755
+ +101
+  11  7350
+ /15  7203
+  10  2999
+   2  897
+   9  7103
+
+C1
+   2  6104
+   6  3264
+C2
+   6  5139
+  12  6560
+MINONE
+  /0  0
+  +0
+EIGHTH
+   2  0
+  +0
+HALF
+   8  0
+   +0
+MPT75
+  /4  0
+  +0
+%
+<! Halt !>

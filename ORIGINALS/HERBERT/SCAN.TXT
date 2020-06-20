@@ -1,0 +1,928 @@
+﻿<! Scanning From "images" TO "scanned" !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903ALG16KLP(190480).1 " !>
+<! scanned\903ALG16KLP(190480) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903ALG16KLP(190480).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903FORTTAPE1(ISS4C).1 " !>
+<! scanned\903FORTTAPE1(ISS4C) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903FORTTAPE1(ISS4C).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903FORTTAPE2(ISS4A).1 " !>
+<! scanned\903FORTTAPE2(ISS4A) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903FORTTAPE2(ISS4A).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903SIRRLBREADER.1 " !>
+<! scanned\903SIRRLBREADER Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903SIRRLBREADER.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X2(ISS1).1 " !>
+<! scanned\903X2(ISS1) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X2(ISS1).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X2B.1 " !>
+<! scanned\903X2B Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X2B.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X3(ISS4).1 " !>
+<! scanned\903X3(ISS4) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X3(ISS4).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X4(ISS3).1 " !>
+<! scanned\903X4(ISS3) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X4(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X50(ISS5).1 " !>
+<! scanned\903X50(ISS5) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X50(ISS5).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X51(ISS1).1 " !>
+<! scanned\903X51(ISS1) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X51(ISS1).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X6(ISS3).1 " !>
+<! scanned\903X6(ISS3) Detected to be 900 telecode !>
+<! Parity Error (Code = 70) !>
+<! Parity Error (Code = 70) !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Parity Error (Code = 137) !>
+<! Unknown 900 character 019 !>
+<! Parity Error (Code = 97) !>
+<! Parity Error (Code = 52) !>
+<! Parity Error (Code = 8) !>
+<! Unknown 900 character 008 !>
+<! Parity Error (Code = 52) !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! scanned\903X6(ISS3) Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X6(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X8(ISS3).1 " !>
+<! scanned\903X8(ISS3) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\903X8(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\905FORT(ISS6).1 " !>
+<! scanned\905FORT(ISS6) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\905FORT(ISS6).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\905FORTLIB1(ISS4).1 " !>
+<! scanned\905FORTLIB1(ISS4) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\905FORTLIB1(ISS4).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\905FORTLIB2(ISS5).1 " !>
+<! scanned\905FORTLIB2(ISS5) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\905FORTLIB2(ISS5).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\905FORTRAN(ISS7).1 " !>
+<! scanned\905FORTRAN(ISS7) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\920AALG1.1 " !>
+<! scanned\920AALG1 Detected to be 900 telecode !>
+<! Unknown 900 character 015 !>
+<! Unknown 900 character 018 !>
+<! Unknown 900 character 005 !>
+<! Unknown 900 character 017 !>
+<! Unknown 900 character 018 !>
+<! Unknown 900 character 017 !>
+<! scanned\920AALG1 Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\920AALG3.1 " !>
+<! scanned\920AALG3 Detected to be 920 telecode !>
+<! Unknown 920 character 129 !>
+<! Unknown 920 character 129 !>
+<! Unknown 920 character 135 !>
+<! Unknown 920 character 017 !>
+<! Unknown 920 character 160 !>
+<! Unknown 920 character 160 !>
+<! scanned\920AALG3 Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\920ALG2.1 " !>
+<! scanned\920ALG2 Detected to be 900 telecode !>
+<! Unknown 900 character 015 !>
+<! Unknown 900 character 018 !>
+<! Unknown 900 character 005 !>
+<! Unknown 900 character 017 !>
+<! Unknown 900 character 018 !>
+<! Unknown 900 character 017 !>
+<! scanned\920ALG2 Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\920ASIR.1 " !>
+<! scanned\920ASIR Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\920X10.1 " !>
+<! scanned\920X10 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\920X10.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE1.1 " !>
+<! scanned\AERE_TAPE1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE1A.1 " !>
+<! scanned\AERE_TAPE1A Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE1B.1 " !>
+<! scanned\AERE_TAPE1B Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE1C.1 " !>
+<! scanned\AERE_TAPE1C Detected to be 900 telecode !>
+<! Parity Error (Code = 13) !>
+<! Parity Error (Code = 8) !>
+<! Unknown 900 character 008 !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE1D.1 " !>
+<! scanned\AERE_TAPE1D Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE1E.1 " !>
+<! scanned\AERE_TAPE1E Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE2.1 " !>
+<! scanned\AERE_TAPE2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE2A.1 " !>
+<! scanned\AERE_TAPE2A Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE2B.1 " !>
+<! scanned\AERE_TAPE2B Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE2C.1 " !>
+<! scanned\AERE_TAPE2C Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE2D.1 " !>
+<! scanned\AERE_TAPE2D Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE2E.1 " !>
+<! scanned\AERE_TAPE2E Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE2F.1 " !>
+<! scanned\AERE_TAPE2F Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE3.1 " !>
+<! scanned\AERE_TAPE3 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE4A.1 " !>
+<! scanned\AERE_TAPE4A Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE4B.1 " !>
+<! scanned\AERE_TAPE4B Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE4C.1 " !>
+<! scanned\AERE_TAPE4C Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE5A.1 " !>
+<! scanned\AERE_TAPE5A Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE5B.1 " !>
+<! scanned\AERE_TAPE5B Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE5C.1 " !>
+<! scanned\AERE_TAPE5C Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE5D.1 " !>
+<! scanned\AERE_TAPE5D Detected to be 900 telecode !>
+<! Parity Error (Code = 224) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE5E.1 " !>
+<! scanned\AERE_TAPE5E Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE5F.1 " !>
+<! scanned\AERE_TAPE5F Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6A.1 " !>
+<! scanned\AERE_TAPE6A Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6B.1 " !>
+<! scanned\AERE_TAPE6B Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6C.1 " !>
+<! scanned\AERE_TAPE6C Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6D.1 " !>
+<! scanned\AERE_TAPE6D Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6E.1 " !>
+<! scanned\AERE_TAPE6E Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6F.1 " !>
+<! scanned\AERE_TAPE6F Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6G.1 " !>
+<! scanned\AERE_TAPE6G Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6H.1 " !>
+<! scanned\AERE_TAPE6H Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6I.1 " !>
+<! Empty Tape !>
+<! Empty Tape !>
+<! scanned\AERE_TAPE6I Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6J.1 " !>
+<! scanned\AERE_TAPE6J Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6K.1 " !>
+<! scanned\AERE_TAPE6K Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE6L.1 " !>
+<! scanned\AERE_TAPE6L Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE7.1 " !>
+<! scanned\AERE_TAPE7 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AERE_TAPE8.1 " !>
+<! scanned\AERE_TAPE8 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1(ISS6)(SRC1).1 " !>
+<! scanned\ALG1(ISS6)(SRC1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1(ISS6)(SRC2).1 " !>
+<! scanned\ALG1(ISS6)(SRC2) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1(ISS6)(SRC3).1 " !>
+<! scanned\ALG1(ISS6)(SRC3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1(ISS6)(SRC4).1 " !>
+<! scanned\ALG1(ISS6)(SRC4) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1(ISS6).1 " !>
+<! scanned\ALG1(ISS6) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1(ISS6F).1 " !>
+<! scanned\ALG1(ISS6F) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG16KLG(ISS6).1 " !>
+<! scanned\ALG16KLG(ISS6) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG16KLP(ISS5).1 " !>
+<! scanned\ALG16KLP(ISS5) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1ISS6PAT.1 " !>
+<! scanned\ALG1ISS6PAT Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1ISS6PAT.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG1P301276.1 " !>
+<! scanned\ALG1P301276 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(COMPACT)(SRC1).1 " !>
+<! scanned\ALG2(ISS6)(COMPACT)(SRC1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(COMPACT)(SRC2).1 " !>
+<! scanned\ALG2(ISS6)(COMPACT)(SRC2) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(SRC1).1 " !>
+<! scanned\ALG2(ISS6)(SRC1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(SRC2).1 " !>
+<! scanned\ALG2(ISS6)(SRC2) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(SRC3).1 " !>
+<! scanned\ALG2(ISS6)(SRC3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(SRC4).1 " !>
+<! scanned\ALG2(ISS6)(SRC4) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(SRC5).1 " !>
+<! scanned\ALG2(ISS6)(SRC5) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6)(SRC6).1 " !>
+<! scanned\ALG2(ISS6)(SRC6) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6).1 " !>
+<! scanned\ALG2(ISS6) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2(ISS6F).1 " !>
+<! scanned\ALG2(ISS6F) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG25578.1 " !>
+<! scanned\ALG25578 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG25578.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2ISS6PAT.1 " !>
+<! scanned\ALG2ISS6PAT Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2ISS6PAT.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2P301276.1 " !>
+<! scanned\ALG2P301276 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2PATCHREWORK.1 " !>
+<! scanned\ALG2PATCHREWORK Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2PATCHREWORK.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG2UC.1 " !>
+<! scanned\ALG2UC Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG3(ISS6).1 " !>
+<! scanned\ALG3(ISS6) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG3(ISS6).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG3(ISS6)X.1 " !>
+<! scanned\ALG3(ISS6)X Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG3(ISS6)X.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG3(ISS6A).1 " !>
+<! scanned\ALG3(ISS6A) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALG32KLP(ISS6).1 " !>
+<! scanned\ALG32KLP(ISS6) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALGE.1 " !>
+<! scanned\ALGE Detected to be 900 telecode !>
+<! Parity Error (Code = 41) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALGE.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALGISS5PAT.1 " !>
+<! scanned\ALGISS5PAT Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALGISS5PAT.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALGPLOT.1 " !>
+<! scanned\ALGPLOT Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALGPLOT.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ALMAT(ISS2).1 " !>
+<! scanned\ALMAT(ISS2) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\AND.1 " !>
+<! scanned\AND Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BASIC16K.1 " !>
+<! scanned\BASIC16K Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BASIC8K.1 " !>
+<! scanned\BASIC8K Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BASICTICTACTOE.1 " !>
+<! scanned\BASICTICTACTOE Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BASICTICTACTOE.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BATTLE(6).1 " !>
+<! scanned\BATTLE(6) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BCR5Y.1 " !>
+<! scanned\BCR5Y Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BINCOP.1 " !>
+<! scanned\BINCOP Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\BOWDLER.1 " !>
+<! scanned\BOWDLER Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\C34.1 " !>
+<! scanned\C34 Detected to be 920 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\C34.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CANDG.1 " !>
+<! scanned\CANDG Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CANDG.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CANDG.3 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CANDG.4 " !>
+<! Ignored: "C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CANDG.4" File Name Extension Not Recognized !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CARDIN(ISS1).1 " !>
+<! scanned\CARDIN(ISS1) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CHEAPLN.1 " !>
+<! scanned\CHEAPLN Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CHEAPLN.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CLEANSIRIII.1 " !>
+<! scanned\CLEANSIRIII Detected to be 920 telecode !>
+<! Unknown 920 character 111 !>
+<! Unknown 920 character 111 !>
+<! Unknown 920 character 111 !>
+<! Unknown 920 character 111 !>
+<! Unknown 920 character 005 !>
+<! Unknown 920 character 017 !>
+<! scanned\CLEANSIRIII Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CNTDWN.1 " !>
+<! scanned\CNTDWN Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\COPY.1 " !>
+<! scanned\COPY Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CPJ_NOLABEL1.1 " !>
+<! scanned\CPJ_NOLABEL1 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CPJ_PERT83ANS.1 " !>
+<! scanned\CPJ_PERT83ANS Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CPJ_PERT83ANS.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CPJ_RANDOM.1 " !>
+<! scanned\CPJ_RANDOM Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CPJ_RANDOMNUMBERS.1 " !>
+<! scanned\CPJ_RANDOMNUMBERS Detected to be 900 telecode !>
+<! Parity Error (Code = 62) !>
+<! Parity Error (Code = 31) !>
+<! Unknown 900 character 031 !>
+<! Unknown 900 character 030 !>
+<! Parity Error (Code = 14) !>
+<! Unknown 900 character 014 !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\CPJ_RANDOMNUMBERS.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\DATAN2SIR.1 " !>
+<! scanned\DATAN2SIR Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\DATAN2SIR.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\DOALL4.1 " !>
+<! scanned\DOALL4 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\E1A.1 " !>
+<! scanned\E1A Detected to be 920 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\E1A.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EASTERD.1 " !>
+<! scanned\EASTERD Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDIT(SRC)(ISS2).1 " !>
+<! scanned\EDIT(SRC)(ISS2) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSACSIMULATOR.1 " !>
+<! scanned\EDSACSIMULATOR Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSACSIMULATOR.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_AIRY1.1 " !>
+<! scanned\EDSAC_AIRY1 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_AIRY1.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_AIRY2.1 " !>
+<! scanned\EDSAC_AIRY2 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_C10.1 " !>
+<! scanned\EDSAC_C10 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_C7.1 " !>
+<! scanned\EDSAC_C7 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_C7EX.1 " !>
+<! scanned\EDSAC_C7EX Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_CHAPMAN.1 " !>
+<! scanned\EDSAC_CHAPMAN Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_CPG51.1 " !>
+<! scanned\EDSAC_CPG51 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_D11.1 " !>
+<! scanned\EDSAC_D11 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_D6.1 " !>
+<! scanned\EDSAC_D6 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_D7.1 " !>
+<! scanned\EDSAC_D7 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_DODDGLENNIE.1 " !>
+<! scanned\EDSAC_DODDGLENNIE Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_E3NEW.1 " !>
+<! scanned\EDSAC_E3NEW Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_F9.1 " !>
+<! scanned\EDSAC_F9 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_G1REL1.1 " !>
+<! scanned\EDSAC_G1REL1 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_G1REL2.1 " !>
+<! scanned\EDSAC_G1REL2 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_HORN.1 " !>
+<! scanned\EDSAC_HORN Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_HORN.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_M1.1 " !>
+<! scanned\EDSAC_M1 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_MULYIPLIER.1 " !>
+<! scanned\EDSAC_MULYIPLIER Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_P11.1 " !>
+<! scanned\EDSAC_P11 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_P14.1 " !>
+<! scanned\EDSAC_P14 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_P31.1 " !>
+<! scanned\EDSAC_P31 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_P7.1 " !>
+<! scanned\EDSAC_P7 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG51A.1 " !>
+<! scanned\EDSAC_PG51A Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG51B.1 " !>
+<! scanned\EDSAC_PG51B Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG51C.1 " !>
+<! scanned\EDSAC_PG51C Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG51D.1 " !>
+<! scanned\EDSAC_PG51D Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG61A.1 " !>
+<! scanned\EDSAC_PG61A Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG61B.1 " !>
+<! scanned\EDSAC_PG61B Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG61C.1 " !>
+<! scanned\EDSAC_PG61C Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_PG61_Q2_OUT.1 " !>
+<! scanned\EDSAC_PG61_Q2_OUT Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_Q2.1 " !>
+<! scanned\EDSAC_Q2 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_Q3.1 " !>
+<! scanned\EDSAC_Q3 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_Q5_3.1 " !>
+<! scanned\EDSAC_Q5_3 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_R1.1 " !>
+<! scanned\EDSAC_R1 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_R3.1 " !>
+<! scanned\EDSAC_R3 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_R5.1 " !>
+<! scanned\EDSAC_R5 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_R9.1 " !>
+<! scanned\EDSAC_R9 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_S2.1 " !>
+<! scanned\EDSAC_S2 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_SINETEST1.1 " !>
+<! scanned\EDSAC_SINETEST1 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_SINETEST2.1 " !>
+<! scanned\EDSAC_SINETEST2 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_T7.1 " !>
+<! scanned\EDSAC_T7 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\EDSAC_WILKES.1 " !>
+<! scanned\EDSAC_WILKES Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ENTERTAINER.1 " !>
+<! scanned\ENTERTAINER Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ESP2(ISS2).1 " !>
+<! scanned\ESP2(ISS2) Detected to be 900 telecode !>
+<! Unknown 900 character 025 !>
+<! Unknown 900 character 025 !>
+<! Unknown 900 character 025 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 025 !>
+<! Unknown 900 character 006 !>
+<! scanned\ESP2(ISS2) Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FLOOR.1 " !>
+<! scanned\FLOOR Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FORMAT.1 " !>
+<! scanned\FORMAT Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FORMAT.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FORPATCH.1 " !>
+<! scanned\FORPATCH Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FORPATCH.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FORPATCH2.1 " !>
+<! scanned\FORPATCH2 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FORPATCH2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FRACT_ARITH.1 " !>
+<! scanned\FRACT_ARITH Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FRACT_ARITH.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FRACT_MULTI.1 " !>
+<! scanned\FRACT_MULTI Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\FRACT_MULTI.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\GAMES2.1 " !>
+<! scanned\GAMES2 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\GAUSSRANSEED.1 " !>
+<! scanned\GAUSSRANSEED Detected to be 900 telecode !>
+<! Parity Error (Code = 176) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\GAUSSRANSEED.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\GCDLOOP.1 " !>
+<! scanned\GCDLOOP Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\HISTORE.1 " !>
+<! scanned\HISTORE Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\HISTORE.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\INTTEST.1 " !>
+<! scanned\INTTEST Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\INTTEST.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\INT_MULTI.1 " !>
+<! scanned\INT_MULTI Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\INT_MULTI.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\IOPACK.1 " !>
+<! scanned\IOPACK Detected to be 900 telecode !>
+<! Parity Error (Code = 11) !>
+<! Unknown 900 character 011 !>
+<! Parity Error (Code = 1) !>
+<! Unknown 900 character 001 !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ISQRT.1 " !>
+<! scanned\ISQRT Detected to be 900 telecode !>
+<! Parity Error (Code = 38) !>
+<! Parity Error (Code = 38) !>
+<! Parity Error (Code = 121) !>
+<! Unknown 900 character 015 !>
+<! Parity Error (Code = 19) !>
+<! Unknown 900 character 019 !>
+<! Parity Error (Code = 38) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ISQRT.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ISS5_BINARY.1 " !>
+<! scanned\ISS5_BINARY Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ISS5_BINARY.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ISS6BIN.1 " !>
+<! scanned\ISS6BIN Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\ISS6BIN.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\LOADER(8K).1 " !>
+<! scanned\LOADER(8K) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\LOADER.1 " !>
+<! scanned\LOADER Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\LOADER.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\LOADER16k(ISS3).1 " !>
+<! scanned\LOADER16k(ISS3) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\LOADER16k(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MAESTRO.1 " !>
+<! scanned\MAESTRO Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MAESTRO.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MANDYMUS.1 " !>
+<! scanned\MANDYMUS Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MAPLOD(256)(ISS2).1 " !>
+<! scanned\MAPLOD(256)(ISS2) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MAPLOD(4096)(920B).1 " !>
+<! scanned\MAPLOD(4096)(920B) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MAPLOD(4096)(ISS2).1 " !>
+<! scanned\MAPLOD(4096)(ISS2) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MAPLOD(4096)(ISS2).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MASIR(ISS1).1 " !>
+<! scanned\MASIR(ISS1) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MASIR(ISS3).1 " !>
+<! scanned\MASIR(ISS3) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD0PATCH.1 " !>
+<! scanned\MOD0PATCH Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD0PATCH.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD0PATCHSRC.1 " !>
+<! scanned\MOD0PATCHSRC Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD0PATCHSRC.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD1PATCH.1 " !>
+<! scanned\MOD1PATCH Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD1PATCH.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD1PATCHSRC.1 " !>
+<! scanned\MOD1PATCHSRC Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD1PATCHSRC.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD1STORETEST.1 " !>
+<! scanned\MOD1STORETEST Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MOD1STORETEST.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MODESET160287.1 " !>
+<! scanned\MODESET160287 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MODESET160287.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MODULESRC.1 " !>
+<! scanned\MODULESRC Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MODULESRC.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MONITOR(ISS1).1 " !>
+<! scanned\MONITOR(ISS1) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MSDUMP(ISS3).1 " !>
+<! scanned\MSDUMP(ISS3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MTALGOL(ISS3).1 " !>
+<! scanned\MTALGOL(ISS3) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MTALGOL(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MULTIPREC_RLB.1 " !>
+<! scanned\MULTIPREC_RLB Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MULTIPREC_RLB.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MULTI_ALGOL.1 " !>
+<! scanned\MULTI_ALGOL Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MULTI_ALGOL.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MULTMOD2.1 " !>
+<! scanned\MULTMOD2 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MULTMOD2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSIC.1 " !>
+<! scanned\MUSIC Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSIC.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICAB.1 " !>
+<! scanned\MUSICAB Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICBASIC.1 " !>
+<! scanned\MUSICBASIC Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICBASIC.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICCAROLS.1 " !>
+<! scanned\MUSICCAROLS Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICCAROLS.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICDG.1 " !>
+<! scanned\MUSICDG Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICSRC.1 " !>
+<! scanned\MUSICSRC Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICTRANS.1 " !>
+<! scanned\MUSICTRANS Detected to be 900 telecode !>
+<! Parity Error (Code = 127) !>
+<! Parity Error (Code = 127) !>
+<! Parity Error (Code = 4) !>
+<! Unknown 900 character 004 !>
+<! Unknown 900 character 024 !>
+<! Parity Error (Code = 4) !>
+<! Unknown 900 character 004 !>
+<! Parity Error (Code = 127) !>
+<! Parity Error (Code = 64) !>
+<! Parity Error (Code = 64) !>
+<! Parity Error (Code = 64) !>
+<! Parity Error (Code = 38) !>
+<! Parity Error (Code = 73) !>
+<! Parity Error (Code = 73) !>
+<! Parity Error (Code = 73) !>
+<! Parity Error (Code = 50) !>
+<! Parity Error (Code = 127) !>
+<! Parity Error (Code = 62) !>
+<! Parity Error (Code = 1) !>
+<! Unknown 900 character 001 !>
+<! Parity Error (Code = 1) !>
+<! Unknown 900 character 001 !>
+<! Parity Error (Code = 127) !>
+<! Parity Error (Code = 1) !>
+<! Unknown 900 character 001 !>
+<! scanned\MUSICTRANS Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICTRANS.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICXX.1 " !>
+<! scanned\MUSICXX Detected to be 900 telecode !>
+<! Parity Error (Code = 128) !>
+<! Parity Error (Code = 50) !>
+<! Unknown 900 character 004 !>
+<! Parity Error (Code = 176) !>
+<! Parity Error (Code = 128) !>
+<! Parity Error (Code = 32) !>
+<! Parity Error (Code = 181) !>
+<! Parity Error (Code = 128) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\MUSICXX.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\NEWSTDF5.1 " !>
+<! scanned\NEWSTDF5 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\NEWSTDF5.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PACKALGLGISS6.1 " !>
+<! scanned\PACKALGLGISS6 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PACKALGLGISS6.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHALGISS6SWITCH.1 " !>
+<! scanned\PATCHALGISS6SWITCH Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHALGISS6SWITCH.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHALGISS6TAPE1.1 " !>
+<! scanned\PATCHALGISS6TAPE1 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHALGISS6TAPE1.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHALGISS6TAPE2.1 " !>
+<! scanned\PATCHALGISS6TAPE2 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHALGISS6TAPE2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHES(30DEC76).1 " !>
+<! scanned\PATCHES(30DEC76) Detected to be 900 telecode !>
+<! Parity Error (Code = 32) !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHES(30DEC76).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHES(30DEC76).3 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHES(30DEC76).4 " !>
+<! Ignored: "C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PATCHES(30DEC76).4" File Name Extension Not Recognized !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PERT1(ISS2)(SCB).1 " !>
+<! scanned\PERT1(ISS2)(SCB) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PERT1(ISS2)(SCB).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PERT1(ISS2)(SOURCE).1 " !>
+<! scanned\PERT1(ISS2)(SOURCE) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PERT1(ISS2)(SOURCE).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PI.1 " !>
+<! scanned\PI Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PI.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PRTLIB.1 " !>
+<! scanned\PRTLIB Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PTTEST.1 " !>
+<! scanned\PTTEST Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\PTTEST.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QAE2.1 " !>
+<! scanned\QAE2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QAE2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QATAN(ISS1).1 " !>
+<! scanned\QATAN(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QCHECK(ISS2).1 " !>
+<! scanned\QCHECK(ISS2) Detected to be 900 telecode !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 011 !>
+<! scanned\QCHECK(ISS2) Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QCHECK(ISS2).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QCHECK(ISS3).1 " !>
+<! scanned\QCHECK(ISS3) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QDAATAN(ISS1).1 " !>
+<! scanned\QDAATAN(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QDASIN(ISS1).1 " !>
+<! scanned\QDASIN(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QDASQRT(ISS1).1 " !>
+<! scanned\QDASQRT(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QDATAN(ISS1).1 " !>
+<! scanned\QDATAN(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QDLA(ISS3).1 " !>
+<! scanned\QDLA(ISS3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QDLB(ISS2).1 " !>
+<! scanned\QDLB(ISS2) Detected to be 900 telecode !>
+<! Parity Error (Code = 224) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QEXP(ISS1).1 " !>
+<! scanned\QEXP(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QF(ISS2).1 " !>
+<! scanned\QF(ISS2) Detected to be 900 telecode !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 011 !>
+<! scanned\QF(ISS2) Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QFINOUT(ISS2).1 " !>
+<! scanned\QFINOUT(ISS2) Detected to be 900 telecode !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 011 !>
+<! scanned\QFINOUT(ISS2) Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QFMATH(ISS2).1 " !>
+<! scanned\QFMATH(ISS2) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QIN1(ISS3).1 " !>
+<! scanned\QIN1(ISS3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QIN1BTTY.1 " !>
+<! scanned\QIN1BTTY Detected to be 920 telecode !>
+<! Parity Error (Code = 128) !>
+<! Final Character Not Halt Code !>
+<! scanned\QIN1BTTY Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QIN1QOUT1.1 " !>
+<! scanned\QIN1QOUT1 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QLN(ISS2).1 " !>
+<! scanned\QLN(ISS2) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QLPOUT(ISS1).1 " !>
+<! scanned\QLPOUT(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QOUT1(ISS3).1 " !>
+<! scanned\QOUT1(ISS3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QOUT1(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QOUT1(ISS4).1 " !>
+<! scanned\QOUT1(ISS4) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QSIN(ISS1).1 " !>
+<! scanned\QSIN(ISS1) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QSQRT(ISS1).1 " !>
+<! scanned\QSQRT(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QX51.1 " !>
+<! scanned\QX51 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\QX51.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\RAISELOWERPEN.1 " !>
+<! scanned\RAISELOWERPEN Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\RLBLIBEXTN.1 " !>
+<! scanned\RLBLIBEXTN Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\RLBREADER.1 " !>
+<! scanned\RLBREADER Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\RLIBEXTN.1 " !>
+<! scanned\RLIBEXTN Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\RLIBEXTN.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\RSHIFT.1 " !>
+<! scanned\RSHIFT Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SHEBA.1 " !>
+<! scanned\SHEBA Detected to be 900 telecode !>
+<! Parity Error (Code = 161) !>
+<! Parity Error (Code = 185) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SHELLSORT(ISS3).1 " !>
+<! scanned\SHELLSORT(ISS3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SHELLSORT(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SINE.1 " !>
+<! scanned\SINE Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SINE.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SIR(ISS5)(512).1 " !>
+<! scanned\SIR(ISS5)(512) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SIR(ISS5)(5500).1 " !>
+<! scanned\SIR(ISS5)(5500) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SIR2PASS.1 " !>
+<! scanned\SIR2PASS Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SIRALG16F.1 " !>
+<! scanned\SIRALG16F Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SIRALG16F.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SIRLIB.1 " !>
+<! scanned\SIRLIB Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SSYS(SOD3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SSYS1(ISS1).1 " !>
+<! scanned\SSYS1(ISS1) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SSYS1(ISS1).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\STARTREKSRC.1 " !>
+<! scanned\STARTREKSRC Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\STORETEST.1 " !>
+<! scanned\STORETEST Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\STORETEST.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\STORETEST_SIR.1 " !>
+<! scanned\STORETEST_SIR Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\STORETEST_SIR.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\SYSS(SOD3).1 " !>
+<! scanned\SYSS(SOD3) Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\TAPE1PATCH151083.1 " !>
+<! scanned\TAPE1PATCH151083 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\TAPE1PATCH151083.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T1.1 " !>
+<! scanned\THIMBLEBY_T1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T10.1 " !>
+<! scanned\THIMBLEBY_T10 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T11.1 " !>
+<! scanned\THIMBLEBY_T11 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T12.1 " !>
+<! scanned\THIMBLEBY_T12 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T2.1 " !>
+<! scanned\THIMBLEBY_T2 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T3,1 " !>
+<! Ignored: "C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T3,1" File Name Extension Not Recognized !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T4.1 " !>
+<! scanned\THIMBLEBY_T4 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T5.1 " !>
+<! scanned\THIMBLEBY_T5 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T6.1 " !>
+<! scanned\THIMBLEBY_T6 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T7.1 " !>
+<! scanned\THIMBLEBY_T7 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T8.1 " !>
+<! scanned\THIMBLEBY_T8 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\THIMBLEBY_T9.1 " !>
+<! scanned\THIMBLEBY_T9 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\TICTACTOE.1 " !>
+<! scanned\TICTACTOE Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\TICTACTOE.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\TREES.1 " !>
+<! scanned\TREES Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\UANTHOLOGY.1 " !>
+<! scanned\UANTHOLOGY Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\UANTHOLOGY.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\UANTHOLOGYSRCE.1 " !>
+<! scanned\UANTHOLOGYSRCE Detected to be 900 telecode !>
+<! Parity Error (Code = 254) !>
+<! Parity Error (Code = 254) !>
+<! Unknown 900 character 017 !>
+<! Parity Error (Code = 128) !>
+<! Parity Error (Code = 128) !>
+<! Parity Error (Code = 128) !>
+<! Parity Error (Code = 128) !>
+<! Parity Error (Code = 128) !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\UANTHOLOGYSRCE.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X12(ISS3).1 " !>
+<! scanned\X12(ISS3) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X12(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X202181266.1 " !>
+<! scanned\X202181266 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X202181266.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X202PARAMS.1 " !>
+<! scanned\X202PARAMS Detected to be 920 telecode !>
+<! Unknown 920 character 177 !>
+<! Unknown 920 character 177 !>
+<! Final Character Not Halt Code !>
+<! scanned\X202PARAMS Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X202PARAMS.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X33.1 " !>
+<! scanned\X33 Detected to be 900 telecode !>
+<! Unknown 900 character 015 !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X33.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X5(ISS3).1 " !>
+<! scanned\X5(ISS3) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X5(ISS3).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X6(ISS2).1 " !>
+<! scanned\X6(ISS2) Detected to be 900 telecode !>
+<! Parity Error (Code = 70) !>
+<! Parity Error (Code = 70) !>
+<! Parity Error (Code = 137) !>
+<! Parity Error (Code = 137) !>
+<! Parity Error (Code = 137) !>
+<! Parity Error (Code = 137) !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 001 !>
+<! Parity Error (Code = 137) !>
+<! Parity Error (Code = 137) !>
+<! Parity Error (Code = 137) !>
+<! Parity Error (Code = 118) !>
+<! Unknown 900 character 001 !>
+<! Unknown 900 character 024 !>
+<! Unknown 900 character 001 !>
+<! scanned\X6(ISS2) Forced to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X7(ISS5).1 " !>
+<! scanned\X7(ISS5) Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\X7(ISS5).2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\HERBERT\images\XFIND(ISS1).1 " !>
+<! scanned\XFIND(ISS1) Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! 
+389 Files Scanned 0 Files Ignored !>
+<! 33 Parity Errors 95 Other problems !>
+FINISHED

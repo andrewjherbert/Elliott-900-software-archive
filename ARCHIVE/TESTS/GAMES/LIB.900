@@ -1,0 +1,57 @@
+﻿
+((IRANDOM - calculate random positive integer - 27/03/2014)
+
+(Recovered from Algol Tape 3 Issue 6A by Andrew Herbert)
+
+IRANDO
+	/14	0	(Algol entry)	
+	0	0	
+	4	FLG	(Test if initialized)
+	7	INIT
+NEXTR	4	M1	(Initialized, compute next random number)
+	12	M2
+	14	14	
+	1	M3
+	5	M4	(M4 := M1 * M2 * 2^14 + M3)
+	12	M3
+	14	13	
+	2	M3
+	5	M1	(M1 := M3 - [M4 * M3 * 2^13])
+	4	M4	(M3 := M4)
+	5	M3
+	4	M1
+	6	+131071	(mask to 17 bits)
+	8	EXIT
+INIT	10	FLG	(set flag)
+	4	+141	(print newline)
+	15	6148	
+	4	+10
+	15	6148	
+	4	5+58	(print colon)
+	15	6148	
+	15	2052	(read 3 chars)	
+	6	+63
+	14	6	
+	1	M1
+	5	M1	(mix into M1)
+( 30;)	15	2052	
+	6	+63
+	1	M1
+	14	6	
+	5	M1	(mix into M1)
+	15	2052	
+	6	+63
+	1	M1
+	5	M1	(mix into M1)
+	8	NEXTR
+( 40;)
+EXIT	0	138	(FP)
+	/5	0	
+	0	IRANDO+1
+	/8	1	
+M1	-25429		(-.194008)
+M2	+103909		(+.792763)
+M3	-80845		(-.616798)
+M4	>1
+FLG	+0		(set to >0 after initialization)
+<! halt !>

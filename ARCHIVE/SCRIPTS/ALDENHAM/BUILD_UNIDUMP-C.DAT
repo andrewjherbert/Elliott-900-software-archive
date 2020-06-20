@@ -1,0 +1,82 @@
+﻿C Build U.8 - UNIDUMP-C 
+
+on 903 8K
+
+nonprinting off
+
+c load SIR
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+c assemble source
+select out tty
+at ptr file ../../MASTERS/ALDENHAM/UNIDUMP-C.900
+j 8
+st 6927
+
+c load T22/23 and dump out program
+select out auto
+at ptp file TEMP.BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+c discard header
+de ptp
+at ptp file TEMP.BIN
+at ptr inline
++4096
++4320
+<! halt !>
+<!!>
+j 8179
+st 8113
+de ptp
+
+c convert to AldRLB format
+at ptr file ALDRLB.BIN
+j 8181
+st 8171
+at tty inline
+225
+4096 4320
+0 0
+<!!>
+at ptr file TEMP.BIN
+at ptp file UNIDUMP-C.BIN
+j 33
+st 275
+
+c reload SIR
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+c build custom T23
+select out tty
+at ptr file ../../MASTERS/ALDENHAM/T23_TRIG7.900
+j 8
+st 6927
+
+c add to tape
+select out auto
+j 32
+st 96
+de ptp
+
+c check against binary
+clear 
+at ptr file ../../MASTERS/ALDENHAM/UNIDUMP-C.BIN
+break on 14
+nonstop on
+j 8181
+du 8192 UNIDUMP-C.IMG
+clear
+at ptr file UNIDUMP-C.BIN
+j 8181
+vi UNIDUMP-C.IMG
+
+delete TEMP.BIN
+delete UNIDUMP-C.IMG
+
+sh t

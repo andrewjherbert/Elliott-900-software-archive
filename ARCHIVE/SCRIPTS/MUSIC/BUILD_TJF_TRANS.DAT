@@ -1,0 +1,61 @@
+﻿c Build TJF_TRANSLATE
+
+on 903 8K
+
+c edit full program tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c steering tape
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+
+*19
+^%,
+
+CHE
+WAI
+CHE
+INS
+
+%
+
+^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+delete errors.txt
+st 490
+delete error.txt
+at ptp file temp.txt
+at ptr file ../../MASTERS/MUSIC/TJF_MUSIC/TJF_TRANS.900
+j 9
+st 822
+at ptr file ../../MASTERS/ACDSIR/CHIO.900
+j 10
+de ptp
+st 1274
+
+c assemble
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+c first pass
+select out tty
+at ptr file temp.txt
+j 12
+st 562
+c second pass
+rewind
+select out auto
+at ptp file TJF_TRANS.BIN
+j 10
+de ptp
+st 587
+delete temp.txt
+sh t
+

@@ -1,0 +1,72 @@
+﻿
+-- Sample Integer I/O, 29/12/82
+
+procedure MAIN is
+
+  CHGET, CHPUT: INTEGER := 0;
+  INTGET, INTPUT: INTEGER := 0;
+
+  procedure GETCH is
+  begin
+    LOW_IN_CH; CHGET := LOW_CHAR;
+  end; --GETCH
+
+  procedure PUTCH is
+  begin
+    LOW_CHAR := CHPUT; LOW_OUT_CH;
+  end; --PUTCH
+
+  procedure GETINT is
+    LOCAL: INTEGER := 0;
+  begin
+    loop
+      if CHGET = 45 then
+        INTGET := -1; GETCH; exit;
+      elsif CHGET < 48 then GETCH;
+      elsif CHGET >= 58 then GETCH;
+      else
+        INTGET := 1; exit;
+      end if;
+    end loop;
+    loop
+      exit when CHGET < 48;
+      exit when CHGET >= 58;
+      LOCAL := (LOCAL*10)+(CHGET-48); GETCH;
+    end loop;
+    INTGET := INTGET*LOCAL;
+  end; --GETINT
+
+  procedure PUTINT is
+    LOCAL: INTEGER;
+  begin
+    LOCAL := INTPUT;
+    if LOCAL < 0 then
+      CHPUT := 45; PUTCH; LOCAL := -LOCAL;
+    end if;
+    if LOCAL >= 10 then
+      INTPUT := LOCAL/10; PUTINT;
+    end if;
+    CHPUT := (LOCAL mod 10)+48; PUTCH;
+    INTPUT := LOCAL;
+  end; --PUTINT
+
+begin --MAIN
+  loop
+    GETCH; exit when CHGET = 10;
+  end loop;
+  loop
+    GETINT; INTPUT := INTGET; PUTINT;
+    CHPUT := 10; PUTCH;
+  end loop;
+end; --MAIN
+
+1 2 4 8 16 32 64 128 256 512 1024 2048 4096
+8192 16384 32768 65536 131072
+1 10 100 1000 10000 100000
+0 9 99 999 9999 99999 999999
+131071 65535 32767 16383
+-131071 -65535 -32767 -16383
+-131072 -65536 -32768 -16384
+-0 -1 -2 -10 -100 RUBBISH 0
+
+<! Halt !>

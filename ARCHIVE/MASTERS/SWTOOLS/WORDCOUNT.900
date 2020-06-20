@@ -1,0 +1,30 @@
+﻿
+wordcount;
+"begin"
+    "code" "procedure" chio; "algol";
+    "code" "procedure" ch900; "algol";
+    "code" "integer" "procedure" getc (ch); "integer" ch; "algol";
+    "code" "procedure" putc (ch); "value" ch; "integer" ch; "algol";
+    "integer" BLANK, EOF, NEWLINE, TAB;
+
+    "integer" i, c, wc;
+    "boolean" inword;
+
+    "comment" initialize special characters;
+    BLANK := 32; EOF := 20; NEWLINE := 10; TAB := 9;
+
+    "comment" initialize chio;
+    chio; ch900;
+
+    wc := 0; inword := "false";
+   "for" i := 0 "while" (getc(c) "ne" EOF) "do" 
+	"if" c = BLANK "or" c = NEWLINE "or" c = TAB "then" 
+	    inword := "false"
+	"else" "if" "not" inword "then" "begin"
+	    inword := "true"; wc := wc+1;
+	"end";
+
+    "print" wc
+
+"end" wordcount
+<! halt !>

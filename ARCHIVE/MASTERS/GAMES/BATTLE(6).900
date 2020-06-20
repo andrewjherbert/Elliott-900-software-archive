@@ -1,0 +1,313 @@
+﻿<! Legible Header OOOO   OOO  OOOOO OOOOO O     OOOOO        OOO   !>
+<! Legible Header O   O O   O   O     O   O     O           O   O  !>
+<! Legible Header O   O O   O   O     O   O     O           O      !>
+<! Legible Header OOOO  OOOOO   O     O   O     OOOO        OOOO   !>
+<! Legible Header O   O O   O   O     O   O     O           O   O  !>
+<! Legible Header O   O O   O   O     O   O   O O           O   O  !>
+<! Legible Header OOOO  O   O   O     O   OOOOO OOOOO        OOO   !>
+<! Legible Header                                                  !>
+
+"PROCEDURE"BOAT(N);
+"INTEGER""ARRAY"(N);
+"SWITCH"SS:=ERROR;
+"BEGIN"
+ "IF"N[X,Y]=1"THEN""BEGIN""PRINT"'YOU HAVE PUT A GUNBOAT ON LAND.
+  WAKEY-WAKEY,TRY AGAIN@;
+  INCREASE:=0;
+  "GOTO"ERROR;
+ "END";
+ "IF"N[X+1,Y+1]=3"OR"N[X+1,Y]=3"OR"N[X+1,Y-1]=3"OR"N[X,Y+1]=3
+ "OR"N[X,Y-1]=3"OR"N[X=1,Y+1]=3"OR"N[X-1,Y-1]=3"OR"N[X-2,Y+1]=3
+ "OR"N[X-2,Y]=3"OR"N[X-2,Y-1]=3"THEN""BEGIN"
+  "PRINT"'YOU HAVE PUT THAT GUNBOAT ON TOP OF ANOTHER UNIT.
+  TRY AGAIN@;
+  INCREASE:=0;
+  "GOTO"ERROR;
+ "END";
+BOAT:=BOAT+1;
+ "IF"B0AT>[MAX NO ALLOWED]"THEN""BEGIN"
+  "PRINT"'YOU CAN NOT HAVE ANY MORE GUNBOATS, TRY ANOTHER UNIT@;
+  INCREASE:=1;
+  "GOTO"ERROR;
+ "END";
+ N[X,Y]:=4;
+ N[X-1,Y]:=4;
+ N[X+1,Y+1]:=3;
+ N[X+1,Y]:=3;
+ N[X+1,Y-1]:=3;
+ N[X,Y+1]:=3;
+ N[X,Y-1]:=3;
+ N[X-1,Y+1]:=3;
+ N[X-1,Y-1]:=3;
+ N[X-2,Y+1]:=3;
+ N[X-2,Y]:=3;
+ N[X-2,Y-1]:=3;
+ ERROR:
+"END";
+
+
+
+
+"COMMENT"---------------------------------------------------------;
+
+
+
+"PROCEDURE" DESTROY(N);
+"INTEGER""ARRAY"(N);
+"SWITCH"SS:=ERROR;
+"BEGIN"
+ "IF"N=PLAY"AND"N[X,Y]=1"THEN""BEGIN""PRINT"''L@@,'YOU HAVE PUT A DESTROYER ON LAND.
+  WAKEY-WAKEY, TRY AGAIN@;
+  INCREASE:=0;
+  "GOTO"ERROR;
+ "END";
+ "IF"N=PLAY"AND"N[X+1,Y+1]=3"OR"N[X+1,Y-1]=3"OR"N[X,Y-1]=3
+ "OR"N[X,Y-1]=3"OR"N[X-1,Y+1]=3"OR"N[X-1,Y-1]=3"OR"N[X-2,Y+1]=3
+ "OR"N[X-2,Y]=3"OR"N[X-2,Y-1]=3"OR"N[X+2,Y+1]=3"OR"N[X+2,Y-1]=3
+ "OR"N[X+3,Y+1]=3"OR"N[X+3,Y]=3"OR"N[X+3,Y-1]=3"THEN""BEGIN"
+  "PRINT"''L@@,'YOU HAVE PUT THAT DESTROYER ON TOP OF ANOTHER UNIT.
+  TRY AGAIN@;
+  INCREASE:=0;
+  "GOTO"ERROR;
+ "END";
+ DESTROY:=DESTROY+1;
+ "IF"DESTROY>[MAX NO ALLOWED]"THEN""BEGIN"
+  "PRINT"'YOU CAN NOT HAVE ANY MORE DESTROYERS, TRY ANOTHER UNIT@;
+  INCREASE:=1;
+  "GOTO"ERROR;
+ "END";
+ N[X,Y]:=4;
+ N[X-1,Y]:=4;
+ N[X+1,Y]:=4;
+ N[X+2,Y]:=4;
+ N[X+1,Y+1]:=3;
+ N[X+1,Y-1]:=3;
+ N[X,Y+1]:=3;
+ N[X,Y-1]:=3;
+ N[X-1,Y+1]:=3;
+ N[X-1,Y-1]:=3;
+ N[X-2,Y+1]:=3;
+ N[X-2,Y]:=3;
+ N[X-2,Y-1]:=3;
+ N[X+2,Y+1]:=3;
+ N[X+2,Y-1]:=3;
+ N[X+3,Y+1]:=3;
+ N[X+3,Y-1]:=3
+ N[X+4,Y+1]:=3;
+ N[X+4,Y]:=3;
+ N[X+4,Y-1]:=3;
+ ERROR;
+"END";
+
+
+
+"COMMENT"------------------------------------------------------------;
+
+
+
+
+
+"PROCEDURE"CRUISE(N);
+"INTEGER""ARRAY"(N);
+"SWITCH"SS:=ERROR;
+"BEGIN"
+ "IF"N[X,Y]=1"THEN""BEGIN"PRINT"'YOU HAVE PUT A CRUISER ON LAND.
+  WAKEY-WAKEY, TRY AGAIN@;
+  INCREASE:=0;
+  "GOTO"ERROR;
+ "END";
+ "IF"N[X+2,Y]=3"OR"N[X+2,Y-1]=3"OR"N[X+2,Y+1]=3"OR"N[X+1,Y+1]=3
+ "OR"N[X+1,Y+1]=3"OR"N[X,Y+1]=3"OR"N[X,Y-1]=3"OR"N[X-1,Y+1]=3
+ "OR"N[X-1,Y-1]=3"OR"N[X-2,Y+1]=3"OR"N[X-2,Y]=3"OR"N[X-2,Y-1]=3
+ "THEN""BEGIN"
+  "PRINT"'YOU HAVE PUT THAT CRUISER ON TOP OF ANOTHER UNIT.
+  TRY AGAIN@;
+  INCREASE:=0;
+  "GOTO"ERROR;
+ "END";
+ CRUISE:=CRUISE+1;
+ "IF"CRUISE>[MAX NO ALLOWED]"THEN""BEGIN"
+  "PRINT"'YOU CAN NOT HAVE ANY MORE CRUISERS, TRY ANOTHER UNIT@;
+  INCREASE:=1;
+  "GOTO"ERROR;
+ "END";
+ N[X,Y]:=4;
+ N[X-1,Y]:=4;
+ N[X+1,Y]:=4;
+ N[X+1,Y+1]:=3;
+ N[X+2,Y]:=3;
+ N[X+2,Y+1]:=3;
+ N[X+2,Y-1]:=3;
+ N[X+1,Y-1]:=3;
+ N[X,Y+1]:=3;
+ N[X,Y-1]:=3;
+ N[X-1,Y-1]:=3;
+ N[X-1,Y+1]:=3;
+ N[X-2,Y+1]:=3;
+ N[X-2,Y]:=3;
+ N[X-2,Y-1]:=3;
+ ERROR:
+"END";
+
+
+
+
+"COMMENT"---------------------------------------------------------;
+
+
+
+
+
+"PROCEDURE"DESTROY(N);
+"INTEGER""ARRAY"(N);
+"SWITCH"SS:=ERROR;
+ "BEGIN"
+ "IF"N[X,Y]=1"THEN""BEGIN""PRINT"'YOU HAVE PUT A DESTROYER ON LAND.
+  WAKEY-WAKEY, TRY AGAIN@;
+  INCREASE:=0;
+  "GOTO"ERROR;
+ "END";
+ "IF"N[X+2,Y-1]=3"OR"N[X+2,Y+1]=3"OR"N[X+3,Y+1]=3"OR"N[X+3,Y]=3
+"OR"N[X+3,Y-1]=3"OR"N[X+1,Y-1]=3"OR"N[X+1,Y+1]=3
+ "OR"N[X,Y+1]=3"OR"N[X,Y-1]=3"OR"N[X-1,Y+1]=3"OR"N[X-1,Y-1]=3
+ "OR"N[X-2,Y+1]=3"OR"N[X-2,Y]=3"OR"N[X-2,Y-1]=3"THEN""BEGIN"
+  "PRINT"'YOU HAVE PUT THAT DESTROYER ON TOP OF ANOTHER UNIT.
+  TRY AGAIN@;
+  INCREASE:=0
+  "GOTO"ERROR;
+ "END"
+ DESTROY:=DESTROY+1;
+ "IF"DESTROY>[MAX NO ALLOWED]"THEN""BEGIN"
+  "PRINT"'YOU CAN NOT HAVE ANY MORE DESTROYERS, TRY ANOTHER UNIT@;
+  INCREASE:=1;
+ "GOTO"ERROR;
+ "END";
+ N[X,Y]:=4;
+ N[X+1,Y]:=4;
+ N[X+2,Y]:=4;
+ N[X-1,Y]:=4;
+ N[X+2,Y+1]:=3;
+ N[X+2,Y-1]:=3;
+ N[X+3,+1]:=3;
+ N[X+3,Y]:=3;
+ N[X+3,Y-1]:=3;
+ N[X+1,Y-1]:=3;
+ N[X+1,Y+1]:=3;
+ N[X,Y+1]:=3;
+ N[X,Y-1]:=3;
+ N[X-1,Y+1]:=3;
+N[X-1,Y-1]:=3;
+ N[X-2,Y+1]:=3;
+ N[X-2,Y]:=3;
+ N[X-2,Y-1]:=3;
+ ERROR:
+"END";
+
+
+
+
+"COMMENT"------------------------------------------------------------;
+
+
+
+
+"PROCEDURE"SHOOT;
+"BEGIN"
+ "PRINT"'TYPE IN THE COORDINATES OF THE POSITION YOU WANT TO
+ SHOOT AT@;
+ AGAIN:
+ "READ"A,B;
+ "IF"COMP[A,B]=5"THEN""BEGIN"
+  "PRINT"'YOU HAVE HIT THAT SQUARE BEFORE. TRY AGAIN@;
+  "GOTO"AGAIN;
+ "EN";
+ "IF"COMP[A,B]=1"OR"COMP[A,B]=2"THEN""BEGIN""PRINT"'MISSED@;
+  "ELSE"
+   COMP[A,B]:=5;
+  "PRINT"'A HIT AT@,SAMELINE,A',@,B;
+ "END";
+ "PRINT"'DO YOU WANT A BOARD?@;
+ "READ"BOARD;
+   1 "IF"BOARD=1"THEN"PRINT;
+ "IF"BOARD=1"THEN"PRINT;
+"END";
+
+
+
+"COMMENT"------------------------------------------------------------;
+
+
+
+
+"PROCEDURE"RANDOM;
+"BEGIN"
+ X:=ENTIER((IRANDOM/131071)*[SIZE OF BOARD+1]);
+ Y:=ENTIER((IRANDOM/131071)*[SIZE OF BOARD+1]);
+"END";
+
+
+
+"COMMENT"----------------------------------------------------------;
+
+
+
+
+"PROCEDURE"FIRE;
+"BEGIN"
+ "IF"PLAY[ACROSS,UP]=1"OR"PLAY[ACROSS,UP]=2"THEN""BEGIN"
+  DESTROY:=0;
+  "GOTO"PLOD;
+ "END";
+ "IF"PLAY[ACROSS,UP]=4"THEN""BEGIN"
+  DESTROY:=1;
+  "GOTO"PLOD;
+ "END";
+ "PRINT"'THERE IS A MISTAKE HERE@;
+ PLOD:
+"END";
+
+
+
+"COMMENT%----------------------------------------------------------;
+
+
+
+"PROCEDURE"PRINT(N);
+"INTEGER""ARRAY"(N);
+"BEGIN"
+ "FOR"X:=1"STEP"1"UNTIL"SIZE OF BOARD"DO""BEGIN
+  "FOR"Y:=[SIZE OF BOARD]"STEP"-1"UNTIL"1"DO""BEGIN"
+   "IF"N[X,Y]=1"THEN""BEGIN"
+    "PRINT"''SX@@,''L@@;
+   "END";
+   "IF"N[X,Y]=2"THEN""PRINT"SAMELINE,'S@;
+   "IF"N[X,Y]=4"THEN""PRINT"SAMELINE,'*@;
+   "IF"N[X,Y]=5"THEN""PRINT"SAMELINE,'H;
+  "END"
+"PRINT"''L4@@;
+"END";
+
+
+
+"COMM"END";
+
+"COMMENT"NOW BOTH ARRAYS SHOULD BE FULL, OF RUBBISH IF NOTHING ELSE
+         THE FOLLOWING PART OF THE PROGRAM IS ONLY THERE AS A TEST
+         PROGRAM ACTUATOR;
+
+
+
+COMMENT"---------------------------------------------------------;
+
+
+
+
+NEXT:
+SHOOT;
+RANDOM;
+"IF"PLAY[X,Y]=1"OR"PLAY[X,Y]=2"THEN""GOTO"NEXT;
+"IF"PLAY[X,Y]=4"THEN"PLAY[X,Y]=5;
+"IF"PLAY[X,Y]=5"THEN""GOTO"NEXT;
+"PRINT"'SOMETHING HAS GONE WRONG?@;
+"END";
+<! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !>

@@ -1,0 +1,42 @@
+﻿
+on 903 16K
+c load bgpm
+at ptr file ../../SCRIPTS/GPM/BGPM.BIN
+j 8181
+st 8175
+
+select out tty
+
+at ptr file ../../MASTERS/GPM/BGPMDATA.900
+
+c Examples from Computer Journal paper.
+j 8
+st 15
+c Run trace on erroneous version of Strachey's Sum macro.
+j 10
+st 15
+j 8
+st 15
+j 11
+st 15
+c Martin Richards Examples.
+c Hanoi.
+reset
+j 8
+st 15
+sh t
+c Permutations.
+reset
+j 8
+st 15
+sh t
+c Primes.
+reset
+j 8
+st 15
+sh t
+c Collatz sequences.
+reset
+j 8
+st 15
+sh t

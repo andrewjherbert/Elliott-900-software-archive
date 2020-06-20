@@ -1,0 +1,68 @@
+﻿
+
+(output from DUMPASSIR 09/05/2015 14:15)
+
+*8192
+*16 (clear 8K, start at 8)
+	+0
+L9	+0
+ 	8 7655
+	8 7656
+	8 7657
+
+^32
+L32
+
+^232
+L232	
+
+^342
+
+L432	+0	(Input counter)
+L433	+0	(Playout counter)
+L434	11 QIN1	(Loop to read in pairs of digits)
+	8 QIN1+1
+	9 L445
+	0 ;-5
+	/5 L32
+	11 QIN1
+	8 QIN1+1
+	0 L432
+	/5 L232
+	10 L432
+	8 L434
+
+L445	0 L433	(Playout loop)
+	/4 L32
+	5 L870
+	/4 L232
+	5 L869
+	11 NOTE
+	8 NOTE+3
+	10 L43
+	4 L432
+	2 L433
+	9 L445
+	8 ;+0
+
+^867
+
+L867	+0	(Workspace)
+
+NOTE		(Player)
+L868	+0
+L869	+0	(Duration)
+L870	+0	(Pitch)
+L871	4 ;-2
+	2 +0
+	5 L867
+	0 ;-4
+	/14 0
+	10 L867
+	4 L867
+	9 ;-3
+	0 NOTE
+	/8 1
+	+0
+%
+<! Halt !>

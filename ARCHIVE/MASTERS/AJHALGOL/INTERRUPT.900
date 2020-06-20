@@ -1,0 +1,64 @@
+﻿
+*1
+
+((INTERRUPT - ANDREW HERBERT - 26/03/2015)
+
+("code" "procedure" interrupt; "algol";
+
+Adds an interrupt facility to AJH ALGOL.
+
+It sets up an interrupt routine such that when a level 1 
+interrupt occurs while an Algol program is running, the program
+is forced to execute a WAIT as its next pord.  On continuation 
+from the WAIT execution continues from the point of interruption)
+ 
+[ INTERRUPT ]
+
+STKEND=72
+STKMOD=71
+NXPDAD=225
+PP=135
+
+INTERR	    /14	  0		(No parameters)
+	    +0	  		(Link)
+	    4	  LEVEL1	(Set up interrupt handler)
+	    5	  0		(Level 1 SCR)
+	    0	  INTERR+1	(Return to Algol)
+	    /8	  1
+
+A	    >1			(Saved accumulator)
+
+LEVEL1	    0	  ;+1		(Address of interrupt routine)	    
+	    5	  A		(Save A)
+	    4 	  PATCH		(Intercept at NXPORD)
+	    0	  NXPDAD
+	    /5	  0
+	    4	  A		(Restore A)
+	    15	  7168		(Terminate back to program)
+	    8	  LEVEL1+1	(Next interrupt in)
+
+PATCH	    8	  ;+1
+	    0	  NXPDAD	(Rest NXPORD)
+	    /4	  2
+	    /5	  0
+	    4	  STKEND	(Test for LP)
+	    6	  +8191
+	    2	  +8191
+	    7	  LP
+	    4	  PP		(Construct jump)
+	    8	  JOIN
+LP	    4	  STKMOD	(Construct jump)
+	    2	  PP		(PP-STKMOD)	
+JOIN	    1	  =8 0		(UJ PP-STKMOD)
+	    5	  WAIT+1
+	    4	  WAIT-1	(Set PP to WAIT)
+	    5	  PP
+	    /8	  0		(Go to NXPORD)	    
+	     
+(-1)	    0	  ;+1
+WAIT	    /15	  24 		(WAIT pord)
+(+1)	    >1	  		(Becomes UJ)
+
+%
+
+<! halt !>

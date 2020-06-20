@@ -1,0 +1,27 @@
+﻿C Demonstrate 903 PERT
+
+on 903
+
+C load PERT binary
+at ptr file ../../MASTERS/PERT/PERT(ISS2P).BIN
+j 8181
+st 8175
+
+c steering tape
+select out tty
+at ptr file ../../MASTERS/HERBERT/PERTDEMO_DATA.900
+
+c read commands
+j 32
+st 3084
+
+c project tape
+j 9
+st 902
+sh t
+
+
+
+
+
+

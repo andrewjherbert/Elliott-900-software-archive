@@ -1,0 +1,18 @@
+﻿C Build Algol character i/o code procedures
+
+on 903
+
+c load 903 SIR
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+c assemble to rlb
+at ptr file ../../MASTERS/SWTOOLS/CHIOAL.900
+at ptp file CHIOAL.RLB
+j 8
+st 6239
+
+de ptp
+
+sh t

@@ -1,0 +1,29 @@
+﻿c curves plotting
+
+on 903 16K
+
+nonprinting off
+
+c read in large program interpreter
+at ptr file ../../MASTERS/MASDALGOL/ALG16KLP(MASD).BIN
+j 8181
+st 8175
+
+c load patched library
+nonstop on
+
+at ptr file ../../MASTERS/HERBERT/ALG3(ISS6PLTMOD).RLB
+j 13
+st 15850
+
+c load program
+at ptr file ../../MASTERS/HERBERT/CURVES.RLB
+at ptp file CURVES.BIN
+at tty inline
+RD<!!>
+fast
+scale 3
+j 8
+nonstop off
+de ptp
+sh t

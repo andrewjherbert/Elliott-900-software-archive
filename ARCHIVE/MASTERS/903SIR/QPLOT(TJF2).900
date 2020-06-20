@@ -1,0 +1,506 @@
+﻿
+((QPLOT, 4/11/12)
+
+(This Elliott SIR subroutine was written by Terry Froggatt,
+ after refurbishing a brace of Benson-Lehner plotters in 2012.
+ It is a direct replacement for "903 QPLOT ISSUE 1", although
+ substantially smaller, and with several minor corrections.
+ The error messages have been replaced by default actions)
+
+[QPLOT]
+
+PLOTAD=4864               (Standard Plotter Address)
+
+(Entry points QPLOT+1 & QPLOT+2, and parameters X2,Y2,X1,Y1,
+ are accessed as offsets of QPLOT, as part of the published
+ user interface, and SENSE has been added in this version)
+
+PENPOS    +0              (+0=Unknow, +16=Raised, +32=Lowered)
+SENSE     +1              (+0=Benson-Lehner, +1=QPLOT)
+QPLOT                     (Loaded into B-reg before main loop)
+STEPS     >1              (Only required in main loop)
+          8     LINE      (Draw Line from X1,Y1 to X2,Y2)
+          8     CHAR      (Draw Character given 6-bit code)
+
+X2        +0              (QPLOT+3)
+Y2        +0              (QPLOT+4)
+X1        +0              (QPLOT+5)
+Y1        +0              (QPLOT+6)
+X0                        (This must directly follow Y1, and is
+                           used briefly before AXIS is required)
+
+AXIS      >1              (Axis step has just one bit)
+DIAG      >1              (Diagonal step has two bits)
+LARGE     >1              (Larger of NS & EW Deltas)
+SMALL     >1              (Smaller of NS & EW Deltas)
+DELTA     >1              (Used for both Abs Delta NS and
+                           Step Direction Discriminator)
+
+LINE      0     QPLOT
+          /4    1
+          7     VERTOK
+          6     +1
+          7     LOWER
+          4     +16
+          8     RAISE
+LOWER     4     PENPOS
+          2     +32
+          7     VERTOK
+          4     +32
+RAISE     5     PENPOS
+          15    PLOTAD    (Output to Plotter)
+
+VERTOK    0     SENSE     (+0=Benson-Lehner, +1=QPLOT)
+          /4    X1        (4 X1 or 4 Y1)
+          /2    X2        (2 X2 or 4 Y2)
+          9     ;+4       (Test North or South)
+          5     DELTA     (Abs Delta NS)
+          4     +5        (Bits for North East step)
+          8     ;+4       (North)
+          2     +0        (South)
+          5     DELTA     (Abs Delta NS)
+          4     +9        (Bits for South East step)
+          5     DIAG      (Provisionally Set Diagonal)
+
+          4     X2
+          5     X0
+          /4    Y2        (4 Y2 or 4 X1)
+          /2    Y1        (2 Y1 or 2 X0=X2)
+          9     ;+2       (Test East or West)
+          8     ;+3       (East)
+          2     +0        (West)
+          10    DIAG      (Change NE to NW or SE to SW)
+          5     LARGE     (Provisionally Abs Delta EW)
+          5     SMALL     (Provisionally Abs Delta EW)
+
+          2     DELTA     (Abs Delta NS - Abs Delta EW)
+          9     ;+5
+          4     DELTA     (Abs Delta NS)
+          5     LARGE     (Abs Delta NS >= Abs Delta EW)
+          4     +12       (Bits for North or South step)
+          8     ;+4
+          4     DELTA     (Abs Delta NS)
+          5     SMALL     (Abs Delta NS < Abs Delta EW)
+          4     +3        (Bits for East or West step)
+          6     DIAG      (Diagonal step has two bits)
+          5     AXIS      (Axis step has just one bit)
+
+          4     X2
+          5     X1
+          4     Y2
+          5     Y1
+
+          0     LARGE     (Interrupt cannot follow this so Q is safe)
+          3     DELTA     (Set Mid-Point Discriminator to LARGE/2.
+                           It would be more correct to set to LARGE,
+                           then to subtract 2*SMALL & add 2*LARGE
+                           within the loop, but this might differ
+                           slightly from the previous version)
+
+          4     LARGE
+          0     QPLOT     (Frees up QPLOT for use as STEPS)
+NXSTEP    /7    2         (Test at start of loop in case QPLOT has)
+          5     STEPS     (been called just to raise or lower pen)
+
+          4     SMALL
+          2     DELTA     (Subtract SMALL, LARGE times)
+          9     ;+4
+          5     DELTA
+          4     AXIS      (Take one step along axis)
+          8     ;+4
+          1     LARGE     (Add LARGE, SMALL times)
+          5     DELTA
+          4     DIAG      (Take one step along diagonal)
+          15    PLOTAD    (Output to Plotter)
+
+          4     STEPS
+          1     -1
+          8     NXSTEP
+
+(The Character Drawing Routine starts here.
+ If it is not required, all that follows can
+ be replaced by a single line "CHAR 8 ;+0")
+
+LINK      >1
+X1SAVE    >1
+Y1SAVE    >1
+ANEXT     >1
+ALAST     >1
+SHIFT     >1
+
+(-1)      4     +62       (Replace unimplemented character by Caret)
+CHAR      6     +63       (Guard against garbage in upper bits)
+          5     ANEXT
+          0     ANEXT
+          /4    ADRES
+          5     ANEXT
+          /4    ADRES+1
+          5     ALAST
+          2     ANEXT
+          7     CHAR-1
+
+          0     QPLOT     (The manual states "the parameter word is)
+          /4    1         (an even integer" but this is not checked)
+          7     SIZEOK    (=0 same as before or preset default)
+          9     ;+5       (<0 for Centered, >0 for Linear)
+          5     PARAM
+          14    8191      (Linear SCALER will be Abs size * 0.2)
+          5     CENTRE
+          8     ;+4
+          2     +0        (Centered SCALER will be Abs size * 0.4)
+          3     PARAM     (Interrupt before this will not alter Q)
+          3     CENTRE    (Interrupt before this will not alter Q)
+          12    +52429    (52428.8 = 0.4 * 2^17)
+          5     SCALER
+
+SIZEOK    4     QPLOT
+          5     LINK
+          4     X1
+          5     X1SAVE
+          4     Y1
+          5     Y1SAVE
+
+          4     +1        (Move to Start with pen up)
+          5     PARAM1
+NXLINE    4     -9        (Use upper half-word first)
+(+1)      5     SHIFT
+
+          0     ANEXT
+          /4    0
+          0     SHIFT
+          /14   9         (14 0 then 14 9)
+          5     Y2
+          14    8178      (Get X from upper 4 bits of half-word)
+          11    SCALSR    (X supposedly in range -7 to +7)
+          8     SCALSR+1
+          1     X1SAVE
+          5     X2
+
+          4     Y2
+          14    4
+          14    8179      (Get Y from lower 5 bits of half-word)
+          2     -16
+          7     FLAG      (Y = -16 used as flag value)
+          2     -16
+          11    SCALSR    (Y supposedly in range -9 to +9)
+          8     SCALSR+1
+          1     Y1SAVE
+          5     Y2
+
+          11    QPLOT
+          8     QPLOT+1
+PARAM1    >1
+          4     +1        (Generally draw next with pen down)
+FLAG      1     +1        (If flagged draw next with pen up)
+          5     PARAM1
+
+          4     SHIFT
+          2     -9
+          7     NXLINE+1  (Use lower half-word last)
+          10    ANEXT
+          4     ALAST
+          2     ANEXT
+          9     NXLINE
+
+          4     Y1SAVE
+          5     Y2
+          4     X1SAVE
+          1     PARAM
+          5     X2
+          11    QPLOT
+          8     QPLOT+1
+          +1              (Move to Finish with pen up)
+
+          0     LINK
+          /8    2
+
+PARAM     +20
+CENTRE    +10
+SCALER    +4              (PARAM/5)
+
+SCALSR    >1              (Link also used as workspace)
+          0     SCALSR
+          12    SCALER    (Same SCALER for both axes)
+          14    15
+          5     SCALSR
+          14    1
+          6     +1
+          1     SCALSR    (Operand*SCALER/4, rounded)
+          1     CENTRE    (Same CENTRE for both axes)
+          /8    1
+
+(This table gives the polygon vertices for drawing each character.
+ They are packed two per word, using the most significant first,
+ with X in the upper 4 bits and Y in the lower 5 bits of each half.
+ The pen is raised to move to the first vertex, and lowered to draw
+ lines to the other vertices, except that half-word &020 raises the
+ pen between the vertices it separates, then it is finally raised.
+ An &020 is also used to pad the final half-word where necessary)
+
+SPACE     &020020
+EXCLAM
+DITTO                     (Tilde or Ditto)
+HASH                      (Sterling sign or 1/2)
+DOLLAR
+PERCEN
+AMPERS
+ACUTE     &643151         (Acute accent or Apostrophe)
+ORB       &167070
+          &734676
+          &642704
+          &050151         (Open round bracket)
+CRB       &667770
+          &134176
+          &142104
+          &750651         (Close round bracket)
+ASTERI    &675143
+          &000643
+          &175000
+          &600200
+          &000004
+          &034020
+PLUS      &031007
+          &000440
+          &340020
+COMMA
+MINUS     &440340
+POINT     &030071
+          &070031
+          &030020
+SLASH     &567251
+CHAR0     &474667
+          &167374
+          &344151
+          &651444
+          &474020
+CHAR1     &605011
+          &027627
+          &227020
+CHAR2     &446651
+          &151346
+          &341467
+          &367020
+CHAR3     &451351
+          &003375
+          &372167
+          &667472
+CHAR4     &167151
+          &476376
+CHAR5     &472667
+          &167372
+          &376141
+          &441451
+          &251020
+CHAR6     &751475
+          &471667
+          &167371
+          &375140
+          &640475
+CHAR7     &451351
+          &467020
+CHAR8     &167371
+          &375140
+          &640443
+          &446651
+          &151346
+          &343140
+          &640475
+          &471667
+          &167020
+CHAR9     &343140
+          &640443
+          &447651
+          &151347
+          &343227
+COLON
+SEMICO
+LESSTH    &371440
+          &347020
+EQUALS    &473373
+          &020445
+          &345020
+MORETH    &471340
+          &447020
+DROP10    &567540
+          &020040
+          &200277
+          &270227
+          &067030
+          &037040         (Suffix 10 or Question mark)
+GRAVE     &651143         (Grave accent or AT symbol)
+CHARA     &527011
+          &235635
+          &235327
+CHARB     &467451
+          &151347
+          &343140
+          &440140
+          &375371
+          &167467
+CHARC     &371167
+          &667472
+          &446651
+          &151347
+CHARD     &467451
+          &151346
+          &372167
+          &467020
+CHARE     &367467
+          &440200
+          &440451
+          &351020
+CHARF     &467442
+          &202442
+          &451351
+CHARG     &346151
+          &651446
+          &472667
+          &167371
+          &375235
+          &375367
+CHARH     &467451
+          &440340
+          &351367
+CHARI     &627227
+          &027011
+          &611211
+CHARJ     &472627
+          &027172
+          &151751
+          &351020
+CHARK     &527511
+          &500311
+          &500327
+CHARL     &511527
+          &327020
+CHARM     &467451
+          &000351
+          &367020
+CHARN     &467451
+          &367351
+CHARO     &472667
+          &167372
+          &346151
+          &651446
+          &472020
+CHARP     &440140
+          &343345
+          &151451
+          &467020
+CHARQ     &270167
+          &667471
+          &447651
+          &151347
+          &371270
+          &072367
+CHARR     &467451
+          &151345
+          &343140
+          &440140
+          &367020
+CHARS     &471667
+          &167371
+          &375140
+          &640443
+          &447651
+          &151347
+CHART     &027011
+          &451351
+CHARU     &451471
+          &667167
+          &371351
+CHARV     &451027
+          &351020
+CHARW     &451527
+          &000327
+          &351020
+CHARX     &467351
+          &000451
+          &367020
+CHARY     &027000
+          &451000
+          &351020
+CHARZ     &451351
+          &467367
+OSB       &167667
+          &651151         (Open square bracket)
+BSLASH    &551267         (Sterling sign or Reverse /)
+CSB       &667167
+          &151651         (Close square bracket)
+CARET     &534006
+          &334020         (Up-arrow or Caret)
+BACK                      (Back-arrow or Underline)
+END
+
+(This table contains 65 addresses, giving the starts & ends of
+ the 64 characters within the vertex table. For unimplemented
+ characters, the start & end lables label the same location.
+ It follows the vertices table to minimise forward references)
+
+ADRES     0     SPACE
+          0     EXCLAM
+          0     DITTO
+          0     HASH
+          0     DOLLAR
+          0     PERCEN
+          0     AMPERS
+          0     ACUTE
+          0     ORB
+          0     CRB
+          0     ASTERI
+          0     PLUS
+          0     COMMA
+          0     MINUS
+          0     POINT
+          0     SLASH
+          0     CHAR0
+          0     CHAR1
+          0     CHAR2
+          0     CHAR3
+          0     CHAR4
+          0     CHAR5
+          0     CHAR6
+          0     CHAR7
+          0     CHAR8
+          0     CHAR9
+          0     COLON
+          0     SEMICO
+          0     LESSTH
+          0     EQUALS
+          0     MORETH
+          0     DROP10
+          0     GRAVE
+          0     CHARA
+          0     CHARB
+          0     CHARC
+          0     CHARD
+          0     CHARE
+          0     CHARF
+          0     CHARG
+          0     CHARH
+          0     CHARI
+          0     CHARJ
+          0     CHARK
+          0     CHARL
+          0     CHARM
+          0     CHARN
+          0     CHARO
+          0     CHARP
+          0     CHARQ
+          0     CHARR
+          0     CHARS
+          0     CHART
+          0     CHARU
+          0     CHARV
+          0     CHARW
+          0     CHARX
+          0     CHARY
+          0     CHARZ
+          0     OSB
+          0     BSLASH
+          0     CSB
+          0     CARET
+          0     BACK
+          0     END
+
+<! halt !>

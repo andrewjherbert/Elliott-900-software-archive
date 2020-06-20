@@ -1,0 +1,63 @@
+﻿on 903 16K
+
+c *** TEST WITH LP
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+C Set optimize, no call by name
+j 18
+C Translate
+
+at ptr file TEST_UNSIGNED.900
+c translate
+at ptp file TEST.RLB
+j 14
+de ptp
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+at ptr file ../../SCRIPTS/AJHALGOL/UNSIGNED_LP.RLB
+j 12
+
+at ptr file TEST.RLB
+at tty inline
+R<!!>
+nonstop on
+nonprinting off
+select out tty
+j 8
+
+sh t
+
+on 903 8K
+
+c *** TEST WITH 8K
+
+at ptr file ../../SCRIPTS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+
+C Translate
+
+at ptr file TEST_UNSIGNED.900
+c translate
+at ptp file TEST.RLB
+j 14
+de ptp
+
+at ptr file ../../SCRIPTS/903ALGOL/ALG2(ISS6).BIN
+j 8181
+
+at ptr file TEST.RLB
+j 8
+
+at ptr file ../../SCRIPTS/AJHALGOL/UNSIGNED.RLB
+j 11
+
+select out tty
+j 10
+
+delete TEST.RLB
+
+sh t

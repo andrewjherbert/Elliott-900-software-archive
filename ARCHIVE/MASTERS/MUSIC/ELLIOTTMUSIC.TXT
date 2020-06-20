@@ -1,0 +1,556 @@
+﻿ELLIOTT 903 MUSIC PROGRAMS
+ ==========================
+
+The following music tapes have been found in various collections:
+
+1.  Terry Froggatt's MUSIC PROGRAM 22/2/72 and CAROLS 22/12/71
+    distributed as a single tape containing a binary of the program
+    which autotriggers loading and single tape.  Input music is
+    written in a textual notation, read in and played out
+    directly. There is a source tape for the program in the file
+    TJF_MUSIC.900.
+
+2.  Two "reverse compilations" of a another music program ("MUSIC")
+    have been found called MUSICAB.900 and MUSICDG.900.  Music can
+    be read in either as a textual score for translation to
+    numerical form or as sequence of pairs of numbers suitable for
+    playing.
+
+3.  MAESTRO, a program issued by Queen Elizabeth School mentioned in
+    documentation, but no tapes have been found for the program,
+    but one music tape ha been found.
+
+4.  An ALGOL program - MUSICSRC - "Music Writing Program" which reads
+    in a textual notation and emits a numerical translation.
+
+4.  A tape of music in the numerical format expected by MUSIC,
+    comprising Handel's "Arrival of the Queen of Sheba",
+    Mendelssohn's "Wedding March" from a Midsummers Night Dream and
+    Rimsky-Korsakov's "Flight of the Bumble Bee". The data is in
+    numerical format.
+
+5.  A tape labelled "SHEBA (Half Speed") containing a numerical form
+    of "The Arrival of The Queen of Sheba" that plays at half speed
+    with (2).  It appears to be the same as the version in 4) but
+    with the note durations doubled.
+
+6.  A tape labelled "THE ENTERTAINER" that plays a badly out of tune
+    version of Joplin's "The Entertainer" with (2).  It is in
+    numerical form.
+
+7.  A tape of binary input to MAESTRO labelled as containing "When All
+     The Saints" and "Cockles and Mussels".
+
+8.  A tape labelled "TUNES (VARIOUS), FOR OLD 8K ONLY" from Terry
+    Froggatt's "Pontefract" paper tape collection, consisting of a
+    player and a set of tunes - "Men of Harlech", "God Save The
+    Queen", "Old Lang Syne", "Ash Grove", "Land of my Fathers",
+    "Land Lubbers Lying Down Below".
+
+9.  A tape labelled "RLB MUSIC, FOR ON-LINE COMPOSING VIA T/t" from
+    Terry Froggatt's "Pontefract" paper tape collection, along with
+    corresponding Algol and SIR sources, and sample tunes: "The
+    Sting", "We Shall Overcome", "What Have They Done to the
+    Rain?", "Fascinating Rhythm", "White Christmas", "Hark the
+    Herald Angels Sing", "Away in a Manger" and "Once in Royal
+    David's City".
+
+
+The various music generating programs and the files of music show
+considerable inconsistency in how notes are played.
+
+I have written my own music program (see "AJH_MUSIC PROGRAM") which is
+intended to be able to play as many of the acquired tunes as possible
+as tunefully as possible.  The program uses an extended version of the
+input notation for the Froggat (TJF) music program as this is the most
+compact.  A suite of programs have been written to convert tunes for
+the other players to a version which plays on the Herbert music
+program.  To the greatest extent possible the converted tunes play as
+the same tempo and pitch as in their native player.  To allow each
+individual 903 to be "tuned" a small utility program called AJH_TUNEUP
+has been written.  Using a stop watch the machine's precise
+instruction timing for the player loop can be calculated and from this
+a table of in tune "pitch" parameters determined for the specific
+machine.  A table in the Herbert music program can be updated with
+these parameters to produce a version tuned to the specific machine.
+Moreover, if a frequency meter or tuning fork etc is available, the
+machine can have the pitch of each note adjusted to be in tune.
+(However, the speed of the 903 has been found to vary by as much as
+10% between a cold and hot machine so setting for an accurate pitch is
+at best approximate.
+ 
+
+TJF MUSIC PROGRAM 
+-----------------
+
+This program can either drive a digital to analogue convertor or
+output via the control panel loud speaker (the default).
+
+Entry at 8 reads in a "score" in an input notation described below.
+Entry at 9 selects loudspeaker output.  Entry at 10, selects DAC
+output.
+
+The input notation consists of pairs of "notes" and "durations"
+terminated by a halt code.
+
+A note consists of a letter A-N or a-n, possibly followed by one or
+more modifiers, $, + or -.  A duration consists of a symbols 0-@ in
+ACD telecode representing valves from 0 to 16. Letters A-G represent
+successive notes of an octave in a nominal scale and H-N represent the
+next octave above. The letters a-n represent a note a semitone sharper
+that the note represented by the capital letter.
+
+The modifier $ sharpens a note by a semitone, + raises it by an
+octave, - lowers it by an octave.
+
+The notes are not tied to a specific pitch; rather the relationships
+between them are computed mathematically.
+
+Other input symbols below 0 in the ACD telecode (e.g., space, newline,
+/) are treated as separators.
+
+Letters M-Z, n-z and symbols above z in ACD telecode translate to
+bogus notes and should be avoided.
+
+The player for this music program is a simple loop:
+
+    14 S 10 N 4 N 9 ;-3
+
+S is an interval derived from the nominal pitch of the note: 2^18 /
+(pitch*10) and N is a negative number counting the number of cycles to
+execute, -(pitch*duration/8).
+
+The sounds produced are close to being in tune, but not perfect.  This
+has been tracked down to four factors:
+
+1.  My 903 has different instruction timings than those published in
+    the documentation (but within the allowed tolerance).
+    shift = 2.8usec vs. nominal 3usec loop takes 93usec vers
+    nominal 96usec.
+
+2.  The table of pitches has some minor differences from published
+    sources.
+
+3.  An in-exact approximation to 2^12 is used when computing
+    semitones.
+
+4.  Rounding errors in the calculation of the value of S.
+
+
+For comparison with the other music programs, the effective shift
+count for each note is:
+
+       Note Shift 
+       C     168 
+       C$    157 
+       D     146 
+       D$    138 
+       E     128 
+       F     118 
+       F$    110 
+       G     102
+       G$     94 
+       A      87
+       A$     80 
+       B      74  
+       C^     68 
+       C$^    62 
+       D^     57 
+       D$^    53 
+       E^     48 
+       F^     43 
+       F^$    39 
+       G^     35 
+       G$^    32 
+       A^     28 
+       A$^    24 
+       B^     21
+       C^     18 
+       C$^    16 
+       D^^    13 
+       D$^^   10
+       E^^     8 
+       F^^     6 
+       F$^^    3 
+       G^^     1
+
+(Note: the calculated shifts are as above +32, which are then added to
+13 8160 to constructed the execute shift instruction.)
+
+
+903 MUSIC 
+=========
+
+No source version of this program has been found. Two reverse
+compilation tapes have been found, MUSICAB.900 and MUSICDG.900 and
+from these a source has been reconstructed, 903_MUSIC.900.  MUSICAB
+and MUSICDG differ in how they compute the duration of notes, MUSICDG
+plays at half the speed of MUSICAB, otherwise they appear to be the
+same.  A binary version was found in the Froggatt Pontefract
+collection (tape "TUNES (VARIOUS)").  This is very similar to MUSICAB
+and MUSICDG, the main difference being the TUNES version skips over
+any initial text heading an input tape in
+
+This is a program I remember encountering as a student, with the
+Arrival of the Queen of Sheba, Wedding March and Flight of the Bumble
+Bee tunes.  However these tapes when played out using MUSICAJH are
+more out of tune.that I remember.
+
+903_MUSIC is entered at 32 to read in and translate a tune written in
+a textual notation.  This outputs a tape of pairs of integers
+terminated by a negarive number.  Such tapes are then played by
+entering at 33 whereupon the tape is read in and played out. On
+completion another tape can be read in.
+
+The integer pairs describe consecutive notes, each comprising a shift
+count (i.e., pitch) and a loop count (i.e., duration).
+
+The player loop is the same as that in TJF_MUSIC.
+
+The pitch is written as a letter A-G possibly followed by one of more
+^ symbols to raise the pitch by an octave, ' to sharpen the pitch by a
+semitone or @ to flatten it.
+
+The duration is an integer.  The input sequence is terminated by a
+letter S.  Letter R can be used to output a short rest of about 1
+msec.
+
+The output consists of pairs of integers, representing S and abs(N)
+for a similar loop to that in TJF_MUSIC.  Rests are encoded as a shift
+of 900.
+
+Internally the program has the following pitch table:
+
+       Note Shift 
+       A     110 
+       A'    100
+       B      90
+       C      80
+       C'     73
+       D      66
+       D'     58
+       E      51
+       F      45
+       F'     40 
+       G      36
+       G'     31
+       A^     27
+       A'^    23
+       B^     19 
+       C^     16 
+       C'^    13 
+       D^     10 
+       D'^     7
+       E^      4
+       F^      1
+
+This is significantly different to TJF-MUSIC.
+
+
+Sheba, Wedding March, Flight of the Bumble Bee
+----------------------------------------------
+
+These superficially seem to be tapes produced by "903_MUSIC" although
+the range of notes is wider and there are some minor differences.
+
+N.B. There were data errors in the original tapes which have been
+corrected.
+
+Combined, using the ANALYSIS program, the following pitch table has
+been determined:
+
+       Tapes Music
+       150   ?? G-  F??  
+       125   ?? G-' G??  
+       115   A+5 
+       102   A'+2 
+        90   B 
+        80   C 
+        72   C'-1  
+        66   D 
+        58   D' 
+        51   E 
+        45   F 
+        40   F' 
+        36   G 
+        31   G' 
+        27   A^ 
+        23   A'^ 
+        19   B^ 
+        16   C^ 
+        13   C'^ 
+        10   D^ 
+         7   D'^ 
+         4   E^ 
+         2   F^+1 
+         0   F^-1
+
+Rests are encoded as a shift of 900.
+
+
+MAESTRO 
+=======
+
+A note describing an improved version of MAESTRO gives the following
+pitch table:
+
+
+        Shift Note      Relative to Music       Length for 1sec duration
+        245     C                                1390
+        226     C'                               1560
+        181     D                                1790
+        160     D'                               1960
+        141     E                                2170
+        127     F                                2380
+        115     F'      A+5                      2560
+        104     G       A'+4                     2780
+        92      G'      B+2                      3030
+        81      A       C+1                      3330
+        74      A'      C'+1                     3570
+        67      B       D+1                      3850
+        61      C^      D'+3                     4000
+        51      C'^     E                        4540
+        45      D^      F                        5000
+        40      D'^     F'                       5260
+        36      E^      G                        5560
+        31      F^      G'                       5880
+        27      F'^     A^                       6250
+        23      G^      A'^                      6670
+        19      G'^     B^                       7140
+        16      A^      C^                       7700
+        13      A'^     C'^                      8300
+        10      B^      D'                       9090
+        7       C^^     D'^                      9090
+        4       C'^^    E^                      10000
+        2       D^^     F^+1                    10000
+        0       D'^^    F^-1                    11100
+
+1000000/11100 = 90usec for loop with shift count 0 1000000/1390
+=719usec for loop with shift count 245 but 245*3=735
+
+Therefore play out can't be the same loop as MUSIC.
+
+Note that for much of the range this is close to MUSIC.
+
+Entertainer 
+-----------
+
+The notes used in The Entertainer are as follows:
+
+
+        181     
+        160
+        141
+        127
+        115
+        104
+         81
+         74
+         67
+         61
+         45
+         40
+         36
+         23
+         16
+         13
+         10
+          7
+          2
+          0
+
+These are identically those from the "Note on MAESTRO" so we can
+assume this is indeed from that table.
+
+Using TRANSLATE to convert this tape to TJF notation produces a
+version that plays well.
+
+
+ALGOL Music 
+===========
+
+An Algol program to translate music from a textual to numerical
+notation has been found (ALG_CREATE.ALG.900) together with a Algol
+player with a code procedure containing the playout part
+(ALG_PLAYER.ALG.900, ALG_PLAYER.SIR.900).  At first it was assumed the
+translator was to prepare tunes for the player, but the accompanying
+numerical music tapes didn't match so these are now assumed to
+represent two distinct music systems.
+
+Translator ----------
+
+The input notation consists of strings such as 
+A.   -- A 
+AS.  -- A sharp 
+BF.  -- B flap 
+BBF. -- B flat one octave above BF.
+
+        Shift Note      Relative to Music Length for 1sec duration
+        222     C                        1389
+        203     C'                       1515
+        166     D                        1786
+        150     D'                       1961
+        137     E                        2174
+        120     F                        2381
+        120     F'                       2564
+        100     G       A'               2778
+         88     G'      B-2              3030
+         79     A       C-1              3333
+         70     A'      C'-3             3571
+         63     B       D-2              3847
+C        58     C^      D'               4000
+         53     C'^     E+2              4543
+         45     D^      F                5000
+         40     D'^     F'               5263
+         36     E^      G                5556
+         30     F^      G^-1             5882
+         26     F^'     A^-1             6250
+         21     G^      A'^-2            6667
+         18     G'^     B^-1             7143
+         15     A^      C^-1             7692
+         12     A'^     C'^-1            8333
+          9     B^      D'-1             9091
+          6     C^      D'^-1            9200
+          4     C'^^    E^              10000
+          2     D^^     F^+1            10000
+          0     D'^^    F^-1            11100
+
+Note that for much of the range this is close to MUSIC.
+
+No player has been found for this translator.
+
+
+Player 
+------
+
+This consists of an Algol program to read in a numeric tape and a SIR
+procedure to play it out.  The tape starts with two integers, the
+first is a count of the number of notes in the tune, the second is the
+length of the unit beat in 0.1s.
+
+The tune itself is encoded as pairs of integers, the first being a
+shift count (i.e., pitch) and the second a duration in beats.
+
+Two hand written notes suggest the following shifts comprise a scale:
+
+28, 26, 24, 23, 21, 19, 17, 16 (or 15).  The fact that distance is 12
+(i.e., the number of semitones in an octave) may be significant?
+
+The player has a different loop to the other music programs in as much
+as the shift instruction is /14 0 and the B register is loaded with
+the necessary pitch shift, also 3 * 14 2047 instructions are included
+in the loop fetching successive notes, unless
+
+If the pitch shift is 0, the note is assumed to be a rest and is
+played by a loop:
+
+       14 1659
+       14 1659 
+       10 COUNT
+        4 COUNT 
+        9 ;-4.
+
+If the pitch shift is 100, the note represents a musical slur and play
+proceeds imemdiately to the next note without an intervening 3 * 14
+2047 sequence.
+
+ALG_OVER1.900 also includes notes 120 and 130 but this is thought to
+be erroneous.
+
+
+Herbert Music Program
+=====================
+
+My music program AJH_MUSIC was derived from TJF_MUSIC as follows:
+
+1.  Code relating to the DAC output was been removed.
+
+2.  A more exact approximation to 2^12 is used.
+
+3.  The note H (A^) has been tuned to 440Hz using a digital tuner and
+       the AJH_TUNEUP program.
+
+4.  Rather than calculating the shift count for each note from it's
+       nominal frequency a pre-calculated table of shifts is used.
+       The shifts are calculated using timing information gained from
+       the AJH_TUNEUP program.
+
+This version produces a more tuneful output.
+
+Note (1) my player plays TJF music input approximately one octave
+lower then the TJF_MUSIC player.  There is a translation utility to
+read in TJF_MUSIC scores and transpose then up by one octave.
+
+Note (2) the highest note playable is V (on other mchines this may
+vary depending on exact instruction timings).  W, X, Y and Z all play
+as V.  Using symbols as [ \ ] ` { | _ and } are treated as playing a
+"rest" - actually a very low frequency note.
+
+Note (3) an additional feature is the notation &n where n is a decimal
+digit.  This has the effect of slowing down the tempo of the player by
+a factor 1.n.  For an example look at the translation of the TJF tune
+"Jesu, Soul of Man's Desiring".
+
+Note (4) an additional feature is the notation * to double the tempo
+and / to halve it.  During playout the tempo can be double by a level
+1 interrupt or halved by a level 2 or 3 interrupt.
+
+The shift counts for the notes available are as follows:
+
+
+        Note    Shift
+        A        253 
+        a        237 
+        B        222 
+        C        208 
+        c        194 
+        D        181 
+        d        169 
+        E        158 
+        F        147 
+        f        137 
+        G        128 
+        g        119 
+        H        110 
+        h        102 
+        I         94 
+        J         87 
+        j         80 
+        K         74 
+        k         68 
+        L         62 
+        M         57 
+        m         52 
+        N         47 
+        n         43 
+        O         38 
+        o         34 
+        P         31 
+        Q         27 
+        q         24 
+        R         20 
+        r         17 
+        S         15 
+        T         12 
+        t          9 
+        U          7 
+        u          5 
+        V          3 
+        v          1 
+
+Note these are the shift counts, the calculated shift has +33 added to
+these and the calculated shift is added to 13 8159 to calculate the
+store shift instruction.
+
+There is a utility program COMPACT for reading in music and punching
+it out in the most compact form possible.
+
+There is a utility program CALCULATE for calculating the table of
+shifts from instruction timings determined using another utility
+program called RETUNE.
+
+Andrew Herbert 26 Jan 2014
+
+
+
+       

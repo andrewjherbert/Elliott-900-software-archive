@@ -1,0 +1,126 @@
+﻿
+((TELEPRINTER INPUT & OUTPUT SUBROUTINE, 1/4/70))
+
+[TIP TIPF TIPL TIPE TOPF TOPL TOPE TOPC
+BITCTL BITCTE ERRORL ERRORE]
+
+(TELECODE INPUT SUBROUTINE)
+
+TIPE      4     TIPF
+          7     TIPR      (Test if first entry)
+          4     TIP
+          1     -20       (C-20, test if <H>)
+          7     CH5
+
+TIPR      4     +0
+          15    2052
+          5     TIP
+          11    BITCTL
+          8     BITCTE
+          14    17
+          9     CH1       (Parity error)
+
+          4     TIP
+          7     TIPR      (Ignore blanks)
+          6     &177      (Delete parity from track 8)
+          5     TIP
+          1     -127      (Ignore erases)
+          7     TIPR
+
+          4     TIPF      (Read first character)
+          7     ;+2       (Jump iff first character)
+          8     ;+3
+          4     TIP
+          5     TIPF      (Store first character)
+
+          4     TIP
+          1     -9
+          7     TAB       (If <T> input, output <S>)
+          1     -1
+          7     LF        (If L.F. input, output C.R.)
+          1     -3
+          7     CR        (If C.R. input, output L.F.)
+          8     TIPX
+
+CR        4     +10       (Set internal value to <N>)
+          5     TIP
+          8     ;+3
+
+TAB       4     +19
+LF        1     +141
+          15    6148
+
+TIPX      4     TIP
+          0     TIPL
+          /8    1
+
+(TELECODE OUTPUT SUBROUTINE)
+
+TOPE      5     TOP
+          6     +127
+          5     OPC
+
+          4     TOPF
+          7     BLANKS    (Test for 1st entry)
+
+TESCOD    4     OPC
+          1     -9        (C-9,  test if <T>)
+          7     ;+4
+          1     -1        (C-10, test if <N>)
+          7     ;+3
+          8     ;+4
+          4     +19       (Prefix <T> by <S>)
+          1     +141      (Carriage Return)
+          15    6148
+
+          4     OPC
+          11    BITCTL
+          8     BITCTE
+          2     +0
+          14    7
+          1     OPC
+          15    6148
+
+          4     OPC
+          1     -20       (C-20, test if <H>)
+          7     BLANKS
+
+OUTEND    4     TOP
+          1     +128
+          9     TOPE
+
+          6     &177
+          0     TOPL
+          /8    1
+
+BLANKS    4     TOPF
+          2     -1
+          5     TOPF
+          9     TESCOD
+          8     OUTEND
+
+(WORKSPACES)
+
+TIPF      >1    (+0 on first entry to TIPE S/R)
+TIPL      >1    (Link)
+TIP       >1    (Last character read in)
+TOPF      >1    (+0 on first entry to TOPE S/R)
+TOPL      >1    (Link)
+TOPC      +1    (Output telecode: ignored)
+TOP       >1
+OPC       >1
+
+(ERROR INDICATIONS)
+
+CH1       4     +95       (Left-pointing arrow)
+          15    6148
+          8     TIPR
+
+CH5       11    ERRORL
+          8     ERRORE
+          £CH
+          £I/O
+          £ ER
+          £ROR
+          £ E.
+<! Halt !>

@@ -1,0 +1,476 @@
+﻿c Demonstrate Algol Elliott Simulation Package (ESP)
+
+c translate in library mode to save store 
+on 903 16K
+telecode 903
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptp file DEMO18.BIN
+
+c read simulation package
+at ptr file ../../MASTERS/HERBERT/ESP1(AJH).903
+j 8
+
+c read test program 
+at ptr inline
+
+"comment" ESP demonstration: 22-APR-2011;
+
+
+"begin" "comment" demonstrate sampling and histograms;
+
+	"real" seed;
+
+	"PROCEDURE" HSTGROUP(A,M,V); "INTEGER" "ARRAY" A; "REAL" M,V;
+        "COMMENT" private version of hst group using reals for intermediate
+                  calculations to avoid overflow;
+	"BEGIN" "INTEGER" LBCELL,I,K; 
+		"REAL" TEMP, HOLD;
+		"SWITCH" SS:=END1;
+		K:=A[-7];
+		"IF" A[-1] "NE" 0 "OR" A[K] "NE" 0 "THEN"
+			"BEGIN" M:=?78; V:=-1.0; "GOTO" END1 "END";
+		TEMP:=HOLD:=0; LBCELL:=A[-6];
+		"FOR" I:=0 "STEP" 1 "UNTIL" K-1 "DO"
+			"BEGIN" TEMP:=TEMP+LBCELL*A[I];
+				HOLD:=HOLD+LBCELL*LBCELL*A[I];
+				LBCELL:=LBCELL+A[-5]
+			"END";
+		M:=TEMP/A[-4]+.5*(A[-5]-1);
+		V:=(HOLD-TEMP*TEMP/A[-4])/(A[-4]-1);
+END1:"END" HSTGROUP;
+
+ 	"procedure" hst draw (a, devout); "value" devout; 
+	"integer" "array" a; "integer" devout;
+        "begin" 
+		"integer" i, j, k;
+		k := a[-6];
+		"print" punch (devout), ''LS8`UNDER  'S4``;
+		"for" i := 1 "step" 1 "until" entier (a[-1]/a[-4]*50.0+0.5) "do" 
+			"print" punch (devout), same line, '*`;
+                "for" j := 0 "step" 1 "until" (a[-7]-1) "do"
+		"begin"
+			"print" punch (devout), k, same line, ':`, k+a[-5]-1, ''S4``;
+			"for" i := 1 "step" 1 "until" entier (a[j]/a[-4]*50.0+0.5) "do" 
+				"print" punch (devout), same line, '*`;
+                        k := k+a[-5]
+                	"end";
+		"print" punch (devout), ''LS8`OVER   'S4``;		
+		"for" i := 1 "step" 1 "until" entier (a[a[-7]]/a[-4]*50.0+0.5) "do" 
+			"print" punch (devout), same line, '*`;
+                "print" ''L2``;
+	"end" hst draw;
+
+
+        "procedure" distribution (x, ns, s); 
+	"value" ns; "integer" "procedure" x; "integer" ns; "string" s;
+	"begin"
+		"comment" set up histogram;
+                "integer" "array" hist [-7:11];
+                "integer" i;
+		"real" mean, variance;
+
+                 "print" punch(3), ''L2`Distribution: `, s, ''L2``;
+		 hst set (hist, 10, 0, 1);
+
+                "comment" sample distribution;
+                "for" i := 1 "step" 1 "until" ns "do"	
+			hst put (hist, x);
+
+		"comment" output histogram to teletype;
+                "comment" hst out   (hist);
+                hst print (hist, 3);
+                "print" punch(3), ''L2``;
+		hst draw  (hist, 3);
+		hst true  (hist, mean, variance);
+		"print" punch (3), ''L2`True  mean = `, same line, mean, 
+			' True  variance = `, variance, ''L``;
+		hst group  (hist, mean, variance);
+		"print" punch (3), 'Group mean = `, same line, mean, 
+			' Group variance = `, variance, ''L2``;            
+
+      	"end" distribution;    	
+
+
+        "integer" "procedure" d uniform;
+        "begin"
+ 		d uniform := random (0, 9, seed)
+        "end" d uniform;
+
+	"integer" "procedure" d geometric;
+        "begin"
+ 		d geometric:= geometric (0.6, seed)
+        "end" d geometric;
+
+	"integer" "procedure" d log normal;
+        "begin"
+		d log normal := log normal (1.0, 0.4, seed)
+	"end" d log normal;
+
+	"integer" "procedure" d neg exp;
+	"begin"
+		d neg exp := neg exp (1.5, seed)
+	"end" d neg exp;
+
+	"integer" "procedure" d normal;
+       	"begin"
+		d normal := normal (4.5, 1.5, seed)
+	"end" d normal;
+
+	"integer" "procedure" d fast normal;
+	"begin"
+		d fastnormal := fast normal (4.5, 1.5, seed)
+	"end" d fast normal;
+
+	"integer" "procedure" d poisson;
+	"begin"
+		d poisson := poisson (3.4, seed)
+        "end" d poisson;
+
+	"integer" "procedure" d binomial;
+        "begin"
+		d binomial := binomial (20, 0.2, seed)
+        "end" d binomial;
+
+	"integer" "procedure" d pascal;
+        "begin"
+		d pascal := pascal (1, 0.6, seed)
+	"end" pascal;
+
+	"integer" "procedure" d erlang;
+        "begin"
+		d erlang := erlang (1.0, 2, seed)
+        "end" erlang;
+
+	"integer" "procedure" d hypergeom;
+	"begin" "integer" tn; "real" p;
+                tn := 10; p := 0.7;
+		d hypergeom := hypergeom (tn, 7, p, seed)
+	"end" hypergeom;
+
+	"procedure" sample (ns, x); 
+	"value" ns; "integer" ns; "real" x;
+	"begin"
+		"comment" set up histogram;
+                "integer" "array" hist1, hist2 [-7:11];
+                "integer" i;
+		"real" mean, variance;
+
+                 "print" punch(3), ''L2` Normal distribution (for sampling)`, ''L2``;
+		 hst set (hist1, 10, 0, 1);hst set (hist2, 10, 0, 1);
+
+                "comment" sample normal distribution;
+                "for" i := 1 "step" 1 "until" ns "do"	
+			hst put (hist1, dnormal);
+
+		"comment" output histogram to teletype;
+                "comment" hst out   (hist1);
+                hst print (hist1, 3);
+                "print" punch(3), ''L2``;
+		hst draw  (hist1, 3);
+		hst true  (hist1, mean, variance);
+		"print" punch (3), ''L2`True  mean = `, same line, mean, 
+			' True  variance = `, variance, ''L``;
+		hst group  (hist1, mean, variance);
+		"print" punch (3), 'Group mean = `, same line, mean, 
+			' Group variance = `, variance, ''L2``;          
+              	"comment" sample histogram;
+                "for" i := 1 "step" 1 "until" ns "do"	
+ 			hst put (hist2, hst sample (hist1, x));
+		"print" punch(3), ''L2` Sampled normal distribution`, ''L2``;
+		"comment" output histogram to teletype;
+                "comment" hst out   (hist2);
+                hst print (hist2, 3);
+                "print" punch(3), ''L2``;
+		hst draw  (hist2, 3);
+		hst true  (hist2, mean, variance);
+		"print" punch (3), ''L2`True  mean = `, same line, mean, 
+			' True  variance = `, variance, ''L``;
+		hst group  (hist2, mean, variance);
+		"print" punch (3), 'Group mean = `, same line, mean, 
+			' Group variance = `, variance, ''L2``;   
+      	"end" sample;
+
+	"integer" "array" a, b, c [-7:11];
+	"integer" i;
+
+	"print" punch(3), ''L2`Start of ESP Demo'L2``;
+
+
+	checks ('HSTADD, SUB, MULT`);
+	hst set (a, 10, 0, 1);
+	hst set (b, 10, 0, 1);
+	hst set (c, 10, 0, 1);
+	"for" i := 0 "step" 1 "until" 9 "do"
+	"begin"
+		hst put (a, i); hst put (b, 9-i)
+	"end";
+	
+	"print" punch (3), ''L2`c:=a+b = 2,2,...2'L2``; 
+	hst add   (a, b, c);
+	hst print (c, 3); 	
+	"print" punch (3), ''L2`a:=c-b = 1,1,...1'L2``;
+	hst sub   (c, b, a);
+	hst print (b, 3); 
+	"print" punch (3), ''L2`a:=c*2 = 2,2,...2'L2``;
+	hst mult  (c, 2, a);
+	hst print (c, 3); 
+	"print" punch (3), ''L2``;
+
+	checks ('HST OUT`);
+	hst out (c);
+	checks ('HSTIN`);
+	hst in (a);
+	"print" punch (3), ''L2`hst out / hst in'L2` = 2,2,...2'L2``;
+	hst print (a, 3);
+	"print" punch (3), ''L2``;
+
+	checks ('INITIALIZE`);
+        initialize(rand,mult1,mult2);
+
+	checks('XBASERANDOM`);
+	"print" punch(3), ''L`XBaseRandom'L``;
+	"for" i := 0 "step" 1 "until" 10 "do" "print" punch(3), xbaserandom (rand, mult2);
+	"print" punch(3), ''L``;
+
+	checks ('SET RANDOM`);
+	seed := set random;
+
+	checks('BASERANDOM`);
+	"print" punch(3), ''L`BaseRandom'L``;
+	"for" i := 0 "step" 1 "until" 10 "do" "print" punch(3), baserandom (seed);
+	"print" punch(3), ''L``;
+
+        checks('RANDOM`);
+	"print" punch(3), ''L`Random'L``;
+	"for" i := 0 "step" 1 "until" 10 "do" "print" punch(3), random (0, 9, seed);
+        "print" punch(3), ''L``;
+
+        checks ('DISTRIBUTIONS`);
+	distribution (d uniform,     500, 'Uniform (0, 9)`);
+        distribution (d geometric,   500, 'Geometric (P=0.6)`);
+	distribution (d log normal,  500, 'Log Normal (M=1.0, V=0.4)`);
+        distribution (d neg exp,     500, 'Negative Exponential (M=2.0)`);
+        distribution (d normal,      500, 'Normal (M=4.5, V=1.5)`);
+	distribution (d fast normal, 500, 'Fast Normal (M=4.5, V=1.5)`);
+        distribution (d poisson,     500, 'Poisson (M=3.4)`);
+        distribution (d binomial,    500, 'Binomial (N=20, P=0.2)`);
+        distribution (d pascal,      500, 'Pascal (N=1, P=0.6)`);
+        distribution (d erlang,      500, 'Erlang (Lambda=1.0, K=2)`);
+        distribution (d hypergeom,   500, 'Hypergeometric (Trials=7, Population=10, P=0.7)`);
+
+	checks('SAMPLE`);
+	sample (500, seed);
+
+"end" distributions and histograms;
+
+
+"begin" "comment" demonstrate simulation;
+
+	"comment"	
+
+		Customers arrive at a counter with 3 servers according to a Poisson distribution 
+		with a mean time interval of 5.  If servers are free the customer picks one at 
+		random and goes to be served.  If no servers are free the customer must join a 
+		FIFO queue until a server becomes free.  The time taken by a server is normally 
+		distributed.  The three servers have a mean service time of 10, 15, 20 respectively,
+		each with a variance of 5;
+	
+        "integer" customers, servers;
+	"integer" max cust, max serv;
+	customers := 100; servers := 3; max cust := customers-1; max serv := servers-1;
+
+	"begin"
+
+	"integer" "procedure" mod (a, b); "value" a, b; "integer" a, b;
+	"begin" "comment" a modulus b;
+		mod := a - (a "div" b) * b
+	"end";
+
+	"boolean" "array" free [0:max serv]; 		"comment" status of servers;
+	"integer" "array" queue, arrive [0:max cust];	"comment" waiting clients and arrival times;
+	"integer" first, last;	                        "comment" queue pointers;
+	"integer" pending;				"comment" count of customers still to process;
+	"integer" waiting;				"comment" count of customers in queue;
+	"integer" max queue;				"comment" longest queue length;
+	"integer" i; 					"comment" for loops;
+	"real"    u1, u2, u3;				"comment" random number seeds;
+
+        "integer" min delay, max delay, max q size;
+	
+	"comment" customer actions;
+	"switch" event := update, arriving, leaving;
+	"switch" dummy := exit;
+
+	"print" punch(3), ''L2`Simulation of a Queueing System'L2``;
+			
+	"comment" initialize system;
+        prepare;
+        u1            := set random;
+	u2            := set random;
+	u3            := set random;	
+	max delay     := max q size := 0;
+        min delay     := 1000;
+	waiting       := 0;
+	pending       := max customers;
+	first := last := 0;
+checks('A`);
+	"for" i := 0 "step" 1 "until" max serv "do" free[i] := "true";
+checks('B`);
+	"for" i := 0 "step" 1 "until" max cust "do"
+	"begin" "integer" arrive, delay;
+		delay   := entier(Poisson (5, u1)-5);
+		arrive  := i*5+5-delay;
+		send[0] :=1; send[1]:= i;
+		call   (1, arrive);
+	"end";
+
+	"comment" start the simulation;
+checks('C`);
+	"goto" event[next];
+
+	update: "begin" "comment" after an event see if a customer can be served;
+			"integer" server;
+			"comment" look for free server;
+checks('D`);
+			server := random (0,max serv,u3);		
+			"for" i := 0 "step" 1 "until" max serv "do"
+			"begin"
+				"comment" check for customers";
+				"if" pending = 0 "then" "goto" exit; 
+				"if" free[server] "and" first "ne" last "then" 
+				"begin"
+					"integer" customer, duration;
+					free[server] := "false";
+					customer := queue[first];
+					duration := normal (10+i*5, 5, u2);
+					"if" duration "le" 0 "then" duration := 1;
+					send[0] := 3;
+                                        send[1] := customer;
+					send[2] := server;
+                                        send[3] := arrive[first];
+					"comment" take customer off arrival queue;
+					waiting := waiting-1;
+					first := mod((first+1), max cust);
+					"print" punch(3), 'At time`, same line, digits(4), time, 
+						' server  `, server, ' serves customer   `, customer,
+						' for`, duration, ' ticks'L``;
+					call (2, duration);
+                                        					
+				"end";
+				"comment" look for work for other servers;
+				server := mod((server+1), max serv)
+			"end";
+			"if" waiting > max q size "then" max q size := waiting;
+			"goto" event[next]
+		"end";
+
+	arriving:
+		"begin" "comment" a customer arrives;
+			"comment" get[1] is the customer number;
+			"comment" put customer in arrival queue;
+			"integer" customer;
+checks('E`);
+			customer := queue[last] := get[1]; 
+			arrive[last] := time;
+			last := mod((last+1), max cust);
+			waiting := waiting+1;
+			"print" punch(3), 'At time`, same line, digits(4), time, 
+				' customer`, customer, ' arrives'L``;
+			"goto" event[next]
+		"end"arriving;
+ 
+	leaving:
+		"begin" "comment" a customer has been served;
+			"comment" get[1] is customer;
+			"comment" get[2] is server;
+			"comment" get[3] is customer's arrival time;
+			"integer" customer, server, arrival, delay;
+checks('F`);
+			pending      := pending-1;
+			customer     := get[1];
+			server       := get[2]; 
+			arrival      := get[3];
+			delay        := time-arrival;
+			free[server] := "true";				
+			"if"   delay < min delay 
+			"then" min delay := delay
+			"else" "if" delay > max delay
+			"then" max delay := delay;
+			"print" punch(3), 'At time`, same line, digits(4), time, ' server  `, 
+				server, ' completes customer`, customer, 
+				' customer total`, time-arrival, ' ticks 'L``;
+			"if" pending > 0 "then" "goto" event[next]
+			
+		"end" leaving;
+			
+	exit: 
+		"begin" "comment" simulation complete;
+
+			"print" punch(3), same line, digits(4), 
+		     		''L`Longest time to be served  = `, max delay,
+				' ticks'L`Shortest time to be served = `, min delay, 
+				' ticks'L`Greatest queue length      = `, max q size, 
+				''L2`End of ESP Demo'L2``
+		"end" exit;
+	"end"
+
+"end" simulation;
+
+
+"end"
+
+"end" ESP
+
+data for hst in
+
+10
+      0
+      1
+     20
+     90
+    570
+      0
+      2
+      2
+      2      2
+      2
+      2
+      2
+      2
+      2
+      2
+      0
+<! Halt !>
+<!!>
+j 9
+j 9
+
+de ptp
+
+
+c run program
+c read in large program interpreter
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+
+c load esp code procedures
+at ptr file ../../MASTERS/ESP/ESP2(ISS2A).RLB
+j 12
+
+
+c run program
+at ptr file DEMO18.BIN
+at tty inline
+R 1000
+<!!>
+select out tty
+c will run out of tty input
+nonstop on
+j 8
+
+delete DEMO18.BIN
+
+sh t

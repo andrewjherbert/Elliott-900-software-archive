@@ -1,0 +1,54 @@
+﻿
+on 903 8K
+
+c edit full program tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c steering tape
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+
+*19
+^%,
+CHE
+INS
+
+%
+
+^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+delete errors.txt
+st 490
+delete error.txt
+at ptp file temp.txt
+at ptr file ../../MASTERS/ACDUTILITIES/TELECOP.900
+j 9
+de ptp
+st 1274
+
+c assemble
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+c first pass
+select out tty
+at ptr file temp.txt
+j 12
+st 562
+c second pass
+rewind
+select out auto
+at ptp file TELECOP(900).BIN
+j 10
+de ptp
+st 587
+delete temp.txt
+compare TELECOP(900).BIN ../../MASTERS/ACDUTILITIES/TELECOP(900).BIN
+sh t

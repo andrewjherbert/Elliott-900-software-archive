@@ -1,0 +1,171 @@
+﻿
+((STORE TEST, FIRST COPY, 16/9/72)
+
+(Absolute Declarations)
+
+[COPY]
+^102
+STASTR +202
+ENDSTR +8177
+FROM=202
+TO=8177
+LENGTH -200
+OTHER=7980
+
+(Declaration of program level)
+
+BREG=1
+
+(The following store test, excluding the above
+declarations, may be placed anywhere in store
+between its own S & B registers and the
+autostart location, and may be used to
+test any continuous area of store within these
+limits, excluding the area occupied by the test itself)
+
+(Initialisations)
+
+START    4    INITMD
+         5    MODE
+NXTMOD   4    STASTR
+         5    ADRES
+
+(Tests whether X4 or X17 is being performed)
+
+NXTWRD   4    MODE
+         6    TWO
+         7    X4
+
+(X17: forms appropriate chequerboard pattern)
+
+X17      4    ADRES
+         6    SEVEN
+         2    RTSH1    (=14 8191)
+         5    WORD
+
+         4    ADRES
+         14   8186
+         6    SEVEN
+         5    BREG
+
+         /4   TABLE
+WORD     >1
+         6    ONE
+         2    ZERO
+         8    ;+2
+
+(X4: forms different pattern for each location)
+
+X4       4    ADRES
+         5    WORD
+
+(On alternate tests uses inverted pattern)
+
+         4    MODE
+         6    FOUR
+         7    ;+4
+         4    WORD
+         2    ALL1S
+         5    WORD
+
+(Initially stores word; then checks word,
+checks that it can be held inverted,
+then resets original value)
+
+         0    ADRES
+         4    MODE
+         6    ONE
+         7    SKPCHK
+
+         4    WORD
+         /2   0
+         7    ;+2
+         8    FAIL
+
+         4    WORD
+         2    ALL1S
+         /5   0
+         /2   0
+         7    ;+2
+         8    FAIL
+
+SKPCHK   4    WORD
+         /5   0
+
+(Checks if whole store tested, and, if so,
+changes mode and checks if all modes tested)
+
+         10   ADRES
+         4    ENDSTR
+         2    ADRES
+         9    NXTWRD
+
+         10   MODE
+         4    MODE
+         9    NXTMOD
+
+(Permits off/on store corruption test)
+
+         4    ALL1S
+         5    MODE
+         4    RESTAR
+         5    8177
+
+(Gives OK or FAIL display, then clears it
+so that arrival of next result can be seen)
+
+OK       4    ALL1S    (&777777)
+         8    ;+2
+FAIL     4    ALT1S    (&525252)
+         15   4103
+         4    ZERO
+         15   4103
+
+(Inhibits restart after switching off & on, since, at
+certain times, this will cause loss of test program)
+
+         4    ERROR
+         5    8177
+
+(Transfers both copies of the test to the other end
+of the store, then jumps to other copy)
+
+         0    LENGTH
+COPY     /4   FROM
+         /5   TO
+         10   BREG
+         4    BREG
+         9    COPY
+
+         8    OTHER
+
+(Autostart Addresses)
+
+RESTAR   8    NXTMOD
+ERROR    8    8181
+
+(Chequerboard Master Pattern)
+
+TABLE    &036 &322 &322 &036
+         &740 &322 &322 &740
+
+(Constants: needed since literals cannot be used.
+INITMD controls the duration of the test; it
+MUST be even, and should have magnitude
+of at least 8 for a complete test)
+
+INITMD   -24  (Adjust for 1 min.)
+ZERO     +0
+ONE      +1
+TWO      +2
+FOUR     +4
+SEVEN    +7
+ALL1S    &777777
+ALT1S    &525252
+RTSH1    14 8191
+
+(Workspaces)
+
+MODE=8178
+ADRES=8179
+<! Halt !>

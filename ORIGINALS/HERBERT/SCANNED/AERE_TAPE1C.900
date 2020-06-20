@@ -1,0 +1,66 @@
+﻿         +0
+         +0
+         +0
+         +0
+
+MAXMUM   +0
+         +0
+         +0
+         +0
+         +0
+         +0
+         +0
+         +0
+ANS      +0
+         +0
+         +0
+         +0
+OFF      +0
+         +0
+         +0
+         +0
+ANGLE    +0
+         +0
+         +0
+         +0
+
+TRIGST   +0
+         +0
+         +0
+         +0
+TAB1     >+40
+TAB2     >+42
+FLAG >+2
+SENSE >+2
+CORECT >+2
+RSHIFT >+4
+LSHIFT >+4
+TRIAL >+2
+STSAVE >+2
+CTSAVE >+2
+SHC    >+2
+SHL    >+2<!  13 !><!   8 !>ABSPOS >+2   (OVER-RUN CORRECTION SEPT 1971)
+BFLAG >+2
+BSAVE >+2
+SAVDIF >+2
+
+OFFST    +0
+         +0
+         +0
+         +0
+ENGLOB   0    ;+0
+MLEV2    0    LEV2
+MLEV3    0    LEV3
+MLEV4    0    LEV4
+POINT
+   +5800
+   +6100
+   +6400
+   +6700
+
+TABENTRY
+   +5800
+   +6100
+   +6400
+   +6700
+

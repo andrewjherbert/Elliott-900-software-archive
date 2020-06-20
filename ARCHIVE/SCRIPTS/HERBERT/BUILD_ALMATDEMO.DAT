@@ -1,0 +1,45 @@
+﻿c Demonstrate Algol Matrix Package
+
+c set up algol
+on 903 64K
+
+at ptr file ../../MASTERS/MASDALGOL/ALG1(MASD).BIN
+j 8181
+st 8171
+
+at ptp file ALMATDEMO.RLB
+at ptr file ../../MASTERS/ALMAT/ALMAT(ISS2).900
+j 8
+st 5368
+
+c read test program
+at ptr file ../../MASTERS/HERBERT/ALMATDEMO.900
+j 9
+st 9
+
+de ptp
+
+reset
+
+c run program
+c read in 16K large program interpreter
+at ptr file ../../MASTERS/MASDALGOL/ALG16KLP(MASD).BIN
+j 8181
+st 8175
+
+at ptr file ALMATDEMO.RLB 
+nonprinting off
+select out tty
+at tty inline
+R
+<!!>
+C will run out of tty input....
+nonstop on
+j 8
+
+sh t
+
+
+
+
+

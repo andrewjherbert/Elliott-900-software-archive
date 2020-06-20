@@ -1,0 +1,167 @@
+﻿<! Legible Header OOOOO  OOO  OOOO         OOO   OOO   OOO        OOOOO  OOO  OOOO  OOOOO  OOO              OOOOO  OOO   OOO   OOO   OOO   !>
+<! Legible Header O     O   O O   O       O   O O   O O   O       OOOOO O   O O   O O     O   O               O   O   O O   O O   O O   O  !>
+<! Legible Header O     OO    O   O       O   O O   O O   O         O   O   O O   O O         O               O   OO    OO        O O   O  !>
+<! Legible Header OOOO   OO   OOOO         OOOO O   O O   O         O   OOOOO OOOO  OOOO    OOO               O    OO    OO     OOO OOOOO  !>
+<! Legible Header O           O               O O   O O   O         O   O   O O     O                         O                     O   O  !>
+<! Legible Header O        O  O               O O   O O   O         O         O     O     OO                  O      O     O  OO           !>
+<! Legible Header O     O   O O           OOOOO O   O O   O         O   O   O O     O     O                   O   O   O O   O O     O   O  !>
+<! Legible Header OOOOO OOOO  O           OOOO   OOO   OOO          O   O   O O     OOOOO OOOOO             OOOOO OOOO  OOOO  OOOOO O   O  !>
+
+*+0
+[STOREMAX]
+STOREMAX  /14   0
+          +0
+          4     136
+          2     27
+          0     138
+          1     -100
+          /5    0
+          0     1;
+          /8    1
+(AJH removed %)
+
+(AJH removed *+0)
+[INITIALISE]
+(AJH replaced INITIALISE/14   3)
+INITIALISE
+         /14   3
+          +0
+          0     138
+          /0    3
+          4     +219
+          /5    0
+          4     +42367
+          /5    1
+          0     138
+          /0    6
+          4     +8175
+          /5    0
+          4     +67825
+          /5    1
+          0     138
+          /0    9
+          4     +3474
+          /5    0
+          4     +126186
+          /5    1
+          0     INITIALISE+1
+          /8    1
+(AJH removed %)
+
+
+(AJH removed *+0)
+[XBASERANDOM]
+(AJH replaced XBASERANDOM/14   2)
+XBASERANDOM
+	 /14   2
+          +0
+          0     138
+          /0    3
+          /4    0
+          5     TEMP1
+          /4    1
+          5     TEMP2
+          0     138
+          /4    6
+          5     TEMP3
+          /4    8
+          6     &000177
+          /1    7
+          5     TEMP4
+          4     TEMP1
+          12    TEMP4
+          5     Z2
+          3     Z3
+          4     TEMP2
+          12    TEMP3
+          1     Z2
+          5     Z2
+          4     +0
+          14    17
+
+          1     Z3
+          9     L1
+L2        5     Z3
+          4     TEMP4
+          12    TEMP2
+          3     Z4
+          1     Z3
+          9     L3
+L4        5     Z3
+          4     TEMP1
+          12    TEMP3
+          5     Z1
+          4     +0
+          14    17
+          1     Z2
+          9     L5
+L6        14    8175
+          4     Z1
+          14    3
+          5     Z1
+          14    17
+          6     &377770
+          5     Z2
+          4     Z3
+          14    8178
+          1     Z2
+          5     Z2
+          4     Z3
+          6     &037777
+          5     Z3
+          4     Z1
+          1     Z3
+          5     Z1
+          4     Z2
+          1     Z4
+          9     L7
+L8        5     Z2
+          4     Z1
+          6     &040000
+          7     L9
+          4     Z2
+          1     +1
+          9     L10
+L11       5     Z2
+          4     Z1
+          6     &037777
+
+                5         Z1
+L9        0     138
+                4         Z2
+          14    8175
+          4     Z1
+          14    3
+          /5    0
+          /0    3
+          4     Z1
+          /5    0
+          4     Z2
+          /5    1
+          0     XBASERANDOM+1
+          /8    1
+L1        10    Z2
+          6     &377777
+          8     L2
+L3        10    Z2
+          6     &377777
+          8     L4
+L5        10    Z1
+          6     &377777
+          8     L6
+L7        10    Z1
+          6     &377777
+          8     L8
+L10       10    Z1
+          6     &377777
+          8     L11
+TEMP1     +0
+TEMP2     +0
+TEMP3     +0
+TEMP4     +0
+Z1        +0
+Z2        +0
+Z3        +0
+Z4        +0
+          %
+<! Halt !>

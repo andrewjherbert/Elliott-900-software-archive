@@ -1,0 +1,28 @@
+﻿
+*+0
+[RAISEPEN LOWERPEN]
+RAISEPEN  /14  0
+ +0
+ 4  +16
+  8  CONT
+W  +0
+LOWERPEN  /14  0
+  +0
+  4  ;-1
+  5  RAISEPEN+1
+  4  +32
+CONT
+ 15  4864
+  4  -1400
+  5  W
+ 10  W
+  4  W
+  9  ;-2
+  0  RAISEPEN+1
+ /8  1
+%
+<! Halt !>
+L;"BEGIN"
+"CODE" "PROCEDURE" RAISE PEN; "ALGOL";
+"CODE" "PROCEDURE" LOWER PEN; "ALGOL";
+<! Halt !>

@@ -1,0 +1,39 @@
+﻿MAGIC SQUARE DEMO;
+
+"BEGIN" "INTEGER" A,B,c;
+"INTEGER" "ARRAY" SQUARE[1:20,1:20];
+
+
+"PROCEDURE" MAGIC(N,X); "VALUE" N; "INTEGER" N; "INTEGER" "ARRAY" X;
+
+"BEGIN" "INTEGER" I,J,K;
+
+  "FOR" I := 1 "STEP" 1 "UNTIL" N "DO"
+     "FOR" J := 1 "STEP" 1 "UNTIL" N "DO" X[I,J] := 0;
+
+  I := (N+1) "DIV" 2;  J := N;
+  "FOR" K := 1 "STEP" 1 "UNTIL" N*N "DO" "BEGIN"
+     "IF" X[I,J] "NE" 0 "THEN" "BEGIN" I := I - 1; J := J - 2;
+       "IF" I < 1 "THEN" I := I + N;  "IF" J < 1 "THEN" J := J + N "END";
+     X[I,J] := K;
+     I := I + 1; "IF" I > N "THEN" I := I - N;
+     J := J + 1; "IF" J > N "THEN" J := J - N;
+     "END";
+"END";
+
+
+"PRINT" {{L} MAGIC SQUARES {L}};
+
+
+"FOR" C:= 3 "STEP" 1 "UNTIL" 10 "DO" "BEGIN"
+    MAGIC(C,SQUARE);
+    "PRINT" {{L3}N =}, SAMELINE, C, {{L}};
+    "FOR" B:= C "STEP" -1 "UNTIL" 1 "DO" "BEGIN"
+        "PRINT" {{L}};
+        "FOR" A := 1 "STEP" 1 "UNTIL" C "DO" 
+            "PRINT" SAMELINE, SQUARE[A,B];
+        "END"
+    "END"
+
+"END"
+<! halt !>

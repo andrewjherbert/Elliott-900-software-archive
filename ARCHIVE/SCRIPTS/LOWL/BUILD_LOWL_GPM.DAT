@@ -1,0 +1,23 @@
+﻿
+C Build H. Thimbleby version of GPM (TGPM) for LOWL translator
+
+on 903
+
+c assemble with 2-pass SIR
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+at ptr file ../../MASTERS/LOWL/LOWL_GPM.900
+select out tty
+j 12
+st 562
+
+rewind
+select out auto
+at ptp file LOWL_GPM.BIN
+j 10
+de ptp
+st 587
+
+sh t

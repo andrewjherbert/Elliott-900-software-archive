@@ -1,0 +1,110 @@
+﻿c  test use of constants in call by name in Elliott ALGOL
+c AJH 10/02/2013
+
+on 903 16K
+nonprinting off
+
+c **********MECSL ALGOL ISSUE 6**********
+c assemble code procedures
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+at ptp file FORMALTEST.RLB
+at ptr inline
+*1
+[GOBLIN]
+GOBLIN	/14	1
+	+0
+	0	138		( FP )
+	/4      3		( address )
+	/5	0		( result )
+	0	GOBLIN+1
+	/8 	1
+[GREMLIN]
+GREMLIN	/14	1
+	+0
+	0	138		( FP )
+	/0	3		( first parameter )
+	/4      0		( indirect to value )
+        0       138             ( FP )
+	/5	0		( result )
+	0	GREMLIN+1
+	/8 	1
+%
+<! halt !><!!>
+j 8
+de ptp
+
+c translate ALGOL program
+at ptr file ../../MASTERS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+at ptr inline
+formal;
+"begin"
+"code" "integer" "procedure" goblin  (i); "integer" i; "algol";
+"code" "integer" "procedure" gremlin (i); "integer" i; "algol";
+"integer" a; a := +10; 
+punch (3);
+"print" 'variable:    @, sameline, goblin (a), gremlin (a), ''l@@;
+"print" 'constant:    @, sameline, goblin (1), gremlin (1), ''l@@;
+"end" 
+<! halt !><!!>
+at ptp file FORMALTEST.BIN
+j 8
+de ptp
+c run program
+at ptr file ../../MASTERS/903ALGOL/ALG2(ISS6).BIN
+j 8181
+c load algol intermediate code
+at ptr file FORMALTEST.BIN
+j 8
+c load code procedures
+at ptr file FORMALTEST.RLB
+j 11
+c run
+select out tty
+traceregion 4609 4625
+trace on
+j 10
+
+c ********** HUNTER **********
+at ptr file ../../MASTERS/HUNTER/ALG16KLG(HUNTER).BIN
+j 8181
+at ptr inline
+formal;
+"begin"
+"code" "integer" "procedure" goblin  (i); "integer" i; "algol";
+"code" "integer" "procedure" gremlin (i); "integer" i; "algol";
+"integer" a, b; 
+"integer" "array" ia [1:2];
+a := ia [1] := +10; b := ia [2] := +10;
+punch (3);
+"print" 'variable:    @, sameline, goblin (a), gremlin (a), ''l@@;
+"print" 'constant:    @, sameline, goblin (1), gremlin (1), ''l@@;
+"comment" note next statement doesn't produce translator error 5;
+"print" 'expression1: @, sameline, goblin (+10), gremlin (+10), ''l@@;
+"comment" note next four statements compile;
+"print" 'expression2: @, sameline, goblin (a+b), gremlin (a+b), ''l@@;
+"print" 'subscript1:  @, sameline, goblin (ia[1]), gremlin (ia[1]), ''l@@;
+"print" 'expression3: @, sameline, goblin (a+b), gremlin (a+b), ''l@@;
+"print" 'expression4: @, sameline, 
+	goblin ("if" a>b "then" a "else" b),
+        gremlin ("if" a>b "then" a "else" b), ''l@@
+"end" 
+<! halt !><!!>
+c translate
+j 8
+c load code procedures
+at ptr file FORMALTEST.RLB
+j 14
+c run
+j 10
+
+c delete working files
+delete FORMALTEST.BIN
+delete FORMALTEST.RLB
+sh t
+
+
+
+
+

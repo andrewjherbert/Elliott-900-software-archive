@@ -1,0 +1,250 @@
+﻿
+7 ;+2     (JULY 71 PATCH 5)
+8 OLDWAY
+11 TITLE
+8 TITLE+1
+4 +2
+11 QOUT1
+8 QOUT1+1
++0
+0 LOCAL1
+/4 TOTAL1
+11 QOUT1
+8 QOUT1+1
+/0 0
+0 LOCAL1
+/4 MAXMUM
+11 QOUT1
+8 QOUT1+1
++0
+8 NOFULL
+
+OLDWAY
+
+
+         11   TITLE
+         8    TITLE+1
+         0    LOCAL1
+         /4   BASE
+         7    ;+3
+         4    +8
+         8    ;+2
+         4    +6
+         11   QOUT1
+         8    QOUT1+1
+         +0
+         0    LOCAL1
+         /4   TOTAL1
+         11   QOUT1
+         8    QOUT1+1
+         /0   0
+NAS6
+         11   QF
+         8    QF+2
+
+         4    ZERO
+         5    X1
+         +0
+         4    +1
+SL1      5    YFIX
+         5    X0
+         4    YPOS
+         5    QF+3
+         11   QF
+         8    QF+2
+         6    3
+
+         5    XWORK
+         12   COEFF
+         1    COEFF+3
+         12   XWORK
+         1    COEFF+6
+         12   XWORK
+         1    COEFF+9
+         12   XWORK
+         1    COEFF+12
+         5    XWORK
+         +0
+
+         4    +1
+         0    LOCAL1
+         /2   TABENTRY
+         1    YFIX
+         5    YFIX
+         5    QF+3
+         11   QF
+         8    QF+2
+         6    3
+         14   8185
+
+
+         2    XWORK
+         5    XWORK
+         12   XWORK
+         1    X1
+         5    X1
+         +0
+
+         0    LOCAL1
+         4    YFIX
+         /2   POINT
+         7    ;+4
+         4    X0
+         1    +1
+         8    SL1
+         0    LOCAL1
+         /4   TABENTRY
+         /2   POINT
+         1    +1
+         5    SOMEWH
+         5    YFIX
+         4    YPOS
+         5    QF+3
+
+         4    SDP
+         1    LOCAL1
+         5    QF+4
+         11   QF
+         8    QF+2
+         6    3
+         5    XWORK
+         4    X1
+         13   XWORK
+       14   14
+         5    XWORK
+         14   8191
+SL2      5    X1
+         14   8191
+         5    X2
+         4    XWORK
+         13   X1
+         14   8191
+         1    X2
+         5    X2
+
+         2    X1
+         5    X1
+         12   X1
+         2    SMALL
+         2    ZERO
+         9    ;+3
+         4    X2
+         8    SL2
+         4    X2
+         6    4
+         +0
+0 LOCAL1
+/4 FLAG-2
+7 NAS9
+11 TITLE
+8 TITLE+1
+4 +2
+11 QOUT1
+8 QOUT1+1
++0
+0 LOCAL1
+/4 SENSE-2
+9 PMIN
+PP
+/4 CORECT-2
+/5 HC-2
+11 QOUT1
+8 QOUT1+1
+/0 0
+4 TC
+1 LOCAL1
+5 QF+3
+4 TB
+1 LOCAL1
+5 QF+4
+11 QF
+8 QF+2
+6 3
+12 X2
+
+6 4
++0
+0 LOCAL1
+/4 SENSE-2
+9 QL
+/4 CORECT-2
+/1 LEVEL+4
+QK
+/5 LEVEL+4
+11 QOUT1
+8 QOUT1+1
++0
+0 LOCAL1
+/4 HTYP-2
+/5 TYPE
+/4 LEVEL+4
+/5 HL-2
+        4   ADHT
+        1   LOCAL1
+        5   QF+3
+       11   QF
+        8   QF+2
+        6   3
+        5   FTEN
+       +0
+
+        0   LOCAL1
+       /4   CTSAVE-2
+        2   +0
+        5   TEN
+        4   ADTEN
+        5   QF+3
+       11   QF
+        8   QF+2
+        6   3
+       13   FTEN
+        5 FTEN
+       +0
+
+        4   ADSHC
+        1   LOCAL1
+        5   QF+4
+        4   ADHC
+        1   LOCAL1
+        5   QF+3
+       11   QF
+        8  QF+2
+        6   3
+       12   FTEN
+        6   4
+       +0
+
+        4   ADSHL
+        1   LOCAL1
+        5   QF+4
+        4   ADHL
+        1   LOCAL1
+        5   QF+3
+       11   QF
+        8   QF+2
+        6   3
+       12   FTEN
+        6   4
+       +0
+
+        0   LOCAL1
+       /4   SENSE-2
+        9   ;+4
+       /4   SHC-2
+       /2   SHL-2
+        8   ;+3
+       /4   SHL-2
+       /2   SHC-2
+       /5   SHL-2
+        8   NOFULL
+TC 0 FACTOR-2
+TB 0 LEVEL+4
+PMIN
+/4 CORECT-2
+2 +0
+/5 CORECT-2
+8 PP
+QL
+/4 LEVEL+4
+/2 CORECT-2
+8 QK

@@ -1,0 +1,86 @@
+﻿c Algol function codes: recursive nested procedures
+c FINDFP work out!
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin" 
+    "integer" m;
+    "procedure" a (i); 
+    "value" i; "integer" i; 
+    "begin"
+        "procedure" b (j, p); 
+        "value" j; "integer" j;
+	"procedure" p;
+        "begin"
+	    "procedure" c (k, p);
+	    "value" k; "integer" k;
+            "procedure" p;
+	    "begin"
+	        "procedure" d (l, p);
+		"value" l; "integer" l;
+                "procedure" p;
+                "begin"
+	            "print" {D:}, sameline, i+j+k+l, {{L}};
+                    "if" l > 1 "then"
+                        d (l-1, p)
+                    "else" "begin"
+			p;
+                        "print" {F:}, sameline, i+j+k+l, {{L}};
+                        stop
+                    "end"
+	        "end" d;
+	        "print" {C:}, sameline, i+j+k, {{L}};
+                "if" k > 10 "then"
+		    c (k-10, p)
+                "else" d (2, p)
+	    "end" c;
+            "print" {B:}, sameline, i+j, {{L}};
+            "if" j > 100 "then"
+	        b (j-100, p)
+            "else" c (20, p)
+        "end" b;
+        "procedure" e;
+        "begin"
+	    "print" {E:}, sameline, i, {{L}};
+        "end";
+       "print" {A:}, sameline, i, {{L}};
+       "if" i > 1000 "then"
+            b (200, e)
+       "else" a(i+1000)
+    "end" a;
+    a(1000)
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t
+

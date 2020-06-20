@@ -1,0 +1,72 @@
+﻿on 903 16K
+telecode 903
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline 903
+strings;
+"begin"
+   "comment" 9-FEB-2011: this program must be input as unicode for correct handling of 
+                          special characters;
+	
+   "integer" m; "integer" "array" a[1:100];
+   punch(3); reader(1);
+
+   "print" ''L`common special symbols ‘QSU’ " # ½ $ % & ( ) * + , - . / : ; < = > ❿ ? [ £ ] ↑'L2``;
+
+   m := 1; instring(a, m);
+   m := 1; outstring(a, m);
+
+   "comment" In INNER strings
+             L means Carriage Return Line Feed
+             S means Space
+             R means Runout
+             Q means Quote
+             U means Unquote
+             H means Halt Code
+     Any of these followed by a small integer repeats the
+     character that many times, and
+             B means output a single character with the value
+               of the small integer which follows it, eg B33
+               is Exclamation Mark;
+
+   "print" ''LS2RLS3QQQLS4UUULS5HLS6B135``;
+"end"
+'DUMMY DATA`<! halt !><!!>
+at ptp file TEST.RLB
+c compile
+j 8
+de ptp
+
+c run
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+at ptr file TEST.RLB
+at tty inline
+R
+R
+R
+<!!>
+nonstop on
+select out tty
+nonprinting off
+telecode 903
+j 8
+c runs off reader
+at ptr inline 903
+ ''L`903 Telecode input. ‘QSU’ " ½ $ % & ( ) * + , - . / : ; < = > ❿ [ £ ] ↑ 'B33SB95SB96L``
+<!!>
+r
+c runs off reader
+telecode 900
+at ptr inline 900 
+ ''L@900 Telecode input. {QSU} " £ $ % & ( ) * + , - . / : ; < = > ? [ \ ] ↑ ^ 'B33SB95SB96SB123SB124SB125SB126L@@
+<!!>
+r
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t
+

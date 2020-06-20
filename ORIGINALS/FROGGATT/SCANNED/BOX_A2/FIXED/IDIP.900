@@ -1,0 +1,71 @@
+﻿
+((IDENTIFIER INPUT SUBROUTINE, 8/3/74))
+
+[IDIPL IDIPE NAME CHIPL CHIPE CHIP ERRORL ERRORE]
+
+NAME     >2
+COUNT1   >1
+COUNT2   >1
+IDIPL    >1
+
+(-2)     11   CHIPL
+         8    CHIPE
+
+IDIPE    4    +0
+         5    COUNT1
+         5    COUNT2
+         5    NAME
+         5    NAME+1
+
+STAKJ1   4    CHIP
+         2    +90      (90-C, test if > u.c. letter)
+         9    ;+2
+         8    ;+3
+         1    +32      (122-C, test if > l.c. letter)
+         9    STAKJ3
+         2    +25      (C-65 or 97, test if < letter)
+         9    STAKJ3
+         1    +33      (C-32 or 64, gives 6-bit code)
+
+STAKJ2   0    COUNT1
+         /8   ;+1
+         8    ;+8
+         8    ;+9
+         8    ;+10
+         8    ;+4
+         8    ;+6
+         8    ;+7
+         8    STAKJ4
+
+         10   COUNT2
+         0    +0
+         14   6
+         0    +0
+         14   6
+         0    COUNT2
+         /1   NAME
+         /5   NAME
+         10   COUNT1
+
+STAKJ4   11   CHIPL
+         8    CHIPE
+         2    +57      (57-C, test if > digit)
+         9    STAKJ1
+         2    +9       (C-48, test if < digit)
+         9    STAKJ1
+         1    +16      (C-32, gives 6-bit code)
+         8    STAKJ2
+
+STAKJ3   4    COUNT1
+         7    ERROR    (CHIP not letter on entry)
+         0    IDIPL
+         /8   1
+
+ERROR    11   ERRORL
+         8    ERRORE
+         £IDI
+         £P E
+         £RRO
+         £R 1
+         £.
+<! Halt !>

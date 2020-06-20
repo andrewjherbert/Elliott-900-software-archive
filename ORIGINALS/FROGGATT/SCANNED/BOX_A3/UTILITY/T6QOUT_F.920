@@ -1,0 +1,161 @@
+﻿
+((INTEGER, FRACTION, & OCTAL OUTPUT SUBROUTINE, 22/10/68)
+
+[T6 QOUT1 PRTL PRTEI PRTEF PRTEO]
+
+T6 QOUT1
+PRTL     >1
+
+(T6+1 QOUT1+1)
+         8    PRTEI
+
+(T6+2 QOUT1+2)
+         8    PRTEF
+
+(T6+3 QOUT1+3)
+PRTEO    5    WORD
+(+1)     4    -6
+         5    DOTPOS
+         5    SUPRES
+         8    SETFLG
+
+PRTEF    5    WORD
+         1    &400000
+         7    PRTEO+1
+         4    +144     (<S>)
+         8    SETFLG
+
+PRTEI    5    WORD
+         1    &400000
+         7    PRTEO+1
+         4    +0
+         5    DIGICT
+
+SETFLG   5    FLAG
+
+         0    PRTL
+         /4   1
+         9    ;+4
+         4    +144     (<S>)
+         15   6144
+         8    ;+2
+         4    +18      (<N>)
+         15   6144
+
+         4    FLAG
+         9    AMPAS
+
+         /4   1
+         6    =0 8191  (N)
+         2    +6       (6-N)
+         9    ERROR    (Error if N>6)
+         2    +0       (N-6)
+         5    DOTPOS   (For integers, 6-N digits before .)
+
+         4    FLAG
+         7    ;+4
+         4    DOTPOS   (N-6)
+         2    -6       (-N)
+         5    DOTPOS   (For fractions, N digits before .)
+
+         /4   1
+         6    =15 0
+         14   8179     (F)
+         2    +6       (6-F)
+         1    DOTPOS   (6-F+DOTPOS; -SUPRES+DOTPOS)
+         9    ERROR    (Error if -SUPRES<-DOTPOS)
+         2    DOTPOS   (F-6; SUPRES)
+         5    SUPRES   (6-F digits to be printed)
+
+         4    WORD
+         9    ;+3
+         4    +45      ([+])
+         8    ;+5
+         2    +0
+         5    WORD
+         4    +11      ([-]-6-[&])
+AMPAS    1    +35      (Add +6+[&])
+         15   6144     ([+], [-], or [&])
+
+         4    +0
+         5    ZERMKR
+
+NEXTDG   4    DOTPOS
+         10   DOTPOS
+         7    ;+4
+         4    DOTPOS
+         7    ;+4
+         8    ;+4
+         4    +63      ([.])
+         15   6144
+         10   ZERMKR
+
+         4    FLAG
+         9    OCTAL
+         7    INTGR
+
+(FRACT)  4    WORD
+         12   +10
+         3    WORD
+         7    SETSUB
+         8    SETSUB-1
+
+INTGR    5    SUBCT
+         4    WORD
+         0    DIGICT
+         /1   POWTEN
+         9    SETSUB+1
+         5    WORD
+         10   SUBCT
+         10   ZERMKR
+         8    ;-5
+
+OCTAL    2    WORD     (Set Q-register)
+         4    WORD
+         14   3
+         5    WORD
+         6    &7
+
+(-1)     10   ZERMKR
+SETSUB   5    SUBCT
+(+1)     4    ZERMKR
+         7    LEADZR
+
+         0    SUBCT
+         4    &1131
+         /14  8187
+         6    +16
+         1    +32
+         1    SUBCT
+         8    ;+3
+
+LEADZR   4    FLAG
+         7    ;+2
+         15   6144
+
+         10   DIGICT
+         10   SUPRES
+         4    SUPRES
+         9    NEXTDG
+
+         0    PRTL
+         /8   2
+
+ERROR    15   6144
+         8    ;-1
+
+POWTEN   -100000
+         -10000
+         -1000
+         -100
+         -10
+         -1
+
+WORD     >1
+FLAG     >1
+DOTPOS   >1
+SUPRES   >1
+DIGICT   >1
+ZERMKR   >1
+SUBCT    >1
+<! Halt !>

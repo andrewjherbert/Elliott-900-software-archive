@@ -1,0 +1,599 @@
+﻿
+(A J HERBERT -- 16/01/12				)
+(Program to demonstrate shellsort			)
+
+(Shellsort Summary					)
+(							)
+( 11 SHELLSORT						)
+( 8  SHELLSORT+1					)
+( 0  SORTAB		address of sort table           )
+(							)
+(Sort Table						)
+(	Word 0:	number of records			)
+(	Word 1: number of words in each record		)
+(	Word 2: address of first word of first record	)
+(	Word 3: sort list 				)
+(	Word 4:	word of first key - first word is word 1)
+(	Word 5: mask of first key			)
+(	etc, etc for up to 9 keys			)
+(	+0 to terminate					)
+(							)
+(Sort List						)
+(	Word 0: +1 ascending order, -1 descending order )
+(	Word 1: highest priority key			)
+(	Word 2: next highest priority key		)
+(	etc						)
+(	+0 to terminate					)
+
+
+["MAIN "NEWLIN "NEWLI2 "OUTSTR SHELLSORT
+ QDOUT QIN1 QOUT1 QCHIN QCHOP]
+
+	(set up interrupt handling)
+	4	L2ENT
+	5	2
+	4	L3ENT
+	5	4
+	4	L4ENT
+	5	6
+IGNORE	15	7168
+	8	;-1		(ignore interrupts)
+L2ENT
+L3ENT	0 IGNORE
+L4ENT	0 MAIN
+
+(file data structure			 )
+( record format:			 )
+( word 1: element symbol as alphanumeric )
+( word 2: atomic number			 )
+( word 3: atomic weight			 )
+
+SORTAB	>1			(number of records)
+WDS	>1			(words per record)
+LOC	>1			(location of file)
+SORTLI	>1			(sort list)
+	+1			(word of first key)
+	&000077			(mask of first key)
+	+1			(word of second key)
+	&007700			(mask of second key)
+	+2			(word of third key)
+	&377777			(mask of third key)
+	+3			(word of fourth key)
+	&377777			(mask of fourth key)
+	+0			(end of sort table)
+
+FILE 	>+900			(file)
+FILEP	0 FILE			(address of FILE)
+MFILEN	-300			(records in FILE)
+
+RECP	>1			(pointer to current record)
+
+(sortlist to sort by name)
+BYNAM	+1			(ascending order)
+	+1			(key 1)
+	+2			(key 2)
+	+0
+BYNAMP	0 BYNAM
+
+(sortlist to sort by reverse atomic number)
+BYNUM	-1			(descending)
+	+3			(key 3)
+	+0
+BYNUMP	0 BYNUM	
+
+(sortlist to sort by atomic weight)
+BYWT	+1			(ascending)
+	+4			(key 4)
+	+0
+BYWTP	0 BYWT
+
+CH	>1			(input character)
+
+	
+MAIN	(housekeeping)
+	4	+0
+	5	SORTAB		(number of records in file)		
+	4	+3
+	5	WDS		(words per record)
+	5	QDOUT		(teleprinter output)
+	4 	FILEP		
+	5	LOC		(location of file)
+	5	RECP		(current record)
+
+	(output title)
+	11	NEWLIN
+	8	NEWLI2
+	11 	OUTSTR
+	8	OUTSTR+1
+	\SHE
+	\LLS
+	\ORT
+	\ DE
+	\MON
+	\STR
+	\ATI
+	\ON
+	\A.J
+	\. H
+	\ERB
+	\ERT
+	\ 16
+	\/01
+	\/12
+	\^
+	11	NEWLIN
+	8	NEWLIN+1
+
+INREC	(loop reading file records)
+	4	+0
+	5	QIN1+2		(scale factor 10^0)
+	11	QIN1
+	8	QIN1+1		(read atomic weight [integer])
+	0	RECP
+	/5	1		(store in current record)
+
+	(if not integer)
+	4	QIN1+125	
+	7	CHKNO		
+	(then)
+	0	RECP
+	/4	1
+	11	QOUT1
+	8	QOUT1+2		(print fraction)
+	/1 0			(newline, digits[5])
+	11	NEWLIN
+	8	NEWLIN+1
+	11	OUTSTR
+	8	OUTSTR+1
+	\ATO
+	\MIC
+	\ NU
+	\MBE
+	\R N
+	\OT
+	\AN
+	\INT
+	\EGE
+	\R^
+	8	ERROR
+
+
+CHKNO	0	RECP
+	/4	1
+	9	SORT		(-ve terminates input)
+	11	QOUT1
+	8	QOUT1+1		(print integer)
+	/0 0			(newline, digits[6])
+	0	RECP
+	/4	1
+	7	BADANO
+
+	(if atomic no > 99)
+	1	-100
+	9	ANOK		
+	(then error)
+BADANO	11	NEWLIN
+	8	NEWLIN+1
+	11 	OUTSTR
+	8 	OUTSTR+1
+	\ATO
+	\MIC
+	\ NU
+	\MBE
+	\R O
+	\UT
+	\OF
+	\RAN
+	\GE^
+	8	ERROR		(halt on error)
+	
+	(read atomic symbol -- e.g. H, Cu)
+	(skip white space)
+ANOK	11	QCHIN
+	8	QCHIN+1	
+	7	ANOK		(skip space/tab)
+	5	CH
+	4	+0
+	11	QCHOP		(print space)
+	8	QCHOP+1
+	4	CH
+	11	QCHOP
+	8	QCHOP+1
+
+	(first letter)
+	(if "A" <= ch <= "Z")
+	4	CH
+	1 	-33		
+	9	ASERR		(< "A" [33])
+	1	-26
+	9	;+2
+	8	ASERR		(> "Z" [58])
+	(then)
+	4	CH
+	0	RECP
+	/5	0		(store in current record)
+	8	LET2		
+	(else)
+ASERR	11	NEWLIN		(output error message)
+	8	NEWLIN+1
+	11	OUTSTR
+	8	OUTSTR+1
+	\ERR
+	\OR
+	\IN
+	\ATO
+	\MIC
+	\ SY
+	\MBO
+	\L ^
+	8	ERROR
+
+LET2	(second letter)
+	11	QCHIN
+	8	QCHIN+1
+
+	(if space)
+	7	;+2
+	8	LET2A
+	(then single letter element)
+	4	+0
+	11	QCHOP
+	8	QCHOP+1
+	8	ATWT
+	
+	(else two letter element)
+LET2A	5	CH
+	11	QCHOP
+	8	QCHOP+1
+	4	CH
+	1 	-33		
+	9	ASERR		(< "A" [33])
+	1	-26
+	9	;+2
+	8	ASERR		(> "Z" [58])
+	(then)
+	4	CH
+	14	6		(pack letter)		
+	0	RECP
+	/1	0		(combine with first letter)
+	/5	0		(store in current record)
+
+	(read atomic weight -- mixed 1-242)
+ATWT	4	+3
+	5	QIN1+2		(scale factor 10^3)
+	11	QIN1
+	8	QIN1+1		(read number)
+	0	RECP
+	/5	2		(store in current record)
+
+	(if integer)
+	4	QIN1+125
+	7	;+2
+	8	CHKWT
+	(then)
+	0	RECP
+	/4	2
+	11	QOUT1
+	8	QOUT1+1		(print integer)
+	0 0			(sameline, digits[6])
+	11	NEWLIN
+	8	NEWLIN+1
+	11	OUTSTR
+	8	OUTSTR+1
+	\ATO
+	\MIC
+	\ WE
+	\IGH
+	\T M
+	\UST
+	\ BE
+	\ A
+	\MIX
+	\ED
+	\NUM
+	\BER
+	\^
+	8	INREC
+
+	(if atomic wt > 0)
+CHKWT	0	RECP
+	/4	2
+	11	QOUT1
+	8	QOUT1+2		(print fraction)
+	0 3			(sameline, digits[6], scale 10^3)
+	0 	RECP
+	/4 	2
+	7	NEGWT
+	9	NEGWT
+	(then atomic wt > 0)
+	4	RECP		(increment file pointer)
+	1	+3
+	5	RECP
+	10	SORTAB		(increment record count)
+
+	(if record count < file length)
+	1	MFILEN
+	(then)
+	9	INREC		(get next record)
+	(else)
+	11	NEWLIN
+	8	NEWLIN+1
+	11	OUTSTR
+	8	OUTSTR+1
+	\FIL
+	\E F
+	\ULL
+	\^
+	8	SORT
+
+	(else - atomic wt <= 0)
+NEGWT	11	NEWLIN
+	8	NEWLIN+1
+	11	OUTSTR
+	8	OUTSTR+1
+	\ATO
+	\MIC
+	\ WE
+	\IGH
+	\T M
+	\UST
+	\BE
+	\GRE
+	\ATE
+	\R T
+	\HAN
+	\ ZE
+	\RO^
+	8	INREC
+
+	(end input data loop)
+
+	(recover from input error)
+ERROR	11 	QCHIN
+	8	QCHIN+1
+	1	-1
+	7	INREC		(next newline found)
+	8	ERROR
+
+SORT		(print data)
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\INP
+	\UT
+	\FIL
+	\E^
+	11	PRFILE
+	8	PRFILE+1
+
+	(sort by element name)
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\SOR
+	\T B
+	\Y S
+	\YMB
+	\OL^
+	4	BYNAMP
+	5	SORTLI		(pointer to sort list)
+	11	SHELLSORT
+	8	SHELLSORT+1
+	0	SORTAB
+
+	(print data)
+	11	PRFILE
+	8	PRFILE+1
+
+	(sort by reverse atomic number)
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\SOR
+	\T B
+	\Y N
+	\UMB
+	\ER
+	\(DE
+	\SCE
+	\NDI
+	\NG)
+	\^
+	4	BYNUMP
+	5	SORTLI		(pointer to sort list)
+	11	SHELLSORT
+	8	SHELLSORT+1
+	0	SORTAB
+
+	(print data)
+	11	PRFILE
+	8	PRFILE+1
+
+	(sort by atomic weight)
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\SOR
+	\T B
+	\Y W
+	\EIG
+	\HT^
+	4	BYWTP
+	5	SORTLI		(pointer to sort list)
+	11	SHELLSORT
+	8	SHELLSORT+1
+	0	SORTAB
+
+	(print data)
+	11	PRFILE
+	8	PRFILE+1
+
+	(print end message)
+END	11 	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\END
+	\^
+	8	;+0
+
+(subroutine to print out sort file)
+PRFILE	+0			(link)
+
+	(housekeeping)
+	4	SORTAB		(count of records in file)
+	2	+0
+	5	RECCT
+	7	PEND
+	4	FILEP		(set RECP to start of file)
+	5	RECP
+
+	(print title)
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\SYM
+	\
+	\NUM
+	\BER
+	\ WE
+	\IGH
+	\T^
+
+	(loop to output next record)
+PFLOOP	11	NEWLIN
+	8	NEWLIN+1
+	0	RECP
+	/4	0		(atomic symbol)		
+	6	&77		(first character)
+	11	QCHOP
+	8	QCHOP+1
+	0	RECP
+	/4	0		
+	14	8186		(second character)
+	7	PRCH		(no second character - print space)
+	1	-33		(convert A to 0)
+	5 	CH
+	0	CH
+	/4	CHTAB		(look up lower case version)
+	1	=/0 0		(flag as telecode)
+PRCH	11	QCHOP
+	8	QCHOP+1
+	0	RECP
+	/4	1		(atomic number)
+	11	QOUT1
+	8	QOUT1+1
+	0 0			(digits[2])
+	0	RECP
+	/4	2		(atomic wt)
+	11	QOUT1
+	8	QOUT1+2
+	0 3			(digits[6], scale factor 10^3)
+	10	RECCT
+	4	RECCT
+	7	PEND		(exit if all printed)
+	10 	RECP		(advance record pointer)
+	10	RECP
+	10	RECP
+	8	PFLOOP
+
+(table of lower case letters)
+CHTAB   +225 
+	+226 
+	+099 
+	+228 
+	+101 
+	+102 
+	+231 
+	+232 
+	+105 
+	+106
+	+235 
+	+108 
+	+237 
+	+238 
+	+111 
+	+240 
+	+113 
+	+114 
+	+243 
+	+116
+	+245 
+	+246 
+	+119 
+	+120 
+	+249 
+	+250
+
+PEND	0	PRFILE		(all records printed)
+	/8	1
+
+RECCT	>1			(count of records left to output)
+
+[NEWLIN NEWLI2 QCHOP]
+
+(subroutine to output a sequence of newlines)
+(enter at NEWLIN+1 for one newline          )
+(enter at NEWLI2 for multiple newlines      )
+(with count in accumulator                  )
+
+NEWLI2	4	-2
+	8	;+4		(set count to -2)
+NEWLIN	+0
+	4 	+1		(entry for one NEWLIN)
+	2 	+0		(entry for multiple NEWLINs)
+	5 	COUNT
+LOOP	7 	EXIT
+	4 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	10 	COUNT
+	4 	COUNT
+	 8 	LOOP
+EXIT	0 	NEWLIN
+	/8 	1
+COUNT	>1
+
+[OUTSTRI QCHOP]
+
+(subroutine to output a string)
+
+OUTSTR 	+0
+LOOP	0 	OUTSTR
+	/4 	1		(next word in string)
+	14 	8180		(first char)
+	6 	+63
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	14 	8186
+	6 	+63		(second char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	6 	+63		(third char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	 8 	QCHOP+1
+	10 	OUTSTR
+	8 	LOOP
+EXIT	0 	OUTSTR
+	/8 	2
+
+%
+<! halt !>

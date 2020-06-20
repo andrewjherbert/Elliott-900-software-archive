@@ -1,0 +1,55 @@
+﻿         8    GET+1
+         0    DNO
+         /5   SIZE
+        4   PHIP
+        7   ;+3
+  /4   SIZE
+  /5   STSAVE-2
+
+
+         11   GET
+         8    GET+1
+         0    DNO
+         /5   OFFP
+         11   GET
+         8    GET+1
+         0    DNO
+         /5   SCAL
+11 GET
+8 GET+1
+0 DNO
+6 &17777
+1 =14 0
+/5 LSHIFT
+5 ;+2
+/4 SIZE
++0
+/5 STEP
+11 GET
+8 GET+1
+0 DNO
+2 +0
+6 &17777
+1 =14 0
+/5 RSHIFT
+
+
+            /4         INITVAL
+            /5         INITSAVE
+         4    +0
+         5    LOCAL1
+STAR     /4   TABENTRY
+         1    LOCAL1
+         5    7
+         4    +0
+         /5   0
+         10   LOCAL1
+         4    DNO
+         0    DNO
+         2    +3
+         7    ;+5
+         4    LOCAL1
+         2    +300
+         7    ;+6
+         8    STAR
+         4    LOCA

@@ -1,0 +1,25 @@
+﻿
+on 903
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+
+select out tty
+nonprinting off
+at ptr file ../../MASTERS//WILLETTS/SIR1.900
+j 8
+
+at ptr file ../../MASTERS/HERBERT/SIO.900
+j 9
+
+at ptr inline
+%
+<! halt !><!!>
+j 9
+
+c run program
+select out tty
+at ptr file ../../MASTERS/WILLETTS/SIR1DATA.900
+j 35
+
+sh t

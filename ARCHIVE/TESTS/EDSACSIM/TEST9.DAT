@@ -1,0 +1,16 @@
+﻿c Table of Squares under Initial Orders 1.
+
+on 903
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/EDSACSIM/PROGRAMS_MCK/SQUARES.900
+c Set IO1
+j 36
+C START
+nonstop on
+s 2500000
+j 32
+
+sh t

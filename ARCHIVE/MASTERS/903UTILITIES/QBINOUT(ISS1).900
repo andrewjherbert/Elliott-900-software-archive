@@ -1,0 +1,58 @@
+﻿<! Legible Header  OOO    OOO   OOOOO        OOO        OOOO   OOOOO  O   O   OOO   O   O  OOOOO       OOOOO    O  OOOOO       OOOOO   OOO    OOO   O   O  OOOOO         O  !>
+<! Legible Header O   O  O   O     O        O   O       O   O    O    OO  O  O   O  O   O  OOOOO       OOOOO  OOO      O         O    O   O  O   O  O   O  O           OOO  !>
+<! Legible Header O   O  O   O    O         O   O       O   O    O    OO  O  O   O  O   O    O           O    OOO     O          O    OO     OO     O   O  O           OOO  !>
+<! Legible Header  OOOO  O   O    OO        O   O       OOOO     O    O O O  O   O  O   O    O           O      O    O           O     OO     OO    O   O  OOOO          O  !>
+<! Legible Header     O  O   O              O   O       O   O    O    O   O  O   O  O   O    O           O      O                O                  O   O  O             O  !>
+<! Legible Header     O  O   O      O       O   O       O   O    O    O  OO  O   O  O   O    O           O      O   O            O       O      O   O   O  O             O  !>
+<! Legible Header OOOOO  O   O      O       O  O        OOOOO    O    O  OO  O   O  OOOOO    O           O      O                O    O   O  O   O  OOOOO  O             O  !>
+<! Legible Header OOOO    OOO   OOOO         OO O       OOOOO  OOOOO  O   O   OOO   OOOOO    O           O      O  O           OOOOO  OOOO   OOOO   OOOOO  OOOOO         O  !>
+
+[ QBINOUT ]
+QBINOUT
+4 37;
+11 21;
+8 22;
+4 38;
+11 21;
+8 22;
+4 39;
+5 41;
+11 21;
+8 22;
+4 40;
+5 42;
+0 42;
+/4 0
+11 21;
+8 22;
+10 41;
+4 41;
+7 18;
+10 42;
+8 12;
++0
+5 43;
+4 44;
+15 6144
+0 43;
+4 45;
+14 4
+15 6144
+4 45;
+14 7
+15 6144
+4 45;
+14 7
+15 6144
+0 21;
+/8 1
+0 8179
+8 8182
++0
++0
++0
++0
++0
++76
++0
+<! Halt !>

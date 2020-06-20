@@ -1,0 +1,27 @@
+﻿         /0   0
+
+         8    PHILPRO
+
+ONT      0    LOCAL1
+         /4   BASE
+         7    TESFUL
+         /4   TOTAL1
+         /12  SIZE
+         14   14
+         /5   TOTAL1
+         6    +31
+         5    MUM
+         /4   POSN+4
+         2    MUM
+         /5   POSN+4
+         /4   TOTAL1
+         14   8187
+         /2   BASE
+         /5   TOTAL1
+
+         /4   VALORD
+         2    +2
+         11   OUTPUT
+         7    OUTPUT+1
+TESFUL   0    LOCAL1
+         /4   FUL

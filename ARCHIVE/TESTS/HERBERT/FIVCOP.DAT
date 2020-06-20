@@ -1,0 +1,41 @@
+﻿C test 5 hole tape copy
+
+on 903 8K
+
+C generate an EDSAC code tape
+at ptr file ../../MASTERS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/EDSACSIM/PROGRAMS_MCK/DODDGLENNIE.900
+at ptp file TEST.BIN
+j 42
+de ptp
+st 756
+
+C load FIVCOP
+at ptr file ../../SCRIPTS/HERBERT/FIVCOP.BIN
+j 8181
+st 8175
+
+at ptr file TEST.BIN
+at ptp file COPY.BIN
+
+c read master
+j 8
+st 42
+
+c check
+rewind
+j 10
+de ptp
+st 75
+
+compare TEST.BIN COPY.BIN
+
+delete TEST.BIN 
+delete COPY.BIN
+
+sh t
+
+ 

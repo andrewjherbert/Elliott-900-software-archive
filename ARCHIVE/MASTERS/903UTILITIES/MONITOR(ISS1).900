@@ -1,0 +1,716 @@
+﻿<! Legible Header  OOO    OOO   OOOOO       O   O   OOO   O   O  OOOOO  OOOOO   OOO   OOOO        OOOOO   OOO    OOO   O   O  OOOOO         O  !>
+<! Legible Header O   O  O   O     O        OO OO  O   O  OO  O    O    OOOOO  O   O  OOOOO         O    O   O  O   O  O   O  O           OOO  !>
+<! Legible Header O   O  O   O    O         OOOOO  O   O  OO  O    O      O    O   O  O   O         O    OO     OO     O   O  O           OOO  !>
+<! Legible Header  OOOO  O   O    OO        O O O  O   O  O O O    O      O    O   O  OOOOO         O     OO     OO    O   O  OOOO          O  !>
+<! Legible Header     O  O   O              O   O  O   O  O   O    O      O    O   O  OO            O                  O   O  O             O  !>
+<! Legible Header     O  O   O      O       O   O  O   O  O  OO    O      O    O   O  O O           O       O      O   O   O  O             O  !>
+<! Legible Header OOOOO  O   O      O       O   O  O   O  O  OO    O      O    O   O  O  O          O    O   O  O   O  OOOOO  O             O  !>
+<! Legible Header OOOO    OOO   OOOO        O   O   OOO   O   O  OOOOO    O     OOO   O   O       OOOOO  OOOO   OOOO   OOOOO  OOOOO         O  !>
+
+
+( AJH 06/04/2012 corrected [[READ)
+[READ
+ADDRESS
+MODE
+ECT
+BUFFCT
+SUM
+INTCT
+CLASS
+WS
+WSA
+BUFFER
+CONSPAN
+ENTRY]
+BEGIN     8     READ
+          4     +1
+          5     ECT
+          8     RESTORE
+
+READ      4     +1
+          5     LASTSEP
+          4     +0
+          5     MODE
+          5     ECT
+          5     MONCT
+          4     CONSPAN
+          5     BUFFCT
+NEWINT    4     +0
+          5     SUM
+          5     INTCT
+IGNORE    4     +0
+          5     WSA
+          15    2048
+          5     CHAR
+NEXTBIT   10    WSA
+          7     PARCHK
+          5     WS
+          2     +0
+          6     WS
+          2     WS
+          8     NEXTBIT
+PARCHK    4     WSA
+          6     +1
+          7     ERRA
+          4     CHAR
+          6     +31
+          5     WS
+          2     CHAR
+          14    8189
+          6     +12
+          2     +0
+          5     WSA
+          0     WS
+          /4    TABLE
+          0     WSA
+          /14   0
+          6     +15
+          5     CLASS
+          4     LASTSEP
+          1     +3
+          7     NEGNO
+          4     SUM
+          8     BOTH
+NEGNO     4     SUM
+          2     +0
+BOTH      0     +0
+          14    2
+          1     CLASS
+          1     -4
+          0     BUFFCT
+          /5    BUFFER
+          0     CLASS
+          /8    ZA
+ZA        8     ERRB
+          8     IGNORE
+          8     DIGIT
+          8     MINUS
+          8     PLUS
+          8     SLASH
+          8     COMMA
+          4     INTCT
+          7     NOINT
+          4     LASTSEP
+          7     NEWMODE
+          8     TOGETHER
+DIGIT     4     SUM
+          12    +10
+          3     SUM
+          5     WS
+          4     CHAR
+          6     +15
+          1     SUM
+          5     SUM
+          10    INTCT
+          6     &600000
+          1     WS
+          7     IGNORE
+          8     ERRC
+COMMA     4     +8191
+          2     SUM
+          9     PLUS
+          8     ERRH
+MINUS     0     BUFFCT
+          /10   BUFFER
+PLUS
+SLASH     4     INTCT
+          7     ERRD
+          0     CLASS
+          /4    SEPTAB-3
+          0     LASTSEP
+          /14   3
+          9     ERRE
+          8     TOGETHER
+NOINT     4     LASTSEP
+          7     STMODE
+          9     ERRD
+          8     BLANKLINE
+NEWMODE   4     SUM
+          5     MODE
+          2     +31
+          9     ERRF
+STMODE    4     MODE
+          0     BUFFCT
+          /5    BUFFER
+TOGETHER  10    BUFFCT
+BLANKLINE 4+6
+          2     CLASS
+          5     LASTSEP
+          7     EXTRACT
+          8     TESTH
+EXTRACT   0     SUM
+          /4    0
+          0     BUFFCT
+          /5    BUFFER
+          10    BUFFCT
+          10    MONCT
+          4     MONCT
+          2     +10
+          9     ERRG
+TESTH     4     CHAR
+          2     +20
+          7     END
+          8     NEWINT
+END       4     +32766
+          0     BUFFCT
+          /5    BUFFER
+
+RESTORE   4     +0
+          5     MONCT
+          4     CONSPAN
+          5     BUFFCT
+
+LOOP      11    ADDRESS
+          8     ADDRESS+1
+          8     LOOP
+          8     POINT
+          8     LOOP
+POINT     5     WS
+          2     +8191
+STOP      7     STOP
+
+          4     ECT
+          7     MODPROG
+          0     BUFFCT
+          /4    BUFFER
+          8     JOIN
+MODPROG   4     MONCT
+          2     PLANT
+          10    MONCT
+JOIN      0     WS
+          /5    0
+          10    BUFFCT
+          10    BUFFCT
+          8     LOOP
+ERRH      10    ECT
+ERRG      10    ECT
+ERRF      10    ECT
+ERRE      10    ECT
+ERRD      10    ECT
+ERRC      10    ECT
+ERRB      10    ECT
+ERRA      4     PARBIT
+
+          0     ECT
+          /14   0
+          6     &000200
+          1     ECT
+          1     +49
+          5     MESSAGE+9
+          4     +0
+          5     ECT
+ERROUT    0     ECT
+          /4    MESSAGE
+          15    6148
+          10    ECT
+          9     ERROUT
+ESTOP     8     ESTOP
+TABLE           &000021
+                &000000
+                &000000
+                &000000
+                &000000
+                &000000
+                &000000
+                &000000
+                &000000
+                &000001
+                &000007
+                &000101
+                &000140
+                &000061
+                &000000
+                &000120
+                &000040
+                &000040
+                &000040
+                &000040
+                &000047
+                &000040
+                &000040
+                &000040
+                &000040
+                &000040
+                &000000
+                &000000
+                &000000
+                &000000
+                &000000
+                &010000
+PLANT     8     ENTRY
+LASTSEP         +0
+MONCT           +0
+CHAR            +0
+SEPTAB          &040000
+                &040000
+                &140000
+                &740000
+PARBIT          &000323
+MESSAGE         &400215
+                &400012
+                &400000
+                &400305
+                &400322
+                &400322
+                &400317
+                &400322
+                &400240
+                +0
+
+
+
+
+
+
+[MONITOR
+ECT
+BUFFCT
+MODE
+TAB
+SPACECT
+CURRADD
+WS
+WSA
+BUFFER
+ENTRY
+ADDRESS
+LINE
+DECOUT
+CONSPAN
+OUTCONT]
+MONITOR   10    ECT
+          10    ECT
+          10    ECT
+          10    ECT
+          10    ECT
+          10    ECT
+          10    ECT
+          10    ECT
+          10    ECT
+ENTRY     5     AQ
+          14    18
+          5     AQ+1
+          4     1
+          5     BA
+          4     3
+          5     BB
+          4     5
+          5     BC
+          4     7
+          5     BD
+          4     CONSPAN
+          5     BUFFCT
+AGAIN     11    ADDRESS
+          8     ADDRESS+1
+          8     AGAIN
+          8     COMMA
+          8     AGAIN
+COMMA     5     MONPT
+          1     &200001
+          5     INSTN+1
+          10    BUFFCT
+          10    BUFFCT
+          4     ECT
+          7     FOUND
+          1     -1
+          5     ECT
+          8     AGAIN
+FOUND     0     BUFFCT
+          /4    BUFFER-2
+          5     INSTN
+          /4    BUFFER-1
+          5     MODE
+          6     +1
+          5     TAB
+          11    LINE
+          8     LINE+1
+          4     +170
+          15    6144
+          4     MONPT
+          11    DECOUT
+          8     DECOUT+1
+          11    LINE
+          8     LINE+1
+          4     MODE
+          6     +2
+          7     NOREG
+          11    LINE
+          8     LINE+1
+          4     +65
+          15    6144
+          10    SPACECT
+          4     AQ
+          11    OUTCONT
+          8     OUTCONT+1
+          4     +209
+          15    6144
+          10    SPACECT
+          4     AQ+1
+          11    OUTCONT
+          8     OUTCONT+1
+NOREG     11    ADDRESS
+          8     ADDRESS+1
+          8     SINGLE
+          8     END
+          5     CURRADD
+          11    ADDRESS
+          8     ADDRESS+1
+          5     ENDADD
+          2     CURRADD
+          9     CURRLESS
+          5     ENDADD
+          2     CURRADD
+          5     CURRADD
+          1     ENDADD
+          8     ZA
+SINGLE    5     CURRADD
+ZA        5     ENDADD
+CURRLESS  11    LINE
+          8     LINE+1
+MULFIVE   4     CURRADD
+          11    DECOUT
+          8     DECOUT+1
+NOTMUL    4     CURRADD
+          2     +7
+          9     NORMAL
+          4     BA
+          5     1
+          4     BB
+          5     3
+          4     BC
+          5     5
+          4     BD
+          5     7
+          4     &100000
+          1     CURRADD
+          5     ZB
+ZB              +0
+          8     BOTH
+NORMAL    0     CURRADD
+          /4    0
+BOTH      11    OUTCONT
+          8     OUTCONT+1
+          4     CURRADD
+          2     ENDADD
+          7     NOREG
+          10    CURRADD
+          4     CURRADD
+REPEAT    5     WS
+          6     +15
+          5     WSA
+          2     WS
+          7     SMALL
+          14    8188
+          1     WSA
+          8     REPEAT
+SMALL     0     WSA
+          4     MASKFIVE
+          /14   0
+          9     MULFIVE
+          8     NOTMUL
+END       4     BA
+          5     1
+          4     BB
+          5     3
+          4     BC
+          5     5
+          4     BD
+          5     7
+          
+          2     AQ+1
+          4     AQ
+INSTN           +0
+                +0
+MASKFIVE        &410204
+AQ              +0
+                +0
+BA              +0
+BB              +0
+BC              +0
+BD              +0
+MONPT           +0
+ENDADD          +0
+
+
+
+
+
+
+[OUTCONT
+MODE
+CURRADD
+WS
+LINE
+SPACE
+DECOUT
+DIGOUT]
+OUTCONT         +0
+          5     OUTNO
+          4     MODE
+          6     +4
+          7     NODEC
+          11    SPACE
+          8     SPACE+1
+          4     OUTNO
+          9     NEG
+          4     +160
+          15    6144
+          4     OUTNO
+          8     PLUS
+NEG       4     +45
+          15    6144
+          4     OUTNO
+          2     +0
+PLUS      11    DECOUT
+          8     DECOUT+1
+NODEC     4     MODE
+          6     +8
+          7     NOOCT
+          11    SPACE
+          8     SPACE+1
+          4     -18
+NEXT      5     OCTCT
+          0     OCTCT
+          4     OUTNO
+          /14   3
+          6     +7
+          11    DIGOUT
+          8     DIGOUT+1
+          4     OCTCT
+          1     +3
+          9     NEXT
+NOOCT     4     MODE
+          6     +16
+          7     NOINST
+          11    SPACE
+          8     SPACE+1
+          4     OUTNO
+          9     MOD
+          4     +160
+          8     ZC
+MOD       4     +175
+ZC        15    6144
+          4     OUTNO
+          14    8179
+          6     +15
+          1     -10
+          9     SINGLE
+          5     WS
+          4     +177
+          15    6144
+          4     WS
+          11    DIGOUT
+          8     DIGOUT+1
+          4     +160
+          8     PUNCH
+SINGLE    1     +10
+          11    DIGOUT
+          8     DIGOUT+1
+          4     +160
+          15    6144
+PUNCH     15    6144
+          4     OUTNO
+          6     &017777
+          11    DECOUT
+          8     DECOUT+1
+NOINST    11    LINE
+          8     LINE+1
+          0     OUTCONT
+          /8    1
+OUTNO           +0
+OCTCT           +0
+
+
+
+
+
+
+[DECOUT
+DIGOUT]
+DECOUT          +0
+          5     REM
+          4     +0
+          5     MARKER
+          5     TABCT
+NEXT      4     +0
+          5     DIGIT
+          0     TABCT
+AGAIN     /4    TENPOW
+          7     END
+          2     REM
+          9     FOUND
+          5     REM
+          10    DIGIT
+          10    MARKER
+          8     AGAIN
+FOUND     /1    TENPOW
+          5     REM
+          4     MARKER
+          7     NONSIG
+          4     DIGIT
+          11    DIGOUT
+          8     DIGOUT+1
+NONSIG    10    TABCT
+          8     NEXT
+END       4     REM
+          11    DIGOUT
+          8     DIGOUT+1
+          0     DECOUT
+          /8    1
+TENPOW          +100000
+                +10000
+                +1000
+                +100
+                +10
+                +0
+REM             +0
+MARKER          +0
+TABCT           +0
+DIGIT           +0
+
+
+
+
+
+
+[ADDRESS
+BUFFCT
+WS
+WSA
+BUFFER]
+ADDRESS         +0
+          4     +0
+          5     CONTENT
+NEXT      0     BUFFCT
+          /4    BUFFER
+          10    BUFFCT
+          5     WS
+          6     +3
+          5     WSA
+          4     WS
+          14    8190
+          0     WSA
+          /8    ZA
+ZA        8     PLUS
+          10    ADDRESS
+          10    ADDRESS
+          1     CONTENT
+          6     &177777
+          0     ADDRESS
+          /8    1
+PLUS      1     CONTENT
+          5     WSA
+          0     WSA
+          /4    0
+          5     CONTENT
+          8     NEXT
+CONTENT         +0
+
+
+
+
+
+
+[DIGOUT
+WS
+SPACECT]
+DIGOUT          +0
+          5     WS
+          0     WS
+          4     PARMASK
+          /14   0
+          14    8190
+          6     &000200
+          1     &000060
+          1     WS
+          15    6144
+          10    SPACECT
+          0     DIGOUT
+          /8    1
+PARMASK         &000646
+
+
+
+
+
+
+[LINE
+TAB
+SPACECT]
+LINE            +0
+          4     TAB
+          7     ZA
+          4     +141
+          15    6144
+          4     +10
+          15    6144
+          4     +0
+          8     ZB
+
+ZA        4     +10
+ZB        15    6144
+          4     -6
+          5     SPACECT
+          0     LINE
+          /8    1
+
+
+
+
+
+
+[SPACE
+TAB
+SPACECT]
+SPACE           +0
+          4     TAB
+          7     ZA
+LOOP      4     +160
+          15    6144
+          10    SPACECT
+          4     SPACECT
+          9     LOOP
+          8     END
+ZA        4     +9
+          15    6144
+END       4     -7
+          5     SPACECT
+          0     SPACE
+          /8    1
+
+
+
+
+
+
+[GLOBAL
+MODE
+ECT
+BUFFCT
+WS
+WSA
+SUM
+CURRADD
+INTCT
+SPACECT
+CLASS
+TAB
+CONSPAN
+BUFFER]
+GLOBAL
+MODE            +0
+ECT             +0
+BUFFCT          +0
+WS              +0
+WSA             +0
+SUM
+CURRADD         +0
+INTCT
+SPACECT         +0
+CLASS
+TAB             +0
+CONSPAN
+BUFFER          +39
+%
+( AJH 06/04/2012 ADDED HALT)
+<! halt !>

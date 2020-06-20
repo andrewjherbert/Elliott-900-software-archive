@@ -1,0 +1,248 @@
+﻿C Kent Programming Prize Competition 1972
+
+
+C Master file create/update run
+C A.J. HERBERT 12 July 2012
+
+on 905 16K
+nonstop on
+nonprinting off
+
+C Sort subroutine
+
+C load MASIR
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j 8181
+st 8164
+
+c assemble sort
+at ptr file ../../MASTERS/HERBERT/KENT_SORT.900
+at ptp file KENT_SORT.BIN
+at tty inline
+O4M
+<!!>
+j 16
+c falls off tty inline
+de ptp
+reverse KENT_SORT.BIN
+
+C Main Program
+C Load Fortran system
+at ptr file ../../MASTERS/905FORTRAN/905FORT(ISS6).BIN
+j 8181
+st 8171
+
+C compile main program
+at ptr file ../../MASTERS/HERBERT/KENT_UPDATE.900
+at ptp file KENT_UPDATE.BIN
+
+at tty inline
+O012R
+<!!>
+j 16
+
+c run out of tty input
+de ptp
+reverse KENT_UPDATE.BIN
+
+c load loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+c load program
+at ptr file KENT_UPDATE.BIN
+at tty inline
+O420L<!!>
+j 16
+
+c reader unloads, load sort
+at ptr file KENT_SORT.BIN
+at tty inline
+O403L<!!>
+j 16
+
+c read unloads, load library tape 1
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB1(ISS4).BIN
+at tty inline
+O403L<!!>
+j 16
+
+c reader unloads, load library tape 2
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB2(ISS5).BIN
+r
+
+c reader unloads
+at tty inline
+MM<!!>
+j 16
+
+c test run with bad data
+
+c call for update tape
+at ptr inline
+AB 1111   2.00
+B3 3333   5.00
+DD 888E   6.00
+AB 2222  -3.50
+BB 3333   4.00
+** 9999   9.57
+[[ 9999   0.00
+<!!>
+at tty inline
+C<!!>
+r
+
+c test run with clean data
+
+c call for update tape
+at ptr inline
+AB 1111   6.00
+BC 3333   5.00
+DD 8888   4.00
+AB 2222   3.50
+BB 3333   2.00
+ZZ 9999   9.57
+[[ 9999   0.00
+<!!>
+at tty inline
+M
+C<!!>
+r
+
+c call for master tape
+at ptp file kent_master.txt
+at ptr inline
+AA 0000   1.00
+AB 1111   1.50
+AB 1155   3.55
+AB 1175   3.75
+EE 8888   9.00
+ZZ 9999   0.25
+[[ 9999   0.00
+<!!>
+at tty inline
+C<!!>
+r
+
+de ptp
+print kent_master.txt
+sh t
+
+c **************************
+
+C Assembly costing run
+C A.J. HERBERT 12 July 2012
+
+c **************************
+
+C Main Program
+C Load Fortran system
+at ptr file ../../MASTERS/905FORTRAN/905FORT(ISS6).BIN
+j 8181
+st 8171
+
+C compile main program
+at ptr file ../../MASTERS/HERBERT/KENT_COSTING.900
+at ptp file KENT_COSTING.BIN
+
+at tty inline
+O012R
+<!!>
+j 16
+
+c run out of tty input
+de ptp
+reverse KENT_COSTING.BIN
+
+c load loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+c load program
+at ptr file KENT_COSTING.BIN
+at tty inline
+O420L<!!>
+j 16
+
+c reader unloads, load sort
+at ptr file KENT_SORT.BIN
+at tty inline
+O403L<!!>
+j 16
+
+c read unloads, load library tape 1
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB1(ISS4).BIN
+at tty inline
+O403L<!!>
+j 16
+
+c reader unloads, load library tape 2
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB2(ISS5).BIN
+r
+
+c reader unloads, run with good data
+at tty inline
+MM<!!>
+j 16
+
+c call for component tape
+at ptr file kent_master.txt
+at tty inline
+C<!!>
+r
+
+c call for ASSEMBLY tape
+at ptr inline
+ASSEMBLY NO. 98J55
+NO.       QTY
+AA 0000     5
+AB 1111     2
+AB 1155    10
+AB 1175     3
+[[ 9999     0
+
+<!!>
+at tty inline
+C<!!>
+r
+
+sh t
+
+c reader unloads, run with bad data
+at tty inline
+M<!!>
+r
+
+c call for component tape
+at ptr file kent_master.txt
+at tty inline
+C<!!>
+r
+
+c call for ASSEMBLY tape
+at ptr inline
+ASSEMBLY NO. 98J55
+NO.       QTY
+AA 0000     5
+AB 1111    -2
+** 1155    10
+DD 1175    -3
+[[ 9999     0
+<!!>
+at tty inline
+C<!!>
+r
+
+delete KENT_SORT.BIN
+delete KENT_UPDATE.BIN
+delete KENT_COSTING.BIN
+
+sh t
+
+
+
+
+
+

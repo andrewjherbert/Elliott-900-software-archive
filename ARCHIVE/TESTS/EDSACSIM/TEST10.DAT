@@ -1,0 +1,19 @@
+﻿c Table of Primes under Initial Orders 1.
+
+on 903
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+nonstop on
+s 1900000
+
+at ptr file ../../MASTERS/EDSACSIM/PROGRAMS_MCK/PRIMES.900
+<!!>
+
+c Set IO1.
+j 36
+c START
+j 32
+
+sh t

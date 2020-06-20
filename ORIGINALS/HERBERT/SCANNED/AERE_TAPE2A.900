@@ -1,0 +1,155 @@
+﻿
+         -1
+TABLE    8    PRE
+         8    TILT
+         8    RUN
+         8    BACK
+         8    GENMOVE
+         8    GENMOVE
+         8    GENMOVE
+         8    WHICH
+         8    STATE8
+         8    STATE9
+
+         8    STATE10
+         8    STATE20
+         8    BRAD
+         8    GENMOVE
+         8    GENMOV
+         8    GENMOV
+
+          8           STAT16          (B01 REPETITION)
+          8           STAT17
+          8           STAT18
+          8           STAT19         (C23/D23 ONLY)
+          8           GENMOVE
+          8           GENMOVE
+          8           GENMOVE
+          8           STAT23
+
+   8   STAT24     (OVER RUN CORRECTION SEPT 1971)
+   8   STAT25
+   8   STAT26
+   >+10
+
+WHICH    0    DIFFRACT
+         /8   ;+1
+LINK     8    ;+0
+         8    ;+0
+         8    ;+0
+         8    ;+0
+
+EXIT     -1
+         -1
+         -1
+         -1
+
+GOON    4   PATTERN
+        2   SCALERS
+        5   SCALERS
+        6   PATTERN
+        7   ;+2
+        8   FAIL-5
+         4    -1
+         5    SCALERS+1
+
+NEG     10  INTVAL
+        10  W
+        4   -1
+        8   RET
+
+GOON1   4   PATTERN+1
+        2   SCALERS
+        5   SCALERS
+        6   PATTERN+1
+        7   ;+2
+        8   FAIL-5
+         4    -1
+         5    SCALERS+1
+
+NEG1     10  INTVAL+1
+        10  W
+        4   -1
+        8   RET1
+
+GOON2   4   PATTERN+2
+        2   SCALERS
+        5   SCALERS
+        6   PATTERN+2
+        7   ;+2
+        8   FAIL-5
+         4    -1
+         5    SCALERS+1
+
+NEG2    10  INTVAL+2
+        10  W
+        4   -1
+        8   RET2
+
+GOON3   4   PATTERN+3
+        2   SCALERS
+        5   SCALERS
+        6   PATTERN+3
+        7   ;+2
+        8   FAIL-5
+         4    -1
+         5    SCALERS+1
+
+NEG3    10  INTVAL+3
+        10  W
+        4   -1
+        8   RET3
+
+[ GENMOVE
+MAXVAL  DIFFRACT  MOVCOUNT  P  PERMIT  NEXT
+  RSF  SCAL  STATE  MASK  FAIL  STCOUNT  INTVAL
+  PATTERN  SCALERS POINT  FORWARD  MOTMASK  MOTLIT
+  POSN  BOSELY ]
+
+GENMOV   0    DIFFRACT
+         /4   MOVCOUNT
+         9 PL
+         4    MOTLIT
+         /6   MOTMASK
+
+         14   1
+         /1   RSF
+         14   8191
+         5    MOTLIT
+         5    MOTLIT+1
+
+         4    PERMIT
+         7    NEXT
+
+         4    +4
+         /2   STATE
+         /5   STATE
+
+         6    +4
+         7    ;+2
+         8    FAIL-3
+         /4   STCOUNT
+         /5   INTVAL
+         4    -1
+         5    SCALERS+1
+
+        /4  PATTERN
+        1   SCALERS
+        5   SCALERS
+        /10 POINT
+        /6  PATTERN
+        7   FAIL-5
+        8   NEXT
+
+
+PL  /4   POSN
+   2   +0
+   /1   MAXVAL+4
+   9   ;+2
+   8   FAIL-2
+   /4   MAXVAL
+   2   +0
+   /1   POSN
+   9   ;+2
+   8   FAIL-2
+

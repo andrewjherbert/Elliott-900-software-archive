@@ -1,0 +1,713 @@
+﻿
+(STORE PROG FOR 1-PASS-SIR & ALDRLB)
+(VERSION A11)
+
+(Corrected A.J.Herbert 20/04/2015)
+
+^4096
+*3
+
+[ STORE QIN QOUT NL ADD RELF QP END ]
+
+STORE 4 +0
+ 5 ADD
+ 4 7
+ 6 +8191
+ 5 BEGIN
+ 4 START
+ 2 END
+ 1 +1
+ 5 LENGTH
+ 4 +1
+ 5 OPT
+ 4 -1
+ 5 MASK
+L 11 NL
+ 8 NL+1
+ 4 +63  (?)
+ 15 6148
+ 4 +0
+ 5 EC
+TTY 15 2052
+ 6 +127
+ 7 TTY
+ 5 CH1
+ 2 +127
+ 7 TTY
+ 4 CH1
+ 1 -1
+ 7 L
+ 1 -37
+ 7 NO
+ 1 -4
+ 7 ASTX
+ 1 -1
+ 7 NO
+ 1 -2
+ 7 NO
+ 1 -2
+ 7 NO
+ 1 -18
+ 7 A
+ 1 -2
+ 7 C
+ 1 -6
+ 7 I
+ 1 -3
+ 7 LIST
+ 1 -1
+ 7 M
+ 1 -2
+ 7 O
+ 1 -3
+ 7 REAL
+ 1 -1
+ 7 S
+ 1 -1
+ 7 T
+ 1 -4
+ 7 8181
+ 4 CH1
+ 1 -32
+ 7 TTY
+ 4 CH1
+ 1 -48
+ 9 L
+ 1 -10
+ 9 ;+2
+ 8 L
+NO 4 CH1
+ 11 QIN
+ 8 QIN+1
+ 5 WORD
+ 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 ADD
+ 0 ADD
+ 4 WORD
+ /5 0
+ 8 L
+
+C 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 FIRST
+ 5 ADD
+ 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 LAST
+ 4 FIRST
+ 2 LAST
+ 9 E4
+ 4 FIRST
+ 5 ADD
+CLR 4 +0
+ 0 ADD
+ /5 0
+ 10 ADD
+ 4 BEGIN
+ 2 ADD
+ 9 CLEAR   (ADD<BEGIN)
+ 4 BEGIN
+ 1 LENGTH
+ 2 ADD
+ 9 ;+2    (ADD<LAST)
+ 8 CLEAR
+ 2 ADD
+ 5 ADD
+CLEAR 4 ADD
+ 2 LAST
+ 9 L
+ 8 CLR
+
+REAL 4 +0
+ 5 QP
+RX 11 QIN
+ 8 QIN+2
+ 5 ADD
+ 0 ADD
+ /4 0
+ 11 QOUT
+ 8 QOUT+1
+ 8 L
+
+I 4 +1
+ 5 QP
+ 4 +0
+ 8 RX
+
+O 4 +2
+ 8 I+1
+
+A 4 +3
+ 8 I+1
+
+ASTX 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 OPT
+ 8 L
+
+M 4 +0
+ 11 QIN
+ 8 QIN+1
+ 5 MASK
+ 8 L
+
+LIST 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 FIRST
+ 9 L
+ 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 LAST
+ 9 L
+ 4 FIRST
+ 2 LAST
+ 9 E4
+ 4 FIRST
+ 5 ADD
+ 4 OPT
+ 14 16
+ 14 8175
+ 6 +3
+ 5 QP
+LISTR 4 BEGIN
+ 2 ADD
+ 9 NOPROB   (BEGIN>ADD)
+ 4 ADD
+ 2 BEGIN
+ 1 LENGTH
+ 9 NOPROB    (ADD>LAST)
+ 4 +0
+ 8 ;+3
+NOPROB 0 ADD
+ /4 0
+ 5 WORD
+ 7 ;+2
+ 8 ;+4
+ 4 OPT
+ 6 +4
+ 7 NEXT
+SPR 11 NL
+ 8 NL+1
+ 4 WORD
+ 11 QOUT
+ 8 QOUT+1
+ 4 OPT
+ 6 +1
+ 7 NEXT
+ 4 ADD
+ 11 QOUT
+ 8 QOUT+2
+NEXT 10 ADD
+ 4 ADD
+ 2 LAST
+ 9 L
+ 8 LISTR
+
+S 4 +0  (SEARCH)
+ 11 QIN
+ 8 QIN+1
+ 5 WORD
+ 4 RELF
+ 5 RELX
+ 7 ;+4
+ 4 ADD
+ 2 WORD
+ 5 WORD
+ 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 FIRST
+ 5 ADD
+ 4 +0
+ 11 QIN
+ 8 QIN+2
+ 5 LAST
+ 4 +0
+ 5 QP
+ 11 NL
+ 8 NL+1
+RSR 4 RELX
+ 7 AB4
+ 4 ADD
+ 6 +8191
+ 1 WORD
+ 5 WORD1
+ 8 LOOK
+AB4 4 WORD
+ 5 WORD1
+LOOK
+ 4 WORD1
+ 6 MASK
+ 5 WORD1
+ 0 ADD
+ /4 0
+ 6 MASK
+ 2 WORD1
+ 7 AGR
+ 10 ADD
+ 4 ADD
+ 2 LAST
+ 9 SNF
+ 8 RSR
+AGR /4 0
+ 5 WORD
+ 4 ADD
+ 5 LAST
+ 8 SPR
+SNF 4 +83
+ 15 6148
+ 4 +78
+ 15 6148
+ 4 +198
+ 15 6148
+ 4 +0
+ 5 ADD
+ 8 L
+
+T 11 QIN
+ 8 QIN+2
+ 1 =8 0
+ 5 ;+1
+ 8 ;+0
+ 8 ;+0
+
+ADD +0
+OPT +0
+MASK -1
+CH1 +0
+WORD +0
+WORD1 +0
+FIRST +0
+LAST +0
+BEGIN +0
+RELX +0
+
+QIN +0
+ 8 WHOLE
+ 5 CHAR
+ 11 QCIN
+ 8 QCIN+1
+ 5 CHAR
+ 9 QREL
+ 2 +16383
+ 9 E5     (ADDR. TOO LARGE)
+ 4 RELF
+ 9 ODD    (NO ADR. GIVEN)
+ 7 ;+2
+ 8 QREL
+QEX 4 CHAR
+ 0 QIN
+ /8 1
+
+QREL 4 CHAR
+ 1 ADD
+ 5 CHAR
+ 8 QEX
+
+
+ODD 4 +1
+ 5 RELF
+ 10 ADD
+ 4 ADD
+ 5 CHAR
+ 8 QEX
+
+ 4 +0
+WHOLE 11 QCIN
+ 8 QCIN+1
+ 5 CHAR
+ 4 RELF
+ 9 WHOLE-1  (NO. MUST BE GIVEN)
+ 7 ;+2
+ 8 E7
+ 4 TYPE
+ 7 ;+2      (BFN)
+ 8 QEX
+ 4 CHAR
+ 6 +131071
+ 2 +15
+ 9 E6       (F>15)
+ 4 CHAR
+ 14 8179
+ 1 CHAR
+ 0 +0
+ 14 13
+ 5 BF1
+XBF 4 +0
+ 11 QCIN
+ 8 QCIN+1
+ 5 CHAR
+ 4 RELF
+ 9 XBF     (ADDR. MUST BE GIVEN)
+ 7 ;+2
+ 8 RELAT
+RLR 4 CHAR
+ 2 +16383
+ 9 E5     (ADDR. TOO LARGE)
+ 4 CHAR
+ 6 +8191
+ 1 BF1
+ 5 CHAR
+ 8 QEX
+RELAT 4 CHAR
+ 1 ADD
+ 5 CHAR
+ 8 RLR
+
+QCIN +0
+ 5 CHX
+ 4 +0
+ 5 CK
+ 5 BF
+ 5 RELF
+ 5 SIGN
+ 5 TYPE
+ 4 CHX
+CHECK 6 +127
+ 5 CHX
+ 1 -1
+ 7 L
+ 1 -12
+ 7 CR
+ 1 -25
+ 7 AMP
+ 1 -5
+ 7 PL
+ 1 -2
+ 7 MIN
+ 1 -2
+ 7 BMOD
+ 1 -1
+ 9 READ
+ 1 -10
+ 9 ;+2
+ 8 ;+3
+ 1 +10
+ 8 NOS
+ 1 -1
+ 7 SEMI
+
+READ 4 +0
+ 15 2052
+  8 CHECK
+
+SEMI 10 RELF
+ 8 READ
+
+BMOD 4 +0
+ 5 NUM
+ 4 &400000
+ 8 INS
+NOS 5 NUM
+ 10 CK
+ 4 +0
+INS 5 BF
+ 4 +10
+ 5 RADIX
+ 8 RINR
+MIN 10 SIGN
+PL 5 NUM
+ 10 TYPE
+ 8 INS
+AMP 4 +8
+ 5 RADIX
+ 4 +0
+ 5 BF
+ 10 TYPE
+ 5 SIGN
+ 5 NUM
+
+RINR 4 +0
+ 15 2052
+ 6 +127
+ 5 CHX
+ 7 RINR
+ 1 -1
+ 7 L
+ 4 CHX
+ 2 +127
+ 7 RINR
+ 4 CHX
+ 1 -48
+ 9 OTHER
+ 1 -10
+ 9 ;+2
+ 8 OTHER
+ 10 CK
+ 1 +10
+ 5 CHX
+ 4 RADIX
+ 2 CHX
+ 9 ;+2
+ 8 E2     (DIGIT>=RADIX)
+ 4 NUM
+ 12 RADIX
+ 3 Q
+ 5 Q1
+ 6 -2
+ 7 ;+2
+ 8 E1      (INTEGER O/F)
+ 0 Q
+ 14 1
+ 4 Q1
+ 14 17
+ 1 CHX
+ 5 NUM
+ 8 RINR
+
+OTHER 4 CK
+ 7 RINR
+ 4 SIGN
+ 7 POS
+ 4 NUM
+ 2 +0
+ 5 NUM
+POS 4 NUM
+ 1 BF
+EX 0 QCIN
+ /8 1
+
+CR 4 -1
+ 5 RELF
+ 4 +10
+ 15 6148
+ 4 +0
+ 8 EX
+CHAR +0
+CHX +0
+RELF +0
+TYPE +0
+BF1 +0
+CK +0
+BF +0
+SIGN +0
+NUM +0
+RADIX +10
+Q +0
+Q1 +0
+
+
+
+E7 10 EC
+E6 10 EC
+E5 10 EC
+E4 10 EC
+E3 10 EC
+E2 10 EC
+E1 10 EC
+ 4 +197   (E)
+ 15 6148
+ 0 EC
+ /4 CH0
+ 15 6148
+ 8 L
+
+EC +0
+
+NL +0
+ 4 +141
+ 15 6148
+ 4 +10
+ 15 6148
+ 4 +0
+ 15 6148
+ 0 NL
+ /8 1
+
+
+QP +0
+QOUT +0
+ 8 WHO
+ 5 W0
+ 4 QP
+ 7 OKAD
+ 1 -3
+ 7 OKAD
+ 8 QOEX
+OKAD 4 SP
+ 15 6148
+ 4 OBKT
+ 15 6148
+ 4 ASTER
+ 15 6148
+ 4 QP
+ 7 ADEC
+ 4 W0
+ 11 PRINT
+ 8 PRINT+2
+ 8 CBEX
+ADEC 4 W0
+ 11 PRINT
+ 8 PRINT+1
+CBEX 4 CBKT
+ 15 6148
+ 8 QOEX
+QOEX  0 QOUT
+ /8 1
+
+WHO 5 W0
+ 4 QP
+ 7 QBFN
+ 1 -1
+ 7 QINT
+ 1 -1
+ 7 QOCT
+ 1 -1
+ 7 QBFN
+ 8 QOEX
+QBFN 4 W0
+ 14 8179
+  11 PRINT
+ 8 PRINT+1
+ 4 W0
+ 6 +8191
+ 5 W0
+ 4 QP
+ 7 ;+2
+ 8 OCTN
+ 4 W0
+ 11 PRINT
+ 8 PRINT+1
+ 8 QOEX
+OCTN 4 W0
+ 11 PRINT
+ 8 PRINT+2
+ 8 QOEX
+QINT 4 W0
+ 9 NEG
+ 4 +43
+ 15 6148
+PLUS 4 W0
+ 11 PRINT
+ 8 PRINT+1
+ 8 QOEX
+NEG 4 +45
+ 15 6148
+ 4 W0
+ 2 +0
+ 5 W0
+ 8 PLUS
+QOCT 4 W0
+ 11 PRINT
+ 8 PRINT+2
+ 8 QOEX
+
+W0 +0
+SP +160
+ASTER +96
+CBKT +169
+OBKT +40
+
+
+
+PRINT +0
+ 8 DEC
+ 10 CODE
+ 5 NUMB
+ 4 AMPERS
+ 15 6148
+ 8 STP
+DEC 5 NUMB
+ 4 +0
+ 5 CODE
+STP 4 NUMB
+ 9 BM0P
+ 4 SP
+ 5 CH0
+BMR 0 -12
+ 4 CODE
+ 7 ;+2
+ 0 -11
+GO 4 +0
+ 5 N0
+AGAIN 4 NUMB
+ /1 MULT+1
+ 9 PUNCH
+ 5 NUMB
+ 10 N0
+ 8 AGAIN
+PUNCH 4 N0
+ 7 ;+3
+ 4 ZERO
+ 5 CH0
+ 4 1
+ 5 W
+ 1 +2
+ 9 ;+3
+ 4 ZERO
+ 5 CH0
+ 0 N0
+ /4 CH0
+ 15 6148
+ 4 CH0
+ 2 BM0
+ 7 ;+2
+ 8 ;+3
+ 4 SP
+ 5 CH0
+ 0 W
+ 10 1
+ 10 1
+ 4 1
+ 9 GO
+ 4 SP
+ 15 6148
+ 0 PRINT
+ /8 1
+
+BM0P 4 BM0
+ 5 CH0
+ 4 NUMB
+ 6 +15
+ 5 NUMB
+ 8 BMR
+
+ -100000
+ -32768
+ -10000
+ -4096
+ -1000
+ -512
+ -100
+ -64
+ -10
+ -8
+ -1
+MULT -1
+CH0 +160    (0 OR SP OR /)
+ +177
+ +178
+ +51
+ +180
+ +53
+ +54
+ +183
+ +184
+ +57   (9)
+
+NUMB +0
+AMPERS +166
+ZERO +48
+CODE +0
+BM0 +175
+N0 +0
+W +0
+LENGTH +600
+START 1 STORE
+
+%
+
+[END]
+
+END 1 ;+0
+
+%
+
+<! halt !>

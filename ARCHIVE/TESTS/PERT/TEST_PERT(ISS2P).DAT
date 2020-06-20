@@ -1,0 +1,33 @@
+﻿C Demonstrate 903 PERT
+
+on 903
+runout on
+C load PERT binary
+at ptr file ../../SCRIPTS/PERT/PERT(ISS2P).BIN
+j 8181
+st 8171
+
+select out tty
+at ptr file PERT_TESTDATA.900
+
+c original data
+c read commands
+j 32
+st 3084
+c execute commands
+j 9
+st 902
+sh t
+
+c Y2K bug data
+c read commands
+j 32
+st 3084
+c execute commands
+j 9
+st 902
+sh t
+
+
+
+

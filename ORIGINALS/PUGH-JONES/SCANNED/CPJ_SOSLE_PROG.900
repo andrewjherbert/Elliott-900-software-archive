@@ -1,0 +1,50 @@
+﻿
+SOSLE;
+"BEGIN""REAL"A,B,M;
+"INTEGER"I,J,L,N;
+"ARRAY"EQN[1:33,1:34];
+"SWITCH"SS:=AA,AB,AC,AD;
+AB: "READ"N;
+"IF"N=0"THEN""GOTO"AD;
+"FOR"I:=1"STEP"1"UNTIL"N"DO"
+"FOR"J:=1"STEP"1"UNTIL"N+1"DO"
+"READ"EQN[I,J];
+"PRINT"''L3S4@SOLUTIONS OF SIMULTANEOUS LINEAR EQUATIONS'L1@@;
+"FOR"I:=1"STEP"1"UNTIL"N"DO"
+      "BEGIN"
+      "IF"EQN[I,I]=0"THEN"
+            "BEGIN"
+            "FOR"L:=I"STEP"1"UNTIL"N"DO"
+            "IF"EQN[L,I]"NE"0"THEN"
+                  "BEGIN"
+                  "FOR"J:=I"STEP"1"UNTIL"N+1"DO"
+                        "BEGIN"
+                        A:=EQN[L,J];
+                        EQN[L,J]:=EQN[I,J];
+                        EQN[I,J]:=A;
+                        "END";
+                  "GOTO"AC;
+                  "END"
+            "ELSE"
+            "IF"L=N"THEN"
+                  "BEGIN"
+                  "PRINT"''L1S5@NO SOLUTION@;
+                  "GOTO"AB;
+                  "END";
+            "END";
+AC:   B:=EQN[I,I];
+      "FOR"J:=I"STEP"1"UNTIL"N+1"DO"
+      EQN[I,J]:=EQN[I,J]/B;
+      "FOR"L:=1"STEP"1"UNTIL"N"DO"
+            "BEGIN"
+            "IF"L=I"THEN""GOTO"AA;
+            M:=EQN[L,I];
+            "FOR"J:=I"STEP"1"UNTIL"N+1"DO"
+            EQN[L,J]:=EQN[L,J]-M*EQN[I,J];
+AA:         "END";
+      "END";
+"FOR"I:=1"STEP"1"UNTIL"N"DO"
+   "PRINT"''L1S3@X@,SAMELINE,DIGITS(2),I,'  =@,ALIGNED(4,4),EQN[I,N+1];
+"GOTO"AB;
+AD: "END";
+<! Halt !>

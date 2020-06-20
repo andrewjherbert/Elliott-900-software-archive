@@ -1,0 +1,27 @@
+﻿C Test Wada 8 Queens in GPM
+
+on 903 24K
+c load bgpm
+at ptr file ../../SCRIPTS/GPM/BGPM.BIN
+j 8181
+st 8175
+
+c set max store to 24K
+e 40 +24575
+
+select out tty
+
+at ptr file ../../MASTERS/GPM/BGPMQUEENS.900
+
+j 8
+st 633
+
+sh t
+
+reset
+
+j 8
+st 633
+
+sh t
+

@@ -1,0 +1,672 @@
+﻿
+(A J HERBERT -- 10/01/12				   )
+(Program to demonstrate working with floating point numbers)
+
+( QF Summary						   )
+(							   )
+( QF+1: work with packed numbers [two words per real]      )
+( QF+2: work with unpacked numbers [three words per real]  )
+(                                                          )
+( FPA = pseudo Floating Point Accumulator		   )
+(							   )
+( Special instructions					   )
+(  0, 7, 8, 9, 10 work on single word items                )
+(  0 X Load pseudo B register with contents of location X  )
+(  0 0 exit QF
+(  3 X Exchange: exchange contents of FPA and location X   )
+(  6 0 Reset presumed formats for i/o                      )
+(  6 1 Assume packed format 				   )
+(  6 2 Assume unpacked format 				   )
+(  6 3 float [integer]. Address of integer in QF+3         )
+(  6 4 entier [FPA]. Address for result in QF+4            )
+(  6 5 float [fraction]. Address of fraction in QF+5       )
+(  6 6 Convert FPA to fraction. Address for result in QF+6 )
+(  6 7 Following i/o instructions refer to integers        )
+(  6 8 Following i/o instructions refer to real numbers    )
+(  6 8191 set output format, specified by following word:  )
+( 	B = 0, sameline = 1 newline		           )
+(       F = 0, freepoint[N]  N <= 8                        )
+(	F = 1, aligned[m, n] N=16m+n  m+n <= 15            )
+(	F = 2, scaled[N] n <= 8				   )
+(	F = 4, digits [N] n <= 6			   )
+( 14 arithemtic shifts and re-standardizes FPA             )
+( 15 2048 read number from paper tape			   )
+( 15 2052 read number from teletype                        )
+( 15 6144 punch number to paper tape			   )
+( 15 6148 punch number to teletype                         )
+(						           )
+( QF:	impermissible instruction			   )
+( ROF:	floating point overflow				   )
+( RTI:	integer overflow				   )
+( RTF:	fraction overflow				   )
+( LN:   argument <= 0					   )
+( SQ:   argument < 0					   )
+( EX:	argument > 2					   )
+( EE2	FPA not standardized on output			   )
+( EE3   integer overflow on input			   )
+( EE4 	contextual error on input			   )
+( EE5   attempt to input string                            )
+( EE6   parity error in input                              )
+( EE7	floating point overflow on input		   )
+(						           )
+( QERROR summary					   )
+(						           )
+( QERROR+1 print error message and pause [continue at 9]   )
+(	Error number in acumulator on entry		   )
+(	Parameter word following call   		   )
+(	word[1]: address of e.g. link location of calling  )
+(	         routine				   )
+(       word[2]: 0 n - number of locations in group        )
+(                following                                 )
+(       word[3]: alphanumeric code			   )
+(	further words ignored				   )
+
+
+["MAIN "NEWTON "NEWLIN "NEWLI2 "OUTSTR
+  QF SQRT EXP LN SIN COS ARCTAN
+  QDOUT QOUT1]
+
+(set up interrupt handling)
+	4	L2ENT
+	5	2
+	4	L3ENT
+	5	4
+	4	L4ENT
+	5	6
+IGNORE	15	7168
+	8	;-1		(ignore interrupts)
+L2ENT
+L3ENT	0 IGNORE
+L4ENT	0 MAIN
+
+MAIN	4	+3		(set tty output for QOUT1)
+	5	QDOUT
+
+	11	NEWLIN
+	8	NEWLI2
+	11 	OUTSTR
+	8	OUTSTR+1
+	\QF
+	\DEM
+	\ONS
+	\TRA
+	\TIO
+	\N
+	\A.J
+	\. H
+	\ERB
+	\ERT
+	\ 10
+	\/01
+	\/12
+	\^
+
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\INT
+	\EGE
+	\R I
+	\NPU
+	\T A
+	\ND
+	\OUT
+	\PUT
+	\ FO
+	\RMA
+	\TS^
+	11	NEWLIN
+	8	NEWLIN+1
+
+(read and write integers, convert to real)
+	4	XP
+	5	QF+4		(address of integer for input)
+	5	QF+3		(address of integer for output)
+RDINT	11	QF
+	8	QF+1		(enter QF - use packed reals)
+	6	0		(reset presumed i/o settings)
+	6	7		(set integer i/o)
+	6	8191		(set format)
+	/4 6			(newline, digits[6])
+	15	2048		(read and print an integer)
+	15	6144
+	6	3		(convert to real)
+	6	8		(set real i/o)
+	6	8191		(set format)
+	0 5			(sameline, freepoint[5])
+	15	6148
+	6	8191		(set format)
+	1 65			(sameline, aligned[4,1] - 16m+n)
+	15	6148
+	6	8191		(set format)
+	2 5			(sameline, scaled[5])
+	15	6148
+	+0			(exit QF)
+	4	X	
+	7	;+2
+	8	RDINT
+
+(conversions)
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\CON
+	\VER
+	\SIO
+	\NS^
+	11	NEWLIN
+	8	NEWLIN+1
+
+(integer conversions)
+	4	-123456		(set up an integer in X)
+	5	X
+
+	11	FLOAT
+	8	FLOAT+1
+
+	4	X
+	11	QOUT1		(output integer)
+	8	QOUT1+1
+	+0			(digits[6])
+
+	11	IS
+	8	IS+1
+
+	11	QF
+	8	QF+1		(enter QF - use packed reals)
+	4	X
+	6	3		(convert integer to real)
+	15	6148
+	+0			(exit QF)
+
+	11	WHICH
+	8	WHICH+1
+
+	11	QF
+	8	QF+1
+	14	8191		(divide by 2)
+	6	4		(convert FPA to integer)
+	6	7		(select integer i/o)
+	4	X
+	15	6148
+	6	8		(select real i/o)
+	+0			(exit QF)
+
+	11	CONVTO
+	8	CONVTO+1
+
+	4	X
+	11	QOUT1
+	8	QOUT1+1
+	+0
+
+(fraction conversions)
+
+	11	NEWLIN
+	8	NEWLIN+1
+	
+	4	XP
+	5	QF+5		(address of fraction for conversion)
+	5	QF+6		(address to place converted fraction)	
+
+	11	FLOAT
+	8	FLOAT+1
+
+	4	-.125		(set up a fraction in X)
+	5	X
+	11	QOUT1		(output fraction)
+	8	QOUT1+2
+	+0			(digits[6])
+
+	11	IS
+	8	IS+1
+
+	11	QF
+	8	QF+1		(enter QF - use packed reals)
+	6	5		(convert fraction to real)
+	15	6148		
+	+0			(exit QF)
+
+	11	WHICH
+	8	WHICH+1
+
+	11	QF		
+	8	QF+1		(enter QF - use packed reals)
+	14	8191		(divide by two)
+	15 	6148
+	6	6		(convert real to fraction)
+	+0			(exit QF)
+
+	11	CONVTO
+	8	CONVTO+1
+
+
+	4	X		(pick up fraction)
+	11	QOUT1
+	8	QOUT1+2
+	+0			(digits[6])
+	8	PART2
+
+(shared layout)
+
+FLOAT	+0
+	11	NEWLIN
+	8	NEWLIN+1
+	11	OUTSTR
+	8	OUTSTR+1
+	\FLO
+	\AT
+	\^
+	0	FLOAT
+	/8	1
+
+IS	+0
+	11	OUTSTR
+	8	OUTSTR+1
+	\ IS
+	\^
+	0	IS
+	/8	1
+
+WHICH	+0
+	11	OUTSTR
+	8	OUTSTR+1
+	\ WH
+	\ICH
+	\ HA
+	\LVE
+	\D I
+	\S^
+	0	WHICH
+	/8	1
+
+CONVTO	+0
+	11	NEWLIN
+	8	NEWLIN+1
+	11	OUTSTR
+	8	OUTSTR+1
+	\
+	\
+	\AND
+	\ CO
+	\NVE
+	\RTS
+	\ TO
+	\^
+	0	CONVTO
+	/8	1
+
+(3 instruction - exchange)
+PART2 	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR	
+	8	OUTSTR+1
+	\3 I
+	\NST
+	\RUC
+	\TIO
+	\N (
+	\EXC
+	\HAN
+	\GE)
+	\ EX
+	\PEC
+	\T 0
+	\.0,
+	\ 2.
+	\0;^
+
+	4	ITWOP		(set up for float[2])
+	5	QF+3
+	11	QF
+	8	QF+2		(unpacked reals)
+	6	3
+	5	RTWO		(should find 2.0)
+	2	RTWO		(fpa := 0.0)
+	15	6148
+	3	RTWO		(should find 2.0)
+	15	6148
+	+0			(exit QF)
+
+(maths functions)
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\QFM
+	\ATH
+	\ RO
+	\UTI
+	\NES
+	\ AN
+	\D R
+	\EAL
+	\ IN
+	\PUT
+	\^
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\
+	\  X
+	\
+	\
+	\  S
+	\QRT
+	\
+	\
+	\  E
+	\XP
+	\
+	\
+	\ LN
+	\
+	\
+	\  S
+	\IN
+	\
+	\
+	\ CO
+	\S
+	\
+	\  A
+	\RCT
+	\AN^
+
+	4	ITWOP		(housekeeping for int to real)
+	5	QF+3
+
+	11 	QF		
+	8	QF+2		(use unpacked format)
+	6	8		(i/o on real numbers)
+	6	3		(float)
+	5	RTWO
+
+READ	6	8191		(set format)
+	/2 4			(newline, scaled 4)
+	15 	2048		(read a number)
+	7	PART3		(zero terminates)
+	5	X
+	15	6148		(output to teletype)
+	6	8191		(set format)
+	2 4			(sameline scaled 4)
+	4	X
+	9	SQRREJ		(reject negative x)
+	11	SQRT		(sqrt)
+	8	SQRT+1
+	15	6148
+LEXP	4	X
+	2	RTWO
+	9	EXPREJ
+	4	X
+	11	EXP		(exp)
+	8	EXP+1
+	15	6148
+LLN	4	X
+	7	LNREJ		(reject x <= 0)
+	9	LNREJ
+	11	LN		(ln)
+	8	LN+1
+	15 	6148
+LSIN	4	X	
+	11	SIN		(sin)
+	8	SIN+1
+	15 	6148
+	4	X
+	11	COS
+	8	COS+1		(cos)
+	15	6148
+	4	X	
+	11	ARCTAN
+	8	ARCTAN+1	(arctan)
+	15	6148
+	8	READ
+
+(newton-raphson method for square roots using unpacked reals)
+PART3	+0			(exit QF)
+	11	NEWLIN
+	8 	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\NEW
+	\TON
+	\'S
+	\MET
+	\HOD
+	\ FO
+	\R S
+	\QRT
+	\^
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\
+	\
+	\ X
+	\
+	\
+	\
+	\
+	\NEW
+	\TON
+	\
+	\
+	\
+	\  S
+	\QRT
+	\^
+
+	11	QF
+	8	QF+2
+MORE	6	8191		(set format)
+	/2 9			(newline, scaled 9)
+	15	2048
+	7	END
+	15	6148
+	5	X
+	11	NEWTON		(calculate sqrt by newton's method)
+	8	NEWTON+1
+	9	MORE		(skip if negative)
+	6 	8191
+	2 9			(sameline, scaled 9)
+	15	6148
+	4	X
+	11	SQRT		(compare to built in sqrt)
+	8	SQRT+1
+	15 	6148
+	8	MORE	
+
+END	+0			(exit QF)
+	11 	NEWLIN
+	8 	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\END
+	\^
+	8	;+0		(stop at end)
+
+SQRREJ	+0			(exit QF)
+	11 	OUTSTR
+	8	OUTSTR+1
+	\
+	\  X
+	\<0
+	\  ^
+	11	QF
+	8	QF+2		(unpacked format)
+	8	LEXP
+
+EXPREJ	+0			(exit QF)
+	11 	OUTSTR
+	8	OUTSTR+1
+	\
+	\  X
+	\>2
+	\  ^
+	11	QF
+	8	QF+2		(unpacked format)
+	8	LLN
+
+LNREJ	+0			(exit QF)
+	11 	OUTSTR
+	8	OUTSTR+1
+	\
+	\  X
+	\<=0
+	\  ^
+	11	QF
+	8	QF+2		(unpacked format)
+	8	LSIN
+
+X	>3
+XP	0	X		(address of X)
+
+ITWO	+2
+ITWOP	0	ITWO
+RTWO	>3
+
+(newton-raphson method for square roots)
+(assumes run from within QF            )
+(argument is in accumulator	       )
+
+[NEWTON QF QCHOP OUTSTR NEWLIN QERROR]
+NEWTON	+0			(link)
+	9	ERROR1
+	7	EXIT		(sqrt 0 = 0)
+	5	A
+	4	ONE	
+SETXN	5	XN		(x[0] := 1.0)
+	4	MIN20
+	5	COUNT
+LOOP	4	A		(x[n+1] := 0.5 [x[n] + a / x[n]])
+	13	XN
+	1	XN
+	14	8191
+	5	XN1
+	2	XN		(x[n]-x[n+1])
+	9	;+2		(abs)
+	8	;+2
+	2	ZERO
+	1	MEPS		(abs[x[n]-x[n+1]]-eps)
+	7	CONV		(x[n+1]-x[n] = eps)
+	9	CONV		(x[n+1]-x[n] < eps)
+	10	COUNT		(iteration counter)
+	4	COUNT
+	7	ERROR2		(too many iterations)
+	4	XN1		(x[n] := x[n+1])
+	5	XN
+	8	LOOP		(next iteration)
+	
+CONV	4	XN1
+EXIT	0	NEWTON
+	/8	1
+
+ERROR1	+0
+	4 	+1		(negative argument)
+	5	ERRNO
+	8	 ERROR
+
+ERROR2	+0
+	4	+2		(iteration count exceeded)
+	5	ERRNO
+
+ERROR	11	NEWLIN
+	8	NEWLIN+1
+	4	ERRNO		(error number)
+	11	QERROR
+	8	QERROR+1
+	0	ERR1
+	11	NEWLIN
+	8	NEWLINE+1
+	11	QF
+	8	QF+2		(enter QF)
+	8	EXIT		(fpa will be -1)
+
+ERR1	0 NEWTON		(ptr to link)
+	0 1			(size of string)
+	\NWT			(error string)
+
+A	>3
+XN	>3
+XN1	>3
+ZERO	+0
+	+0
+	+0
+ONE     &200000			(0.5 * 2^1)
+	&000000
+	&000001
+MEPS	&400000			(-1 * 2^-20)
+        &000000
+	-20
+MIN20   -20			(used as an integer)
+	+0
+	+0
+COUNT  	>3			(used as an integer)
+ERRNO	>1
+
+[NEWLIN NEWLI2 QCHOP]
+
+(subroutine to output a sequence of newlines)
+(enter at NEWLIN+1 for one newline          )
+(enter at NEWLI2 for multiple newline       )
+(with count in accumulator                  )
+
+NEWLI2	4	-2
+	8	;+4		(set count to -2)
+NEWLIN	+0
+	4 	+1		(entry for one NEWLIN)
+	2 	+0		(entry for multiple NEWLINs)
+	5 	COUNT
+LOOP	7 	EXIT
+	4 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	10 	COUNT
+	4 	COUNT
+	 8 	LOOP
+EXIT	0 	NEWLIN
+	/8 	1
+COUNT	>1
+
+[OUTSTRI QCHOP]
+
+(subroutine to output a string)
+
+OUTSTR 	+0
+LOOP	0 	OUTSTR
+	/4 	1		(next word in string)
+	14 	8180		(first char)
+	6 	+63
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	14 	8186
+	6 	+63		(second char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	6 	+63		(third char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	 8 	QCHOP+1
+	10 	OUTSTR
+	8 	LOOP
+EXIT	0 	OUTSTR
+	/8 	2
+
+%
+<! halt !>

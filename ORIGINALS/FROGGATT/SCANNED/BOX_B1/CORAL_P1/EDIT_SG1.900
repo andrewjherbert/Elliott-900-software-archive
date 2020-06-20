@@ -1,0 +1,15 @@
+﻿
+FL "PROCEDURE"ATOB
+FL "BEGIN"
+IS (
+FL TL[DATADD]:=TL[DATADD]-1
+IS )
+IB
+
+              PUTOUT(15,7174);(905 ONLY ******)
+              HD[BREG]:=-1
+
+^
+RE
+&&
+<! Halt !>

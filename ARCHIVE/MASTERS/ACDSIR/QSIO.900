@@ -1,0 +1,287 @@
+﻿
+((SINGLE-LENGTH INPUT/OUTPUT, 15/12/69)
+
+[T5 QIN1 INPUTL INPUTE CHIPL CHIPE CHIP
+T6 QOUT1 PRTL PRTEI PRTEF PRTEO CHOPL CHOPE
+ERRORL ERRORE]
+
+(INTEGER & FRACTION INPUT SUBROUTINE)
+
+T5 QIN1
+INPUTL    >1
+
+(T5+1 QIN1+1)
+INPUTE    11    CHIPL
+          8     CHIPE
+          2     +45       (45-C)
+          5     SIGN
+          7     CLEAR     (Jump if -; SIGN=+0)
+          1     -2        (43-C)
+          7     CLEAR     (Jump if +; SIGN=+2)
+          8     INPUTE
+
+CLEAR     5     DIGICT
+          5     WORD
+          11    CHIPL
+          8     CHIPE
+
+          1     -46       (C-46)
+          5     POINT
+          7     FRACT1    (Jump if .)
+
+          4     CHIP
+TESDIG    2     +57       (57-C)
+          9     NOTDIG
+          2     +9        (C-48)
+          9     NOTDIG
+
+          0     +0
+          14    8191
+          1     WORD
+          14    8190
+          1     WORD
+          5     A
+          3     Q
+          14    3
+          5     WORD
+
+          10    DIGICT
+
+FRACT1    11    CHIPL
+          8     CHIPE
+          8     TESDIG
+
+NOTDIG    4     DIGICT
+          7     QINE1
+          2     +6
+          9     QINE1
+
+          4     POINT
+          7     FRACT2
+
+          4     A
+          2     &037777
+          9     QINE1
+
+          4     WORD
+          8     TESSGN
+
+FRACT2    4     DIGICT
+          1     -6
+          7     ;+5
+
+          4     WORD
+          5     A
+          4     +0
+          5     Q
+
+          0     DIGICT
+          /4    IPTENS-1
+          5     DIGICT
+
+          14    8191
+          2     A
+          9     ;+4
+          5     A
+          4     &200000
+          5     POINT
+
+          0     Q
+          14    1
+          4     A
+          14    1
+          13    DIGICT
+          14    8191
+          1     POINT
+
+TESSGN    0     SIGN
+          /8    ;+1
+          2     +0
+          14    0
+          0     INPUTL
+          /8    1
+
+QINE1     4     +1
+          8     QSIOER
+
+IPTENS    +10
+          +100
+          +1000
+          +10000
+          +100000
+          +125000
+
+(INTEGER, FRACTION, & OCTAL OUTPUT SUBROUTINE)
+
+T6 QOUT1
+PRTL      >1
+
+(T6+1 QOUT1+1)
+          8     PRTEI
+
+(T6+2 QOUT1+2)
+          8     PRTEF
+
+(T6+3 QOUT1+3)
+PRTEO     5     WORD
+(+1)      4     -6
+          5     DOTPOS
+          5     SUPRES
+          8     SETFLG
+
+PRTEF     5     WORD
+          1     &400000
+          7     PRTEO+1
+          4     +32       (<S>)
+          8     SETFLG
+
+PRTEI     5     WORD
+          1     &400000
+          7     PRTEO+1
+          4     +0
+          5     DIGICT
+
+SETFLG    5     FLAG
+
+          0     PRTL
+          /4    1
+          9     ;+3
+          4     -224      (<SS>)
+          8     ;+2
+          4     +10       (<N>)
+          11    CHOPL
+          8     CHOPE
+
+          4     FLAG
+          9     AMPAS
+
+          0     PRTL
+          /4    1
+          6     =0 8191   (N)
+          2     +6        (6-N)
+          9     QOUTE1    (Error if N>6)
+          2     +0        (N-6)
+          5     DOTPOS    (For integers, 6-N digits before .)
+
+          4     FLAG
+          7     ;+4
+          4     DOTPOS    (N-6)
+          2     -6        (-N)
+          5     DOTPOS    (For fractions, N digits before .)
+
+          /4    1
+          6     =15 0
+          14    8179      (F)
+          2     +6        (6-F)
+          1     DOTPOS    (6-F+DOTPOS; -SUPRES+DOTPOS)
+          9     QOUTE1    (Error if -SUPRES<-DOTPOS)
+          2     DOTPOS    (F-6; SUPRES)
+          5     SUPRES    (6-F digits to be printed)
+
+          4     WORD
+          9     ;+3
+          4     +43       ([+])
+          8     ;+5
+          2     +0
+          5     WORD
+          4     +1        ([-]-6-[&])
+AMPAS     1     +44       (Add +6+[&])
+          11    CHOPL
+          8     CHOPE     ([+], [-], or [&])
+
+          4     +0
+          5     ZERMKR
+
+NEXTDG    4     DOTPOS
+          10    DOTPOS
+          7     ;+4
+          4     DOTPOS
+          7     ;+5
+          8     ;+5
+          4     +46       ([.])
+          11    CHOPL
+          8     CHOPE
+          10    ZERMKR
+
+          4     FLAG
+          9     OCTAL
+          7     INTGR
+
+(FRACT)   4     WORD
+          12    +10
+          3     WORD
+          7     SETSUB
+          8     SETSUB-1
+
+INTGR     5     SUBCT
+          4     WORD
+          0     DIGICT
+          /1    OPTENS
+          9     SETSUB+1
+          5     WORD
+          10    SUBCT
+          10    ZERMKR
+          8     ;-5
+
+OCTAL     2     WORD      (Set Q-register)
+          4     WORD
+          14    3
+          5     WORD
+          6     &7
+
+(-1)      10    ZERMKR
+SETSUB    5     SUBCT
+(+1)      4     ZERMKR
+          7     LEADZR
+
+          4     +48       ([0])
+          1     SUBCT
+          8     ;+3
+
+LEADZR    4     FLAG
+          7     ;+3
+          11    CHOPL
+          8     CHOPE
+
+          10    DIGICT
+          10    SUPRES
+          4     SUPRES
+          9     NEXTDG
+
+          0     PRTL
+          /8    2
+
+QOUTE1    4     +2
+          8     QSIOER
+
+OPTENS    -100000
+          -10000
+          -1000
+          -100
+          -10
+          -1
+
+(WORKSPACES)
+
+WORD >1
+SIGN FLAG >1
+POINT DOTPOS >1
+SUPRES >1
+DIGICT >1
+A ZERMKR >1
+Q SUBCT >1
+
+(ERROR INDICATIONS)
+
+QSIOER    0     +0
+          14    6
+          1     £ 0.
+          5     ERRNO
+          11    ERRORL
+          8     ERRORE
+          £QS
+          £I/O
+          £ ER
+          £ROR
+ERRNO     >1
+<! Halt !>

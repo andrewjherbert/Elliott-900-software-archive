@@ -1,0 +1,104 @@
+﻿
+((DYNAMIC INPUT & OUTPUT TESTS, 14/9/72)
+
+(Common Workspace)
+
+DIOT     >1   (Timing count)
+DIOC     >1   (Data or address count)
+
+(DYNAMIC DATA TEST)
+
+(Outputs & checks every combination of data lines,
+for 1 minute)
+
+DTD      4    -3       (Adjust for 1 min.)
+         5    DIOT
+
+         4    +0
+         5    DIOC
+
+DTD2     4    DIOC
+         15   4096
+         4    +0
+         15   0
+         2    DIOC
+         7    ;+2
+         8    FAIL
+
+         10   DIOC
+         4    DIOC
+         7    ;+2
+         8    DTD2
+
+         10   DIOT
+         4    DIOT
+         9    DTD2
+         8    OK
+
+(DYNAMIC INPUT ADDRESS TEST)
+
+(Outputs & checks every input combination
+of address lines, for half minute. As this test
+uses instruction 15 7, it does not start until
+the control key is released, and it then waits 0.5 sec. to
+allow for non-simultaneous switch contacts)
+
+IATD     15   7
+         9    ;-1
+
+         4    -25000   (Adjust for 0.5 sec.)
+         1    +1
+         9    ;-1
+
+         4    -150     (Adjust for 0.5 min.)
+         5    DIOT
+
+IATD1    4    +0
+         5    DIOC
+
+IATD2    4    +0
+         0    DIOC
+         /15  0
+         2    DIOC
+         7    ;+2
+         8    FAIL
+
+         10   DIOC
+         4    DIOC
+         1    -2048
+         9    IATD2
+
+         10   DIOT
+         4    DIOT
+         9    IATD1
+         8    OK
+
+(DYNAMIC OUTPUT ADDRESS TEST)
+
+(Outputs & checks every output combination
+of address lines, for half minute)
+
+OATD     4    -150
+         5    DIOT     (Adjust for 0.5 min.)
+
+OATD1    4    +0
+         5    DIOC
+
+OATD2    4    +0
+         0    DIOC
+         /15  4096
+         15   0
+         2    DIOC
+         7    ;+2
+         8    FAIL
+
+         10   DIOC
+         4    DIOC
+         1    -2048
+         9    OATD2
+
+         10   DIOT
+         4    DIOT
+         9    OATD1
+         8    OK
+<! Halt !>

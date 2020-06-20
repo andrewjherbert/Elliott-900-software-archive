@@ -1,0 +1,491 @@
+﻿
+sirtidy;
+"begin"
+
+    "comment" Program to tidy up and tabulate SIR programs.
+	      Generally preserves newlines.  Long lines are wrapped.
+	      Global identifier lists are packed.
+	      >+ and *+ converted to > and * respectively.
+	      Handles MASIR extented address formats and *PROG, *NOMEM,
+	      *NOTITLE, TITLE directives.
+	
+	      If tabs are encountered these are assumed to align with the
+	      tab stops of Micrsoft WIndow's NOTEPAD (9, 17, 25, ...).
+
+	      Uses CHIOAL library.
+	      
+	      Andrew Herbert 20th August 2014;
+
+    "comment" chioal library - ACD CHIO CHIP and CHOP;
+
+    "code" "procedure" chio; "algol";
+    "code" "procedure" ch900; "algol";
+    "code" "integer" "procedure" getc(ch); "integer" ch; "algol";
+    "code" "procedure" putc (ch); "value" ch; "integer" ch; "algol";
+
+    "integer" AMP, BACK, BLANK, CARET, COLON, DOLLAR, EQUAL, DIG0, DIG9, EOF, GT, 
+              LCA, LCZ, LT, MINUS, NEWLINE, PERCENT, PLUS, QUOTE, RDBRA, RDKET, 
+	      SLASH, STAR, SQBRA, SQKET, TAB, UCA, UCL, UCM, UCN, UCP, UCT, UCZ;
+
+    "procedure" closeptp; putc(EOF);
+
+    "procedure" finish;
+    "begin"
+	"comment" terminate output tape and stop;
+	closeptp;
+	stop
+    "end" finish;
+
+    "integer" ch, dummy, incol, outcol, tstop1, tstop2, tstop3, trigstop, maxcol;
+
+    "comment" ch is character read by last call of getc
+ 	      incol is next input column
+	      outcol is next output column
+	      tstop1-3 are column numbers for tabbing
+	
+
+      trigstop is preferred column for trigger
+	      maxcol is maximum column before text wrapping occurs;
+
+    "comment"read next input character and update input column;
+    "integer" "procedure" getcol;
+    "begin" 
+	getcol := getc(ch);
+	"if" ch = NEWLINE "then"
+	    incol := 1
+	"else"
+	    incol := incol+1
+    "end" getcol;
+
+    "comment" output character and update output column;
+    "procedure" putcol(c);"value" c; "integer" c;
+    "begin"
+	putc(c);
+	"if" c = NEWLINE "then"
+	    outcol := 1
+	"else"
+	    outcol := outcol+1
+    "end" putcol;
+
+    "comment" output spaces to position output immediate before col;
+    "procedure" spaceto(col); "value" col; "integer" col;
+	"for" dummy := 0 "while" outcol < col "do" 
+	    putcol(BLANK);
+
+    "comment" tab to stop n, n=1 for order column, 2 for address column,
+	      3 for comment column;
+    "procedure" tabtostop(stop); "value" stop; "integer" stop;
+	"if"        stop = 1 "and" outcol < tstop1 "then"
+	    spaceto(tstop1)
+	"else" "if" stop = 2 "and" outcol < tstop2 "then"
+	    spaceto(tstop2)
+	"else" "if" stop = 3 "and" outcol < tstop3 "then"
+	    spaceto(tstop3)
+	"else" putcol(BLANK);
+
+    "comment" force output position to be at second column (tab stop 1);
+    "procedure" force1;
+    "begin"
+	"if" outcol > tstop1 "then" putcol(NEWLINE); 
+	spaceto(tstop1)
+    "end" force1;
+
+    "comment" force output to start on a newline;
+    "procedure" ensure nl;
+    	"if" outcol > 1 "then" putcol(NEWLINE);
+
+    "comment" predicates;
+
+    "comment" test if can fit n characters on rest of current line;
+    "boolean" "procedure" fit(n); "value" n; "integer" n;
+	fit := (outcol+n) "le" maxcol;
+
+    "boolean" "procedure" digit;
+	digit := DIG0 "le" ch "and" ch "le" DIG9;
+    
+    "boolean" "procedure" letter;
+	letter := (LCA "le" ch "and" ch "le" LCZ) "or"
+			(UCA "le" ch "and" ch "le" UCZ);
+
+    "boolean" "procedure" space;
+        space := ch = BLANK "or" ch = TAB;
+
+    "boolean" "procedure" white;
+	white := ch = BLANK "or" ch = TAB "or" ch = NEWLINE;
+
+    "comment" treat comments as separators;
+    "boolean" "procedure" seperator;
+	seperator := white "or" ch = RDBRA; 
+
+    "comment" lexical routines.  Note these generally assume ch is last
+	      character read and leave next character waiting in ch on
+	      their return;
+
+    "comment" convert ch to uppercase;
+    "integer" "procedure" upch;
+	upch := "if"   lca "le" ch "and" lcz "le" ch
+		 "then" ch-lca+uca 
+	         "else" ch;
+
+    "comment" skip of spaces and tabs;
+    "procedure" skipblanks;
+        "for" dummy := 0 "while" space "do" dummy := getcol;
+
+    "comment" copy a sequence up to the next seperator from input to output;
+    "procedure" copyword;
+    "begin"
+	putcol(ch);
+	"for" dummy := getcol "while" "not" seperator "do" putcol(ch)
+    "end" copyword;
+
+    "comment" copy remainder of input line to output;
+    "procedure" copyline; 
+    "begin"
+    	putc(ch);
+	"comment" copy to end of line;
+	"for" dummy := 0 "while" getc(ch) "ne" NEWLINE "do"
+	    "if" ch = EOF "then" finish "else" putc(ch);
+	putcol(NEWLINE)
+    "end"  copyline;
+
+    "comment" syntax recognizer;
+
+    "comment" shared buffer;
+    "integer" "array" buffer[1:120];
+    "integer" bufp;
+
+    "comment" alphanumeric constant or literal, e.g., \ABC;
+    "procedure" alphanum;
+    "begin" 
+	putcol(BACK);
+	"if" getcol "ne" NEWLINE "then" "begin"
+	    putcol(ch);
+	    "if" getcol "ne" NEWLINE "then" "begin"
+	        putcol(ch);
+		"if" getcol "ne" NEWLINE "then" "begin"
+		    putcol(ch);
+		    dummy := getcol
+		"end"
+	    "end"
+	"end"
+    "end" alphanum;
+
+    "procedure" unbuffer;
+    "begin"
+	"for" dummy := 1 "step" 1 "until" bufp-1 "do" 
+  	    putcol(buffer[dummy]);
+	bufp := 1
+    "end" unbuffer;
+		
+    "comment" comment or title - if overflows line attempt to wrap relative to
+	      starting column;
+    "procedure" comment;
+    "begin"
+	"integer" stop;	    
+        "procedure" newcol;
+	"begin"
+	    putcol(NEWLINE);
+	    tabtostop(stop)
+	"end";
+	"comment" establish which column to start comment in;
+	"if" getcol = RDBRA "then" "begin" 
+	    "comment" titles always get a newline;
+	    stop := 0;
+	    ensurenl;
+	    buffer[1] := RDBRA; bufp := 2
+	    "end"
+	"else" "if" outcol = 1 "then" 
+	    stop := 0
+	"else" "begin"
+	    stop := 3;
+	    tabtostop(stop)
+	    "end";
+
+	"comment" copy comment or title with wrapping;
+	putcol(RDBRA);
+	bufp := 1;
+	"for" dummy := 0 "while" ch "ne" RDKET "do" "begin"
+	    "if" white "then" "begin"
+ 	        
+		"comment" end of word - see if enough space;
+		"if" "not" fit(bufp-1) "then" "begin"
+		    putcol(NEWLINE);
+		    tabtostop(stop)
+		    "end";
+
+	         "comment" output word;
+		 unbuffer;
+
+                "comment" deal with following space if any following character;
+		"if" space "then" "begin"
+		    "integer" i, count;
+		    "for" count := 0, count+1 "while" space "do" dummy := getcol;
+		    "if" ch "ne" NEWLINE "then" "begin"
+		       "if" fit(count) "then" "begin"
+		           "for" i := 1 "step" 1 "until" count "do" putcol(BLANK)
+		           "end"
+		       "else"
+		           newcol
+		       "end"
+		    "end"
+		"else" "if" ch = NEWLINE "then" "begin"
+		    newcol;
+		    dummy := getcol
+		     "end"
+		"else" "begin" "comment" must be RBRA;
+		    "if" "not"  fit(1) "then" newcol;
+	            putcol(RDBRA);
+		    dummy := getcol
+		    "end"                
+		"end" 
+
+	    "else" "begin" "comment" build word;
+		buffer[bufp] := ch; bufp := bufp+1;
+                dummy := getcol
+		"end"
+
+	    "end" do;
+        
+	"comment" deal with anything left in buffer;
+	"if" "not" fit(bufp) "then" "begin"
+	    putcol(NEWLINE);tabtostop(stop)
+	    "end";
+	unbuffer;
+	putcol(RDKET);
+	dummy := getcol
+    "end" comment;
+
+    "comment" alphanumeric constant;
+    "procedure" cona;
+    "begin"
+	force1;
+	alphanum
+    "end" cona;
+
+    "comment" numerical constants, absolute addresses (:LABEL);
+    "procedure" constant;
+    "begin"
+	force1;
+	copyword
+    "end" constant;
+
+    "comment" copy global identifiers list with text wrapping;
+    "procedure" globals; 
+    "begin"
+	bufp := 1;
+	ensurenl;
+	putcol(SQBRA);
+	dummy := getcol;
+	"for" dummy := 0 "while" ch "ne" SQKET "do" "begin"
+	   "if" white "then" "begin" 
+		    "if" bufp > 1 "then" "begin"
+		        "if" fit(bufp) "then" 
+			    putcol(BLANK)
+		        "else"
+			    putcol(NEWLINE);
+		        unbuffer
+		        "end"
+		    "end" 
+	    "else" "begin" 
+		buffer[bufp] := ch; bufp := bufp+1
+		"end" if;
+	    dummy := getcol
+	    "end" do;
+	"if" bufp > 1 "then" "begin"
+	    putcol("if" fit(bufp) "then" BLANK "else" NEWLINE);
+	    unbuffer
+	    "end";
+	putcol("if" fit(2) "then" BLANK "else" NEWLINE);
+	putcol(SQKET);
+	"if" getcol "ne" NEWLINE "then" putcol(NEWLINE)
+    "end" globals;
+	
+    "comment" label or label=;
+    "procedure" identifier;
+    "begin"
+	ensurenl;
+	copyword
+    "end" identifier;
+
+    "comment" quasi instruction, e.g., =/8 99;
+    "procedure" quasi; 
+    "begin"
+	copyword;
+	skipblanks; 
+	putcol(BLANK);
+	copyword
+    "end" quasi;
+
+    "comment" instruction: /F N or F N;
+    "procedure" instruction;
+    "begin" 
+	force1;
+	copyword;
+	skipblanks;
+	"comment" copy address;
+	tabtostop(2);
+	"comment" decide on type of address/literal;
+	"if"        ch = EQUAL "then"
+	    quasi
+	"else" "if" ch = BACK  "then"
+	    alphanum
+	"else"
+	    copyword
+    "end" instruction;
+
+    "comment" obeyed instruction, e.g., '8 8';
+    "procedure" obey;
+    "begin"
+        ensurenl;
+	tabtostop(1);
+	copyword;
+	skipblanks;
+	tabtostop(2);
+	copyword
+    "end" obey;	    
+
+   "comment" SIR option *n *+9 or some MASIR directives;
+   "procedure" option;    
+   "begin" 
+	ensurenl;
+	putcol(STAR);
+	dummy := getcol;
+        "if"    digit "then"
+	    copyword
+	"else" "if" ch = PLUS "then" "begin"
+	    dummy := getcol;
+	    copyword
+	    "end"
+	"else" "begin"
+	    "integer" u; u := upch;
+	    "if"       u = UCP "then" "begin"
+		"comment" assume *PROG name;
+		copyword;
+		skipblanks; 
+	        putcol(BLANK);
+		copyword
+		"end"
+	    "else" "if" u = UCL "or"  u = UCM "or" u = UCN "or" u = UCT "then" 
+                "begin"
+		"comment" assume *LISTLA, *MEM, *NOMEM, *NOTITLE or *TITLE;
+		copyword
+		"end"
+	    "end"		
+    "end" option;
+
+    "comment" patch, e.g., ^99 or ^ALPHA+1;
+    "procedure" patch;
+    "begin"
+	ensurenl;
+	putcol(CARET);
+	"if" getcol = PLUS "then" dummy := getcol;
+	copyword
+    "end" patch;
+
+    "comment" restore symbol, $;
+    "procedure" restore;
+    "begin"
+	ensurenl;
+	putcol(DOLLAR);
+	dummy := getcol
+    "end" restore;
+
+    "comment" skip, >n, or >+n.  Doesn't handle >n: NAME data;
+    "procedure" skip; 
+    "begin"
+	force1;
+	putcol(GT);
+	"if" getcol = PLUS "then" "begin"
+	    dummy := getcol;
+	    copyword
+	    "end"
+	"else" 
+	    copyword 
+    "end" skip;
+
+    "comment" terminate symbol, %;
+    "procedure" terminate;
+    "begin"
+	ensurenl;
+	putcol(PERCENT);
+	dummy := getcol;
+    "end" terminate;
+
+    "comment" trigger symbol, <;
+    "procedure" trigger;
+    "begin" 
+	"if" outcol < trigstop "then" spaceto(trigstop);
+	putcol(BLANK);
+	putcol(LT);
+	dummy := getcol
+    "end" trigger;
+
+    "comment" set up character set;
+    AMP := 38; BACK := 92; BLANK:= 32; CARET := 94; COLON :=  58; DOLLAR := 36; 
+    EQUAL := 61; DIG0 := 48; DIG9 := 57; EOF := 20; GT := 62; LCA := 97; LCZ := 122; 
+    LT := 60; MINUS := 45; NEWLINE := 10; PERCENT := 37; PLUS := 43; QUOTE := 39;
+    RDBRA := 40; RDKET := 41; SLASH := 47;  STAR := 42; SQBRA := 91; SQKET := 93; 
+    TAB := 9; UCA := 65; UCP := 80; UCL := 76; UCM := 77; UCN := 78; UCT := 84; 
+    UCZ := 90; 
+
+    "comment" SIR tab stops at 11, 17, 27, 37, ...;
+
+    tstop1 := 11; tstop2 := 17; tstop3 := 27; trigstop := 8; maxcol := 80;
+
+    incol := outcol := 1;
+
+    "comment" initialize i/o;
+    chio; ch900;
+
+    "comment" syntax scanner;
+    dummy := getcol;
+
+SCAN:
+    skipblanks; 
+
+    "if"        ch = slash   "then"
+	instruction
+    "else" "if" digit        "then"
+        instruction 
+    "else" "if" letter       "then"
+	identifier
+    "else" "if" ch = PLUS    "then"
+	constant
+    "else" "if" ch = MINUS   "then"
+	constant
+    "else" "if" ch = AMP     "then"
+	constant
+    "else" "if" ch = COLON   "then"
+        constant
+    "else" "if" ch = NEWLINE "then" "begin"
+	putcol(NEWLINE);
+        dummy := getcol
+        "end"
+    "else" "if" ch = BACK    "then"
+	cona
+    "else" "if" ch = RDBRA   "then"
+	comment
+    "else" "if" ch = SQBRA   "then"
+	globals
+    "else" "if" ch = STAR    "then"
+	option
+    "else" "if" ch = GT      "then"
+	skip
+    "else" "if" ch = CARET   "then"
+	patch
+    "else" "if" ch = EOF     "then"
+	finish
+    "else" "if" ch = DOLLAR  "then" 
+      	restore
+    "ELSE" "IF" CH = LT	     "then"
+	trigger
+    "else" "if" ch = QUOTE   "then" 
+        obey
+    "else" "if" ch = PERCENT "then"
+	terminate
+    "else"copyline;
+
+    "goto" SCAN
+
+"end" sirtidy
+<! halt !>

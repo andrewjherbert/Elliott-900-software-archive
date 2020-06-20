@@ -1,0 +1,337 @@
+﻿
+*3
+(NOV. 1977. SOME LABELS NEED NOT BE IN SWITCH LISTS.)
+
+(
+AJH Notes 30/08/2013
+====================
+
+Location 10 is patched to 8 7000.
+
+Has an entry point at 1024 to initialize patch.
+
+Copies code from PROG [1046] to 7000.
+
+	Therefore entry at 10 after entry at 1024.
+
+Entry at 10 
+	resets location 10 to 8 17.
+	Copies from 7013 to 8000.	
+	\8000 := 8 8000.
+	Loop stop at 7009.
+)
+	
+
+
+
+DECTYP=170
+DELIM=207
+LASTDL=209
+PRINT=435
+FAIL=706
+
+RETUR=743
+SEARCH=2379
+FILLIN=2410
+FIN=2429
+DECL=3018
+
+W=6090
+P=8000
+PARAM=35
+C=188
+I=178
+
+FOMPIL=1574
+NOTIN=1613
+EXIT=2086
+PAGTWO=2257
+EXCOM=2288
+
+K4=5911                   (=1 0)
+K5=5952                   (=/5 0)
+TR=2982
+TWO=2999
+BN=156
+
+NLP=180
+NCLAPS=3367
+RETURN=3377
+CONT=3398
+END=3405
+
+EXT=3409
+CODL=6237
+CNL=222
+FCLAPS=3173
+EXIT2=3243
+
+SEMICO=4324
+PROCBG=4338
+E=132
+PROC=134
+
+SP=183
+L2=3008
+BEGIN=3480
+OUT=5231
+
+
+DEC=2944
+ADDI=191
+OK=5055
+K6=5970                   (&177760)
+^10
+          8     7000
+^67
+          7     P+35
+^RETUR-1
+          9     P+101
+^PAGTWO+11
+          7     P+35
+^FIN+3
+          8     P+8
+^TR-2
+          8     ;+1
+^TR+8
+          7     8133
+^FCLAPS+5
+          8     8137
+^EXIT2
+          4     DELIM
+          8     P+129
+^RETURN-3
+          8     P+49
+          4     NLP
+          8     P+48
+^CONT-2
+          7     P+52
+^EXT+7
+          4     5879      (+8)
+          8     P+56
+^BEGIN+18
+          8     8141
+^SEMICO+4
+          7     P+119
+^OK-5
+          8     P+150
+^1024
+          4     -167
+          5     COUNT
+          4     POINT
+          5     PT1
+          4     DEST
+          5     PT2
+
+LOOP      0     PT1       (COPY PATCH TO 7000...)
+          /4    0
+          0     PT2
+          /5    0
+          10    PT1
+          10    PT2
+          10    COUNT
+          4     COUNT
+          9     LOOP
+          8     ;+0
+
+COUNT     +0		  
+POINT     0     PROG
+PT1       +0
+DEST      0     7000
+PT2       +0
+
+PROG      4     7012	  ( \10 := =8 17)
+          5     10
+          0     7010
+          /4    7013
+          /5    8000
+          10    7010
+          10    7011
+          4     7011
+          9     7002
+          8     7009	  ( dynamic stop )
+          +0		  
+          -154		  
+          8     17	  
+
+(8000)    8     P         (PREVENT REPRODUCTION)
+          +0              (RETURN ADDRESS STORE)
+          &202000         ("GOTO")
+          &064000         (:)
+          &100200         (TYPE=LABEL)
+          +4              (CONSTANT)
+          +0              (CONSTANT)
+          +3              (  "     )
+
+          4     LASTDL    (IS LAST DELIMITER A GOTO QUERY)
+          2     P+2
+(8010)    7     P+15
+          4     DELIM     (HAVE WE GOT A : QUERY)
+          2     P+3
+          7     P+15
+          8     P+124
+
+          4     W
+          7     P+20
+          2     P+7
+          7     FILLIN
+          8     FAIL-18
+
+(8020)    4     DECTYP    (MUST NOT BE IN ARRAY DECLARATION)
+          7     P+23
+          8     FAIL-18
+
+          4     SEARCH    (SAVE RETURN ADDRESS)
+          5     P+1
+          4     P+4       (DECLARE NAME AS A LABEL)
+          5     DECTYP
+          4     P+5
+          11    DECL
+          8     DECL+1
+(8030)    4     P+1
+          5     SEARCH    (RESTORE RETURN ADDRESS)
+          4     P+6
+          5     DECTYP
+          8     SEARCH+1  (RESUME SEARCH[W] WITH W=0)
+
+          0     I         (CORRECT SIR-CODED TYPE PROCS. AS ACTUALS)
+          /4    2
+          6     K4
+          7     EXCOM     (USUAL ROUTE)
+          4     C
+(8040)    5     PARAM
+          11    FOMPIL
+          8     NOTIN+3
+          4     K5
+          5     PARAM
+          8     EXIT
+
+          +0              (J)
+          +0              (K)
+          5     NLP+2
+          4     NLP
+(8050)    5     P+46
+          8     RETURN
+
+          4     SP
+          2     SP+1
+          7     FAIL-79
+          8     END
+
+          2     NLP
+          5     P+47
+          4     P+46
+          2     P+47
+(8060)    0     CNL
+          /9    P+115     (EXIT)
+          0     P+47
+          /4    0
+          9     P+66      (MUST BE A NAME)
+          8     P+97
+          /4    3
+          6     5970      (&177760)
+          2     5986      (&100200)
+          7     P+71      (LABEL)
+(8070)    8     P+97
+
+          /4    2
+          6     5891      (+8191)
+          5     W
+          0     W
+          /4    CODL
+          7     P+78      (SO TRANSFER)
+          8     P+97
+
+          4     P+5
+          2     NLP
+(8080)    5     NLP
+
+          0     P+47
+          /4    0
+          0     NLP
+          /5    0
+
+          0     P+47
+          /4    1
+          0     NLP
+          /5    1
+
+          0     P+47
+(8090)    /4    2
+          0     NLP
+          /5    2
+
+          0     P+47
+          /4    3
+          0     NLP
+          /5    3
+
+          4     P+5
+          2     P+47
+          5     P+47
+(8100)    8     P+58
+
+          0     NLP
+          /4    0
+          5     P+112
+          /4    1
+          5     P+113
+          11    PRINT
+          8     PRINT+1
+          0     P+110
+          8     END
+(8110)    +11
+          +7
+          +0
+          +0
+          &400000
+
+          0     NCLAPS
+          /8    1
+          0     FCLAPS
+          /8    1
+
+          4     5921      (+2)
+(8120)    5     CNL
+          4     NLP
+          5     P+46      (J)
+          8     PROCBG
+
+          4     PROC
+          7     FAIL-18
+          4     E
+          7     FAIL-18
+          8     P+15
+
+          2     6052      (9 1024)
+(8130)    7     P+117     ("ALGOL")
+          4     P+5
+          8     P+56
+
+(8133)    4     BN+4
+          5     BN
+          5     L2
+          8     TWO
+
+(8137)    /5    4
+          /4    5
+          5     BN
+(8140)    8     FCLAPS+6
+          4     P+7       (+3)
+
+(8141)    1     SP+1
+          2     SP
+          7     8146      (FIRST TIME)
+          8     OUT
+
+(8146)    4     5921      (+2)
+          11    DEC
+          8     DEC+1
+          8     OUT
+
+(8150)    /5    3
+          6     K6
+          5     ADDI+3
+          8     OK-4
+%
+<! Halt !>

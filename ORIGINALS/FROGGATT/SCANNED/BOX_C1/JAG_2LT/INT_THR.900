@@ -1,0 +1,117 @@
+﻿
+((INTERRUPTS THRESHOLD TEST, 5/9/72)
+
+(Below-threshold tests are presumed to be performed first;
+the program then waits until the level-sequence given
+in LLIST has been obeyed. Levels 2 & 3 are each obeyed
+for 5 seconds before terminating. An illegal level causes
+a failure exit, bypassing these delays)
+
+(List of levels to be entered)
+
+LLIST    +3 +4 +2 +4 +3 +2 +3 +4 +0
+
+(Reset addresses)
+
+AFAIL3   0    IFAIL3
+AFAIL4   0    IFAIL4
+
+(Workspaces)
+
+PLIST    >1   (List pointer)
+LEVEL    >1   (Current level)
+
+(Level 4: Initialise list pointer and current level,
+and permit entry to levels 2 & 3)
+
+INTTH4   4    +0
+         5    PLIST
+         4    +4
+         5    LEVEL
+         4    +1
+         5    INTAC
+
+(Level 4: Wait for test to be completed by levels 2 & 3,
+then ignore further interrupts)
+
+         0    PLIST
+         /4   LLIST
+         7    ;+2
+         8    ;-3
+
+         5    INTAC
+         8    OK
+
+(Level 4: If error is detected, level 4 is jumped by
+level 2 or 3 to this point)
+
+IFAIL4   4    +0
+         5    INTAC
+         8    FAIL
+
+(Level 3: Check level 3 is due)
+
+INTTH3   4    +3
+         5    LEVEL
+
+         0    PLIST
+         10   PLIST
+         /2   LLIST
+         7    ;+2
+         8    JFAIL3
+
+(Level 3: Delay for 5 sec.)
+
+         4    +35000   (Adjust for 5 sec.)
+         1    +1
+         7    ;+2
+         8    ;-2
+
+(Level 3: Check level 4 is due)
+
+         4    +4
+         5    LEVEL
+
+         0    PLIST
+         10   PLIST
+         /2   LLIST
+         7    L3T
+
+(Level 3: Inform level 4 of failure)
+
+JFAIL3   4    AFAIL4
+         5    6
+IFAIL3   8    L3T
+
+(Level 2: Check level 2 is due)
+
+INTTH2   4    +2
+         0    PLIST
+         10   PLIST
+         /2   LLIST
+         7    ;+2
+         8    JFAIL2
+
+(Level 2: Delay for 5 sec.)
+
+         4    +35000   (Adjust for 5 sec.)
+         1    +1
+         7    ;+2
+         8    ;-2
+
+(Level 2: Check level 3 or 4 is due, according to LEVEL)
+
+         4    LEVEL
+         0    PLIST
+         10   PLIST
+         /2   LLIST
+         7    L2T
+
+(Level 2: Leave level 3 if running, & inform level 4 of failure)
+
+JFAIL2   4    AFAIL3
+         5    4
+         4    AFAIL4
+         5    6
+         8    L2T
+<! Halt !>

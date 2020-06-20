@@ -1,0 +1,152 @@
+﻿c DUMP STORE FOR HUNTER ALGOL
+
+on 903
+
+c edit 903 ALGOL Issue 6 Dump and T23 
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+
+( Dump utility for Hunter ALGOL )
+( Andrew Herbert 01 Sept 2013   )
+
+^6144
+*35
+
+^%,
+
+DLE [ DUMP
+
+CLE MKR
+DLI ^8001
+INS
+	  8	DUMP
+
+MKR	  +0
+COUNT	  +0
+ADDR	  +0
+CHECK1	  +0
+CHECK2	  +0
+^%,
+
+DLE FROM
+
+RTS 8135
+6143^%,
+
+RTS +8135
++6143^%,
+
+RTS (8010)
+      ^%,
+RTS (8020)
+      ^%,
+
+RTS ( punch 8124-8179 )
+( Punch clear store and T23 )^%,
+
+RTS (8030)
+      ^%,
+
+RTS 8180 
+ALGT23+56^%,
+
+RTS (8040)
+      ^%,
+RTS (8050)
+      ^%,
+RTS (8060)
+      ^%,
+RTS (8070)
+      ^%,
+RTS (8081)
+      ^%,
+
+CLE END
+DLI END
+INS
+END	  4	+6318	  ( set second region to dump )
+	  5	ADDR
+	  4	+8135
+	  5	TO
+	  4	JMP	  ( set up checksum and exit )
+	  5	END
+	  0	ADDR	  ( check for data )
+	  /4	0
+	  7	NULL
+	  8	NEWBLK	  ( found - start a new block )
+
+JMP	  8	CHKSUM	  ( after second block )
+
+CHKSUM	  4	+128
+^%,	
+RTS (8090)
+      ^%,
+
+RTS (8097)
+      ^%,
+
+CLE %
+WAI
+
+CLE ( reverse
+DLI [ ALG
+INS
+( Modified to jump to 10 after input )
+^%,
+
+CLE 7 8171
+RTI 8171
+10^%,
+
+CLI 8 8135
+CLI +0
+INS
+%
+^%,
+
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+st 490
+at ptp file DUMP(HUNTER).900
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_DUMP.900
+j 9
+st 822
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_T23.900
+j 10
+de ptp
+
+c assemble
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
+j 8181
+st 8171
+select out tty
+nonprinting off
+at ptr file DUMP(HUNTER).900
+j 8
+st 1939
+select out auto
+
+c dump with t22-23
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+at ptp file DUMP(HUNTER).BIN
+j 8181
+st 8070
+at ptr inline
++6144
++6318
+<! halt !><!!>
+j 8179
+de ptp
+st 8113
+
+delete errors.txt
+
+sh t

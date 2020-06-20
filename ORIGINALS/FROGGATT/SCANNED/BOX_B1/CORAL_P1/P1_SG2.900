@@ -1,0 +1,1032 @@
+﻿
+($ PASS 1  SEGMENT 2)
+
+                     "END";
+                     "CODE""BEGIN"LIT1:14,0;
+                     LIT2:/4,BOOLWD;
+                     LIT3:"LOCATION"(PROGRAM);
+                     LIT4:"LOCATION"(STARTOP);
+                     LIT5:"LOCATION"(FAILEDSYNTAX);
+                     "END";
+                     MAIN:"IF"TI<0"THEN
+                     ""BEGIN"P2SYN:=0;
+                     "CODE""BEGIN"0,BOTTOM;
+                     /5,0;
+                     10,BOTTOM;
+                     4,LIT3;
+                     5,P"END
+                     ""END
+                     ""ELSE
+                     ""BEGINIF"P2SYN<>0"THEN
+
+                     ""BEGIN""IF"TI=26"THEN"
+                            "BEGIN"P2SYN:=0;
+                                   "CODE
+                                   BEGIN"4,LIT5;
+                                          5,P
+                                   "END"
+                            "END
+
+                     ""END""ELSE
+
+                     ""BEGIN
+                            "SETTI:"CODE
+                            BEGIN"4,TI;
+                                   6,+15;
+                                   1,LIT1;
+                                   5,PLACES;
+                                   4,TI;
+                                   14,8188;
+                                   1,LIT2;
+                                   5,WORDNO;
+                                   NEXTERM:0,P;
+                                   /4,0;
+                                   10,P;
+                                   5,WS;
+                                   6,"OCTAL"(17777);
+                                   5,BWNO;
+                                   4,WS;
+                                   14,1;
+                                   9,ACTCLASS;
+                                   14,1;
+                                   9,EXITEREAD;
+                                   4,TI;
+                                   2,BWNO;
+                                   7,TEST;
+                                   8,FAILS;
+                                   ACTCLASS:4,WS;
+                                   9,LAST1;
+                                   4,P;
+                                   0,BOTTOM;
+                                   /5,0;
+                                   10,BOTTOM;
+                                   4,BOTTOM;
+                                   2,STAK;
+                                   7,FULL;
+                                   LAST1:4,BWNO;
+                                   5,P;
+                                   TESTER:0,P;
+                                   /4,0;
+                                   5,WS;
+                                   6,"OCTAL"(777);
+                                   5,BWNO;
+                                   4,WS;
+                                   14,1;
+                                   9,SINGLEBIT;
+                                   0,BWNO;
+                                   WORDNO:/4,BOOLWD;
+                                   PLACES:14,0;
+                                   9,TERM;
+                                   4,WS;
+                                   9,FAIL;
+                                   10,P;
+                                   8,TESTER;
+                                   SINGLEBIT:4,BWNO;
+                                   2,TI;
+                                   7,TERM;
+                                   4,WS;
+                                   9,FAILS;
+                                   10,P;
+                                   8,TESTER;
+                                   TERM:4,WS;
+                                   14,8183;
+                                   6,"OCTAL"(177);
+                                   7,EXITER;
+                                   1,P;
+                                   5,P;
+                                   8,NEXTERM;
+                                   FAIL:
+                                   "BEGIN"FLT("CODE
+                                          BEGIN"4,P;
+                                                 1,+1064;
+                                                 2,LIT4
+                                          "END");
+                                          "GOTO"CARRYON;
+                                          FAILS:FLT(-(BWNO+1000));
+                                          CARRYON:P2SYN:=1;
+                                          ERROR:=0;
+                                          "GOTO"END;
+                                          FULL:FLT(20)
+                                   "END";
+                                   8,"SELF";
+                                   EXITER:4,BOTTOM;
+                                   1,-1;
+                                   5,BOTTOM;
+                                   0,BOTTOM;
+                                   /4,0;
+                                   7,END;
+                                   5,P;
+                                   8,NEXTERM;
+                                   TEST:4,WS;
+                                   9,EXITEREAD;
+                                   8,END;
+                                   EXITEREAD:4,BOTTOM;
+                                   1,-1;
+                                   5,BOTTOM;
+                                   0,BOTTOM;
+                                   /4,0;
+                                   7,END;
+                                   5,P;
+                                   END:
+                            "END
+
+                     ""END
+
+              ""END
+
+       ""END";
+       ($ WRITE)
+       "PROCEDURE"WRITE("VALUE""INTEGER"X);
+       "IF"X<>31"THEN"
+       "BEGIN"SUMCH:=SUMCH+X;
+              NOR:=NOR+1;
+              "IF"X>=84"THEN"
+              "BEGIN"FLT(3);
+
+              "END""ELSE""IF"X<72"AND"INSERT<>0"THEN"CHECK(X);
+              "IF"ERROR<>0"THEN
+
+              ""BEGIN""IF"X<72"THEN"PUNCH("IF"X>=58"THEN"X+38"ELSE"X);
+                     COUNT:=COUNT+1;
+                     "IF"COUNT>=40"THEN
+
+                     ""BEGIN""IF"X=26"OR"X=19"OR"COUNT>=60"AND"X>=10"AND"X<>32"AND"X<>28"AND"X<>13"THEN
+
+                            ""BEGIN"PUNCH(59);
+                                   COUNT:=0
+                            "END
+
+                     ""END";
+                     "IF"INSERT<>0"THEN
+
+                     ""BEGIN""IF"LINECOUNT<>MEMORY"THEN
+
+                            ""BEGIN""FOR"MEMORY:=MEMORY+1:1:LINECOUNT"DO"PUNCH(111);
+                                   MEMORY:=LINECOUNT
+
+                            "END
+
+                     ""END""ELSE""IF"X=19"THEN"INSERT:=1;
+                     "IF"X>=72"THEN"
+                     "BEGIN"COUNT:=COUNT+1;
+                            INSERT:=0;
+                            PUNCH(X+38)
+                     "END
+
+              ""END""ELSE
+
+              ""BEGIN
+                     ""IF"INSERT=0"AND"X=19"THEN"INSERT:=1;
+                     "IF"X>=72"THEN"INSERT:=0
+
+              "END
+
+       ""END"WRITE;
+       ($ PRINT)
+       "PROCEDURE"PRINT("VALUE""INTEGER"N);
+
+       "BEGIN""INTEGER"LEADING,I,K,L;
+              "CODE
+              BEGIN"8,MAIN;
+                     DIVISORS:+10000;
+                     +1000;
+                     +100;
+                     +10;
+                     +1;
+                     MAIN:4,+0;
+                     5,LEADING;
+                     4,-4;
+                     5,I;
+                     NEXT:0,I;
+                     /4,DIVISORS+4;
+                     5,K;
+                     4,N;
+                     1,N;
+                     14,8175;
+                     13,K;
+                     14,8191;
+                     5,L;
+                     /12,DIVISORS+4;
+                     14,17;
+                     2,N;
+                     5,N;
+                     4,L;
+                     0,LEADING;
+                     /7,IG;
+                     /8,NUM;
+                     IG:8,IG1;
+                     8,PUN;
+                     NUM:10,LEADING;
+                     8,"SELF"+1;
+                     PUN:
+                     "BEGIN"WRITE
+                     "END";
+                     IG1:10,I;
+                     4,I;
+                     9,NEXT;
+                     10,LEADING;
+                     7,NEXT
+
+              "END
+
+       ""END";
+       "INTEGER"FREE,STACK,STACKHD;
+       ($ SET UP)
+       "PROCEDURE"SETUP;
+
+       "BEGIN""PROCEDURE"ZERO("LOCATION""INTEGER"L);
+
+              "BEGIN"L:=0
+              "END";
+              "INTEGER"I;
+              DECLARELISTS(ZERO);
+              "FOR"I:=LMIN+1"STEP"1"UNTIL"LMAX"DO
+
+              ""BEGIN"TL[I]:=I+1;
+                     HD[I]:=0
+              "END";
+              TL[LMAX]:=STACK:=0;
+              FREE:=LMIN+1
+
+       "END"SETUP;
+       ($ COLLECT GARBAGE)
+       "PROCEDURE"COLLECTGARBAGE;
+
+       "BEGIN""PROCEDURE"TRACE("LOCATION""INTEGER"LL);
+
+              "BEGIN""INTEGER"FIRST,T,MARK,L;
+                     L:=LL;
+                     "IF"L-LMIN>0"AND"L-LMAX<=0"THEN
+
+                     ""BEGIN"MARK:=LMAX+LMAX;
+                            FIRST:=0;
+                            TRACETL:T:=TL[L];
+                            "IF"T+LMAX>0"THEN
+
+                            ""BEGIN""IF"T-LMIN<=0"THEN
+
+                                   ""BEGIN"TL[L]:=T-MARK;
+                                          TRACEHD:T:=HD[L];
+                                          "IF"T-LMIN>0"AND"T-LMAX<=0"THEN
+
+                                          ""BEGIN"TL[L]:=TL[L]-MARK;
+                                                 HD[L]:=FIRST
+                                          "END
+                                          ""ELSE""GO""TO"RETRACE
+
+                                   "END""ELSE"TL[L]:=FIRST-MARK;
+                                   FIRST:=L;
+                                   L:=T;
+                                   "GO"
+                                  "TO"TRACETL
+
+                            "END"FORWARDLOOP;
+                            RETRACE:"IF"FIRST>0"THEN
+
+                            ""BEGIN"T:=TL[FIRST]+MARK;
+                                   "IF"T+LMAX<=0"THEN
+
+                                   ""BEGIN"TL[FIRST]:=T;
+                                          T:=HD[FIRST];
+                                          HD[FIRST]:=L;
+                                          L:=FIRST;
+                                          FIRST:=T;
+                                          "GO""TO"RETRACE
+
+                                   "END"RETRACETOHEAD;
+                                   TL[FIRST]:=L-MARK;
+                                   L:=FIRST;
+                                   FIRST:=T;
+                                   "GO""TO"TRACEHD
+
+                            "END"RETRACE
+
+                     "END"LISTTRACE
+
+              "END"TRACE;
+              "INTEGER"I,L;
+              ;
+              TRACE(STACK);
+              DECLARELISTS(TRACE);
+              FREE:=0;
+              "FOR"I:=LMIN+1"STEP"1"UNTIL"LMAX"DO
+
+              ""BEGIN"L:=TL[I];
+                     "IF"L+LMAX<=0"THEN"TL[I]:=L+LMAX+LMAX
+                     "ELSE"
+                     "BEGIN"TL[I]:=FREE;
+                            FREE:=I
+                     "END
+
+              ""END"RECOVERY;
+              "IF"FREE=0"THEN"FLT(6)
+
+       "END"COLLECTGARBAGE;
+       ($ CONS)
+       "INTEGER""PROCEDURE"CONS("VALUE""INTEGER"H,T);
+
+       "BEGIN""INTEGER"F;
+              F:=FREE;
+              FREE:=TL[FREE];
+              TL[F]:=T;
+              HD[F]:=H;
+              STACK:=F;
+              "IF"FREE=0"THEN"COLLECTGARBAGE;
+              "ANSWER"F;
+
+       "END";
+       ($ FIND M)
+       "INTEGER""PROCEDURE"FINDM("VALUE""INTEGER"X);
+
+       "BEGIN""INTEGER"I,J;
+              J:=0;
+              "IF"NAMES[X]<0"THEN
+
+              ""BEGIN"I:=MACROLIST;
+                     BB:"IF"I<>0"THEN
+
+                     ""BEGIN""IF"HD[HD[I]]=X"THEN
+
+                            ""BEGIN"IDEN:=HD[I];
+                                   J:=1;
+                                   "GOTO"AA
+                            "END";
+                            I:=TL[I];
+                            "GOTO"BB
+
+                     "END
+
+              ""END";
+              AA:"ANSWER"J;
+
+       "END";
+       ($ DELETE)
+       "PROCEDURE"DELETE("VALUE""INTEGER"X);
+
+       "BEGIN""INTEGER"I,J;
+              "IF"HD[HD[MACROLIST]]=X"THEN
+
+              ""BEGIN"MACROLIST:=TL[MACROLIST];
+                     MX:="IF"MACROLIST=0"THEN"BOT MAX STORE"ELSE"MACROS[HD[TL[HD[MACROLIST]]]]
+              "END
+              ""ELSE
+
+              ""BEGIN"I:=MACROLIST;
+                     AA:J:=TL[I];
+                     "IF"J<>0"THEN
+
+                     ""BEGIN""IF"HD[HD[J]]=X"THEN"TL[I]:=TL[J]"ELSE
+
+                            ""BEGIN"I:=TL[I];
+                                   "GOTO"AA
+                            "END
+
+                     ""END
+
+              ""END";
+
+       "END";
+       ($ OUT I)
+       "PROCEDURE"OUTI("VALUE""INTEGER"N);
+
+       "BEGIN""INTEGER"COUNT,TERM;
+              COUNT:=-15;
+              TERM:=0;
+              NEXT:"CODE"
+              "BEGIN"4,N;
+                     0,COUNT;
+                     /14,0;
+                     6,+7;
+                     0,TERM;
+                     /7,IG;
+                     /8,NUM;
+                     IG:8,IG1;
+                     8,PUN;
+                     NUM:10,TERM;
+                     8,"SELF"+1;
+                     PUN:11,WRITE;
+                     8,WRITE+1;
+                     IG1:4,COUNT;
+                     1,+3;
+                     5,COUNT;
+                     9,NEXT;
+                     10,TERM;
+                     7,NEXT
+
+              "END
+
+       ""END";
+       ($ IN)
+       "INTEGER""PROCEDURE"IN;
+
+       "BEGIN""INTEGER"I;
+              "IF"INSOURCE<>0"THEN
+
+              ""BEGIN"I:=MACROS[INSOURCE];
+                     "CODE"
+                     "BEGIN"0,INSH;
+                            4,I;
+                            /8,"SELF"+1;
+                            14,8183;
+                            6,+127;
+                            5,I;
+
+                     "END";
+                     INSH:=INSH-1;
+                     "IF"INSH<0"THEN"
+                     "BEGIN"INSOURCE:=INSOURCE+1;
+                            INSH:=1
+                     "END";
+
+              "END""ELSE"I:=TAPEROW;
+              "ANSWER"I
+
+       "END"IN;
+       ($ STACK M)
+       "PROCEDURE"STACKM("VALUE""INTEGER"X);
+
+       "BEGIN""INTEGER"I;
+              I:=MACROS[MX];
+              "CODE"
+              "BEGIN"0,I;
+                     4,X;
+                     14,9;
+                     5,I;
+
+              "END";
+              MACROS[MX]:=I;
+              WS:=WS-1;
+              "IF"WS<0"THEN
+
+              ""BEGIN"WS:=1;
+                     MX:=MX+1;
+                     "IF"MX>=LIMITMACROS"THEN"FLT(9);
+                     MACROS[MX]:=0;
+
+              "END";
+
+       "END";
+       ($ OUT ID)
+       "PROCEDURE"OUTID("VALUE""INTEGER"I);
+
+       "BEGIN""INTEGER"M,N;
+              N:=0;
+              "FOR"M:=IDS[N]"WHILE"M<>I"AND"M<>0"DO"N:=N+1;
+              "IF"M<>0"THEN"PRINT(N)
+              "ELSE"
+              "BEGIN"IDS[LASTREF]:=I;
+                     LASTREF:="IF"LASTREF<>9"THEN"LASTREF+1"ELSE"0;
+                     PRINT(I)
+
+              "END
+
+       ""END";
+       ($ FX)
+       "PROCEDURE"FX("VALUE""INTEGER"I);
+
+       "BEGIN""IF"OUTSTATE=1"THEN
+
+              ""BEGIN"WRITE(I);
+                     OUTSTATE:=0;
+
+              "END";
+
+       "END";
+       ($ F1)
+       "PROCEDURE"F1;
+
+       "BEGIN""IF"OUTSTATE=0"THEN"OUTSTATE:=1;
+
+       "END";
+       ($ F5)
+       "PROCEDURE"F5;
+
+       "BEGIN"AA[1]:=(TT-47)*4096;
+              AA[2]:=AA[3]:=AA[4]:=0;
+              II:=JJ:=1;
+              HASH:=TT-47
+
+       "END";
+       ($ F6)
+       "PROCEDURE"F6;
+
+       "BEGIN""IF"JJ<=4"THEN
+
+              ""BEGIN""INTEGER"I,X;
+                     I:=AA[JJ];
+                     X:="IF"TT<=9"THEN"TT+1"ELSE"TT-47;
+                     HASH:=HASH+X;
+                     "CODE"
+                     "BEGIN"0,I;
+                            4,X;
+                            14,12;
+                            5,I;
+
+                     "END";
+                     AA[JJ]:=I;
+                     II:=II+1;
+                     "IF"II>=3"THEN"
+                     "BEGIN"JJ:=JJ+1;
+                            II:=0;
+
+                     "END";
+
+              "END";
+
+       "END";
+       ($ F4)
+       "PROCEDURE"F4;
+
+       "BEGIN""IF"II=0"THEN"JJ:=JJ-1;
+              HASH:=AND(4*HASH+JJ,127);
+              KK:=PP[HASH];
+              "IF"KK=BOT MAX STORE-1"OR"KK=BOT MAX STORE-32769"THEN
+
+              ""BEGIN"CC:NAMES[NEXTID]:=PP[HASH];
+                     PP[HASH]:=NEXTID;
+                     "FOR"II:=1:1:JJ"DO"NAMES[NEXTID+II]:=AA[II];
+                     "IF"ERROR<>0"THEN
+
+                     ""BEGIN""INTEGER"KK,NAME;
+                            WRITE(74);
+                            PRINT("CODE"
+                            "BEGIN"4,NEXTID; 1,-8172;  14,8191;
+                            "END");
+                            "FOR"II:=1:1:JJ"DO
+
+                            ""BEGIN"NAME:=AA[II];
+                                   "FOR"KK:=2:-1:0"DO"
+                                   "BEGIN""INTEGER"I;
+                                          "CODE"
+                                          "BEGIN"0,KK;
+                                                 4,NAME;
+                                                 /8,"SELF"+1;
+                                                 14,8186;
+                                                 14,8186;
+                                                 6,+63;
+                                                 5,I;
+                                                 7,BLANK;
+
+                                          "END";
+                                          WRITE("IF"I<=10"THEN"I-1"ELSE"I+21);
+                                          BLANK:
+                                   "END";
+
+                            "END";
+                            WRITE(19)
+
+                     "END";
+                     IDEN:=NEXTID;
+                     NEXTID:=NEXTID+JJ+1;
+                     "IF"NEXTID>=LIMITNAMES-4"THEN"FLT(10);
+
+              "END""ELSE
+
+              ""BEGIN"DD:"FOR"II:=1:1:JJ"DO""IF"NAMES[KK+II]<>AA[II]"THEN""GOTO"EE;
+                     IDEN:=KK;
+                     "GOTO"BB;
+                     EE:"IF"NAMES[KK]=BOT MAX STORE-1"OR"NAMES[KK]=BOT MAX STORE-32769"THEN""GOTO"CC
+                     "ELSE"
+                     "BEGIN"KK:="IF"NAMES[KK]<0"THEN"NAMES[KK]+32768"ELSE
+                            "NAMES[KK];
+                            "GOTO"DD;
+
+                     "END";
+                     BB:
+
+              "END";
+
+       "END";
+       ($ F8)
+       "PROCEDURE"F8;
+
+       "BEGIN""IF"OUTSTATE=1"THEN
+
+              ""BEGIN"OUTSTATE:=3;
+                     ST:=CONS(MX,ST);
+                     MX:=MX+1;
+                     MACROS[MX]:=0;
+
+              "END";
+
+       "END";
+       ($ F9)
+       "PROCEDURE"F9;
+
+       "BEGIN""IF"HD[EXL]=1"THEN
+
+              ""BEGIN"II:=MX;
+                     AA:STACKM(87);
+                     "IF"II=MX"THEN""GOTO"AA;
+                     OUTSTATE:=1;
+                     MACROS[HD[ST]]:=MX;
+
+              "END
+
+       ""END";
+       ($ F10)
+       "PROCEDURE"F10;
+       "BEGIN""IF"HD[EXL]=1"THEN
+
+              ""BEGIN"ST:=CONS(CONS(HD[ST],0),TL[ST]);
+
+              "END
+
+       ""END";
+       ($ F11)
+       "PROCEDURE"F11;
+
+       "BEGIN""IF"HD[EXL]=1"THEN
+
+              ""BEGIN"ST:=CONS(CONS(HD[TL[ST]],HD[ST]),TL[TL[ST]])
+              "END";
+
+       "END";
+       ($ F13)
+       "PROCEDURE"F13;
+
+       "BEGIN""IF"OUTSTATE=1"THEN"ST:=CONS(IDEN,ST);
+              EXL:=CONS(OUTSTATE,EXL);
+
+       "END";
+       ($ F14)
+       "PROCEDURE"F14;
+
+       "BEGIN"ST:=CONS(0,ST);
+
+       "END";
+       ($ F15)
+       "PROCEDURE"F15;
+
+       "BEGIN""IF"HD[EXL]=1"THEN"ST:=CONS(IDEN,ST)
+       "END";
+       ($ F16)
+       "PROCEDURE"F16;
+
+       "BEGIN""IF"HD[EXL]=1"THEN
+
+              ""BEGIN"IDEN:=HD[TL[ST]];
+                     "IF"NAMES[IDEN]>=0"THEN"NAMES[IDEN]:=
+                     NAMES[IDEN]-32768;
+                     MACROLIST:=CONS(CONS(IDEN,CONS(MX,HD[ST])),MACROLIST);
+                     ST:=TL[TL[ST]];
+
+              "END";
+
+       "END";
+       ($ F17)
+       "PROCEDURE"F17;
+
+       "BEGIN""IF"HD[EXL]=1"THEN
+
+              ""BEGIN"ST:=TL[ST];
+                     OUTSTATE:=0
+
+              "END";
+              EXL:=TL[EXL];
+
+       "END";
+       ($ F18)
+       "PROCEDURE"F18;
+
+       "BEGIN""IF"OUTSTATE=1"THEN"OUTSTATE:=0;
+
+       "END";
+
+       ($ F19)
+       "PROCEDURE"F19;
+
+       "BEGIN""IF"OUTSTATE=1"THEN"DELETE(IDEN)
+       "END";
+       ($ F20)
+       "PROCEDURE"F20;
+
+       "BEGIN"INSERT:=0;
+              WRITE(23);
+              BLANKTAPE(100);
+              (PUNCH(59);
+              OUTI(SUMCH);
+              PUNCH(59);
+              OUTI(NOR);
+              PUNCH(59);
+              PUNCH(58);
+              )OUTSTATE:=4
+       "END";
+       ($ F21)
+       "PROCEDURE"F21;
+
+       "BEGIN""IF"OUTSTATE=1"THEN
+
+              ""BEGIN""FOR"II:=CHARACTER"WHILE"II<>26"DO";
+                     IGNORE:=1
+              "END";
+
+       "END";
+       ($ F22)
+       "PROCEDURE"F22;
+       ;
+       ($ F23)
+       "PROCEDURE"F23;
+       ;
+       ($ F24)
+       "PROCEDURE"F24;
+
+       "BEGIN"FX(31);
+              IGNORE:=0
+       "END";
+       ($ F26)
+       "PROCEDURE"F26;
+
+       "BEGIN"WAIT;
+              TI:=31;
+              DUMMYSPACE:=1
+       "END";
+       ($ FOSQ)
+       "PROCEDURE"FOSQ;
+       EXL:=CONS(OUTSTATE,EXL);
+       ($ FCSQ)
+       "PROCEDURE"FCSQ;
+       EXL:=TL[EXL];
+       ($ F25)
+       "PROCEDURE"F25;
+
+       "BEGIN""INTEGER"I,J,K;
+              "PROCEDURE"S("VALUE""INTEGER"X);
+
+              "BEGIN""IF"J=1"THEN"I:=0;
+                     "CODE"
+                     "BEGIN"0,I;
+                            4,X;
+                            14,9;
+                            5,I;
+
+                     "END";
+                     J:=J-1;
+                     "IF"J<0"THEN
+
+                     ""BEGIN"WRITE(42);
+                            WRITE(18);
+                            OUTI(I);
+                            WRITE(19);
+                            WRITE(26);
+                            J:=1;
+
+                     "END
+
+              ""END"S;
+              "IF"OUTSTATE<>0"THEN"WAIT;
+              OUTSTATE:=1;
+              "FOR"I:=33,57,32,1,26,38,32,0,26,34,33,32,2,23"DO
+              "WRITE(I);
+              (OUTPUTS
+              "BEGIN""INTEGER"A1;
+                     "GOTO"A0;
+                     "CODE"
+                     "BEGIN"A2:)
+                            J:=1;
+                            "FOR"K:=CHARACTER"WHILE"K<>87"DO"S(K);
+                            S(61);
+                            S(61);
+                            "FOR"I:=43,18,32,2,19,26,32,0,23,4,22,48,11,1,36,36"DO"WRITE(I);
+                            (OUTPUTS"LOCATION"(A2);
+                            A0:4,"SELF"-1
+                     "END"
+              "END")
+
+       "END"F25;
+       ($ NEWA)
+       ($ ENTRY)
+       "PROCEDURE" ENTRY;
+       "CODE
+       BEGIN
+              "0,STAK;
+              4,ENTRY;
+              6,+8191;
+              /5,0;
+              4,STAK;
+              1,-1;
+              5,STAK;
+              2,BOTTOM;
+              9,OK;
+
+              "BEGIN
+                     "FLT(20)
+
+              "END";
+              OK:
+       "END" OF PROCEDURE ENTRY;
+       ($ F3)
+       "PROCEDURE" F3;
+       "IF" OUTSTATE=1 "THEN
+
+       ""BEGIN
+              ""IF" FINDM(IDEN)=0 "THEN
+
+              ""BEGIN
+                     "WRITE(32);
+                     OUTID("CODE
+                     BEGIN" 4,IDEN; 1,-8172;  14,8191;
+
+                     "END");
+                     OUTSTATE_0
+
+              "END ELSE
+
+              ""BEGIN
+                     "ENTRY;
+                     "GOTO" EXPAND
+
+              "END
+
+       ""END" OF F3;
+       ($ F7)
+       "PROCEDURE" F7;
+
+       "BEGIN
+              ""IF" OUTSTATE=1 "THEN
+
+              ""BEGIN
+                     ""IF" FINDM(IDEN)=0 "THEN
+
+                     ""BEGIN
+                            "WRITE(32);
+                            OUTID("CODE
+                            BEGIN" 4,IDEN; 1,-8172;  14,8191;
+
+                            "END");
+                            OUTSTATE_0
+
+                     "END ELSE
+                     ""IF" TL[TL[IDEN]]=0 "THEN
+
+                     ""BEGIN
+                            "ENTRY;
+                                   "GOTO" EXPAND
+
+                     "END ELSE
+                     "ST_CONS(IDEN,ST);
+
+              "END";
+              EXL_CONS(OUTSTATE,EXL)
+
+       "END" OF F7;
+       ($ NEWB)
+       ($ F12)
+       "PROCEDURE" F12;
+       "IF" HD[EXL]=1 "THEN
+
+       ""BEGIN
+              "KK_HD[ST];
+              IDEN_HD[TL[ST]];
+              JJ_TL[TL[IDEN]];
+              "FOR" KK_KK "WHILE" KK<>0 "DO
+
+              ""BEGIN
+                     "MACROLIST_CONS(CONS(HD[JJ],CONS(HD[KK],0)),MACROLIST);
+                     "IF" NAMES[HD[JJ]]>=0 "THEN
+                     "NAMES[HD[JJ]]_NAMES[HD[JJ]]-32768;
+                     KK_TL[KK];
+                     JJ_TL[JJ]
+
+              "END";
+              EXL_TL[EXL];
+              ST_CONS(TL[TL[IDEN]],TL[TL[ST]]);
+              ENTRY;
+              "GOTO" EXPAND;
+              II_HD[ST];
+              LL_0;
+              "FOR" II_II "WHILE" II<>0 "DO
+
+              ""BEGIN
+                     "LL_CONS(HD[II],LL);
+                     II_TL[II]
+
+              "END";
+              ST_TL[ST];
+              "FOR" LL_LL "WHILE" LL<>0 "DO
+
+              ""BEGIN
+                     "DELETE(HD[LL]);
+                     LL_TL[LL]
+
+              "END
+
+       ""END ELSE
+       "EXL_TL[EXL];
+       ($ NEW1)
+       "PROCEDURE"F58;
+       FX(33);
+       "PROCEDURE"F59;
+       FX(36);
+       "PROCEDURE"F60;
+       FX(63);
+       "PROCEDURE"F61;
+       FX(57);
+       "PROCEDURE"F62;
+       FX(39);
+       "PROCEDURE"F63;
+       FX(55);
+       "PROCEDURE"F64;
+       FX(56);
+       "PROCEDURE"F65;
+       FX(44);
+       "PROCEDURE"F66;
+       FX(45);
+       "PROCEDURE"F67;
+       FX(47);
+       "PROCEDURE"F68;
+       FX(52);
+       "PROCEDURE"F69;
+       FX(53);
+       "PROCEDURE"F70;
+       FX(43);
+       "PROCEDURE"F71;
+       FX(41);
+       "PROCEDURE"F72;
+       FX(37);
+       "PROCEDURE"F73;
+       FX(35);
+       "PROCEDURE"F74;
+       FX(40);
+       "PROCEDURE"F75;
+       FX(51);
+       "PROCEDURE"F76;
+       FX(62);
+       "PROCEDURE"F77;
+       FX(58);
+       "PROCEDURE"F78;
+       FX(46);
+       "PROCEDURE"F79;
+       FX(23);
+       "PROCEDURE"F80;
+       FX(54);
+       "PROCEDURE"F81;
+       FX(23);
+       "PROCEDURE"F82;
+       FX(54);
+       "PROCEDURE"F83;
+       FX(38);
+       "PROCEDURE"F84;
+       FX(34);
+       "PROCEDURE"F85;
+       FX(48);
+       "PROCEDURE"F86;
+       FX(23);
+       "PROCEDURE"F87;
+       FX(42);
+       "PROCEDURE"F88;
+       FX(49);
+       "PROCEDURE"F89;
+       FX(59);
+       "PROCEDURE"F90;
+       FX(34);
+       "PROCEDURE"F91;
+       FX(61);
+       "PROCEDURE"F92;
+       FX(60);
+       "PROCEDURE"F93;
+       FX(52);
+       "PROCEDURE"F94;
+       FX(50);
+       "PROCEDURE"F95;
+       FX(49);
+       ($ SET TI)
+       "PROCEDURE"SETTI;
+
+       "BEGIN"CH:="IF"TI>=59"THEN"58"ELSE"TI;
+              "IF"TI=86"OR"TI=87"THEN"CH:=TI-26;
+              "CODE
+              BEGIN"4,CH;
+                     6,+15;
+                     1,LIT1;
+                     5,PLACES;
+                     4,CH;
+                     14,8188;
+                     1,LIT2;
+                     5,WORDNO
+
+              "END
+
+       ""END";
+
+BEGINNING: QOUT(5);  RESET;  BLANK TAPE(150);  QOUT(10);  PUNCH(59);
+COPY('900 CORAL PASS ONE@);
+PUNCH(59);  QOUT(5);  QIN(1);       RESET;
+       PUNCH(59);
+       PUNCH(28);
+       PUNCH(61);
+       SUMCH:=NOR:=COUNT:=BO:=INSOURCE:=OUTSTATE:=LINECOUNT:=IGNORE:=LASTREF:=MEMORY:=BUGS:=0;
+       PAGE:=ERROR:=-1;
+       "FOR"WS:=0:1:127"DO"PP[WS]:=BOT MAX STORE-1;
+       "FOR"WS:=0:1:10"DO"IDS[WS]:=0;
+       NEXTID:=MX:=BOT MAX STORE;
+       TI:=31;
+       SETUP;
+       MACROS[BOT MAX STORE]:=0;
+       WS:=INSH:=DUMMYSPACE:=INSERT:=1;
+       "GOTO"START;
+       "CODE
+       BEGIN"STARTOP:;
+                       "HALT";
+
+<! Halt !>

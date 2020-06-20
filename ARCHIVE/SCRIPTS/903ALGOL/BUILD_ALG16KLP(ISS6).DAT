@@ -1,0 +1,85 @@
+﻿C Build Reconstructed ALGOL Issue 6 Large Program Interpreter
+
+on 903 16K
+
+c load Elliott distribution scb
+at ptr file ../../MASTERS/903ALGOL/ALG16KLP(ISS6).BIN
+j 8181
+st 4309
+
+c dump for comparison with built version
+du 16384 ALG16KLP(ISS6).IMG
+das ALG16KLP.900
+
+
+c assemble lp interpreter
+c load 2-pass sir 
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+c assemble interpreter using ACD 2-pass SIR
+at ptr file ../../MASTERS/903ALGOL/ALG16KLP(ISS6).900
+select out tty
+j 12
+st 562
+rewind
+select out auto
+at ptp file ALG16KLP(ISS6).BIN
+j 10
+st 587
+de ptp
+
+c load image 
+at ptr file ALG16KLP(ISS6).BIN
+j 8181
+st 8175
+
+c initialise S and B registers
+e 2 +10981
+e 3 +0
+e 4 +11000
+e 5 +2804
+e 6 +4130
+e 7 +4134
+
+c correct frigged literals in interpreter
+e 4444 +28
+e 4455 +8192
+
+
+c patch to fix up t23 data
+e 8167 =15 2048
+e 8168 =15 2048
+e 8169 =15 2048
+e 8170 =2 8176
+e 8171 =7 4263
+e 8172 =8 8165
+e 8173 =0 128
+e 8174 =0 4510
+e 8175 =/1 315
+e 8176 =14 6079
+e 8177 =8 8135
+e 8178 =0 128
+e 8179 +0
+e 8191^1 -65535
+
+c fix up loader literal
+e 8166^1 8112
+
+c dump out new system
+at ptp file ALG16KLP(ISS6).BIN
+j 14
+de ptp
+st 4247
+
+c compare to distributed binary
+at ptr file ALG16KLP(ISS6).BIN
+j 8181
+st 4309
+vi ALG16KLP(ISS6).IMG
+c differences in locs 4375, 4376 are ok
+
+
+delete ALG16KLP(ISS6).IMG
+sh t

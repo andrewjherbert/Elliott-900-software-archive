@@ -1,0 +1,24 @@
+﻿DV51R1;
+"BEGIN""REAL"A,B,C; A:=83;
+       SETORIGIN(0,0);
+       WAY(0,6);
+       MOVEPEN(0,3000);
+       "PRINT"PUNCH(5),
+'COMPUTER GRAPHICS BY ELLIOTT 903@;
+       MOVEPEN(0,0);
+       "FOR"C:=1"STEP"1"UNTIL"
+       100"DO"
+       "BEGIN"A:=A*A;
+              B:=A/10;
+              "IF"B>100"THEN"B:=B/10;
+              "IF"B>61"THEN"B:=B-40;
+              B:=ENTIER(B);
+              B:=B+12;
+              "IF"B=1"THEN"B:=B+1.00;
+              A:=B;
+              DRAWLINE(A*40,A*40);
+        "END";
+"END";
+<! halt !>
+
+   

@@ -1,0 +1,39 @@
+﻿C Build U.5 - ALDCOPY
+
+on 903 8K
+
+nonprinting off
+
+c load SIR
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+c assemble source
+select out tty
+at ptr file ../../MASTERS/ALDENHAM/ALDCOPY.900
+j 12
+st 562
+rewind
+at ptp file ALDCOPY.BIN
+select out auto
+j 10
+st 587
+de ptp
+
+c check against binary
+clear 
+at ptr file ../../MASTERS/ALDENHAM/ALDCOPY.BIN
+break on 12
+nonstop on
+j 8181
+du 8192 ALDCOPY.IMG
+clear
+at ptr file ALDCOPY.BIN
+j 8181
+vi ALDCOPY.IMG
+
+delete TEMP.BIN
+delete ALDCOPY.IMG
+
+sh t

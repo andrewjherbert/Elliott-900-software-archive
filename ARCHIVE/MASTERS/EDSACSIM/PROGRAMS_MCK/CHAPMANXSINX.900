@@ -1,0 +1,315 @@
+﻿
+[Chapman Integral table as reported by M.V. Wilkes in 
+ "A table of Chapman's Grazing Incidence Integral Ch(x,chi)", 
+ 1954 Proc. Phys. Soc., B, 67, 304-308.
+
+ Derived from Don Hunter tape "Chapman Integral 27 Sept. 1992"
+ with addition of initial x sin chi term.
+
+ Uses Q3 (six point Gauss integration).  The program makes
+ repeated application of a gauss six point formula.  In each case
+ the integration proceeds by a sweries of strips starting at the
+ upper limit, continuing until a point where the integrand becomes
+ too small to contribute to the integrand.  The computation is then 
+ repeated with a smaller strip width.  If this produces a significant
+ difference, the strip width is further reduced until there is no
+ significant change in result.  The strip width reduction is achieved 
+ by reducing the bounds of the integration.
+
+ Andrew Herbert 09/11/2013.]
+...
+[R9]
+PKT56KGKT20FVDL8FA40DUDTFI40F
+A40FS39FG@S2FG23FA5@T5@E4@
+...
+...
+	PK
+	T84K
+[M1]
+GKH2FTFA42FC42FU42FA8FU22FA15@
+AFH8FT45FA10@A2FT10@E34FNFT44K
+	P76F		[Routines table at 76]
+	T100K		[Program at 100]
+...
+...
+	PZGK
+	E84K		[H sequence]
+			[ 0H: a for Q3]
+			[ 1H: h for Q3]
+			[ 2H: integration limit]
+			[10H: input by R9]
+			[12H: input by R9]
+			[14H workspace]
+
+	TD
+	G15K
+	E84K
+	TF		[N sequence at 114]
+	P200F		[0N: Starting value of x.2^-15]
+	P200F		[1N: Current value of x.2^-15]
+	P20F		[2N: Increment of x.2^-15]
+	P300F		[3N: max x.2^15]
+	QF		[4N: Staring value of integration limit]
+	P90F		[5N: Starting value of chi]
+	P50F		[6N: chi min]
+	RF		[7N: 0.25]
+	SF		[8N: 0.75]
+	PF		[9N: dummy]
+	M82F		[10#N: 0.01]
+    	P327D
+...
+	PZGKE69KT10H	[Read a number using R9 into 10H 12H]
+9595049034F
+859F
+#TZ
+...
+	PZGK
+	T94KT!		[Signal start of routines]
+	E84KIF
+[0: Master routine at 123]
+	GK
+[ 0]	TF		[Clear Acc., 0F]
+	AN		[Initialize x]		
+	T1N
+	TF
+[Main loop on x in 1N]
+[ 3]	A4N		[Initialize integration limit]
+	T2H
+[ 6]	A6@		[Call in Aux2]
+	G2!
+	AD		[0D to 10D]
+	T10D
+
+[10]	A2H		[limit/:=2]
+	RD
+	T2H
+[13]	A13@
+	G2!		[Call in Aux2]
+	AD
+	U4D		[0D to 4D]
+	S10D		[Print if difference in results < A2F]
+	G21@
+
+	TD		
+	SD		
+[21]	A2F		
+	E27@		
+
+	TF		[Difference > A2F]
+	A4D		[4D to 10D]
+	T10D		[Result 2 to Result 1]
+	E10@		[Reduce integration limit]
+[Multiply by x sin chi -- new code added by AJH]
+[27]	TF
+	A4D	
+	T14H		[Integral]
+	H6H		[sin chi * integral]
+	V14H
+	LD
+	YF
+    	TD
+	HD
+	V1N		[x * sin chi * integral]
+	TD
+	HD		[Adjust scaling - multiply by 2^32/100]
+	V10#N		
+	LF
+	L1F
+	TD
+[43]	A43@		
+	G4!		[Call in P11]
+	A1N		[x+:=dx]
+	A2N
+	U1N
+	S3N		
+	G3@		[Loop to 3 if x < max x]
+	A5N		[chi -:= 1]
+	S2F
+	U5N
+	S6N		[chi min]
+	E@		[Loop if chi >= chi min]
+	ZF		[Stop]
+...
+	PZGK
+	E84KPF
+[1: Aux 1 - auxiliary function for integration]
+	TZ
+	A3F		[Plant return link]
+	T42@
+
+	AD		[0.5 lambda]
+	T4D		
+[ 4]	A4@		[Call in T7]
+	G6!
+	A4D		[0.5 sin lambda]
+	S6H		[0.5 sin lambda -  0.5 sin chi]
+	T8D		
+	A7N		[0.25]				
+	UD
+	SD
+[12]	A12@		[Call in D11]
+	G7!
+	H8D		[0.5 sin lambda]
+	AD		[0.25/0.5 sin lambda]
+	T6D		[To 6D]
+	V6D		[0.25 * (0.5 sin chi -0.5 sin lambda) / 0.5 sin lambda]
+	YF
+	TD		
+	HD
+	V1N		[x * ...]
+	L16F
+	L16F
+	YF
+	UD		[Deal with 2^4.u too large]
+	A8N		
+	E30@		
+	T12D
+	T12D
+[30]	HD
+	TF
+[32]	A32@
+	G5!		[Call in E3]
+	H6D		[0.25 / 0.5 sin^2 lambda]
+	V6D
+	YF
+	T4D		
+	H4D
+	VD		[  x* ... * cosec^2 lambda]
+	YF
+	TD
+	ZF		[Return link]
+...
+	PZGK
+	E84KPF
+[2: Aux2 - called twice by master routine]
+	GK
+	A3F		[Plant return link]
+	T32@
+
+	T8H		[Clear acc.]
+	H5N		[chi]
+	V10H		
+	L128F		
+	YF
+	U4D		
+	S2H		
+	TH		[Set a to chi-factor - determines strip length]
+[10]	A10@		[Call in T7 for 0.5 sin chi]
+	G6!
+	A4D
+	T6H		
+	T8H		
+	S2H		
+	S2H
+	T12D
+[18]	A18@
+	G3!		[Call in Q3]
+	AD
+	A8H
+	T8H
+	A12D		
+	E28@
+	AH
+	TH
+	E18@
+	TF
+	A8H
+	L2F
+	TD
+[32]	ZF
+...
+	PZGK
+	E84KPF
+	T46K		
+	P1!		[Use 1! as auxiliary routine]
+[3: Q3]
+TZ
+	A3F		[Plant link]
+	T30@
+	T4H		[Zero 4H]
+	S31@
+	A32@
+	U16@
+	A33@
+[ 7]	TJ@
+	AH		[a]
+	H2H		[h]
+[10]	VF		
+	YF
+	TD
+[13]	A13@
+	GN		[Call auxiliary function]
+	HD
+	VF
+	YF
+	A4H
+	T4H
+	AJ@
+	A34@
+	G7@
+	S35@
+	G4@
+	H4H
+	V2H
+	LD
+	YF
+	TD
+[30]	EF
+	P6F		[Constants]
+	V42#@
+	M6F
+	OF
+	I46#@
+E69KT36#@
+1471666184F
+3098918315F
+4019350093F
+16019704270F
+11359490762F
+4099446400#
+T48Z
+...
+	PZGK
+	E84KPF
+	T45K		[P11 parameters]
+	A12H
+	P25F
+	P46@
+	P1664F
+[4: P11]
+TZA3FTMA20@G11@O1MO2MS2FEJ@O2MA7MS19@A7MT20@ADE21@TDSDO@E22@PNPF
+O5MPHTDA6MH4MGKT4FVDUFOFFFSFG9@S3MGJ@O2MA3ML4FTDA4FLDE@O5MLDG@O5M
+O5MO5MO40K#FT22KTM@F&FQFJF!FP&P5F
+...
+	PZGK
+	E84KPF
+	T45		[E3 parameters]
+	KP5F
+[5: E3]
+TZT20FVDL8FA40DUDTFI40FA40FS39FG@S2FG23FA5@T5@E4@E13ZT30#@
+41F430F4734F47343F426088F3408704F23860929F143165577F715827883F
+2863311531F8589934592F17179869183F17179869183#TZA3FT25@A30#@TD
+S26@A28@T8@VDADYFTDA8@S27@G5@S29@T4FHDVDYFYFYFTDA4FA2FG15@ZFP24F
+A54#@A56#@PHT56Z
+...
+	PZGKE84KPF
+[6: T7]
+GKE69KT26#@
+11453246086F
+2290648539F
+218152390F
+12105378F
+419996#
+TZA3FT25@H4DV4DYFTDHDN34#@A32#@TDNDA30#@
+TDNDA28#@TDNDA26#@TDNDTDHDV4DA4DT4DEFT36Z
+...
+	PZGK
+	E84KPF
+[7: D11]
+GKA3FU31@S31@E13@IFA4DS4@U4DS4DADLDUDSDA4DA4@E5@A4@G22@T4D
+SDTDS4DT4DH4DNDADYFTDN4DYFG22@ZF
+...
+	PK
+	E25K
+	E!PF
+<! halt !>

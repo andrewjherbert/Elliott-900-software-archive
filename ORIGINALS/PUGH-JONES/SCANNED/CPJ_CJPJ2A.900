@@ -1,0 +1,155 @@
+﻿
+CJPJ2A;
+"BEGIN""REAL"A,B,C,D,N,X,Y;
+"INTEGER"D1,D2,D3,T1,T2,I,J,K,L,NO,CN,CP,G,ZZ,ERROR,AM,II,IJ,F;
+"INTEGER""ARRAY"RAN[1:104],NUM[1:25,1:4],E[1:4];
+"SWITCH"SS:=AA,AB,AC,BA,BB,RA,RB;
+READER(3);
+PUNCH(3);
+F:=1;
+BB:"PRINT"''L2S10@NUMBERS GAME'LS10@------- ----'L2S3@WHAT IS@,
+          ' THE DATE AND THE TIME.'L@ ** @;
+   "READ"D1,D2,D3,T1,T2;
+   X:=SIN(D1+D2+D3+T1+T2);
+   "IF"X<0.5"THEN""BEGIN"
+                  Y:=D1+T2;
+                  N:=D2+D3;
+                  "END"
+   "ELSE""IF"X<0.8"THEN"
+                  "BEGIN"
+                  Y:=T1+D3+T2;
+                  N:=D1;
+                  "END"
+   "ELSE""BEGIN"Y:=D2+T2;N:=T1+T2+D1;"END";
+   "FOR"L:=1"STEP"1"UNTIL"100"DO"
+      "BEGIN"
+      Y:=LN((3+SIN(Y))^2)+3.7*N+2.3*F;
+      A:=(SQRT(N)*N/3^5)/(257+N/23)+1+Y+F;
+      B:=ENTIER(A);
+      C:=(B+100*(A-B))*13/59+F;
+      D:=ENTIER(C);
+      N:=1000*(C-D);
+      RAN[L]:=ENTIER(N/10)-10*ENTIER(N/100);
+      F:=F+RAN[L];
+      "END";
+   "FOR"L:=1"STEP"1"UNTIL"4"DO"RAN[L+100]:=L;
+   L:=0;
+   "FOR"K:=1,K+1"WHILE"L<100"DO"
+      "BEGIN"
+      L:=L+1;
+      NUM[K,1]:=RAN[L];
+      "FOR"I:=2"STEP"1"UNTIL"4"DO"
+         "BEGIN"
+AA:      L:=L+1;
+         "FOR"J:=1"STEP"1"UNTIL"I-1"DO"
+           "IF"RAN[L]=NUM[K,J]"THEN""GOTO"AA;
+         NUM[K,I]:=RAN[L];
+         "END";
+      "END";
+   K:=K-1;
+   "PRINT"''L2@NUMBER OF 4 DIGIT NUMBERS IS   @,SAMELINE,DIGITS(2),K,
+<! Halt !>          '.'L2@TYPE YOUR 4 FIGUARE NUMBER AS EITHER 4 SEPARATE @,
+          'DIGITS OR AS ONE'L@4 DIGIT NUMBER (NO REPITIONS ARE PERMIS@,
+          'SABLE, INCLUDE ALL ZEROS).'L@TO END THE GAME AT ANY TIME@,
+          ' TYPE -999.'L2@@;
+   L:=1;
+   ERROR:=AM:=G:=0;
+   "GOTO"AC;
+<! Halt !>AB:ERROR:=ERROR+1;
+   "PRINT"''L@ERROR RETYPE WHOLE NUMBER@;
+AC:"PRINT"''L@ ** @;
+   "IF"ERROR>5"AND"AM=0"THEN"
+      "BEGIN""PRINT"''L2@TOO MANY ERRORS,END OF GAME.@;
+      "GOTO"RB;
+      "END";
+   "READ"E[1];
+   "IF"E[1]=-999"THEN""GOTO"RB;
+   NO:=E[1];
+   "IF"NO=9999"AND"AM=1"THEN"
+      "BEGIN""PRINT"DIGITS(2),NUM[L,1]+NUM[L,2],SAMELINE,NUM[L,1]-
+             NUM[L,2]+NUM[L,3]-NUM[L,4],NUM[L,3]+NUM[L,4];
+      "IF"NUM[L,1]=0"OR"NUM[L,2]=0"OR"NUM[L,3]=0"OR"NUM[L,4]=0"THEN"
+         "PRINT"SAMELINE,'1@;
+      "GOTO"AC;
+      "END";
+   "COMMENT" SINGLE NUMBER;
+   "IF"NO>122"AND"NO<9877"THEN"
+      "BEGIN"
+      E[1]:=ENTIER(NO/1000);
+      E[2]:=ENTIER(NO/100-E[1]*10);
+      E[4]:=ENTIER(NO-10*ENTIER(NO/10));
+      E[3]:=ENTIER(NO/10-ENTIER(NO/100)*10);
+      "END"
+   "ELSE""IF"NO>-1"AND"NO<10"THEN"
+      "BEGIN";
+      "COMMENT" SINGLE DIGITS ;
+      "FOR"I:=2"STEP"1"UNTIL"4"DO"
+         "BEGIN"
+         "READ"E[I];
+         "IF"E[I]=-999"THEN""GOTO"RB;
+         "IF"E[I]>9"OR"E[I]<0"THEN""GOTO"AB;
+         "END";
+      "END"
+   "ELSE""IF"NO<0"AND"NO>-10"THEN"
+      "BEGIN"
+      "COMMENT" NEGATIVE NUMBERS ;
+      "READ"NO;
+      "IF"NO<0"AND"NO>-5"THEN"
+         "BEGIN"
+         II:="IF"NO>-3"THEN"L"ELSE"1;
+         IJ:="IF"NO<-1"THEN"K"ELSE"L;
+         "FOR"I:=II"STEP"1"UNTIL"IJ"DO"
+         "PRINT"DIGITS(1),NUM[I,1],SAMELINE,NUM[I,2],NUM[I,3],NUM[I,4];
+         "IF"NO=-1"THEN""GOTO"RA;
+         AM:=0;
+         "GOTO"BA;
+         "END"
+      "ELSE""IF"NO=-999"THEN""GOTO"RB
+      "ELSE""IF"NO=19044"THEN"
+         "BEGIN"
+         ERROR:=0;
+         AM:=1-AM;
+         "PRINT"'23123'L@@;
+         "GOTO"AC;
+         "END"
+      "ELSE""IF"AM=1"OR"NO<-1000"AND"NO>-(1000+G)"THEN"
+            G:=1000+G+NO;
+      "GOTO"AB;
+      "END"
+   "ELSE""GOTO"AB;
+<! Halt !>   "IF"AM=0"THEN"
+   "FOR"I:=1"STEP"1"UNTIL"3"DO"
+   "FOR"J:=I+1"STEP"1"UNTIL"4"DO"
+   "IF"E[I]=E[J]"THEN""GOTO"AB;
+   CN:=CP:=0;
+   "FOR"I:=1"STEP"1"UNTIL"4"DO"
+   "FOR"J:=1"STEP"1"UNTIL"4"DO"
+   "IF"E[I]=NUM[L,J]"THEN"
+      "BEGIN"
+      CN:=CN+1;
+      "IF"J=I"THEN"CP:=CP+1;
+      "END";
+   "PRINT"''L2S4@GUESS IS  @,DIGITS(1),SAMELINE,E[1],E[2],E[3],E[4],
+          ''L@CORRECT NOS. =   @,CN,'   CORRECT PLACES =   @,CP;
+   G:=G+1;
+   "PRINT"''L2@@;
+   "IF"CP=4"THEN"
+      "BEGIN"
+      "PRINT"''L2@ RANDOM NUMBER = @,SAMELINE,DIGITS(1),E[1],E[2],
+             E[3],E[4],DIGITS(2),''S5@NUMBER OF  TRIES =  @,G,''L4@@;
+      "END"
+   "ELSE""GOTO"AC;
+RA:"IF"L=K"THEN""GOTO"BA;
+   L:=L+1;
+   "GOTO"AC;
+BA:"PRINT"''L4@FOR ANOTHER SET OF NUMBERS TYPE 1,OTHERWISE@,
+          ' TYPE 0.'L2@ ** @;
+   "READ"ZZ;
+   "IF"ZZ=1"THEN""GOTO"BB;
+   "IF"ZZ"NE"0"THEN"
+      "BEGIN""PRINT"''L@ERROR  @;
+      ERROR:=ERROR+1;
+      "IF"ERROR<4"THEN""GOTO"BA;
+      "END";
+RB:"PRINT"''L3S15@END OF PROGRAM'L@@;
+"END";

@@ -1,0 +1,76 @@
+﻿<! Scanning From "IMAGES" TO "SCANNED" !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\ALGOL3.1 " !>
+<! SCANNED\ALGOL3 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\ALGOL3.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\ALGOL7.1 " !>
+<! SCANNED\ALGOL7 Detected to be 900 telecode !>
+<! Unknown 900 character 008 !>
+<! Unknown 900 character 008 !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\ALGOL7.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\EX4.1 " !>
+<! SCANNED\EX4 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\EX4.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\EX4INPUT.1 " !>
+<! SCANNED\EX4INPUT Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\EX4INPUT.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRACT4.1 " !>
+<! SCANNED\PRACT4 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRACT4.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRACT4DATA.1 " !>
+<! SCANNED\PRACT4DATA Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRACT4DATA.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRCAT4DATA_2.1 " !>
+<! SCANNED\PRCAT4DATA_2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRCAT4DATA_2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRCAT4_2.1 " !>
+<! SCANNED\PRCAT4_2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\PRCAT4_2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\README.TXT " !>
+<! Ignored: "C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\README.TXT" File Name Extension Not Recognized !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR1.1 " !>
+<! SCANNED\SIR1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR1.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR1DATA.1 " !>
+<! SCANNED\SIR1DATA Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR1DATA.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2.1 " !>
+<! SCANNED\SIR2 Detected to be 900 telecode !>
+<! Unknown 900 character 008 !>
+<! Parity Error (Code = 13) !>
+<! Parity Error (Code = 138) !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2DATA1.1 " !>
+<! SCANNED\SIR2DATA1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2DATA1.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2DATA2.1 " !>
+<! SCANNED\SIR2DATA2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2DATA2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2DATA3.1 " !>
+<! SCANNED\SIR2DATA3 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2DATA3.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2_2.1 " !>
+<! SCANNED\SIR2_2 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\SIR2_2.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\TASK1DATA.1 " !>
+<! SCANNED\TASK1DATA Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\TASK1DATA.2 " !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\TSK1.1 " !>
+<! SCANNED\TSK1 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\WILLETTS\IMAGES\TSK1.2 " !>
+<! 
+35 Files Scanned 0 Files Ignored !>
+<! 2 Parity Errors 17 Other problems !>
+FINISHED

@@ -1,0 +1,21 @@
+﻿
+FL "PROCEDURE"G33
+FL "IF"HERE<>0
+FC (SEN A191)
+IS(
+FL GOUT(0,J);
+IB
+
+)
+                     GOUT(15,7174);
+
+
+^
+FL "PROCEDURE"<1>INITIALISE
+FC -1
+FC COPY(
+DC @
+IS 'NOVC(900) PII IS501@
+RE
+&&
+<! Halt !>

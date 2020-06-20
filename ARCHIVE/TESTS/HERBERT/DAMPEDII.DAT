@@ -1,0 +1,39 @@
+﻿C Test DAMPED.903
+
+on 903 8K
+
+nonprinting off
+
+C Translate
+at ptr file ../../MASTERS/903FORTRAN/903FORT1(ISS4C).BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/HERBERT/DAMPEDII.903
+at ptp file TEMP.BIN
+j 8
+st 2449
+
+de ptp
+
+C Assemble
+at ptr file ../../MASTERS/903FORTRAN/903FORT2(ISS4A).BIN
+j 8181
+st 8171
+
+at ptr file TEMP.BIN
+j 8
+st 6926
+j 10
+st 161
+
+C data
+at ptr file ../../MASTERS/HERBERT/DAMPEDII_DATA.900
+
+C Run
+select out tty
+j 11
+st 1919
+
+delete TEMP.BIN
+sh t

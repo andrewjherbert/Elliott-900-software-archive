@@ -1,0 +1,119 @@
+﻿<! Legible Header  OOO    OOO   OOOOO        OOO   OOOO    OOO    OOO   OOOOO  O   O          O   OOOO     O   OOO   O       OOO    O          OOOOO   OOO    OOO   O   O  OOOOO         O  !>
+<! Legible Header O   O  O   O     O        O   O  O   O  O   O  O   O    O    OO  O         O    O   O  OOO  O   O  O      O   O    O           O    O   O  O   O  O   O  O           OOO  !>
+<! Legible Header O   O  O   O    O         O   O  O   O  O   O  OO       O    OO  O        O     O   O  OOO  O   O  O O    O   O     O          O    OO     OO     O   O  O           OOO  !>
+<! Legible Header  OOOO  O   O    OO        O   O  O   O  OOOOO   OO      O    O O O        O     OOOO     O  O   O  O O    OOOOO     O          O     OO     OO    O   O  OOOO          O  !>
+<! Legible Header     O  O   O              O   O  O   O  O   O           O    O   O              O   O    O  O   O  O      O   O                O                  O   O  O             O  !>
+<! Legible Header     O  O   O      O       O   O  O   O            O     O    O  OO        O     O   O    O  O   O  OOOOO            O          O       O      O   O   O  O             O  !>
+<! Legible Header OOOOO  O   O      O       O  O   O   O  O   O  O   O    O    O  OO         O    OOOOO    O  O   O    O    O   O    O           O    O   O  O   O  OOOOO  O             O  !>
+<! Legible Header OOOO    OOO   OOOO         OO O  OOOO   O   O  OOOO   OOOOO  O   O          O   OOOOO    O   OOO     O    O   O   O          OOOOO  OOOO   OOOO   OOOOO  OOOOO         O  !>
+
+(AJH replaced [[ QDASIN QDLA ])
+[ QDASIN QDLA ]
+QDASIN
++0
+1 88;
+5 96;
+6 97;
+5 98;
+11 QDLA+20
+8 QDLA+21
+4 98;
+2 88;
+5 100;
+12 100;
+1 90;
+5 98;
+14 2
+5 102;
+4 92;
+5 104;
++0
+4 94;
+5 95;
+11 QDLA+20
+8 QDLA+21
+0 95;
+4 104;
+/1 86;
+12 102;
+5 104;
++0
+10 95;
+10 95;
+4 95;
+9 20;
+11 QDLA+20
+8 QDLA+21
+4 104;
+2 86;
+12 100;
+13 98;
+5 98;
+12 98;
+1 88;
+14 1
+5 100;
+1 90;
+14 8191
+13 100;
+5 102;
+4 98;
+13 100;
+5 104;
++0
+4 96;
+9 63;
+11 QDLA+20
+8 QDLA+21
+4 102;
+2 92;
+5 102;
+4 104;
+2 92;
+5 104;
++0
+4 96;
+1 96;
+9 74;
+11 QDLA+20
+8 QDLA+21
+4 104;
+5 100;
+4 102;
+5 104;
+4 100;
+2 92;
+5 102;
+4 102;
++0
+0 0;
+/8 1
++0
+0 5875
++1
+10 7784
+0 69
+0 256
+0 4568
+15 4976
+12 4639
+11 2696
+4 0
++0
+/0 0
++0
++0
++0
+-8
++0
++0
+7 8191
++0
++0
++0
++0
++0
++0
++0
++0
+<! Halt !>

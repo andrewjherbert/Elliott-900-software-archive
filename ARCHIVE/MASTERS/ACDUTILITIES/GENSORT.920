@@ -1,0 +1,429 @@
+﻿
+
+((GENERAL SORT PROGRAM, 8/3/71)
+
+[]
+
+((ENTRY POINTS, 3/3/71)
+
+(8)      8    ALPHAB
+(9)      8    INPUT
+(10)     8    CONTIN
+(11)     8    MERGE
+(12)     8    OUTPUT
+
+((GLOBAL WORKSPACE, 8/3/71)
+
+FLAG     >1   (+0 for INPUT, +1 for MERGE, -1 for OUTPUT)
+
+A        +680 (Start of Data)
+B        >1   (Start of Best Line)
+C        >1   (Current Word of Best Line)
+D        >1   (Start of Current Line)
+E        >1   (Current Word of Current Line)
+F        >1   (Start of Store not in use)
+G        +8180 (Start of Store not to be used)
+
+((UNSORTED & SORTED TAPES INPUT ROUTINE, 6/3/71)
+
+INPUT    4    A
+         5    F
+         4    +0
+         5    OPFLAG
+         5    IPMODE
+         8    ;+2
+
+MERGE    4    +1
+
+         5    FLAG
+
+CONTIN   11   IPCHL
+         8    IPCHE
+         7    ;-2      (Ignore empty lines)
+         9    ;+0
+
+INLOOP   4    G
+         2    F
+         9    ;+3
+
+         4    +6
+         8    ERROR    (Store full)
+
+         4    F
+         5    E
+         4    +0
+         0    E
+         /5   0
+         10   F
+
+         4    IPCHAR
+         7    INJUMP
+         9    ;+0
+
+         0    +0
+         14   12
+         0    E
+         /5   0
+
+         11   IPCHL
+         8    IPCHE
+         7    INJUMP
+         9    ;+0
+
+         0    +0
+         14   6
+         0    E
+         /1   0
+         /5   0
+
+         11   IPCHL
+         8    IPCHE
+         7    INJUMP
+         9    ;+0
+
+         0    E
+         /1   0
+         /5   0
+
+         11   IPCHL
+         8    IPCHE
+         8    INLOOP
+
+INJUMP   4    FLAG
+         7    CONTIN   (Jump if INPUT)
+         8    SORT     (Else MERGE)
+
+((SORT ROUTINE & SORTED TAPE OUTPUT ROUTINE, 6/3/71)
+
+WORD     >1
+
+OUTPUT   4    -1
+         5    FLAG
+
+OUTJ0    4    F
+         2    A
+         9    SORT
+
+         11   OPCHL
+         8    OPCHE    (Punch <N>)
+         4    -1
+         11   OPCHL
+         8    OPCHE    (Punch <H>)
+         8    ;+0
+
+SORT     4    A
+         5    E
+OUTJ1    5    B
+
+OUTJ2    0    E
+         /4   0
+         10   E
+         6    &77
+         7    ;+2
+         8    ;-5
+
+OUTJ6    4    F
+         2    E
+         7    OUTJ4
+
+         4    B
+         5    C
+         4    E
+         5    D
+
+OUTJ3    0    C
+         /4   0
+         0    E
+         9    ;+8
+         /4   0
+         9    OUTJ2
+         0    C
+         /2   0
+         9    OUTJ2
+         7    ;+6
+         8    ;+3
+         /4   0
+         9    ;-6
+
+         4    D
+         8    OUTJ1
+
+         0    E
+         /4   0
+         10   E
+         6    &77
+         7    OUTJ6
+         10   C
+         8    OUTJ3
+
+OUTJ4    11   OPCHL
+         8    OPCHE    (Punch <N>)
+
+         4    B
+         5    C
+
+OUTLOOP  0    C
+         /4   0
+         5    WORD
+         10   C
+
+         4    WORD
+         14   8180
+         6    &77
+         7    OUTJUMP
+         11   OPCHL
+         8    OPCHE    (Punch 1st character)
+
+         4    WORD
+         14   8186
+         6    &77
+         7    OUTJUMP
+         11   OPCHL
+         8    OPCHE    (Punch 2nd character)
+
+         4    WORD
+         6    &77
+         7    OUTJUMP
+         11   OPCHL
+         8    OPCHE    (Punch 3rd character)
+         8    OUTLOOP
+
+OUTJUMP  4    F
+         2    C
+         7    OUTJ5
+
+         0    C
+         /4   0
+         0    B
+         /5   0
+
+         10   B
+         10   C
+         4    F
+         2    C
+         9    ;-8
+
+         4    B
+         5    F
+         8    OUTJ0
+
+OUTJ5    4    B
+         5    F
+
+         4    FLAG
+         9    OUTJ0    (Jump if OUTPUT)
+         8    CONTIN   (Else MERGE)
+
+((ALPHABET INPUT ROUTINE, 3/3/71)
+
+TABLE    >256
+ALPHAC   >1
+
+ALPHAB   4    -1
+         5    IPFLAG
+         5    IPMODE
+
+         4    +0
+         5    ALPHAC
+         4    +0
+         0    ALPHAC
+         /5   TABLE
+         10   ALPHAC
+         4    ALPHAC
+         1    -256
+         9    ;-6
+
+         5    ALPHAC
+
+         11   IPCHL
+         8    IPCHE
+         7    ;-2
+         9    ALPHAE
+
+ALPHAL   10   ALPHAC
+
+         0    IPCHAR
+         /4   TABLE
+         6    &77
+         7    ;+3
+
+         4    +3
+         8    ERROR
+
+         4    ALPHAC
+         /1   TABLE
+         /5   TABLE
+
+         0    ALPHAC   (Also clears m.s. end of Q)
+         4    IPCHAR
+         14   6
+         /1   TABLE
+         /5   TABLE
+
+         11   IPCHL
+         8    IPCHE
+         7    ALPHAN
+         9    ALPHAE
+
+         4    ALPHAC
+         1    -63
+         9    ALPHAL
+
+         4    +4
+         8    ERROR    (Too many characters in Alphabet)
+
+ALPHAN   11   IPCHL
+         8    IPCHE
+         7    ;-2
+         9    ;+0
+
+ALPHAE   4    +5
+         8    ERROR    (Haltcode misplaced)
+
+((CHARACTER INPUT SUBROUTINE, 3/3/71)
+
+IPCHL    >1
+IPFLAG   >1
+IPMODE   >1
+IPCHAR   >1
+
+IPCHE    4    +0
+         15   2048
+         5    IPCHAR
+
+         7    IPCHE    (Jump if blank)
+         1    -255
+         7    IPCHE    (Jump if erase)
+
+         4    IPFLAG
+         9    ;+2      (Jump if first entry)
+         8    IPSUBS
+
+         4    IPCHAR
+         1    -10      (Jump if 900 N.L./L.F.)
+         7    ;+7
+         1    -131     (Jump if 900 C.R.)
+         7    ;+5
+         1    +123     (Jump if 920 N.L.)
+         7    ;+4
+         4    +1
+         8    ERROR    (1st character not newline)
+
+         10   IPFLAG
+         10   IPFLAG
+
+         4    IPFLAG   (+0 for 920, +1 for 900)
+IPSUBS   7    ;+9
+
+         4    IPCHAR
+         1    -10      (Jump if 900 N.L./L.F.)
+         7    IPEXIT
+         1    -131     (Jump if 900 C.R.)
+         7    IPCHE
+         1    +121     (Jump if 900 Haltcode)
+         7    IPEXIT-1
+         8    ;+6
+
+         4    IPCHAR
+         1    -18      (Jump if 920 N.L.)
+         7    IPEXIT
+         1    -138     (Jump if 920 Haltcode)
+         7    IPEXIT-1
+
+         4    IPMODE   (+0 for Convert, -1 for Dont)
+         7    ;+3
+
+         4    IPCHAR
+         8    IPEXIT
+
+         0    IPCHAR
+         /4   TABLE
+         6    &77
+         7    ;+2
+         8    IPEXIT
+         4    +2
+         8    ERROR    (Character not in Alphabet)
+
+(-1)     4    -1
+IPEXIT   5    IPCHAR
+(+1)     0    IPCHL
+         /8   1
+
+((CHARACTER OUTPUT SUBROUTINE, 3/3/71)
+
+OPCHL    >1
+OPFLAG   >1
+OPCHAR   >1
+
+OPCHE    5    OPCHAR
+
+         4    OPFLAG
+         7    OPBLKS   (Jump if first entry)
+
+OPCTES   4    IPFLAG   (+0 for 920, +1 for 900)
+         7    ;+5
+
+         4    OPCHAR
+         7    OPNL
+         9    OPHALT
+         8    ;+4
+
+         4    OPCHAR
+         7    OPNL+4
+         9    OPHALT+2
+
+         0    OPCHAR
+         /4   TABLE
+         14   8186
+
+(-1)     15   6144
+OPEXIT   4    OPCHAR
+         0    OPCHL
+         /8   1
+
+OPNL     4    +141     (900 C.R.)
+         15   6144
+         4    +10      (900 N.L./L.F.)
+         8    ;+2
+(+4)     4    +18      (920 N.L.)
+         15   6144
+
+         4    +0
+         15   6144
+         15   6144
+         15   6144
+         8    OPEXIT-1
+
+OPHALT   4    +20      (900 Haltcode)
+         8    ;+2
+(+2)     4    +156     (920 Haltcode)
+         15   6144
+
+OPBLKS   4    -46080   (-180*256)
+         15   6144
+         1    +256
+         9    ;-2
+
+         4    OPFLAG
+         2    -1
+         5    OPFLAG
+         9    OPCTES
+         8    OPEXIT
+
+((ERROR INDICATIONS, 3/3/71)
+
+ERRNO    >1
+
+ERROR    5    ERRNO
+         4    -46080
+         15   6144
+         1    +256
+         9    ;-2
+         7    ;+2
+         8    ;-5
+         4    ERRNO
+         9    ;+0
+         1    -46080
+         5    ERRNO
+         8    ;-9
+<! Halt !>

@@ -1,0 +1,32 @@
+﻿C construct SHELLSORT RLB
+
+on
+
+c load SIR
+at ptr file ..\..\MASTERS\903SIR\SIR(ISS6)(5500).BIN
+j 8181
+
+
+at ptp file SHELLSORT(ISS3).RLB
+at ptr inline
+
+*1
+<! halt !>
+<!!>
+j 8
+
+at ptr file ..\..\MASTERS\903SIR\SHELLSORT(ISS3).900
+j 9
+
+at ptr inline
+
+%
+
+<! halt !>
+<!!>
+j 9
+
+de ptp
+ 
+sh t
+

@@ -1,0 +1,257 @@
+﻿
+   "REAL" "PROCEDURE" FLOAT(K); "VALUE" K; "INTEGER" K; FLOAT:=K;
+
+   "PROCEDURE" ADD(A,B,C,N); "VALUE" N; "INTEGER" "ARRAY" A,B,C;
+                             "INTEGER" N;
+   "BEGIN"
+      "INTEGER" J,CARRY; "REAL" SUM;
+
+      CARRY:=0;
+      "FOR" J:=N "STEP" -1 "UNTIL" 1 "DO"
+      "BEGIN"
+         SUM:=FLOAT(CARRY+B[J])+C[J];
+         "IF" SUM>99999.0 "THEN"
+         "BEGIN"
+            A[J]:=SUM-100000.0; CARRY:=1
+         "END"
+                          "ELSE"
+         "BEGIN"
+           A[J]:=SUM; CARRY:=0
+         "END"
+      "END"
+   "END" OF ADD;
+
+   "PROCEDRE" MPY(A,F,N); "VALUE" F,N; "INTEGER" "ARRAY" A;
+                                        "INTEGER" F,N;
+   "BEGIN"
+      "INTEGER" J,CARRY;
+      "PROCEDURE" LOCAL(PROD); "VALUE" PROD; "REAL" PROD;
+      "BEGIN"
+         CARRY:=0;
+         "FOR" J:=N "STEP" -1 "UNTIL" 1 "DO"
+         "BEGIN"
+            PROD:=FLOAT(A[J])*F+CARRY;
+            CARRY:=ENTIER(PROD*0.00001);
+            A[J]:=PROD-100000.0*CARRY
+         "END"
+      "END" OF LOCAL;
+      LOCAL(0.0)
+   "END" OF MPY;
+
+   "PROCEDURE" DIV(A,S,N); "VALUE" S,N; "INTEGER" "ARRAY" A;
+                           "REAL" S;    "INTEGER" N;
+   "BEGIN"
+      "INTEGER" FIRST,J,REM,REST;
+      "PROCEDURE" LOCAL(NUM,QUOT); "VALUE" NUM,QUOT; "REAL" NUM,QUOT;
+      "BEGIN"
+         REM:=0;
+         "FOR" J:=1 "STEP" 1 "UNTIL" N "DO"
+         "BEGIN"
+            NUM:=100000.0*REM+A[J];
+            FIRST:=10000*ENTIER(NUM/(10000.0*S));
+            NUM:=NUM-FIRST*S;
+            QUOT:=NUM/S;
+            REST:=ENTIER(QUOT);
+            REM:=(QUOT-REST)*S;
+            A[J]:=FIRST+REST
+         "END"
+      "END" OF LOCAL;
+      LOCAL(0.0,0.0)
+   "END" OF DIV;
+
+   "PROCEDURE" SUB(A,B,C,N); "VALUE" N; "INTEGER" "ARRAY" A,B,C;
+                             "INTEGER" N;
+   "BEGIN"
+      "INTEGER" BORROW,DIFF,J;
+      BORROW:=0;
+      "FOR" J:=N "STEP" -1 "UNTIL" 2 "DO"
+      "BEGIN"
+         DIFF:=B[J]-C[J]-BORROW;
+         "IF" DIFF<0 "THEN"
+         "BEGIN"
+            A[J]:=DIFF+100000; BORROW:=1
+         "END"
+                     "ELSE"
+         "BEGIN"
+            A[J]:=DIFF; BORROW:=0
+         "END"
+      "END";
+      A[1]:=B[1]-C[1]-BORROW
+   "END" OF SUB;
+
+<! Halt !>
+   "PROCEDURE" EXTEND(A,B,J,N); "VALUE" J,N; "INTEGER" "ARRAY" A,B;
+                                "INTEGER" J,N;
+   "BEGIN"
+      "INTEGER" K;
+      "FOR" K:=1 "STEP" 1 "UNTIL" 2*N "DO" A[K]:=
+            "IF" K "LE" J "OR" K>J+N "THEN" 0 "ELSE" B[K-J]
+   "END" OF EXTEND;
+
+   "PROCEDURE" COPY(A,B,N); "VALUE" N; "INTEGER" "ARRAY" A,B;
+                            "INTEGER" N;
+   "BEGIN"
+      "INTEGER" J;
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" A[J]:=B[J]
+   "END" OF COPY;
+
+   "PROCEDURE" RSHIFT(A,N); "VALUE" N; "INTEGER" "ARRAY" A; "INTEGER" N;
+   "BEGIN"
+      "INTEGER" J;
+      "FOR" J:=N "STEP" -1 "UNTIL" 2 "DO" A[J]:=A[J-1];
+      A[1]:=0
+   "END" OF RSHIFT;
+
+   "PROCEDURE" GET(A,N,CHAN,S); "VALUE" N,CHAN; "INTEGER" "ARRAY" A;
+                                "INTEGER" N,CHAN; "STRING" S;
+   "BEGIN"
+      "INTEGER" J,K;
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" A[J]:=0;
+      "FOR" J:=J "WHILE" "NOT" BUFFER(CHAN,S) "DO"
+      "BEGIN"
+         "FOR" K:=1 "STEP" 1 "UNTIL" N-1 "DO" A[K]:=A[K+1];
+         "READ" READER(CHAN),A[N]
+      "END"
+   "END" OF GET;
+
+   "PROCEDURE" PUT(A,N,CHAN,S); "VALUE" N,CHAN; "INTEGER" "ARRAY" A;
+                                "INTEGER" N,CHAN; "STRING" S;
+   "BEGIN"
+      "INTEGER" I,J,K,L,P; "BOOLEAN" FIRST;
+      "PROCEDURE" GROUP;
+      "BEGIN"
+         "IF" "NOT" FIRST "THEN" "PRINT" PUNCH(CHAN),' @;
+         "PRINT" DIGITS(5),SAME LINE,PUNCH(CHAN),A[J];
+         J:=J+1
+      "END" OF GROUP;
+
+      J:=0;
+LOOP:
+      "IF" J=N "THEN"
+      "BEGIN"
+         "PRINT" PUNCH(CHAN),''LS59@0@;
+         "GOTO" FIN
+      "END";
+
+      J:=J+1;
+      "IF" A[J]=0 "THEN" "GOTO" LOOP
+      I:=N-J+1;
+      L:=(I-1) "DIV" 10;
+      P:=I-L*10;
+      "PRINT" PUNCH(CHAN),''L@@;
+      "FOR" K:=1 "STEP" 1 "UNTIL" 10-P "DO" "PRINT" PUNCH(CHAN),''S6@@;
+      FIRST:="TRUE"; GROUP;
+      LEAD ZERO; UNSIGNED; FIRST:="FALSE";
+      "FOR" K:=1 "STEP" 1 "UNTIL" P-1 "DO" GROUP;
+      "FOR" I:=1 "STEP" 1 "UNTIL" L "DO"
+      "BEGIN"
+         "PRINT" PUNCH(CHAN),''L@@;
+         "FOR" K:=1 "STEP" 1 "UNTIL" 10 "DO" GROUP
+      "END";
+      LEAD BLANK; REVERT;
+FIN:
+      "PRINT" PUNCH(CHAN),S,''LR6@@
+   "END" OF PUT;
+
+   "PROCEDURE" MULTIPLY(A,B,C,N); "VALUE" N; "INTEGER" "ARRAY" A,B,C;
+                                  "INTEGER" N;
+   "BEGIN
+      "INTEGER" J; "INTEGER" "ARRAY" WORK[1:2*N];
+      "FOR" J:=1 "STEP" 1 "UNTIL" 2*N "DO" A[J]:=0;
+
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO"
+      "BEGIN"
+         EXTEND(WORK,B,J,N);
+         MPY(WORK,C[J],2*N);
+         ADD(A,A,WORK,2*N)
+      "END"
+   "END" OF MULTIPLY;
+
+   "PROCEDURE" MOD(X,A,B,N); "VALUE" B,N; "INTEGER" "ARRAY" A,B,X;
+                             "INTEGER" N;
+   "COMMENT" X:=A MOD B;
+
+   "BEGIN"
+      "INTEGER" J,K;
+      "FOR" J:=N "STEP" -1 "UNTIL" 1 "DO"
+            "IF" B[J] "NE" 0 "THEN" "GOTO" L2;
+      "PRINT" PUNCH(3),''L@B ZERO@; STOP;
+L2:
+      K:=0;
+      "IF" A[1]>49999 "THEN"
+      "BEGIN"
+L3:
+         "IF" B[1]<50000 "THEN"
+         "BEGIN"
+            MPY(B,2,N); K:=K+1; "GOTO" L3,N); K:=K+1; "GOTO" L         "END";
+        SUB(X,A,B,N);
+        "IF" X[1]<0 "THE"GOTO" L5
+                   "ELSE"
+        BEGIN"
+         SUB(X,X,B,); "GOTO" L5
+         "END"
+      "END";
+      COPY(X,A,N);
+L4:
+      SUB(X,X,B,N);
+      "IF" X[1] "GE" 0 "THEN"
+      "BEGIN"
+         MPY(B,2,N); K:=K+1; "GOTO" L4
+      "END";
+L5:
+      ADD(X,X,B,N);
+      "FOR" J:=0 "STEP" 1 "UNTIL" K "DO"
+      "BEGIN"
+         SUB(X,X,B,N);
+         "IF" X[1]<0 "THEN" ADD(X,X,B,N);
+         DIV(B,2,N)
+      "END"
+   "END" OF MOD;
+
+
+   "PROCEDURE" MOD2(X,AA,B,N); "VALUE" AA,N; "INTEGER" "ARRAY" X,AA,B;
+                               "INTEGER" N;
+   "COMMENT" X:= AA MOD B;
+   "BEGIN"
+      "INTEGER" J,K,L,NN; "INTEGER" "ARRAY" TS,BB[1:2*N],AC[1:2];
+
+      NN:=2*N;
+      "FOR" J:=N "STEP" -1 "UNTIL" 1 "DO"
+                 "IF" B[J] "NE" 0 "THEN" "GOTO" M2;
+
+      "PRINT" PUNCH(3),''L@B IN MOD2 ZERO@; STOP;
+M2:
+      EXTEND(BB,B,0,N);
+      K:=0;
+      "FOR" K:=K+1 "WHILE" BB[1]<50000 "DO" MPY(BB,2,NN);
+
+      "FOR" L:=1 "STEP" 1 "UNTIL" N "DO"
+      "BEGIN"
+         SUB(AA,AA,BB,NN);
+         "IF" AA[1]<0 "THEN" ADD(AA,AA,BB,NN);
+         RSHIFT(BB,NN); COPY(TS,BB,NN);
+         "IF" AA[L]=BB[L+1] "THEN" MPY(TS,99999,NN)
+                            "ELSE"
+         "BEGIN"
+         AC[1]:=AA[L]; AC[2]:=AA[L+1];
+         DIV(AC,BB[L+1],2); MPY(TS,AC[2],NN)         "END";
+         SUB(AA,AA,TS,NN;
+M3:
+         "IF" AA[1]=0 "THEN" "GOTO" M4
+                      "ELSE" "IF" AA[1]<0 "THEN" ADD(AA,AA,BB,NN)
+                                          "ELSE" SUB(AA,AA,BB,NN);
+         "GOTO" M3;
+M4:
+      "END" OF WORD LOOP;
+
+      "FOR" J:=1 "STEP" 1 "UNTIL" K "DO"
+      "BEGIN"
+         SUB(AA,AA,BB,NN);
+         "IF" AA[1]<0 "THEN" ADD(AA,AA,BB,NN);
+         DIV(BB,2,NN)
+      "END" OF BIT LOOP;
+
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" X[J]:=AA[J+N]
+   "END" OF MOD2;
+
+<! Halt !>

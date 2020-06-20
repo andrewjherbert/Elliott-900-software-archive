@@ -1,0 +1,55 @@
+﻿
+CP51;
+"BEGIN"
+   "COMMENT" 17 OCT. 89;
+   "INTEGER" N; "READ" N;
+   "BEGIN"
+      "INTEGER" J,R;
+      "INTEGER" "ARRAY" ONE,ZERO,S,X,Y,Z[1:N],
+                        ZERO2,NUM[1:2*N],A,K[1:N,1:5];
+      "COMMENT" SETUP, FMULT, FMULT2, FDIV, READNUM, PRINTNUM HERE;
+<! Halt !>      "PROCEDURE" G(B,L); "VALUE" L; "INTEGER" "ARRAY" B; "INTEGER" L;
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" Z[J]:=B[J,L];
+
+      "PROCEDURE" P(B,L); "VALUE" L; "INTEGER" "ARRAY" B; "INTEGER" L;
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" B[J,L]:=Z[J];
+
+      "PROCEDURE" IN(B,L); "VALUE" L; "INTEGER" "ARRAY" B; "INTEGER" L;
+      "BEGIN"
+         READNUM(Z,N,1); MPY(Z,10000); DIV(Z,16384); MPY(Z,10000);
+         DIV(Z,16384); MPY(Z,100); DIV(Z,64); P(B,L)
+      "END";
+
+      "PROCEDURE" F;
+      "BEGIN"
+         ADD(X,ONE,ZERO); ADD(Y,ONE,ZERO); MPY(X,3); FMULT2(NUM,X,Y);
+         DIV(NUM,16); ADD(X,ONE,ZERO); DIV(X,4); FMULT(Y,Z,Z);
+         ADD(X,X,Y); MPY(X,15); DIV(X,16); FDIV(Y,NUM,X)
+      "END";
+
+      SETUP;
+      "FOR" R:=1 "STEP" 1 "UNTIL" 5 "DO" IN(K,R);
+      "FOR" R:=1 "STEP" 1 "UNTIL" 5 "DO" IN(A,R);
+
+      ADD(S,ZERO,ZERO);
+
+      "FOR" R:=1 "STEP" 1 "UNTIL" 5 "DO"
+      "BEGIN"
+         G(K,R); DIV(Z,2); F; ADD(X,Y,ZERO); PRINTNUM(X,N-1,3,' @);
+         G(A,R); FMULT(X,Y,Z); ADD(S,S,X)
+      "END";
+      DIV(S,2); PRINTNUM(S,N-1,3,' @)
+   "END"
+"END"
+  4
+  0  08059  08987  0
+  0  39645  18438  0
+  0  85899  34592  0
+  1  32153  50746  0
+  1  63739  60197  0
+  0  20351  86446  0
+  0  41113  88973  0
+  0  48867  18346  0
+  0  41113  88973  0
+  0  20351  86446  0
+<! Halt !>

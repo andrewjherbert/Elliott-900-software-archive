@@ -1,0 +1,146 @@
+﻿
+        Pontefract Music Tapes.
+        =======================
+
+
+Labelled in pencil unless stated otherwise.
+None in my hand. None topped & tailed.
+Pink & yellow tapes were punched on TeleTypes, others were not.
+
+I have not checked that MUALGR2 is the RLB obtained from MULAG,
+   or what version of the Algol Translator was used.
+I have not established the differences between MUSIR & MUSIR2,
+I have not checked that MUSIRR2 is the RLB obtained from either,
+   or what version of the SIR Assembler was used.
+I have not checked that RLBMUSIC does indeed use MUALGR2 & MUSIRR2
+   or what version of the Algol Interpreter was used.
+However both SIR sources assume FP=38 as required by Algol issuue
+   5 or earlier, not FP=138 as required by Algol issue 6 or later.
+
+I have not established the differences between OVERCOME & OVERALG1.
+All of the tunes tapes (except those within TUNES)
+   start with the two constants required by the Algol program
+   except for STING which has them on STINGHDR. In the case
+   of MANGER, they were unipunched in retrospectively.
+I have not checked the relationship between the four separate carol
+   tapes and the combined carols tape, except that the number of
+   notes on the combined tape is indeed the sum of the other four.
+
+"TUNES (VARIOUS), FOR OLD 8K ONLY" and "Load 8181, st at 33" on white tape
+   Presume "OLD 8K" applies to store speed, on a machine which had
+   had extra faster store fitted & switchably wired as the first 8K.
+[TUNE PROG 8181]
+   then the program then a second Legible section!
+[TUNE DATA ENT 33]
+   then several sections with blanks between
+   each section annotated by me in blue,
+      "Men of Harlech"
+      "God Save The Queen"
+      "Old Lang Syne"
+      "Ash Grove"
+      "Land of my Fathers"
+      "Land Lubbers Lying Down Below"
+   Trigger at 33 once to play all tunes, each is read then played,
+   then the next is read, finally leaving the reader hung.
+   This program works & manages to generate a plausible pause.
+TUNES    1          10,266 24/11/13   15:13
+TUNES    2          10,266 24/11/13   16:05
+
+"RLB MUSIC, FOR ON-LINE COMPOSING VIA T/t" with COMPOSING in "..." quotes
+   in black marker, "Program at 8181, Tune at 10" added by me in blue,
+   pale blue or grey tape, appears to be a dump of the Algol interpreter
+   including the Algol music program & SIR code procedure herein,
+   This program works & manages to generate a plausible pause,
+   for example it plays "The Sting" if triggered at 10 once, with
+   TTY input diverted to reader to read in both STINGHDR then STING.
+RLBMUSIC 1          17,052 24/11/13   15:11
+RLBMUSIC 2          17,052 24/11/13   16:02
+
+"Music ALGOL" on white tape
+   had a clear tape repair in which the holes had not been
+   unipunched so I unipunched them between the uploads
+   Algol source calling SIR code procedure PLAY
+MUALG    1           1,811 24/11/13   15:14
+MUALG    2           1,811 24/11/13   16:40
+
+"RLB Music Alg, 2" on white tape
+MUALGR2  1           1,513 24/11/13   15:18
+MUALGR2  2           1,513 24/11/13   16:41
+
+"Music Sir" upside down on white tape
+   SIR code procedure PLAY, for Algol using 38 not 138.
+MUSIR    1           1,203 24/11/13   15:19
+MUSIR    2           1,203 24/11/13   16:42
+
+"Music Sir, 2" on pink tape
+   SIR code procedure PLAY, for Algol using 38 not 138.
+MUSIR2   1           1,157 24/11/13   15:21
+MUSIR2   2           1,157 24/11/13   16:52
+
+"RLB Music Sir, 2" on white tape
+MUSIRR2  1             747 24/11/13   15:20
+MUSIRR2  2             747 24/11/13   16:47
+
+"STING, 363 4" on yellow tape
+STINGHDR 1             369 24/11/13   15:34
+STINGHDR 2             369 24/11/13   18:06
+What Have They DOne To 
+"MUSIC, THE STING" with THE STING in "..." quotes
+   and "363, 4" all upside down on pink tape
+STING    1           2,542 24/11/13   15:23
+STING    2           2,542 24/11/13   17:56
+
+"Alg 1" or "Gly I" or some combination thereof in ink on pink tape
+   but is actually another "We shall overcome"
+OVERALG1 1             789 24/11/13   15:21
+OVERALG1 2             789 24/11/13   18:15
+
+"We shall overcome" on white tape
+OVERCOME 1             825 24/11/13   15:23
+OVERCOME 2             825 24/11/13   18:00
+
+"What have they done to the rain" on white tape
+RAIN     1           1,198 24/11/13   15:26
+RAIN     2           1,198 24/11/13   18:01
+
+"Fascinating Rhythm" on white tape
+RHYTHM   1           2,984 24/11/13   15:27
+RHYTHM   2           2,984 24/11/13   18:03
+
+"WHITE XMAS, 99 5" on pink tape
+WHITE    1             983 24/11/13   15:29
+WHITE    2             983 24/11/13   18:03
+
+"HARK THE HERALD" on yellow tape
+HARK     1             891 24/11/13   15:29
+HARK     2             891 24/11/13   18:04
+
+"AWAY IN A MANGER" on pink tape
+   and "NO OF NOTES 13, LENGTH 5" unipunched through and
+   made unreadable with a silver patch 1=>0 in +16 track
+MANGER   1             467 24/11/13   15:30
+MANGER   2             467 24/11/13   18:04
+
+"Once in Royal" on yellow tape
+ROYAL    1             732 24/11/13   15:31
+ROYAL    2             732 24/11/13   18:05
+
+"Combined Carols" in pencil on yellow tape with three splices and
+   "WHITE XMAS, HARK THE HERALD, AWAY IN A MANGER, ONCE IN ROYAL"
+   in black marker all listed vertically at the start
+   with two silver 1=>0 patches in +4 track of ONCE IN ROYAL
+CAROLS   1           2,108 24/11/13   15:32
+CAROLS   2           2,108 24/11/13   18:05
+
+"SCALE, 8 5" on pink tape
+   first & last notes differ by 12, presumably semitones
+SCALE    1             422 24/11/13   15:32
+SCALE    2             422 24/11/13   18:06
+
+"0.05 3000 0" and some other text on yellow tape
+NUMBERS  1             375 24/11/13   15:35
+NUMBERS  2             375 24/11/13   18:06
+
+
+*** EOF ***
+

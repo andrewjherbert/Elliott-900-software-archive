@@ -1,0 +1,11 @@
+﻿C Demonstrate XSTORE
+
+on 903 16K
+at ptr file ../../MASTERS/TEST/XSTORE.BIN
+at tty inline
+0<!!>
+s 10000000
+nonstop on
+j 8181
+sh t
+

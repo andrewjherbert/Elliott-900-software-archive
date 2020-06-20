@@ -1,0 +1,143 @@
+﻿
+	
+*17
+
+((Print out range of a music tape - AJH - 17/02/2015)
+
+(
+Notation:
+
+A-G H-N O-U V: naturals in successive octaves.
+a-g h-n o-u v: semitone above equivalent capital.
+
+WwXxYyZz are input but output no note.
+
+$:  add a semitone [to A-Z only].
++:  add an octave.
+-:  subtract an octave.
+&n: decrease tempo by factor 1.n where n=1,2,..,9,:,..@.
+    n=0 resets tempo to normal.
+    N.B. no separators allowed between & and digit.
+*   double tempo.
+/   halve tempo.
+[\]^_`: rest - i.e., silence.
+)
+
+[CHIPF CHIPL CHIPE CHIP CHOPL CHOPE CHOPC CHOPF]
+
+(Read in & store score up to & inc. <H>)
+
+START  	  4     +0       (Initialise CHIO)
+          5     CHIPF
+	  5	CHOPF
+	  4	+1
+	  5	CHOPC
+          4	AL	 (Initialise MIN and MAX)
+	  5	MAXL
+	  4	ZL
+	  5	MINL
+	  4	AS
+	  5	MAXS
+	  4	ZS
+	  5	MINS
+NXCHAR    11    CHIPL
+          8     CHIPE
+          1     -20
+          7     RESULT    (Test for <H>)
+          1     -16
+          7     ;+0       (Test for $)
+	  1	-7
+          7     ;+0       (Test for +)
+          1     -2
+          7     ;+0       (Test for -)
+	  1	+7
+	  7	AMPSND	  (Test for &)
+          1     -4
+	  7	NXCHAR	  (Test for *)
+	  1	-5
+	  7	NXCHAR	  (Test for /)
+          9     NXCHAR	  (Ignore other symbols)
+          1     -18
+          9     NXCHAR    (Test for digit, etc.)
+
+(Otherwise character is letter; fetch appropriate frequency)
+
+DECODE    1	+65       (Convert to letter)
+	  5	CHIP
+	  11	CHOPL
+	  8	CHOPE
+	  4	CHIP
+	  1	-91	  (Test <= Z)
+	  9	LARGE
+	  1	-6	  (Test < a)
+	  9	NXCHAR
+
+(Small letters)
+          4	CHIP
+	  2	MAXS	  (CHIP>MAXS)
+	  9	;+2
+	  8	;+3
+	  4	CHIP
+	  5	MAXS
+	  4	MINS
+	  2	CHIP      (CHIP<MINS)
+	  9	;+2
+	  8	NXCHAR
+	  4	CHIP
+	  5	MINS
+	  8	NXCHAR
+
+(Large letters)
+LARGE     4	CHIP
+	  2	MAXL	  (CHIP>MAXS)
+	  9	;+2
+	  8	;+3
+	  4	CHIP
+	  5	MAXL
+	  4	MINL
+	  2	CHIP	  (CHIP<MINS)
+	  9	;+2
+	  8	NXCHAR
+	  4	CHIP
+	  5	MINL
+	  8	NXCHAR
+
+AMPSND	  11	CHIPL
+	  8	CHIPE
+	  8     NXCHAR
+
+RESULT	  4	-246	  (Output min and max notes)
+	  11	CHOPL
+	  8	CHOPE
+	  4	MINL
+	  11	CHOPL
+	  8	CHOPE
+	  4	MAXL
+	  11	CHOPL
+	  8	CHOPE
+	  4	MINS
+	  11	CHOPL
+	  8	CHOPE
+	  4	MAXS
+	  11	CHOPL
+	  8	CHOPE
+	  4	-246
+	  11	CHOPL
+	  8	CHOPE
+	  4	+20
+	  11	CHOPL
+	  8	CHOPE
+	  8	;+0
+
+(Workspace)
+MINL	  >1
+MAXL	  >1
+MINS	  >1
+MAXS	  >1
+
+AL	  +65		  (Large A)
+ZL	  +90		  (Large Z)
+AS	  +97		  (Small A)
+ZS       +122		  (Small Z)
+
+<! halt !>

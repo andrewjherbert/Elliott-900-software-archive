@@ -1,0 +1,107 @@
+﻿c music playing program 903_MUSIC
+
+on 903 8K
+
+c edit full program tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c steering tape
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+
+*8192
+*19 (clear 8K, start at 8, labels)
+^%,
+CHE
+WAI
+CHE
+WAI
+CHE
+WAI
+CHE
+INS
+%
+^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+delete errors.txt
+st 490
+delete error.txt
+at ptp file temp.txt
+at ptr file ../../MASTERS/MUSIC/903_MUSIC/903_MUSIC.900
+j 9
+st 822
+at ptr file ../../MASTERS/903SIR/QOUT1(ISS4).900
+j 10
+st 822
+at ptr file ../../MASTERS/903SIR/QIN1(ISS3).900
+j 10
+st 822
+at ptr file ../../MASTERS/903SIR/SSYS1(ISS1).900
+j 10
+st 1274
+de ptp
+
+c assemble
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+c first pass
+select out tty
+at ptr file temp.txt
+j 12
+st 562
+c second pass
+rewind
+select out auto
+at ptp file 903_MUSIC.BIN
+j 10
+de ptp
+st 587
+sh t
+delete temp.txt
+sh t
+
+reset
+
+nonstop on
+select out tty
+c load program
+at ptr file 903_MUSIC.BIN
+nonstop on
+j 8181
+at ptr file ../../MASTERS/903_MUSIC/903_SHEBA.900
+r
+nonstop off
+sh t
+
+c check out new binary
+reset
+tidy
+
+select out auto
+at ptp file 903_SCALE.900
+at ptr inline
+
+A9R B@9R B9R C9R C'9R D9R E@9R E9R F9R F'9R G9R 
+A^9R B@^9R B^9R C^9R C'^9R D^9R E@^9R E^9R F^9R F'^9
+
+RR
+
+C9D9E9F9G9A^9B^9c^9D^9E^9F^9
+
+S
+<!!>
+j 32
+de ptp
+print 903_SCALE.900
+delete 903_SCALE.900
+st 140
+sh t
+

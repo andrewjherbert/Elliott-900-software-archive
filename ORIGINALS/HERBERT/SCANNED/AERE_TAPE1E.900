@@ -1,0 +1,179 @@
+﻿
+
+         4    MLEV2
+         5    2
+         4    MLEV3
+         5    4
+         4    MLEV4
+         5    6
+         4    BOSELY
+         15   4354     (  SET MOTORS ADVANCE )
+         15   196      (  ALLOW OPERATOR INTERRUPT )
+         0    -4
+
+AGAIN    4    +1
+         /5   FORWARD+4
+         /5   INTVAL+4
+         5    PERMIT
+         4    -1
+         /5   STATE+4
+         5    TRIG
+
+         /4   TABENTRY+4
+         /5   POINT+4
+         10   1
+         4    1
+         9    AGAIN
+         4    -1
+         5    SCALERS+1
+         4    +1170
+         5    MOTLIT
+         5    MOTLIT+1
+        4   +1
+        5   BUFOUT
+NEXT     0    AUX
+         14   1
+         4    A
+         15   7168
+
+         5    A
+         3    AUX
+         4    SCALERS+1
+         7    L
+         4    SCALERS
+         15   4352
+         4    +0
+         5    SCALERS+1
+         8    T
+L        4    BOSELY+1
+         7    M
+         4    BOSELY
+         15   4354
+         4    +0
+         5    BOSELY+1
+         8    T
+M        4    DIS
+         7    PZ
+         0    DIS
+         /4   DIS
+         /15  4354
+         4    +0
+         /5   DIS
+         4    DIS
+         1    -1
+         5    DIS
+         8    T
+PZ       4    MOTLIT+1
+         7    T
+         4    MOTLIT
+         15   4363
+         4    +0
+         5    MOTLIT+1
+T        4    +0
+         5    W
+
+         4    INTVAL
+         9    NEG
+         7    GOON
+         0    STATE
+         /4   TABLE
+RET      5    EXIT
+
+         4    INTVAL+1
+         9    NEG1
+         7    GOON1
+         0    STATE+1
+         /4   TABLE
+RET1     5    EXIT+1
+
+         4    INTVAL+2
+         9    NEG2
+         7    GOON2
+         0    STATE+2
+         /4   TABLE
+RET2     5    EXIT+2
+         4    INTVAL+3
+
+         9    NEG3
+         7    GOON3
+         0    STATE+3
+         /4   TABLE
+RET3     5    EXIT+3
+
+         10   TIMER
+         4    TIMER
+         6    +63
+         7    ALARM
+         4    W
+         1    PERMIT
+        7   TRANSFER
+
+         4    W
+         2    NUMBER
+         7    NEXT
+
+BACKLOC  10   DIFFRACT
+         4    +4
+         2    DIFFRACT
+         9    ;+3
+         4    +0
+         5    DIFFRACT
+         0    DIFFRACT
+         /4   EXIT
+         9    BACKLOC
+
+         /8   EXIT
+
+ALARM    10   LIGHT
+         4    LIGHT
+         9    REAL
+         4    SCALERS
+         6    +1
+         7    REAL
+         2    SCALERS
+         5    SCALERS
+         4    -1
+         5    SCALERS+1
+REAL     15   4224
+
+         4          MARKER      (FAIL 13 IF FITQU LOOP)
+         7          OK
+         10         TIMEFAIL
+         4          TIMEFAIL
+         9          OK
+         4          +0
+         5          MARKER
+         4          MLEV4       (RESET LEV4 IDLING LOOP)
+         5          6
+         4          DIF
+         5          DIFFRACT
+         8          FAIL-13
+OK       4          TRIG
+         9    NEXT
+
+         0    TRIG
+         /4   TRIGST
+         /5   STATE
+        9   K
+        10  NUMBER
+SETRIG  4   -1
+         5    TRIG
+         8    NEXT
+K       1   NUMBER
+        5   NUMBER
+         4    P
+         /6   MASK+4
+         5    P
+
+         4          BOSELY      (26 OCT 67)
+         /6         MASK+4      (BRUCE SUGGESTION)
+         5          BOSELY
+        4   +1
+         /5   INTVAL
+         4    SCALERS
+         /6   PATTERN
+         2    SCALERS
+         5    SCALERS
+         8    SETRIG
+TRANSFER 8    NEXT
+<! Halt !>

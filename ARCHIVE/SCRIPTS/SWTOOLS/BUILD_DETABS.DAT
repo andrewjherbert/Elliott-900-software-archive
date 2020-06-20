@@ -1,0 +1,54 @@
+﻿C Build ENTABS
+
+on 903 8K
+
+c edit program tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptr inline
+
+INS
+
+*19
+^%,
+CHE
+WAI
+CHE
+INS
+%
+^%,
+COP
+<! halt !><!!>
+at ptp file errors.txt legible
+j 13
+de ptp
+print errors.txt
+st 490
+at ptp file DETABS.900
+at ptr file ../../MASTERS/SWTOOLS/DETABSS.900
+j 9
+st 822
+at ptr file ../../MASTERS/ACDSIR/CHIO.900
+j 10
+st 1274
+de ptp
+
+c assemble program
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+at ptr file DETABS.900
+select out tty
+j 12
+st 562
+rewind
+at ptp file DETABS.BIN
+select out auto
+j 10
+de ptp
+st 587
+
+delete errors.txt
+
+sh t

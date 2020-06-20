@@ -1,0 +1,440 @@
+﻿     /12   THQART
+
+         2    COEFF+12
+         5    COEFF+12
+         4    ZERO
+         5    Y4
+
+         4    Y0
+         14   1
+         1    Y0
+         14   8191
+         5    X1
+
+BET58    4    X1
+         12   X1
+         5    X1+3
+         12   X1
+         5    X1+6
+         4    X1+3
+         12   COEFF+3
+         5    DENOM
+
+         14   1
+         1    DENOM
+         1    COEFF+9
+         5    DENOM
+         4    X1
+         12   COEFF+6
+         14   1
+         1    DENOM
+         5    DENOM
+         4    X1+6
+         12   COEFF
+         14   2
+         1    DENOM
+         5    DENOM
+         4    COEFF
+         12   X1
+         1    COEFF+3
+         12   X1
+         1    COEFF+6
+         12   X1
+         1    COEFF+9
+         12   X1
+         1    COEFF+12
+         13   DENOM
+
+         5    APPROX
+         2    X1
+         5    X1
+         4    APPROX
+         12   APPROX
+         2    SMALL
+         9    BET58
+         4    Y4
+         7    ;+2
+         8    FIVFIN
+         4    X1
+         5    Y4
+        4   Y0
+        8   BET58-2
+
+FIVFIN   4    X1
+         2    Y4
+         6    4
+         +0
+
+         0    LOCAL1
+         /4   FIVATE
+         11   QOUT1
+         8    QOUT1+1
+         +0
+
+         4    LOCAL1
+         1    RATIOP
+         5    QF+4
+         11   QF
+         8    QF+2
+         4    X1
+         2    Y0
+         5    X1
+         4    Y0
+         2    Y4
+         13   X1
+         14   10
+         6    4
+         +0
+
+         0    LOCAL1
+         /4   RATIO
+         11   QOUT1
+         8    QOUT1+1
+         +0
+
+         4    +0
+         5    CHK
+         0    LOCAL1
+         /0   TABENTRY
+
+ACCUM    4    7
+         5    OUT
+         /4   0
+         14   8188
+         1    CHK
+         5    CHK
+         4    7
+         0    LOCAL1
+         /2   POINT
+         7    ;+4
+         0    OUT
+         10   7
+         8    ACCUM
+         4    CHK
+         14   8185
+         5    CHK
+
+         11   QOUT1
+         8    QOUT1+1
+         +0
+         0    LOCAL1
+         4    SOMEWH
+         11   QOUT1
+         8    QOUT1+1
+         +0
+
+         0    LOCAL1
+         4    SOMEWH
+         1    CHK
+         /1   RATIO
+         /1   FIVATE
+         /1   MAXMUM
+         /1   SD
+         /1   TOTAL1
+         11   QOUT1
+         8    QOUT1+1
+         /0   0
+         4    +0
+         11   OUT
+         8    OUT+1
+
+
+
+NOFULL      4          +0        (CLEAR MARKER)
+            5          MARKER    (ON LEAVING FITQU)
+            4          LOCAL1
+         5    DNO
+         2    +1
+         0    LOCAL1
+9 ;+2
+8 LABNAS
+/4 FLAG-2
+7 PHIL
+8 PHILPRO
+LABNAS
+
+         /4   BASE
+         7    BEXIT
+FIX      /4   MAXMUM
+         /5   MAXMUM+4
+
+         /4   SECOND
+         9    SEC
+
+         4    -1
+         /5   SECOND
+         /4   TOTAL1
+         /5   TOTAL0
+         9    FAIL6
+
+         /4   ANS
+         7    EVAL1
+CONTIN   4    +8
+         /5   TRIGST
+         4    TRIG
+         9    ;+2
+         8    ;-2
+         4    LOCAL1
+         5    TRIG
+         8    LEV4
+
+BEXIT    4    -1
+         /5   BASE
+         4    +1
+         /5   TRIGST
+         8    CONTIN+2
+EVAL1    /4   POSN
+         14   1
+         /5   ANS
+         8    CONTIN
+SEC      /4   TOTAL1
+         /2   TOTAL0
+
+         9    FAIL6
+         /5   ANS
+
+         /4   OFF
+         9    ON
+         4    +0
+
+         /5   TOTAL2
+         /5   TOTAL3
+
+         /4   TYPE
+         2    +1
+         7    OP
+         /4   ANS
+         5    XNO
+         2    =8 2304  ( 4M-15*2^18 )
+         4    +15
+         13   XNO
+         1    +2
+         14   8190
+         /5   OFFST
+         5    XNO
+         2    +0
+         /5   OFF
+         2    =/4 1152
+         4    +7
+         13   XNO
+         14   8189
+         6    =3 8191
+
+        /5  ANGLE
+
+ON       /4   ANS
+         5    XNO
+         /4   TAB
+         /1   OFF
+         5    7
+         4    XNO
+         /5   0
+         8    RLOC
+
+OP       4    +1
+         /5   OFFST
+         4    -1
+         /5   OFF
+RLOC     0    LOCAL1
+         4    +0
+         /5   SECOND
+         /4   TOTAL2
+         /1   ANS
+         9    ;+3
+         /5   TOTAL2
+         8    ;+4
+         6    =15  8191
+         /10  TOTAL3
+         /5   TOTAL2
+         /10  OFF
+         /4   OFF
+         7    OUTP
+         4    +9
+
+PR       /5   TRIGST
+         4    TRIG
+         9    ;+2
+         8    ;-2
+         4    7
+         5    TRIG
+         8    LEV4
+
+LOFFST   +0
+ANSWER   +0
+         +0
+         +0
+FAIL6    4    +6
+         8    ;+2
+FAIL9    4    +9
+ERR      5    TA
+         4    -1
+         5    TAMARK
+         4    +0
+         5    TAMARK+2
+         4    DNO
+         5    TAMARK+1
+         8    LEV4
+OUTP     /4   OFFST
+         5    LOFFST
+         /4   TOTAL3
+
+            5          ANSWER+2
+         /4   TOTAL2
+         14   8175
+
+            4          ANSWER+2
+         13   LOFFST
+
+STANCE   5    ANSWER
+         12   LOFFST
+         3    ANSWER+1
+         /2   TOTAL3
+         7    ;+4
+
+DECANS   4    -1
+         1    ANSWER
+         8    STANCE
+
+         4    ANSWER+1
+         /2   TOTAL2
+         9    DECANS
+         14   5
+         6    -32
+         /1   POSN+4
+         14   8175
+         13   LOFFST
+         /5   TOTAL3
+         11   TITLE
+         8    TITLE+1
+         4    +3
+
+         11   QOUT1
+         8    QOUT1+1
+         +0
+         0    LOCAL1
+         4    ANSWER
+         /5   TOTAL2
+
+AGAIN   11  QOUT1
+        8   QOUT1+1
+         /0   0
+        4   +0
+        11  OUT
+        8   OUT+1
+         0    LOCAL1
+         /4   ANS
+         7    GLOF
+         /5   TOTAL1
+         4    +0
+         /5   ANS
+         /4   TOTAL3
+         11   QOUT1
+         8    QOUT1+1
+         /0   0
+         0    LOCAL1
+         /4   TOTAL3
+         /1   TOTAL2
+         8    AGAIN
+
+GLOF     /5   ANGLE
+         /5   OFFST
+         /4   TYPE
+         2    +1
+         7    ;+2
+
+            8          PE1
+         4    +12
+         8    LAB
+TAB      0    TAB1+40
+         0    TAB2+40
+
+PE1         4          LOCAL1    (B01 REPETITION)
+            5          DNO
+            /4         EXPNO
+            5          XNO
+            /4         OFFP
+            7          STAR-2
+            4          +1
+            /5         RPT
+            8          STAR-2
+LOCAL1   +0
+         +0
+OUT     +0
+        5   WORK
+        10  BUFOUT
+        4   +128
+        2   BUFOUT
+        9   ZERO1
+        4   +1
+        5   BUFOUT
+
+ZERO1   0   BUFOUT
+       4   WORK
+        /5  BUFOUT
+        15  195
+        4   BUFOUT
+        2   BUFPOINT
+        7   ;-2
+        0   OUT
+        /8   1
+WORK    +0
+
+IN      4   INITBUF
+        5   INBUF
+        11  GET
+        8   GET+1
+        5   XNO
+        11  GET
+        8   GET+1
+
+        5   DNO
+       14   8191
+        5   PHIP
+        0   DNO
+        /4  STATE
+         9    ;+4
+         4    +1
+         5    FOURIN
+         8    ERR
+
+         4    +1
+         /5   FORWARD
+         4    BOSELY
+         /6   MASK+4
+         5    BOSELY
+         4    -1
+         5    BOSELY+1
+         11   GET
+         8    GET+1
+         0    DNO
+         /5   VALORD
+         11   GET
+        8   GET+1
+         0    DNO
+         2    +0
+         /5   TENSEC
+        4   PHIP
+        7   ;+3
+  /4   TENSEC
+  /5   CTSAVE-2
+
+
+         11   GET
+         8    GET+1
+         0    DNO
+         /5   TYPE
+         11   GET
+         8    GET+1
+      0   DNO
+        /5 PEAKWIDTH
+
+11 GET
+8 GET+1
+0 DNO
+/5 MOTMOV
+11 GET
+8 GET+1
+0 DNO
+/5 MOTNO
+4 PHIP
+

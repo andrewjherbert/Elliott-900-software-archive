@@ -1,0 +1,59 @@
+﻿c Algol function codes: test jump out of procedures and for loops
+
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin" 
+    "procedure" a(i); "value" i; "integer" i;
+    "begin"
+        "integer" k;
+	"procedure" b(j); "value" j; "integer" j;
+	"begin" "print" {J=}, sameline, j, {{L}};
+	"if" j = 0 "then" 
+	    "goto" l
+        "else"
+    	    b(j-1);
+        "end";
+        "print" {I=}, sameline, i, {{L}};
+        "if" i < 1 "then"
+	    a(i+1)
+	"else"
+            "for" k := i "step" 1 "until" 10 "do"
+	        "if" k = 5 "then"
+	           b(10);
+        stop;
+     l: "print" {DONE AT I=}, sameline, i;
+    "end";
+    a(-10)
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run trivial program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t

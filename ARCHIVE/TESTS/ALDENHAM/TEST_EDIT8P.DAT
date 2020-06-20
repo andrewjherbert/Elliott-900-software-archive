@@ -1,0 +1,176 @@
+﻿
+C Test Aldenham Editor version 8P
+
+C Notes
+C Enter at 32 to continue after a halt
+C Enter at 33 to restart
+C ENter at 34 to load help
+C PSC punches 8 stop codes
+C DLB, DLC find line and delete it
+C Moving backwards forces a RST
+C LIST replace original text with new
+
+C 
+
+on 903
+
+C Test DNE
+at ptr file ../../MASTERS/ALDENHAM/EDIT8P.BIN
+at tty inline
+STOP<!!>
+j 8181
+st 460
+at ptr file ../../MASTERS/ALDENHAM/EDIT8PINS.900
+j 34
+st 66
+at ptp file RESULT.BIN
+at tty inline
+DNE
+<! 132 !><! 132 !>
+STOP<!!>
+j 33
+de ptp
+print RESULT.BIN
+delete RESULT.BIN
+st 460
+
+C Test runout, legible and stop code printing
+at ptr file ../../MASTERS/ALDENHAM/EDIT8P.BIN
+at ptp file result.txt legible
+at tty inline
+Control-A is value 129 $$FROM<! 129 !>LOAD
+PRO
+PLLLEGIBLE
+PSC
+STOP<!!>
+at ptr inline
+<! halt !><!!>
+j 33
+de ptp
+print result.txt
+delete result.txt
+st 460
+
+c Test loading help
+at ptr file ../../MASTERS/ALDENHAM/EDIT8PINS.900
+j 34
+st 66
+at ptp file RESULT.TXT
+at tty inline
+HELP
+STOP<!!>
+j 33
+de ptp
+print RESULT.TXT
+st 460
+
+C Test CLP
+at ptr inline
+ONE
+TWO
+THREE
+<! halt !><!!>
+at tty inline
+CLP
+STOP<!!>
+at ptp file RESULT.TXT
+c restart editor
+j 33
+de ptp
+print RESULT.TXT
+stop 460
+
+C Test finding your place general editing
+at ptr inline
+
+                   EDITOR INSTRUCTIONS
+                  =====================
+
+
+INSTRUCTIONS ARE RECOGNISED BY THE FIRST THREE CHARACTERS ONLY ALTHOUGH
+IN MANY CASES MORE MAY MAKE THE OPERATION CLEARER. THE EDITOR IS EXPEC-
+TING AN INSTRUCTION WHENEVER IT PRINTS A *. AFTER EACH OF THE INSTRUCTI-
+ONS, THE NUMBER OF FULL-STOPS REPRESENTS THE NUMBER OF DELIMITERS IN THE
+STRING. LETTERS IN BRACKETS SHOW OPTIONAL SINGLE LETTER INSTRUCTIONS.
+<! halt !>
+TEXT TO READ IN FROM TAPE
+SPREAD OVER TWO LINES
+<! halt !><!!>
+at tty inline
+LOAD
+LIST
+FLB/INSTRUCTIONS/
+DLB/IN MANY/
+FLC/NUMBER/
+DLC/SINGLE/
+N
+RST
+FLC/EDITOR
+MLN 6
+EXS/THREE/3/
+MLN 2
+ISA/EDITOR/ 8P/
+ISB/ED?OR/ALDENHAM /
+MLN+5
+COS/*/
+ILB LINE BEFORE
+ILA LINE AFTER
+N
+ECLEXCHANGED TEXT
+MLN3
+DCL
+DSP+10
+EOT
+TAB4
+IBB
+TABBED TEXT
+<! 9 !>ADDED
+<! 9 !><! 9 !>AT
+<! 9 !><! 9 !><! 9 !>END
+<! halt !>RPN
+LIST
+RST
+MLN10
+DUCAT
+ITB
+LIST
+RST
+GXS/INSTRUCTION/INSTR./
+GIA/FIRST/1ST/
+GIB/AFTER/2ND/
+GDS/PRINTS/
+MAC/CH/KK/
+MLN12
+DET
+LIST
+SSC
+PUNCH
+HELP
+STOP<!!>
+at ptp file RESULT.TXT
+c restart editor
+j 33
+de ptp
+print RESULT.TXT
+delete RESULT.TXT
+st 460
+
+C test ROT
+at tty inline
+LOAD
+FLC/GOOD/
+EXS/GOOD/BAD/
+FLC/LAZY/
+EXS/LAZY/IDLE/
+
+ROT
+LIST
+STOP
+<!!>
+at ptr inline
+NOW IS THE TIME FOR ALL GOOD MEN TO COME TO THE AID OF THE PARTY.
+THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG.
+<! halt !><!!>
+j 33
+st 460
+sh t

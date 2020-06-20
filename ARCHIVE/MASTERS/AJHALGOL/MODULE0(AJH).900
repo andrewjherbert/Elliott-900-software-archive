@@ -1,0 +1,267 @@
+﻿^4540
+	4	=8 L3952 (Normal translate)
+	5	8
+	4	=8 23   (Execute)
+	5	10
+
+
+^8000
+	8	8000	(Dump not present)
+
+^8
+	8	ENT8	(Translate)
+	8	CONTIN
+(10)	8	ENT10	(Execute)
+	8	ENT11
+	8	ENT12
+	8	ENT13
+	8	ENT14
+(15)	+0		(Thunk code)
+	8	ENT16
+	8	ENT17
+	8	ENT18
+	8	LOCK
+(20)	+0	(Put Name on/off here)
+	+0
+	+0
+	+0
+	+0
+(25)	8	FREEZE
+
+
+EXECAD  0      EXECUT
+ENT10	4	EXECAD   (Execute)
+TERML4	5	6	(Set level 4 address)	
+	4	;+5	(Set level 2 and 3 interrupt)
+	5	2
+	5	4
+	15      7168
+        8       ;-1	(Levels 1, 2, 3 terminate)
+        0       ;-2	(Address for level 1, 2, 3 interrupts)
+
+CONTAD	>1
+CONTIN	4	CONTAD	(Continue after entry at 9)
+(22)	8	TERML4	(Continue on level 4)
+
+FREEZE	0   	+8192	 (Freeze known names)
+	/8	304	(T-SETPER)
+
+^FAILEN+4
+	8	;+4	(Skip over punching deletes) -- can just delete
+
+^MAMPS4+2
+	9	;+2	(Allow stack to overflow loader)
+
+(Following patch turns calls of FINSUB into a null routine)
+^FINSUB
+	8	;+6	(Skip over punching alarm sequence) -- do by deleting
+
+^FINISH
+	8	FINISH+4 (Skip over punching end sequence) -- do by deleting
+
+(Protect CF to missing procedure) -- insert at end of CF
+	2	+8191   (Test if address = "undefined")
+	7	NOPROG	("NO PROGRAM" error) --add NOPROG to globals
+        8	NXPORD	
+
+(Patch to stop runout on stop) -- do by deleting instructions
+^STOP-4
+	8	L2550	(I-STOP)
+
+L8000	8	L8000
+L8001	+0
+L8002	+8192
+L8003	+6
+L8004	+20
+L8005	+28
+L8006 	+18
+L8007	+9
+L8008	+8128
+L8009	+8192
+L8010	+16383
+L8011	-3
+L8012	8	L3952
+L8013	8	L8088
+L8014   0       L8007
+
+W1	>1		(-ve if taking rlb from translator, +0 otherwise)
+W2	>1
+W3	>1		(Initialized 0 at ENT8, 11)
+W4	>1		(Translation mode
+		          0 Normal
+			  8 Library mode
+			 18 Reports
+			 20 Checks and Reports)
+FLAG	>1
+SUM	>1		(Checksum for locked interpreter)
+
+(Entry at 8 - normal translate)
+L8015
+ENT8	4	+0	(Set normal translate)
+(+1)	5	W4
+	4	-3	(Set no tape)
+	5	W1
+        4       +0
+L8020   5       W3
+        8       READAL
+
+(Entry at 11 - translate with checks and reports)
+ENT11	4	+20	(Set checks and reports)
+        8	ENT8+1
+
+(Entry at 12 - library mode)
+ENT12	4 	+8	(Set library mode)
+(+1)   	5	W4
+	4	-3	(Set not tape)
+	5	W1
+	8	READOL
+
+(Entry at 13 - translate in library mode with checks and reports)
+ENT13	4	+28	(translate in library mode with checks and reports)
+	8	ENT12+1
+
+(Entry at 14 - read code procedures from paper tape)
+ENT14	4	+0	(Set read tape)
+        5	W1
+	8 	LSTART-1
+
+(Entry at 16 - translate in report mode)
+ENT16	4	+18	(Set report mode)
+	0	+8192
+	/8      L237	(T START)
+
+(Entry at 17 - translate to RLB - go to translator)
+ENT17	0	+8192	(translate to RLB)
+	/8	11
+
+(Entry at 18 - re-establish library)
+ENT18	4	+0	(set read tape)
+	5	W1
+	8	READLB
+
+L8044	4	FLAG	(From T START)
+	0       +8192
+	9	L8057
+	/4	L6093	(T W+3)
+	5	L7562	(L LOW1)
+	/4	L211	(T CODE)
+L8050	5	L7804	(L LOW)
+	2	+6	(Test for end of block)
+	9	L2525	(I FINSUB+3)
+	7	L7819	(L ST2)
+	4	L7804	(L LOW)
+	7	L8068
+	8	L7855	(L BLANK+24 - continue decoding)
+
+L2525	4	LOW1
+	8	L-HALT+4	
+
+L8057	/4	L6093	(T W+3 FLAG < 0)
+	5	L7555	(L INTEGR)
+	/4	211	(T CODE)
+	5	L7567	(L W+3)
+	4	+0
+	5	FLAG
+	8	L7603	(L RETURN+3)
+
+(Next 4 instructions put test of W1 at READTH+1)
+(W1 < 0 => read paper tape)
+L8064	4	W1	(From LOADER A - READTH divert)
+	9	L8072
+	4	-3
+	8	L7590	(L READTH+2)
+
+(Next for instructions put test of W1 at BLANK)
+L8068	4	W1	(From LOADER B - BLANK divert)
+	9	L8076
+L8070	4	+0
+	8	L7832	(L BLANK+1)
+
+(READTH from translator)
+L8072	4	-3
+	5	FLAG
+	0	+8192
+	/8	L5415	(T EXIT)
+	
+(BLANK from translator)
+L8076	4	W3
+	0	+8192
+	/9	L5415	(T EXIT)
+	4	-3
+L8080	5	W3
+	/5	10
+	4	+0
+	5	FLAG
+	4	W4
+	/8	L237	(T START)
+(End of BLANK from translator)
+
+
+
+(Code to checksum store?)
+L8007	+9
+L8008	+8128
+L8009	+8192
+L8010	+16383
+L8011   -3
+(W1 running total)
+
+L8086
+LOCK	4	+0	(LOCK)
+	8	:+2
+UNLOCK	4	L8012	(UNLOCK L8012 = 8 3952)
+	5	8	(Stop entry at 8)
+L8090	4	+0
+	5	W1	(W1 := 0)
+	4	L8014	(L8014 = 0 L8007)
+	5	W2
+L8094	0	W2	
+	/4	0	(W2[0] - from address)
+	9	L8112	(Last block done?)
+	5	W4	(W4 := next address)
+	/4	1	(W2[1] - to address)
+	5	W3	(W3 := to address)
+L8100	0	W4
+	/4	0	(Add to sum)
+	1	W1
+	5	W1
+	10	W4
+	4	W4
+	2	W3	(Test for end)
+	7	;+2
+	8	L8100	(Keep adding)
+	10	W2	(Advance to next block)
+L8110	10	W2
+	8	L8094
+L8112   4	8	(Test if 8 = L8088)
+	2	L8013	
+	7	L8119	(Locking)
+	4	SUM	(Unlocking - check sum matches)
+	2	W1
+	7	8	(Ok)
+	8	;+0
+L8119	4	W1
+L8120	5	SUM
+L8121	8	;+0	(Locked)
+
+L8122	+8
+
+
+(Patches to divert loader to new code)
+(READTH is routine to read 3 rows of tape)
+(BLANK is loop to read next command)
+^5120
+	4	=8 8064
+	5 	LREADTH+1
+        4	=8 8068
+	5	BLANK
+
+
+
+
+
+
+	
+
+
+

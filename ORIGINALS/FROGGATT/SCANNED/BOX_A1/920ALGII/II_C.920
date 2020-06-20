@@ -1,0 +1,1543 @@
+﻿
+
+BUFLAG   +0
+HALTMK   +0
+W10
+SIGNCH   +0
+ADPART   +0
+W3ADDR   0  W3
+BUFFER   +0
+         +0
+         +0
+
+
+
+SBLNK1   +0
+SUBWK1
+         +0
+SBW1     +0
+SBW2     +0
+SBW3     +0
+SBW4     +0
+SBW5     +0
+
+SW       +0
+SW1      +0
+
+
+
+PBA      0  0
+
+         0 CBL ( 1 )
+         0 CHECKB
+         0 CHECKI
+         0 CHECKR
+         0 CHECKS ( 5 )
+
+         0 DO
+         0 STW
+         0 FINISH
+         0 FOR
+         0 FR
+
+         0 FSE (11)
+         0 DIV
+         0 ITOR1
+         0 ITOR2
+         0 NEGI
+         0 NEGR (16)
+         0 RETURN
+         0 RTOI1
+         0  SPARE
+         0 ST (20)
+
+         0 STA
+         0 STEP
+         0 ST ( WILL BE SPARE FOR VERSIONS OF TRANS.>MAY66)
+
+         0 WAIT
+         0 SPARE
+         0 UNTIL (26)
+
+         0 UP
+         0 PRIM28 ( R↑I=R )
+         0 WHILE (29)
+
+         0  PRIM30
+         0 PRIM31
+         0  PRIM32
+         0  PRIM33
+         0 PRIM34
+         0 PRIM35
+         0 PRIM36
+         0 PRIM37
+         0 PRIM38
+         0 PRIM39
+         0 PRIM40
+         0 PRIM41
+         0 PRIM42
+         0 PRIM43
+         0 PRIM44
+         0 PRIM45
+         0 PRIM46
+         0 PRIM47
+         0 PRIM48
+         0 PRIM49
+         0 PRIM50
+         0 PRIM51
+         0 PRIM52
+         0 PRIM53
+         0 PRIM54
+         0 PRIM55
+         0 PRIM56
+         0 PRIM57
+         0 PRIM58
+         0 PRIM59
+         0 EXP
+         0 PRIM61
+         0 PRIM62
+         0 PRIM63
+         0 PRIM63
+         0 PRIM63 ( 65 )
+         0 PRIM63
+         0 PRIM63
+         0 PRIM63 ( 68 )
+         0 PRIM63
+         0 PRIM63 (  70 )
+
+
+
+FLNST1   +0
+         +0
+
+FAILHD   0 ;+1
+         &070101
+         £ERR
+         £OR
+         £NO
+         £BLK
+         £ AD
+         £R
+         £RET
+         &014000
+
+FAILEN   14  8175
+         4  W3
+         5  WS
+         3  W3 ( STORE ERROR NO FOR OUTPUT)
+         4  -4096
+         15 6144
+         1  +256
+         9  ;-2
+         4  +3
+         5  ODEV ( SET TO OUTPUT ON TELEPRINTER)
+
+         4  FAILHD
+         11 SBLNK2 ( PRINT ERROR HEADING)
+         8  OSTSB
+         4  PRFA1
+         5  FLNST1
+         4  NULSTR+2
+         5  PRFA1
+         4  IOLNK
+         5  FLNST1+1
+
+         4  +6
+
+         11 IOLNK
+         8  OUTI5
+         4  BN
+         14 8188
+         5  W3
+         4  +3
+         11 IOLNK
+         8  OUTI5
+
+         4  PDADD
+         2  PP
+         5  W3
+         4  +4
+         11 IOLNK
+         8  OUTI5
+         0  EP
+         4  EP
+         2  STACKADD
+         7  ;+3 ( IF OUTERMOST BLOCK PRINT RET=0)
+
+         4  PDADD
+         /2 1
+         5  W3
+         4  +4
+         11 IOLNK
+         8  OUTI5
+
+         4  FLNST1
+
+         5  PRFA1
+         4  +1
+         11 OTCHA
+         8  OTCHA1
+         4  WS
+         5  W3
+
+         4  FLNST1+1
+         5  IOLNK ( RESTORE IOLNK )
+
+SWAIT    8  ;+0 ( WAIT FOR RE-ENTRY AT 9 )
+
+CONTIN   0 PAUSRT
+         11  PAUSRT
+         /8  1
+         8  STOP
+
+
+
+FAILNS   +2   ( STACK OVERFLOW ARRAY OR PROCDR)
+FLNS1    +3   ( INTEGER OVERFLOW )
+FLNS2    +4   ( ILLEGAL SWITCH SUBSCRIPT )
+FLNS3    +5   ( ILLEGAL ARRAY SUBSCRIPT )
+FLNS4    +9   ( OVERFLOW FOR REAL NOS )
+FLNS5    +1   ( PARAMETER MISMATCH )
+FLNS6    +7   (NON STANDARD NO. IN OUTPUT )
+FLNS7    +6   ( ILLEGAL CHAR IN INNER STRING)
+
+FLNS14   +15  ( INPUT PARITY FAIL )
+FLNS15   +14  (  INPUT CHAR NOT INALGOL SET)
+FLNS16   +16  ( INPUT BUFFER OVERFLOW )
+FLNS17   +18  ( ILLEGAL FORM OF NUMBER)
+
+FLNS19   +8   ( ILLEGAL CHAR IN NUMBER )
+FLNS21   +22  ( ARRAY BOUND NEGATIVE RANGE )
+FLNS22   +20  ( COMPILER ERROR )
+
+
+
+
+GTSFAIL  4  FLNS2
+ENFAIL   11 PAUSRT
+         8 FAILEN ( ERROR : CONTINUE NOT POSSIBLE)
+         8  STOP
+         4  +21 ( ATTEMPT TO OVERWRITE CONSTANT )
+         8  ENFAIL
+
+WAIT     11 PAUSRT
+         8  SWAIT
+         8  NXPORD
+
+
+STSUBRT  +0
+         4  SP
+         1  -6 (ADDRESS OF ADDRESS:=SP-6)
+         5  PKDADD
+
+         5  W
+         1  +3
+         5  SP ( SP:=SP-3 )
+         5  SBW ( 7, ENTRY FOR M/C CODE PROCEDURES )
+         0  SBW
+         /4 0
+         5  W3
+         /4 1
+         5  W4
+         /4 2
+         5  W5
+STSUB    0  PKDADD ( 15, ENTRY FROM UNTILR, INPUT & CODE)
+         /4 0
+         5  PKDADD ( ADDRESS TO WHICH VALUE IS ASSIGNED)
+         6  =/8 0
+         7  STSUB1 (JUMP IF INTEGER;NOT CONST. OR REAL)
+         14 1
+         9  ENFAIL+4 ( ERROR IF CONST. TO BE OVERWRITTEN)
+         /4 1
+         9  STSUB7 (REAL NUMBER NOT TO BE PACKED )
+         4  W4
+         1  +64 ( ROUND OFF MANTISSA )
+         9  STSUB2 ( JUMP IF CARRY TO MS. )
+         6  &377600
+         5  W4
+
+STSUB3   4  W5
+         1  +64
+         9  STSUB5 ( JUMP IF EXP.<-64 )
+         1  -128
+         9  ;+4 ( JUMP IF EXP.<+64 )
+         4  FLNS4 ( OTHERWISE ERROR F.P. OVERFLOW )
+         11 FAIL
+         8  FAIL+1
+         4  W5
+         6  +127
+         1  W4
+         0  PKDADD
+         /5 1 ( STORE PACKED EXP. & L.S. MANTISSA)
+STSUB1   0  PKDADD
+         4  W3 ( STORE INTEGER OR M.S. MANTISSA )
+         /5 0
+         0  STSUBRT ( EXIT )
+         /8 1
+
+STSUB7   4  W5 ( COPY VALUE WITHOUT PACKING )
+         0  PKDADD
+         /5 2
+         4 W4
+         8  STSUB1-1
+
+STSUB5   4  +0 ( IF EXP. <-64 SET ZERO )
+         5  W3
+         5  W5
+         8  STSUB3-1
+
+STSUB2   4  +0
+         5  W4
+         10 W3
+         4  W3
+         6  =7 8191 ( IS IT SPECIAL CASE )
+         11 SBLNK
+         7  ;+2 ( CARRY OVERFLOW )
+         8  STSUB3
+         4  W3
+         14 1
+         0  W3ADDR
+         9  NEGR4+7 ( -0.499999999 GIVES -1.0*1/2 )
+         8  NEGR3 ( +0.999999999 GIVES +0.5*2 )
+
+
+
+
+W345R    4  SP
+         1  -3
+W345R1   5 W
+         0 W
+W345R2   /4 0
+         5  W3
+         /4  1
+         5  W4
+         /4  2
+         5  W5
+         0  SBLNK
+         /8  1
+
+
+
+RICONV   4  W5
+         1  -17 ( TEST EXP >17 )
+         9  RICON1
+         7  RICON2
+NEGIE
+INTOVR   4  FLNS1
+         8  ENFAIL ( INTEGER OVERFLOW )
+
+RICON1   11  SBLNK ( SCALE ACCORDING TO EXPONENT )
+         8  SHIFTD
+RICON2   4  =8 0
+         2  W4
+         9  RICON3 ( JUMP IF ROUNDING NOT REQUIRED)
+         4  W3
+         9  RICON4
+         1  +1 ( IF MANT +VE TEST FOR  )
+         9  INTOVR (  ROUNDING OVERFLOW  )
+         8  ;+2
+RICON4   1  +1
+         5  W3
+RICON3   4  W3 ( PICK UP INTEGER )
+         0  SBLNK1
+         /8  1
+
+
+ITRSB1   5  W3
+ITRSB2   4  +0
+         5  W4
+         4  +17
+         5  W5
+         8  STAND+1
+
+
+
+NEGR1    0  W
+NEGR6    /4  1
+         7  NEGR4 (TEST FOR -1.0 OR +0.5 )
+         2  +0
+         6  =15 8191
+         /5 1
+         /10 0 (CARRY TO MS )
+NEGR5    /4 0
+         2  +0 ( NEGATE MS )
+NEGR2    /5 0
+         0  SBLNK ( EXIT )
+         /8 1
+NEGR4    /4 0
+         2  =/0 0
+         7  NEGR3 ( IF -1.0000000 )
+         /4  0
+         2  =8 0
+         7  ;+2 ( IF +0.5000000)
+         8  NEGR5
+         /4 2 ( SPECIAL ENTRY FROM STSUBRT )
+         1  -1 ( -0.50*2↑E := -1.0*2↑[E-1 ])
+         /5 2
+         4  =/0 0
+         8  NEGR2
+
+NEGR3    /10 2 ( SPECIAL ENTRY FROM STSUBRT )
+         4  =8 0 (+1.0*2↑E:=+0.5*2↑[E+1])
+         8  NEGR2
+
+
+
+STODEV   +1
+GLOPMD   +0
+GLIDEV   +0
+GLODEV   +0
+GLPRFA   +0
+GLINTD   +0
+GLDIGM   +0
+GLDIGN   +0
+
+OPMD1    +0
+IDEV     +1
+ODEV1    +1
+PRFA1    +0
+INTDG    +6
+DIGM1    +2
+DIGN1    +8
+
+
+
+         &070101
+         £NO
+         £PRO
+         £GRA
+         &550140
+         0  ;-5
+TEXT1    0  ;+1
+         &070162
+         £ELO
+         £AD
+
+         £TAP
+         &452201
+         &010140
+         4  TEXT1-1
+         8  ;+5
+READAL   4  WARN
+         2  +1
+         7  7785 ( JUMP TO LOADER INPUT AFTER LIBRARY)
+         4  TEXT1
+         0  +6
+         3  ODEV
+         11 SBLNK2
+         8  OSTSB (DISPLAY WARNING )
+         8  STOP
+
+READLB   4  -1
+         5  75 ( SET MARKER FOR LIBRARY INPUT )
+READOL   4  WARN
+         2  +1
+         7  7774 ( JUMP TO LOADER :OVERWRITE LIB.)
+         8  READAL+3 ( JUMP TO DISPLAY WARNING )
+
+EXECUT   4  BASE+2
+         2  +8191 ( HAVE ALGOL LABELS  )
+         7  READAL-2 ( BEEN READ IN )
+         4  STKMOD
+         7  ;+2 (  IF NO STACK ADDRESS GIVEN )
+         5  STACKADD (ADDRESS GIVEN )
+         4  STACKADD (USE GIVEN ADDR. OR 1ST FREE LOCN.)
+         5  SP
+         5  EP
+         1  -3
+         5  FP
+         4  PDADD
+         5  PP
+         4  -1
+         5  BUFLAG
+         4  +1
+         5  GLIDEV
+         4  STODEV
+         5  GLODEV
+         4  +6
+         5  GLINTD
+         4  +7
+         5  GLDIGN
+         4  NULSTR+3
+         5  GLPRFA
+         4  +0
+         5  GLOPMD
+
+
+         5  BUFFER
+         5  BUFFER+1
+         5  BUFFER+2
+
+
+         4  +800
+         5  BN
+         8  NXPORD
+PRIM     0  ADPART
+         1  -30
+         /0 PBA
+         /9  0
+         1  -27
+         9  PRIMA
+         4  SP
+         1  -3
+         5  W
+         8  PRIMA1
+
+PRIMA    4  SP
+         1  -6
+         5  W
+         1  +3
+         5  SP
+PRIMA1   /11 0
+         /8  1
+NXPORD
+         0 PP
+
+         /4 0
+         10 PP
+         14 8179
+         5 W
+         /4 0
+         6 +8191
+         5 ADPART
+         0 W
+         /8 FBAJ
+
+         8 TRAP (16)
+         8 TICA ( ALSO TLA )
+         8 TIC
+         8 TRCA
+         8 TRC
+
+         8 CF (21)
+         8 CFF
+         8 PE
+
+         8 TFAI (ALSO TFAR TFVI )
+         8 TFVR
+         8 TRCN
+         8 INDS (27)
+         8 IFUN
+         8 RFUN
+         8 PEM
+         8 PRIM (31)
+
+FBAJ     8 TA ( 0 )
+         8 TIA ( 1 )
+         8 TIR
+         8 TRA
+         8 TRR
+
+         8 SPARE
+
+         8 MAMPS
+
+         8 IFJ
+         8 UJ
+
+         8 GTS (9)
+         8 GT
+         8 GTF
+         8 INDA
+         8 INDR
+         8 GTFS
+         8  INOUT
+
+
+
+FINDFP   +0
+
+         4 ADPART
+         6 +15
+         5 W  ( STORE N )
+         2 ADPART
+         5 SUBWK1+1 ( STORE GIVEN BLOCKNAME)
+         2 BN ( IF SAME AS CURRENT )
+         7 FINDP3 (    BLOCKNAME  JUMP   )
+         0 EP
+         4 EP (OTHERWISE SEARCH FOR BLOCKNAME )
+FINDP2   5 SUBWK1
+         2 STACKADD
+         9 FINDP1 (TEST IF FIRST VALUE REACHED)
+SPARE 4 +20 (IF SO COMPILER ERROR )
+         8  ENFAIL
+
+FINDP1   /4 3
+         2 SUBWK1+1
+         7 FINDP4
+         /4 0
+         /0 0
+         8 FINDP2
+
+FINDP3   4 FP (EXIT WITH 3N+FP)
+         1 W
+         1 W
+         1 W
+         5 W1
+         0 W1
+         /4 0
+         0 FINDFP
+         /8 1
+FINDP4   /0 0
+         /4 2
+         1 -3
+         8 FINDP3+1
+
+
+( 903 ALGOL INTERPRETER : FUNCTIONS )
+
+PEM      5 W
+         1 W
+         1 W
+         2 EP
+         0 SP
+         /5 0
+         1  -3
+         5  FP
+         4  BN
+         /5 1
+         10 SP
+         10 SP
+
+         0 PP
+         /11 0 (CALL MACHINE CODE BLOCK )
+
+         /8 1  (  AS SUBROUTINE   )
+
+RETURN   0 EP
+         /4 3
+         5 BN
+         /4 2
+         5 SP
+         (RESTORE PP )
+         /4 1
+         5 PP
+         /4 0
+         5 EP
+         0 EP
+         /4 2
+         1 -3
+         5 FP
+         8 NXPORD
+
+TIA      1  BASE+2
+         5  W1
+         4  +1
+         8  TACHK
+
+TRA      1  BASE+2 ( ABSOLUTE ADDRESS )
+TRAP     1  =/0 0 ( REAL ADDRESS MARKER )
+         5  W1
+         4  +2
+TACHK    0  SP
+         /5 1 ( STORE CHECK CODE )
+         4  W1
+              ( TLA TIC & OTHERS>> )
+TA       0 SP
+         /5 0 ( STORE ADDRESS )
+UP       4 SP ( TRR>> )
+         1 +3 (SP:=SP+3)
+         5 SP
+         8 NXPORD
+
+TRR      0 ADPART
+         1 BASE+2
+              ( TRC>> )
+STKRLV   5 W+1
+         0 W+1
+         /4 1
+         5 W+2
+         /4 0
+         0 SP
+         /5 0
+         4 W+2
+         6 &777600
+         /5 1
+         4 W+2
+         14 11 ( EXP )
+         14 8181
+         /5 2
+         8 UP
+
+
+TIR      1  BASE+2
+         5  W
+         0  W
+         /4  0
+         8  TA
+
+TRCA     1  BASE+1
+         1  =/8 0 (MARKS FOR REAL AND CONSTANT )
+         8  TRAP+1
+
+TICA     1  BASE+1
+         1  =8 0 ( MARK FOR CONSTANT )
+         8  TIA+1
+
+RFUN     11 FINDFP
+         8  FINDFP+1
+         4  W1
+         1  =/0 0 (TAKE 3N+FP AS REAL ADDRESS)
+         5 W1
+         4 =/0 2
+         8  TACHK
+
+IFUN     11 FINDFP
+         8  FINDFP+1
+         8  TIA+2 ( TAKE 3N+FP AS INTEGER ADDR.)
+TIC      1  BASE+1
+         8  TIR+1
+TRC      1  BASE+1
+         8  STKRLV
+
+
+
+IFJ      4 +3
+         2 SP
+         5 SP ( SP:=SP-3 )
+         0 SP
+         /4 0
+         7 ;+2
+         8 NXPORD ( IF TRUE CONTINUE )
+         4 ADPART ( IF FALSE JUMP  )
+UJ       5 PP
+         8 NXPORD
+
+PE       6 +15
+         5 W
+         1 W  ( STORE EP-3M )
+         1 W
+         2 EP
+         0 SP
+         /5 0
+         5  W4
+         1 -3
+         5 FP
+         4 BN
+         /5 1 ( OLD BLOCK NAME TO STACK ENTRY )
+         4 ADPART
+         6 &017760 ( TAKE NEW BLOCK NAME )
+         5 BN
+         10 SP
+
+         10 SP (SP:=SP+2 )
+PCHK4    4  EP
+         2  W4 ( ARE MORE PARAMS. TO BE CHECKED)
+         9  PCHK1
+MAMPS4   4  WARNAD
+         2  SP
+         9  NXPORD
+         10 WARN
+
+         4  STKEND
+         2  SP
+         9  NXPORD
+
+MAMPS5   4  FAILNS ( STACK OVERFLOW )
+         8  ENFAIL
+
+PRIM63   +0
+         4  +60
+         2  ADPART (SET +3 TO +10 FOR PRIMITIVES )
+         0  W (   63 TO 70   )
+         /5 1
+         8  NXPORD
+
+
+PCHK1    0  PP
+         /4 0 ( NEXT CHECK )
+         10  PP
+         5  W2 ( CECKWORD )
+         14 8179
+         9  PCHK2 ( CALL BY VALUE )
+         6  +15
+         5  W3 ( CODE )
+         0  W4
+         /4 1
+         6  =15 8191
+         2 W3
+         7  PCHK3
+PCHK7    4  FLNS5
+         8  ENFAIL
+PCHK2    6  +15 ( IF CALL BY VALUE IS IT AN ARRAY)
+         1  -3
+         9  PCHK5
+         1  -2
+         9  COPYAR
+PCHK5    4  W4 (ADVANCE TO CHECK )
+         1  +3
+         5  W4
+         8  PCHK4 ( NEXT PARAMDTER )
+
+
+PCHK3
+         4  PDADD
+         2  W2 ( SUBTRACT BASE ADDRESS )
+         6  +8191
+         5 W5
+         1 PDADD
+         2  +8191 ( IF 8191 DO NOT CHECK )
+         7 PCHK5
+         4  W3 (CHECK FOR PROCEDURES )
+         1  -3 (  AND ARRAYS  )
+         9  PCHK5
+         1  -2
+         9  PCHK8 ( IF ARRAY JUMP )
+         1  -3
+         9  PCHK6 ( IF PROCEDURE JUMP )
+         8  PCHK5
+
+PCHK6    0  W4 ( PROCEDURE )
+         /0 0
+         /4 0
+         6  +15 ( NUMBER OF PARAMETERS )
+PCHK9    2  W5
+         7  PCHK5
+         8  PCHK7 ( IF NOT CORRECT NO. FAIL )
+
+PCHK8    0  W4 ( ARRAY )
+         /0 0
+         /4 1
+         14 8179
+         6  +63
+         8  PCHK9
+
+CFF      11 FINDFP
+         8 FINDFP+1
+         5 ADPART ( ADDRESS :=3N+FP )
+         8 CF
+
+
+GTF      11 FINDFP
+              8 FINDFP+1
+         8 GTL2
+
+GT       1 BASE+1
+              ( GTS>>)
+GTL2     5 W
+         0 W
+         4 BN
+         /2 1
+         7 GTCONW
+
+GTL3     0 EP ( FIND THE STACK ENTRY WITH    )
+         /4 3 (    THE BLOCK NAME FOR        )
+         0 W  (     THE GIVEN LABEL         )
+         /2 1
+         7 GTL4
+         0 EP
+         /4 0 ( CHECK PREVIOUS STACK ENTRY )
+         5 EP
+         2 STACKADD ( HAS INITIAL VALUE BEEN REACHED )
+         9 GTL3 ( IF NOT CONTINUE )
+         4 +24 ( IF YES ERROR )
+         8 ENFAIL
+
+
+         4  EP ( IF EXIT FROM ~FOR~ BLOCK SP:=EP )
+         5  SP
+         8  FOREX ( DO NOT RESET FP )
+GTL4     0 EP
+         /4 2
+         9  ;-5 ( IF ~FOR~ BLOCK JUMP )
+         5 SP ( OTHERWISE SP:=CONTENT OF EP+2 )
+         1 -3
+         5 FP (FP:=SP-3 )
+FOREX    /4 3
+         5  BN ( RESET BLOCK NAME )
+         /4 0
+         5 EP (EP:=STORE(EP)
+
+         ( GT>> )
+GTCONW   0 W
+         /4 0
+         5 PP
+         8 NXPORD
+
+GTFS     11 FINDFP ( FIND CORRECT FP )
+         8 FINDFP+1
+         8 GTL5 ( ADDRESS:=3N+FP )
+GTS      1 BASE+1 ( ADDRESS:=N+ODL )
+GTL5     5 W
+         4 +3
+         2 SP ( SP:=SP-3 )
+         5 SP
+         0 SP
+         /4 0
+         9 GTSFAIL
+         7 GTSFAIL
+         0 W
+         /2 0
+         9 GTSFAIL
+         0 SP
+         4 +1
+         /2 0 ( FORM [2*INTEGER-1] )
+         /1 0
+         1 W
+         8 GTL2
+
+
+TFAI
+TFAR
+TFVI
+TFVR     11 FINDFP
+         8  FINDFP+1
+         0  W1
+         /4 2
+         0  SP
+         /5 2
+         0  W1
+         /4 0
+         5 W1
+         /4 1
+         8  TACHK
+
+
+
+         /4  0
+         5 W1
+         8  TFVR+2
+TRCN     11 FINDFP
+         8  FINDFP+1
+         0  W1
+         /4 1
+         9  TRCN-3
+         /4 0
+STKVAL   5 W+1
+         9 STKRLV
+         0 W+1
+         /4 0
+         8 TA ( PUT INTO STACK )
+
+
+
+( 903 ALGOL INTERPRETER : FUNCTIONS 3 )
+
+MAMPS9   4  FLNS21
+         8  ENFAIL
+
+GARAD    5  W
+         0  W
+         /4  1
+         6  +8191
+         1  W
+         5  W1
+         0  W1
+         /4 1
+         5  W1
+         0  SBLNK
+         /8 1
+
+MAMPS    0  +0
+         14 8186
+         5  W8 ( NO. OF DIMENSIONS )
+         4  +0
+         14 7 ( NO. OF ARRAYS*2 )
+         1  PP
+         5 W1 (ADDRESS OF MAP POINTER )
+
+         0  PP
+         /4 0
+         6  =/0 0
+         5  W2 ( REAL/INTEGER MARKER )
+         7  ;+2
+         4  +1
+         1  +1
+         5  W3 ( CONST.:=2 FOR REAL; 1 FOR INTEGER )
+         5  W6 ( CN )
+         4  W8
+         1  W8
+         1  W8
+         0  +0
+         14 1
+         2  SP
+         5  W9
+         5  W5
+         0  W1
+         /5 0
+         5  W4
+         0  W4
+         4  W2
+         7  ;+2
+         /4  0 ( A*2 FOR REAL )
+         /1 0 ( A*1 FOR INTEGER )
+         2  +0
+         5  W7
+
+MAMPS2   /4 0
+         0  W5
+         /5 2
+         0  W4
+         /2 3 ( UPPER BOUND - LOWER +1 )
+         9  MAMPS9 ( ERROR IF RANGE<1 )
+         1  +1
+         12 W6
+         3  W6
+         4  W4
+         1  +6
+         5  W4
+         2  SP
+         7  MAMPS1
+         4  W6 ( STORE VALUE OF CN )
+         0 W5
+         /5 3
+         10 W5 ( ADVANCE MAP ADDRESS )
+         10 W5
+         0  W4
+         /4 0 ( LOWER BOUND )
+         12 W6
+         14 17
+         2  W7
+         5  W7
+         8  MAMPS2
+
+MAMPS1   4  W6 ( TOTAL SIZE )
+         0  W9
+         /5 0
+         4 W7 ( BASE ADDRESS )
+         /5 1
+         4  W5
+         1  +3
+         1  W2
+         5  W5
+MAMPS3   4  W5
+         0  PP
+         /5 0
+         1  W6
+         5  W5
+         10 PP
+         10 PP
+         4  W1
+         2  PP
+         9 MAMPS3
+         10 PP
+         4  W5
+         6  =15 8191
+         5  SP
+         8  MAMPS4
+
+
+COPYAR   0  W4
+         /4 0
+         5  W ( ADDRESS OF ARRAY PAIR )
+         4  SP
+         /5 0 (REPLACE BY ADDRESS OF COPY )
+         11 SBLNK
+         8  GARAD+1
+         0  W
+         /4 1
+         14 8180 ( NUMBER OF DIMENSIONS *2 )
+         6  +30
+         1  SP
+         1  +4
+         5  W2
+         6 =/0 0
+         1 W+2 ( ADD REAL/INTEGER BIT )
+         0 SP
+         /5 0
+         0 W
+         /4 1
+         6 =/15 0
+         1 +1
+         0 SP
+         /5 1
+         4 SP
+         1  +3
+         /5 2 ( SET MAP POINTER )
+         5 SP ( ADDRESS OF MAP COPY )
+         0 W+1
+         /4 0 ( TOTAL SIZE )
+         1 W+2 ( + ADDRESS OF COPY )
+         5 W+5
+         2  STKEND
+         9  MAMPS5 ( TOO BIG FOR STACK )
+
+
+CPYAR1   0 W+1
+         /4 0
+         0 SP
+         /5 0
+         10 W+1
+         10 SP
+         4 W+2
+         2 SP
+         9 CPYAR1
+         4 W+5 ( LIMITING ADDRESS OF ARRAY COPY )
+
+         5 W+2
+         2 SP
+         7  PCHK5
+         0  W
+         /4  0
+         5 W+1
+         8 CPYAR1
+
+INDSFL   4 FAILNS+2
+         8 ENFAIL
+
+INDS     1 BASE+1
+         5 ADPART ( ADDRESS:=N+ODL )
+         4 +3
+         2 SP
+         5 W
+         0 W
+         /4 0
+         9 INDSFL
+         7 INDSFL
+         0 ADPART
+         /2 0
+         9 INDSFL
+         4 +1 ( -1 + ADDRESS )
+         2 ADPART
+         0 W  ( +2*INTEGER )
+         /1 0
+         /1 0
+         /5 0
+         8 NXPORD
+
+AINDSB   +0
+         4 ADPART
+         2 SP ( SP-3N )
+         5 W+5
+         1 -3
+         5 W+6
+         0 W+6
+         /4 0
+         11 SBLNK
+         8  GARAD
+         5 W+7
+
+         0 W
+         /4 0
+         6 &400000
+         0 W+5
+         7 ;+2
+         /4 0 ( IF REAL THEN INDEX*2 )
+         /1 0
+         0 W+1
+         /1 1 (ADD BASE ADDRESS )
+AINDS1   5 W+3
+         4 W+5
+         1 +3 ( UPDATE INDEX ADDRESS )
+         5 W+5
+         2 SP
+         7 AINDS2 ( IF ALL INDICES USED JUMP )
+         0 W+5
+         /4 0 ( NEXT INDEX )
+         0 W+1
+         /12 3 (MULTIPLY BY NEXT CONST )
+         14 17
+         10 W+1
+         10 W+1
+1 W+3
+         8 AINDS1
+
+AINDS2   4 W+6
+         5 SP
+         0 W+7
+         /4 0
+         2 W+3
+         9 ;+3
+INDWRG   4 FAILNS+3
+         8 ENFAIL
+         4 W+3
+         9 INDWRG
+         0 W
+
+         /1 0
+         0 AINDSB
+         /8 1 ( EXIT )
+
+
+INDA     11 AINDSB
+         8 AINDSB+1
+         9  TRAP+1 (IF -VE STORE AS REAL ADDRESS )
+         8  TIA+1 ( ELSE STORE AS INTEGER ADDR. )
+
+INDR     11 AINDSB
+         8 AINDSB+1
+         8 STKVAL
+
+( 903 ALGOL INTERPRETER : PRIMITIVE FUNCTIONS )
+
+CBL      4 PP ( CBL IS CF TO A POINT TWO PORDS ON )
+         1 +1
+         5 ADPART
+              ( CFF>~> )
+CF       0 SP ( ENTRY POINT FOR CF )
+         4 EP ( STORE EP )
+         /5 0
+         4 PP ( STORE PP )
+         /5 1
+         4 SP ( UPDATE EP )
+         5 EP
+         10 SP
+         10 SP
+         4 ADPART
+         5 PP
+         8 NXPORD
+
+ST       11 STSUBRT
+         8 STSUBRT+1
+         4 W  ( TOTAL EFFECT IS  SP:=SP-6 )
+         5 SP
+         8 NXPORD
+
+STA      11 STSUBRT
+         8 STSUBRT+1
+         0 W
+         /4 3 ( MOVE VALUE ALONG IN STACK )
+         /5 0
+         /4 4
+         /5 1
+         /4 5
+         /5 2
+         8 NXPORD
+
+DO       11 STSUBRT
+         8 STSUBRT+1
+
+         0 EP
+         4 PP ( STORE PP AT EP+1 )
+         /5 1
+         /4 2 ( SET PP TO RETURN )
+         6  =15 8191
+         5 PP
+         8 NXPORD
+
+STEP     11 STSUBRT
+         8 STSUBRT+1
+         4 PP
+         0 EP ( STORE PP)
+         /5 1
+         4 +0 (SET MARKER FOR FIRST LOOP( AT EP+7)
+         /5 7
+         8 NXPORD
+
+FOR      0 SP
+         4 EP
+         /5 0
+         0 PP
+         /4 0 ( STORE ADDRESS 1 )
+         1  =/0 0 ( ADD MARK TO INDICATE ~FOR~ BLOCK )
+         0 SP
+         /5 2
+         4 BN
+         /5 3 ( STORE BLOCK NAME )
+         0 PP
+         /4 1
+         5 BN ( SET NEW BLOCK NAME )
+         /4 2
+         0 SP (STORE ADDRESS 2 )
+         /5 4
+
+         4 SP
+         5 EP ( SET EP:=SP )
+         1 +5 ( SP:=SP+5 )
+         5 SP
+         4 PP
+         1 +3 ( PP:=PP+3 )
+         5 PP
+
+         1 +1
+         /5 1
+         8 NXPORD
+
+FR       0 EP
+         /4 1
+         5 PP
+         8 NXPORD (RESET PP AT END OF CONTROLED STATMENT )
+
+FSE      0 EP
+         /4 3 ( RESET BLOCK NAME )
+         5 BN
+         /4 4
+         5 PP ( SET PP TO ADDR OF NEXT STATMENT )
+         4 EP
+         5 SP ( SP:=EP )
+         /4 0 ( RESET EP )
+         5 EP
+         8 NXPORD
+
+NEGI     4 +3
+         2 SP
+         5 W
+         0 W
+         /4 0
+         2 =/0 0
+         7 NEGIE ( TEST FOR -1.0*2↑17 )
+         /4 0
+         2 +0 ( NEGATE )
+         /5 0
+         8 NXPORD
+
+
+UNTIL    4 +6
+         2 SP (SP:=SP-6 )
+         5 SP
+         0 EP
+         /4 5
+         9 UNTILR ( IF REAL ARITH REQUIRED JUMP )
+         /4 7 ( TEST FOR FIRST TIME )
+         /3 7 ( SET SECOND TIME )
+         7  UNTIL2
+         /4 8
+
+         /0 5
+         /1 0
+
+         /5 0
+UNTIL2   0 EP
+         /4 11 ( CONTROLLED VARIABLE - FINAL VALUE )
+         /0 5
+         /2 0
+         7  UNTIL3
+         0 EP
+         6 =/0 0
+         /2 8 ( FIND SIGN OF INCREMENT*DIFFERENCE )
+UNTIL4   9 UNTIL3
+WHILE1   0 EP ( IF END OF ELEMENT STORE PP )
+         4 PP
+
+         /5 1
+         8 NXPORD
+
+
+
+WADDR    0  W
+GETRL2   0  EP
+         /4 6
+         /0 5 ( ADDR. OF CONTROLLED VAR. )
+         9 W345R2
+
+         /4  0
+         5 W3
+         /4 1
+         6  &777600
+         5  W4 ( STORE CONTROLLED VAR. IN W345 )
+         /4 1
+         14 11
+         14 8181
+         5  W5
+         0  SBLNK
+         /8 1
+
+
+UNTILR   /4 7 (TEST FIRST TIME )
+         /3 7 (SET SECOND TIME )
+              ( SET NON ZERO )
+         7 UNTLR2 ( IF FIRST TIME AVOID INCR.)
+         4  EP
+         1  +5
+         5  W ( PICK UP CONT. OF EP+8)
+         11 RSTACK
+         8  RSTACK+1
+         11 SBLNK
+         8  GETRL2 ( GET CONTROLLED VARIABLE)
+         4  W3ADDR
+         5  W
+         11 PRIM31 ( ADD INCREMENT TO VARIABLE )
+         8  PRIM31+3
+         4  EP
+         1  +5
+         5 PKDADD
+         11 STSUBRT
+         8  STSUB
+
+UNTLR2   4  EP
+         1  +8
+         5  W ( PICK UP FINAL VALUE)
+         11 RSTACK
+         8  RSTACK+1
+         11 SBLNK ( PICK UP CONTROLLED VAR.)
+         8  GETRL2
+         4  W3ADDR
+         5  W
+              11 PRIM33
+         8  PRIM33+3 ( SUBTRACT )
+         4  W3 ( SIGN OF RESULT )
+         8  UNTIL2+4
+
+
+
+
+
+
+
+NULSTR   &074000
+         &070140
+         0  NULSTR
+         0  NULSTR+1
+
+
+         +0
+         &070112
+         &400000
+         0  ;-2
+CHKSBR   4  PRFA1
+         5  CHKSBR-4
+         4  CHKSBR-1
+         5  PRFA1 ( SET PREFIX OF  NEWLINE * )
+         4  GLODEV
+         5  ODEV ( OUTPUT DEVICE )
+         8  W345R ( SET VALUE FROM STACK )
+CHECKI   11 SBLNK
+         8  CHKSBR
+         4  +6 ( DIGITS 6 )
+         11 IOLNK
+         8  OUTI5 ( PRINT INTEGER )
+         4  CHKSBR-4
+         5  PRFA1
+         8  NXPORD
+
+CHECKR   11 SBLNK
+         8  CHKSBR
+         4  +8
+         5  DIGN
+         4  +1 ( SET SCALED [8]  FORMAT )
+         5  OPMD
+         11 IOLNK
+         8  OUTR+3 ( PRINT REAL NO. )
+         8  CHECKI+5
+
+         &070112
+         &026462
+         &654502
+         &000040
+         &070112
+         &024641
+         £LSE
+         &020040
+         0  ;-4
+CHECKB   11 SBLNK
+         8  CHKSBR+4
+         4  W3
+         7  ;+2
+         4  -4 ( ADDRESS FOR: NL *~TRUE~ )
+         1  CHECKB-1 ( ADDRESS FOR: NL *~FALSE~ )
+         11 SBLNK2
+         8  OSTSB
+
+         8  NXPORD
+
+
+CHECKS   11 SBLNK
+         8  CHKSBR+4
+         4  CHKSBR-1 ( PRINT NEWLINE * )
+         11 SBLNK2
+         8 OSTSB
+         4 SP
+         1 -3
+         5 SP
+         4 W3
+         8  CHECKB+6 ( PRINT STRING GIVEN BY ADDRESS )
+
+
+OSTR1    5  SP
+         4  ODEV1
+         5  ODEV
+         0  SP
+         /4 0
+         8  CHECKB+6
+
+
+CHNGOP   4  +4
+         5  STODEV ( SET LINEPRINTER PRESUMED )
+         8  ;+0
+
+PUNCH1   4  +1 (RESET PUNCH AS PRESUMED )
+         8  CHNGOP+1
+
+FINSUB   4  ALRMCH
+         15  6144
+         1  =2 0
+         9  ;-2
+         4  ALRMCH+1
+         15 6144
+         0  SBLNK
+         /8 1
+
+         &070101
+         £FIN
+         £ISH
+         &010140
+         0  ;-4
+FINISH   4  -5120
+         15 6144 ( 20 BLANKS ON TAPE )
+         1  +256
+         9  ;-2
+         4  GLODEV
+         5  ODEV
+         4  FINISH-1 ( PRINT FINISH )
+         11 SBLNK2
+         8  OSTSB
+         11 SBLNK
+         8  FINSUB
+
+         4  -38400
+         15 6144 ( 150 BLANKS )
+         1  +256
+         9  ;-2
+STOP     11 PAUSRT
+         8 SWAIT
+         8  STOP
+
+
+
+
+
+
+
+WHILE    4 +3
+         2 SP
+         5 SP
+         0 SP
+         /4 0
+         7 WHILE1 ( IF FALSE STORE PP FOR END )
+
+UNTIL3   0  EP ( DO CONTROLLED STAYEMENT )
+         /4 2
+         6  =15 8191
+         5  PP
+         8  NXPORD
+
+
+
+STW      11 STSUBRT
+         8  STSUBRT+1
+         8  NXPORD
+
+
+
+
+RTOI1    11 SBLNK
+         8  W345R
+         11 SBLNK1
+         8  RICONV
+         0  W
+         /5 0 ( PUT INTEGER IN STACK )
+         8  NXPORD
+
+ITOR1    4  +3
+         8  ;+2
+ITOR2    4  +6
+         2  SP
+         5  W
+         0  W
+         /4 0
+         11 STAND
+         8  ITRSB1
+         11 RRES
+         8  RRES+1 ( PUT REAL NUMBER IN STACK)
+         8  NXPORD
+
+
+
+NEGR     4  SP
+         1  -3
+         5  W
+         11 SBLNK
+         8  NEGR1
+         8  NXPORD
+
+<! Halt !>

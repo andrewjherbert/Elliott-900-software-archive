@@ -1,0 +1,516 @@
+﻿
+($ MG1-PASS2-S3)
+
+"BEGIN"
+       "DEFINE" FLT(AAA)'ENTERFLT(AAA)@;
+       "INTEGER"ROP,FINISHOFF,CONSTEP,FUNCTION,CONSTANT,SINGLE;
+       "PROCEDURE"F3;
+       ;
+       "INTEGER""PROCEDURE"ZEROCONST("VALUE""INTEGER"X);
+       "ANSWER IF" HD[X]=10 "AND" TCONST[HD[TL[X]]]=0 "AND" FCONST[HD[TL[X]]]=0
+       "THEN" 0 "ELSE" 1;
+       "PROCEDURE"F8;
+       PUSH(6);
+       "PROCEDURE"F2;
+
+       "BEGIN""INTEGER"I;
+              "INTEGER""PROCEDURE"MINUSONE;
+              CONS(FINDC(-1),BRAC(TYREQ));
+              LT:=PULL;
+              ROP:=PULL;
+              PUSH(LT);
+              I:=HD[TL[SS]];
+              PULLLIST:=HD[SS];
+              "IF"ZEROCONST(PULLLIST)=0
+              "THEN"LT:="IF"ROP=1"THEN"CONS(2,CONS(I,MINUSONE))"ELSE"
+              "IF"ROP=2"THEN"CONS(1,CONS(I,MINUSONE))"ELSE"
+              "IF"ROP=3"THEN"CONS(6,CONS(7,I))"ELSE"I
+              "ELSE""IF"ZEROCONST(I)=0
+              "THEN"LT:="IF"ROP=1"OR"ROP=2"THEN"CONS(ROP,CONS(PULLLIST,MINUSONE))
+              "ELSE"
+              "IF"ROP=4"THEN"CONS(6,CONS(7,PULLLIST))"ELSE"PULLLIST
+              "ELSE"
+              "BEGIN"
+                     G23; LT:=PULL; G23; PUSH(LT);   (SEN A124)
+                     "IF"ROP=2"OR"ROP=4
+                     "THEN"
+                     "BEGIN COMMENT"SWAP TOP OF STACK;
+                            PULL; PULL; PUSH(LT); PUSH(PULLLIST);
+                     "END";   (SEN A124)
+
+                     (LINE REMOVED : SEN A124)
+                     LT:=CONS(2,CONS(HD[TL[SS]],HD[SS]));
+                     "IF"ROP=1"OR"ROP=2"THEN"
+
+                     "BEGIN"LT:=CONS(7,LT);
+                            LT:=CONS(1,CONS(LT,MINUSONE));
+
+                     "END";
+
+              "END";
+              EVALUATE(LT,-1);
+              PULL;
+              PULL
+
+       "END"F2;
+       ($ MG1.5)
+       "PROCEDURE"F10;
+
+       "BEGIN""IF"ROP<>5"THEN"ROUT("IF"ROP<>6"THEN"9"ELSE"7,2);
+              GOUT("IF"ROP<>5"THEN"8"ELSE"7,CHAIN(ORCHAIN));
+              "IF"ANDCHAIN<>0"THEN"
+              "BEGIN"DECHAIN(ANDCHAIN);
+                     ANDCHAIN:=0
+
+              "END"
+
+       "END"F10;
+       "PROCEDURE"F1;
+
+       "BEGIN"PUSH(ANDCHAIN);
+              ANDCHAIN:=0;
+              "IF"ORCHAIN<>0
+              "THEN"
+              "BEGIN"DECHAIN(ORCHAIN);
+                     ORCHAIN:=0
+
+              "END"
+
+       "END"F1;
+       ($ MG2)
+       "PROCEDURE"F11;
+       DECHAIN(PULL);
+       "PROCEDURE"F12;
+
+       "BEGIN"SS:=CONS(PULL,PUSH(DUPL(PROGADD)));
+              GOUT(8,0)
+
+       "END"F12;
+       "PROCEDURE"F14;
+
+       "BEGIN""IF"ROP=5"THEN"ROUT(7,2);
+              GOUT("IF"ROP=6"THEN"7"ELSE"("IF"ROP=5"THEN"8"ELSE"9),CHAIN(ANDCHAIN))
+
+       "END"F14;
+       "PROCEDURE"F15;
+
+       "BEGIN"TYREQ:=0;
+              VAL:=1
+
+       "END"F15;
+       "PROCEDURE"F16;
+
+       "BEGIN"PUSH(VAL);
+              PUSH(TYREQ)
+       "END";
+       "PROCEDURE"F18;
+
+       "BEGIN"TYREQ:=PULL;
+              VAL:=PULL
+
+       "END"F18;
+       ($ MG3)
+       "PROCEDURE"F31;
+
+       "BEGIN"
+              PULL;
+              "IF" FINISHOFF=2 "THEN" GOUT(8,HD[TL[SS]])
+              "ELSE IF" FINISHOFF=3 "THEN"
+
+              "BEGIN"
+                     "IF" CONSTANT=10 "AND" CONSTEP=1 "THEN" GOUT(10,ADRESS(
+                     PULLLIST))
+                     "ELSE "
+              "       BEGIN"
+                            GOUT(4,ADRESS(PULLLIST));
+                            GOUT(1,STEPF);
+                            GOUT(5,ADRESS(PULLLIST))
+
+                     "END";
+                     GOUT(8,REPEAT)
+
+              "END";
+              SS:=CONS(PULLLIST,CONS(PULL,TL[SS]))
+
+       "END" OF F31;
+       "PROCEDURE"F32;
+       "IF"NEXT<>0"THEN"DECHAIN(NEXT);
+       "PROCEDURE"F20;
+
+       "BEGIN"SINGLE:=1;
+              DOCHAIN1:=DOCHAIN2:=NEXT:=0
+
+       "END"F20;
+       "PROCEDURE"F21;
+       SINGLE:=0;
+       "PROCEDURE"F22;
+
+       "BEGIN"G27;
+              GOUT(5,ADRESS(HD[SS]))
+
+       "END"F22;
+       "PROCEDURE"F23;
+
+       "BEGIN"FINISHOFF:=1;
+              NEXT:=0
+
+       "END"F23;
+       "PROCEDURE"F26;
+
+       "BEGIN"GOUT(11,CHAIN(DOCHAIN1));
+              GOUT(8,CHAIN(DOCHAIN2));
+              HD[BREG]:=-1;
+              F31
+
+       "END"F26;
+       "PROCEDURE"F24;
+       "IF"SINGLE=0
+       "THEN"F26;
+       ($ MG4)
+       "PROCEDURE" F25;
+
+       "BEGIN"
+              SINGLE:=PULL;
+              FINISHOFF:=PULL;
+                  NEXT:=PULL;
+              REPEAT:=PULL;
+              STEPF:=PULL;
+              "IF" FINISHOFF=3 "THEN"
+
+              "BEGIN"
+                     CONSTANT:=PULL;
+                     CONSTEP:=PULL
+
+              "END";
+              "IF" SINGLE=1 "THEN" F31 "ELSE"
+
+              "BEGIN"
+                     PUTOUT(0,PULL);
+                     PUTOUT(24,1)
+
+              "END";
+              F32;
+              PULL;
+              DATADD:=PULL
+
+       "END" OF F25;
+       "PROCEDURE" F19;
+
+       "BEGIN"
+              DECHAIN(HD[SS]);
+              GF
+
+       "END" OF F19;
+       ($ MG4.5)
+       "PROCEDURE"F27;
+
+       "BEGIN"
+              "INTEGER" LIMIT,VAR;
+              "IF" HD[HD[SS]]<>10 "THEN"
+
+              "BEGIN"
+                     LIMIT:=GRAB(1);
+                     G27;
+                     PUTOUT(5,LIMIT)
+
+              "END"
+              "ELSE"
+              "BEGIN"
+                     CONRED(HD[SS],0);
+                     PULL;
+                     LIMIT:=FINDC(INTEG)
+
+              "END";
+              VAR:=ADRESS(HD[SS]);
+              REPEAT:=DUPL(PROGADD);
+              HD[BREG]:=-1;
+              "IF" CONSTANT<>10 "THEN"
+
+              "BEGIN"
+                     GOUT(4,STEPF);
+                     ROUT(9,4);
+                     GOUT(4,VAR);
+                     GOUT(2,LIMIT);
+                     ROUT(8,3);
+                     L:GOUT(4,LIMIT);
+                     GOUT(2,VAR)
+
+              "END"
+              "ELSE "
+       "       BEGIN"
+                     "IF" CONSTEP>=0 "THEN"
+
+                     "BEGIN"
+                            GOUT(4,VAR);
+                            GOUT(2,LIMIT)
+
+                     "END"
+                     "ELSE" "GOTO" L
+
+              "END";
+              NEXT:=DUPL(PROGADD);
+              GOUT(9,0)
+
+       "END" OF F27;
+       ($ MG5)
+       "PROCEDURE"F28;
+       "BEGIN"HD[BREG]:=-1;   (SEN A187)
+       SS:=CONS(PULL,CONS(PULL,PUSH(DUPL(PROGADD))));
+       "END";
+       "PROCEDURE"F29;
+
+       "BEGIN""INTEGER"I;
+              "IF"SINGLE=0
+              "THEN"
+              "BEGIN""IF"FINISHOFF=1
+                     "THEN"
+                     "BEGIN"NEXT:=DUPL(PROGADD);
+                            GOUT(8,0)
+
+                     "END";
+                     DECHAIN(DOCHAIN1);
+                     PUSH(DUPL(PROGADD));
+                     COUT(0);
+                     DECHAIN(DOCHAIN2)
+
+              "END";
+              "IF"FINISHOFF=3"THEN"
+              "BEGIN"PUSH(CONSTEP);
+                     PUSH(CONSTANT)
+              "END";
+              PUSH(STEPF);
+              PUSH(REPEAT);
+              PUSH(NEXT);
+              PUSH(FINISHOFF);
+              PUSH(SINGLE);
+              NEXT:=0
+
+       "END"F29;
+       "PROCEDURE"F30;
+
+       "BEGIN"CONSTANT:=HD[HD[SS]];
+              "IF" CONSTANT<>10 "THEN"
+
+              "BEGIN"
+                     STEPF:=GRAB(1);
+                     G27;
+                     PUTOUT(5,STEPF)
+
+              "END"
+              "ELSE "
+       "       BEGIN"
+                    CONRED(HD[SS],0);
+                     PULL;
+                     CONSTEP:=INTEG;
+                     "IF" CONSTEP<>0 "THEN"
+
+                     "BEGIN"
+                            "IF"CONSTEP<>1 "THEN" STEPF:=FINDC(INTEG)
+
+                     "END ELSE" FLT(24)
+
+              "END";
+              FINISHOFF:=3;
+
+       "END" OF F30;
+       "PROCEDURE"F33;
+
+       "BEGIN"NEXT:=ANDCHAIN;
+              ANDCHAIN:=0;
+              FINISHOFF:=2;
+              "IF"ORCHAIN<>0
+              "THEN"
+              "BEGIN"DECHAIN(ORCHAIN);
+                     ORCHAIN:=0
+
+              "END"
+
+       "END"F33;
+       ($ MG5.5)
+       "PROCEDURE"F40;
+       FUNCTION:=INTEG;
+       "PROCEDURE"F41;
+       OCTAL:=TT;
+       "PROCEDURE"F42;
+       OCTAL:="CODE"
+       "BEGIN"4,OCTAL;
+              0,+0;
+              14,3
+       "END"+TT;
+       "PROCEDURE"F43;
+       ABSCOUT(OCTAL);
+       "PROCEDURE"F45;
+       DEST:=PROGADD;
+
+       "PROCEDURE" F46;
+       "BEGIN"  G11;  DEST:=ADD(PROG ADD,INTEG)
+       "END" OF F46;
+       "PROCEDURE"F47;
+       DEST:=INTEG;
+       "PROCEDURE"F48;
+
+       "BEGIN""INTEGER"TYPE;
+              "IF"TL[HD[SS]]=0
+              "THEN"
+              "BEGIN"WRONG:=0;
+                     FIND;
+                     WRONG:=1;
+                     "IF"TL[PULL]=0
+                     "THEN"
+                     "BEGIN"TL[PULLLIST]:=CONS(DUPL(PROGADD),BRAC(2));
+                            DEST:=0;
+                            "GOTO"EXIT
+
+                     "END"
+
+              "END""ELSE"PULL;
+              TYPE:=HD[TL[TL[PULLLIST]]];
+              DEST:=HD[TL[PULLLIST]];
+              "IF"TYPE=2
+              "THEN"
+              "BEGIN"DEST:=SUBTRACT(DEST,PROGADD);
+                     HD[TL[PULLLIST]]:=DUPL(PROGADD)
+
+              "END";
+              "IF"TYPE=4"THEN"
+              "BEGIN"DEST:=SUBMOD(HD[DEST],TL[DEST]);
+                     TL[DEST]:=ADDRESSPART(UNPACK(TL[DEST]))
+              "END";
+              EXIT:
+       "END"F48;
+       ($ MG6)
+       "PROCEDURE"F49;
+
+       "BEGIN""INTEGER"TYPE;
+              G11;
+              "IF"TL[HD[SS]]=0
+              "THEN"
+              "BEGIN"WRONG:=0;
+                     FIND;
+                     WRONG:=1;
+                     "IF"TL[HD[SS]]=0
+                     "THEN"
+                     "BEGIN"
+                            L1:FLT(10);
+                            "GOTO"EXIT
+                            "END"
+
+                     "END";
+                     TYPE:=HD[TL[TL[PULL]]];
+                     DEST:=HD[TL[PULLLIST]];
+                     "IF"TYPE=2
+                     "THEN""GOTO"L1
+                     "ELSE""IF"TYPE=4"THEN"
+                     "BEGIN"DEST:=SUBMOD(HD[DEST],TL[DEST]);
+                            TL[DEST]:=ADDRESSPART(UNPACK(TL[DEST])+INTEG)
+
+                     "END"
+                     "ELSE"
+                     "BEGIN"DEST:=ADD(DEST,INTEG);
+
+                     "END";
+                     EXIT:
+              "END"F49;
+              "PROCEDURE"F50;
+              PUTOUT(FUNCTION,DEST);
+              "PROCEDURE"F51;
+              PUTOUT(FUNCTION+16,DEST);
+              "PROCEDURE"F52;
+              DEST:=FINDC(OCTAL);
+              "PROCEDURE"F53;
+
+              "BEGIN"LIT:=INTEG;
+                     DEST:=FINDC(UNPACK(PULL));
+
+              "END";
+              "PROCEDURE"F54;
+              COUT(DEST);
+              "PROCEDURE"<1>CLEARUP;
+
+              "BEGIN""INTEGER"I,J;
+                     "PROCEDURE"OUTSUMCHECK;
+
+                     "BEGIN"BASE:=16;
+                            OUT0(2);
+                            BLANKTAPE(15);
+                            RITE(1);
+                            BLANKTAPE(300)
+                     "END";
+                     ROUT(8,0);   (SEN DH1)
+                     "FOR"HASH:=0:1:HASHSIZE"DO"
+
+                     "BEGIN"I:=CURRENT[HASH];
+                            "IF"I<>0"THEN"
+                            "BEGIN"FLT(12);
+                                   AA:PUNCH(59);
+                                   PRINTI(HD[HD[I]]);
+                                   I:=TL[I];
+                                   "IF"I<>0"THEN""GOTO"AA
+
+                            "END"
+                     "END";
+                     DUMPCONSTS;
+                     QOUT(8);
+                     OUTSUMCHECK;
+                     "FOR"I:=0:1:15"DO"
+
+                     "BEGIN""IF"STOREUSED[I]<>0"THEN"
+
+                            "BEGIN""FOR"J:=0:1:3"DO"OUT(5,6*I+J+22,POOLAREA[16*J+I],"IF"J=0"THEN"1
+                                   "ELSE"0)
+                            "END"
+
+                     "END";
+                     OUTSUMCHECK;QOUT(10); PUNCH(59);
+              "IF" FAULT1=0 "THEN" COPY('COMPILED PASS TWO,NO ERRORS@) "ELSE" COPY('FAILED PASS TWO@);
+
+              "END";
+              ($ MG6.5)
+              "PROCEDURE"D4;
+              DIAG(304);
+              "PROCEDURE"<1>AUXINFO("VALUE""INTEGER"I);
+
+              "BEGIN""SWITCH"SWITCH:=NEWPAGE,NEWLINE,DICTIONARY;
+                     "GOTO"SWITCH[I];
+                     NEWPAGE:LINECOUNT:=PAGE:=0;
+                     OUTPAGE:=1;
+                     "FOR"TI:=PUNCH(-1)"WHILE"TI<>19"DO"
+
+                     "BEGIN"
+              "IF" PAGE<12 "THEN"
+              "BEGIN"
+                     PAGE NAME[PAGE]:=TI;
+                    PAGE:=PAGE+1;
+             "END"
+                     "END";
+                     "GOTO"END;
+                     NEWLINE:LINECOUNT:=LINECOUNT+1;
+                     "GOTO"END;
+                     DICTIONARY:"FOR"TI:=PUNCH(-1)"WHILE"TI<>19"DO";
+                     END:
+              "END";
+              "PROCEDURE"<1>INITIALISE;
+
+              "BEGIN"
+                     ANDCHAIN:=ORCHAIN:=FAULT1:=LINECOUNT:=NEXTCONST:=ANSWERT:=TRIGGER:=ACCPOS:=
+                     TYREQ:=TYPEACC:=JUMPOVER:=SUMCHECK:=ACCDUMP:=STOREQ:=DEPTH:=LIT:=NEXTID
+                     :=OUTPAGE:=0;
+                     WRONG:=FIRST:=VAL:=CCSPEC:=TNEXT:=OPERATOR:=1;
+                     HERE:=RER:=PAGE:=-1;
+                     TI:=LASTCODE:=31;
+                     PUNCH(29);QIN(1);QOUT(10);PUNCH(59); COPY('900 CORAL PASS TWO@);  QOUT(9);
+                     BLANKTAPE(100);
+                     SETUP;
+                     PUSH(HERE);   (SEN RK3)
+                     DATADD:=BRAC(DATABASE);
+                     BREG:=BRAC(-1);
+                     PROCD:=DUPL(DATADD);
+                     "FOR"I:=0:1:111"DO"POOLAREA[I]:=0;
+                     STORESIZE[0]:=8155;
+                     "FOR"I:=1:1:15"DO"STORESIZE[I]:=8192;
+
+              "END";
+
+       "END""XXX"
+
+)

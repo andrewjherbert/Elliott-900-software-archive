@@ -1,0 +1,313 @@
+﻿
+        ALGOL, FORTRAN, PERT, WORKSHOP.
+        ===============================
+
+Total files listed:
+      120 file(s)      1,534,005 bytes
+   Files shown as created on 12/07/08 were actually
+      created at the time shown but on 14/07/08.
+
+
+Bag "920 ALGOL II Telecode".
+----------------------------
+Directory BOX_A1\920ALGII
+       12 file(s)        174,678 bytes
+
+"ALGOL TAPE II A 19/5/69, Telecode" ACD
+II_A     1          11,585 12/07/08    9:31
+II_A     2          11,585 12/07/08    9:50
+"ALGOL TAPE II B 19/5/69, Telecode" ACD
+II_B     1          22,957 12/07/08    9:37
+II_B     2          22,957 12/07/08    9:58
+"ALGOL TAPE II C 19/5/69, Telecode" ACD
+II_C     1          24,335 12/07/08    9:41
+II_C     2          24,335 12/07/08   10:04
+"ALGOL TAPE II D 19/5/69, Telecode" ACD
+II_D     1          14,877 12/07/08    9:34
+II_D     2          14,877 12/07/08    9:54
+"ALGOL TAPE II E 19/5/69, Telecode" ACD
+II_E     1           6,179 12/07/08    9:24
+II_E     2           6,179 12/07/08    9:45
+"ALGOL LOADER 19/5/69, Telecode" ACD
+LOADER   1           7,406 12/07/08    9:26
+LOADER   2           7,406 12/07/08    9:48
+
+
+Bag "920 ALGOL & ALGCON".
+-------------------------
+Directory BOX_A1\920ALGOL
+       14 file(s)        173,782 bytes
+
+"ALGCON 8/9/69, Binary Mode 3" ACD
+ALGCON_B 1           3,620 12/07/08   10:23
+ALGCON_B 2           3,620 12/07/08   10:45
+"ALGCON 8/9/69, Telecode" ACD
+ALGCON_T 1          15,226 12/07/08   10:29
+ALGCON_T 2          15,226 12/07/08   10:55
+"EXTENDED ALGOL LIBRARY 30/5/69, Intermediate"
+EXT_LIB  1          12,334 12/07/08   10:27
+EXT_LIB  2          12,334 12/07/08   10:51
+"ALGOL TAPE I, Binary" XACD
+I        1          18,966 12/07/08   10:39
+I        2          18,966 12/07/08   11:10
+"ALGOL TAPE II, Binary" XACD
+II       1          16,638 12/07/08   10:36
+II       2          16,638 12/07/08   11:05
+"ALGOL TAPE III, Intermediate" XACD
+III      1           3,886 12/07/08   10:25
+III      2           3,886 12/07/08   10:48
+"ALGOL TAPE II 19/5/69, Binary" XACD
+II_69    1          16,221 12/07/08   10:32
+II_69    2          16,221 12/07/08   10:59
+
+
+Bag "903 ALGOL".
+----------------
+Directory BOX_A1\903ALGOL
+       26 file(s)        225,554 bytes
+   How do these relate to SIM900AL's M0.DAT & M1.DAT?
+
+"903 ALGOL 16K LOAD-&-GO 1/1/74, Binary Mode 3" MASD
+16K_LG   1          34,273 12/07/08   12:01
+16K_LG   2          34,273 12/07/08   12:40
+"903 ALGOL 16K LONG PROG 1/1/74, Binary Mode 3" MASD
+16K_LP   1          18,255 12/07/08   11:56
+16K_LP   2          18,255 12/07/08   12:31
+"ALGMOD 21/12/73 PART 1, 900-Series Telecode"
+ALGMOD_1 1           1,098 12/07/08   11:36
+ALGMOD_1 2           1,098 12/07/08   12:08
+"ALGMOD 21/12/73 PART 2, 900-Series Telecode"
+ALGMOD_2 1           3,777 12/07/08   11:48
+ALGMOD_2 2           3,777 12/07/08   12:20
+"ALGMOD 21/12/73, Binary Mode 3"
+ALGMOD_B 1           1,925 12/07/08   11:39
+ALGMOD_B 2           1,925 12/07/08   12:12
+"ALGSCAN 19/12/73, 900-Series Telecode"
+ALGSC_19 1           3,811 12/07/08   11:45
+ALGSC_19 2           3,811 12/07/08   12:19
+"ALGSCAN 20/12/73, 900-Series Telecode"
+ALGSC_20 1           3,186 12/07/08   11:42
+ALGSC_20 2           3,186 12/07/08   12:17
+"ALGOL ERROR TESTS 1 20/12/73, 900-Series Telecode NONSTANDARD"
+E_TEST_1 1           2,876 12/07/08   11:41
+E_TEST_1 2           2,876 12/07/08   12:15
+"ALGOL ERROR TESTS 2 20/12/73, 900-Series Telecode NONSTANDARD"
+E_TEST_2 1           2,640 12/07/08   11:40
+E_TEST_2 2           2,640 12/07/08   12:14
+"903 ALGOL INTERPRETER 1/1/74, Binary Mode 3" MASD
+INTERPRE 1          16,044 12/07/08   11:53
+INTERPRE 2          16,044 12/07/08   12:27
+"903 ALGOL LIBRARY 1/1/74, Intermediate Mode 3" MASD
+LIBRARY  1           3,609 12/07/08   11:50
+LIBRARY  2           3,609 12/07/08   12:23
+"ALGOL LOADER TEST 5/1/74, 900-Series Telecode"
+   Sections labelled "ALGOL" and "SIR".
+LOD_TEST 1             712 12/07/08   11:35
+LOD_TEST 2             712 12/07/08   12:06
+"903 ALGOL TRANSLATOR 1/1/74, Binary Mode 3" MASD
+TRANSLAT 1          20,571 12/07/08   11:58
+TRANSLAT 2          20,571 12/07/08   12:35
+
+
+Loose "PONTEFRACT ALGOL TAPES".
+-------------------------------
+Directory BOX_A1\BIGALGOL
+       13 file(s)        229,984 bytes
+   903 A*C2 tapes not labelled by me.
+   16-64K tapes relabelled by me in pencil,
+      original labels in documentation.
+   With the LG tapes it is not clear whether the "set"
+      size given includes or excludes the 8K translator.
+   The 16K and 24K LG tapes only differ in 17 bytes.
+   The 24K and 32K LP tapes only differ in 5 bytes.
+   The LG & LP tape lengths differ from those in "903 ALGOL".
+
+"ALGOL 16-64K LG, Set to 16K"
+   2 copies read once each.
+16K_LG   1          35,082 14/07/08   18:23
+16K_LG   2          35,082 14/07/08   18:27
+"ALGOL 16-64K LG, Set to 24K"
+   2 copies read once each.
+24K_LG   1          35,082 14/07/08   18:37
+24K_LG   2          35,082 14/07/08   18:45
+"ALGOL 16-64K LP, Set to 24K"
+   3 copies read once each.
+24K_LP   1          17,022 14/07/08   18:04
+24K_LP   2          17,022 14/07/08   18:08
+24K_LP   3          17,022 14/07/08   18:11
+"ALGOL 16-64K LP, Set to 32K"
+   1 copy read twice.
+32K_LP   1          17,022 14/07/08   18:15
+32K_LP   2          17,022 14/07/08   20:41
+"903 AIC2"
+[903 AIC2]
+   1 copy read twice.
+AIC2     1           1,266 14/07/08   18:02
+AIC2     2           1,266 14/07/08   20:39
+"903 ATC2"
+[903 ATC2]
+   1 copy read twice.
+ATC2     1           1,007 14/07/08   18:00
+ATC2     2           1,007 14/07/08   20:37
+
+
+Bag "DON HUNTER'S ALGOL TAPES".
+-------------------------------
+Directory BOX_A1\DON_HUNT
+       26 file(s)         79,168 bytes
+   As labelled by Don Hunter (or Brian Hamilton-Kelly?).
+   How do these relate to SIM900AL's M0.DAT & M1.DAT?
+   BLUE_1 & BLUE_2 are a single tape in 5 labelled sections
+      whith one label which is too thick for the reader.
+   BLUE_* and WHITE may be the same but for gap-lengths & RESULTS.
+   GREEN and PINK may be the same but for gap-lengths & erase.
+
+"Source tapes:- Translator 18 Jun 1976 Patch."
+"Source tapes:- T22/23 for Translator 18 Jun 1976"
+"Source tapes:- Example 18 Jun 1976 Algol"
+BLUE_1   1           3,752 14/07/08   16:50
+BLUE_1   2           3,752 14/07/08   17:19
+"Source tapes:- Interpreter 18 Jun 1976 Patch"
+"Source tapes:- T22/23 for Interpreter 18 Jun 1976"
+BLUE_2   1           1,944 14/07/08   16:52
+BLUE_2   2           1,944 14/07/08   17:21
+"903 (ISSUE 6) ALGOL PATCHES 18 JUNE 1976"
+   Sections labelled:
+      "(1) TRANSLATOR PATCH"
+      "(2) RUN-TIME PATCH (INTERPRETER)"
+   Has a possibly spurious trailing erase.
+GREEN    1           1,611 14/07/08   16:32
+GREEN    2           1,611 14/07/08   17:12
+"903 Algol Translator Patch 18 June 1976 (Issue 6)"
+"903 Algol Interpreter Patch 18 June 1976 (Issue 6)"
+PINK     1           1,329 14/07/08   16:30
+PINK     2           1,329 14/07/08   17:09
+"RLB of RECURSIVE(N) procedure 16 SEP 1975"
+   "Input by entry at 11"
+"903 Algol Issue 6, Run-Time patch 16 SEP 1975"
+   "Input by Initial Instructions"
+RECURSIV 1           1,137 14/07/08   16:56
+RECURSIV 2           1,137 14/07/08   17:42
+"903 Algol Issue 6, Switch list patch, Tape 1 17 NOV 1977"
+SWITCH   1           1,176 14/07/08   16:37
+SWITCH   2           1,176 14/07/08   17:18
+"903 Algol Issue 6, T1-BIN and T2-BIN, 08 DEC 1976"
+   In two unlabelled sections.
+T1_T2    1           2,509 14/07/08   16:58
+T1_T2    2           2,509 14/07/08   17:43
+"903 Algol Issue 6, Patch for TAPE 1, 30 DEC 1976"
+TAPE_1   1           1,272 14/07/08   16:33
+TAPE_1   2           1,272 14/07/08   17:13
+"903 Algol Issue 6, Patch for TAPE 2"
+   Wound up with Patch for TAPE 1, 30 DEC 1976.
+TAPE_2   1           1,578 14/07/08   16:35
+TAPE_2   2           1,578 14/07/08   17:15
+"903 Algol Issue 6, 16K trigger tape"
+   Wound up with Patch for TAPE 1, 30 DEC 1976.
+TRIGGER  1             639 14/07/08   16:36
+TRIGGER  2             639 14/07/08   17:17
+"Testit RLB & Interrupt Handler" FEB 1976 Fanfolded
+   "(Folded by someone with DEC leanings ?)"
+   Possibly in 2 or 3 unlabelled sections.
+TSTIT_IH 1           2,291 14/07/08   17:01
+TSTIT_IH 2           2,291 14/07/08   17:45
+"SOURCE TEXT OF PATCHES TO 903 ALGOL SYSTEM"
+   "(AND EXAMPLE ALGOL PROGRAM) 18 JUNE 1976"
+   Sections labelled:
+      "SOURCE TEXT OF TRANSLATOR PATCH"
+      "DATA FOR T22/23 DUMP"
+      "EXAMPLE ALGOL PROGRAM"
+      "SOURCE TEXT OF INTERPRETER PATCH"
+      "DATA FOR T22/23 DUMP"
+      "RESULTS"
+WHITE    1           6,057 14/07/08   16:54
+WHITE    2           6,057 14/07/08   17:40
+"18 APR 1975 Elliott 903 Algol Tape 2 Issue 6"
+   "600 extra locations available"
+      "3360 3940 instead of 3960 4540"
+   "WITHOUT: EXP,LN,CHECKB,CHECKI,CHECKR,CHECKS,"
+   "PARAMETER CHECKING, ARRAYS CALLED BY VALUE,"
+   "and the ^ symbol: all give run-time error 30"
+WITHOUT  1          14,289 14/07/08   17:05
+WITHOUT  2          14,289 14/07/08   17:47
+
+
+Bag "903 FORTRAN".
+------------------
+Directory BOX_A1\903FORTR
+        8 file(s)        235,332 bytes
+   Why are LG & LP "ACD", whilst the main tapes are not?
+      All four 1/10/71 tapes are documented as "ACD Library".
+   Note that LG & LP are similar sizes, unlike Algol.
+
+"903 FORTRAN 16K LG 1/10/71, Binary Mode 3" ACD
+16K_LG   1          39,145 14/07/08   21:30
+16K_LG   2          39,145 14/07/08   21:51
+"903 FORTRAN 16K LP 1/10/71, Binary Mode 3" ACD
+16K_LP   1          39,481 14/07/08   21:25
+16K_LP   2          39,481 14/07/08   21:44
+"903 FORTRAN TAPE 1 1/10/71, Binary Mode 3"
+TAPE_1   1          19,689 14/07/08   21:18
+TAPE_1   2          19,689 14/07/08   21:34
+"903 FORTRAN TAPE 2 1/10/71, Binary Mode 3"
+TAPE_2   1          19,351 14/07/08   21:21
+TAPE_2   2          19,351 14/07/08   21:37
+
+
+Bag "905 FORTRAN".
+------------------
+Directory BOX_A1\905FORTR
+        6 file(s)        120,750 bytes
+
+"905 FORTRAN COMPILER 1/1/74, Intermediate Mode 3" MASD
+COMPILER 1          25,116 14/07/08   22:06
+COMPILER 2          25,116 14/07/08   22:16
+"905 FORTRAN LIBRARY VOL 1 1/1/74, Intermediate Mode 3" MASD
+LIB_VOL1 1          20,409 14/07/08   22:03
+LIB_VOL1 2          20,409 14/07/08   22:12
+"905 FORTRAN LIBRARY VOL 2 1/1/74, Intermediate Mode 3" MASD
+LIB_VOL2 1          14,850 14/07/08   22:00
+LIB_VOL2 2          14,850 14/07/08   22:09
+
+
+Bag "PERT ALMAT ESP".
+---------------------
+Directory BOX_A1\PE_AL_ES
+       11 file(s)        235,315 bytes
+
+"903 ALMAT 1/1/74, 900-Series Telecode" MASD
+   File 2 has a 7-byte misread (possibly a spike
+      caused by a 56ohm resistor in the PTS burning out?)
+ALMAT    1          25,997 15/07/08    9:25
+ALMAT    2          25,997 15/07/08    9:49
+ALMAT    3          25,997 15/07/08   15:34
+"903 ESP TAPE 1 1/1/74, 900-Series Telecode" MASD
+ESP_1    1          14,879 15/07/08    9:22
+ESP_1    2          14,879 15/07/08    9:41
+"903 ESP TAPE 2 1/1/74, 900-Series Telecode" MASD TJF
+ESP_2    1           2,725 15/07/08    9:17
+ESP_2    2           2,725 15/07/08    9:37
+"903 PERT 1/1/74, Binary Mode 3" MASD
+PERT_B   1          12,472 15/07/08    9:19
+PERT_B   2          12,472 15/07/08    9:39
+"903 PERT 1 ISS 3, 903 Telecode UNCLEAN" TJF
+PERT_T   1          48,586 15/07/08    9:30
+PERT_T   2          48,586 15/07/08    9:53
+
+
+Bag "WORKSHOP".
+---------------
+Directory BOX_A1\WORKSHOP
+        4 file(s)         59,442 bytes
+
+"WORKSHOP SYSTEM ONLINE VERSION ISS1"
+[WORKSHOP SYSTEM ON LINE VERSION ISS 1]
+OFFLINE  1          14,853 15/07/08   15:46
+OFFLINE  2          14,853 15/07/08   16:41
+"WORKSHOP SYSTEM OFFLINE VERSION ISS1"
+[WORKSHOP SYSTEM OFF LINE ISSUE 1]
+ONLINE   1          14,868 15/07/08   15:44
+ONLINE   2          14,868 15/07/08   16:39
+
+
+*** EOF ***

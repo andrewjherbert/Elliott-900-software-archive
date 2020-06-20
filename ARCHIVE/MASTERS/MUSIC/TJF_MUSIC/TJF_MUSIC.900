@@ -1,0 +1,190 @@
+﻿
+((MUSIC PROGRAM, 22/2/72)
+
+[CHIPF CHIPL CHIPE]
+
+(Entry points)
+
+(8)       8     START
+
+(9)       8     ;+3
+(10)      4     -1
+          8     ;+2
+          4     +0
+          5     FLAG
+          8     NXCHAR+1
+
+FLAG      +0              (Presume NO interface)
+
+(Read in & store score up to & inc. <H>)
+
+<
+START     4     +0
+          5     CHIPF
+          5     SCORF
+          11    CHIPL
+          8     CHIPE
+          0     SCORF
+          /5    SCORE
+          1     -20
+          7     ;+3
+          10    SCORF
+          8     ;-7
+
+(Fetch score character & test which group it is in)
+
+          5     SCORF
+          8     ;+2
+NXCHAR    10    SCORF
+(+1)      0     SCORF
+          /4    SCORE
+
+          1     -20
+          7     ;-6       (Test for <H>)
+          1     -16
+          7     SHARP     (Test for $)
+          1     -7
+          7     PLUS      (Test for +)
+          1     -2
+          7     MINUS     (Test for -)
+          1     -3
+          9     NXCHAR    (Test for separator, etc.)
+          1     -16
+          9     TIME      (Test for digit, etc.)
+
+(Otherwise character is letter; fetch appropriate frequency)
+
+          5     NOTE
+          0     NOTE
+          1     -32       (Test case, for sharp/natural)
+          9     ;+5
+          /4    FREQS-32
+          12    +.059     (1.059 = 2^[1/12])
+          /1    FREQS-32
+          8     ;+2
+          /4    FREQS
+
+STFREQ    5     FREQ
+          8     NXCHAR
+
+(Move note up or down one octave; or raise by one semitone)
+
+SHARP     4     FREQ
+          12    +.059     (1.059 = 2^[1/12])
+          8     ;+2
+
+PLUS      4     FREQ
+          1     FREQ
+          8     STFREQ
+
+MINUS     4     FREQ
+          14    8191
+          8     STFREQ
+
+(Test which method of output is to be used)
+
+TIME      4     FLAG
+          9     IFU
+
+(Calculate number of loops; set shift instruction)
+
+          /4    SCORE
+          2     +48
+          12    FREQ
+          14    14
+          5     COUNT
+
+          2     +0
+          4     +2048
+          13    FREQ
+          14    8182
+          1     =13 8160
+          5     ;+1
+
+(Output note for required duration)
+
+          >1
+          10    COUNT
+          4     COUNT
+          9     ;-3
+          8     NXCHAR
+
+(Calculate number of loops; initiallise registers)
+
+IFU       /4    SCORE
+          2     +48       (Also clears top of Q-register)
+          14    8
+          5     COUNT
+
+          4     FREQ
+          14    4
+          5     FREQ
+
+          4     +0
+          5     SINE
+          4     +.5
+          5     COSINE
+
+(Output note for required duration)
+
+OPNOTE    4     SINE
+          12    FREQ
+          2     COSINE
+          5     COSINE
+          12    FREQ
+          1     SINE
+          5     SINE
+          15    4099
+
+          10    COUNT
+          4     COUNT
+          9     OPNOTE
+          8     NXCHAR
+
+(Workspace)
+
+SCORF     >1
+SCORE=1024
+NOTE
+FREQ      >1
+COUNT     >1
+SINE      >1
+COSINE    >1
+
+(Scale)
+
+FREQS     +0
+          +2200
+          +2470
+          +2616
+          +2937
+          +3296
+          +3492
+          +3920
+          +4400
+          +4939
+          +5232
+          +5874
+          +6592
+          +6984
+          +7840
+          +8800
+          +9878
+          +10464
+          +11748
+          +13184
+          +13968
+          +15680
+          +17600
+          +19756
+          +20928
+          +23496
+          +26368
+          +0
+          +0
+          +0
+          +0
+          +0
+
+
+

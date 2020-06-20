@@ -1,0 +1,21 @@
+﻿c single precision arithmetic
+
+on 903 16k
+
+select out tty
+nonprinting off
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+
+at ptr file ../../MASTERS/HERBERT/SGLDEMO.900
+j 8
+
+at ptr file ../../MASTERS/HERBERT/SGLPAK.RLB
+j  11
+
+at ptr file ../../MASTERS/HERBERT/SGLDATA.900
+
+j 32
+
+sh t

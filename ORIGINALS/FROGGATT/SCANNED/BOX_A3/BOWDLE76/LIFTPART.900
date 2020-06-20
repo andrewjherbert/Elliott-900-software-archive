@@ -1,0 +1,57 @@
+﻿
+((TO LIFT PARTS OF BOWDLER, 23/8/76))
+
+ESC ..
+
+RTS BOW
+PARTS OF BOW..
+
+RTS [
+[SFREE EFREE START
+STOPL STOPC STOPZ STOPE
+..
+
+CLI (BOWDLER STEE
+DLE (BOWDLER EDIT
+INS
+
+STEER    4    +0
+         5    ERRNO
+         5    INSTCT
+         4    SFREE
+         5    STOPP
+         4    +0
+         5    STOPP+1
+         4    +0
+         5    CHIPF
+         8    START
+
+..
+
+CLE SFREE +
+DLI EFREE +
+
+CLE STOPE
+INS
+STOPC    5    INSDES
+         10   INSTCT
+
+         4    +0
+         5    STCHAR
+         0    STCHAR
+         /4   LIST1
+         7    UNRECO
+         2    INSDES
+         7    STOPE+1
+         10   STCHAR
+         8    ;-6
+
+STOPZ    4    +0
+..
+
+CLI STOPE
+INS
+(+1)..
+
+CHI
+<! Halt !>

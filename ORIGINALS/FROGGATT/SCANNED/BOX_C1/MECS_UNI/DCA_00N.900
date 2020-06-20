@@ -1,0 +1,649 @@
+﻿
+EXTERN(DBASE);
+
+EXTERN(*QSETSUP,*DOBEY,*DELAY3,FRFLAG);
+
+
+
+
+    SUBR QSETSUP;
+4 FRFLAG;
+
+         9 QNEKST;
+
+   CALL DELAY1;      ESTABLISHES STORE SPEED AND MULTIPLYING FACTOR
+CALL MXSTACK;  FOR DISC EXCHANGED WITHROUTINE BELOW
+
+
+   CALL QRPATCH;
+PRINT
+DISC ADDRESS = $ID DAD ;
+4 DAD;
+1 ONEFIV;
+5 DGO;
+5 DISTRT;
+5 DSCGO;
+5 DISGO;
+
+
+         4 -1;
+         5 FRFLAG;
+
+QNEKST CALL QSETINT;
+
+
+
+    END;
+
+
+
+
+
+SUBR DELAY2;   CAUSES DELAY
+QDEL 0 QDEL-1;
+/0 1;
+/4 0;
+5 QDELAY;
+
+LOOP(QD1=QFACTOR);
+LOOP(QD2=QDELAY);
+JB;
+JB;
+END(1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+    SUBR PAUSE;
+
+
+         4 QPAUSE+1;
+         5 9;
+
+
+
+ PRINT
+RE-ENTER AT 9
+;
+
+QPAUSE   8 QPAUSE;
+         8 QPAUSE+2;
+
+   CALL QSETINT;
+
+
+
+    END;
+
+
+SUBR DOBEY;
+
+QCB 0 QCB-1;
+/0 1;
+/4 0;
+5 XXF;
+0 DBASE;
+/5 0;
+0 QCB-1;
+/4 2;
+0 DBASE;
+/5 2;
+0 QCB-1;
+/0 3;
+/4 0;
+0 DBASE;
+/5 5;
+0 QCB-1;
+/0 4;
+/4 0;
+0 DBASE;
+/5 6;
+0 QCB-1;
+/0 5;
+/4 0;
+0 DBASE;
+/5 4;
+
+
+4 'B 16,18;
+5 YNDEX;
+LOOP(BMOD=6);
+0 DBASE;
+YNDEX 4 0;
+10 YNDEX;
+0 BMOD;
+/5 PBASE;
+JB;
+
+
+
+
+
+
+
+4 +0;
+5 QOPF;
+5 QSPUR;
+4 RMARK;
+7 NORS;
+
+
+
+CALL DELAY3(10000);
+2 +0;
+5 QTIMED;
+4 +3;
+DGO 15 DGO;
+
+
+
+
+QEST 4 QOPF;
+1 +2;
+7 QDONE;
+
+10 QTIMED;
+4 QTIMED;
+7 QREP2;
+8 QEST;
+
+QREP2 PRINT
+INTERRUPT TIMED OUT
+;
+DSTOP 8 DSTOP;
+
+NORS 4 -1;
+0 DBASE;
+/5 7;
+
+CALL DELAY3(10000);
+2 +0;
+5 TYMER;
+4 +1;
+DISTRT 15 DISTRT;
+
+ITOL 0 DBASE;
+/4 7;
+1 +1;
+7 TTIME;
+4 QOPF;
+7 QDONE;
+PRINT
+INTERRUPT NOT EXPECTED;
+8 QDONE;
+TTIME 10 TYMER;
+4 TYMER;
+7 NSCH;
+8 ITOL;
+
+NSCH PRINT
+OPERATION TIMED OUT.
+;
+8 DSTOP;
+
+
+
+
+QDONE 0 DBASE;
+/4 7;
+0 QCB-1;
+/0 6;
+/5 0;
+
+4 QSPUR;
+7 QNONE;
+
+PRINT
+SPURIOUS INTERRUPT COUNTER: $OD QSPUR .
+;
+QNONE
+
+
+4 'B 16,18;
+5 QINDX;
+LOOP(BMOD=6);
+0 DBASE;
+QINDX 4 0;
+5 PA1;
+10 QINDX;
+0 BMOD;
+/4 PBASE;
+5 PA2;
+2 PA1;
+7 PMU;
+PRINT
+PARAMETERS CORRUPT
+WORD $OD BMOD
+EXP: $OB PA2
+REC: $OB PA1
+;
+
+PMU JB;
+END(6);
+
+
+
+
+
+
+
+SUBR INPINT;
+
+GET3 PRINT
+READ INT. EXT. STATUS ADDRESS - $ID BITNO ;
+4 BITNO;
+7 GET3;
+9 GET3;
+2 +8191;
+9 GET3;
+4 BITNO;
+END; INPINT
+
+
+SUBR QEXTBT;
+
+QREP22 PRINT
+TERMINATION INTERRUPT BIT - $ID BITNO
+;
+4 BITNO;
+CALL CHECK;
+8 QREP22;
+END; QEXTBT
+
+
+SUBR CHECK;
+QCHECK 5 CHAN;
+9 WRONG;
+7 WRONG;
+2 +18;
+9 WRONG;
+4 CHAN;
+1 MVLEFT;
+5 XS;
+4 +1;
+0 +0;
+XS 14 0;
+10 QCHECK-1;
+
+WRONG END; CHECK
+
+
+
+
+
+
+
+
+
+
+SUBR QRPATCH;
+4 +0;
+5 QDM3;
+5 QDM2;
+REPX PRINT
+SET INTERRUPT FLAG - $ID RMARK
+;
+4 RMARK;
+7 PEPT;
+1 -1;
+7 PEPT;
+8 REPX;
+
+
+PEPT PRINT
+INTERRUPT LEVEL CONNECTED - $ID QLEVS ;
+
+4 QLEVS;
+2 +2;
+7 LEV2;
+4 QLEVS;
+
+2 +3;
+7 LEV3;
+8 PEPT;
+
+LEV2 4 +1;
+5 QDLEVQ;
+4 -1;
+5 QCLEVQ;
+8 QGOOUT;
+
+LEV3 4 +1;
+5 QCLEVQ;
+4 -1;
+5 QDLEVQ;
+
+QGOOUT 4 QNO;
+7 WCLEAR;
+CALL INPINT;
+1 ONEFIV;
+5 QDRMIU;
+5 QCRMIU;
+
+CALL QEXTBT;
+5 QCM2;
+5 QCM3;
+
+
+BGOOUT END;  QRPATCH
+WCLEAR 4 QDLEVQ;
+9 NOT2;
+4 +0;
+5 QDLEVQ;
+8 BGOOUT;
+NOT2 4 +0;
+5 QCLEVQ;
+8 BGOOUT;
+
+
+
+
+
+FRFLAG +0;
+
+
+
+QLEVS +0;
+BITNO +0;
+DBASE +88;
+DINOP 'O 372100;
+RMASK +1;
+MVLEFT 13 8191;
+QDM3 +0;
+QDM2 +0;
+PBASE>7;
+
+
+
+
+
+    SUBR MXSTACK;
+
+
+REPIT PRINT
+NO. OF MIUS AND/OR ATUS IN SYSTEM: $ID QNO
+;
+
+         4 QNO;
+         7 QNIL;
+         2 +8;
+         9 REPIT;
+
+LOOP(X=QNO);
+
+         4 X;
+         1 +1;
+         5 QSTACK;
+
+ PRINT
+MX[$OD QSTACK ] 'READY ENABLE@ ADDRESS: $ID QADDRS  AND INTERRUPT PATCH BITS: $IB PBITS
+;
+
+         0 X;
+         4 QADDRS;
+        /5 QADRSST;
+         4 PBITS;
+        /5 QBITSS;
+
+ JB;
+
+QNIL END;
+
+
+
+    SUBR DELAY1;      ESTABLISHES STORE SPEED AND MULTIPLYING FACTOR
+
+
+QRETURN PRINT
+
+
+STORE SPEED: $ID STSPD
+;
+
+
+         4 STSPD;
+          7 QRETURN;
+         9 QRETURN;     IF STSPD < 1
+         2 +6;          OR > 6
+         9 QRETURN;     REPRINT MESSAGE
+         0 STSPD;
+        /4 QLIST;
+         5 QFACTOR;
+
+
+END;
+
+QLIST      +0;
+           +10;
+           +6;
+           +0;
+           +0;
+           +0;
+           +1;
+
+
+
+
+    SUBR DELAY3;      EXITS WITH THE DELAY COUNT IN THE ACC.
+
+
+QDELY    0 QDELY-1;
+        /0 1;
+        /4 0;
+        12 QFACTOR; DETERMINED FROM THE BLOCK DELAY1
+        14 17;
+        10 QDELY-1;
+
+
+    END;
+
+
+
+    SUBR MXOPEN;
+
+QMX      0 QMX-1;
+        /0 1;
+        /4 0;
+         1 QNO;
+         5 QNOCT;
+         9 XCIT;
+         7 XCIT;
+
+
+ LOOP(X=QNOCT);
+
+         0 X;
+        /4 QADRSS;
+         1 ONEFIV;
+         5 OBEYER;
+        /4 QBITSS;
+
+OBEYER2    +0;
+
+ JB;
+
+XCIT END(1);
+
+QADRSS>8;
+
+QBITSS>8;
+
+ONEFIV  15 0;
+
+
+
+    SUBR QSETIN;
+
+
+   CALL MXOPEN(0);
+
+11 AREG2;
+ 14 18;
+6 'B 14:17;
+5 AREG2;
+0 AREG2;
+15 7177;
+
+/4 QL4;
+/1 AREG2;
+5 6;
+/4 QL3;
+/1 AREG2;
+5 4;
+/4 QL2;
+/1 AREG2;
+5 2;
+15 7176;
+
+
+
+QTERMI  15 7168;
+         8 QTERMI;
+
+QL1      0 QL1+2;
+        15 7168;
+         5 AREG1;
+        14 18;
+         5 QREG1;
+
+ LOOP(LEV1=10);
+
+         0 LEV1;
+        /4 MESIJ;
+        15 6148;
+        14 8183;
+        15 6148;
+
+ JB;
+
+         4 AREG1;
+         0 QREG1;
+
+         8 QL1+1;
+
+
+QL2      0 QELEV2+1;
+
+QL3      0 QELEV3+1;
+
+QL4      0 QL4+1;
+         0 AREG2;
+        15 7177;
+
+/4 QL1;
+/1 AREG2;
+
+         5 0;
+ 15 7176;
+         8 AUSGANG;
+
+MESIJ      'O 012012;          'LEVEL 1 INTERRUPT@
+           'O 305314;
+           'O 305126;
+           'O 240314;
+           'O 240261;
+           'O 116311;
+           'O 305324;
+           'O 322322;
+           'O 120125;
+           'O 012324;
+
+;                       LEVEL TWO INTERRUPT ROUTINE
+
+QELEV2  15 7168;
+         5 AREG2;
+        14 18;
+         5 QREG2;
+         4 QTIMED;
+         7 QSPURI;
+4 QOPF;
+9 QSPURI;
+4 QDLEVQ;
+7 GO2;
+9 QFAILED;
+
+QDRMIU 15 QDRMIU;
+6 QCM2;
+7 QSPURI;
+GO2 4 +0;
+DISGO 15 DISGO;
+4 -2;
+5 QOPF;
+
+
+
+QRESTO   0 QREG2;
+         4 AREG2;
+         8 QELEV2;
+QSPURI 10 QSPUR;
+8 QRESTO;
+
+
+QFAILE PRINT
+LEVEL 2 NOT IN USE;
+
+QST2     8 QST2;
+
+Q1FAIL PRINT
+LEVEL 2 READY WRONG;
+
+         8 QST2;
+
+;                      LEVEL 3 INTERRUPT ROUTINE
+
+QELEV3  15 7168;
+         5 AREG3;
+        14 18;
+         5 QREG3;
+         4 QTIMED;
+         7 Q3SPUR;
+4 QOPF;
+9 Q3SPUR;
+
+         4 QCLEVQ;
+7 GO3;
+9 Q3FAIL;
+QCRMIU 15 QCRMIU;
+6 QCM3;
+7 QSPURI;
+GO3 4 +0;
+DSCGO 15 DSCGO;
+4 -2;
+5 QOPF;
+
+
+
+Q3REST   0 QREG3;
+         4 AREG3;
+         8 QELEV3;
+Q3SPUR 10 QSPUR;
+
+8 Q3REST;
+
+
+
+Q3FAIL PRINT
+LEVEL 3 NOT IN USE;
+
+QST3     8 QST3;
+
+Q2FAIL PRINT
+LEVEL 3 READY WRONG;
+
+         8 QST3;
+
+
+
+AUSGANG END;
+
+DCHAIN;
+<! Halt !>

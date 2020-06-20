@@ -1,0 +1,377 @@
+﻿
+(903 ALGOL TRANSLATOR. ELIMINATE ERRORS 107 AND 108)
+(21 OCT 1976. CAP DGNH)
+(ACTUAL PARAMETERS WHICH ARE TO BE TREATED AS CALLED)
+(BY VALUE - TO FORMAL PROCEDURES - MUST BE ENCLOSED IN)
+(BRACKETS. SEE EXAMPLE.)
+(CORRECT ERROR HANDLING IN TRANSLATOR)
+
+*3
+PROCPO=176
+I=178
+C=188
+ADDI=191
+M=215
+PRMCOU=223
+FAIL=706
+W=6090
+FOMPIL=1574
+NOTIN=1613
+NOTOWN=1645
+PRAMCH=1992
+FMT=2007
+EX=2075
+EXIT=2086
+REXIT=2092
+PAGTWO=2257
+N4=2322
+NAMOK=2341
+NOCBIT=2501
+OTHER=2697
+AB=2723
+K1=5912                   (K1 =8 0)
+K2=5970                   (K2 =&177760)
+K3=5947                   (K3 =2 0)
+K4=5911                   (K4 =1 0)
+K5=5952                   (K5 =/5 0)
+K6=5980                   (K6 =&717760)
+
+^32
+MAYBE
+          4     M
+          7     REXIT     (DO NOTHING FOR CALL BY VALUE)
+          8     EX        (USUAL ACTION FOR CALL BY NAME)
+PARAM
+          /5    0
+TEST
+          4     ADDI+3
+          6     K3        (=2 0)
+          7     ;+2       (PROCEDURES)
+          8     NAMOK     (ARRAYS)
+          0     I
+          /4    2
+          6     K3        (=2 0)
+          7     ;+2
+
+          8     FAIL-89   (INTRINSIC FUNCTIONS DIS-ALLOWED)
+          /4    2
+          6     K4        (=1 0)
+          7     NAMOK     (INTERNAL)
+          4     C         (EXTERNAL)
+          5     PARAM
+          11    FOMPIL
+          8     NOTIN+3
+          4     K5        (=/5 0)
+          5     PARAM
+          4     W+10
+          7     EXIT
+          8     FAIL-5
+NOPARM
+          4     ADDI+3    (GIVE FAILURE FOR PARAMETERLESS)
+          2     ;+3       (NON-TYPE PROCEDURES)
+          7     FAIL-25
+          8     AB
+          &100120
+
+^FOMPIL+3
+          8     NOTOWN    (SUPPRESS ERROR 107)
+^NOTIN+19
+          4     PARAM     (SHARE PART OF FOMPIL)
+^PRAMCH+4
+          9     MAYBE     (TEST FOR VALUE OR NAME CALL)
+^PRAMCH+10
+          8     N4        (MUST FETCH PARAMETER WORD FROM)
+(UNUSUAL PLACE WITH RESPECT TO PROCPO)
+^PAGTWO+6
+          8     TEST      (SUPPRESS ERROR 108)
+^N4
+          /4    2         (USE SPACE TO FETCH PARAMETER WORD)
+          6     K1
+          7     NORMAL    (USUAL ROUTE)
+          4     PRMCOU    (NOW FOLLOW RECURSIVE ROUTE)
+          1     PRMCOU
+          1     PRMCOU
+          1     PRMCOU
+          2     PROCPO
+          5     W+1
+          0     W+1
+          /4    2
+          6     K1
+          5     W+7       (STORE VALUE BIT)
+          /4    3
+          6     K2
+          1     W+7
+          8     FMT       (ADD VALUE BIT TO TYPE PATTERN)
+NORMAL
+          4     PRMCOU
+          8     PRAMCH+11
+^NAMOK+2
+          8     MATCH     (ANOTHER ACTUAL-FORMAL PAIR TOLERATED)
+^NOCBIT+2
+          8     ;+4       (STILL ANOTHER ACTUAL-FORMAL PAIR TOLERATED)
+MATCH
+          2     K6
+          7     NAMOK+3
+          8     FAIL-5
+^OTHER+9
+          8     NOPARM
+          8     FAIL-14
+          8     FAIL-14   (VALUE CALL WHEN NOT A FORMAL PARAMETER )
+%
+<! Halt !>
+
+
+(16 NOV 1976 CALL-BY -NAME)
+(903 ALGOL TRANSLATOR)
+*3
+SP=183
+PP=185
+DELIM=207
+LASTDL=209
+COMPIL=1506
+EXIT=2086
+ITOP=2099
+RTOI=2114
+WONE=2174
+CZERO=2179
+CONE=2195
+WTWO=2214
+WFOUR=2236
+PAGTWO=2257
+N2=2272
+EXCOM=2288
+ARRY=2304
+N6=2351
+N7=2353
+AC=2656
+ARR2=2666
+OTHER=2697
+ESAVE=4408
+COMMA=4791
+ARR=4952
+OUT=5231
+D1=6085
+D2=6086
+D3=6087
+D4=6088
+W=6090
+Z1=5882                   (+0)
+Z2=5977                   (&106100)
+Z3=5961                   (/15 0)
+Z4=5954                   (+15)
+Z5=5967                   (+5)
+Z6=5953                   (+6)
+Z7=5911                   (1 0)
+Z8=5920                   (12 0)
+
+
+^21
+T1        8     1
+TAB1
+          /12   16
+          /13   16
+          /12   16
+
+^512
+          4     W1
+          5     D1
+          4     W2
+          5     D2
+          4     W3
+          5     D3
+          4     W4
+          5     D4
+          8     ;+0
+W1        4     LASTDL
+W2        5     DELIM
+W3        8     OUT
+W4        /9    0
+
+
+^RTOI-3
+          8     TEST2
+^RTOI+4
+          8     TEST2
+^RTOI+6
+          7     TEST2
+^WONE-1
+          8     ITOP
+^CZERO+4
+          8     ;+1
+^CONE+4
+          8     ;+1
+^WTWO+1
+          8     ;+1
+^WTWO+10
+          7     TEST2
+^WTWO+14
+          8     TEST2
+^WTWO+16
+          7     TEST2
+^WFOUR+5
+          8     ;+1       (SWITCH CALL)
+^WFOUR+11
+          8     TEST2
+^WFOUR+15
+          8     TEST2
+^PAGTWO+3
+          8     N5
+^PAGTWO+7
+          8     N5
+          8     NEWN6
+          4     W+14
+          2     Z5        (+5)
+          7     EXCOM     (IPZ OR BPZ)
+          4     Z7        (=1 0)
+          8     HERE
+^ARRY+7
+          8     INDA	  ( corrected - original was 8 IND )
+^N6-3
+          8     ;+7
+          4     W
+          8     ;+5
+N5
+          4     W+10
+          7     ;+2
+          8     701       (FAIL-5)
+          4     5983      (=/1 0)
+          11    1553
+          8     1555      (COMP+2)
+          8     EXIT
+^AC+3
+          4     D4
+^OTHER+15
+          8     ARR2+2
+^ESAVE-1
+          8     D1
+^COMMA+11
+          8     UJ
+^ARR-1
+          8     UJ
+^62
+TEST2
+          4     W+8
+          7     CALL      (BY NAME)
+          8     EXIT      (BY VALUE)
+NEWN6
+          4     W+14
+          2     Z6        (+6)
+          7     EXCOM     (RPZ)
+          4     5991      (=3 0)
+HERE
+          5     W
+          4     W+10
+          7     N6-2
+          8     N2
+UJ
+          0     SP        (STACK ADDRESS OF POTENTIAL)
+          /4    1         (JUMP AROUND THUNK)
+          14    8188
+          4     PP
+          14    4
+          /5    1
+          4     T1        (8 1)
+          1     PP        (COMPILE UJ ;+1 AS NOP)
+          5     ;+4
+          11    COMPIL
+          8     COMPIL+1
+          &112000
+          +0
+          8     OUT
+CALL
+          0     W+11
+          /4    TAB1-5
+          5     L1
+          /4    TAB2-5
+          5     L2
+          0     SP
+          /4    1
+          14    8188
+          5     ADDR
+          4     5930      (+127)
+          2     212       (CHKSUM)
+          5     212
+          11    COMPIL
+          8     COMPIL+1
+          &441111
+          /15   20
+          /15   17
+          /7    16
+L1        +0              (IFUN OR RFUN)
+          11    COMPIL
+          8     COMPIL+1
+          &232170
+ADDR      +0              (NOP ADDRESS)
+L2        +0              (TRAP)
+          +15             (LOADER LINKAGE)
+          4     W+11
+          2     Z5
+          7     EXIT+6
+          8     EXIT
+TAB2
+          /0    9
+          /0    2
+          /0    1
+INDA
+          4     W+8
+          7     ;+2
+          4     Z7        (1 0)
+          1     Z8        (12 0)
+          8     ARRY+8
+%
+<! Halt !>
+*3
+PERM=129
+TYPBOX=136
+ADDI=191
+FMT=2007
+EX=2075
+DEST=7723
+^PERM
+          +7723
+^EX+3
+          1     5884      (+1)
+          8     DEST
+^520
+          8     ;+5
+^525
+LOOP      0     COUNT
+          /4    PROG
+          /5    DEST
+          10    COUNT
+          4     COUNT
+          2     +9
+          7     ;+2
+          8     LOOP
+          8     ;+0
+PROG      7     DEST+3
+          4     ADDI+3
+          8     FMT
+          4     TYPBOX
+          7     DEST+7
+          4     EX+8
+          8     FMT
+          4     EX+9
+          8     FMT
+COUNT     +0
+%
+<! Halt !>
+
+
+(30 DEC 1976, FOR STATEMENTS)
+*3
+^256
+          4     L1
+          5     7732
+          4     L2
+          5     4808
+          8     ;+0
+L1        /15   25        (STEP2)
+L2        1     138       (LOKTYP)
+^4173
+          4     7732
+          5     4189
+          4     6053      (12  3072)
+          8     4184
+%
+<! Halt !>

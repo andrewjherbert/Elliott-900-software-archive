@@ -1,0 +1,22 @@
+﻿D05103;
+"BEGIN" "REAL" A,B,C,D,E,F,G;LPRINT;PUNCH(4);
+        "PRINT"''L8S12@@,'LENGTH OF COIL@,''S40@@,
+        'TABLES FOR TWO-METRE INDUCTANCES@,''L4S4@@,''L@@,
+        ''S6@@,'3CM@,''S6@@,'2CM@,''S6@@,'1CM@,''S10@@,
+        '5PF@,''S6@@,'10PF@,''S6@@,'15PF@,''S10@@,'ALL@,
+        ' INDUCTANCES IN MICROHENRIES@,''L@@;
+        "FOR" A:=1 "STEP" 1 "UNTIL" 100 "DO"
+	"BEGIN"
+		B:=SQRT((A*3)/(0.0395*0.25*0.8734));
+		C:=SQRT((A*2)/(0.0395*0.25*0.8181));
+		D:=SQRT((A)/(0.395*0.25*0.6884));
+		E:=1/(6.28318*SQRT(A*5));
+		F:=1/(6.28318*SQRT(A*10));
+		G:=1/(6.28318*SQRT(A*15));
+		"PRINT" SAMELINE,ALIGNED(4,1),''S5@@,A,''S6@@,
+		B,''S6@@,C,''S6@@,D,''S10@@,E,''S6@@,F,
+		''S6@@,G,''L@@;
+	"END";
+        "PRINT" ''L2S40@@,'THIS ASSUMES COIL DIAMETER 0.5CM@;
+"END";
+<! Halt !>

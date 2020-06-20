@@ -1,0 +1,79 @@
+﻿
+((LEVEL 1 PROGRAM, AND LEVELS 2 & 3 EXECUTIVES, 11/9/72)
+
+(Entry addresses)
+
+TRIG     8    START
+AL2S     0    L2S
+AL3S     0    L3S
+AL4S     0    L4S
+
+(Workspaces)
+
+INTAC    >1   (Interrupt action controller)
+L2A      >1   (Acctr. saved by level 2)
+L2Q      >1   (Q-Reg. saved by level 2)
+L3A      >1   (Acctr. saved by level 3)
+L3Q      >1   (Q-Reg. saved by level 3)
+
+(Initial switch-on sequence)
+
+<
+START    4    TRIG
+         5    8177
+
+         4    AL2S
+         5    2
+         4    AL3S
+         5    4
+         4    AL4S
+         5    6
+
+(Sets INTAC to ignore levels 2 & 3 interrupts)
+
+         4    +0
+         5    INTAC
+
+(Terminates, and ignore subsequent level 1 interrupts)
+
+         15   7168
+         8    ;-1
+
+(Level 2 terminate sequence)
+
+L2T      2    L2Q
+         4    L2A
+         15   7168
+L2S      5    L2A
+         14   18
+         5    L2Q
+
+(Level 2 executive switch)
+
+         0    INTAC
+         /8   ;+1
+
+         8    L2T
+         8    INTTH2
+         8    INTTE2
+         8    FTIME2
+
+(Level 3 terminate sequence)
+
+L3T      2    L3Q
+         4    L3A
+         15   7168
+L3S      5    L3A
+         14   18
+         5    L3Q
+
+(Level 3 executive switch)
+
+         0    INTAC
+         /8   ;+1
+
+         8    L3T
+         8    INTTH3
+         8    INTTE3
+         8    L3T
+<! Halt !>

@@ -1,0 +1,21 @@
+﻿C Assemble FIVCOPY.900
+
+on 903 8K
+
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+select out tty
+at ptr file ../../MASTERS/HERBERT/FIVCOP.900
+j 12
+st 562
+
+at ptr file ../../MASTERS/HERBERT/FIVCOP.900
+select out auto
+at ptp file FIVCOP.BIN
+j 10
+de ptp
+st 333
+
+sh t

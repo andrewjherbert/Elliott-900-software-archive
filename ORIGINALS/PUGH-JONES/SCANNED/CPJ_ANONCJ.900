@@ -1,0 +1,36 @@
+﻿
+ANONCJ;
+"BEGIN""REAL"N,A,SN,SP,AN,AP,NN,NP,NZ,C;
+       "SWITCH"SS:=NEXT,FIRST,LOOP,LAST;
+       "PRINT"''S6@NUMBER OF:-'S14@SUM OF:-'S12@AVERAGE OF:-'L3S3@@,
+'ZEROS POSITIVE NEGATIVE  POSITIVE NEGATIVE  POSITIVE NEGATIVE'L1@@;
+       "READ" C;
+FIRST: "READ" N;
+ LOOP: "READ"A;
+       "IF"A<0"THEN""BEGIN";
+              NN:=NN+1;SN:=SN+A;AN:=SN/NN;
+              "END"
+       "ELSE""IF"A>0"THEN""BEGIN"
+              NP:=NP+1;SP:=SP+A;AP:=SP/NP;
+              "END"
+       "ELSE"NZ:=NZ+1;
+       N:=N-1;
+           "IF"N=0"THEN""GOTO"LAST"ELSE""GOTO"LOOP;
+ LAST: "PRINT"''L1@@,ALIGNED(2,1),PREFIX('   @),NZ,NP,NN,SP,SN,AP,AN;
+  NZ:=0;NP:=0;NN:=0;;SP:=0;SN:=0;AP:=0;AN:=0;
+   C:=C-1;
+       "IF"C=0"THEN""GOTO"NEXT;
+       "GOTO"FIRST;
+ NEXT: "PRINT"''L2S29@END OF PROGRAM@;
+       "END";
+7
+4   -1   -6   0   5
+6   0   6   0   -7   10   -15
+7   1   -6   -7   -8   0   0   2
+20
+0   0   1   2   -3   -4   6   7   -10       6
+   16    0     19   2   14   -16   0   -25   -1   0
+5   0   0   0   -1   1
+6    -1   2   5   -3   -6   0
+8   0   5   2   7   -1   -2   0   2
+<! Halt !>

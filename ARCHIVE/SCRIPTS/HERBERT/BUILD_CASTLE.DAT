@@ -1,0 +1,36 @@
+﻿C Program to plot picture of Caernarfon Castle
+
+on 903
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+select out tty
+
+at ptr inline
+*19
+<! halt !><!!>
+j 8
+st 6927
+at ptr file ../../MASTERS/HERBERT/CASTLE.900
+j 9
+st 6927
+at ptr file  ../../MASTERS/903SIR/QPLOT(TJF2).900
+j 9
+st 6927
+at ptr file ../../MASTERS/903SIR/SSYS1(ISS1).900
+j 9
+st 6927
+at ptr inline
+%
+<! halt !><!!>
+j 9
+st 6927
+
+at plt
+swapxy
+scale 3
+at ptr file ../../masters/herbert/castle.raw
+j 32
+de plt

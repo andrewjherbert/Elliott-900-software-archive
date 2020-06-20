@@ -1,0 +1,347 @@
+﻿
+((PARAGRAPH & JUSTIFICATION PROGRAM, 6/6/72)
+
+[CHIPF CHIPL CHIPE CHIP
+CHOPC CHOPF CHOPL CHOPE
+ERRORL ERRORE
+SLOPL SLOPE]
+
+(8)      8    ;+4
+(9)      8    CONTIN
+(10)     4    +0
+         8    ;+2
+         4    +1
+         5    CHOPC
+
+         4    +0
+         5    CHOPF
+         5    SCOUNT
+         5    TCOUNT
+         4    -1
+         5    DEPTH
+
+CONTIN   4    +0
+         5    CHIPF
+
+MAINLP   11   CHIPL
+         8    CHIPE
+         1    -20
+         7    ;+0
+         1    -13
+         9    MAINLP
+
+         1    -32
+         7    A
+         1    -15
+         7    P
+         1    +13
+         7    C
+         1    -7
+         7    J
+         1    -4
+         7    N
+         1    +6
+         7    H
+         1    -12
+         7    T
+         1    +1
+         7    S
+         8    ERRORC
+
+A        4    +42
+         11   CHOPL
+         8    CHOPE
+         8    MAINLP
+
+H        4    DEPTH
+         9    ERRORD
+         7    ;+4
+         1    -1
+         5    DEPTH
+         8    MAINLP
+
+         4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+
+N        4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +0
+         5    SCOUNT
+         5    TCOUNT
+         8    MAINLP
+
+T        4    -10
+         1    TCOUNT
+         5    TCOUNT
+S        4    +32
+         11   CHOPL
+         8    CHOPE
+         4    SCOUNT
+         1    TCOUNT
+         9    S
+         8    MAINLP
+
+P        0    DEPTH
+         10   DEPTH
+         /5   PARNOS+1
+
+         4    DEPTH
+         7    C
+         /10  PARNOS
+         4    +0
+         5    DEPTH
+
+P1       0    DEPTH
+         /4   PARNOS
+         7    P2
+         11   SLOPL
+         8    SLOPE
+         4    +46
+         11   CHOPL
+         8    CHOPE
+         10   DEPTH
+         8    P1
+
+P2       4    +32
+         11   CHOPL
+         8    CHOPE
+         11   CHOPL
+         8    CHOPE
+
+C        4    -1
+J        5    FLAG
+         4    SCOUNT
+         5    INSET
+
+         11   CHIPL
+         8    CHIPE
+         1    -20
+         7    ERRORC
+         1    -13
+         9    ;-5
+         1    -6
+         7    ;+2
+         8    ERRORC
+
+         5    QCT
+         5    I1
+         5    I2
+
+IPLOOP   11   CHIPL
+         8    CHIPE
+         1    -10
+         7    IPN
+         1    -22
+         7    IPS
+         9    ERRORC
+
+         1    -7
+         7    IPOQT
+         1    -25
+         7    IPCQT
+         1    -32
+         7    IPCQT
+
+PACKCH   0    I1
+         4    CHIP
+         8    PACK
+
+IPN      4    FLAG
+         9    ERRORC
+
+IPS      4    I1
+         7    IPLOOP
+
+         0    I1
+         /4   BUF-1
+         7    IPLOOP
+
+         4    +0
+PACK     /5   BUF
+         10   I1
+         8    IPLOOP
+
+IPOQT    10   QCT
+         8    PACKCH
+
+IPCQT    4    QCT
+         7    ;+4
+         1    -1
+         5    QCT
+         8    PACKCH
+
+         4    I1
+         7    ERRORC
+
+         0    I1
+         /4   BUF-1
+         7    ;+2
+         8    ;+4
+
+         4    -1
+         1    I1
+         5    I1
+
+TEST     4    I2
+         2    I1
+         7    MAINLP
+
+         1    INSET
+         2    WIDTH
+         9    JUST
+
+         0    I2
+         /4   BUF
+         10   I2
+
+         7    ;+4
+         1    -36
+         7    ;+2
+         1    +4
+         1    +32
+
+         11   CHOPL
+         8    CHOPE
+         8    TEST
+
+JUST     4    FLAG
+         9    ERRORW
+
+         4    -1
+         5    SEPCT
+         4    I2
+         5    I3
+
+SCHLP    0    I3
+         /4   BUF
+         7    ;+2
+         8    ;+4
+         10   SEPCT
+         4    I3
+         5    I4
+         10   I3
+
+         4    I2
+         2    I3
+         1    INSET
+         2    WIDTH
+         9    ;+2
+         8    SCHLP
+
+         4    +1
+         5    SPACE
+         1    I4
+         2    I3
+
+         5    REM
+         4    SEPCT
+         2    REM
+         9    ;+3
+         10   SPACE
+         8    ;-5
+
+OPLOOP   4    I2
+         2    I4
+         7    OPJN
+
+         0    I2
+         /4   BUF
+         10   I2
+
+         7    OPJS
+         1    -36
+         7    ;+3
+         /4   BUF
+         8    ;+2
+OP1S     4    +32
+         11   CHOPL
+         8    CHOPE
+         8    OPLOOP
+
+OPJS     5    COUNT
+         4    +32
+         11   CHOPL
+         8    CHOPE
+         10   COUNT
+         4    SPACE
+         2    COUNT
+         9    ;-6
+
+         4    -1
+         1    SEPCT
+         5    SEPCT
+         4    REM
+         2    SEPCT
+         9    OP1S
+         8    OPLOOP
+
+OPJN     10   I2
+
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +0
+         5    SCOUNT
+         5    TCOUNT
+
+         4    +0
+         5    COUNT
+         2    INSET
+         7    TEST
+
+         4    +32
+         11   CHOPL
+         8    CHOPE
+         10   COUNT
+         4    COUNT
+         8    ;-7
+
+ERRORC   4    £R C
+         8    ;+4
+ERRORD   4    £R D
+         8    ;+2
+ERRORW   4    £R W
+         5    ERRNO
+         11   ERRORL
+         8    ERRORE
+         £JUS
+         £TIF
+         £ICA
+         £TIO
+         £N E
+         £RRO
+ERRNO    >1
+         £.
+
+<        4    CHOPE
+         5    FRIG
+         4    FRIG-1
+         5    CHOPE
+         8    ;+0
+
+(-1)     8    ;+1
+FRIG     >1
+         10   SCOUNT
+         8    CHOPE+1
+
+SCOUNT   >1
+TCOUNT   >1
+DEPTH    >1
+PARNOS   >15
+FLAG     >1
+INSET    >1
+QCT      >1
+I1       >1
+I2       >1
+SEPCT    >1
+I3       >1
+I4       >1
+SPACE    >1
+REM      >1
+COUNT    >1
+WIDTH    +74
+BUF=2048
+<! Halt !>

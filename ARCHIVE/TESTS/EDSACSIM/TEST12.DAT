@@ -1,0 +1,103 @@
+﻿C Table of reciprocals with PM0 post mortem.
+
+on 903
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+at ptr inline
+[Reciprocals]
+..PZ
+[M3]
+PFGKIFAFRDLFUFOFE@A6FG@E8FEZPF
+@&*RECIPROCALS@&#
+..PZ
+T56K
+[D6]
+GKA3FT34@S4DE13@T4DSDTDE2@T4DAD
+LDTDA4DLDE8@RDU4DLDA35@T6D
+E25@U8DN8DA6DT6DH6DS6DN4DA4DYF
+G21@SDVDTDEFW1526D
+..PZ
+[P1]
+GK
+A18@U17@S20@T5@H19@PFT5@VDUFOFFFSF
+L4FTDA5@A2FG6@EFU3FJFM1F
+..PZ
+[Reciprocals Master]
+G			K
+T	47		K
+P	25		@
+T			Z
+S	1		M
+T	6		M
+A	2		M
+T			D
+A	7		M
+T	4		D
+A	6		@
+G	56		F
+A			D
+A	8		#M
+T			D
+			
+O	3		M
+O	4		M
+O	5		M
+A	14		@
+G	92		F
+			
+P	6		F
+A	7		M
+A	2		M
+T	7		M
+A	6		M
+A			M
+G	1		@
+			
+Z			F
+P			F
+			
+P			D
+P	4		D
+Q			F
+@			F
+&			F
+M			F
+P			F
+W			F
+F	1464	        D
+P	1		D
+EZPF
+<!!>
+
+c CLEAR
+j 35
+C START
+j 32
+
+at ptr inline
+..PK
+[PM0: Print Function Letters]
+	T	42	K
+	@	41	F
+	B		@
+	O		D
+	M	1	Z
+	P		F
+	P		F
+	P		F
+	D	1	Z
+	H		@
+	A	2	F
+	#!
+	A	1	Z
+	O	113	F [O m F: Print from location m]
+[Source: EDSAC Programming Bulletin 1,
+31 March 1950]
+<!!>
+
+c START
+j 32
+
+sh t

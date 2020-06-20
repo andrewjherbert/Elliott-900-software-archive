@@ -1,0 +1,17 @@
+﻿9,10c9
+< ( AJH replaced [[READ)
+< [READ
+---
+> [[READ
+134,135c133
+< (AJH replaced BLANKLINE 4+6)
+< BLANKLINE 4  +6
+---
+> BLANKLINE 4+6
+713,714c711
+< %
+< <! halt !>
+\ No newline at end of file
+---
+> %
+\ No newline at end of file

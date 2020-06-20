@@ -1,0 +1,195 @@
+﻿
+( Dump utility for Hunter ALGOL )
+( Andrew Herbert 01 Sept 2013   )
+
+^6144
+*35
+
+[ DUMP ]
+
+ 	  8 	DUMP
+
+MKR 	  +0
+COUNT 	  +0
+ADDR 	  +0
+CHECK1 	  +0
+CHECK2 	  +0
+FROM      +2              ( dump from 2 to 6143 )
+TO        +6143
+
+PUNCH     >+1             ( punch word as 3 chars )
+          14    8174
+          4     +0
+          14    4
+          1     MKR
+          15    6144
+          4     +0
+          5     MKR
+          14    7
+          15    6144
+          4     +0
+          14    7
+          15    6144
+          0     PUNCH
+          /8    1
+
+DUMP      4     +0
+          5     COUNT
+          5     ADDR
+          5     CHECK1
+          5     CHECK2
+          5     MKR
+          4     -56       ( Punch clear store and T23 )
+          5     COUNT
+
+L1        0     COUNT
+          4     +76
+          15    6144
+          /4    ALGT23+56
+          11    PUNCH
+          8     PUNCH+1
+          10    COUNT
+          4     COUNT
+          9     L1
+          15    6144
+          4     FROM
+          5     ADDR
+          4     +128
+          5     MKR
+          4     ADDR
+          1     CHECK2
+          5     CHECK2
+          4     ADDR
+          11    PUNCH
+          8     PUNCH+1
+
+L2        0     ADDR
+          /4    0
+          1     CHECK1
+          5     CHECK1
+          /4    0
+          11    PUNCH
+          8     PUNCH+1
+          4     ADDR
+          2     TO
+          7     END
+          0     ADDR
+          /4    0
+          7     NULL
+          10    ADDR
+          8     L2
+
+NULL      /4    1
+          7     SKIP
+NEWBLK    4     +128
+          5     MKR
+          4     ADDR
+          1     CHECK2
+          5     CHECK2
+          4     ADDR
+          11    PUNCH
+          8     PUNCH+1
+          4     +0
+          11    PUNCH
+          8     PUNCH+1
+          4     ADDR
+          2     TO        ( check if done )
+          7     END
+          10    ADDR
+          8     L2
+
+SKIP      4     ADDR      ( skip over empty store )
+          2     TO
+          7     NEWBLK
+          10    ADDR
+          0     ADDR
+          8     NULL
+
+END 	  4 	+6318 	  ( set second region to dump )
+ 	  5 	ADDR
+ 	  4 	+8135
+ 	  5 	TO
+ 	  4 	JMP 	  ( set up checksum and exit )
+ 	  5 	END
+ 	  0 	ADDR 	  ( check for data )
+ 	  /4 	0
+ 	  7 	NULL
+ 	  8 	NEWBLK 	  ( found - start a new block )
+
+JMP 	  8 	CHKSUM 	  ( after second block )
+
+CHKSUM 	  4 	+128
+          15    6144
+          4     +0
+          15    6144
+          15    6144
+          4     CHECK1    ( punch checksums )
+          11    PUNCH
+          8     PUNCH+1
+          4     CHECK2
+          11    PUNCH
+          8     PUNCH+1
+          8     ;+0
+
+
+(( ALGOL T23 loader )
+
+( Modified to jump to 10 after input )
+ALGT23    0     8179
+          8     8182
+          -5
+          8     8177
+          8     8181
+          /5    2
+          10    1
+          8     8175
+          0     8179
+          8     8182
+          -45
+(8135^00) 4     8179
+          15    2048
+          7     8136
+          5     8173
+          6     8178
+          7     8151
+          4     8173
+          15    2048
+          15    2048
+          7     8160
+          5     8174
+          1     8176
+          5     8176
+          4     8179
+          15    2048
+          8     8138
+          0     8174
+          4     8173
+          15    2048
+          15    2048
+          /5    0
+          1     8175
+          5     8175
+          10    8174
+          8     8148
+          15    2048
+          15    2048
+          15    2048
+          2     8175
+          7     8167
+          15    6144
+          8     8165
+          15    2048
+          15    2048
+          15    2048
+          2     8176
+          7     10
+          8     8165
+          +128
+          0     8136
+          +0
+          +0
+          8     8135
+          +128
+          +0
+%
+<! Halt !>

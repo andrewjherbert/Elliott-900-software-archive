@@ -1,0 +1,32 @@
+﻿c heatmap in fortran ii
+
+
+on 903 8K
+
+
+at ptr file ../../MASTERS/903FORTRAN/903FORT2(ISS4A).BIN
+j 8181
+st 8171
+
+C load RLB
+at ptr file ../../MASTERS/HERBERT/HEATMAPII_RLB_DATA.BIN
+j 14
+
+
+on 903 16k
+
+select out tty
+nonprinting off
+
+at ptr file ../../MASTERS/903FORTRAN/903FORT16KLP(ISS4).BIN
+j 8181
+st 8171
+
+C load RLB
+at ptr file ../../MASTERS/HERBERT/HEATMAPII_RLB_DATA.BIN
+j 14
+st 16006
+j 11
+st 10111
+
+sh t

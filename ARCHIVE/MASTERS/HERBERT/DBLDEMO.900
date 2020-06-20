@@ -1,0 +1,541 @@
+﻿
+(A J HERBERT -- 11/01/12				    )
+(Program to demonstrate working with double length fractions)
+
+( QDLA Summary						    )
+(							    )
+( 11 QDLA+20						    )
+(  8 QDLA+21					            )
+( 							    )
+( Numbers held in 2 words. Bit 18 of second word must be 0. )
+(							    )
+( p - pseudo double length accumulator	QDLA+16,17	    )
+( pseudo B register QDLA+18				    )
+( modified address field of pseudo instruction QDLA+19      )
+( pseudo S.C.R. and link for exit QDLA+20                   )
+(                                                           )
+( Special Instructions					    )
+(							    )
+(  0 0		exit QDLA, set hardware accumulator to      )
+(		p[m.s]					    )
+(  0 x		load pseudo B-register			    )
+(  3 x		store l.s. half of pseudo accumulator	    )
+(  6 x		set scaling factor 			    )
+(		6 x = 10^x, 6 8192-x = 10^-x		    )
+( 15 2048	input number from paper tape		    )
+( 15 2052	input number from teleprinter		    )
+(		max 10 digits in input.  Will be treated as )
+(		an integer if no decimal point. Use scaling )
+(		factor to input mixed numbers		    )
+(               intgers in range -17179869184 to 	    )
+(		+17179869184				    )
+(		frations in range -10^m to +10^m where m    )
+(		is scaling factor                           )
+( 15 6144	output number to paper tape		    )
+( 15 6148	output number to teleprinter                )
+( 15 6144/6148 	followed by parameter word  b f n           )
+(		b = 1, newline; b = 0, sameline             )
+(               f = number of digits to appear after        )
+(		decimal point				    )
+(		k = 0 output as integer			    )
+(		total printing positions = 12-f             )
+(		k=4096 output as a fraction / mixed number  )
+(		if scaling factor is m, total printing      )
+(		positions = f+m+3			    )
+(							    )
+( Errors						    )
+(							    )
+( 0020		attempt to divide by zero		    )
+( 0021		input number format error		    )
+( 0022		input overflow [number too large]           )
+( 0024		more than 10 digits in input fraction       )
+( 0025  	15 instruction with illegal address         )
+( 0026		overflow during division                    )
+(							    )
+( QDAATAN+1	calculate [1/pi] arctan [x/y] and           )
+(		[1/[2pi]] true bearing                      )
+(	QDAATAN+136,137 x				    )
+(	QDAATAN+138,139 y				    )
+(	QDAATAN+142,143 arctan				    )
+(	QDAATAN+146,1477 true bearing			    )
+(	if x=y=0 punches 0000.001 continuously		    )
+(							    )
+( QDASIN+1	calculate 0.5 sin pi x / 0.5 cos pi x	    )
+(	argument in QDASIN+98,99 argument m.s. in  	    )
+(	accumulator					    )
+(	QDASIN+102,103 sin				    )
+(	QDASIN+104,105 cos				    )
+(							    )
+( QDASQRT+1	calculate sqrt x			    )
+(	QDASQRT+44,45 x					    )
+(	QDASQRT+46,47 sqrt x				    )
+(       if x<0 punches 0000.010 continuously                )
+
+["MAIN "NEWTON "NEWLIN "NEWLI2 "OUTSTR
+  QDLA QDASQRT QDASIN QDAATAN
+  QIN1 QOUT1 QERROR QDOUT]
+
+	(set up interrupt handling)
+	4	L2ENT
+	5	2
+	4	L3ENT
+	5	4
+	4	L4ENT
+	5	6
+IGNORE	15	7168
+	8	;-1		(ignore interrupts)
+L2ENT
+L3ENT	0 IGNORE
+L4ENT	0 MAIN
+
+MAIN	4	+3
+	5	QDOUT
+	11	NEWLIN		(output title)
+	8	NEWLI2
+	11 	OUTSTR
+	8	OUTSTR+1
+	\QDL
+	\A D
+	\EMO
+	\NST
+	\RAT
+	\ION
+	\
+	\A.J
+	\. H
+	\ERB
+	\ERT
+	\ 11
+	\/01
+	\/12
+	\^
+
+	(initialize useful constants)
+	4	+0		(scale := double [0])
+	5	SCALE	
+	5	SCALE+1
+
+	5	PL8192		(PL8192 := double [+8192])
+	4	+8192
+	5	PL8192+1
+
+	4	-1		(NG8192 := double [-8192])
+	5	MI8192	
+	4	-8192
+	6	&377777
+	5	MI8192+1	
+	
+	(demonstrate maths functions)
+	4	+2
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\
+	\
+	\ X
+	\
+	\
+	\
+	\ SQ
+	\RT
+	\
+	\
+	\  S
+	\IN
+	\
+	\
+	\
+	\COS
+	\^
+
+	(sqrt, sin, cos loop)
+PART1	11	QIN1		(read scaling factor)
+	8	QIN1+1
+	5	SCALE
+	(if not [-8191 <= scale <= +8191])
+	2	+8191
+	9	ERR1		(scale factor > 8191)
+	4	SCALE
+	1	+8191
+	9	ERR1		(scale factor < -8191)
+	8	SCALOK
+	(then)
+ERR1	4	+1		(error number)
+	11	QERROR
+	8	QERROR+1
+	0 E1BLK
+	8	;+0		(no continuation)	
+
+E1BLK	0 +0			("link")
+	+1			(words following)
+	\SCL			(error code)
+	(endif)
+
+SCALOK	4	SCALE
+	(if scale < 0)
+	9	NEGSCL
+	(then)
+	1	=6 0		(convert to instruction)
+	8	STORE
+	(else)
+NEGSCL	1	=6 8191		(negative scale factor)
+	(endif)
+
+STORE	5	PATCH
+	11	QDLA+20		(enter QDLA)
+	8	QDLA+21
+PATCH	>1			(input scale)
+	15	2048		(read a fraction)
+	6	0		(reset scale to 0)
+	7	PART2		(0.0 terminates loop)
+	15	6148
+	/10 4096		(format: digits[10])
+	5	X
+	(if X < 0)
+	9	SQRREJ		(negative argument)
+	(then)
+	5	QDASQRT+44	(set up as argument of sqrt)
+	+0			(exit QDLA)
+
+	11	QDASQRT
+	8	QDASQRT+1
+
+	11	QDLA+20		(enter QDLA)
+	8	QDLA+21
+	4 	QDASQRT+46	(result from sqrt)
+	15	6148
+	10 4096			(fraction, digits[10])
+	+0			(exit QDLA)
+	8	DOSIN
+	(else)
+SQRREJ	+0			(exit QDLA)
+	4	+3
+	5	QDOUT		(QDLA corrupts QDOUT)
+	11 	OUTSTR
+	8	OUTSTR+1
+	\
+	\  X
+	\<0
+	\
+	\ ^
+	(endif)
+
+DOSIN	4	X+1
+	5 	QDASIN+99
+	4	X
+	5	QDASIN+98	
+	11	QDASIN		(sin & cos)
+	8	QDASIN+1
+
+	11	QDLA+20		(enter QDLA)
+	8	QDLA+21
+	4	QDASIN+102
+	15 	6148		(sin)
+	10 4096			(fraction, digits[10])
+	4	QDASIN+104	(cos)
+	15	6148
+	10 4096			(fraction, digits[12])
+	+0			(exit QDLA)
+	8	PART1		(do another cycle)
+	(end loop)
+
+	(arctan loop)
+PART2	+0			(exit QDLA)
+	4	+3
+	5	QDOUT		(QDOUT corrupted by QDLA)
+	4	+2
+	11	NEWLIN		(output headings)
+	8	NEWLIN+2
+	11	OUTSTR
+	8	OUTSTR+1
+	\
+	\
+	\ X
+	\
+	\
+	\
+	\ Y
+	\
+	\
+	\ AR
+	\CTA
+	\N X
+	\/Y
+	\  T
+	\RUE
+	\ BE
+	\ARI
+	\NG^
+
+	11	QDLA+20		(enter QDLA)
+	8	QDLA+21
+NEXT	15	2048		(read x, y)
+	5	QDAATAN+136	(x)
+	15	2048
+	7	PART3		(y=0 terminates)
+	5	QDAATAN+138	(y)
+	4	QDAATAN+136
+	15	6148
+	/10 4096		(fraction, newline digits[10])
+	4	QDAATAN+138
+	15	6148
+	10 4096			(fraction, sameline, digits[10])
+
+	+0			(exit QDLA)
+
+	11	QDAATAN
+	8	QDAATAN+1
+
+	11	QDLA+20		(enter QDLA)
+	8	QDLA+21
+	4	QDAATAN+142
+	15	6148
+	10 4096			(fraction, sameline, digits[10])
+	4	QDAATAN+146
+	15	6148
+	10 4096			(fraction, sameline, digits[10])
+	8	NEXT		(do another cycle)
+	(end loop)
+
+	(newton-raphson method for square roots using unpacked reals)
+PART3	+0			(exit QDLA)
+
+	4	+3
+	5	QDOUT		(QDLA corrupts QDOUT)
+
+	11	NEWLIN		(output headings)
+	8 	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\NEW
+	\TON
+	\'S
+	\MET
+	\HOD
+	\ FO
+	\R S
+	\QRT
+	\^
+	11	NEWLIN
+	8	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+
+	\
+	\
+	\ X
+	\
+	\
+	\
+	\NEW
+	\TON
+	\
+	\
+	\  S
+	\QRT
+	\^
+
+
+	11	QDLA+20		(enter QDLA)
+	8	QDLA+21
+
+	(newton loop)
+MORE	15	2048		(input x)
+	7	END		(0 terminates)
+	15	6148		(output x)
+	/10 4096		(newline, digits[10])
+	5	X
+	11	NEWTON		(calculate sqrt by newton's method)
+	8	NEWTON+1
+	15	6148		(output result)
+	10 4096			(sameline, digits[10])
+	4	X
+	5	QDASQRT+44	(argument location)
+	0 0			(terminate QDLA)
+	
+	11	QDASQRT		(compare to built in sqrt)
+	8	QDASQRT+1
+
+	11	QDLA+20		(enter QDLA)
+	8	QDLA+21
+	4	QDASQRT+46	(result)
+	15 	6148		(output result)
+	10 4096			(sameline, digits[10])
+	8	MORE
+	(end newton loop)	
+
+END	0 0			(exit QDLA)
+	4	+3
+	5	QDOUT		(QDLA corrupts QDOUT)
+
+	11 	NEWLIN
+	8 	NEWLI2
+	11	OUTSTR
+	8	OUTSTR+1
+	\END
+	\^
+	8	;+0		(stop at end)
+
+X	>2
+SCALE	>2
+PL8192	>2
+MI8192	>2
+
+(newton-raphson method for square roots)
+(assumes run from within QDLA	       )
+(argument is in accumulator	       )
+
+[NEWTON OUTSTR NEWLIN QDLA QERROR QDOUT]
+NEWTON	+0			(link)
+
+	(if argument >= 0)
+	9	ERROR1
+	7	EXIT		(sqrt 0 = 0)
+	(then)
+	5	A
+	(if argument <> 1.0)
+	2	MAX		(a = 0.9999999?)
+	7	EXIT		(sqrt 1 = 1)
+	(then)
+	4	MAX		(x[0] := 1.0)
+SETXN	5	XN
+	4	MI20
+	5	COUNT
+	(loop until converged or count falls to 0)
+LOOP	4	A		(x[n+1] := 0.5 [x[n] + a / x[n]])
+	13	XN
+	14 	8191
+	5	XN1
+	4	XN
+	14	8191
+	1	XN1
+	5	XN1
+	2	XN
+	(if abs [x[n+1] >= x[n]] <= eps)
+	9	;+2
+	8	;+2
+	2	+0		(abs)
+	1	MEPS
+	7	CONV
+	9	CONV
+	(then)
+	10	COUNT		(iteration counter)
+	4	COUNT
+	7	ERROR2		(too many iterations)
+	4	XN1		(x[n] := x[n+1])
+	5	XN
+	8	LOOP
+	(else)
+CONV	4	XN1
+EXIT	0	NEWTON
+	/8	1
+	(else)
+
+ERROR1	0 0
+	4 	+1
+	5 	ERRNO
+	8	ERROR
+
+ERROR2	4	+2
+	5	ERRNO
+
+ERROR	4	+3
+	5	QDOUT		(QDLA corrupts QDOUT)
+	4	ERRNO
+	11	QERROR
+	8	QERROR+1
+	0	ERRBLK
+	11	QDLA+20		(enter QDLA on resume)
+	8	QDLA+21
+	4	ZERO		(return zero)
+	8	EXIT
+	(else)
+CONT	4	XN1		(x[n] := x[n+1])
+	5	XN
+	8	LOOP		(next iteration)
+	(end loop)
+
+ERRBLK	0 NEWTON		(link)
+	+1			(words following)
+	\NWT
+
+ERRNO	>1
+
+A	>2
+XN	>2
+XN1	>2
+ZERO	+0			(double[0])
+	+0
+MAX	&377777			(double[1.0-eps])
+	&377777
+
+MEPS    &777777			(-espilon)
+	&377774
+
+MI20	-1			(double[-20])
+	&377753
+COUNT  	>2			(used as an integer)
+
+[NEWLIN NEWLI2 QCHOP]
+
+(subroutine to output a sequence of newlines)
+(enter at NEWLIN+1 for one newline          )
+(enter at NEWLI2 for multiple newlines      )
+(with count in accumulator                  )
+
+NEWLI2	4	-2
+	8	;+4		(set count to -2)
+NEWLIN	+0
+	4 	+1		(entry for one NEWLIN)
+	2 	+0		(entry for multiple NEWLINs)
+	5 	COUNT
+LOOP	7 	EXIT
+	4 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	10 	COUNT
+	4 	COUNT
+	 8 	LOOP
+EXIT	0 	NEWLIN
+	/8 	1
+COUNT	>1
+
+[OUTSTRI QCHOP]
+
+(subroutine to output a string)
+
+OUTSTR 	+0
+LOOP	0 	OUTSTR
+	/4 	1		(next word in string)
+	14 	8180		(first char)
+	6 	+63
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	14 	8186
+	6 	+63		(second char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	6 	+63		(third char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	 8 	QCHOP+1
+	10 	OUTSTR
+	8 	LOOP
+EXIT	0 	OUTSTR
+	/8 	2
+
+%
+<! halt !>

@@ -1,0 +1,36 @@
+﻿<! Scanning From "images" TO "scanned" !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T1.1 " !>
+<! scanned\THIMBLEBY_T1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T10.1 " !>
+<! scanned\THIMBLEBY_T10 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T11.1 " !>
+<! scanned\THIMBLEBY_T11 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T12.1 " !>
+<! scanned\THIMBLEBY_T12 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T2.1 " !>
+<! scanned\THIMBLEBY_T2 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T3.1 " !>
+<! scanned\THIMBLEBY_T3 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T4.1 " !>
+<! scanned\THIMBLEBY_T4 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T5.1 " !>
+<! scanned\THIMBLEBY_T5 Assumed to be binary !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T6.1 " !>
+<! scanned\THIMBLEBY_T6 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T7.1 " !>
+<! scanned\THIMBLEBY_T7 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T8.1 " !>
+<! scanned\THIMBLEBY_T8 Detected to be 900 telecode !>
+<! File Name " C:\Users\Andrew\Dropbox\elliott903\Papertapes\ORIGINALS\THIMBLEBY\images\THIMBLEBY_T9.1 " !>
+<! scanned\THIMBLEBY_T9 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! 
+12 Files Scanned 0 Files Ignored !>
+<! 0 Parity Errors 7 Other problems !>
+FINISHED

@@ -1,0 +1,535 @@
+﻿
+((DO-ALL 3, 13/12/68)
+
+((MAIN PROGRAMME)
+
+[CHIPF CHIPL CHIPE CHIPM CHIPS CHIP1 CHIP2 CHIP3 CHIP4
+CHOPF CHOPL CHOPE CHOPB CHOPC CHOP1
+T2S T2SF T2SS T2S1 T2S2 T2S3]
+
+(8)      8    LEGIBL
+(9)      8    SET920
+(10)     8    SET903
+(11)     8    BLANKS
+(12)     8    NOBLKS
+(13)     8    LAT
+(14)     8    LATWD
+(15)     8    CAT
+(16)     8    START
+(17)     8    CONTIN
+(18)     8    END
+(19)     8    T2SB
+(20)     8    T2SE1
+(21)     8    T2SE1A
+(22)     8    T2HALT
+(23)     8    T2CRB
+
+LEGIBL   4    +0
+         5    CHIPF
+         5    CHOPF
+         4    +20
+         5    CHIPS
+         4    &400000
+         5    CHOPC
+         11   CHIPL
+         8    CHIPE
+PSTOP    11   CHOPL
+         8    CHOPE
+         1    -20
+         7    ;+0
+         8    ;-6
+
+SET920   4    +0
+         8    ;+2
+SET903   4    +1
+         5    CHOPCR
+         8    ;+0
+
+BLANKS   4    +0
+         8    ;+2
+NOBLKS   4    -1
+         5    CHOPB
+         8    ;+0
+
+LAT      4    +0
+         8    ;+4
+LATWD    4    +1
+         8    ;+2
+CAT      4    -1
+         5    CHIPM
+         8    ;+0
+
+START    4    +0
+         5    CHOPF
+         4    +20
+         5    CHIPS
+         4    CHOPCR
+         5    CHOPC
+
+CONTIN   4    +0
+         5    CHIPF
+         11   CHIPL
+         8    CHIPE
+         1    -20
+         7    ;+0
+         11   CHOPL
+         8    CHOPE-1
+         8    ;-6
+
+END      4    +20
+         8    PSTOP
+
+T2SB     4    +0
+         8    ;+4
+T2SE1    4    -1
+         8    ;+2
+T2SE1A   4    +1
+         5    T2SF
+
+         4    T2SS
+         5    CHIPS
+         4    +0
+         5    CHIPF
+         8    T2S
+
+
+T2HALT   4    +20
+         8    ;+2
+T2CRB    4    +41
+         5    T2SS
+         8    ;+0
+
+CHIP1    11   ERRORL
+         8    ERRORE
+         £PAR
+         £ITY
+         £ ER
+         £ROR
+         £.
+
+CHIP2    11   ERRORL
+         8    ERRORE
+         £1ST
+         £ CH
+         £ARA
+         £CTE
+         £R N
+         £OT
+         £NEW
+         £LIN
+         £E.
+
+CHIP3    11   ERRORL
+         8    ERRORE
+         £ILL
+         £EGA
+         £L I
+         £NPU
+         £T C
+         £HAR
+         £ACT
+         £ER.
+
+CHIP4    11   ERRORL
+         8    ERRORE
+         £OVE
+         £R 1
+         £20
+         £CHA
+         £RAC
+         £TER
+         £S O
+         £N L
+         £INE
+         £.
+
+CHOP1    11   ERRORL
+         8    ERRORE
+         £ILL
+         £EGA
+         £L O
+         £UTP
+         £UT
+         £CHA
+         £RAC
+         £TER
+         £.
+
+T2S1     11   ERRORL
+         8    ERRORE
+         £CON
+         £TEX
+         £TUA
+         £L E
+         £RRO
+         £R.
+
+T2S2     11   ERRORL
+         8    ERRORE
+         £NUM
+         £ERI
+         £CAL
+         £ OV
+         £ERF
+         £LOW
+         £.
+
+T2S3     11   ERRORL
+         8    ERRORE
+         £BLO
+         £CK
+         £NUM
+         £BER
+         £ NO
+         £T 1
+         £0 O
+         £R 1
+         £1.
+
+CHOPCR   +0
+
+ERRORL   >1
+
+ERRORE   4    +0
+         5    CHOPF
+         4    &400000
+         5    CHOPC
+
+NEXTWD   4    -2
+         5    COUNT
+         10   ERRORL
+         0    ERRORL
+         /4   0
+
+NEXTCH   5    CHAR
+         14   8180
+         6    &77
+         1    -14
+         7    END
+         1    +46
+         11   CHOPL
+         8    CHOPE
+
+         4    COUNT
+         7    NEXTWD
+         10   COUNT
+         4    CHAR
+         14   6
+         8    NEXTCH
+
+COUNT    >1
+CHAR     >1
+
+((T2 TO S.I.R. CONVERSION PROGRAMME, 13/12/68)
+
+[CHIPL CHIPE CHIP CHOPL CHOPE
+T2S T2SF T2SS T2S1 T2S2 T2S3]
+
+T2S      4    +0
+         5    JREL
+
+         11   CHIPL
+         8    CHIPE
+TESTNL   1    -10
+         7    ;+2
+         8    T2S1
+         11   CHOPL
+         8    CHOPE-1
+
+         11   CHIPL
+         8    CHIPE
+         1    -10
+         7    CHIPE
+
+         4    CHIP
+         2    T2SS
+         7    STOP
+
+         4    +40
+         11   CHOPL
+         8    CHOPE
+         4    JREL
+         11   INTOPL
+         8    INTOPE
+         4    +59
+         11   CHOPL
+         8    CHOPE
+         4    +41
+         11   CHOPL
+         8    CHOPE
+         4    +9
+         11   CHOPL
+         8    CHOPE
+
+         4    CHIP
+         1    -43
+         7    CONST
+         1    -2
+         7    CONST
+
+         1    -2
+         7    BMOD
+         1    -19
+         7    BMOD
+         8    NOTMOD
+
+BMOD     4    +47
+         11   CHOPL
+         8    CHOPE
+         11   CHIPL
+         8    CHIPE
+
+NOTMOD   11   INTINL
+         8    INTINE
+         5    F
+         2    +15
+         9    T2S2
+         11   INTOPL
+         8    INTOPE+1
+
+         4    CHIP
+         1    -9
+         7    ;+4
+         1    -23
+         7    ;+2
+         8    T2S1
+         4    +9
+         11   CHOPL
+         8    CHOPE
+
+         11   CHIPL
+         8    CHIPE
+         11   INTINL
+         8    INTINE
+         5    NREL
+         2    +8191
+         9    T2S2
+
+         4    CHIP
+         1    -44
+         7    REL
+         1    -15
+         7    REL
+         8    PUNINT
+
+REL      11   CHIPL
+         8    CHIPE
+         1    -10
+         7    OWNBLK
+
+         11   INTINL
+         8    INTINE
+         2    +8191
+         9    T2S2
+
+         4    T2SF
+         7    GENRAL
+
+         4    INTGR
+         1    -10
+         7    B10
+         1    -1
+         7    B11
+         8    T2S3
+
+B10      4    +69
+         11   CHOPL
+         8    CHOPE
+         4    +49
+         11   CHOPL
+         8    CHOPE
+         4    T2SF
+         9    TESTN
+         4    +65
+         8    PUNCHA
+
+B11      4    +66
+         11   CHOPL
+         8    CHOPE
+         4    +54
+PUNCHA   11   CHOPL
+         8    CHOPE
+         8    TESTN
+
+GENRAL   4    +66
+         11   CHOPL
+         8    CHOPE
+         11   INTOPL
+         8    INTOPE+1
+
+TESTN    4    NREL
+         7    INCJ
+         8    PUNPOS
+
+OWNBLK   0    F
+         4    &437777
+         /14  8186
+         9    NOTSR    (Not self-relative unless F= 7, 8, or 9)
+
+         4    JREL
+         2    NREL
+         9    ;+2
+         2    +0       ( - Modulus[NREL - JREL])
+         1    +6       (6 - Modulus)
+         9    NOTSR    (Not self-relative if Modulus>6)
+
+         4    +59
+         11   CHOPL
+         8    CHOPE
+         4    JREL
+         2    NREL
+         9    PUNNEG
+
+PUNPOS   5    INTGR
+         4    +43
+         8    ;+4
+PUNNEG   2    +0
+         5    INTGR
+         4    +45
+         11   CHOPL
+         8    CHOPE
+         8    PUNINT
+
+NOTSR    11   INTOPL
+         8    INTOPE+1
+         4    +59
+         11   CHOPL
+         8    CHOPE
+         8    INCJ
+
+CONST    11   CHOPL
+         8    CHOPE-1
+         11   CHIPL
+         8    CHIPE
+         1    -46
+         7    FRACT
+
+         11   INTINL
+         8    INTINE
+
+PUNINT   11   INTOPL
+         8    INTOPE+1
+
+INCJ     10   JREL
+         4    CHIP
+         8    TESTNL
+
+STOP     4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+
+FRACT    5    DIGICT
+(+1)     11   CHOPL
+         8    CHOPE-1
+
+         11   CHIPL
+         8    CHIPE
+         2    +57
+         9    ENDFRC
+         2    +9
+         9    ENDFRC
+
+         4    DIGICT
+         1    -6
+         7    T2S2
+         10   DIGICT
+         8    FRACT+1
+
+ENDFRC   4    DIGICT
+         7    T2S1
+         8    INCJ
+
+INTINL   >1
+
+INTINE   4    +0
+         5    DIGICT
+         5    INTGR
+
+         4    CHIP
+TESDIG   2    +57
+         9    ENDINT
+         2    +9
+         9    ENDINT
+
+         14   8191
+         1    INTGR
+         14   8190
+         1    INTGR
+         5    EIGHTH
+         14   3
+         5    INTGR
+
+         10   DIGICT
+         11   CHIPL
+         8    CHIPE
+         8    TESDIG
+
+ENDINT   4    DIGICT
+         7    T2S1
+         2    +6
+         9    T2S2
+
+         4    EIGHTH
+         2    &037777
+         9    T2S2
+
+         4    INTGR
+         0    INTINL
+         /8   1
+
+INTOPL   >1
+
+INTOPE   5    INTGR
+(+1)     4    +0
+         5    DIGICT
+         5    ZERMKR
+
+NEXTDG   4    +0
+         5    SUBCT
+         4    INTGR
+         0    DIGICT
+         /1   POWTEN
+         9    ;+5
+         10   SUBCT
+         10   ZERMKR
+         5    INTGR
+         8    ;-5
+
+         4    ZERMKR
+         7    ;+5
+
+         4    SUBCT
+ADD48    1    +48
+         11   CHOPL
+         8    CHOPE
+
+         10   DIGICT
+         4    DIGICT
+         1    -5
+         9    NEXTDG
+         7    ;+3
+
+         0    INTOPL
+         /8   1
+
+         4    INTGR
+         8    ADD48
+
+POWTEN   -100000
+         -10000
+         -1000
+         -100
+         -10
+
+F        >1
+NREL     >1
+JREL     >1
+INTGR    >1
+DIGICT   >1
+EIGHTH
+ZERMKR   >1
+SUBCT    >1
+T2SS     +41
+T2SF     >1
+<! Halt !>

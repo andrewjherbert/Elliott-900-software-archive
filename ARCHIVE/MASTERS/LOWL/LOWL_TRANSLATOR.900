@@ -1,0 +1,217 @@
+﻿<,;^!>:
+:DEF,COMMENT,;!
+!
+:COMMENT,COMMON FUNCTIONS;!
+!
+:DEF,IF,<:^1,:DEF,^1,^4;:DEF,^2,^3;;>;!
+!
+:COMMENT,DIRECTIVES AND CONSTANTS;!
+!
+:DEF,ALIGN,<>;!
+!
+:DEF,CON,<:LEG,^1,^1,+0,+^1;>;!
+!
+:DEF,DCL,<^1 +0>;!
+!
+:DEF,EQU,<*DEFINE ^1 [^2]>;!
+!
+:DEF,HASH,<::UNQUOTE,^1;; ( ^1 )>;!
+!
+:DEF,IDENT,<*DEFINE ^1 [^2]>;!
+!
+:DEF,LABEL,<^1 >;!
+!
+:DEF,NB,<(:UNQUOTE,^1;)>;!
+!
+:DEF,NCH,<:^1;>;!
+!
+:DEF,NLREP,&500001;!
+!
+:DEF,OF,<^2>;!
+!
+:DEF,PRGEN,<
+
+%>;!
+!
+:DEF,PRGST,<(^1>);!
+!
+:DEF,RL,<+^2 ( TO ^1 )>;!
+!
+:DEF,SLREP,&540001;!
+!
+:DEF,SPREP,&500000;!
+!
+:DEF,STOPCD,&540000;!
+!
+:DEF,QUTREP,&500002;!
+!
+:DEF,TABREP,TABCD;!
+!
+:DEF,WTHS,+131071;!
+!
+:COMMENT,INSTRUCTIONS;!
+!
+:DEF,AAL,<:COND,^1,0,,1 +^1;>;!
+!
+:DEF,AAV,<1 ^1>;!
+!
+:DEF,ABV,<LDAB
+ 1 ^1
+ LDBA>;!
+!
+:DEF,ANDL,<6 +^1>;!
+!
+:DEF,ANDV,<6 ^1>;!
+!
+:DEF,BMOVE,<11 STKL
+8 BMOVE>;!
+!
+:DEF,BSTK,<11 STKL
+8 BSTK>;!
+!
+:DEF,BUMP,<:COND,^2,!
+1,10 ^1,!
+2,10 ^1
+10 ^1,!
+4 ^1
+1 +^2
+5 ^1;>;!
+!
+:DEF,CAI,<0 ^1
+/2 0>;!
+!
+:DEF,CAL,<2 +^1>;!
+!
+:DEF,CAV,<2 ^1>;!
+!
+:DEF,CCI,<0 ^1
+/2 0>;!
+!
+:DEF,CCL,<2 :STR,^1;>;!
+!
+:DEF,CCN,<2 :^1;>;!
+!
+:DEF,CFSTK,<11 STKL
+8 FSTK+1>;!
+!
+:DEF,CLEAR,<4 +0
+5 ^1>;!
+!
+:DEF,CSS,;!
+!
+:DEF,EXIT,<0 ^2
+/8 ^1>;!
+!
+:DEF,FMOVE,<11 STKL
+8 FMOVE>;!
+!
+:DEF,FSTK,<11 STKL
+8 FSTK+1>;!
+!
+:DEF,GO,<8 ^1>;!
+!
+:DEF,GOADD,<0 ^1
+/8 <;>+1>;!
+!
+:DEF,GOEQ,<7 ^1>;!
+!
+:DEF,GOGE,<7 ^1
+9 ^1>;!
+!
+:DEF,GOGR,<9 ^1>;!
+!
+:DEF,GOLE,<7 ^1
+2 +0
+9 ^1>;!
+!
+:DEF,GOLT,<2 +0
+9 ^1>;!
+!
+:DEF,GOND,<9 ^1>;!
+!
+:DEF,GONE,<7 <;>+2
+8 ^1>;!
+!
+:DEF,GOPC,<6 &100000
+7 <;>+2
+8 ^1>;!
+!
+:DEF,GOSUB,<:COND,^1,STKARG,11 LINKPT
+8 ^1,!
+MDERCH,11 MDOUCH
+8 ^1,!
+11 ^1
+8 ^1+1;>;!
+!
+:DEF,LAA,<4 R^1>;!
+!
+:DEF,LAI,<0 ^1
+/4 0>;!
+!
+:DEF,LAL,<4 +^1>;!
+!
+:DEF,LAM,</4 ^1>;!
+!
+:DEF,LAV,<4 ^1>;!
+!
+:DEF,LBV,<0 ^1>;!
+!
+:DEF,LCI,<0 ^1
+/4 0>;!
+!
+:DEF,LCM,</4 ^1>;!
+!
+:DEF,LCN,<4 :^1;>;!
+!
+:DEF,LINKB,<0 LINKPT
+/8 1>;!
+!
+:DEF,LINKR,<^1>;!
+!
+:DEF,MESS,<11 MESS
+8 MESS+1
+:ALPHA,^1;>;!
+:DEF,QMESS,<11 MESS
+8 MESS+1
+:ALPHA,^1;>;!
+:DEF,RMESS,<11 MESS
+8 MESS+1
+:ALPHA,^1;>;!
+!
+:DEF,MULTL,<:COND,^1,1,,12 +^1
+14 17;>;!
+!
+:DEF,ORL,<5 MDCH
+2 -1
+6 +^1
+1 MDCH>;!
+!
+:DEF,SAL,<:COND,^1,0,,1 -^1;>;!
+!
+:DEF,SBL,<LDAB
+1 -^1
+LDBA>;!
+!
+:DEF,SAV,<2 ^1
+2 +0>;!
+!
+:DEF,STI,<0 ^1
+/5 0>;!
+!
+:DEF,SBV,<LDAB
+2 ^1
+2 +0
+LDBA>;!
+!
+:DEF,STV,<5 ^1>;!
+!
+:DEF,SUBR,<^1 +0
+:COND,^2,X,,5 ^2;
+>;!
+!
+:DEF,UNSTK,<11 STKL
+8 UNSTK
+5 ^1>;!
+!
+:COMMENT, END OF MACRO DEFS;
+<! halt !>

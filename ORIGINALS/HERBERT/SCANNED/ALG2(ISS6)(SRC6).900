@@ -1,0 +1,925 @@
+﻿
+  8 DECML1
+OTMX8 4 W3
+ 14 8179
+ 1 +16
+ 5 SW
+ 4 W3
+ 6 +8191
+ 5 W3
+OTMX9 4 SIGNCH
+ 9 OTMX10
+ 11 OTCHA
+ 8 OTCHA1
+ 4 -1
+ 5 SIGNCH
+OTMX10 4 SW
+ 11 OTCHA
+ 8 OTCHA1
+ 4 BEFPT
+ 1 -1
+ 5 BEFPT
+ 8 OTMX2
+OTMX12 4 ADPART
+ 7 OTMX13
+ 4 +0
+ 11 OTCHA
+ 8 OTCHA1
+OTMX13 0 SBLNK1
+ /8 1
+
+RDNM26 4 FLNS19
+ 11 PAUSRT
+ 8 FAILEN
+ 11 GECHAR
+ 8 GECHEN
+RDNM 4 +0
+ 5 W1
+ 5 W2
+ 5 W3
+ 5 W4
+ 5 W5
+ 5 W6
+ 5 W7
+ 5 W9
+ 5 WS20
+ 4 =/0 0
+ 5 W8
+ 8 ;+5
+ 4 WS22
+ 5 W2
+RDNM1 11 GECHAR
+ 8 GECHEN
+ 0 IDEV
+ /4 BUFFER-1
+ 5 WS21
+ 0 WS21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /4 TABLE
+ 6 =8 0
+ 7 RDNM3
+ 10 W1
+ 10 WS20
+ 4 W7
+ 7 RDNM2
+ 0 +0
+ 4 W9
+ 1 W9
+ 5 W9
+ 14 2
+ 1 W9
+ 1 WS21
+ 1 -16
+ 5 W9
+ 2 +28
+ 9 ;+2
+ 8 RDNM1
+ 1 W9
+ 8 ;-5
+RDNM2 10 W8
+ 11 SBLNK
+ 8 DECML5
+ 4 W5
+ 2 +17
+ 6 +8191
+ 1 SHFT1
+ 5 ;+4
+ 4 WS21
+ 1 -16
+ 0 +0
+ +0
+ 3 SBW
+ 11 SBLNK
+ 8 DECML4
+ 11 STAND
+ 8 STAND+1
+ 8 RDNM1
+ RDNM5 4 W6
+ 10 W6
+ 7 RDNM6
+RDNM7 4 FLNS17
+ 8 RDNM26+1
+RDNM6 5 W8
+ 8 RDNM1
+RDNM8 4 +1
+
+
+
+
+
+
+
+
+
+
+
+
+
+RDNM9 5 WS22
+ 4 WS20
+ 7 RDNM1-2
+ 8 RDNM27
+RDNM10 5 WS20
+ 4 W7
+ 7 RDNM11
+ 8 RDNM7
+RDNM11 10 W7
+ 4 W1
+ 7 RDNM12
+RDNM13 4 W2
+ 5 W10
+ 4 +0
+ 5 W2
+ 10 W6
+ 8 RDNM1
+RDNM12 4 =8 0
+ 5 W3
+ 4 +1
+ 5 W5
+ 10 W1
+ 8 RDNM13
+RDNM3 4 WS21
+ 1 -14
+ 7 RDNM5
+ 1 -17
+ 7 RDNM10
+ 1 +18
+ 7 RDNM8
+ 1 +2
+ 7 RDNM9
+ 1 +4
+ 7 RDNM26
+RDNM27 4 W1
+ 7 RDNM1
+ 4 W7
+ 7 RDNM14
+ 4 W2
+ 7 RDNM4
+ 4 W9
+ 2 +0
+ 5 W9
+RDNM4 4 W10
+ 5 W2
+RDNM14 4 W8
+ 9 RDNM15
+ 2 W9
+ 5 W9
+RDNM15 4 W9
+ 7 RDNM20
+ 9 RDNM16
+ 1 -1
+ 5 W9
+
+
+
+
+
+
+
+
+
+
+
+
+ 11 SBLNK
+ 8 DECML5
+RDNM19 11 STAND
+ 8 STAND+1
+ 8 RDNM15
+RDNM16
+ 4 W3
+ 7 RDNM20
+ 10 W9
+ 4 =10 0
+ 5 TENPWR
+ 11 SBLNK
+ 8 DIVTEN
+ 8 RDNM19
+RDNM20 4 W2
+ 7 ;+4
+ 0 W3ADDR
+ 11 SBLNK
+ 8 NEGR6
+ 4 ADPART
+ 2 +2
+ 7 ;+3
+ 11 SBLNK1
+ 8 RICONV
+ 4 W
+ 5 SP
+ 5 PKDADD
+ 11 STSUBRT
+ 8 STSUB
+ 8 INOEX
+ 0 SBLNK2
+ /8 1
+OSTSB 5 WS2
+ 4 -12
+ 5 WS3
+ 4 -1
+ 5 WS6
+ 5 WS4
+
+OST2 0 WS2
+ /4 0
+ 0 WS3
+ /14 0
+ 6 +63
+ 5 WS5
+ 4 WS3
+ 7 OST1
+ 1 +6
+ OST3 5 WS3
+ 4 WS4
+ 9 OST4
+ 7 OST6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 0 WS5
+ /4 TABLE
+ 6 =8 0
+ 7 OST5
+ 4 WS6
+ 12 +10
+ 14 17
+ 1 WS5
+ 1 -16
+ 5 WS6
+ 8 OST2
+OST1 4 -12
+ 10 WS2
+ 8 OST3
+OST4 4 WS5
+ 1 -7
+ 7 OST2-1
+ 4 +23
+ 8 ENFAIL
+ 4 +1
+ 8 OST2-1
+OST6 4 WS5
+ 1 -7
+ 7 OST6-2
+ 1 -25
+ 7 OSTSB-2
+ 4 WS5
+ 11 OTCHA
+ 8 OTCHA1
+ 8 OST2
+
+OST5 4 WS6
+ 9 OST9+3
+ 4 WS7
+ 1 -34
+ 7 OST11
+ 4 WS6
+ 1 -2
+ 5 WS6
+ 9 OST9
+ 4 WS14
+ 11 OTCHA
+ 8 OTCHA1
+ 4 WS6
+ 1 -1
+ 8 ;-7
+ 4 =/0 0
+ 8 ;+2
+OST8 4 HALTCH
+ 8 OST8+8
+ 4 +1
+ 5 WS7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 4 LFCH+1
+ 8 OST8+9
+ 1 +25
+ 1 +7
+ 5 WS7
+ 5 WS14
+ 4 +0
+ 5 WS6
+ 8 OST2
+OST11
+ 4 WS6
+ 1 =/0 0
+ 5 WS7
+ 4 -1
+ 5 WS6
+OST9 4 WS7
+ 11 OTCHA
+ 8 OTCHA1
+ 4 WS5
+ 5 WS7
+ 1 -32
+ 7 OST2-1
+ 1 -2
+ 7 OST8+10
+ 1 -6
+ 7 OST8
+ 1 -4
+ 7 OST8+2
+ 1 -5
+ 7 OST8+7
+ 1 -1
+ 7  OST8-2
+ 1 -1
+ 7 OST8+8
+ 1 -2
+ 7 OST8+6
+ 4 FLNS7
+ 11 PAUSRT
+ 8 FAILEN
+ 8 OST8+2
+
+
+
+[SERIES FPA DLMULT]
+
+SERIES +0
+ 4 +0
+ 11 DLMULT
+ 5 FPA+1
+ 0 SERIES
+ /1 1
+ 5 FPA
+ /4 2
+ 10 SERIES
+ 1 FPA+1
+ 10 SERIES
+ 9 OVERFLOW
+RETURN 5 FPA+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /4 4
+ /9 5
+ 8 DLMULT+1
+ OVERFLOW 6 =15 8191
+ 10 FPA
+ 8 RETURN
+
+[DLDIV W3 W4 WS]
+
+DLDIV +0
+ 4 W3
+ 5 WS+13
+ 4 W4
+ 5 WS+14
+ 0 +0
+ 14 8191
+ 3 WS+16
+ 5 WS+15
+ 4 +0
+ 5 WS+30
+ 5 WS+29
+ 0 +0
+ 4 WS+13
+ 13 WS+17
+ 5 WS+32
+ 12 WS+17
+ 3 WS+20
+ 5 WS+19
+ 4 WS+20
+ 7 NOCARRY
+ 2 +131071
+ 1 +1
+ 5 WS+20
+ 4 WS+19
+ 2 WS+13
+ 1 -1
+ 8 ;+3
+ NOCARRY 4 WS+19
+ 2 WS+13
+ 5 WS+19
+ 4 WS+32
+ 12 WS+18
+ 14 8191
+ 3 WS+33
+ 2 WS+15
+ 5 WS+21
+ 4 WS+33
+ 2 WS+16
+ 5 WS+22
+ 9 SUBTI
+ 4 WS+21
+ 8 ;+4
+SUBTI 4 WS+21
+ 1 -1
+ 5 WS+21
+ 7 L0
+ 9 LNEG
+LPOS 14 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 10 WS+30
+ 9 JUMP1
+ 8 ;-3
+L0 4 +16
+ 5 WS+30
+ 8 JUMP1
+LNEG 0 +0
+ 14 1
+ 10 WS+30
+ 9 ;-2
+ JUMP1 4 WS+19
+ 7 JUMP2
+ 1 +1
+ 7 JUMP2
+ 1 -1
+ 14 8191
+ 10 WS+29
+ 8 ;-6
+JUMP2 4 WS+29
+ 1 WS+30
+ 2 +1
+ 7 N1
+ 4 WS+29
+ 2 +16
+ 5 WS+28
+ 1 =14 0
+ 5 SHIFT2
+ 4 WS+29
+ 2 +0
+ 6 &17777
+ 1 =14 0
+ 5 SHIFT1
+EVALUATE 0 WS+22
+ 14 1
+ 4 WS+21
+SHIFT1 14 0
+ 3 WS+22
+ 5 WS+21
+ 0 WS+20
+ 14 1
+ 4 WS+19
+SHIFT2 14 0
+ 3 WS+23
+ 1 WS+21
+ 5 WS+24
+ 4 WS+23
+ 1 WS+22
+ 5 WS+25
+ 9 ADDI
+ 8 ;+2
+ADDI 10 WS+24
+ 0 WS+25
+ 14 1
+ 4 WS+24
+ 14 8191
+ 13 WS+17
+ 5 WS+26
+ 4 WS+28
+ 2 =15 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 5 SHIFT3
+ 0 +0
+ 4 WS+26
+SHIFT3 14 0
+ 3 WS+29
+ 3 W4
+ 1 WS+32
+ 5 W3
+ 5 WS+28
+ 0 DLDIV
+ /8 1
+ N1 4 =14 8191
+ 5 SHIFT1
+ 4 =14 15
+ 5 SHIFT2
+ 4 +15
+ 5 WS+28
+ 8 EVALUATE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[TABLE]
+TABLE
+ /0 67
+ /0 192
+ 2 192
+ 2 64
+ 2 192
+ 2 64
+ 2 64
+ 2 2243
+
+ 2 2240
+ 2 2048
+ 2 2625
+ 2 2752
+ 2 2112
+ 2 2755
+ 2 4288
+ 2 2624
+
+ 8 192
+ 8 64
+ 8 64
+ 8 192
+ 8 69
+ 8 192
+ 8 192
+ 8 64
+
+ 8 64
+ 8 192
+ 2 2240
+ 2 2112
+ 2 2496
+ 2 2368
+ 2 2368
+ 2 4288
+
+ 2 128
+ 4 66
+ 4 2
+ 4 131
+ 4 4
+ 4 133
+ 4 134
+ 4 7
+
+ 4 8
+ 4 137
+ 4 138
+ 4 11
+ 4 140
+ 4 13
+ 4 14
+ 4 143
+
+ 4 16
+ 4 145
+
+
+
+
+
+
+
+
+
+
+
+
+ 4 146
+ 4 19
+ 4 148
+ 4 21
+ 4 22
+ 4 151
+
+ 4 152
+ 4 25
+ 4 26
+ 2 2203
+ 2 28
+ 2 2205
+ 2 2718
+ 2 31
+
+/4 160
+ /1 5153
+ 4 2082
+ /4 3235
+ 4 4132
+ /4 5285
+ /4 6310
+  4 7207
+
+ 5 40
+ /5 1193
+ /5 2218
+ 5 3115
+ /5 4268
+ 5 5165
+ 5 6190
+ /5 7343
+
+ 6 48
+ /6 1201
+ /6 2226
+ 6 3123
+ /6 4276
+
+ 6 5173
+ 6 6198
+ /6 7351
+
+ /7 184
+ 7 1081
+ 7 2106
+ /7 3259
+ 7 4156
+ /7 5309
+ /7 6334
+ 7 7232
+
+ /8 66
+  8 1185
+ 8 2210
+ /8 3107
+ 8 4260
+ /8 5157
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /8 6182
+ 8 7335
+
+ 9 168
+ /9 1065
+ /9 2090
+ 9 3243
+ /9 4140
+ 9 5293
+ 9 6318
+ /9 7215
+
+ 10 176
+ /10 1073
+ /10 2098
+ 10 3251
+ /10 4148
+ 10 5301
+  10 6326
+ /10 7223
+
+ /11 56
+ 11 1209
+ 11 2234
+ /11 3136
+ 11 4288
+ /11 5184
+ /11 6208
+ 11 7363
+
+[OTCHA GECHAR GECHEN GECH OTCHA1 OTCHA2
+TABLE ALRMCH HALTCH FAILEN PAUSRT BUFFER
+ NEXTCH PCHLNK IDEV ODEV INSLOT OUTSLT
+ SBLNK HALTMK SBW4 SBW3 SBW FLNS14 FLNS15
+ SBW5 LFCH OUTPA INPA ]
+
+DEV +0
+OTCHA +0
+OTCHA1 5 SBW
+OTCHA2 4 OTCHA
+ 5 PCHLNK+1
+ 4 SBW
+ 0 ODEV
+ /0 OUTSLT-1
+ /8 0
+
+OUTPA 0 ;+4
+ 0 ;+1
+ 4 +6148
+ 8 ;+2
+ 4 +6144
+ 5 DEV
+ 4 SBW
+ 9 OTCHA6
+OTCHA4
+ 0 SBW
+ /0 TABLE+64
+
+
+
+
+
+
+
+
+
+
+
+
+ 14 8
+OTCHA6
+ 0 DEV
+ /15 0
+ 4 SBW
+ 1 -1
+ 7 ;+3
+OTCHA5 0 PCHLNK+1
+ /8 1
+ 4 LFCH
+ /15 0
+ 4 +0
+ /15 0
+ 8 OTCHA5
+
+GECHAR +0
+GECH 4 SBLNK
+ 8 ;+2
+GECHEN 4 GECHAR
+ 5 PCHLNK
+ 0 IDEV
+ /0 INSLOT-1
+ /8 0
+INPA 0 ;+4
+ 0 ;+1
+ 4 +2052
+ 8 ;+2
+ 4 +2048
+ 5 DEV
+ 0 IDEV
+ /4 BUFFER-1
+ 9 ;+3
+ 5 NEXTCH
+GECHP1 8 GECH4
+ 11 PAUSRT
+       8   HALTCH+1
+ 4 +1
+ 8 ;-5
+GECH4 4 +0
+ 0 DEV
+ /15 0
+ 5 SBW4
+ 6 +127
+ 5 SBW5
+ 0 SBW5
+ 2 SBW4
+ /2 TABLE
+ 6 +128
+ 7 ;+3
+ 4 FLNS14
+ 8 GECH15
+ /4 TABLE
+ 6 +127
+
+
+
+
+
+
+
+
+
+
+
+
+ 1 -64
+GECHP4 9 GECH13
+ 5 SBW4
+ 0 SBW4
+ /8 ;+1
+ 8 GECH9
+ 8 GECH11
+ 8 GECH99
+ 8 GECH4
+GECHP2 8 GECH9
+
+ 4 =/0 1
+GECH11 5 HALTMK
+GECHP3 8 ;+2
+GECH13 6 +63
+ 0 IDEV
+ /5 BUFFER-1
+ 0 NEXTCH
+ /4 TABLE
+ 0 PCHLNK
+ /8 1
+
+GECH99 4 +0
+ 15 2048
+ 15 6144
+ 7 GECH4
+ 8 ;-4
+
+GECH9 4 FLNS15
+GECH15 11 PAUSRT
+ 8 FAILEN
+ 4 +0
+ 8 GECH13
+LFCH +10
+
+ /0 10
+ALRMCH /0 135
+HALTCH /0 20
+
+[PAUSRT NXPORD SP READAL]
+       4   PAUSRT       (LIKE SWAIT)
+       1   +1
+       5   20
+      8   NXPORD+1
+
+       4   20           (FROM 9)
+       5   20           (FROM 8 ETC)
+       4   NXPORD+2
+       5   NXPORD
+       4   NXPORD+3
+       5   NXPORD+1
+       0   20
+       /8  0
+
+       4   SP           (FROM 14)
+       1   -7980
+       9   8000
+       8   READAL-1
+
+
+%
+<! Halt !>

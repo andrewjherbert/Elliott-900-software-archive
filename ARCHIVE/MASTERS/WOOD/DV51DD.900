@@ -1,0 +1,27 @@
+﻿DV51DD;
+"BEGIN" "REAL" PA0,G8,X,Y,Z,A,B,C,D,P,Q,R,S,T,U;
+LPRINT;PUNCH(4);
+"READ" PA0,G8;
+"PRINT"''S20@@,'2-METRE XTAL TABLE@,
+''L4S3@@,'FREQ@,''S5@@,'/2@,PREFIX
+('        @),'/4@,'/5@,'/6@,'/7@,'/8@,'/15@,
+'/16@,'/17@,'/18@,'/19@,'/20@;"PRINT"''L@@;
+"FOR" X:=PA0 "STEP" 0.001 "UNTIL" G8 "DO"
+"BEGIN"
+
+          P:=X/15;
+          Q:=X/16;
+A:=X/5;   R:=X/17;
+B:=X/6;   S:=X/18;
+C:=X/7;   T:=X/19;
+D:=X/8;   U:=X/20; 
+
+"PRINT" SAMELINE,ALIGNED(3,3),x,ALIGNED(2,5),
+PREFIX('  @),A,B,C,D,P,Q,R,S,T,U,''L@@;
+"END";
+"PRINT"''L60@@,PA0,''S5@@,G8;
+"END"
+
+144.000
+144.500
+<! Halt !>

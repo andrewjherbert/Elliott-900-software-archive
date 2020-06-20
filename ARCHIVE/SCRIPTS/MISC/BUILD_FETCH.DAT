@@ -1,0 +1,58 @@
+﻿C Build FREDFIX
+
+on 903
+nonprinting off
+
+c edit FETCH
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+
+*17
+^%,
+CHE
+WAI
+CHE
+INS
+%
+^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+st 490
+delete errors.txt
+at ptr file ../../MASTERS/MISC/FETCH.900
+at ptp file TEMP.900
+j 9
+st 822
+at ptr file ../../MASTERS/ACDSIR/CHIO.900
+j 10
+st 1274
+de ptp
+
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+c assemble
+select out tty
+at ptr file TEMP.900
+j 12
+st 562
+
+rewind
+select out auto
+at ptp file FETCH.BIN
+j 10
+st 587
+de ptp
+
+delete TEMP.900
+
+sh t

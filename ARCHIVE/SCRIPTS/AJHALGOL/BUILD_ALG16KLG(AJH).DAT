@@ -1,0 +1,383 @@
+﻿C Build 16K Load and Go ALGOL System (AJH)
+
+C Also makes LPR version with LPRINT built-in
+
+c The load and go system consists of the 2-pass system Tape 2 
+c in store module 0 and Tape 1 in module 1 patched to 
+c enable ALGOL intermediate code to be passed from translator to 
+c interpreter directly without being punched out.
+
+c The entire system is built using MASIR to enable automatic resolution
+c of inter store and and program module references.
+
+c A custom dump utility is used to make the final tape.
+
+c The 2 Pass system must be built before building the LG system.
+c The lpr library must be built before building the LPR version.
+
+c Store map:
+c
+c The assembled translator  in locations     0^1-6185^1
+c W, INBUF and stack	    in locations  6186^1-6333^1 
+c CODL                      at location          6334^1          
+c A pre-loaded symbol table in locations  7923^1-8190^1
+c The assembled interpreter in locations       8-3907^0
+c The built-in library      in locations    3908-4492^0
+c The RLB loader            in locations    7851-8129^0
+c The MASIR loader 	    in locations    8130-8176^0
+
+on 903 16K
+
+C **********EDIT SYSTEM**********
+
+c load Bowdler
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+c edit translator
+at ptp file errors.txt legible
+c steering tape
+at ptr file EDIT_TRANSLAT(LG).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptp file TEMP_T.900
+at ptr file TRANSLAT(2PASS).900
+j 9
+de ptp
+st 1274
+
+c edit symbols
+at ptp file errors.txt legible
+c steering tape
+at ptr file EDIT_SYMBOLS(LG).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptp file TEMP_S.900
+at ptr file ALG1_SYMBOLS(2PASS).900
+j 9
+de ptp
+st 1274
+
+c edit interpreter.
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c patch for long steering tape
+e 1231 8200
+e 1232 64000
+at ptp file errors.txt legible
+c first steering tape
+at ptr file EDIT_INTERPR(LG).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptr file INTERPR(2PASS).900
+at ptp file TEMP_I.900
+j 9
+de ptp
+st 1274
+
+c edit loader
+at ptp file errors.txt legible
+c steering tape
+at ptr file EDIT_LOADER(LG).900
+j 13
+de ptp
+print errors.txt
+st 490
+at ptr file LOADER(2PASS).900
+at ptp file TEMP_L.900
+j 9
+de ptp
+st 1274
+
+c prettify sources
+at ptr file ../../MASTERS/SWTOOLS/SIRTIDYS.BIN
+j 8181
+st 8175
+
+at ptr file TEMP_T.900
+at ptp file TRANSLAT(LG).900
+j 8
+de ptp
+st 676
+at ptr file TEMP_S.900
+at ptp file ALG1_SYMBOLS(LG).900
+j 8
+de ptp
+st 676
+at ptr file TEMP_I.900
+at ptp file INTERPR(LG).900
+j 8
+de ptp
+st 676
+at ptr file TEMP_L.900
+at ptp file LOADER(LG).900
+j 8
+de ptp
+st 676
+
+C **********ASSEMBLE SYSTEM**********
+
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j  8181
+st 8164
+
+C MASIR commands
+c O4 - punch loader halt code, normal assembly
+c O0 - normal assembly
+c M  - assemble
+
+at ptp file LG.RLB
+at tty inline
+O4M<!!>
+at ptr file ../../MASTERS/AJHALGOL/LGDUMP(AJH).900
+nonstop on
+j 16
+c falls off tape
+at tty inline
+O0M<!!>
+at ptr file INTERPR(LG).900
+j 16
+c falls off tape
+at tty inline
+O0M<!!>
+at ptr file LOADER(LG).900
+j 16
+c falls off tape
+at tty inline
+O0M<!!>
+at ptr file TRANSLAT(LG).900
+j 16
+c falls off tape
+at tty inline
+O0M<!!>
+at ptr file ALG1_SYMBOLS(LG).900
+j 16
+c falls off tty 
+de ptp
+nonstop off
+
+reverse LG.RLB
+
+c load output rlb tape by LOADER at 16, input loader commands by teleprinter
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+c LOADER commands
+c O34 - set options
+c option 004 - output program to tape or backing store
+c option 010 - select paper tape
+c option 020 - no built-in routines required
+c option 100 - list labels
+c L read tape
+
+at tty inline
+O34LM<!!>
+at ptr file LG.RLB
+at ptp file LG.BIN
+nonstop on
+j 16
+
+c falls off end of teleprinter input
+de ptp
+nonstop off
+
+C **********ADD LIBRARY**********
+
+c load system
+clear
+at ptr file LG.BIN
+j 8181
+st 8164
+
+c run fix up at 7000^1
+e 5120 +15192
+e 5121 =0 5120
+e 5122 =/8 0
+j 5121
+st 7020^1
+
+c load ALGOL library
+at ptr file LIBRARY(AJH).RLB
+select out tty
+nonprinting off
+j 18
+select out auto
+nonprinting on
+st 8000
+
+c run dump at 7001^1
+at ptp file ALG16KLG(AJH).BIN
+e 5120 +15193
+e 5121 =0 5120
+e 5122 =/8 0
+j 5121
+st 7060^1
+
+de ptp
+
+C **********MAKE LPR VERSION**********
+
+c make a version of amend at 5120
+
+c edit full program tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c steering tape
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+
+*17
+^5120		  
+^%,
+
+CHE
+INS
+
+%
+
+^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+delete errors.txt
+st 490
+delete error.txt
+at ptp file temp.txt
+at ptr file ../../MASTERS/ACDUTILITIES/AMEND.900
+j 9
+de ptp
+st 1274
+
+c assemble
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+c first pass
+select out tty
+at ptr file temp.txt
+j 12
+st 562
+c second pass
+rewind
+select out auto
+at ptp file AMEND(900)(5120).BIN
+j 10
+de ptp
+st 587
+delete temp.txt
+
+c load system
+clear
+at ptr file LG.BIN
+j 8181
+st 8164
+
+c run fix up at 7000^1
+e 5120 +15192
+e 5121 =0 5120
+e 5122 =/8 0
+j 5121
+st 7020^1
+
+c save LGDUMP as gets cleared by translator
+at ptr file AMEND(900)(5120).BIN
+j 8181
+st 8175
+at ptr inline
+^5373 (save)
+   +6000
+   +15192 (7000^1)
+   -300
+(5376)
+   0 5374
+  /4 0
+   0 5373
+  /5 0
+  10 5373
+  10 5374
+  10 5375
+   4 5375
+   9 ;-8
+   8 ;+0
+   +0
+^5389 (restore and enter)
+   +6000
+   +15192 (7000^1)
+   -300
+(5392)
+   0 5389
+  /4 0
+   0 5390
+  /5 0
+  10 5389
+  10 5390
+  10 5391
+   4 5391
+   9 ;-8
+   8 ;+0
+<! halt !><!!>
+j 5120
+st 5126
+
+c save LGDUMP
+j 5376
+st 5385
+
+c build LPRINT into translator
+c by translating then freezing namelist
+at ptr inline
+title;"begin""code""procedure"lprint;"algol";
+<! halt !><!!>
+j 16
+st 1715
+j 25
+st 181^01
+
+c restore LGDUMP
+j 5392
+st 5401
+
+c load lpr library
+at ptr file LPRLIBRARY(AJH).RLB
+select out tty
+nonprinting off
+j 18
+select out auto
+nonprinting on
+st 8000
+
+c run dump at 7001^1
+at ptp file ALG16KLGLPR(AJH).BIN
+e 5120 +15193
+e 5121 =0 5120
+e 5122 =/8 0
+j 5121
+st 7060^1
+de ptp
+
+C **********TIDY UP**********
+
+delete temp.txt
+delete errors.txt
+delete TEMP_I.900
+delete TEMP_L.900
+delete TEMP_T.900
+delete TEMP_S.900
+delete LG.RLB
+delete AMEND(900)(5120).BIN
+
+sh t

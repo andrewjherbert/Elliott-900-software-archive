@@ -1,0 +1,65 @@
+﻿on
+telecode 900
+at ptr file ../..//SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+
+PRIMES;
+"BEGIN"
+   "COMMENT" 30-APR-1996
+             Knuth and Merner, CACM June 1961;
+   "INTEGER" J, A, M, P, Z;
+   "INTEGER" "PROCEDURE" G(J, N, Z, V); "INTEGER" J, N, Z, V;
+   "BEGIN"
+      "FOR" J := 1 "STEP" 1 "UNTIL" N "DO" Z := V;
+      G := 1
+   "END";
+
+   PUNCH(3); DIGITS(5);
+
+   "FOR" M := 1 "STEP" 1 "UNTIL" 20 *
+      G(J, "IF" J = 0 
+           "THEN" -1 
+           "ELSE" J, P,
+              "IF" J = 1 
+              "THEN"  1
+              "ELSE"
+                 "IF" G(A, J, Z,
+                    "IF" A = 1 
+                    "THEN" 1
+                    "ELSE"
+                       "IF" A * (J "DIV" A) = J "AND" A < J 
+                       "THEN" 0
+                       "ELSE" Z) = Z
+                 "THEN" 
+                   ("IF" P < M 
+                    "THEN" P + 1
+                    "ELSE" J * G(A, 1, J, -1))
+                 "ELSE" P)
+   "DO" 
+      "IF" M = 1 
+      "THEN" "PRINT" {{LS23}TABLE OF PRIMES{L2}}, P
+      "ELSE" 
+         "IF" 10 *(M "DIV" 10) = M - 1
+         "THEN" "PRINT" P
+         "ELSE" "PRINT" SAME LINE, P
+"END"
+<! Halt Code !>
+<!!>
+at ptp file TEST.RLB
+c compile
+j 8
+de ptp
+
+c run
+at ptr file ../..//SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+at ptr file TEST.RLB
+j 8
+select out tty
+nonprinting off
+j 10
+
+delete TEST.RLB
+sh t

@@ -1,0 +1,212 @@
+﻿
+>24
+
+((A J HERBERT -- 24/07/13)
+((Music Playing Program)
+(						)
+(Enter at 0; to translate music 		)
+(Enter at 1; to load and play music		)
+(Enter at 2; to replay music			)
+(						)
+(Music input format				)
+( <note><mod> <duration>			)
+( <note> ::= A B C D E F G			)
+( <mod>  ::= ^ upper octave     		)
+(            ' sharp            		)
+(	     @ flat             		)
+( R	     rest				)
+( S	     end of input       		)
+(						)
+(Music playing format          		 	)
+( <pitch> <duration>				)
+( -1  to terminate				)	
+
+[MUSIC QIN1 QOUT1 QCHOP QCHIN]
+
+MUSIC	8	TRANS		(translate music)
+	8	READ		(load and play music)
+
+PLAY	4	+0		(play loaded music)
+	5	OUTDEX
+PLAYL	(for OUTDEX := 0 step 2 until INDEX do)
+	(SHIFT := BUFFER[OUTDEX]+14 0)
+	0 	OUTDEX
+	/4 	BUFFER
+	1	=14 0
+	5	SHIFT
+	(for CYCLE := 0 step 1 until BUFFER[OUTDEX+1] do)
+	/4	BUFFER+1
+	2	+0
+	5	CYCLE
+SHIFT	>1			(patched with variable shift)
+	10	CYCLE
+	4	CYCLE
+	9	SHIFT
+	10	OUTDEX
+	10 	OUTDEX
+	4	INDEX
+	2	OUTDEX
+	9	PLAYL	
+	8	READ		(finished - fetch next tune)
+
+(read and play music)
+
+READ <	4	+0		
+	5	INDEX
+
+	(for INDEX := 0, INDEX+2 while true do)
+	(read i, presume integer)
+READL	11	QIN1
+	8	QIN1+1
+	(if i >= 0)
+	9	PLAY
+	(then)	
+	(BUFFER[INDEX] := i)
+	0	INDEX
+	/5	BUFFER
+	(read BUFFER[INDEX+1])
+	11	QIN1
+	8	QIN1+1
+	0	INDEX
+	/5	BUFFER+1
+	10	INDEX
+	10   	INDEX
+	8	READL
+
+(translate music)
+TRANS	
+
+	(read next note)
+NOTEL	11	QCHIN
+	8	QCHIN+1
+        7	NOTEL		( skip space )
+	1	-1		
+	7	NOTEL		( skip newline )
+	1	-49		(R?)
+	7	LETR
+	1	-1		(S?)
+	7	LETS
+	1	+18		(adjust so A = 0)
+	5	WS
+	0	WS
+	/4	NOTES		(look up note A-G)
+	5	NOTE
+
+	(look for modifier to note)
+MOD	11	QCHIN
+	8	QCHIN+1
+	7	;-2		(skip spaces)
+	1	-62		(^ - add an octave)
+	7	LETUP
+	1	+30		(@ - flat)
+	7	LETAT
+	1	+25		('- sharp)
+	7	LETAC
+	1	-9
+	5	DUR		(0-9 duration)
+	0	NOTE
+	/4	PITCH
+	5	SHIFTS
+	11	QOUT1
+	8	QOUT1+1
+	/3 0
+	0	+0
+	4	SHIFTS		(duration of shift)
+	1	SHIFTS
+	1	SHIFTS		( 3 usec each place shifted )
+	1	+96		( 14 + 10 + 4 + 9 instruction times in usec )
+	5	WS		( time for each loop cycle in usec )
+	(70000 / shift time * duration)
+	4	+70000
+	14	8176		(2^-16)
+	13	WS
+	14	8191		(2^1)
+	0	+0
+	12	DUR
+	14	17		(2^17)
+	11	QOUT1
+	8	QOUT1+1
+	1 0
+	8	NOTEL
+
+	(add an octave to note)
+LETUP	4	NOTE
+	1	+12
+MODOK	5	NOTE
+	8	MOD
+
+	(make note flat)
+LETAT	4	NOTE
+	1	-1
+	8	MODOK
+
+	(make note sharp)
+LETAC	10	NOTE
+	8	MOD
+
+	(rest)
+LETR	4	+900
+	11	QOUT1
+	8	QOUT1+1
+	/3 0
+	4	+40
+	11	QOUT1
+	8	QOUT1+1
+	1 0
+	8	NOTEL
+
+	(stop)
+LETS 	4	-1		(output -1 to terminate music)
+	11	QOUT1
+	8	QOUT1+1
+	/0 0
+	4	+1		(output newline)
+	11	QCHOP
+	8	QCHOP+1
+	8	;+0		(stop)
+
+PITCH	+110			(A)
+	+100			(B@)
+	+90			(B)
+	+80			(C)
+	+73			(C')
+	+66			(D)
+	+58			(E@)
+	+51			(E)
+	+45			(F)
+	+40			(F')
+	+36			(G)
+	+31			(A^)
+	+27			(B@^)
+	+23			(B^)		
+	+19			(C^)			
+	+16			(C'^)
+	+13			(D^)
+	+10			(E@^)
+	+7			(E^)
+	+4			(F^)
+	+1			(F'^)
+
+NOTES	+0			(A) 
+	+2			(B)
+	+3			(C)
+	+5			(D)
+	+7			(E)
+	+8			(F)
+	+10			(G)
+
+
+
+WS	>1
+NOTE	>1
+INDEX	>1
+DUR	>1
+SHIFTS	>1
+OUTDEX	>1
+CYCLE	>1
+
+^800
+BUFFER	>1
+$
+
+<! halt !>

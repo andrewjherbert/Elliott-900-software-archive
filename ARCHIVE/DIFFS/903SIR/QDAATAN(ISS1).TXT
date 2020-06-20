@@ -1,0 +1,12 @@
+﻿9,11c9
+< 
+< (AJH replaced pp[ QDAATAN QDLA ])
+< [ QDAATAN QDLA ]
+---
+> pp[ QDAATAN QDLA ]
+180c178
+< <! Halt !>
+\ No newline at end of file
+---
+> <! Halt !><! Halt !>
+\ No newline at end of file

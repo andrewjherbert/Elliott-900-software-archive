@@ -1,0 +1,11 @@
+﻿
+on 903 16k
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+at ptr file ../../MASTERS/WOOD/DV51X1.900
+j 8
+select out tty
+j 10
+
+sh t

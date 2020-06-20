@@ -1,0 +1,55 @@
+﻿Notes on Don Hunter tapes in TJF Box A1
+=======================================
+
+BLUE, WHITE
+
+Probably same, source of Hunter patches dated 18/06/76.
+
+Superseded by Patches in AJH collection dates 30/12/76.
+
+Note WHITE includes test program missing from 30/12/76
+sources.
+
+GREEN, PINK
+
+Possibly binary versions of BLUE and/or WHITE.
+
+T1_T2
+
+Tape 1 and Tape 2 binary patches dated 8/12/76.
+
+TA
+
+RECURSIV
+
+RLB possibly of a recursive ALGOL procedure?
+
+SWITCH
+
+Binary patch for Tape 1, 17/11/77 to remove need to
+declare labels in switch list.
+
+TAPE_1, TAPE_2 
+
+Binary patches for Tape 1 and Tape 2 dated 30/12/76.
+
+TRIGGER
+
+903 Algol Issue 6, 16K trigger tape
+(Was wound up with Patch for TAPE 1, 30 DEC 1976.)
+Purpose unknown.
+
+TEST_IT
+
+Compiled ALGOL procedure.  Purpose unknown.
+
+WITHOUT
+
+18 APR 1975 Elliott 903 Algol Tape 2 Issue 6
+600 extra locations available
+3360 3940 instead of 3960 4540
+WITHOUT: EXP,LN,CHECKB,CHECKI,CHECKR,CHECKS,
+PARAMETER CHECKING, ARRAYS CALLED BY VALUE,
+and the ^ symbol: all give run-time error 30.
+
+Don Hunter's compact ALGOL interpreter.

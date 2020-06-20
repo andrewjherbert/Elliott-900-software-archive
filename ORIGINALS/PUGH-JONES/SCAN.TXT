@@ -1,0 +1,279 @@
+﻿<! Scanning From "IMAGES" TO "SCANNED" !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\ALG1(ISS5).1 " !>
+<! SCANNED\ALG1(ISS5) Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\ALG1(ISS5).2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\ALG2(ISS5).1 " !>
+<! SCANNED\ALG2(ISS5) Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\ALG2(ISS5).2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ-MISC2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_ACTUALRESULTS.1 " !>
+<! SCANNED\CPJ_ACTUALRESULTS Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_ACTUALRESULTS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_ANONCJ.1 " !>
+<! SCANNED\CPJ_ANONCJ Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_ANONCJ.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CAREOFPERSON.1 " !>
+<! SCANNED\CPJ_CAREOFPERSON Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CAREOFPERSON.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CAREOFPERSON2.1 " !>
+<! SCANNED\CPJ_CAREOFPERSON2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CAREOFPERSON2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CAREOFPERSONDATA.1 " !>
+<! SCANNED\CPJ_CAREOFPERSONDATA Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CAREOFPERSONDATA.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESS070571.1 " !>
+<! SCANNED\CPJ_CHESS070571 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESS070571.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESS1.1 " !>
+<! SCANNED\CPJ_CHESS1 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESS1.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESS2.1 " !>
+<! SCANNED\CPJ_CHESS2 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESS2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSANS.1 " !>
+<! SCANNED\CPJ_CHESSANS Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSANS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSANS2.1 " !>
+<! SCANNED\CPJ_CHESSANS2 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSANS2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSANS210471.1 " !>
+<! SCANNED\CPJ_CHESSANS210471 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSANS210471.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSDATA.1 " !>
+<! SCANNED\CPJ_CHESSDATA Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSDATA.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSDATA2.1 " !>
+<! SCANNED\CPJ_CHESSDATA2 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSDATA2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSDATA3.1 " !>
+<! SCANNED\CPJ_CHESSDATA3 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSDATA3.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CHESSONLY.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ1A-1.1 " !>
+<! SCANNED\CPJ_CJPJ1A-1 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ1A-1.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ1A-2.1 " !>
+<! SCANNED\CPJ_CJPJ1A-2 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ1A-2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ2A.1 " !>
+<! SCANNED\CPJ_CJPJ2A Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ2A.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ2A_2.1 " !>
+<! SCANNED\CPJ_CJPJ2A_2 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CJPJ2A_2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CURRENCY.1 " !>
+<! SCANNED\CPJ_CURRENCY Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_CURRENCY.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_DATABOARD.1 " !>
+<! SCANNED\CPJ_DATABOARD Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_DATABOARD.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_DATESANDDAYS.1 " !>
+<! SCANNED\CPJ_DATESANDDAYS Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_DATESANDDAYS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_EDITBLOCKOX.1 " !>
+<! SCANNED\CPJ_EDITBLOCKOX Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_EDITBLOCKOX.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_FIND.1 " !>
+<! SCANNED\CPJ_FIND Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_FIND.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_FOOLSMATE.1 " !>
+<! SCANNED\CPJ_FOOLSMATE Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_FOOLSMATE.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_INITIALPOS.1 " !>
+<! SCANNED\CPJ_INITIALPOS Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_INITIALPOS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_LEGIBLE.1 " !>
+<! SCANNED\CPJ_LEGIBLE Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_LEGIBLE.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC1.1 " !>
+<! SCANNED\CPJ_MISC1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC1.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC10.1 " !>
+<! SCANNED\CPJ_MISC10 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC10.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC11.1 " !>
+<! SCANNED\CPJ_MISC11 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC11.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC12.1 " !>
+<! SCANNED\CPJ_MISC12 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC12.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC13.1 " !>
+<! SCANNED\CPJ_MISC13 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC13.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC14.1 " !>
+<! SCANNED\CPJ_MISC14 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC14.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC15.1 " !>
+<! SCANNED\CPJ_MISC15 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC15.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC16.1 " !>
+<! SCANNED\CPJ_MISC16 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC16.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC17.1 " !>
+<! SCANNED\CPJ_MISC17 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC17.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC18.1 " !>
+<! SCANNED\CPJ_MISC18 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC18.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC19.1 " !>
+<! SCANNED\CPJ_MISC19 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC19.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC2.1 " !>
+<! SCANNED\CPJ_MISC2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC20.1 " !>
+<! SCANNED\CPJ_MISC20 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC20.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC3.1 " !>
+<! SCANNED\CPJ_MISC3 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC3.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC4.1 " !>
+<! SCANNED\CPJ_MISC4 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC4.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC6.1 " !>
+<! SCANNED\CPJ_MISC6 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC6.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC7.1 " !>
+<! SCANNED\CPJ_MISC7 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC8.1 " !>
+<! SCANNED\CPJ_MISC8 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC9.1 " !>
+<! SCANNED\CPJ_MISC9 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_MISC9.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NOOFNOS.1 " !>
+<! SCANNED\CPJ_NOOFNOS Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NOOFNOS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NOUGHTS.1 " !>
+<! SCANNED\CPJ_NOUGHTS Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NOUGHTS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NUMBEREDBOARD.1 " !>
+<! SCANNED\CPJ_NUMBEREDBOARD Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NUMBEREDBOARD.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NUMBERS.1 " !>
+<! SCANNED\CPJ_NUMBERS Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NUMBERS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NUTS.1 " !>
+<! SCANNED\CPJ_NUTS Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_NUTS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OANDXB.1 " !>
+<! SCANNED\CPJ_OANDXB Detected to be 900 telecode !>
+<! Parity Error (Code = 186) !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OANDXB.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OLD2.1 " !>
+<! SCANNED\CPJ_OLD2 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OLD2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OLD4.1 " !>
+<! SCANNED\CPJ_OLD4 Detected to be 900 telecode !>
+<! Unknown 900 character 005 !>
+<! Parity Error (Code = 1) !>
+<! Unknown 900 character 001 !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OLD4.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OXO.1 " !>
+<! SCANNED\CPJ_OXO Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_OXO.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT120473-2.1 " !>
+<! SCANNED\CPJ_PERT120473-2 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT120473-2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT120473.1 " !>
+<! SCANNED\CPJ_PERT120473 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT120473.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT251171.1 " !>
+<! SCANNED\CPJ_PERT251171 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT251171.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT_APRIL73.1 " !>
+<! SCANNED\CPJ_PERT_APRIL73 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERT_APRIL73.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTDATA11.1 " !>
+<! SCANNED\CPJ_PERTDATA11 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTDATA11.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTEX3.1 " !>
+<! SCANNED\CPJ_PERTEX3 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTEX3.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTEX4.1 " !>
+<! SCANNED\CPJ_PERTEX4 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTEX4.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTEX5.1 " !>
+<! SCANNED\CPJ_PERTEX5 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PERTEX5.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PROGRAMCHESS.1 " !>
+<! SCANNED\CPJ_PROGRAMCHESS Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_PROGRAMCHESS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SIMPLEX.1 " !>
+<! SCANNED\CPJ_SIMPLEX Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SIMPLEX.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SORT.1 " !>
+<! SCANNED\CPJ_SORT Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SORT.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SORT210471.1 " !>
+<! SCANNED\CPJ_SORT210471 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SORT210471.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SORTTRANS.1 " !>
+<! SCANNED\CPJ_SORTTRANS Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SORTTRANS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_7HARD.1 " !>
+<! SCANNED\CPJ_SOSLE_7HARD Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_7HARD.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_DATA.1 " !>
+<! SCANNED\CPJ_SOSLE_DATA Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_DATA.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_PROG.1 " !>
+<! SCANNED\CPJ_SOSLE_PROG Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_PROG.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_RESULTS.1 " !>
+<! SCANNED\CPJ_SOSLE_RESULTS Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_RESULTS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_TRANS.1 " !>
+<! SCANNED\CPJ_SOSLE_TRANS Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_SOSLE_TRANS.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_STEEL1.1 " !>
+<! SCANNED\CPJ_STEEL1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_STEEL1.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_STEEL2.1 " !>
+<! SCANNED\CPJ_STEEL2 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_STEEL2.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_TESTDATA.1 " !>
+<! SCANNED\CPJ_TESTDATA Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\CPJ_TESTDATA.2 " !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\QCOPY(ISS2).1 " !>
+<! SCANNED\QCOPY(ISS2) Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\PUGH-JONES\IMAGES\QCOPY(ISS2).2 " !>
+<! 
+156 Files Scanned 0 Files Ignored !>
+<! 2 Parity Errors 38 Other problems !>
+FINISHED

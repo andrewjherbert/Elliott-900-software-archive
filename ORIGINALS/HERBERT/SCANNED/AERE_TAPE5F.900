@@ -1,0 +1,10 @@
+﻿        7   NOTPHI
+       11   GET
+        8   GET+1
+        0   DNO
+       /5   SENSE-2
+
+       11   GET
+        8   GET+1
+        0   DNO
+<! Halt !>

@@ -1,0 +1,63 @@
+﻿C Build CORALIO
+
+on 905 16K
+
+nonstop on
+newline off
+
+C Macro pass
+at tty inline
+GO
+<!!>
+at ptr file ../../MASTERS/CORAL/MACRO.BIN
+j ii
+
+at ptp file TEMP1.900
+at ptr file ../../MASTERS/CORAL/CORALIO.900
+r
+de ptp
+st 8117
+
+C Pass 1A
+at ptr file ../../MASTERS/CORAL/PASS1A.BIN
+at tty inline
+GO
+<!!>
+j ii
+at ptp file TEMP2.BIN
+at ptr file TEMP1.900
+r
+de ptp
+st 6512^1
+
+C Pass 1B -- note needs run in same store as PASS1A
+at tty inline
+GO
+<!!>
+at ptr file ../../MASTERS/CORAL/PASS1B.BIN
+j ii
+at ptp file TEMP3.BIN
+at ptr file TEMP2.BIN
+r
+de ptp
+st 6512^1
+
+C Pass 2
+at ptr file ../../MASTERS/CORAL/PASS2.BIN
+at tty inline
+GO
+<!!>
+j ii
+at ptr file TEMP3.BIN
+at ptp file CORALIO.RLB
+r
+de ptp
+st 6912^01
+
+reverse CORALIO.RLB
+
+delete TEMP1.900
+delete TEMP2.BIN
+delete TEMP3.BIN
+
+sh t

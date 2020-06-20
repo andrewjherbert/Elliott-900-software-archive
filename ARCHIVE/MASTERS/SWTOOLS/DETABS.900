@@ -1,0 +1,56 @@
+﻿
+detabs;
+"begin"
+
+    "comment" detab tape in SIR format;
+
+    "code" "procedure" chio; "algol";
+    "code" "procedure" ch900; "algol";
+    "code" "integer" "procedure" getc (ch); "integer" ch; "algol";
+    "code" "procedure" putc (ch); "value" ch; "integer" ch; "algol";
+    "integer" BLANK, EOF, NEWLINE, TAB;
+    "procedure" closeptp; putc(EOF);
+
+    "integer" i, c, col;
+
+    "boolean" "array" tabs[1:120];
+
+    "procedure" settabs;
+        "begin"
+            "for" i := 2 "step" 1 "until" 120 "do" tabs[i] := "false";
+            "for" i := 11, 17 "step" 10 "until" 120 "do" tabs[i] := "true"
+        "end" settabs;
+
+    "boolean" "procedure" tabpos(col); "value" col; "integer" col;
+        tabpos := ("if" col < 121 "then" tabs[col] "else" "false");
+
+    "comment" initialize special characters;
+    BLANK := 32; EOF := 20; NEWLINE := 10; TAB := 9;
+
+    "comment" initialize chio;
+    chio; ch900;
+
+    settabs;
+
+    col := 1;
+    
+    "for" i := 0 "while" getc(c) "ne" EOF "do"
+	"if" c = TAB "then" "begin"
+	    repeat:
+	        putc(BLANK);
+	        col := col+1;
+		"if" "not" tabpos(col) "then" "goto" repeat
+	    "end"
+	"else" "if" c = NEWLINE "then" "begin"
+	    putc (NEWLINE);
+	    col := 1
+	    "end"
+	"else" "begin"
+	    putc (c);
+	    col := col+1
+	    "end";
+
+    closeptp;
+
+"end" detabs
+<! halt !>

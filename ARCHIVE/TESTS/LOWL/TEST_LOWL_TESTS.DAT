@@ -1,0 +1,9 @@
+﻿C Run LOWL tests
+
+on 905 16K
+
+at ptr file ../../SCRIPTS/LOWL/LOWL_TESTS.BIN
+j 8181
+st 8164
+j 16
+sh t

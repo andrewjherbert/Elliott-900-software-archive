@@ -1,0 +1,652 @@
+﻿
+(A J HERBERT -- 11/01/12				  )
+(Program to demonstrate working with fixed point fractions)
+
+(Summary of single length fraction routines		  )
+(							  )
+( QIN1+1: integer or fraction input       		  )
+( QIN1+2: scaling factor for mixed/fractional numbers	  )
+( QIN1+125: 0 after integer input,                        )
+(           +1 after fraction input			  )
+( Error 1: format error				          )
+( Error 2: integer or mixed number overflow		  )
+( Error 3: scale error - mixed number out of range        )
+( Error 4: negative scaling factor                        )
+(							  )
+( QOUT1+1: integer output				  )
+( QOUT1+2: fraction output				  )
+( parameter word 	                                  )
+( / = newline, otherwise sameline               	  )
+( f = width 6-f digits                        	          )
+( n = scaling factor                            	  )
+( integer occupies 7-f positions, fraction or mixed 8-f   )
+(                                                         )
+( Error 1: number cannot be express in specified format   )
+(	   after scaling				  )
+(							  )
+( QATAN+1: calculate [1/pi] arctan [x/y]		  )
+(	argument x in QATAN+89				  )
+(	argument y in QATAN+90                            )
+(       result in accumulator                             )
+(							  )
+( QEXP+1: calculate exp [2^p x]				  )
+(	x in accumulator				  )
+(	p in QEXP+53					  )
+(	result in accumulator and QEXP+54                 )
+(       x saved in QEXP+52, p overwritten                 )
+(							  )
+( QLN+1: calculate 1/16 ln x				  )
+(	argument in accumulator                           )
+(	result in accumulator and QLN+52                  )	
+(							  )
+( QSIN+1: calculate 0.5 sin pi x and 0.5 cos pi x         )
+(	x in accumulator				  )
+(	result 0.5 sin pi x in accumulator and QSIN+67    )
+(	result 0.5 cos pi x in QSIN+68                    )
+(							  )
+( QSQRT+1: calculate square root - double length working  )
+(       argument [l.s.] in QSQRT+3                        )
+(       argument [m.s.] in accumulator                    )
+(	result in accumulator and QSQRT+45                )
+(	argument saved in QSQRT+4 [m.s.]                  )
+( 	and QSQRT+3 [l.s.]                                )
+( QSQRT+2: calculate square root - single length working  )
+(       argument in accumulator                           )
+(       result in accumulator and QSQRT+45                )
+(	argument saved in QSQRT+4                         )
+
+["MAIN QDOUT QIN1 NEWLINE OUTSTR]
+
+(set up interrupt handling)
+	4	L2ENT
+	5	2
+	4	L3ENT
+	5	4
+	4	L4ENT
+	5	6
+IGNORE	15	7168
+	8	;-1		(ignore interrupts)
+L2ENT
+L3ENT	0 IGNORE
+L4ENT	0 MAIN
+
+MAIN	4 	+3		(select teletype output)
+	5 	QDOUT
+	4	+0
+	5	QIN1+2		(scaling factor 0)
+	4	+2
+	11 	NEWLINE		(output title)
+	8 	NEWLINE+2
+	11 	OUTSTR
+	8	OUTSTR+1
+	\FIX
+	\ED
+	\POI
+	\NT
+	\ARI
+	\THM
+	\ETI
+	\C D
+	\EMO
+	\ AJ
+	\ HE
+	\RBE
+	\RT
+	\11/
+	\01/
+	\12^
+
+
+["OUTPUT QOUT1 NEWLINE OUTSTR]
+
+(examples from programming information manual 2b)
+
+OUTPUT	4 	+2
+	11 	NEWLINE		(output heading)
+	8 	NEWLINE+2
+	11 	OUTSTR
+	8 	OUTSTR+1
+	\QOU
+	\T1
+	\EXA 
+	\MPL 
+	\ES  
+	\FRO
+	\M M 
+	\ANU 
+	\AL^
+	11 	NEWLINE
+	8 	NEWLINE+1
+
+	4 	-123456
+	11 	QOUT1
+	8 	QOUT1+1		(print integer)	
+	/0 0			(newline, digits[6])
+
+	4 	+.00357
+	11 	QOUT1
+	8 	QOUT1+2 	(print fraction)	
+	0 3			(sameline, digits[6], scaled by 10^3)
+				(n.b. manual used 2 3 as parameter)
+
+	4 	-3706
+	11 	QOUT1
+	8 	QOUT1+1		(print integer)
+	/0 0			(newline, digits[6])
+
+	4 	-3706
+	11 	QOUT1
+	8 	QOUT1+1		(print integer)
+	/0 2			(newline, digits[6])
+
+	4 	+65536
+	11 	QOUT1
+	8 	QOUT1+1
+	/1 0			(newline, digits[5])
+
+	4 	+65536
+	11 	QOUT1
+	 8 	QOUT1+2
+	/0 0			(newline, digits[6])
+
+	4 	-.517682
+	11 	QOUT1
+	8 	QOUT1+2
+	/0 0			(newline, digits[6])
+
+	4 	-.517682
+	11 	QOUT1
+	8 	QOUT1+2
+	/2 3			(newline, digits[4], scale by 10^3)
+
+["MULDIV QOUT1 OUTSTR NEWLINE]
+
+(use of 12 instruction: AQ := A * N)
+
+MULDIV	4 +2
+	11 	NEWLINE
+	8 	NEWLINE+2
+
+	11 	OUTSTR
+	8 	OUTSTR+1
+	\USE 
+	\ OF 
+	\ 12
+	\ &  
+	\13  
+	\INS
+	\TRU 
+	\CTI 
+	\ONS
+	\^
+	4 	+2
+	11 	NEWLINE
+	8 	NEWLINE+2
+
+
+	11 	OUTSTR
+	8 	OUTSTR+1
+	\0.5 
+	\*0. 
+	\1  
+	\= ^
+	4 	+.5
+	12 	+.1		(0.5*0.1 = 0.05)
+	11 	QOUT1
+	8 	QOUT1+2
+	0 0
+
+	11 	NEWLINE
+	8 	NEWLINE+1
+	11 	OUTSTR
+	8 	OUTSTR+1
+ 	\2*1 
+	\0   
+	\   
+	\=   
+	\^ 	  
+
+	 4 	+2
+	 12 	+10		(2*10 = 20)
+	 14 	17		(multiply by 2^17)
+	 11 	QOUT1
+	 8 	QOUT1+1
+	 0 0			(sameline, digits[6])
+
+	 11 	NEWLINE
+	 8 	NEWLINE+1
+	
+(use of 13 instruction: A := AQ / N)
+
+	11 	OUTSTR
+	8 	OUTSTR+1
+    	\0.2 
+	\5/0 
+	\.5
+	\= ^
+	0 	+0		(clear Q)
+	4 	+.25
+	13 	+.5		(0.25/0.5 = 0.5)
+	11 	QOUT1
+	8 	QOUT1+2
+	0 0
+
+	4	+2
+	11 	NEWLINE
+	8 	NEWLINE+2
+	11 	OUTSTR
+	8 	OUTSTR+1
+	\NOT
+	\E E
+	\RRO
+	\RS
+	\IN
+	\INT
+	\EGE
+	\R D
+	\IVI
+	\SIO
+	\N^
+	4	+2
+	11	NEWLINE
+	8 	NEWLINE+2
+	11	OUTSTR
+	8	OUTSTR+1
+ 	\10/ 
+	\2  
+	\
+	\=   
+	\^  
+
+	0 	+0
+	4 	+10
+	14 	8175		(divide by 2^17)
+	13 	+2		(10/2 = 5)
+	11 	QOUT1
+	8 	QOUT1+1
+	0 0			(sameline, digits[6])
+
+	11 	NEWLINE
+	8	NEWLINE+1
+	11 	OUTSTR
+	8 	OUTSTR+1
+ 	\8/2 
+	\  
+	\
+	\=   
+	\^  
+
+	0 	+0
+	4 	+8
+	14 	8175		(divide by 2^17)
+	13 	+2
+	11 	QOUT1
+	8 	QOUT1+1
+	0 0			(sameline, digits[6])
+
+	11 	NEWLINE
+	8	NEWLINE+1
+	11 	OUTSTR
+	8 	OUTSTR+1
+ 	\-8/ 
+	\2  
+	\
+	\=   
+	\^  
+
+	0 	+0
+	4 	-8
+	14 	8175		(divide by 2^17)
+	13 	+2		(-8/2 = -4)
+	11 	QOUT1
+	8 	QOUT1+1
+	0 0			(sameline, digits[6])
+
+	11 	NEWLINE
+	8	NEWLINE+1
+	11 	OUTSTR
+	8 	OUTSTR+1
+ 	\8/- 
+	\2  
+	\
+	\=   
+	\^  
+
+	0 	+0
+	4 	+8
+	14 	8175		(divide by 2^17)
+	13 	-2		(8/-2 = -4)
+	11 	QOUT1
+	8 	QOUT1+1
+	0 0			(sameline, digits[6])
+
+	11 	NEWLINE
+	8	NEWLINE+1
+	11 	OUTSTR
+	8 	OUTSTR+1
+ 	\-8/ 
+	\-2  
+	\
+	\=   
+	\^  
+
+	0 	+0
+	4 	-8
+	14 	8175		(divide by 2^17)
+	13	-2		(-8/-2 = 4)
+	11 	QOUT1
+	8 	QOUT1+1
+	0 0			(sameline, digits[6])
+
+["INPUT QIN1 QOUT1 OUTSTR NEWLINE "MATHS]
+
+
+(use of QIN1 -- read in scale factor followed by number)
+
+INPUT	4	+2
+	11 	NEWLINE
+	8 	NEWLINE+2
+	11	OUTSTR
+	8	OUTSTR+1
+	\REA
+	\D N
+	\UMB
+	\ERS
+	\ WI
+	\TH
+	\QIN
+	\1^
+	11 	NEWLINE
+	8	NEWLINE+1
+
+NEXTIN	11	QIN1		(read scale factor)
+	8	QIN1+1
+	5	QIN1+2
+	1	=/0 0		(set up output format)
+	5	FORMAT
+	11	QIN1		(read number)
+	8	QIN1+2		
+	7	MATHS		(terminate on zero)
+	5	NUMBER
+	4	QIN1+125
+	7	INTGR		(test for integer or fraction)
+	4	NUMBER
+	11 	QOUT1		(fraction)
+	8	QOUT1+2
+FORMAT	>1
+	8	NEXTIN
+
+INTGR	4	NUMBER
+	11 	QOUT1		(integer)
+	8	QOUT1+1
+	/0 0
+	8 	NEXTIN
+
+NUMBER	>1
+
+["MATHS QIN1 QOUT1 QCHOP QSQRT QLN QEXP QSIN QATAN OUTSTR NEWLINE]
+
+(maths functions)
+
+MATHS	4	+0
+	5	QIN1+2		(set scale factor 0)
+	4	+2
+	11 	NEWLINE
+	8 	NEWLINE+2
+	11	OUTSTR
+	8	OUTSTR+1
+	\SIN
+	\GLE
+	\ LE
+	\NGT
+	\H M
+	\ATH
+	\S F
+	\UNC
+	\TIO
+	\NS^
+	4	+2
+	11 	NEWLINE
+	8	NEWLINE+2
+	11	OUTSTR
+	8	OUTSTR+1
+	\   
+	\INP
+	\UT  
+	\ 
+	\ X
+	\   
+ 	\ SQ
+	\RT(
+	\X)
+	\LN(
+	\X)/
+	\16
+	\ EX
+	\P(-
+	\X)
+	\  s
+	\IN(
+	\X)
+	\  c
+	\OS(
+	\X)^
+	11	NEWLINE
+	8 	NEWLINE+1
+
+MORE	11	QIN1		(read a number)
+	8	QIN1+1
+	7	ATAN		(terminate on zero)
+	5	NUMBER
+	4	QIN1+125
+	7	INT		(integer not fraction)
+	4	NUMBER		(fraction)
+	11	QOUT1
+	8	QOUT1+2
+	/0 0			(newline, digits[6])
+ADJUST	4	NUMBER
+	11	ABS
+	8	ABS+1
+	5	ABSNUM
+	11 	QOUT1		
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+	
+	4	ABSNUM
+	11	QSQRT		(square root, single length working)
+	8	QSQRT+2
+	11 	QOUT1		(integer)
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+
+	4	ABSNUM
+	11	QLN		(natural logarithm: ln x / 16)
+	8	QLN+1
+	11	QOUT1
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+
+	4	+0
+	5	QEXP+53		(exponential: exp -x)
+	4	NUMBER
+	9	;+2
+	2	+0
+	11 	QEXP
+	8	QEXP+1
+	11	QOUT1
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+
+	4	NUMBER
+	11	QSIN		(sine: 0.5 sin pi x)
+	8	QSIN+1
+	11	QOUT1
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+	4	QSIN+68
+	11	QOUT1
+	8	QOUT1+2
+	0	0		(sameline, digits[6])
+	8 	MORE
+
+INT	11	QOUT1		(integer found where fraction expected)
+	8	QOUT1+1
+	/0  0			(newline, digits[6])
+	8	ADJUST
+
+ATAN	4	+2
+	11	NEWLINE
+	8	NEWLINE+2
+	11 	OUTSTR
+	8	OUTSTR+1  
+	\   
+	\   
+	\ IN
+	\PUT
+	\
+	\
+	\ 
+	\ X
+	\   
+ 	\   
+	\ Y
+	\
+	\1/P
+	\I A
+	\TAN
+	\(X)
+	\^
+LOOP	11	QIN1		(read next pair)
+	8	QIN1+1
+	7	NOMORE
+	5	QATAN+89	(x)
+	4	QIN1+125
+	7	INTX		(integer not fraction)
+	4	QATAN+89
+	11	QOUT1
+	8	QOUT1+2
+	/0 0			(newline, digits[6])
+GETY	11	QIN1
+	8	QIN1+1
+	5	QATAN+90	(y)
+	4	QIN1+125
+	7	INTY		(integer not fraction)
+	4	QATAN+90
+	11	QOUT1
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+CALC	4	QATAN+89	(output x and y as fractions)
+	11	QOUT1
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+	4	QATAN+90
+	11	QOUT1
+	8 	QOUT1+2
+	0 0			(sameline, digits[6])
+	11 	QATAN		(1/pi arctan x/y)
+	8 	QATAN+1
+	11 	QOUT1
+	8	QOUT1+2
+	0 0			(sameline, digits[6])
+	8	LOOP
+
+INTX	11	NEWLINE
+	8	NEWLINE+1
+	4	QATAN+89
+	11 	QOUT1
+	8	QOUT1+1
+	0 0			(sameline, digits[6])
+	8	GETY
+
+INTY	4	+0
+	11	QCHOP
+	8	QCHOP+1
+	4	QATAN+90
+	11 	QOUT1
+	8	QOUT1+1
+	0 0			(sameline, digits[6])
+	8	CALC
+
+NOMORE	4	+2
+	11	NEWLINE
+	8	NEWLINE+2
+	11	OUTSTR
+	8	OUTSTR+1
+	\END
+	\^
+
+	8 	;+0		(end of program)
+
+( abs function)
+ABS	+0
+	7	;+3
+	9	NEG
+	0	ABS
+	/8	1
+NEG	2	+0
+	8	;-3
+	
+
+NUMBER	>1
+ABSNUM	>1
+
+[NEWLINE QCHOP]
+
+(subroutine to output a sequence of newlines)
+(enter at NEWLINE+1 for one newline         )
+(enter at NEWLINE+2 for multiple newlines   )
+(with count in accumulator                  )
+
+NEWLINE	+0
+	4 	+1		(entry for one newline)
+	2 	+0		(entry for multiple newlines)
+	5 	COUNT
+LOOP	7 	EXIT
+	4 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	10 	COUNT
+	4 	COUNT
+	 8 	LOOP
+EXIT	0 	NEWLINE
+	/8 	1
+COUNT	>1
+
+[OUTSTRI QCHOP]
+
+(subroutine to output a string)
+
+OUTSTR 	+0
+LOOP	0 	OUTSTR
+	/4 	1		(next word in string)
+	14 	8180		(first char)
+	6 	+63
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	14 	8186
+	6 	+63		(second char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	OUTSTR
+	/4 	1
+	6 	+63		(third char)
+	1 	-1
+	7 	EXIT
+	1 	+1
+	11 	QCHOP
+	 8 	QCHOP+1
+	10 	OUTSTR
+	8 	LOOP
+EXIT	0 	OUTSTR
+	/8 	2
+
+%
+<! halt !>

@@ -1,0 +1,27 @@
+﻿
+C Test Harold Thimbleby's GPM
+
+on 903
+
+c Functional tests
+at ptr file ../../SCRIPTS/GPM/TGPM.BIN
+j 8181
+st 917
+
+select out tty
+
+at ptr file ../../MASTERS/GPM/TGPMDATA.900
+c change warning characters
+j 34
+st 82
+
+c run example macros
+j 32
+st 1112
+
+c do a traceback
+j 33
+st 917
+
+
+sh t

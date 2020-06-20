@@ -1,0 +1,29 @@
+﻿
+test;
+"begin"
+
+   "integer" d;
+   
+   "code" "procedure" unsigned; "algol";
+   "code" "procedure" leadzero; "algol"
+   "code" "procedure" revrtu; "algol";
+   "code" "procedure" revrtl; "algol";
+
+   punch(3); 
+
+   "print" 'Unsigned Test'L2@@;
+
+   sameline;
+
+   "for" d := 6 "step" -1 "until" 1 "do" "begin"
+
+      digits(d);
+
+      "print"           1, ' default'L@@,
+              leadzero, 2, ' leadzero'L@@,
+              unsigned, 3, ' leadzero, unsigned'L@@,
+              revrtu,   4, ' revertu'L@@,
+              revrtl,   5, ' revertl'L@@
+      "end"
+"end"
+<! halt !>

@@ -1,0 +1,21 @@
+﻿c Test Terry Froggatt's Countdown numbers game solver in ALGOL.
+on 903 16K
+
+at ptr file ../../MASTERS/ALGOL/AJH/ALG16KLG(AJH).BIN
+j 8181
+st 5124
+
+at ptr file ../../MASTERS/GAMES/CNTDWN.ALG.900
+j 8
+st 7943
+at ptp file result.txt
+at ptr inline
+960 1  2  3  4  5  6
+<!!>
+c initialize
+j 10
+de ptp
+st 1727
+print result.txt
+delete result.txt
+sh t

@@ -1,0 +1,342 @@
+﻿
+        UTILITIES.
+        ==========
+
+Total files listed:
+      183 file(s)      1,170,699 bytes
+
+
+Bag "UTILITY SOFTWARE".
+-----------------------
+Directory BOX_A3\UTILITY
+       64 file(s)        203,858 bytes
+   All three Mylar tapes are Binary Mode 3.
+
+"T5-CUM-QIN 20/7/70, Telecode" ACD
+T5_QIN_F 1           2,234 08/02/13   21:35
+T5_QIN_F 2           2,234 09/02/13    9:49
+"900 T5-CUM-QIN 20/7/70, 900-Series Telecode" ACD
+T5_QIN_T 1           2,572 08/02/13   21:36
+T5_QIN_T 2           2,572 09/02/13    9:50
+"T6-CUM-QOUT 22/10/68, Telecode" ACD
+T6QOUT_F 1           2,632 08/02/13   21:37
+T6QOUT_F 2           2,632 09/02/13    9:51
+"900 T6-CUM-QOUT 22/10/68, 900-Series Telecode" ACD
+T6QOUT_T 1           3,091 08/02/13   21:39
+T6QOUT_T 2           3,091 09/02/13    9:52
+"GENSORT 8/3/71, Binary Mode 3" ACD
+GENSORTB 1           1,488 08/02/13   21:40
+GENSORTB 2           1,488 09/02/13    9:53
+"SHELLSORT 17/8/71, 900-Series Telecode" ACD
+SHELSORT 1           4,020 08/02/13   21:42
+SHELSORT 2           4,020 09/02/13    9:54
+"BINCOP 20/7/70, Binary Mode 3" ACD
+BINCOP_B 1             972 08/02/13   21:43
+BINCOP_B 2             972 09/02/13    9:54
+"920 TELECOP 20/7/70, Binary Mode 3" ACD
+TELECOFB 1             936 08/02/13   21:44
+TELECOFB 2             936 09/02/13    9:55
+"900 TELECOP 20/7/70, Binary Mode 3" ACD
+TELECOTB 1             963 08/02/13   21:47
+TELECOTB 2             963 09/02/13    9:56
+"DO-ALL 4 3/8/70, Binary Mode 3" ACD
+DOALL4_B 1           3,504 08/02/13   21:48
+DOALL4_B 2           3,504 09/02/13    9:56
+"DO-ALL 5 21/1/71, Binary Mode 3"
+DOALL5_B 1           3,852 08/02/13   21:50
+DOALL5_B 2           3,852 09/02/13    9:57
+"BOWDLER 20/7/70, Binary Mode 3" ACD
+BOWDLERB 1           6,038 08/02/13   21:51
+BOWDLERB 2           6,038 09/02/13    9:58
+"BOWDLER LPDB, Binary Mode 3 19/7/72" sic (date last)
+   and in pencil "with legible heading"
+[BOWDLER LPDB (19/7/72)]
+BOWLPDBB 1           7,527 08/02/13   21:54
+BOWLPDBB 2           7,527 09/02/13   10:00
+"SYSTEMS DOCUMENTATION 30/9/69, Binary Mode 3" ACD
+SYSDOC_B 1           4,791 08/02/13   21:57
+SYSDOC_B 2           4,791 09/02/13   10:01
+"TATDOC 27/7/70, Binary Mode 3" ACD
+TATDOC1B 1           4,220 08/02/13   21:59
+TATDOC1B 2           4,220 09/02/13   10:02
+"TATDOC 15/12/70, Binary Mode 3 Clean Dump"
+TATDOC2B 1           4,314 08/02/13   22:01
+TATDOC2B 2           4,314 09/02/13   10:03
+"MASD TATDOC 27/11/73, Binary Mode 3" MASD TJF
+TATDOC3B 1           5,148 08/02/13   22:03
+TATDOC3B 2           5,148 09/02/13   10:04
+"IGNORE NOTHING FRIG 7/10/70, Telecode"
+IGNOTHIN 1             771 08/02/13   22:04
+IGNOTHIN 2             771 09/02/13   10:05
+"Clear Store" and stop, for 8K store, Mylar
+   Unlabelled ACD, title taken from documentation.
+   In centre of "DUMP 15/4/70, Binary Mode 3".
+CS8KSTOP 1             372 08/02/13   22:05
+CS8KSTOP 2             372 09/02/13   10:05
+"DUMP 15/4/70, Binary Mode 3" ACD
+DUMP_B   1             885 08/02/13   22:06
+DUMP_B   2             885 09/02/13   10:05
+"Autostart" Mylar
+   Unlabelled ACD, title taken from documentation.
+   In centre of "900 VERIFY 2/5/70, Binary Mode 3".
+AUTOSTAR 1             369 08/02/13   22:07
+AUTOSTAR 2             369 09/02/13   10:06
+"920 VERIFY 2/5/70, Binary Mode 3" ACD
+VERIFYFB 1             932 08/02/13   22:09
+VERIFYFB 2             932 09/02/13   10:06
+"900 VERIFY 2/5/70, Binary Mode 3" ACD
+VERIFYTB 1             947 08/02/13   22:10
+VERIFYTB 2             947 09/02/13   10:07
+"Clear Store & Jump to II" for 8K store, Mylar
+   Unlabelled, title not yet found in documentation.
+   In centre of "900 AMEND 20/7/70 &17000, Binary Mode 3".
+   As output by DUMP, but marker "....Oo..." not ".O..OoO..".
+CS8KCONT 1             392 08/02/13   22:11
+CS8KCONT 2             392 09/02/13   10:07
+"920 AMEND 20/7/70, 920 Telecode" ACD
+AMEND_FS 1           3,269 08/02/13   22:12
+AMEND_FS 2           3,269 09/02/13   10:08
+"900 AMEND 20/7/70, 900-Series Telecode" ACD
+AMEND_TS 1           3,872 08/02/13   22:13
+AMEND_TS 2           3,872 09/02/13   10:08
+"920 AMEND 20/7/70 &17000, Binary Mode 3" ACD
+AMEND_FB 1           1,131 08/02/13   22:14
+AMEND_FB 2           1,131 09/02/13   10:09
+"900 AMEND 20/7/70 &17000, Binary Mode 3" ACD
+AMEND_TB 1           1,128 08/02/13   22:15
+AMEND_TB 2           1,128 09/02/13   10:10
+"920 STORE PRINT 3/8/70, 920 Telecode" ACD
+STOREPRF 1           3,944 08/02/13   22:17
+STOREPRF 2           3,944 09/02/13   10:10
+"900 STORE PRINT 3/8/70, 900-Series Telecode" ACD
+STOREPRT 1           4,844 08/02/13   22:18
+STOREPRT 2           4,844 09/02/13   10:11
+"TRACE PROGRAMME 29/5/69, Telecode" ACD
+TRACE    1          10,692 08/02/13   22:20
+TRACE    2          10,692 09/02/13   10:13
+"MONITOR 12/3/71, 900-Series Telecode" ACD
+MONITOR  1          10,079 08/02/13   22:22
+MONITOR  2          10,079 09/02/13   10:14
+
+
+Bag "UTILITY SOFTWARE Source Tapes".
+------------------------------------
+Directory BOX_A3\SOURCES
+       35 file(s)        386,249 bytes
+
+"GENSORT 8/3/71, 920 Telecode"
+GENSORTF 1           6,231 09/02/13   15:45
+GENSORTF 2           6,231 12/02/13   11:51
+"GENSORT 8/3/71, 900-Series Telecode"
+GENSORTT 1           7,331 09/02/13   15:46
+GENSORTT 2           7,331 12/02/13   11:52
+"BINCOP 20/7/70, 920 Telecode" ACD
+BINCOP_S 1           3,214 09/02/13   15:51
+BINCOP_S 2           3,214 12/02/13   11:53
+"32K BINCOP 20/7/70, 920 Telecode"
+BINC32_S 1           3,297 09/02/13   15:52
+BINC32_S 2           3,297 12/02/13   11:54
+"920 TELECOP 20/7/70, 920 Telecode" ACD
+TELECOFS 1           2,898 09/02/13   16:32
+TELECOFS 2           2,898 12/02/13   11:55
+"900 TELECOP 20/7/70, 900-Series Telcode" ACD
+TELECOTS 1           3,504 09/02/13   16:33
+TELECOTS 2           3,504 12/02/13   11:56
+"DO-ALL 4 3/8/70, 920 Telecode" ACD
+DOALL4_S 1          16,546 09/02/13   16:36
+DOALL4_S 2          16,546 12/02/13   11:58
+"DO-ALL 5 21/1/71, 900-Series Telecode"
+DOALL5_S 1          20,765 09/02/13   16:38
+DOALL5_S 2          20,765 12/02/13   12:00
+"BOWDLER 20/7/70, 920 Telecode" ACD
+BOWDLERS 1          23,820 09/02/13   16:41
+BOWDLERS 2          23,820 12/02/13   12:03
+"BOWDLER PATCH FOR LINEPRINTER (LPDB), 920 Telecode 19/7/72" sic (date last)
+   Has trailing erases.
+BOWLPDBS 1           7,148 09/02/13   16:45
+BOWLPDBS 2           7,148 12/02/13   12:07
+"SYSTEMS DOCUMENTATION 30/9/69, Telecode" ACD
+   Torn between *.1 & *.2 and repaired with holed patch
+      so added in pencil "Torn & Repaired"
+SYSDOC_S 1          20,117 09/02/13   17:44
+SYSDOC_S 2          20,117 12/02/13   12:09
+"TATDOC 27/7/70, 920 Telecode" ACD
+TATDOCFS 1          21,093 09/02/13   17:52
+TATDOCFS 2          21,093 12/02/13   12:42
+TATDOCFS BAD        21,093 12/02/13   12:17
+"TATDOC 27/7/70, 900-Series Telecode"
+TATDOCTS 1          24,250 09/02/13   17:55
+TATDOCTS 2          24,250 12/02/13   12:20
+"MASD TATDOC 27/11/73, 900-Series Telecode Vol 1"
+TATDOC3S 1          13,765 09/02/13   17:58
+TATDOC3S 2          13,765 12/02/13   12:22
+"DUMP 15/4/70, 920 Telecode" ACD
+DUMP_S   1           3,073 09/02/13   17:59
+DUMP_S   2           3,073 12/02/13   12:22
+"920 VERIFY 2/5/70, 920 Telecode" ACD
+VERIFYFS 1           2,503 09/02/13   18:00
+VERIFYFS 2           2,503 12/02/13   12:39
+"900 VERIFY 2/5/70, 900-Series Telecode" ACD
+VERIFYFT 1           3,023 09/02/13   18:02
+VERIFYFT 2           3,023 12/02/13   12:39
+
+
+Bag "OLD UTILITY PROGS".
+------------------------
+Directory BOX_A3\OBSOLETE
+       17 file(s)        126,056 bytes
+   ALPHA & BETA are written on tape as single Greek letters.
+
+"C3 ALPHA, Telecode (T2)" /Obsolete/
+C3_ALPHA 1           4,116 13/02/13   21:04
+C3_ALPHA 2           4,116 13/02/13   21:17
+"C3 BETA, Telecode (T2)" /Obsolete/
+C3_BETA  1           4,129 13/02/13   21:05
+C3_BETA  2           4,129 13/02/13   21:18
+"C5 224 LOC, Telecode (T2)"
+C5_224   1           1,729 13/02/13   21:06
+C5_224   2           1,729 13/02/13   21:19
+"LABEL CHANGE FOR 12 SYMBOLS, Binary"
+LABLCHNG 1             994 13/02/13   21:06
+LABLCHNG 2             994 13/02/13   21:20
+"BOWDLER 3/2, Binary"
+BOWDL32B 1           5,970 13/02/13   21:10
+BOWDL32B 2           5,970 13/02/13   21:21
+"BOWDLER 3/2, Telecode"
+   Torn between *.2 & *.3 and repaired with holed patch
+      so added in pencil "Torn & Repaired"
+BOWDL32S 1          23,238 13/02/13   21:12
+BOWDL32S 2          23,238 13/02/13   21:23
+BOWDL32S 3          23,238 13/02/13   21:34
+"DO-ALL 3 13/12/68, Binary Mode 3"
+DOALL3_B 1           4,305 13/02/13   21:14
+DOALL3_B 2           4,305 13/02/13   21:25
+"DO-ALL 3 13/12/68, Telecode Vol 1"
+DOALL3_S 1           6,928 13/02/13   21:14
+DOALL3_S 2           6,928 13/02/13   21:26
+
+
+Bag "BINARY DECODE, TRACER, Etc".
+---------------------------------
+Directory BOX_A3\BINDECOD
+       31 file(s)        190,640 bytes
+
+"TRACER 30/5/69, Telecode"
+TRACER   1           1,262 14/02/13   22:19
+TRACER   2           1,262 16/02/13   17:16
+"BINARY MERGE 26/2/71, 900-Series Telecode"
+BINMRGES 1           6,492 14/02/13   22:21
+BINMRGES 2           6,492 16/02/13   17:19
+"BINARY MERGE 26/2/71, Binary Mode 3"
+BINMRGEB 1           4,511 14/02/13   22:22
+BINMRGEB 2           4,511 16/02/13   17:19
+"LOCATE 32+4096 24/9/71, Binary Mode 3" TJF
+LOCATE   1           1,494 14/02/13   22:24
+LOCATE   2           1,494 16/02/13   17:20
+"RIS 32 24/9/71, Binary Mode 3" TJF
+   Original label not in my handwriting crossed out
+RIS32    1           2,952 14/02/13   22:28
+RIS32    2           2,952 16/02/13   17:22
+"RIS 4096 24/9/71, Binary Mode 3" TJF
+   Original label not in my handwriting crossed out
+RIS4096  1           3,035 14/02/13   22:29
+RIS4096  2           3,035 16/02/13   17:22
+"BINARY DECODE 14/10/71, 900-Series Telecode Vol 1"
+BINDE71S 1           9,832 14/02/13   22:35
+BINDE71S 2           9,832 16/02/13   17:27
+BINDE71S BA1         9,830 14/02/13   22:34
+BINDE71S BA2         9,831 16/02/13   17:24
+"BINARY DECODE 14/10/71, Binary Mode 3"
+BINDE71B 1           5,138 14/02/13   22:37
+BINDE71B 2           5,138 16/02/13   17:28
+"AMOP 13/11/71, 900-Series Telecode"
+AMOP71   1           3,694 14/02/13   22:39
+AMOP71   2           3,694 16/02/13   17:35
+"AMOP 10/12/73, 900-Series Telecode" TJF
+AMOP73   1           3,904 14/02/13   22:40
+AMOP73   2           3,904 16/02/13   17:36
+"BINARY TAPE OUTPUT SUBROUTINE 21/12/73, 900-Series Telecode"
+BTOP73   1           3,739 14/02/13   22:42
+BTOP73   2           3,739 16/02/13   17:37
+"BINARY DECODE SUBROUTINE 20/2/74, 900-Series Telecode"
+BINDECSR 1          13,728 14/02/13   22:44
+BINDECSR 2          13,728 16/02/13   17:40
+"BINARY DECODE 20/2/74, 900-Series Telecode Vol 1" TJF
+BINDE74S 1          13,177 14/02/13   22:56
+BINDE74S 2          13,177 16/02/13   18:13
+BINDE74S BA1        13,209 14/02/13   22:55
+"BINARY DECODE 20/2/74, Binary Mode 3" TJF
+BINDE74B 1           5,927 14/02/13   22:59
+BINDE74B 2           5,927 16/02/13   18:14
+
+
+Bag "BOWDLER 1976".
+-------------------
+Directory BOX_A3\BOWDLE76
+       20 file(s)        145,544 bytes
+
+"BOWDLER COMMAND TABLE 28/7/76, 900-Series Telecode"
+COMTABLE 1           4,195 16/02/13   18:27
+COMTABLE 2           4,195 17/02/13   17:27
+"BOWDLER COMMAND CONVERTOR 28/7/76, 900-Series Telecode Vol 1"
+COMCONVE 1           2,197 16/02/13   18:28
+COMCONVE 2           2,197 17/02/13   17:28
+"BOWDLER 2/8/76, 900-Series Telecode Vol 1" TJF
+VOL1_2_8 1          24,376 16/02/13   18:32
+VOL1_2_8 2          24,376 17/02/13   17:30
+"BOWDLER 2/8/76, Binary Mode 3"
+BINA_2_8 1           6,186 16/02/13   18:34
+BINA_2_8 2           6,186 17/02/13   17:32
+"TO LIFT PARTS OF BOWDLER 23/8/76, 900-Series Telecode"
+LIFTPART 1           1,138 16/02/13   19:50
+LIFTPART 2           1,138 17/02/13   17:33
+"PARTS OF BOWDLER 2/8/76, 900-Series Telecode"
+PART_2_8 1          19,257 16/02/13   19:52
+PART_2_8 2          19,257 17/02/13   17:34
+"BOWDLER CH I/O EDIT 1/9/76, 900-Series Telecode"
+CHIOEDIT 1           2,147 16/02/13   19:54
+CHIOEDIT 2           2,147 17/02/13   17:35
+"BOWDLER 1/9/76, 900-Series Telecode Vol 2" TJF
+VOL2_1_9 1           5,572 16/02/13   19:56
+VOL2_1_9 2           5,572 17/02/13   17:36
+"BOWDLER 1/9/76, Binary Mode 3" TJF
+BINA_1_9 1           4,908 16/02/13   19:57
+BINA_1_9 2           4,908 17/02/13   17:36
+"BOWDLER ERROR INDICATIONS, 920 Telecode"
+   and in pencil "with TTTS at the start of each line UNCHECKED"
+ERRORIND 1           2,796 16/02/13   19:58
+ERRORIND 2           2,796 17/02/13   17:37
+
+
+Bag "PCL, MANDY, PAJ".
+----------------------
+Directory BOX_A3\PCLMAPAJ
+       16 file(s)        118,352 bytes
+
+"PCL DO-ALL 10/6/69 A, Telecode"
+PCLDOALS 1          20,236 17/02/13   17:44
+PCLDOALS 2          20,236 17/02/13   19:53
+"PCL DO-ALL 10/6/69 B, Binary Mode 3"
+PCLDOALB 1           3,070 17/02/13   17:45
+PCLDOALB 2           3,070 17/02/13   19:54
+"MANDY 15/2/71, 920 Telecode Vol 1"
+MANDYV1S 1           3,305 17/02/13   18:04
+MANDYV1S 2           3,305 17/02/13   19:54
+"MANDY 15/2/71, 900-Series Telecode"
+MANDY_S  1          16,503 17/02/13   18:06
+MANDY_S  2          16,503 17/02/13   19:56
+"MANDY 15/2/71, Binary Mode 3"
+MANDY_B  1           2,974 17/02/13   18:50
+MANDY_B  2           2,974 17/02/13   19:56
+"SAMPLE HUMBER TAPE, 5-hole code"
+HUMBER5H 1           4,268 17/02/13   18:52
+HUMBER5H 2           4,268 17/02/13   20:02
+"PAJ 6/6/72, 900-Series Telecode Vol 1"
+PAJ_S    1           5,204 17/02/13   18:54
+PAJ_S    2           5,204 17/02/13   20:02
+"PAJ 6/6/72, Binary Mode 3"
+PAJ_B    1           3,616 17/02/13   18:54
+PAJ_B    2           3,616 17/02/13   20:03
+
+
+*** EOF ***

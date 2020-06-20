@@ -1,0 +1,58 @@
+﻿C Test 16K Hunter load and go ALGOL System
+
+on 903 16K
+
+at ptr file ../../SCRIPTS/HUNTER/ALG16KLG(HUNTER).BIN
+j 8181
+
+c compile and run test program
+at ptr inline 900
+TEST;
+"BEGIN"
+
+    "COMMENT" FOLLOWING RELIES ON RECURSION AND PROCEDURE
+    WITH VALUE PARAMETERS AS PROCEDURE PARAMETERS;
+
+    "INTEGER" J;
+     "REAL" W;
+     "REAL" "PROCEDURE" FACT(N);
+          "VALUE" N; "INTEGER" N;
+          FACT:= "IF" N=0 "THEN" 1 "ELSE" N*FACT(N-1);
+
+     "REAL" "PROCEDURE" SIMPS(F,G,H);
+          "VALUE" G,H; "REAL" G,H; "REAL" "PROCEDURE" F;
+          SIMPS:=(F((G))+F(((G+H)/2))+F((H)))/6;
+
+     "REAL" "PROCEDURE" P; P:=1;
+     "REAL" "PROCEDURE" Q; Q:=0;
+     "REAL" "PROCEDURE" R; R:=-1;
+     "REAL" "PROCEDURE" A(K,X1,X2,X3,X4,X5);
+          "VALUE" K; "INTEGER" K; "REAL" "PROCEDURE" X1,X2,X3,X4,X5;
+     "BEGIN"
+        "REAL" "PROCEDURE" B;
+        "BEGIN"
+           K:=K-1;
+           B:=A:=A(K,B,X1,X2,X3,X4)
+        "END";
+        "IF" K"LE" 0 "THEN" A:=X4+X5 "ELSE" "IF" B<0 "THEN"
+     "END";  
+  
+     PUNCH(3); 
+
+     DIGITS(4); W:=0;
+     "FOR" J:= 1 "STEP" 1 "UNTIL" 6 "DO"
+     "BEGIN"
+        "PRINT" J,SAMELINE,‘   @,FACT(J),‘   @,A(J,P,R,R,P,Q);
+        W:=W+SIMPS(SIN,(J-1)*.26179939,J*.26179939);
+     "END";
+     "PRINT" ‘‘L2@SIMPS = @,SAMELINE,W
+
+ "END"
+<! halt !><!!>
+select out tty
+j 8
+st 7943
+j 10
+st 1727
+
+sh t

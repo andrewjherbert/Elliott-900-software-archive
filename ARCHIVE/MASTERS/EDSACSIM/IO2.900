@@ -1,0 +1,52 @@
+﻿[Initial Orders 2]
+
+..PK
+	T	100	K	[Put at location 64.]
+	G		K
+
+	T		F
+	E	20	F
+	P	1	F
+	U	2	F
+	A	39	F
+	R	4	F
+	V		F
+	L	8	F
+	T		F
+	I	1	F
+	A	1	F
+	S	39	F
+	G	4	F
+	L		D
+	S	39	F
+	E	17	F
+	S	7	F
+	A	35	F
+	T	20	F
+	A		F
+	H	8	F
+	A	40	F
+	T	43	F
+	A	22	F
+	A	2	F
+	T	22	F
+	E	34	F
+	A	43	F
+	E	8	F
+	A	42	F
+	A	40	F
+	E	25	F
+	A	22	F
+	T	42	F
+	I	40	D
+	A	40	D
+	R	16	F
+	T	40	D
+	E	8	F
+	P	5	D
+	P		D
+
+	T	200	K
+	G		K
+	Z		F
+	E200KPF

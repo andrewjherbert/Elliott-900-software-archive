@@ -1,0 +1,337 @@
+﻿C Test C and G Assembler
+on 903
+at ptr file ../../MASTERS/CANDG/CANDG.BIN
+j 8181
+
+at ptr inline
+(TITLE)
+TEST Q FACILITY
+(STORE 12)
+PNL 
+LDAN 10
+PNT 1, 6
+PNL
+SUBN  1 Q
+JEQ 19
+JUN 14
+PNL
+JST
+(EXECUTE 12)
+
+(TITLE)
+TEST WAIT FACILITY
+(STORE 12)
+PNL
+LDAN 10
+PNT 1, 6
+PNL
+(WAIT)
+LDAN 20
+PNT 1, 6
+PNL
+(EXECUTE 12)
+
+(TITLE)
+TEST RESUME AFTER JST
+(STORE 12)
+PNL
+LDAN 30
+PNT 1, 6
+PNL
+JST 17
+LDAN 40
+PNT 1, 6
+PNL
+JST
+(EXECUTE 12)
+
+(TITLE)
+DEMONSTRATE ERR 1
+(STORE 12)
+<! halt !>
+
+(TITLE)
+DEMONSTRATE ERR 2
+(STORE 12)
+LDAN !
+
+(TITLE)
+DEMONSTRATE ERR 3
+(STORE 12)
+LDAN 131072
+
+(TITLE)
+DEMONSTRATE ERR 4
+(STORE 999)
+LDAN 1
+LDAN 2
+
+(STORE 0)
+
+(TITLE)
+DEMONSTRATE ERR 5
+(STORE 12)
+(WRONG 99)
+
+(TITLE)
+DEMONSTRATE ERR 6
+(WAIT 99)
+
+(TITLE)
+DEMONSTRATE ERR 7
+(STORE 12)
+LDAN 0,20
+
+(TITLE)
+DEMONSTRATE ERR 8
+(STORE 12)
+WXYZ 2, 3
+
+(TITLE)
+DEMONSTRATE ERR 9
+LDAN 2000,8
+
+
+(TITLE)
+DEMONSTRATE ERR 10
+(STORE 12)
+JST
+(EXECUTE 1000)
+
+(TITLE)
+DEMONSTRATE ERR 11
+(STORE 12)
+PNL
++99.99
+JST
+(EXECUTE 12)
+
+(TITLE)
+DEMONSTRATE ERR 13
+(STORE 12)
+PNL
+LDAN 999
+STA 2
+LDA 10,2
+JST
+(EXECUTE 12)
+
+(TITLE)
+DEMONSTRATE ERR14
+(STORE 12)
+PNL
+RCC 0
+JST
+(EXECUTE 12)
+
+(TITLE)
+DEMONSTRATE ERR15
+(STORE 12)
+PNL
+LDA 12
+JST
+(EXECUTE 12)
+
+(TITLE)
+DEMONSTRATE ERR16
+(STORE 12)
+PNL
+PCT 15
+JST
++0.00005
+(EXECUTE 12)
+
+(TITLE)
+DEMONSTRATE ERR17
+(WAIT)
+
+(TITLE)
+DEMONSTRATE ERR18
+(STORE 12)
+PNL
+LDAN 2
+MLT 1 Q
+JUN 14
+(EXECUTE 12)
+
+(TITLE)
+DEMONSTRATE CHARACTER SET
+(STORE 12)
+PNL
+RCT 100
+PCT 100
+JUN 13
+(EXECUTE 12)
+0123456789(),\:&*/=+-.;[]?<>^ABCDEFGHIJKLMNOPQRSTUVWXYZ"£$'@
+LINE
+FEED
+TAB	ULATE
+SPA CE
+<! halt !><!!>
+
+select out tty
+
+c Test Q
+j 8
+st 590
+c Set tracing on
+interrupt 1
+r
+j 9
+st 952
+
+c test WAIT
+j 8
+st 579
+interrupt 2
+r
+j 9
+st 952
+
+c test resume after JST
+j 8
+st 590
+j 9
+st 952
+
+interrupt 3
+r
+
+c demonstrate error 1
+j 8
+st 1135
+
+c demonstrate error 2
+j 8
+st 1135
+
+c demonstrate error 3
+j 8
+st 1135
+
+c demonstrate error 4
+j 8
+st 1135
+j 8
+st 1135
+
+c demonstrate error 5
+j 8
+st 1135
+
+c demonstrate error 6
+j 8
+st 1135
+
+c demonstrate error 7
+j 8
+st 1135
+
+c demonstrate error 8
+j 8
+st 1135
+
+c demonstrate error 9
+j 8
+st 1135
+
+c demonstrate error 10
+j 8
+st 1135
+
+c demonstrate error 11
+j 8
+st 590
+j 9
+st 1135
+
+c cannot demonstrate 12 - no means to load an instruction in
+c an index register!
+
+c demonstrate error 13
+j 8
+st 590
+j 9
+st 1135
+
+c demonstrate error 14
+j 8
+st 590
+j 9
+st 1135
+
+c demonstrate error 15
+j 8
+st 590
+j 9
+st 1135
+
+c demonstrate error 16
+j 8
+st 590
+j 9
+st 1135
+
+c demonstrate error 17
+j 8
+st 579
+j 9
+st 1135
+
+c demonstrate error 18
+j 8
+st 590
+j 11
+st 590
+j 9
+st 1135
+
+c demonstrate character set
+j 8
+st 590
+j 11
+st 590
+nonstop on
+j 9
+nonstop off
+
+c demonstrate editor
+at ptr inline
+FL T W O
+DL THREE
+FC 1234
+DC 678
+FC 1234
+IS Insert
+CS Copy
+FC 0
+IB INSERT A SHORT
+BLOCK
+@
+FL WITH
+RE
+<! halt !><!!>
+j 48
+st 3138
+at ptr inline
+ONE
+TWO
+T H R E E
+1234567890
+1234567890
+STUFF
+<! halt !>
+NEXT TAPE
+ENDING WITH A HALT CODE
+<! halt !>
+<!!>
+
+c modify dynamic stop at 3342 
+e 3342 =9 3342
+j 49
+st 3342
+j 50
+st 3342
+
+sh t
+

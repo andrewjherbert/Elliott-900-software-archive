@@ -1,0 +1,396 @@
+﻿
+        MASIR & LOADER Source Tapes.
+        ============================
+        Terry Froggatt, October 2015.
+
+
+Background.
+-----------
+
+In 1982, I was asked to make some bespoke alterations to MASIR and to
+its LOADER, which did not involve understanding much about their internal
+workings, but which did enable me to get a copy of the source files.
+I was also provided a lever-arch file of Foolscap flowcharts & listings.
+
+In 2014, I uploaded these paper tapes to more modern media,
+where they form part of BOX_B6.ZIP, recorded in BOX_B6.TXT.
+The following is an extract from BOX_B6.TXT. (It looks as though
+I was given copies of the four tapes listed as being on white tape,
+whereas I had to make my own pink copies of the five other tapes).
+
+   "MASIR ISS 3, TAPE 1A"
+      in my hand in thick black marker on pink tape square-topped & tailed
+   MASIR1A  1           9,577  10/10/14  12:34
+   MASIR1A  2           9,577  10/10/14  14:06
+
+   "MASIR ISS 4, TAPE 1B"
+      in my hand in thick black marker on pink tape square-topped & tailed
+   MASIR1B  1          18,680  10/10/14  12:36
+   MASIR1B  2          18,680  10/10/14  14:15
+
+   "MASIR ISS 3, TAPE 1C"
+      in my hand in thick black marker on pink tape square-topped & tailed
+   MASIR1C  1           8,884  10/10/14  12:38
+   MASIR1C  2           8,884  10/10/14  14:17
+
+   "MASIR ISSUE 3 TAPES 2,3&4" in black and "MSR23&4.SRC" in black
+      "28 APR 1981" rubber stamp and "TAPE (18)" in green
+      none in my hand and all inside out on white tape square-topped & tailed
+      short leader so I've covered holes with blank tape to avoid rubber mess
+   MASIR234 1          30,818  10/10/14  12:41
+   MASIR234 2          30,818  10/10/14  14:27
+
+   "MASIR ISS 3, TAPE 5A"
+      in my hand in thick black marker on pink tape square-topped & tailed
+   MASIR5A  1          23,176  10/10/14  12:49
+   MASIR5A  2          23,176  10/10/14  14:30
+
+   "MASIR ISSUE 3 TAPE 5B" in black and "MASIR5B.SRC" more faintly
+      "28 APR 1981" rubber stamp and "TAPE (32)" in green
+      none in my hand and all inside out on white tape square-topped & tailed
+   MASIR5B  1          16,723  10/10/14  12:52
+   MASIR5B  2          16,723  10/10/14  14:33
+
+   "MASIR ISS 4, TAPES 6 & 7"
+      in my hand in thick black marker on pink tape square-topped & tailed
+   MASIR67  1          18,960  10/10/14  12:57
+   MASIR67  2          18,960  10/10/14  14:35
+
+   "MASIR ISSUE 3 TAPE 8" in black and "MSRTAP8.SRC" more faintly
+      "28 APR 1981" rubber stamp and "TAPE 45" in green
+      none in my hand and all inside out on white tape square-topped & tailed
+      ends with repeated 0,160,160,141,10 but uploads matched
+   MASIR8   1           7,725  10/10/14  12:59
+   MASIR8   2           7,725  10/10/14  14:37
+
+   "900 LOADER ISS 3 SOURCE" in black and "LOADER.SRC" in blue
+      "(1)" in red and "29 APR 1981" rubber stamp and "TAPE (4)" in green
+      none in my hand and all inside out on white tape square-topped & tailed
+      "Slight Tear" added by me in pencil but tear not noticed
+   LOADSRC  1          37,432  10/10/14  13:37
+   LOADSRC  2          37,432  10/10/14  14:46
+
+The following information about these files is a mixture of:
+reports enclosed in <!...!> from a source analysis tool,
+plus a selection of the comments from within the files,
+plus all of the lines starting with a '%' from the files,
+plus some subsequent further notes starting "--".
+
+   <! File Name "MASIR1A.1&2" !>
+   <! 903 TeleType Code !>
+   ((MASIR ISSUE 3  TAPE 1A))
+   <! Final Character Not Halt Code !>
+   <! 0 Halt Codes !>                   -- Haltcode has been unipunched out?
+
+   <! File Name "MASIR1B.1&2" !>
+   <! 903 TeleType Code !>
+   ((MASIR ISSUE 3  TAPE 1B))
+   (THIS CODE INSERTED TO CORRECT LITERAL GENERATED FOR +LOCAL)
+   (WHEN MODULE PATCHED TO ABSOLUTE LOCATION - SAN/7 -GRC 18/11/75)
+   <! Final Character Not Halt Code !>
+   <! 0 Halt Codes !>
+
+   <! File Name "MASIR1C.1&2" !>
+   <! First Character Not CR or LF !>
+   ((MASIR ISSUE  3:  TAPE 1C))
+   <! Final Character Not Halt Code !>
+   <! 0 Halt Codes !>
+
+   <! File Name "MASIR234.1&2" !>
+   <! 903 TeleType Code !>
+   ((MASIR ISSUE  3 TAPE 2))
+   ((MASIR ISSUE 3  TAPE 3))
+   ((MASIR ISSUE 3  TAPE 4))
+   <! Final Character Not Halt Code !>
+   <! 0 Halt Codes !>
+
+   <! File Name "MASIR5A.1&2" !>
+   <! 903 TeleType Code !>
+   ((MASIR ISSUE 3  TAPE 5A))
+   <! Halt Code !>                      -- Followed by CR LF.
+   <! Final Character Not Halt Code !>
+
+   <! File Name "MASIR5B.1&2" !>
+   <! First Character Not CR or LF !>
+   ((MASIR ISSUE  3:  TAPE 5B))
+   <! Final Character Not Halt Code !>  -- Ends with ')' CR LF
+   <! 0 Halt Codes !>
+
+   <! File Name "MASIR67.1&2" !>
+   <! 903 TeleType Code !>
+   ((MASIR ISSUE  3  TAPE 6))
+   ((MASIR ISSUE  3  TAPE 7))
+   (THIS CODE INSERTED TO IGNORE COMMENTS INSIDE MACRO TEXT - GRC 18/11/75)
+   %
+   <! Halt Code !>                      -- Followed by CR LF.
+   <! Final Character Not Halt Code !>
+
+   <! File Name "MASIR8.1&2" !>
+   <! 903 TeleType Code !>
+   ((MASIR ISSUE  3:  TAPE 8))          -- These comments are on adjacent
+   ((PTEXEC 8/5/70 VERSION 7))          -- lines, so TAPE 8 is PTEXEC.
+   %
+   <! Final Character Not Halt Code !>
+   <! 0 Halt Codes !>
+
+   <! File Name "LOADSRC.1&2" !>
+   <! 903 TeleType Code !>
+    (900 LOADER ISSUE 3)
+   <! Halt Code !>
+   % (905 LOADER SETTING ROUTINE)
+   %
+   <! Halt Code !>
+   <! Unknown Character 4 !>            -- Spurious CR LF LF EOT LF.
+   <! Final Character Not Halt Code !>
+   <! 2 Halt Codes !>
+
+It will be seen that the eleven parts of the MASIR source
+(1A 1B 1C 2 3 4 5A 5B 6 7 8), and the LOADER source tape,
+all contain comments stating that they are at ISSUE 3.
+
+In addition, two parts (1B and 7) also contain comments in them
+that changes were made by "GRC" on 18/11/75. These changes
+are also written up on the listings in the lever-arch file.
+
+Correspondingly, the names written
+onto tape 1B and onto the combined tape 6 & 7 say ISSUE 4,
+and the other tapes have ISSUE 3 written onto them.
+
+The latest versions of the MASIR and LOADER binary tapes
+that I had when I left Elliotts in late 1976 were ISSUE 3.
+In 2012, I uploaded these paper tapes to more modern media,
+where they form part of BOX_C2.ZIP, recorded in BOX_C2.TXT.
+
+   "MASIR ISS 3, SCB 13-3-73" no 900, "Copy 502"
+   [MASIR ISSUE 3 SCB 13-3-73] no 900
+   MASIR_3  5_1        19,005  04/03/12   8:19
+   MASIR_3  5_2        19,005  04/03/12  14:28
+
+   "900 LOADER, ISS 3 (SCB)", "Copy 502"
+   [900 LOADER ISSUE 3 SCB]
+   LOADER_3 5_1        10,035  04/03/12   8:41
+   LOADER_3 5_2        10,035  04/03/12  15:04
+
+The 1/1/74 Maritime Aircraft Systems Division MASIR and LOADER were
+the same as MECSL's ISSUE3 except that I'd removed the legible headers.
+In 2011, I uploaded these paper tapes to more modern media,
+where they form part of BOX_A2.ZIP, recorded in BOX_A2.TXT.
+
+   "903 MASIR 1/1/74, Binary Mode 3" MASD "Torn & Repaired"
+      Torn between *.1 & *.2 and repaired with holed patch
+   MASIR    1          18,795  28/12/11  12:15
+   MASIR    2          18,795  28/12/11  12:37
+
+   "903 LOADER 1/1/74, Binary Mode 3" MASD "Torn Leader"
+      Torn and repaired long ago with Sellotape
+   LOADER   1           9,843  28/12/11  12:18
+   LOADER   2           9,843  28/12/11  12:39
+
+In 1982, I wrote notes:
+   explaining how I had successfully regenerated
+      a binary LOADER ISSUE 3 from the above source tape,
+   explaining how I had successfully regenerated
+      a binary version of MASIR from the above source tapes,
+      which I chose to call the 18/11/75 version,
+   speculating that if I removed GRC's two edits, I'd get
+      a binary MASIR ISSUE 3 from the above source tapes.
+
+I was reluctant to call my 18/11/75 MASIR "MASIR ISSUE 4" because
+I've never seen an official MASIR ISSUE 4 binary tape (then or since).
+In fact my 1982 notes say that, subsequently, my 18/11/75 tape
+was found to be the same as "18/11/75 Pre-release Issue 4" and
+another "ISS 4" tape, neither of which had legible headings.
+
+In 2015, using my 903/920B simulator, I've successfully repeated
+the builds of LOADER ISSUE 3 and MASIR 18/11/95, and I've
+successfully performed the speculated build of MASIR ISSUE 3.
+
+
+Details.
+--------
+
+The builds below used my 1/1/74 versions of the MASIR & LOADER
+binaries, so I certainly could have used the ISSUE 3 versions.
+I have not checked if other versions would give the same results.
+
+To build "903 MASIR 18/11/75, Binary Mode 3":
+
+   Clear store
+   Load "903 MASIR 1/1/74, Binary Mode 3" at 8181
+   Jump 16
+   Type "O4M"
+   Read "MASIR ISSUE 3 TAPE 8"
+   Wind up output tape backwards giving
+      "903 PTEXEC 18/11/75, RLB Mode 3"
+      PTEXRLB  1           1,861  31/01/15  23:12
+      PTEXRLB  2           1,861  31/01/15  23:40
+
+   Clear store
+   Load "903 MASIR 1/1/74, Binary Mode 3" at 8181
+   Jump 16
+   Type "O4M"
+   Type "
+   [STMASI]
+   STMASI=434
+   %
+   "
+   Wind up output tape backwards giving
+      "903 STMASI 18/11/75, RLB Mode 3"
+      STMASRLB 1             418  31/01/15  23:11
+      STMASRLB 2             418  31/01/15  23:39
+
+   Clear store
+   Load "903 MASIR 1/1/74, Binary Mode 3" at 8181
+   Jump 16
+   Type "O4M"
+   Read "MASIR ISS 3, TAPE 1A"
+   Read "MASIR ISS 4, TAPE 1B"
+   Read "MASIR ISS 3, TAPE 1C"
+   Read "MASIR ISSUE 3 TAPES 2,3&4"
+   Read "MASIR ISS 3, TAPE 5A"
+   Type "C"
+   Read "MASIR ISSUE 3 TAPE 5B"
+      ignore CONTEXT ERROR given at final ')'
+   Read "MASIR ISS 4, TAPES 6 & 7"
+   Wind up output tape backwards giving
+      "903 MASIR 18/11/75, RLB Mode 3"
+      MASIRRLB 1          24,964  10/10/14  13:02
+      MASIRRLB 2          24,964  10/10/14  14:40
+
+   Clear store
+   Load "903 LOADER 1/1/74, Binary Mode 3" at 8181
+   Jump 16
+   Type "O434L"
+   Read "903 STMASI 18/11/75, RLB Mode 3"
+   Type "O435L"
+   Read "903 MASIR 18/11/75, RLB Mode 3"
+   Type "O435L"
+   Read "903 PTEXEC 18/11/75, RLB Mode 3"
+   Type "M"
+   Wind up output tape normally giving
+      "903 MASIR 18/11/75, Binary Mode 3"
+      MASIRBIN 1          19,206  10/10/14  13:35
+      MASIRBIN 2          19,206  10/10/14  14:43
+
+To build "903 MASIR 1/1/74, Binary Mode 3", or
+"MASIR ISS 3, SCB 13-3-73" excluding legible header:
+
+   First edit the two "ISS 4" source files back to "ISS 3" thus:
+   Load "BOWDLER 13/7/82, Binary Mode 3" at 8181
+
+   Read the following steering tape at 13
+   starting with a newline and ending with newline & haltcode
+      CLI ZERFRT
+      CLI /5  1
+      DLI 8  ;+2
+      DLE 4  ACTADR
+      CHI
+   Read "MASIR ISS 4, TAPE 1B" at 9
+      there is no final haltcode so punch some runout
+   Giving "MASIR ISS 3, TAPE 1B"
+
+   Read the following steering tape at 13
+   starting with a newline and ending with newline & haltcode
+      CLE (THIS CODE
+      DLE BRACK2
+      RTI BRACK2
+      BRACKET^%,
+      CHI
+   Read "MASIR ISS 4, TAPES 6 & 7" at 9
+   Giving "MASIR ISS 3, TAPES 6 & 7"
+
+   These two tapes will agree with the ISSUE 3 listings given in
+   the lever-arch file, including visible layout, but possibly
+   differing in trailing spaces and in blanks and erases.
+
+   The two short RLBs described above will be needed unchanged
+      "903 PTEXEC 18/11/75, RLB Mode 3"
+      "903 STMASI 18/11/75, RLB Mode 3"
+   Make the main RLB using the same process as described above
+   except that the "ISS 3" tapes are used throughout, giving
+      "903 MASIR 1/1/74, RLB Mode 3"
+
+   Clear store
+   Load "903 LOADER 1/1/74, Binary Mode 3" at 8181
+   Jump 8
+   Type "F
+   +1;
+   +8192;
+   +0;
+   +7167;
+   "
+   Jump 16
+   Type "O434L"
+   Read "903 STMASI 18/11/75, RLB Mode 3"
+   Type "O435L"
+   Read "903 PTEXEC 18/11/75, RLB Mode 3"
+   Type "O435L"
+   Read "903 MASIR 1/1/74, RLB Mode 3"
+   Type "M"
+   Wind up output tape normally giving
+      "903 MASIR 1/1/74, Binary Mode 3"
+      MASIR    1          18,795  28/12/11  12:15
+      MASIR    2          18,795  28/12/11  12:37
+
+   The 1/1/74 binary is shorter than the 18/11/75 binary,
+   not just because the edits have removed 15 instructions,
+   but also because the order of loading is more efficient.
+
+To build "903 LOADER 1/1/74, Binary Mode 3", or
+"900 LOADER, ISS 3 (SCB)" excluding legible header,
+as written up in the lever-arch file, using SIR:
+
+   Clear store
+   Load "900 SIR (SCB), ISS 6 (10.12.71)" at 8181
+      my copy has no legible heading
+   Read option "*+6" at 8
+      starting with a newline and ending with a haltcode
+   Read "900 LOADER ISS 3 SOURCE" at 9
+      omitting the first three lines and first haltcode
+      ignore EU LDICT and EU LODSET given at the first '%'
+   Patch location 19 to 4 116 to duplicate original garbage
+      (it is included in the dump but not set by the source)
+
+   Load "903 T22/23, ISS 3" at 8181
+      omitting the legible heading
+   Read the following steering tape at 8179
+   starting with a newline and ending with newline & haltcode
+      +8
+      +8
+      +15
+      +19
+      +128
+      +3203
+   Giving
+      "903 LOADER 1/1/74, Binary Mode 3"
+      LOADER   1           9,843  28/12/11  12:18
+      LOADER   2           9,843  28/12/11  12:39
+
+The first three lines of the "900 LOADER ISS 3 SOURCE" tape,
+which were omitted above, imply that it is possible to build
+the loader with MASIR rather than with SIR:
+    (900 LOADER ISSUE 3)
+   *PROG JENLD
+   *NOMEM
+
+   With this approach, having made an RLB with MASIR, it isn't
+   possible to load it into store with the existing LOADER and
+   dump it with T22/23, because the old & new loaders occupy
+   the same store area. It will be necessary to use the existing
+   LOADER in binary tape mode (and optionally load and dump this
+   to make it shorter), or move the existing loader with LODSET.
+
+   The loader source tape starts with an absolute patch, and
+   it will be seen above that it contains two '%' percent signs.
+   In SIR, the code after the first '%' follows the code before it,
+   whereas in MASIR, the code after the '%' ignores the patch.
+   There are further problems persuading MASIR & LOADER not to
+   hijack the trigger address, which I think involves LODSET.
+
+   However, I'm fairly certain that the 1/1/74 aka ISSUE 3
+   version of the loader was made using SIR, rather than using
+   MASIR (which would have placed the name JENLD into locations
+   2264-2265), so I've not explored this approach further.
+
+
+*** EOF ***

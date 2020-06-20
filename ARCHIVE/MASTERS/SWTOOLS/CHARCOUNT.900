@@ -1,0 +1,22 @@
+﻿
+charcount;
+"begin"
+    "code" "procedure" chio; "algol";
+    "code" "procedure" ch900; "algol";
+    "code" "integer" "procedure" getc (ch); "integer" ch; "algol";
+    "code" "procedure" putc (ch); "value" ch; "integer" ch; "algol";
+    "integer" EOF;
+
+    "integer" c, i, nc;
+
+    "comment" initialize special characters;
+    eof := 20;
+
+    "comment" initialize chio;
+    chio; ch900;
+
+    nc:=0;
+    "for" i := 0 "while" (getc(c) "ne" EOF) "do" nc := nc+1;
+    "print" nc
+"end" charcount
+<! halt !>

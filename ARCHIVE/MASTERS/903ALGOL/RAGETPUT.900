@@ -1,0 +1,66 @@
+﻿
+*1
+[RAGET RAPUT]
+
+
+FP=38
+WS=80
+PACK=74
+
+FAIL	4	+5	
+	11	65	( call ALGOL error handling )
+	8	66
+	8	;+0	( no continuation )
+
+( raget [a, i] )
+RAGET     /14 2           ( 2 parameters )
+          >1              ( link )
+          0     FP
+          /4    6         ( second parameter i )
+          /0    3         ( first parameter a )
+          /1    0         ( base+i )
+          5     WS
+          0     WS        ( get 2 word real from array and unpack )
+          /4    1
+          5     WS
+          /4    0
+          0     FP        ( put in result stack frame )
+          /5    0         ( first word of mantissa )
+          4     WS
+          6     &377600
+          /5    1         ( second word of mantissa )
+          4     WS
+          14    11
+          14    8181
+          /5    2         ( exponent )
+          0     RAGET+1
+          /8    1
+
+( raput [a, i, r] )
+RAPUT     /14 3           ( 3 parameters )
+          >1              ( link )
+          0     FP
+          /4    9         ( r from stack, unpacked )
+          5     WS+3
+          /4    10
+          5     WS+4
+          /4    11
+          5     WS+5
+          /4    6         ( second parameter i )
+          9     FAIL      ( i must be >= 0 )
+          /0    3         ( first parameter a )
+          /1    0         ( base+i )
+          5     103       ( address for result of pack )
+          /2    0         ( -i )
+          /0    1         ( address of array map )
+          /1    1         ( total size - i )
+          1     -2
+          9     FAIL      ( i+1 must be < total size )
+          0     PACK      ( interpreter routine to pack a real )
+          /11   0         ( will pack into i-th word of a )
+          /8    24
+          0     RAPUT+1
+         /8    1
+			
+%
+<! halt !>

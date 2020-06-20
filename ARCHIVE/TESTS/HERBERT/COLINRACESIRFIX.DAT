@@ -1,0 +1,21 @@
+﻿C Colin's computer race
+
+on 903 16K
+
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+select out tty
+at ptr file ../../MASTERS/HERBERT/COLINRACESIRFIX.900
+j 12
+rewind
+select out auto
+at ptp file COLINRACESIRFIX.BIN
+j 10
+de ptp
+at ptr file COLINRACESIRFIX.BIN
+j 8181
+sh t
+select out tty
+j 8
+sh t
+delete COLINSRACESIRFIX.BIN

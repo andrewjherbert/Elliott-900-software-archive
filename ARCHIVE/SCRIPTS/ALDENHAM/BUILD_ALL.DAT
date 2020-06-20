@@ -1,0 +1,12 @@
+﻿C build all ALdenham utilities
+
+C N.B. ALDRLB is required to build others.
+
+do build_aldrlb
+do build_readit
+do build_punchit
+do build_store
+do build_map
+do build_aldcopy
+do build_unidump-b
+do build_unidump-c

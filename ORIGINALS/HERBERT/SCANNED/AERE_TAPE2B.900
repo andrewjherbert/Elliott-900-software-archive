@@ -1,0 +1,126 @@
+﻿
+
+
+MOVE     4    BOSELY+1
+         9    NEXT
+         4    P
+         15   4365     (  ALL MOVE )
+
+         4    MOVCOUNT
+         9    ZERO
+RETZED   4    MOVCOUNT+1
+         9    ONE
+RETONE   4    MOVCOUNT+2
+         9    TWO
+RETTWO   4    MOVCOUNT+3
+         9    THREE
+
+         8    NEXT
+
+ZERO     10   MOVCOUNT
+         0    +0
+         4    P
+         6    MASK
+         7    MZ
+
+MOVPOS   /4   FORWARD
+         /2   POSN
+
+         /5   POSN
+
+ON       /8   ;+1
+8        MZ
+         8    MONE
+         8    MTWO
+         8    MTHREE
+
+MZ       4    MOVCOUNT
+         9    RETZED
+         4    P
+         6    MASK+4
+         5    P
+         8    RETZED
+
+ONE      10   MOVCOUNT+1
+         0    +1
+         4    P
+         6    MASK+1
+         7    MONE
+         8    MOVPOS
+
+MONE     4    MOVCOUNT+1
+         9    RETONE
+         4    P
+         6    MASK+5
+         5    P
+         8    RETONE
+TWO 0 +2
+         10 MOVCOUNT+4
+         4    MOVCOUNT+4
+         /2   SCAL
+         7    TWOCON
+
+MTWO     4    MOVCOUNT+2
+         9    RETTWO
+         4    P
+         6    MASK+6
+         5    P
+         8    RETTWO
+THREE    0    +3
+         10   MOVCOUNT+5
+         4    MOVCOUNT+5
+         /2   SCAL
+         7    THRECON
+
+MTHREE   4    MOVCOUNT+3
+         9    NEXT
+         4    P
+         6    MASK+7
+         5    P
+         8    NEXT
+TWOCON   5    MOVCOUNT+4
+         10   MOVCOUNT+2
+         8    MOVPOS
+
+THRECON  5    MOVCOUNT+5
+         10   MOVCOUNT+3
+         8    MOVPOS
+
+
+[ GETCOUNT SHC TRIAL
+CORECT FAIL INITIAL RSHIFT SENSE  W  W1  DIFFRACT ]
+
+GETCOUNT +0
+         8    ;+1
+         /8   ;+1
+         8    ZERO
+         8    ONE
+         8    TWO
+         15   270
+         5    W
+         15   271
+         8    ST1
+
+TWO      15   270
+         14   6
+         5    W
+         15   269
+         8    ST1
+
+ONE      15   265
+         5    W
+         15   266
+         8    ST1
+
+ZERO     15   265
+         14   6
+         5    W
+         15   264
+ST1      5    W1
+         4    W
+         14   6
+         6    =/15  4096
+         1    W1
+         5    W
+         4    DIFFRACT
+         2    +

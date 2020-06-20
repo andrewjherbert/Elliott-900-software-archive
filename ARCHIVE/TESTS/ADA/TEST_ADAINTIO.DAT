@@ -1,0 +1,12 @@
+﻿C Demonstrate L1 ADA - Integer I/O
+
+on 903 16K
+c load Ada system
+at ptr file ../../MASTERS/ADA/L1ADA.BIN
+j 8181
+c run program
+at ptr file ../../MASTERS/ADA/ADAINTIO.900
+select out tty
+j 8
+sh t
+st 34

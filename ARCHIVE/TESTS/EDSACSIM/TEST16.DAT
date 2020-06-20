@@ -1,0 +1,26 @@
+﻿C Demonstrate producing 5 hole tape and running it - primes example.
+
+on 903
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/EDSACSIM/PROGRAMS_MCK/PRIMES.900
+
+c translate
+at ptp file PRIMES.BIN
+j 42
+de ptp
+c set IO1
+j 36
+c set EDSAC input code
+j 40
+c run program
+at ptr file PRIMES.BIN
+nonstop on
+step 2500000
+j 32
+nonstop off
+
+delete PRIMES.BIN
+sh t

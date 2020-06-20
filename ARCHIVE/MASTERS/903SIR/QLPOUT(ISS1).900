@@ -1,0 +1,171 @@
+﻿(  OOO   OOO  OOOOO        OOO  O     OOOO   OOO  O   O OOOOO       OOOOO  OOO   OOO  O   O OOOOO          O  )
+( O   O O   O    O        O   O O     O   O O   O O   O OOOOO         O   O   O O   O O   O O            OOO  )
+( O   O O   O   O         O   O O     O   O O   O O   O   O           O   OO    OO    O   O O            OOO  )
+(  OOOO O   O   OO        O   O O     OOOO  O   O O   O   O           O    OO    OO   O   O OOOO           O  )
+(     O O   O             O   O O     O     O   O O   O   O           O               O   O O              O  )
+(     O O   O     O       O   O O     O     O   O O   O   O           O      O     O  O   O O              O  )
+( OOOOO O   O     O       O  O  OOOOO O     O   O OOOOO   O           O   O   O O   O OOOOO O              O  )
+( OOOO   OOO  OOOO         OO O OOOOO O      OOO  OOOOO   O         OOOOO OOOO  OOOO  OOOOO OOOOO          O  )
+
+[ QLPOUT QERROR QLEV2  QLPT2 QLPT3  ]
+
+LPCONT=5665
+LPSTAT=1569
+LPOPB=5697
+
+QLPOUT
+
+ +0
+ 8 INTCOD
+ 8 FEED
+ 8 TAB
+
+MARK +1  (+1 INITIAL:BUFFER EMPTY)
+     ( -1 : BUFFER FULL, +0 ORDINARY)
+
+CT  +0
+BUFAD 0 BUFFER
+BUFEND 0 BUFFER+42
+ADDR 0 BUFFER+1
+M +0
+CODE +0
+BUFFER  >+42
+
+
+INTCOD
+ 6 +63
+ 5 CODE
+TRYAG
+ 15 LPSTAT
+ 15 1600 (ERROR IF INVALID,NOT CONNECTED)
+ 6 =/8 0
+ 7 ;+3
+ 4 -1
+ 8 ER
+ 15 LPSTAT (READ LINEPRINTER STATUS)
+ 6 +50  ( IS IT IN MANUAL , PAPER LOW, ERROR)
+ 7 STOK
+ 15 LPSTAT (PRINT ERROR STATUS)
+ER
+ 11 QERROR
+ 8 QERROR+1
+ 0 DATA
+ 8 TRYAG
+
+DATA
+ 0 QLPOUT
+ 0 1
+ \LPT
+
+STOK
+ 4 MARK
+ 9 TRYAG
+ 7 WCOD ( STORE CODE IN BUFFER )
+INIT   ( RESET BUFFER)
+ 4 BUFAD
+ 1 +1
+ 5 ADDR
+ 4 +0
+ 5 M
+ 5 MARK
+ 4 FF
+ 0 BUFAD
+ /5 1
+ 4 +2
+ 5 CT
+
+WCOD
+ 4 CODE
+ 9 STORTB
+ 1 -1
+ 7 NL ( IS IT NEWLINE)
+ 1 -31 (IS IT CLOSEQUOTE)
+ 7 CLSQT
+STCOD
+ 0 ADDR
+ 4 M
+ 10 M
+ 7 SEC
+ 9 FIR
+ 4 CODE
+/1 0
+/5 0  (ADD LAST OF 3 INTO WORD)
+ 10 ADDR (ADVANCE ADDRESS FOR NEXT WORD)
+ 4 -1
+ 5 M
+ 4  BUFEND
+ 2 ADDR
+ 9 EXIT ( EXIT IF BUFFER NOT FULL)
+NL
+ 4 -1  ( ATTEMPT TO OUTPUT BUFFER)
+5 MARK
+ 4 +2
+ 15 LPCONT (PERMIT INTERUPTS )
+ 8 EXIT    ( SO BUFFER CAN BE OUTPUT)
+
+STORTB
+ 1 +64
+ 9 STFEED
+ 4 +1  ( STORE +1 FOR TAB)
+CTQ
+ 5 CODE
+ 8 STCOD
+CLSQT
+ 4 +63
+ 8 CTQ
+STFEED
+ 0 BUFAD
+ /2 1 ( LOAD Q )
+ 14 6
+ 4 CODE
+ 14 12 ( INSERT FEED CODE IN 2ND. WORD OF BUFFER)
+ /5 1
+ 8 NL
+
+FIR
+ 10 CT
+ 2 +0
+ 4 CODE
+ 14 12
+STW
+ /5 0
+EXIT
+ 0 QLPOUT
+ /8 1
+
+SEC
+ 2 +0
+ 4 CODE
+ 14 6
+/1 0
+ 8 STW
+
+
+QLPT3
+ 15 LPSTAT
+ 8 QLEV2
+
+QLPT2
+ 4 MARK
+ 9 ;+4 ( IF BUFFER EMPTY THEN )
+
+ 4 +1 ( SUPRESS INTERUPTS AND TERMINATE)
+ 15 LPCONT
+ 8 QLEV2
+ 4 BUFAD
+ 0 CT
+ 14 LPOPB ( OUTPUT BUFFER)
+ 4 +1
+ 5 MARK ( SET TO INITIALISE BUFFER  ON  L4)
+ 8 QLEV2
+
+TAB
+ 4 -1
+ 8 INTCOD+1
+
+FF &010000
+FEED
+ 1 =/0 0
+ 8 INTCOD+1
+
+<! Halt !>

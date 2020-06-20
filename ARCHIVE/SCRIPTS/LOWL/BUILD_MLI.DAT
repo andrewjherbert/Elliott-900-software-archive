@@ -1,0 +1,149 @@
+﻿C Build ML/I System
+
+on 905 16K
+
+C Generate hash tables
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+select out tty
+
+at ptr inline
+*19
+<! halt !><!!>
+j 8
+st 6927
+at ptr file ../../MASTERS/LOWL/MLI_HASH.900
+j 9
+st 6927
+at ptr file ../../MASTERS/HERBERT/SGLPAK.900
+j 9
+st 6927
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 6927
+
+C generate hash details
+
+select out auto
+at ptp file MLI_HASHMACRO.900
+at ptr inline
+
+MCDEF
+MCSKIP
+MCINS
+MCWARN
+MCDEFG
+MCSKIPG
+MCINSG
+MCWARNG
+MCNODEF
+MCNOSKIP
+MCNOINS
+MCNOWARN
+MCSET
+MCGO
+MCALTER
+MCNOTE
+MCPVAR
+MCLENG
+MCSUB
+MCSTOP
+<! halt !><!!>
+j 32
+j 33
+de ptp
+
+C Generate ML/I GPM from LOWL
+at ptr file LOWL2GPM.BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/LOWL/MLI_MILOGIC.900
+at ptp file MLI_GMILOGIC.900
+j 8
+st 63
+de ptp
+
+C Generate ML/1 MASIR from LOWL
+
+C use LOWL Translator to convert GPM formatted LOWL to MASIR
+at ptr file LOWL_GPM.BIN
+j 8181
+c st 1141
+
+at ptr file ../../MASTERS/LOWL/LOWL_TRANSLATOR.900
+c read in warning characters
+select out tty
+j 34
+st 86
+c read in macros
+j 32
+c read in hash table
+at ptr file MLI_HASHMACRO.900
+j 32
+c macrogenerate ML/I MI-LOGIC from  ML/I LOWL to MASIR
+select out auto
+at ptr file MLI_GMILOGIC.900
+at ptp file TEMP.900
+j 32
+st 1482
+j 35
+st 37
+de ptp
+
+C add in local fixes to MASIR
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/LOWL/EDIT_MLI_MILOGIC.900
+at ptp file errors.txt legible
+j 13
+st 490
+de ptp
+print errors.txt
+at ptr file TEMP.900
+at ptp file MLI_MILOGIC.900
+j 9
+de ptp
+st 1274
+
+delete TEMP.900
+delete errors.txt
+
+C assemble with MASIR, adding in EXEC and MD-LOGIC
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j 8181
+st 8164
+at tty inline
+O4MCCC<!!>
+at ptr file ../../MASTERS/LOWL/EXEC.900
+at ptp file MLI.RLB
+nonstop on
+j 16
+at ptr file ../../MASTERS/LOWL/MLI_MDLOGIC.900
+r
+at ptr file ../../MASTERS/LOWL/MLI_REFS.900
+r
+at ptr file MLI_MILOGIC.900 
+r
+de ptp
+reverse MLI.RLB
+
+c Generate binary with loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+at tty inline
+O134LM<!!>
+at ptr file MLI.RLB
+at ptp file MLI.BIN
+j 16
+de ptp
+delete MLI.RLB
+
+sh t

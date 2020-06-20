@@ -1,0 +1,21 @@
+﻿C Install IO1 using IO2.
+
+on 903
+
+at ptr file ../../SCRIPTS/EDSACSIM/EDSACSIM.BIN
+j 8181
+st 8171
+
+c load IO1 using IO2
+at ptr file ../../MASTERS/EDSACSIM/IO1_FOR_IO2.900
+c START
+j 32
+
+c load IO1 program
+at ptr file ../../MASTERS/EDSACSIM/PROGRAMS_MCK/PRIMES.900
+
+c RESET
+step 1000000
+j 34
+
+sh t

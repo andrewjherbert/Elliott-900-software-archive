@@ -1,0 +1,171 @@
+﻿<! Legible Header  OOOO      OOO      OOOO              OOO      OOOOO    O    O   OOOOOOO    O            OOO    OOOO     OOOO    O    O   OOOOO               O  !>
+<! Legible Header O    O    O   O    O    O            O   O    O     O   O    O      O      OO             O    O    O   O    O   O    O   O                  OO  !>
+<! Legible Header O    O   O     O        O           O     O   O     O   O    O      O       O             O    O        O        O    O   O                 O O  !>
+<! Legible Header  OOOOO   O     O     OOO            O     O   O     O   O    O      O       O             O     OOOO     OOOO    O    O   OOOO            OOOOOO !>
+<! Legible Header      O   O     O        O           O     O   O     O   O    O      O       O             O         O        O   O    O   O                   O  !>
+<! Legible Header      O   O     O        O           O   O O   O     O   O    O      O       O             O         O        O   O    O   O                   O  !>
+<! Legible Header O    O    O   O    O    O            O   O    O     O   O    O      O       O             O    O    O   O    O   O    O   O                   O  !>
+<! Legible Header  OOOO      OOO      OOOO              OOO O    OOOOO     OOOO       O      OOO           OOO    OOOO     OOOO     OOOO    OOOOO               O  !>
+
+[QOUT1 QCHOP QERROR]
+QOUT1  +0
+ 8 INT
+ 5 NUMBER
+ 4 +0
+IPLINK 5 SCALE
+ 5 TYPMK
+ 0 QOUT1
+ /4 1
+ 6 +8191
+ 1 SCALE
+ 9 ;+2
+ 2 +0
+ 5 SCALE
+ /4 1
+ 9 NL
+ 4 +0
+ 8 QCH
+NLRET 6 =15 0
+ 14 8179
+ 1 -6
+ 5 DC
+ 4 +0
+ 5 DIGMK
+ 4 NUMBER
+ 9 CHKSGN
+ 4 PLUS
+SGNRET 5 SIGN
+LOOP2 4 +0
+ 5 DIGIT
+ 4 SCALE
+ 7 OPDECPT
+COMP 4 TYPMK
+ 7 CALCFR
+DPRET 0 DC
+ 4 NUMBER
+LOOP1 /1 CONST
+ 9 CONTIN
+ 10 DIGIT
+ 8 LOOP1
+CALCFR 4 NUMBER
+ 12 +10
+ 3 NUMBER
+ 5 DIGIT
+ 8 FRDTCC
+CONTIN /2 CONST
+ 2 +0
+SETNN
+ 5 NUMBER
+FRDTCC 4 DIGIT
+ 7 OPSPCE
+ 2 +9
+ 9 ERROR
+TESTDC 4 DC
+ 7 EXIT
+ 4 DIGMK
+ 7 OPSIGN
+OPDGT 4 DIGIT
+ 1 +16
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 DIGMK
+RETURN 10 DC
+ 10 SCALE
+ 8 LOOP2
+INT 5 NUMBER
+ 4 -6
+ 5 TYPMK
+ 8 IPLINK
+NL 4 +1
+QCH 11 QCHOP
+ 8 QCHOP+1
+ 0 QOUT1
+ /4 1
+ 8 NLRET
+CHKSGN 2 +0
+ 5 NUMBER
+ 4 +13
+ 8 PATCH2
+OPDECPT 4 TYPMK
+ 9 ;+2
+ 8 ;+3
+ 4 DC
+ 7 EXIT
+ 4 DIGMK
+ 7 OPS
+DPOPUT 4 +14
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 DIGMK
+ 8 COMP
+OPSPCE 4 DIGMK
+ 7 ;+2
+ 8 TESTDC
+ 4 DC
+ 1 +1
+ 7 OPSIGN
+ 4 +0
+ 11 QCHOP
+ 8 QCHOP+1
+ 8 RETURN
+
+OPS 4 SIGN
+ 11 QCHOP
+ 8 QCHOP+1
+ 8 DPOPUT
+OPSIGN 4 SIGN
+ 11 QCHOP
+ 8 QCHOP+1
+ 8 OPDGT
+EXIT 4 TYPMK
+ 2 SCALE
+ 9 ERROR
+OUT 0 QOUT1
+ /8 2
+ERROR 4 +10
+ 11 QCHOP
+ 8 QCHOP+1
+ 4 +0
+ 11 QERROR
+ 8 QERROR+1
+ 0 ERRDTA
+ 8 OUT
+ERRDTA 0 QOUT1
+ 0 1
+  \QO1
+  -100000
+  -10000
+  -1000
+  -100
+  -10
+  -1
+CONST  -1
+SIGN  +0
+NUMBER  +0
+SCALE  +0
+DC  +0
+DIGIT  +0
+PLUS  +0 ( 0 FOR <SPACE>: INSERT  +11 FOR <PLUS> )
+DIGMK  +0
+TYPMK  +0
+
+PATCH2
+ 5 SIGN
+ 4 NUMBER
+ 9 ;+2
+ 8 LOOP2
+ 4 +1
+ 5 DIGIT
+ 4 TYPMK
+ 7 FM1
+ 4 +31072
+ 8 SETNN
+
+FM1
+ 4 -1
+ 1 SCALE
+ 5 SCALE
+ 4 +0
+ 8 SETNN
+(*)
+<! Halt !>

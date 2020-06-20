@@ -1,0 +1,135 @@
+﻿
+((BOWDLER CHARACTER SUBROUTINE EDIT, 1/9/76))
+
+TIM
+ESC ..
+
+RTS TELECODE
+BOWDLER..
+RTS 31/3/70
+1/9/76..
+
+CLE [
+INS
+(May contain some loose ends)
+
+^SFREE   +1900 $
+
+..
+
+CLE ERR
+INS
+LISFLG ..
+
+RTS ISO or 920
+ISO..
+RTS internal
+7-bit code,..
+RTS code, but
+but..
+
+CSI (+1)
+DSI (+3)
+INS
+         4    +0
+(+2)..
+
+RTS F+3
+F+2..
+CLE 1
+DLI 7
+INS
+         1    -13
+         7    FILBUF+2 (Ignore C.R.)
+         1    -114
+         7    FILBUF+2 (Ignore erases)
+..
+
+CLE 1 -13
+DLE 0 BUFCT
+
+RTS internal
+7-bit..
+RTS ISO or 920
+ISO..
+
+CSI TESCOD
+DSI 903)
+
+CLE 15 6144
+DLI 5 OPC
+INS
+         11   BITCTL
+         8    MODTES
+..
+
+RTL 2 +0
+..
+CLI 14
+INS
+         6    +128
+..
+RTL 15 6144
+         11   BITCTL
+         8    MODTES
+..
+
+CLE NL 15
+DLE OUT
+INS
+NL       4    -1024    (-4*256)
+         11   BITCTL
+         8    MODTES
+
+..
+
+CLI BLANKS
+DLI 9
+INS
+         11   BITCTL
+         8    MODTES
+..
+
+CLE (FAS
+INS
+MODTES   0    BITCTL
+         5    TOTAL
+         4    CHOPC
+         9    ;+7
+         4    TOTAL
+         15   6144
+         1    +256
+         9    ;-2
+         4    LISFLG
+         /7   1
+         4    TOTAL
+         15   6148
+         /8   1
+
+..
+
+RTS telecode: +0=920, +1=903
+mode: <0 for Error..
+RTS BAR
+..
+DSP
+
+CLE (CODE T
+DLE (ERR
+
+CLI ((ERR
+RTS CHOPL
+CHOPC CHOPL..
+
+
+CSI then stops
+DSE )
+
+RTL ERRORE
+ERRORE   4    &400000
+         5    CHOPC
+         4    +0
+..
+
+CHI
+<! Halt !>

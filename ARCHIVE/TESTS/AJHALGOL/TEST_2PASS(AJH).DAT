@@ -1,0 +1,39 @@
+﻿C TEst 2-Pass ALGOL System (AJH)
+
+on 903 16k
+
+c load new tape 1 
+clear
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+st 8171
+
+c compile a test program
+
+at ptp file TEST.RLB
+at ptr file ../../../MASTERS/ALGOL/AJH/TEST_PROGRAM.900
+
+
+j 14
+de ptp
+st 9
+
+C **********TAPE 2**********
+
+c load new tape 2 
+at ptr file ../../SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+st 8171
+
+c load and run test program
+at ptr file TEST.RLB
+select out tty
+nonprinting off
+j 8
+st 7943
+j 10
+st 1727
+
+delete TEST.RLB
+
+sh t

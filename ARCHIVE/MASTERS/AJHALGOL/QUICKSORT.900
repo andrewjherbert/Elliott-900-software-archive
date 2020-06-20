@@ -1,0 +1,110 @@
+﻿Quick Sort;
+"begin"
+   "comment" 04-MAY-1996;
+
+   "integer" j, m, n, x, y, z;
+   punch(1); reader(1);
+   "print" ''L@Input m, n    (array bounds)@;
+   "print" ''L@and   x, y, z (random seeds)'L@@;
+   "read" m, n, x, y, z;
+   "print" sameline, ''L@@, m, n, ''L@@, x, y, z, ''L2@@;
+   "begin"
+      "array" a[m: n];
+
+      "procedure" exchange(x, y); "real" x, y;
+      "begin"
+         "real" w; 
+         w := x; x := y; y := w
+      "end" of exchange;
+
+      "real" "procedure" Wichmann;
+      "begin"
+         "comment" The Wichmann-Hill portable random number
+                   generator. B. A. Wichmann and I. D. Hill,
+                   An Efficient and Portable Pseudo-Random Number
+                   Generator, Applied Statistics, 31 (No. 2),
+                   188-190 (1982) ;
+         "real" w;
+         x := (171 * (x - (x "div" 177) * 177) -  2 * (x "div" 177));
+         y := (172 * (y - (y "div" 176) * 176) - 35 * (y "div" 176));
+         z := (170 * (z - (z "div" 178) * 178) - 63 * (z "div" 178));
+         "if" x < 0 "then" x := x + 30269;
+         "if" y < 0 "then" y := y + 30307;
+         "if" z < 0 "then" z := z + 30323;
+         w := x/30269.0 + y/30307.0 + z/30323.0;
+         Wichmann := w - entier(w)
+      "end" of Wichmann;
+
+      "real" "procedure" random(m, n); "value" m, n; "integer" m, n;
+      "begin"
+         "integer" k;
+         "if" n < m "then" "print" ''L@Gloom@, stop;
+         k := m + entier((1 + n - m) * Wichmann);
+         "if" k > n "then" "print" ''L@Trouble@, stop;
+         random := k
+      "end" of random; 
+
+      "procedure" partition(a, m, n, i, j); "value" m, n;
+                  "array" a; "integer" m, n, i, j;
+      "begin"
+         "comment" CACM July 1961 Algorithm 63 
+                   page 321 C. A. R. Hoare, 
+                   and certifications
+                   page 439 1962 J. S. Hillmore,
+                   page 446 August 1963 B. Randell, L. J. Russell;
+         "real" x; "integer" f; "switch" ss := up, down, change;
+         f := random(m, n); x := a[f];
+         i := m; j := n;
+up: 
+         "for" i := i "step" 1 "until" n "do"
+            "if" x < a[i] "then" "goto" down;
+         i := n;
+down: 
+         "for" j := j "step" -1 "until" m "do"
+            "if" a[j] < x "then" "goto" change;
+         j := m;
+change: 
+         "if" i < j "then" "begin" exchange(a[i], a[j]);
+                                   i := i + 1; j := j - 1;
+                                   "goto" up
+                           "end"
+         "else"
+         "if" i < f "then" "begin" exchange(a[i], a[f]);
+                                   i := i + 1
+                           "end"
+         "else"
+         "if" f < j "then" "begin" exchange(a[f], a[j]);
+                                   j := j - 1
+                           "end"
+      "end" of partition;
+   
+      "procedure" quicksort(a, m, n); "value" m, n;
+                  "array" a; "integer" m, n;
+      "begin"
+         "comment" CACM July 1961 Algorithm 64 
+                   page 321 C. A. R. Hoare, 
+                   and certifications
+                   page 439 1962 J. S. Hillmore,
+                   page 446 August 1963 B. Randell, L. J. Russell;
+         "procedure" local(i, j); "value" i, j; "integer" i, j;
+         "begin"
+            "if" m < n "then" "begin" partition(a, m, n, i, j);
+                                      quicksort(a, m, j);
+                                      quicksort(a, i, n)
+                              "end"
+         "end" of local;
+         local(0, 0)
+      "end" of quicksort;
+
+      "comment" program start;
+      checks('Generating@);
+      "for" j := m "step" 1 "until" n "do" a[j] := Wichmann;
+      "comment" "print" ''L2@Before'L@------'L@@;
+      "comment" "for" j := m "step" 1 "until" n "do" "print" a[j];
+      checks('Sorting@);
+      quicksort(a, m, n);
+      "comment" "print" ''L2@After'L@-----'L@@;
+      "comment" "for" j := m "step" 1 "until" n "do" "print" a[j];
+   "end"
+"end"
+<! halt !>

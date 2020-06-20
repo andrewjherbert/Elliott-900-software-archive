@@ -1,0 +1,323 @@
+﻿
+*PROG FIXDMP
+*LISTLA
+*NOMEM
+
+((DUMPER AND FIXUPS FOR AJH LG ALGOL SYSTEM - AJH - 21/06/2015))
+
+^7000^1
+[ DUMPER FIXES BD BTOPA BTOPE BTOPF BTOPI BTOPL BTOPM BTOPT ENT16
+  ENT17 ENT18 ENT19 FIX LA PERM SYMBOL TW ]
+
+(7000^1)  8     FIXES
+(7000^2)  8     DUMPER
+
+FIXES     4	FIX	     (Correct 14 ARRAY)
+	  1	=14 0
+	  5	FIX
+	  4	FIX+1	     (Correct 15 SWITCH)
+	  1	=15 0
+	  5	FIX+1
+	  4     FIX+12       (Correct /15 THEN)
+          1     -8192
+          5     FIX+12
+	  0	+ENT16/
+	  4	E16
+	  /5	16
+	  4	E17
+	  /5	17
+	  4	E18
+	  /5	18
+	  4	E19
+	  /5	19
+	  8	;+0
+
+DUMPER    4     PERM	  (In case we have added to namelist)
+          1	:PERM/
+	  5	TABLE+6
+	  4     +0
+          5     COUNT
+          11    BTOPL     (Initialize system)
+          8     BTOPI
+          4     +8        (Set marker bit)
+          5     BTOPM
+          4     +2        (Select 16K clear store)
+          5     BTOPF
+
+          0	+ENT16/
+	  /4	LA
+          1     -1
+          5     TABLE+1
+          /4     BD
+          5     TABLE+2
+
+CYCLE     0     COUNT
+          /4    TABLE     (First location to dump)
+          9     DONE
+          5     BTOPA
+          /4    TABLE+1   (Second location to dump)
+          5     LAST
+
+LOOP      4     BTOPA     (Location to dump)
+          1     -8192
+          5     ADDR
+          0     ADDR
+          /4    0         (Word to dump)
+          11    BTOPL     (Dump word)
+          8     BTOPE
+          4     BTOPA     (Test for end)
+          2     LAST
+          9     ;+2       (All done)
+          8     LOOP
+
+          10    COUNT     (Look for next pair)
+          10    COUNT
+          8     CYCLE
+
+DONE      11    BTOPL     (Terminate tape)
+          8     BTOPT
+          8     ;+0
+
+E16	  8	ENT16
+E17	  8	ENT17
+E18	  8	ENT18
+E19	  8	ENT19
+
+LAST      >1
+COUNT     +0
+ADDR      >1
+
+TABLE     +8              (Interpreter and library)
+(+1)      >1              ([LA])
+(+2)      >1              (Loader and  dictionary)
+(+3)      +8129
+          +8192           (Translator)
+(+5)      :TW
+(+6)      >1              (Namelist)
+          +16383
+          -1
+
+((BINARY TAPE OUTPUT SUBROUTINE, 21/12/73))
+
+[ BTOPL BTOPI BTOPE BTOPT BTOPM BTOPF BTOPA BTOPW BTOPJ ]
+
+BTOPL     >1
+
+BTOPT     4     &400000
+          5     BTOPA
+          8     ;+2
+
+BTOPE     5     BTOPW
+(+1)      4     BTOPF
+          9     SUBSEQ
+
+          4     -46080
+          15    6144
+          1     +256
+          9     ;-2
+
+          4     BTOPF
+          7     PL
+          2     +1
+          7     PCS
+
+          0     +0
+          14    13
+          5     LAST
+          4     -9
+          11    PGL
+          8     PGE
+
+          10    1         (8171)
+          /5    8191      (8172)
+          4     1         (8173)
+          1     8179      (8174)
+          7     8181      (8175)
+          4     8178      (8176)
+          8     8171      (8177)
+          +0              (8178)
+LAST      >1              (8179)
+
+          4     -1024
+          15    6144
+          1     +256
+          9     ;-2
+
+PCS       4     -5
+          11    PGL
+          8     PGE
+
+          8     8177      (8175)
+          8     8181      (8176)
+          5     2         (8177)
+          10    8177      (8178)
+          8     8175      (8179)
+
+          4     -1024
+          15    6144
+          1     +256
+          9     ;-2
+
+PL        4     -12
+          11    PGL
+          8     PGE
+
+          4     8169      (8168)
+          5     8175      (8169)
+          4     1         (8170)
+          15    2048      (8171)
+          7     8168      (8172)
+          15    2048      (8173)
+          15    2048      (8174)
+          +0              (8175)
+          1     8167      (8176)
+          5     8167      (8177)
+          10    8175      (8178)
+          8     8170      (8179)
+
+          4     &400000
+          5     BTOPF
+
+SUBSEQ    4     BTOPA
+          9     PT
+
+          6     =15 0
+          2     MODULE
+          7     ;+2
+          8     PMP
+
+          4     BTOPA
+          2     EXPECT
+          7     PW
+          8     PSP
+
+PMP       4     =5 0
+          11    PWL
+          8     PWE1
+          4     BTOPA
+          6     =15 0
+          5     MODULE
+          11    PWL
+          8     PWE2
+
+PSP       4     BTOPA
+          5     EXPECT
+          6     =0 8191
+          1     =/4 8191
+          11    PWL
+          8     PWE1
+
+PW        4     BTOPW
+          11    PWL
+          8     PWE2
+          10    EXPECT
+          10    BTOPA
+          8     EXIT
+
+PT        4     =8 8180
+          11    PWL
+          8     PWE1
+          4     +0
+          11    PWL
+          8     PWE2
+
+          4     -6
+          11    PGL
+          8     PGE
+
+SUM       >1              (8174)
+BTOPJ     >1              (8175)
+          15    6144      (8176)
+          4     8174      (8177)
+          2     8167      (8178)
+          8     8175      (8179)
+
+          4     -46080
+          15    6144
+          1     +256
+          9     ;-2
+
+BTOPI     4     +127
+          5     BTOPM
+          4     +0
+          5     BTOPF
+          5     MODULE
+          5     SUM
+          4     &400000
+          5     EXPECT
+          4     =7 8175
+          5     BTOPJ
+
+EXIT      0     BTOPL
+          /8    1
+
+PGL       >1
+
+PGE       5     HEAD+2
+          4     -3
+          5     COUNT
+
+PM        4     BTOPM
+          15    6144
+
+          4     COUNT
+          7     ;+5
+          0     COUNT
+          /4    HEAD+3
+          10    COUNT
+          8     ;+5
+          0     PGL
+          /4    1
+          10    PGL
+          10    HEAD+2
+
+          11    PWL
+          8     PWE3
+
+          4     HEAD+2
+          9     PM
+          0     PGL
+          /8    1
+
+HEAD      0     8179      (8177)
+          8     8182      (8178)
+          >1              (8179)
+
+PWL       >1
+
+PWE1      5     WORD
+          4     +0
+          15    6144
+          4     WORD
+
+PWE2      5     WORD
+          1     SUM
+          5     SUM
+          4     WORD
+
+PWE3      14    8178
+          1     &100
+          15    6144
+          4     +0
+          14    7
+          15    6144
+          4     +0
+          14    7
+          15    6144
+
+          0     PWL
+          /8    1
+
+BTOPM     >1
+BTOPF     >1
+BTOPA     >1
+BTOPW     >1
+
+MODULE    >1
+EXPECT    >1
+COUNT     >1
+WORD      >1
+
+%
+
+<! Halt !>

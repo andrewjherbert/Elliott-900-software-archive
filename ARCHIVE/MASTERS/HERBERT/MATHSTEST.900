@@ -1,0 +1,16 @@
+﻿
+maths test;
+
+"begin"
+   "real" a, b; "integer" c, d;
+   "for" c := 1 "step" 1 "until" 10 "do" "begin"
+      a := c;
+      "for" d := 1 "step" 1 "until" 10 "do" "begin"
+         b := arctan (exp(ln(sqrt(a*a))));
+         a := sin(b)/cos(b);
+         "print" d, sameline, a;
+         "end";
+      "print" {{L}}
+      "end"
+"end"
+<! halt !>

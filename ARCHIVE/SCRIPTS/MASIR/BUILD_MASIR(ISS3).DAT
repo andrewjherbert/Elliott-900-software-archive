@@ -1,0 +1,123 @@
+﻿C Build "903 MASIR ISSUE 3"
+
+on 903 16K
+
+clear
+
+nonstop on
+
+C Edit issue 4 sources back to issue 3
+
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptr inline
+
+      CLI ZERFRT
+      CLI /5  1
+      DLI 8  ;+2
+      DLE 4  ACTADR
+      CHI
+<! halt !><!!>
+j 13
+st 490
+at ptr file ../../MASTERS/MASIR/MASIR1B.900
+at ptp file MASIR1B(ISS3).900
+j 9
+de ptp
+
+at ptr inline
+
+      CLE (THIS CODE
+      DLE BRACK2
+      RTI BRACK2
+      BRACKET^%,
+      CHI
+<! halt !><!!>
+j 13
+st 490
+at ptr file ../../MASTERS/MASIR/MASIR67.900
+at ptp file MASIR67(ISS3).900
+j 9
+st 1274
+
+C Build MASIR Issue 3
+c load MASIR
+at ptr file ../../MASTERS/MASIR/MASIR(181175).BIN 
+j 8181
+st 8164
+
+at ptp file MASIR(ISS3).RLB
+at ptr file ../../MASTERS/MASIR/MASIR1A.900
+at tty inline
+O4M<!!>
+j 16
+at ptr file MASIR1B(ISS3).900
+r
+at ptr file ../../MASTERS/MASIR/MASIR1C.900
+r
+at ptr file ../../MASTERS/MASIR/MASIR234.900
+r
+at ptr file ../../MASTERS/MASIR/MASIR5A.900
+at tty inline
+C<!!>
+r
+at ptr file ../../MASTERS/MASIR/MASIR5B.900
+r
+at ptr file MASIR67(ISS3).900
+r
+de ptp
+reverse MASIR(ISS3).RLB
+
+c link components together
+
+clear
+
+c load Loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+c link components together
+at tty inline
+F
++1;
++8192;
++0;
++7167;
+<!!>
+j 8
+at ptp file MASIR(ISS3).BIN
+at ptr file STMASI(181175).RLB
+at tty inline
+O434L<!!>
+j 16
+at ptr file MASIR(ISS3).RLB
+at tty inline
+O435L<!!>
+r
+at ptr file PTEXEC(181175).RLB
+at tty inline
+O435L<!!>
+r
+at tty inline
+M<!!>
+r
+de ptp
+
+sh t
+
+C Verify
+clear
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j 8181
+du 16384 MASIR(ISS3).IMG
+clear
+at ptr file MASIR(ISS3).BIN
+j 8181
+c error in 8175 is benign
+vi MASIR(ISS3).IMG
+delete MASIR(ISS3).IMG
+
+
+

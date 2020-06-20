@@ -1,0 +1,657 @@
+﻿
+(SYNCHRONOUS INPUT/OUTPUT PROGRAM 15TH JULY 1979 CAP DGNH)
+*+0
+[ "OUT1   "OUT2   "OUT3   "LEV1   "LEV2   "LEV3 INIT
+  "START  "CONTIN QAVNDA "ANY]
+
+INIT  /14 0
+  +0
+  8  START
+
+AC1    +0          (LEVEL ONE ACCUMULATOR SAVE AREA)
+AUX1   +0          (LEVEL ONE AUXILIARY REGISTER SAVE AREA)
+WXAP   +0          (ACCUMULATOR)
+       +0
+WYAP   +0          (ACCUMULATOR)
+       +0
+OUTWD  +0          (OUTPUT DATA WORD STORAGE AREA)
+       +0          (OLD OUTWD)
+       +0          (XYZ BITS)
+W      +0          (WORK SPACE)
+LOGX   +0          (NEW)
+       +0          (OLD)
+LOGY   +0          (NEW)
+       +0          (OLD)
+WS1    +0          (WORKING STORAGE)
+LCOUNT +0          (LEVEL ONE INTERRUPT COUNT)
+INBEAT +0
+CHECK  +0
+        2  OUTWD+1
+        6  +3
+        7  ;+3      (XY BITS CHECK)
+        0  QAVNDA+24
+      /10  0        (MARK ERROR 1)
+
+        4  WS1
+        6  &20000
+        7  ;+3      (OBSERVE CHECK ON XYZ BITS PERFORMED IN 920M)
+        0  QAVNDA+24
+      /10  4        (MARK ERROR 5)
+
+        4  WS1
+        6  &10000
+        7  LY
+        4  WS1
+       14  6
+        6  &777400
+        2  LOGX+1
+        7  JOIN     (LOGX CHECK)
+        0  QAVNDA+24
+      /10  5        (MARK ERROR 6)
+        8  JOIN
+
+LY      4  WS1
+       14  6
+        6  &777400
+        2  LOGY+1
+        7  JOIN     (LOGY CHECK)
+        0  QAVNDA+24
+      /10  6        (MARK ERROR 7)
+
+JOIN    0  WS1
+       14  3
+        6  +7
+        5  W
+        0  W
+       /4  TABLE
+        5  OUTWD+2
+
+        4  WS1
+        0  CHECK
+       /8  1
+
+TABLE  +0
+      +32
+      +16
+      +48
+       +8
+      +40
+      +24
+      +56
+
+OUT1
+  5  AC1
+  3  AUX1
+  4  OUTWD
+  5  OUTWD+1
+  4  OUTWD+2       (SET XYZ BITS)
+  5  OUTWD
+  0  QAVNDA+10
+ /4  QAVNDA+13
+  1  WXAP+1
+  9 CARRYX
+
+BACKX
+  5  WXAP+1
+ /4 QAVNDA+11
+  1  WXAP
+  9  INCX
+
+RETX
+  5  WXAP
+  0  QAVNDA+10
+ /4  QAVNDA+22
+  1  WYAP+1
+  9  CARRYY
+
+BACKY
+  5  WYAP+1
+ /4  QAVNDA+20
+  1  WYAP
+  9  INCY
+
+RETY
+  5  WYAP
+  8  OUT
+
+INCX
+  10  OUTWD
+  6  &377777
+  8  RETX
+
+INCY
+ 10  OUTWD
+ 10  OUTWD
+  6  &377777
+  8  RETY
+
+CARRYX
+ 10  WXAP
+  6  &377777
+  8  BACKX
+
+CARRYY
+ 10  WYAP
+  6  &377777
+  8  BACKY
+
+
+OUT
+  4  OUTWD      (OUTPUT DATA WORD TO 920)
+ 15  5122
+  4  LOGX
+  5  LOGX+1     (PRESERVE LOG INFORMATION)
+  4  LOGY
+  5  LOGY+1
+
+ /4  QAVNDA+15
+  9  ;+2
+  8  ;+3
+  2  +0
+  1  &400000
+  6  &777400
+  5  LOGX
+ 15  5120
+
+ /4  QAVNDA+17
+  9  ;+2
+  8  ;+3
+  2  +0
+  1  &400000
+  6  &777400
+  5  LOGY
+ 15  5121
+
+  4  +0
+ 15  1027       (INPUT DATA WORD)
+  5  WS1
+
+ 11  CHECK      (10 JULY 1979)
+  8  CHECK+1
+
+  6  &40000     (CHECK IF VALID DATA PRESENT)
+  7  NODATA     (NO DATA PRESENT)
+  4  INBEAT
+  7  VALDIN
+  4  +0
+  5  INBEAT
+  8  NODATA
+VALDIN
+ 10  INBEAT
+  0  QAVNDA+10  (PROCESS INPUT DATA)
+  4  WS1
+  6  &400000
+  7  ;+2
+/10  QAVNDA+1   (IF XPULSE INCREMENT X COUNT)
+  4  WS1
+  6  &200000
+  7  ;+2
+/10  QAVNDA+3   (IF YPULSE INCREMENT Y COUNT)
+  4  WS1
+  6  &100000
+  7  ;+2
+/10  QAVNDA+5   (IF ZPULSE INCREMENT Z COUNT)
+/10  QAVNDA+7   (INCREMENT ELAPSED INPUT TIME)
+NODATA
+ 10  LCOUNT     (INCREMENT INPUT CYCLE COUNT)
+  4  LCOUNT     (IF THIS IS END OF A BEAT THEN DO END PROCESSING)
+  9  DISMS1
+  4  -32
+  5  LCOUNT     (RESET CYCLES PER BEAT COUNT)
+  4  QAVNDA+9
+  7  USESAM     (IF BUFFERS ARE NOT TO BE SWAPPED USE SAME BUFFER)
+  4  QAVNDA+10  (SWITCH VALUE OF INPUT INDEX)
+  1  +1
+  6  +1
+  5  QAVNDA+10
+  0  QAVNDA+10
+  4  -4         (INITIALISE PULSE COUNTS)
+ /5  QAVNDA+1
+ /5  QAVNDA+3
+ /5  QAVNDA+5
+  4  +0
+ /5  QAVNDA+7   (ZERO ELAPSED TIME FOR INPUT)
+  5  QAVNDA+9   (RESET CHANGEOVER SWITCH)
+  8  DISMS1
+
+USESAM
+  0  QAVNDA+10  (SAME BUFFER SO INCREMENT COUNT BY -4)
+ /4  QAVNDA+1
+  1  -4
+ /5  QAVNDA+1
+ /4  QAVNDA+3
+  1  -4
+ /5  QAVNDA+3
+ /4  QAVNDA+5
+  1  -4
+ /5  QAVNDA+5
+
+DISMS1
+  4  +0         (DISMSIS FROM LEVEL ONE)
+
+  5  ANY+1
+  4  ANY+2
+  1  ANY+3
+  5  ANY
+  0  AUX1
+ 14  1
+  4  AC1
+  8  LEV1
+
+START
+  4  -32        (INITIALISATION)
+  5  LCOUNT
+  4  +0
+  5  QAVNDA+2
+  5  QAVNDA+4
+  5  QAVNDA+6
+  5  QAVNDA+7
+  5  QAVNDA+8
+  5  QAVNDA+9
+  5  QAVNDA+10
+  5  QAVNDA+13
+  5  QAVNDA+14
+  5  QAVNDA+22
+  5  QAVNDA+23
+  5  WXAP
+  5  WXAP+1
+  5  WYAP
+  5  WYAP+1
+  5  INBEAT
+
+  4  -4
+  5  QAVNDA+1
+  5  QAVNDA+3
+  5  QAVNDA+5
+  4  +.5
+  5  QAVNDA+11
+  5  QAVNDA+12
+  5  QAVNDA+20
+  5  QAVNDA+21
+  8  CONTIN
+OUT2  8  LEV2
+OUT3  8  LEV3
+(INTERRUPT HANDLER 903 ALGOL 14TH MAY 1976 CAP DGNH)
+[CONTIN INIT LEV1 LEV2 LEV3
+ ONINTE OUT1 OUT2 OUT3 RETURN
+
+ START TOBASE ANY]
+
+PP=135
+SP=136
+EP=137
+FP=138
+BN=139
+NEXT=1373
+NEXT1=1374
+
+
+ADLEV2 0 LEV2
+ADLEV3 0 LEV3
+ADLEV4 0 LEV4
+LINK 8 DISPAT
+ANY +0
+ACT1 +0
+ACT2 +0
+ACT3 +0
+LEVEL +0
+LOC1 +0
+LOC2 +0
+
+X
+JUMP +0       (X)
+   +0         (JUMP[1])
+   +0
+NAME +0
+   +0         (NAME[1])
+   +0
+SAVE +0
+   +0         (SAVE[1])
+   +0
+   +0
+
+AC     +0
+F1      8  P1
+F2      8  P2
+F3      8  P3
+F4      8  P4
+
+CONTIN
+  4  +1
+ 15  6145
+  4  F1
+  5  3159
+  4  F2
+  5  3166
+  4  F3
+  5  3168
+  4  F4
+  5  3195
+
+   4  +0      (INIT;)
+   5  ANY
+   5  ACT1
+   5  ACT2
+   5  ACT3
+   5  JUMP+1
+   5  JUMP+2
+   5  JUMP+3
+   0  INIT+1
+  /8  1
+
+P1
+  5  AC
+  4  =8 3160
+  8  JOIN
+
+P2
+  5  AC
+  4 =8 3167
+  8  JOIN
+
+P3
+  5  AC
+  4  =8 3169
+  8  JOIN
+
+P4
+  5  AC
+  4  =8 3196
+   5  LIVE
+  4  3138
+  1  -2052
+  7  IDLEI2
+
+IDLEI1
+  4  +0
+ 15  2049
+  6  +1
+  1  -1
+  7  IOINST
+  8  IDLEI1
+
+IDLEI2
+  4  +0
+ 15  2049
+  6  +4
+  1  -4
+  7  IOINST
+  8  IDLEI2
+
+JOIN
+  5  LIVE
+  4  3138
+  1  -6144
+  7  IDLEO2
+
+IDLEO1
+  4  +0
+ 15  2049
+  6  +8
+  1  -8
+  7  IOINST
+  8  IDLEO1
+
+IDLEO2
+  4  +0
+ 15  2049
+  6  +2
+  1  -2
+  7  IOINST
+  8  IDLEO2
+
+IOINST
+  4  AC
+/15  0
+
+LIVE   +0
+
+ONINTE
+ /14  2        (ON INTERRUPT[LEVEL,LABEL];)
+  +0
+   0  FP
+  /4  3
+   5  LOC1
+  /4  6
+   6  +8191
+   5  LOC2
+   0  LOC2
+  /4  1
+   5  LOC2
+  /4  0
+   0  LOC1
+  /5  JUMP
+   4  LOC2
+  /5  NAME
+   0  ONINTE+1 (FILLED JUMP TABLE ENTRY)
+  /8  1
+
+RETURN
+ /14  0        (RETURN;)
+  +0
+   0  LEVEL    (RESTORE ENVIRONMENT)
+  /4  SAVE
+   5  SP
+   0  SP
+  /4  10
+   5  PP
+  /4  11
+   5  EP
+  /4  12
+   5  FP
+  /4  13
+   5  BN
+  /4  14
+   5  LEVEL
+
+DISPAT          (ENTER DISPATCHER)
+   0  PP
+   4  ANY
+   7  NEXT1      (NOTHING DOING)
+   4  JUMP+1
+   7  ;+5       (SIR ROUTINE DOES NECESSARY WORK)
+   4  ACT1
+   7  ;+3
+   0  +1
+   8  ACTION
+   4  JUMP+2
+   7  ;+5       (SIR ROUTINE DOES NECESSARY WORK)
+   4  ACT2
+   7  ;+3
+   0  +2
+   8  ACTION
+   4  JUMP+3
+   7  NEXT1     (SIR ROUTINE DOES NECESSARY WORK)
+   0  +3
+
+ACTION
+  14  1         (X:= INTERRUPTING LEVEL;)
+   3  X
+   4  LEVEL     (IS X<LEVEL QUERY)
+   2  X
+   9  ;+2       (YES, SO CHANGE OVER)
+   8  LETGO
+   4  +0
+  /5  ANY       (ACT[X]:=0;)
+   1  ACT1
+   1  ACT2
+   1  ACT3
+   5  ANY       (RESET ANY)
+   4  SP        (SAVE ENVIRONMENT)
+  /5  SAVE
+   0  SP
+   4  PP
+  /5  10
+   4  EP
+  /5  11
+   4  FP
+  /5  12
+   4  BN
+  /5  13
+   4  LEVEL
+  /5  14
+   4  SP
+   1  +15
+   5  SP
+   0  X
+  /4  JUMP      (EXECUTE AN ALGOL "GOTO")
+   5  PP
+  /4  NAME
+   5  BN
+   4  X         (NOTE NEW LEVEL)
+   5  LEVEL
+
+LETGO
+   0  PP        (START IT OFF)
+   8  NEXT1
+
+TOBASE
+ /14  0         (TO BASE;)
+  +0
+   4  LINK      (PLANT JUMP INTO ALGOL INTERPRETER)
+   5  NEXT
+   4  +4        (SET BASE LEVEL)
+   5  LEVEL
+   4  ADLEV2
+   5  2
+   4  ADLEV3
+   5  4
+   4  ADLEV4
+   5  6
+
+LEV1
+  15  7168
+  10  ACT1
+  10  ANY
+   8  OUT1
+
+LEV2
+  15  7168
+  10  ACT2
+  10  ANY
+   8  OUT2
+
+LEV3
+  15  7168
+  10  ACT3
+  10  ANY
+   8  OUT3
+
+LEV4
+   0  TOBASE+1
+  /8  1
+
+[OUTX QAVNDA]
+FP=138
+OUTX
+/14  1
++0
+  4  =14 0
+  5  SHIFT
+  4  QAVNDA+10
+  2  XPLANT
+  5  LSIG
+  1  =1 8190
+  5  MSIG
+  0  FP
+ /4  5
+  1  -1
+  7  NOSHIF
+  1  =15 0
+  5  SHIFT
+NOSHIF
+ /4  3
+  5  LOC1
+ /0  4
+ 14  1
+  4  LOC1
+SHIFT  +0
+MSIG   +0
+LSIG   +0
+  0  OUTX+1
+ /8  1
+XPLANT 3  QAVNDA+14
+LOC1   +0
+
+[OUTY QAVNDA]
+FP=138
+OUTY
+/14  1
++0
+  4  =14 0
+  5  SHIFT
+  4  QAVNDA+10
+  2  YPLANT
+  5  LSIG
+  1  =1 8190
+  5  MSIG
+  0  FP
+ /4  5
+  1  -1
+  7  NOSHIF
+  1  =15 0
+  5  SHIFT
+NOSHIF
+ /4  3
+  5  LOC1
+ /0  4
+ 14  1
+  4  LOC1
+SHIFT  +0
+MSIG   +0
+LSIG   +0
+  0  OUTY+1
+ /8  1
+YPLANT 3  QAVNDA+23
+LOC1   +0
+[RANDOM QAVNDA]
+FP=138
+W=183
+STAND=150
+RANDOM
+ /14  0
+  +0
+  4  -12
+  5  COUNT
+  4  +0
+  5 RESULT
+LOOP
+  11  RAND
+  8  RAND+1
+  14  8188
+  1  RESULT
+  5  RESULT
+ 10  COUNT
+  4  COUNT
+  9  LOOP
+  4  RESULT
+  5  W
+  4  +0
+  5  W+1
+  4  +3
+  5  W+2
+  0  STAND
+ /11  0
+  /8  1
+  0  FP
+  4  W
+ /5  0
+  4  W+1
+ /5  1
+  4  W+2
+ /5  2
+  0  RANDOM+1
+ /8  1
+COUNT  +0
+RESULT  +0
+RAND  +0
+  4  QAVNDA+19
+ 12  +23
+  5  QAVNDA+19
+ 14  17
+  2  QAVNDA+19
+  5  QAVNDA+19
+  0  RAND
+  /8  1
+%
+<! Halt !>

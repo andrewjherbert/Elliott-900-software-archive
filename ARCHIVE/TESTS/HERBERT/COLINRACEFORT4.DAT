@@ -1,0 +1,35 @@
+﻿C Colin's computer race
+
+on 903 16K
+
+at ptr file ../../MASTERS/905FORTRAN/905FORT(ISS6).BIN
+j 8181
+nonstop on
+at ptr file ../../MASTERS/HERBERT/COLINRACEFORT4.900
+at ptp file COLINRACEFORT4.BIN
+at tty inline
+O0R
+<!!>
+j 16
+de ptp
+reverse COLINRACEFORT4.BIN
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+at ptr file COLINRACEFORT4.BIN
+at tty inline
+O20L<!!>
+j 16
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB1(ISS4).BIN
+at tty inline
+O3L<!!>
+j 16
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB2(ISS5).BIN
+r
+at tty inline
+MM<!!>
+select out tty
+sh t
+j 16
+sh t
+delete COLINRACEFORT4.BIN
+

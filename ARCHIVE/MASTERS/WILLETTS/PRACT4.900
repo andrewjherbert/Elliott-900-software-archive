@@ -1,0 +1,71 @@
+﻿PPPRACT4;
+"BEGIN"
+"INTEGER" N;
+"READ" N;
+       "BEGIN""INTEGER""ARRAY" NAME[1:14*N],CURRENCY,CAPITAL[1:8*N],
+                    KEY[1:14];
+              "REAL""ARRAY" CONVERSION, POPULATION[1:N];
+              "INTEGER" I,J,K;
+              "SWITCH"SS:=INSTORE,OUTSTORE,AGAIN;
+              "COMMENT" INPUT RECORDS TO FILE;
+              "FOR" I:=1"STEP"1"UNTIL"N"DO"
+                    "BEGIN" J:=(I-1)*14+1;
+                         INSTRING (NAME,J);
+                         J:=(I-1)*8+1;
+                         INSTRING (CURRENCY,J);
+                         "READ" CONVERSION[I];
+                         J:=(I-1)*8+1;
+                         INSTRING(CAPITAL,J);
+                         "READ" POPULATION[I];
+                    "END";
+               "COMMENT" READ IN DATA;
+                AGAIN:   J:=1;
+                    INSTRING(KEY,J);
+                    K := 0;
+                    "COMMENT" SEARCH FILE;
+                    "FOR" I:=1"STEP"1"UNTIL"N"DO"
+                         "BEGIN" K:=K+1;
+                         "IF" KEY[1] = NAME[(I-1)*14+1]
+                         "AND"KEY[2] = NAME[(I-1)*14+2]
+                         "AND"KEY[3] = NAME[(I-1)*14+3]
+                         "AND"KEY[4] = NAME[(I-1)*14+4]
+                         "THEN""BEGIN"
+                              "GOTO" INSTORE;
+                               "END";
+                         "END";
+           OUTSTORE: "PRINT"'
+           KEY NOT FOUND IN FILE@;
+           "GOTO" AGAIN;
+           INSTORE: "PRINT"'
+           KEY FOUND RECORD IS '4@@; J:=(K-1)*14+1;
+           OUTSTRING (NAME,J); "PRINT"''L@@;
+           J :=(K-1)*8+1;
+           OUTSTRING (CURRENCY,J);
+           "PRINT" CONVERSION[K]; "PRINT"''L@@;
+           J:= (K-1)*8+1;
+           OUTSTRING (CAPITAL,J);
+           "PRINT" POPULATION[K];
+           "GOTO" AGAIN;
+       "END";
+"END";
+
+
+10
+'AMERICA@'DOLLAR@ 2 'WASHINGTON@135000
+'ASTONIA@ 'POUND@ 100 'VILLS@ 60000
+'HALESOWEN@ 'KRAMER@ 87.6 'COLLEYGATE@ 2500
+'NEWGRIPPA@ 'TONGS@ 39.0 'NEWGRIP@ 123456
+'AUSTRALIA@ 'DOOLLAR@ 25.0 'CANBERRA@ 999999
+'DUDLEYVILLE@ 'GROAT@ 1.1 'DUDDERLEY@ 50001
+'AFAR AND ISSAS@ 'DJIBOUTI@ 580.0 'DJIBOUTI@ 57000
+'EQUATORIAL SCOTLAND@ 'GLASGIE@ 196 'EDINBURGH@ 99000
+'BRIT WEST HARTLEPOOL@ 'YEN@ 37.5 'CLENT@ 555555
+'UNITED STATES OF AMERICA@ 'DOLLAR@ 2.1 'NEW YORK@ 9876543
+
+'Australia@
+'DUDLEYVILLE@
+'Wimbledon@
+'ASTONIA@
+
+<! Halt !>
+

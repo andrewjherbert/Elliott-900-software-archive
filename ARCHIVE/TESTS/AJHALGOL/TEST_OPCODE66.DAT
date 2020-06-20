@@ -1,0 +1,75 @@
+﻿c Test TJF relational operators and divide
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin" 
+    sameline;
+    "print" {+9 div +3 = },    9 "div"  3,   {{L}},
+            {-9 div +3 = }, (-9) "div"  3,   {{L}},
+            {-9 div -3 = }, (-9) "div" (-3), {{L}},
+            {+9 div -3 = },    9 "div" (-3), {{L}},
+            {-131072 div  1 = }, (-131071-1) "div"    1, {{L}},
+            {-131072 div -2 = }, (-131071-1) "div" (-2), {{L}},
+            {-131072 div  2 = }, (-131071-1) "div"    2, {{L3}};
+
+    "print" {sign -131072 = }, sign(-1-131071), {{L}},
+            {sign  131071 = }, sign(131071),    {{L3}};
+
+    "print" {-131072 <    131071 =}, (-131071-1) <     131071,     {{L}},
+            {-131072 le   131071 =}, (-131071-1) "le"  131071,     {{L}},
+            {-131072 >    131071 =}, (-131071-1) >     131071,     {{L}},
+            {-131072 ge   131071 =}, (-131071-1) "ge"  131071,     {{L}},
+            {-131072 =   -131072 =}, (-131071-1) =    (-131071-1), {{L}},
+            {-131072 ne   131071 =}, (-131071-1) "ne " 131071,     {{L3}};
+
+    "print" {T and  T  }, "true"  "and" "true",    {{L}},
+            {T and  F  }, "true"  "and" "false",   {{L}},
+            {F and  F  }, "false" "and" "false",   {{L}},
+            {T or   T  }, "true"  "or"  "true",    {{L}},
+            {T or   F  }, "true"  "or" "false",    {{L}},
+            {F or   F  }, "false" "or" "false",    {{L}},
+            { not F    }, "not" "false",           {{L}},
+            { not T    }, "not" "true",            {{L}},
+            {T equiv T }, "true" "equiv" "true",   {{L}},
+            {T equiv F }, "true" "equiv" "false",  {{L}},
+            {F equiv F }, "false" "equiv" "false", {{L}},
+            {T impl T  }, "true" "impl" "true",    {{L}},
+            {T impl F  }, "true" "impl" "false",   {{L}},
+            {F impl T  }, "false" "impl" "true",   {{L}},
+            {F impl F  }, "false" "impl" "false",  {{L3}}
+
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t
+

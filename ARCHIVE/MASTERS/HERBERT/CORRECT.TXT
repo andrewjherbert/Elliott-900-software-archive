@@ -1,0 +1,56 @@
+﻿CORRECT 21/02/12
+ ================
+
+A.J. HERBERT
+
+PURPOSE
+
+This is a utility program for correcting errors that arise when using
+the GNT 4604 paper tape punch on a PC, namely occasional mispunches
+and dropped rows.
+
+FORM OF DISTRIBUTION
+
+The program is distributed as a sum-checked binary for loading under
+initial instructions.
+
+OPERATING INSTRUCTIONS
+
+The program should be triggered at 8 to read in editing commands from
+the teletype.  Usually these commands will have been copied from a run
+of the COMPARE command in the Elliott 900 Simulator, comparing a
+master tape against a suspect copy produced by the GNT 4604.
+
+The program halts when the commands have been read.  The program
+should then be retriggered at 9 whereupon it will read in the suspect
+tape and punch a corrected version.  The reading process is buffered
+to reduce wear on the paper tape reader, but still requires a reader
+capable of stopping on a single character.
+
+COMMAND FORMAT
+
+The commands consist of pairs of integers.  The first integer of each
+pair is a position at which an edit is required.  The position is
+relative to the first non-zero row in the master tape, which is given
+position 0.  The second integer is an edit command.  If the value is
+less than 256, the value should be inserted as an additional row at
+the specified position.  If the value is greater than or equal to 512
+then the value less 256 should be substituted for the input row at the
+specified position.  A negative position terminates the list, and the
+"edit" following gives a count of the number of rows to be read
+following the initial blanks of the suspect copy.
+
+
+ERRORS
+
+Error "COR 1" will be given if too many commands (more than 10) are
+input.
+
+Error "COR 2" will be given if the input tape size specified is less
+than one row.
+
+FILES
+
+CORRECT.DAT: script to build and test the program.  CORRECT.BIN:
+binary version of the program.  CORRECT.TXT: this file.
+

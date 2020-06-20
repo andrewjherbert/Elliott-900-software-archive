@@ -1,0 +1,44 @@
+﻿
+[Initial Orders 1 in Intial Orders 2 Notation]
+[Andrew Herbert 16/10/13]
+
+..
+	T	100	K	[Load at 100]
+	G		K	[Set @]
+
+[ 0]	T		F	[Clear Acc]
+[ 1]	H	2	F	[Multiplier := 10/32]
+[ 2]	T		F	[Clear Acc. also 10/32]
+[ 3]	E	6	F	[Jump to 6]
+
+[ 4]	P	1	F	[2^-15]
+[ 5]	P	5	F	[10*2^-16]
+
+[ 6]	T		F	[Clear Acc]
+[ 7]	I		F	[Input function digits to 0]
+[ 8]	A		F	[Acc +:= function digits]
+[ 9]	R	16	F	[Shift Acc 6 places right]
+[10]	T		D	[Store Acc in 0,1]
+[11]	I	2	F	[Input next ch to 2]
+[12]	A	2	F	[Acc+:=C(2)]
+[13]	S	5	F	[Acc-:=10^2-16]
+[14]	E	21	F	[Jump if Acc +ve - i.e., >= 10]
+[15]	T	3	F	[Clear Acc using 3 as rubbish dump]
+[16]	V	1	F	[Acc+:=C(1)*10/32]
+[17]	L	8	F	[Acc*:=32]
+[18]	A	2	F	[Acc+:=input digit]
+[19]	T	1	F	[Store in 1]
+[20]	E	11	F	[Jump to 11 to get next digit]
+
+[21]	R	4	F	[Acc>>:=4 17th digit=1 for L, 0 for S]
+[22]	A	1	F	[Acc+:=C(1) - calculated address]
+[23]	L		D	[Acc<<:=1 - shidt in long/short bit]
+[24]	A		F	[Acc+:=C(0) - the complete order]
+[25]	T	31	F	[Store Acc in 31 - this order gets incremented]
+[26]	A	25	F	[Increment loc 25]
+[27]	A	4	F
+[28]	U	25	F
+[29]	S	31	F	[Test if all orders taken in]
+[30]	G	6	F	[More to do, read next order]
+[31]	Z		F	[First order to be placed in store]
+	E131KPF			[DUmmy start]

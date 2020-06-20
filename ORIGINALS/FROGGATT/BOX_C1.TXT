@@ -1,0 +1,711 @@
+﻿
+        X-TAPES.
+        ========
+
+Total files listed:
+      338 file(s)      1,106,158 bytes
+   The X-tapes are generally given here in numerical order.
+   Bags "TEST TAPES 1970 A" & "TEST TAPES 1970 B"
+      contain tapes whose contents are identical, except
+      for X17, which only differ in that A is Mode 3 and
+      B is Mode 1, neither having a legible header.
+   However, there are minor variations, in the handwritten
+      labels on several tapes, between these two bags.
+
+
+Bag "920 TEST TAPES".
+---------------------
+Directory BOX_C1\920
+       52 file(s)        102,730 bytes
+   Some not labelled by me, but all in my style.
+
+"X1/3, Binary" XACD
+X1_3     1           1,660 02/01/11   17:07
+X1_3     2           1,660 02/01/11   21:24
+"X2-8044, Binary"
+X2_8044  1           1,547 02/01/11   17:09
+X2_8044  2           1,547 02/01/11   21:26
+"X2, Binary" XACD
+X2       1           1,543 02/01/11   17:10
+X2       2           1,543 02/01/11   21:28
+"X3/2, Binary" /Obsolete/
+X3_2     1           1,654 02/01/11   17:16
+X3_2     2           1,654 02/01/11   21:29
+"X3/3, Binary"
+X3_3     1           2,107 02/01/11   17:18
+X3_3     2           2,107 02/01/11   21:31
+"X3/4, Binary (Wrong Parity)"
+X3_4     1           2,466 02/01/11   17:24
+X3_4     2           2,466 02/01/11   21:33
+"X3 19/8/69, Binary" XACD
+X3_69    1           2,794 02/01/11   17:27
+X3_69    2           2,794 02/01/11   21:35
+"X4, Binary" XACD
+X4       1           1,570 02/01/11   17:30
+X4       2           1,570 02/01/11   21:39
+"X5, Telecode (T2)"
+X5_T2    1           1,485 02/01/11   17:34
+X5_T2    2           1,485 02/01/11   21:43
+"X5, Binary" /Obsolete/
+X5       1           1,753 02/01/11   17:38
+X5       2           1,753 02/01/11   21:46
+"X5/3, Binary" XACD
+X5_3     1           1,741 02/01/11   17:39
+X5_3     2           1,741 02/01/11   21:49
+"T2 + X6, Binary" XACD
+T2_X6    1           3,831 02/01/11   17:42
+T2_X6    2           3,831 02/01/11   21:51
+"X7, Binary" small
+X7       1             533 02/01/11   17:44
+X7       2             533 02/01/11   21:52
+"X7/4, Binary" large
+X7_4     1           2,295 02/01/11   18:19
+X7_4     2           2,295 02/01/11   21:55
+"X8, Binary"
+X8       1             752 02/01/11   18:20
+X8       2             752 02/01/11   21:56
+"X8/3, Binary (Wrong Parity)" /Obsolete/
+X8_3     1             842 02/01/11   18:21
+X8_3     2             842 02/01/11   21:58
+"X8 19/8/69, Binary" XACD
+X8_69    1             842 02/01/11   19:20
+X8_69    2             842 02/01/11   22:02
+"X10, Binary Mode 3" XACD
+X10      1           1,835 02/01/11   19:24
+X10      2           1,835 02/01/11   22:06
+"X11, Binary"
+X11      1           2,551 02/01/11   19:26
+X11      2           2,551 02/01/11   22:08
+"X12, Binary (Wrong Parity)"
+X12      1           1,653 02/01/11   19:29
+X12      2           1,653 02/01/11   22:11
+"X12 21/8/67, Binary"
+X12_67   1           1,916 02/01/11   19:30
+X12_67   2           1,916 02/01/11   22:13
+"X12 19/8/69, Binary" XACD
+X12_69   1           1,653 02/01/11   19:56
+X12_69   2           1,653 02/01/11   22:16
+"X17, Binary (Wrong Parity)"
+X17      1           1,464 02/01/11   19:58
+X17      2           1,464 02/01/11   22:18
+"X17 19/8/69, Binary" XACD
+X17_69   1           1,464 02/01/11   20:00
+X17_69   2           1,464 02/01/11   22:21
+"920M INTERRUPT TEST, Binary (Wrong Parity)"
+INTERRUP 1             999 02/01/11   20:02
+INTERRUP 2             999 02/01/11   22:22
+"SYSTEM TEST, Binary"
+SYSTEMTE 1           8,415 02/01/11   20:04
+SYSTEMTE 2           8,415 02/01/11   22:25
+
+
+Bag "TEST TAPES RECEIVED WITH 920M (with 2us store) NOV 1968".
+--------------------------------------------------------------
+Directory BOX_C1\920M
+       20 file(s)         37,868 bytes
+   Not labelled by me, in Red felt-tip pen.
+   Not trimmed at either end.
+
+"T2"
+T2       1           2,288 03/01/11   12:03
+T2       2           2,288 03/01/11   17:18
+"X1"
+X1       1           1,663 03/01/11   12:04
+X1       2           1,663 03/01/11   17:18
+"X3"
+[X3 920 B&M. ISS 4]
+X3       1           2,996 03/01/11   12:06
+X3       2           2,996 03/01/11   17:20
+"X4"
+   "TRIG 8000 (1111101000000)"
+   "TRIG 8009 (1111101001001 FOR ON/OFF" without ')'
+X4       1           1,570 03/01/11   12:06
+X4       2           1,570 03/01/11   17:24
+"X5"
+[X5 920B. M&C ISS 3.]
+X5       1           2,003 03/01/11   12:07
+X5       2           2,003 03/01/11   17:27
+"X6"
+X6       1           1,863 03/01/11   12:09
+X6       2           1,863 03/01/11   17:27
+"X7/4"
+X7_4     1           2,295 03/01/11   12:10
+X7_4     2           2,295 03/01/11   17:28
+"X8"
+X8       1             752 03/01/11   12:11
+X8       2             752 03/01/11   17:30
+"X10 MODE 3"
+[920 X 10 MODE 3]
+X10      1           2,040 03/01/11   12:12
+X10      2           2,040 03/01/11   17:35
+"X17"
+X17      1           1,464 03/01/11   12:14
+X17      2           1,464 03/01/11   17:36
+
+
+Bag "TEST TAPES 1970 A".
+------------------------
+Directory BOX_C1\1970_A
+       32 file(s)         82,820 bytes
+   Not labelled by me.
+   Not trimmed at either end.
+
+"X1, ISS 3"
+[X1 920 B.C&M. ISS.3]
+X1_3     1           1,905 14/01/11   15:08
+X1_3     2           1,905 14/01/11   16:00
+"920 X3, ISS 4"
+[X3 920 B&M. ISS 4]
+X3_4     1           2,646 14/01/11   15:10
+X3_4     2           2,646 14/01/11   16:01
+"X4, ISS 3"
+[ISS 3] 4" [X4] 8" [903 X 4]
+X4_3     1           1,948 14/01/11   15:11
+X4_3     2           1,948 14/01/11   16:02
+"920B X5, ISS 3"
+[X5 920B. M&C ISS 3.]
+X5_3     1           2,003 14/01/11   15:12
+X5_3     2           2,003 14/01/11   16:03
+"903 X6, ISS 2"
+[903X6 ISS 2]
+X6_2     1           2,691 14/01/11   15:14
+X6_2     2           2,691 14/01/11   16:04
+"X7"
+[X7 920 BMC ISS 5]
+X7_5     1           2,457 14/01/11   15:16
+X7_5     2           2,457 14/01/11   16:05
+"905 X8, ISS 3" sic (905)
+[X8] 5.5" [903 X 8 ISS 3]
+X8_3     1           1,077 14/01/11   15:17
+X8_3     2           1,077 14/01/11   16:06
+"X10, ISS 1"
+[X10 920 B.M&C. ISS 1.]
+X10_1    1           2,094 14/01/11   15:18
+X10_1    2           2,094 14/01/11   16:07
+"X12, ISSUE 3" upside down
+[X12 920 M ISS 3]
+X12_3    1           1,867 14/01/11   15:19
+X12_3    2           1,867 14/01/11   16:08
+"X17 ISSUE 1, MODE 3" upside down
+X17_1    1           1,011 14/01/11   15:20
+X17_1    2           1,011 14/01/11   16:09
+"903 X50, ISS 2"
+[903 X50 ISSUE 2]
+X50_2    1           8,897 14/01/11   15:22
+X50_2    2           8,897 14/01/11   16:15
+"X51, ISS 1"
+[903 X51 ISSUE 1]
+X51_1    1           4,670 14/01/11   15:23
+X51_1    2           4,670 14/01/11   16:17
+"X212 ISS 2 MODE 3" upside down
+[X212 920 M ISS2]
+X212_2   1           1,796 14/01/11   15:24
+X212_2   2           1,796 14/01/11   16:19
+"X217 ISS 1 MODE 3" upside down
+[X217 920 M ISS1] strange '7'
+X217_1   1           1,716 14/01/11   15:26
+X217_1   2           1,716 14/01/11   16:20
+"X400, ISSUE 1" upside down
+[X400 ISS1] strange 'S'
+X400_1   1           3,119 14/01/11   15:27
+X400_1   2           3,119 14/01/11   16:22
+"X402" upside down
+[903 X402 BIN 19 1 67]
+X402_67  1           1,513 14/01/11   15:28
+X402_67  2           1,513 14/01/11   16:23
+
+
+Bag "TEST TAPES 1970 B".
+------------------------
+Directory BOX_C1\1970_B
+       32 file(s)         82,820 bytes
+   Not labelled by me.
+   Not trimmed at either end.
+
+"X1, ISS 3"
+[X1 920 B.C&M. ISS.3]
+X1_3     1           1,905 03/01/11   22:06
+X1_3     2           1,905 04/01/11   12:38
+"920 X3, ISS 4"
+[X3 920 B&M. ISS 4]
+X3_4     1           2,646 03/01/11   22:09
+X3_4     2           2,646 04/01/11   12:42
+"903 X4, ISS 3"
+[ISS 3] 4" [X4] 8" [903 X 4]
+X4_3     1           1,948 03/01/11   22:14
+X4_3     2           1,948 04/01/11   12:44
+"X5 920B M&C, ISSUE 3" on the inside (but not upside down)
+[X5 920B. M&C ISS 3.]
+X5_3     1           2,003 03/01/11   22:22
+X5_3     2           2,003 04/01/11   12:45
+"903 X6, ISS 2"
+[903X6 ISS 2]
+X6_2     1           2,691 03/01/11   22:25
+X6_2     2           2,691 04/01/11   12:49
+"X7"
+[X7 920 BMC ISS 5]
+X7_5     1           2,457 03/01/11   22:30
+X7_5     2           2,457 04/01/11   12:52
+"903 X8, ISS 3"
+[X8] 5.5" [903 X 8 ISS 3]
+X8_3     1           1,077 03/01/11   22:34
+X8_3     2           1,077 04/01/11   13:42
+"X10, ISSUE 1" upside down
+[X10 920 B.M&C. ISS 1.]
+X10_1    1           2,094 03/01/11   22:37
+X10_1    2           2,094 04/01/11   13:45
+"X12, ISSUE 3" upside down
+[X12 920 M ISS 3]
+X12_3    1           1,867 04/01/11    9:43
+X12_3    2           1,867 04/01/11   13:49
+"X17, 2us store, ISSUE 1" upside down
+X17_1    1           1,011 04/01/11    9:53
+X17_1    2           1,011 04/01/11   13:52
+"903 X50, ISS 2"
+[903 X50 ISSUE 2]
+X50_2    1           8,897 04/01/11    9:57
+X50_2    2           8,897 04/01/11   13:56
+"X51, ISS 1"
+[903 X51 ISSUE 1]
+X51_1    1           4,670 04/01/11   10:09
+X51_1    2           4,670 04/01/11   14:00
+"X212 ISS 2, MODE 3" upside down
+[X212 920 M ISS2]
+X212_2   1           1,796 04/01/11   10:12
+X212_2   2           1,796 04/01/11   14:07
+"X217 ISS 1 MODE 3" upside down
+[X217 920 M ISS1] strange '7'
+X217_1   1           1,716 04/01/11   10:16
+X217_1   2           1,716 04/01/11   14:12
+"X400, ISSUE 1" upside down
+[X400 ISS1] strange 'S'
+X400_1   1           3,119 04/01/11   10:20
+X400_1   2           3,119 04/01/11   14:13
+"X402" upside down
+[903 X402 BIN 19 1 67]
+X402_67  1           1,513 04/01/11   10:25
+X402_67  2           1,513 04/01/11   14:21
+
+
+Bag "MECSL 903 TEST TAPES".
+---------------------------
+Directory BOX_C1\MECS_903
+       32 file(s)        148,128 bytes
+   Not labelled by me.
+   Not trimmed at either end.
+
+"903 X2 ISS 1" upside down
+[903 X2 ISSUE 1]
+X2_1     1           1,816 14/01/11   21:46
+X2_1     2           1,816 15/01/11   10:16
+"903 X3 ISS 4"
+[903 X3 ISS 4]
+X3_4     1           2,653 14/01/11   21:47
+X3_4     2           2,653 15/01/11   10:17
+"903 X4 ISS 1" on the inside & upside down
+[903 X4 ISSUE 1]
+X4_1     1           1,884 14/01/11   21:49
+X4_1     2           1,884 15/01/11   10:18
+"903 X5, ISSUE 2" Stamped
+[903 X 5 ISS 2]
+X5_2     1           1,990 14/01/11   21:49
+X5_2     2           1,990 15/01/11   10:20
+"903 X6, ISSUE 2" Stamped
+[903X6 ISS 2]
+X6_2     1           2,691 14/01/11   21:50
+X6_2     2           2,691 15/01/11   10:21
+"903 X8, ISSUE 3" Stamped
+[903 X 8 ISS 3]
+X8_3     1           1,006 14/01/11   21:52
+X8_3     2           1,006 15/01/11   10:22
+"903 X50, ISSUE 2" Stamped
+[903 X50 ISSUE 2]
+X50_2    1           8,897 14/01/11   21:53
+X50_2    2           8,897 15/01/11   10:25
+"903 X50A, BIN ISSUE 1" on the inside & upside down "COPY 12/8/68"
+[903 X50A BIN ISS1]
+X50A_1   1           8,903 14/01/11   21:56
+X50A_1   2           8,903 15/01/11   10:27
+"903 X52, ISSUE 1" Stamped
+[903 X52 ISSUE 1]
+X52_1    1           6,144 14/01/11   21:58
+X52_1    2           6,144 15/01/11   10:29
+"903 XPTS 1 RLB ISSUE 1" on the inside & upside down "COPY 12/8/68"
+[903 XPTS1 RLB ISSUE 1]
+XPTS1_1  1           5,299 14/01/11   22:00
+XPTS1_1  2           5,299 15/01/11   10:31
+"903 XINIT, ISS 1 SCB" on the inside & upside down "COPY 14/8/68"
+[903 XINIT ISSUE1 SCB]
+XINIT_1  1           3,108 14/01/11   22:02
+XINIT_1  2           3,108 15/01/11   10:34
+"903 XDPA213 BIN, ISS 1"
+[903 XDPA213 BIN ISSUE 1]
+XDPA213  1           2,388 14/01/11   22:05
+XDPA213  2           2,388 15/01/11   10:35
+"903 XTM70, ISSUE 1" Stamped
+[903 XTM70 ISSUE 1]
+XTM70_1  1           6,339 14/01/11   22:06
+XTM70_1  2           6,339 15/01/11   10:39
+"903 XTM71, ISSUE 1" Stamped
+[903 XTM71 ISSUE 1]
+XTM71_1  1           5,850 14/01/11   22:08
+XTM71_1  2           5,850 15/01/11   10:42
+"903 XTM72 BIN ISSUE 1"
+[903 XTM72 BIN ISSUE 1]
+XTM72_1  1           7,824 14/01/11   22:11
+XTM72_1  2           7,824 15/01/11   10:43
+"903 XTM73, ISSUE 1" Stamped
+[903 XTM 73 ISSUE 1]
+XTM73_1  1           7,272 14/01/11   22:12
+XTM73_1  2           7,272 15/01/11   10:45
+
+
+Bag "MECSL 905 TEST TAPES".
+---------------------------
+Directory BOX_C1\MECS_905
+       38 file(s)        135,818 bytes
+   No "M" on this bag label.
+   Not labelled by me except as noted.
+   Not trimmed at either end.
+
+"920BMC, X7 ISS 5"
+[X7 920 BMC ISS 5]
+X7_5     1           2,457 16/01/11   22:36
+X7_5     2           2,457 17/01/11   12:16
+"X13, ISS 4" upside down
+[920C X13 ISS 4]
+X13_4    1           3,173 16/01/11   22:39
+X13_4    2           3,173 17/01/11   12:17
+"X14, ISS 3" and by me in Red "Initial Blanks Torn"
+[920C X14 ISS 3]
+X14_3BT  1           5,217 16/01/11   22:45
+X14_3BT  2           5,217 17/01/11   12:18
+"920C X14, ISS 3" and by me in Red "Spurious Character"
+[920C X14 ISS 3]
+X14_3SC  1           5,218 16/01/11   22:47
+X14_3SC  2           5,218 17/01/11   12:19
+"X15 905 920C, ISS 3"
+[920C 905 X15 ISSUE 3]
+X15_3    1           3,162 16/01/11   22:48
+X15_3    2           3,162 17/01/11   12:21
+"X18, ISS 4"
+[920C X18 ISS 4]
+X18_4    1           3,066 16/01/11   22:49
+X18_4    2           3,066 17/01/11   12:22
+"920C X19 T/T, ISS 2"
+[920C X19 T/T ISS 2]
+X19_2    1           2,115 16/01/11   22:50
+X19_2    2           2,115 17/01/11   12:23
+"X20, ISS 2"
+[X20 ISSUE 2]
+X20_2    1           2,799 16/01/11   22:51
+X20_2    2           2,799 17/01/11   12:24
+"X23, ISS 1"
+[905 X23 ISS 1]
+X23_1    1           3,258 16/01/11   22:52
+X23_1    2           3,258 17/01/11   12:25
+"X24, ISS 1"
+[905 X24 ISS 1]
+X24_1    1           3,095 16/01/11   22:54
+X24_1    2           3,095 17/01/11   12:26
+"920C X25, ISS 2"
+[920C X25 ISS 2]
+X25_2    1           2,525 16/01/11   22:55
+X25_2    2           2,525 17/01/11   12:27
+"X26, ISS 1"
+[X26 905 DPU TEST ISS 1]
+X26_1    1           1,930 16/01/11   22:56
+X26_1    2           1,930 17/01/11   12:28
+"905 X27, ISS 1" and by me in Red "OK"
+[905 X27 ISS 1]
+X27_1OK  1           3,037 16/01/11   22:57
+X27_1OK  2           3,037 17/01/11   12:30
+"905 X27 BIN, (C2)" and by me in Red "Sumcheck Failure"
+[905 X27 ISS 1]
+X27_1SF  1           3,032 16/01/11   22:59
+X27_1SF  2           3,032 17/01/11   12:31
+"905 X35, ISS 1"
+[905 X35 ISSUE 1]
+X35_1    1           2,777 16/01/11   23:00
+X35_1    2           2,777 17/01/11   12:32
+"X36"
+[905 X36 ISSUE 1]
+X36_1    1             962 16/01/11   23:01
+X36_1    2             962 17/01/11   12:33
+"X43, ISS 1"
+X43_1    1           6,402 16/01/11   23:02
+X43_1    2           6,402 17/01/11   12:34
+"903 X50, ISSUE 2" upside down
+[903 X50 ISSUE 2]
+X50_2    1           8,897 16/01/11   23:03
+X50_2    2           8,897 17/01/11   12:35
+"X51, ISS 1"
+[903 X51 ISSUE 1]
+X51_1    1           4,787 16/01/11   23:04
+X51_1    2           4,787 17/01/11   12:37
+
+
+Bag "MECSL APPLICATIONS PROGRAMS".
+----------------------------------
+Directory BOX_C1\MECS_APP
+       14 file(s)         58,634 bytes
+   Not labelled by me.
+   Not trimmed at either end.
+
+"BGIRAH DATA, ISS 1"
+[BGIRAH DATA ISS1]
+   Last line but two torn at end but 439.22 read OK.
+BGIRAH_D 1           3,300 21/01/11   17:07
+BGIRAH_D 2           3,300 21/01/11   18:02
+"BGIRAH PROG, ISS 1"
+[BGIRAH PROGRAM 21767]
+BGIRAH_P 1          10,979 21/01/11   17:05
+BGIRAH_P 2          10,979 21/01/11   17:32
+"PARACH DATA"
+[PARACH DATA 21767]
+PARACH_D 1             977 21/01/11   16:59
+PARACH_D 2             977 21/01/11   17:23
+"903 PARACH PROG"
+[PARACH PROGRAM 21767]
+PARACH_P 1           2,104 21/01/11   16:58
+PARACH_P 2           2,104 21/01/11   17:22
+"905 RINTRN FORTRAN"
+[905 RINTRN FORTRAN]
+RINTRN_F 1           2,292 21/01/11   17:02
+RINTRN_F 2           2,292 21/01/11   17:29
+"905 RINTRN (OBJECT)"
+[905 RINTRN OBJECT]
+RINTRN_O 1           6,791 21/01/11   17:04
+RINTRN_O 2           6,791 21/01/11   17:30
+"903 XFIND, ISS 1"
+[903 XFIND ISSUE 1]
+XFIND    1           2,874 21/01/11   17:01
+XFIND    2           2,874 21/01/11   17:24
+
+
+Bag "MECSL UNIDENTIFIED PROGRAMS".
+----------------------------------
+Directory BOX_C1\MECS_UNI
+       14 file(s)        138,114 bytes
+   Not labelled by me.
+   Not trimmed at either end.
+
+"DMA001/DCA001, ISS 2" sic (M & C reversed)
+[DCA 001 DMA 001 ISSUE 2]
+DCA_001  1          10,429 21/01/11   20:01
+DCA_001  2          10,429 21/01/11   21:32
+"DCA002/DMA002, ISS 2"
+[DCA002 DMA002 ISSUE 2]
+DCA_002  1          18,636 21/01/11   20:03
+DCA_002  2          18,636 21/01/11   21:34
+"DCA 003, ISS 3"
+[DMA DCA 003 ISSUE 3] sic (M & C reversed)
+DCA_003  1          16,345 21/01/11   20:05
+DCA_003  2          16,345 21/01/11   21:37
+"DCA00N DMA00N, ISS 2" by columns not lines
+DCA_00N  1           9,601 21/01/11   19:59
+DCA_00N  2           9,601 21/01/11   21:30
+"TPG, ISS 2"
+[TPG] 6" [ISSUE 2]
+TPG      1          11,190 21/01/11   19:57
+TPG      2          11,190 21/01/11   21:28
+"TPGDUMP, ISS 1"
+[TPGDUMP ISS1]
+TPG_D    1           1,310 21/01/11   18:40
+TPG_D    2           1,310 21/01/11   21:26
+"TPG DUMP & ALLOC, ISS 1"
+[T P G DUMP AND ALLOC ISSUE 1]
+TPG_DA   1           1,546 21/01/11   18:42
+TPG_DA   2           1,546 21/01/11   21:27
+
+
+Bag "903/920 TEST TAPES".
+-------------------------
+Directory BOX_C1\903_920
+       44 file(s)        156,904 bytes
+   All labelled by me.
+   Record what the documentation says about
+      the relationship between these & MECSL's.
+
+"900 X1 1/1/71, Binary Mode 1" ACD
+   Exceptionally Mode 1 is in name.
+X1       1           1,660 22/01/11   21:56
+X1       2           1,660 23/01/11   12:03
+"900 X2 1/1/71, Binary Mode 3" ACD
+X2       1           1,543 22/01/11   21:58
+X2       2           1,543 23/01/11   12:04
+"900 X3 1/1/71, Binary Mode 3" ACD
+X3       1           2,281 22/01/11   21:58
+X3       2           2,281 23/01/11   12:16
+"900 X3 1/1/71, 900-Series Telecode"
+X3_T     1          11,079 22/01/11   22:00
+X3_T     2          11,079 23/01/11   12:17
+"900 X3A 1/1/71, Binary Mode 3" ACD
+X3A      1           2,281 22/01/11   22:01
+X3A      2           2,281 23/01/11   12:28
+"900 X3A 1/1/71, 900-Series Telecode"
+X3A_T    1          11,080 22/01/11   22:02
+X3A_T    2          11,080 23/01/11   12:30
+"SKELETON X3M 7/9/72, 900-Series Telecode WITH SPURIOUS TABS"
+   The tape winder fell off & I tore the tape.
+X3M_T    1           7,013 22/01/11   22:04
+X3M_T    2           7,013 23/01/11   12:31
+"900 X4 1/1/71, Binary Mode 3" ACD
+X4       1           1,601 22/01/11   22:06
+X4       2           1,601 23/01/11   12:40
+"900 X5 1/1/71, Binary Mode 3" ACD
+X5       1           1,741 22/01/11   22:07
+X5       2           1,741 23/01/11   12:42
+"900 X6 1/1/71, Binary Mode 3" ACD
+X6       1           4,344 22/01/11   22:08
+X6       2           4,344 23/01/11   12:43
+"900 X7 1/1/71, Binary Mode 3" ACD
+X7       1           2,295 22/01/11   22:09
+X7       2           2,295 23/01/11   12:44
+"900 X8 1/1/71, Binary Mode 3" ACD
+X8       1             842 22/01/11   22:09
+X8       2             842 23/01/11   12:45
+"900 X10 1/1/71, Binary Mode 3" ACD
+X10      1           1,835 22/01/11   22:10
+X10      2           1,835 23/01/11   12:46
+"900 X12 1/1/71, Binary Mode 3" ACD
+X12      1           1,653 22/01/11   22:11
+X12      2           1,653 23/01/11   12:47
+"900 X17 1/1/71, Binary Mode 3" ACD
+X17      1           1,411 22/01/11   22:12
+X17      2           1,411 23/01/11   12:47
+"900 X50 1/1/71, Binary Mode 3" ACD
+X50      1           8,791 22/01/11   22:13
+X50      2           8,791 23/01/11   12:49
+"900 X51 1/1/71, Binary Mode 3" ACD
+X51      1           4,508 22/01/11   22:15
+X51      2           4,508 23/01/11   12:50
+"900 XPTS1 1/1/71, Binary Mode 3" ACD
+XPTS1    1           5,163 22/01/11   22:16
+XPTS1    2           5,163 23/01/11   12:51
+"900 X212 1/1/71, Binary Mode 3" ACD
+X212     1           1,534 22/01/11   22:17
+X212     2           1,534 23/01/11   12:53
+"900 X217 1/1/71, Binary Mode 3" ACD
+X217     1           1,545 22/01/11   22:18
+X217     2           1,545 23/01/11   12:53
+"900 X400 1/1/71, Binary Mode 3" ACD
+X400     1           2,897 22/01/11   22:19
+X400     2           2,897 23/01/11   12:54
+"900 X402 1/1/71, Binary Mode 3" ACD
+X402     1           1,355 22/01/11   22:20
+X402     2           1,355 23/01/11   12:56
+
+
+Bag "905 TEST TAPES".
+---------------------
+Directory BOX_C1\905
+       28 file(s)         81,896 bytes
+   X15,X20,X35,X36,X43 not labelled by me, but
+      in my style, all others labelled by me.
+   Record what the documentation says about
+      the relationship between these & MECSL's.
+
+"905 X13 1/1/74, Binary Mode 3" MASD
+X13      1           2,963 23/01/11   16:49
+X13      2           2,963 23/01/11   22:19
+"905 X14 1/1/74, Binary Mode 3" MASD
+X14      1           5,064 23/01/11   16:50
+X14      2           5,064 23/01/11   22:21
+"905 X15 1/1/74, Binary Mode 3" MASD
+X15      1           3,014 23/01/11   16:51
+X15      2           3,014 23/01/11   22:22
+"905 X18 1/1/74, Binary Mode 3" MASD
+X18      1           2,902 23/01/11   17:57
+X18      2           2,902 23/01/11   22:25
+"905 X19 1/1/74, Binary Mode 3" MASD
+X19      1           1,921 23/01/11   17:58
+X19      2           1,921 23/01/11   22:26
+"905 X20 1/1/74, Binary Mode 3" MASD
+X20      1           2,519 23/01/11   17:59
+X20      2           2,519 23/01/11   22:27
+"905 X23 1/1/74, Binary Mode 3" MASD
+X23      1           2,981 23/01/11   18:00
+X23      2           2,981 23/01/11   22:28
+"905 X24 1/1/74, Binary Mode 3" MASD
+X24      1           2,875 23/01/11   18:00
+X24      2           2,875 23/01/11   22:29
+"905 X25 1/1/74, Binary Mode 3" MASD
+X25      1           2,352 23/01/11   18:01
+X25      2           2,352 23/01/11   22:30
+"905 X26 1/1/74, Binary Mode 3" MASD
+   Cleaned off rubber band between *.1 & *.2, surprised they agree.
+X26      1           1,669 23/01/11   18:03
+X26      2           1,669 23/01/11   22:31
+"905 X27 1/1/74, Binary Mode 3" MASD
+X27      1           2,882 23/01/11   18:06
+X27      2           2,882 23/01/11   22:32
+"905 X35 1/1/74, Binary Mode 3" MASD
+X35      1           2,504 23/01/11   18:12
+X35      2           2,504 23/01/11   22:33
+"905 X36 1/1/74, Binary Mode 3" MASD
+X36      1             850 23/01/11   18:12
+X36      2             850 23/01/11   22:34
+"905 X43 1/1/74, Binary Mode 3" MASD
+X43      1           6,452 23/01/11   18:13
+X43      2           6,452 23/01/11   22:35
+
+
+Bag "JAGUAR 2ND LINE TEST".
+---------------------------
+Directory BOX_C1\JAG_2LT
+       32 file(s)         80,426 bytes
+   All labelled by me.
+   In original date order.
+
+"INTERRUPTS THRESHOLD TEST 5/9/72, 900-Series Telecode"
+INT_THR  1           2,668 24/01/11   12:33
+INT_THR  2           2,668 24/01/11   13:42
+"I/O THRESHOLD TESTS 11/9/72, 900-Series Telecode"
+I_O_THR  1           1,581 24/01/11   12:33
+I_O_THR  2           1,581 24/01/11   13:43
+"LEVELS 1 2 & 3 EXECUTIVES 11/9/72, 900-Series Telecode"
+LEV123_X 1           1,709 24/01/11   12:34
+LEV123_X 2           1,709 24/01/11   13:44
+"LEVEL 4 EXECUTIVE 14/9/72, 900-Series Telecode"
+LEV4_X   1           1,466 24/01/11   12:35
+LEV4_X   2           1,466 24/01/11   13:44
+"DYNAMIC INTERRUPTS TEST 14/9/72, 900-Series Telecode"
+DYN_INT  1           2,077 24/01/11   12:35
+DYN_INT  2           2,077 24/01/11   13:45
+"DYNAMIC I/O TESTS 14/9/72, 900-Series Telecode"
+DYN_I_O  1           2,200 24/01/11   12:37
+DYN_I_O  2           2,200 24/01/11   13:46
+"FUNCTION TEST 14/9/72, 900-Series Telecode"
+FUNCTION 1           7,606 24/01/11   12:38
+FUNCTION 2           7,606 24/01/11   13:47
+"FUNCTION TIMING TEST 15/9/72, 900-Series Telecode"
+F_TIMING 1           5,523 24/01/11   12:39
+F_TIMING 2           5,523 24/01/11   13:48
+"SELECT & REPLY TESTS 15/9/72, 900-Series Telecode"
+SEL_REP  1             804 24/01/11   12:40
+SEL_REP  2             804 24/01/11   13:49
+"PHASE 2 TITLE 15/9/72, 900-Series Telecode"
+PHASE2_T 1             430 24/01/11   12:40
+PHASE2_T 2             430 24/01/11   13:50
+"JAGUAR 2ND LINE TEST PHASE 2 15/9/72, Clear Store & Binary Mode 3"
+PHASE2_B 1           3,131 24/01/11   12:41
+PHASE2_B 2           3,131 24/01/11   13:50
+"INITIAL SETTING-UP ROUTINE 16/9/72, 900-Series Telecode"
+INITIAL  1           1,068 24/01/11   12:41
+INITIAL  2           1,068 24/01/11   13:51
+"STORE TEST FIRST COPY 16/9/72, 900-Series Telecode"
+STORE_1  1           3,676 24/01/11   12:42
+STORE_1  2           3,676 24/01/11   13:52
+"STORE TEST SECOND COPY 16/9/72, 900-Series Telecode"
+STORE_2  1           3,671 24/01/11   12:43
+STORE_2  2           3,671 24/01/11   13:53
+"PHASE 1 TITLE 16/9/72, 900-Series Telecode"
+PHASE1_T 1           1,502 24/01/11   12:44
+PHASE1_T 2           1,502 24/01/11   13:54
+"JAGUAR 2ND LINE TEST PHASE 1 16/9/72, Clear Store & Binary Mode 3"
+PHASE1_B 1           1,101 24/01/11   12:45
+PHASE1_B 2           1,101 24/01/11   13:55
+
+
+*** EOF ***

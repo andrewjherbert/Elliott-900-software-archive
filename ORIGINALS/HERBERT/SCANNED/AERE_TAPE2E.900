@@ -1,0 +1,327 @@
+﻿         10   ;-1
+EXIT
+4 +2
+2 DIFFRACT
+9 IGNORE (IGNORE ALL BUT PHILLIPS DIFFMTR)
+/4 RSHIFT
+5 ;+2
+/4 CORECT-2
++0
+5 SCORECT (SHIFTED VALUE,IN CASE INTERVAL,INITIAL=2)
+4 +1
+/2 SENSE-2
+7 PLUS
+4 -1
+/2 SENSE-2
+7 MINUS
+8 FAIL-14
+
+SCORECT +0
+
+PLUS
+/4 INITIAL
+2 +2
+7 SHIFT1
+       /4   TRIAL-2
+        7   ;+3
+       /4   SHC-2
+        8   ;+2
+       /4   CORECT-2
+JOIN2
+2 W
+JOIN
+5 W
+8 EXITF
+SHIFT1
+4 SCORECT
+8 JOIN2
+MINUS
+/4 INITIAL
+2 +2
+7 SHIFT2
+       /4   TRIAL-2
+        7   ;+4
+        4   W
+       /2   SHC-2
+        8   JOIN
+        4   W
+/2 CORECT-2
+8 JOIN
+SHIFT2
+4 W
+2 SCORECT
+8 JOIN
+IGNORE
+4 W
+EXITF
+
+         0    GETCOUNT
+         /8   1
+
+
+[ INCSTATE  DIFFRACT  STATE  FAIL  MOVCOUNT  P
+  MOTLIT  MOTMASK  RSF  MASK ]
+
+INCSTATE +0
+         2    +0
+         0    DIFFRACT
+         /5   MOVCOUNT
+         /4   STATE
+         1    +4
+         /5   STATE
+         6    +4
+         7    FAIL-3
+
+         4    P
+         /6   MASK
+         7    FIN
+         4    MOTLIT
+         /6   MOTMASK
+         /1   RSF
+         5    MOTLIT
+         5    MOTLIT+1
+
+FIN      0    INCSTATE
+         /8   1
+
+[PRE  RSHIFT TENSEC BACKP  BACKSPACE  BASE  DIFFRACT  FAIL  GETCOUNT
+  INCSTATE  INITIAL  INITVAL  LEVEL  LINK  LOCPAT
+  MAX  MAXVAL  NEXT  NUMBER  P  PEAK  STOMAX  SECOND
+  PEAKWIDTH  POINT  POSN  SECOND  STATE
+  REENT  FORWARD  PRELINK  MAXMUM  RESTART
+  STCOUNT  STEP  TABENTRY  W  W1  X ]
+
+PRE      0    DIFFRACT
+         /10  INITIAL
+         /0   INITIAL
+
+         /8   ;+0
+         8    INIT
+         8    START
+         8    INCX
+         8    ON
+
+START    0    DIFFRACT
+         11   GETCOUNT
+         8    GETCOUNT+1
+
+         0    DIFFRACT
+         /2   MAXMUM
+         9    ST
+         4    W
+GO       /2   LEVEL
+         9    STORE
+RESTART  0    DIFFRACT
+         4    +0
+         /5   STATE
+
+
+         /5   INITIAL
+
+          4           DIFFRACT        (PHILIPS POSITION)
+          2           +1
+          9           ;+3
+         /4   POSN
+         /5   INITVAL
+         4    +1
+         /5   FORWARD
+         8    NEXT
+ST       4    W
+         /5   MAXMUM
+         8    GO
+STORE    4    W
+         /2   STOMAX
+         9    MAYBE
+STORON   /4   TABENTRY
+         5    W1
+         /4   POINT
+         1    -4
+         5    1
+         4    W
+         /5   4
+
+         4    W1
+         2    1
+         9    NEITHER
+         /4   2
+         /2   3
+         5    W1
+         14   1
+         1    W1
+         /2   1
+         /2   4
+         0    DIFFRACT
+         9    ;+4
+
+         4    +0
+         /5   MAX
+         8    NEITHER
+
+         /4   MAX
+         9    PRETWO
+         4    -1
+         /5   MAX
+         8    NEITHER
+
+PRETWO   /4   SECOND
+         9    PAT
+         /4   TABENTRY
+
+         /5   X
+         4    +3
+         /2   POINT
+         /5   POINT
+
+         /4   STEP
+         /1   STEP
+         /1   STEP
+         /1   POSN
+         /5   PEAK
+
+         /0   POINT
+         /4   0
+
+        0   DIFFRACT
+      /12   ;+2
+       8    ;+5
+
+BREADTH
+       +.625
+       +.625
+       +.625
+       +.625
+
+         /5   MAX
+         /5   STOMAX
+         /0   TABENTRY
+         /2   1
+         9    NEXT
+PAT      0    DIFFRACT
+
+         /4   LOCPAT
+         /5   BACKP
+         4    +0
+         /5   MAX
+         4    CLINK
+         /5   LINK
+         4    -1
+         /5   FORWARD
+         /4   PEAKWIDTH
+         8    BACKSPACE
+
+CLINK    8    ;+1
+         0    DIFFRACT
+         4    +256
+         /2   POSN
+         /5   POSN
+         8    RESTART
+
+
+INCX     0    DIFFRACT
+         /10  X
+         /4   MAX
+         /0   X
+         /2   1
+         9    INCX
+         0    DIFFRACT
+         4    +0
+         /5   MAX
+         8    NEXT
+
+ON       0    DIFFRACT
+         /4   X
+         /2   POINT
+         1    +4
+         /12  STEP
+         14   17
+PRELINK  5    WRK
+         /4   LOCPAT
+         /5   BACKP
+
+         4    DLINK
+         /5   LINK
+         4    -1
+         /5   FORWARD
+         4    WRK
+         8    BACKSPACE
+DLINK    8    ;+2
+WRK      +0
+         0    DIFFRACT
+         4    +256
+         /2   POSN
+         /5   POSN
+         /4   MAXMUM
+         14   4
+         /2   MAXMUM
+         2    +0
+         /5   MAXMUM
+
+OFF      /4   TABENTRY
+         /5   POINT
+
+         /4   POSN
+         /5   BASE
+
+          4           DIFFRACT        (PHILIPS POSITION)
+          2           +1
+          9           ;+3
+          /4          POSN
+         /5   INITVAL
+         /4   INITIAL
+         7    ;+2
+         4    +1
+         /5   STATE
+         4    +1
+         /5   FORWARD
+         4    +0
+         /5   INITIAL
+
+         4    DIFFRACT
+         2    +1
+         9    ;+3
+         /4   SECOND
+         7    NEXT
+         4    +0
+         /5   MAXMUM
+
+         /4   POINT
+         1    -1
+         /5   POINT
+         /10  STATE
+         8    NEXT
+
+
+INIT
+   0   DIFFRACT
+
+          4           DIFFRACT        (PHILIPS POSITION)
+          2           +1
+          9           ;+3
+         /4   INITVAL
+         /5   POSN
+
+         /4   TABENTRY
+         /5   POINT
+         4    +0
+         /5   MAX
+         /0   POINT
+         /5   0
+
+NEITHER  4    +1
+         0    DIFFRACT
+         /5   INITIAL
+
+         /4   LOCPAT
+         1    P
+         5    P
+
+         /4   STEP
+REENT    11   INCSTATE
+         8    INCSTATE+1
+         0    DIFFRACT
+/4 RSHIFT
+5 ;+2
+/4 TENSEC
++0
+
+         /5   STCOUNT

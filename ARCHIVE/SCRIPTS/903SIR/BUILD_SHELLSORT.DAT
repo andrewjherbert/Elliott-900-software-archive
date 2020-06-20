@@ -1,0 +1,28 @@
+﻿C build SHELLSORT 
+
+on 903
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptp file SHELLSORT(ISS3).RLB
+
+at ptr inline
+
+*1
+<! halt !><!!>
+j 8
+st 6927
+at ptr file ../../MASTERS/903SIR/SHELLSORT(ISS3).900
+j 9
+st 6927
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 6239
+
+de ptp
+
+sh t

@@ -1,0 +1,233 @@
+﻿(  OOO   OOO  OOOOO         OO   OOO  OOOO  OOOO  OOOOO O   O       OOOOO  OOO   OOO  O   O OOOOO          O  )
+( O   O O   O    O         O  O O   O OOOOO O   O   O   OO  O         O   O   O O   O O   O O            OOO  )
+( O   O O   O   O         O     O   O O   O O   O   O   OO  O         O   OO    OO    O   O O            OOO  )
+(  OOOO O   O   OO        O     OOOOO OOOOO O   O   O   O O O         O    OO    OO   O   O OOOO           O  )
+(     O O   O                   O   O OO    O   O   O   O   O         O               O   O O              O  )
+(     O O   O     O       O           O O   O   O   O   O  OO         O      O     O  O   O O              O  )
+( OOOOO O   O     O        O    O   O O  O  O   O   O   O  OO         O   O   O O   O OOOOO O              O  )
+( OOOO   OOO  OOOO          OOO O   O O   O OOOO  OOOOO O   O       OOOOO OOOO  OOOO  OOOOO OOOOO          O  )
+
+[ QCARDIN QCARD2 QCARD3 QLEV2 ]
+IDPR=1536
+OCUM=5664
+ISUM=1568
+
+
+
+QCARDIN  +0  ( LINK )
+ 8 START    ( ENTRY )
+  -1        ( SWITCH FOR FIRST )
+  +0         ( BUFFER )
+  -1        ( BUFFER )
+  +0         ( TABLE )
+STATUS  +0  ( STATUS )
+BUFFER  +0  ( BUFFER FOR INPUT )
+
+  +0
+BUFFCT  +0
+TABCT  +0
+TWITCH  +0
+SWITCH  +0
+INC  +0
+HOLD  +0
+STORE  +0
+CHAR  +0
+START 4 QCARDIN+2
+ 9 FIRST
+ 15 ISUM
+ 6 +18
+ 7 TESTBUSY
+ 5 STATUS
+ 8 NRERR
+
+TESTBUSY 4 QCARD2-1
+ 6 +8191
+ 2 +79
+ 9 REENTER
+ 8 START
+
+REENTER 4 QCARDIN+4
+ 9 SINGLE
+ 4 +0
+ 8 SINGLE+1
+
+FIRST 4 +0
+ 5 SWITCH
+ 4 +2
+ 15 OCUM
+ 15 ISUM
+ 6 +63
+ 5 STATUS
+ 7 SINGLE
+ 8 NRERR
+
+SINGLE 4 -1
+ 5 TWITCH
+ 4 SWITCH
+ 10 SWITCH
+ 6 +1
+ 7 EVEN
+ 4 TWITCH
+ 9 EVEN
+ 4 QCARDIN+4
+ 5 BUFFER
+A 4 QCARDIN+3
+ 8 B
+EVEN 4 QCARDIN+3
+ 5 BUFFER
+ 4 TWITCH
+ 9 A
+ 4 QCARDIN+4
+
+B 5 BUFFER+1
+DECODE
+ 4 +0
+ 5 BUFFCT
+ 4 =/5 0
+ 5 QCARD2-1
+ 4 +66
+ 15 OCUM
+
+COLUMN 4 BUFFER+1
+ 1 BUFFCT
+ 5 HOLD
+ 4 +32
+ 5 TABCT
+ 5 INC
+ 4 TWITCH
+ 9 D
+SEARCH 4 QCARDIN+5
+ 1 TABCT
+ 5 STORE
+ 0 STORE
+ /4 0
+ 5 STORE
+ 6 &777700
+ 0 HOLD
+ /2 0
+ 7 EQUAL
+ 4 INC
+ 14 8191
+ 7 NOTIN
+ 5 INC
+ /4 0
+ 2 STORE
+ 9 E
+ 4 INC
+ 2 TABCT
+ 5 TABCT
+ 8 SEARCH
+E 4 INC
+ 1 TABCT
+ 8 E-2
+NOTIN /4 0
+ 6 &777700
+ 8 EQUAL+1
+EQUAL 4 STORE
+ /5 0
+
+CHKEND 10 BUFFCT
+ 4 BUFFCT
+ 2 +79
+ 9 ALLDUN
+ 8 COLUMN
+ALLDUN 4 QCARDIN+4
+ 9 F
+ 4 QCARDIN+2
+ 9 ;+2
+ 8 F
+ 4 QCARDIN+4
+ 5 BUFFER
+ 10 SWITCH
+ 4 =/5 0
+ 5 QCARD2-1
+
+ 4 +66
+ 15 OCUM
+F 4 +0
+ 5 QCARDIN+2
+ 4 STATUS
+ 6 +16
+ 7 ;+2
+ 8 RECERR
+ 4 BUFFER+1
+ 8 EXIT
+
+D 4 QCARD2-1
+ 6 +8191
+ 2 BUFFCT
+ 9 SEARCH
+ 4 STATUS
+ 6 +44
+ 7 D
+NRERR 4 -1
+ 5 QCARDIN+2
+RECERR 4 STATUS
+ 1 =/0 0
+EXIT 0 QCARDIN
+ /8 1
+
+  +0
+QCARD2 4 QCARD2-1
+
+ 5 LDBUFF
+ 4 +0
+ 15 IDPR
+ 6 +63
+ 0 +0
+ 14 6
+ 5 CHAR
+ 15 IDPR
+ 6 +63
+ 1 CHAR
+ 14 6
+ 0 QCARDIN+7
+LDBUFF /5 0
+ 10 QCARD2-1
+ 8 QLEV2
+QCARD3 15 ISUM
+ 5 QCARDIN+6
+ 8 QLEV2
+
+
+[ QCINCH QCARDIN QERROR ]
+QCINCH  +0   ( LINK )
+ 8 START     ( ENTRY )
+  +100       ( CAARD COLUMN )
+  +0         ( WORD CONTAINING IMAGE )
+STORE  +0
+DATA 0 ;+1
+ 0 QCINCH
+ 0 1
+  \CRD
+START 10 QCINCH+2
+ 4 QCINCH+2
+ 1 -80
+ 9 GET
+ 11 QCARDIN
+ 8 QCARDIN+1
+ 9 ERROR
+ 4 +0
+ 5 QCINCH+2
+GET 4 QCARDIN+8
+ 1 QCINCH+2
+ 5 QCINCH+3
+ 0 QCINCH+3
+ /4 0
+ 6 +63
+ 0 QCINCH
+ /8 1
+ERROR 6 +127
+ 5 STORE
+ 4 DATA
+ 5 AFTER
+ 4 STORE
+ 11 QERROR
+ 8 QERROR+1
+AFTER  +0    ( PARAMETER WORD )
+ 8 QCARDIN+1
+
+
+<! Halt !>
+
+

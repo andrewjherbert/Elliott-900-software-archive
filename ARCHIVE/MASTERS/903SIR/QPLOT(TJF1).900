@@ -1,0 +1,673 @@
+﻿
+((QPLOT, 15/6/12)
+
+(This Elliott SIR subroutine was written by Terry Froggatt,
+ after refurbishing a brace of Benson-Lehner plotters in 2012.
+ It is a direct replacement for "903 QPLOT ISSUE 1", although
+ substantially smaller, and with several minor corrections)
+
+(After reporting an error, issue 1 had to be triggered at 9,
+ whereas this version waits for Teletype or Reader input.
+ Apart from this, and its size, and edit given below to delete
+ character drawing, this version still conforms to the Manual)
+
+[QPLOT]
+
+PLOTAD=4864               (Standard Plotter Address)
+
+MESSAG    &405215         (CR  + 256 * LF )
+          &450000         (NUL + 256 * 'P')
+          &547714         ('L' + 256 * 'O')
+          &520324         ('T' + 256 * SP )
+(+4)      >1              (L/C + 256 * EXC)
+          &405215         (CR  + 256 * LF )
+          &103400         (NUL + 256 * BEL)
+
+ERROR     >1
+          5     MESSAG+4
+
+          4     +0
+          5     COUNT
+          0     COUNT
+          /4    MESSAG
+          15    6148      (Output to Teleprinter)
+          14    8184      (Chars packed two per word)
+          15    6148
+          10    COUNT
+          9     ;-6       (Sign bit not added to final pair)
+
+          4     -15360
+          15    6144      (Output 60 Blanks to Punch)
+          1     +256
+          9     ;-2
+
+          15    2052      (Wait for Teleprinter Input)
+          0     ERROR
+          /8    1
+
+(Entry points QPLOT+1 & QPLOT+2, and parameters X2,Y2,X1,Y1,
+ are accessed as offsets of QPLOT, as part of the published
+ user interface, and SENSE has been added in this version)
+
+PENPOS    +0              (+0=Unknow, +16=Raised, +32=Lowered)
+SENSE     +1              (+0=Benson-Lehner, +1=QPLOT)
+QPLOT     >1
+          8     LINE      (Draw Line from X1,Y1 to X2,Y2)
+          8     CHAR      (Draw Character given 6-bit code)
+
+X2        +0              (QPLOT+3)
+Y2        +0              (QPLOT+4)
+X1        +0              (QPLOT+5)
+Y1        +0              (QPLOT+6)
+X0                        (This must directly follow Y1, and is
+                           used briefly before AXIS is required)
+
+AXIS      >1              (Axis step has just one bit)
+DIAG      >1              (Diagonal step has two bits)
+LARGE     >1              (Larger of NS & EW Deltas)
+SMALL     >1              (Smaller of NS & EW Deltas)
+COUNT     >1              (Error & Step Loop Counts)
+DELTA     >1              (Used for both Abs Delta NS and
+                           Step Direction Discriminator)
+
+LINE      0     QPLOT
+          /4    1
+          7     VERTOK
+          9     ;+2
+          2     +0
+
+          1     +1
+          7     RAISE
+          1     +1
+          7     LOWER
+          4     &420714   ('L' + 256 * EXC)
+          11    ERROR
+          8     ERROR+1   (Should this Lower Unconditionally?)
+
+LOWER     4     PENPOS
+          1     -32
+          7     VERTOK
+          4     +16
+RAISE     1     +16
+          5     PENPOS
+          15    PLOTAD    (Output to Plotter)
+
+VERTOK    0     SENSE     (+0=Benson-Lehner, +1=QPLOT)
+          /4    X1        (4 X1 or 4 Y1)
+          /2    X2        (2 X2 or 4 Y2)
+          9     ;+4       (Test North or South)
+          5     DELTA     (Abs Delta NS)
+          4     +5        (Bits for North East step)
+          8     ;+4       (North)
+          2     +0        (South)
+          5     DELTA     (Abs Delta NS)
+          4     +9        (Bits for South East step)
+          5     DIAG      (Provisionally Set Diagonal)
+
+          4     X2
+          5     X0
+          /4    Y2        (4 Y2 or 4 X1)
+          /2    Y1        (2 Y1 or 2 X0=X2)
+          9     ;+2       (Test East or West)
+          8     ;+3       (East)
+          2     +0        (West)
+          10    DIAG      (Change NE to NW or SE to SW)
+          5     LARGE     (Provisionally Abs Delta EW)
+          5     SMALL     (Provisionally Abs Delta EW)
+
+          2     DELTA     (Abs Delta NS - Abs Delta EW)
+          9     ;+5
+          4     DELTA     (Abs Delta NS)
+          5     LARGE     (Abs Delta NS >= Abs Delta EW)
+          4     +12       (Bits for North or South step)
+          8     ;+4
+          4     DELTA     (Abs Delta NS)
+          5     SMALL     (Abs Delta NS < Abs Delta EW)
+          4     +3        (Bits for East or West step)
+          6     DIAG      (Diagonal step has two bits)
+          5     AXIS      (Axis step has just one bit)
+
+          4     X2
+          5     X1
+          4     Y2
+          5     Y1
+
+          0     LARGE     (Interrupt cannot follow this so Q is safe)
+          3     DELTA     (Set Mid-Point Discriminator to LARGE/2.
+                           It would be more correct to set to LARGE,
+                           then to subtract 2*SMALL & add 2*LARGE
+                           within the loop, but this might differ
+                           slightly from the previous version)
+
+          4     LARGE
+          0     QPLOT
+NXSTEP    /7    2         (Test at start of loop in case QPLOT has)
+          5     COUNT     (been called just to raise or lower pen)
+
+          4     SMALL
+          2     DELTA     (Subtract SMALL, LARGE times)
+          9     ;+4
+          5     DELTA
+          4     AXIS      (Take one step along axis)
+          8     ;+4
+          1     LARGE     (Add LARGE, SMALL times)
+          5     DELTA
+          4     DIAG      (Take one step along diagonal)
+          15    PLOTAD    (Output to Plotter)
+
+          4     COUNT
+          1     -1
+          8     NXSTEP
+
+(The Character Drawing Routine starts here.
+ If it is not required, all that follows can
+ be replaced by a single line "CHAR 8 ;+0")
+
+LINK      >1
+X1SAVE    >1
+Y1SAVE    >1
+ADRES1    >1
+FLAGS     >1              (+32 Explicitly move with pen up,
+                           +16 Final line, ignore other bits)
+
+          4     &420703   ('C' + 256 * EXC)
+          11    ERROR
+          8     ERROR+1
+          4     +0        (Replace unimplemented character by space)
+CHAR      5     ADRES1
+          0     ADRES1
+          /4    ADRES
+          9     ;-7       (But no check that 0 <= character <= 63)
+          5     ADRES1
+
+          0     QPLOT     (The manual states "the parameter word is)
+          /4    1         (an even integer" but this is not checked)
+          7     SIZEOK    (=0 same as before or preset default)
+          9     ;+5       (<0 for Centered, >0 for Linear)
+          5     PARAM
+          14    8191      (Linear SCALER will be Abs size * 0.2)
+          5     CENTRE
+          8     ;+4
+          2     +0        (Centered SCALER will be Abs size * 0.4)
+          3     PARAM     (Interrupt before this will not alter Q)
+          3     CENTRE    (Interrupt before this will not alter Q)
+          12    +52429    (52428.8 = 0.4 * 2^17)
+          5     SCALER
+
+SIZEOK    4     QPLOT
+          5     LINK
+          4     X1
+          5     X1SAVE
+          4     Y1
+          5     Y1SAVE
+
+          4     +1        (Move to Start with pen up)
+NXLINE    5     PARAM1
+
+          0     ADRES1
+          /4    0         (Get X from upper half-word)
+          14    8183
+          11    SCALSR    (X supposedly in range -7 to +7)
+          8     SCALSR+1
+          1     X1SAVE
+          5     X2
+
+          0     ADRES1
+          /4    0         (Get Y and FLAGS from lower half-word)
+          14    9
+          14    8183
+          9     ;+4
+          5     FLAGS
+          6     +15
+          8     ;+5
+          2     +0
+          5     FLAGS     (FLAGS are added to absolute value of Y)
+          6     +15
+          2     +0
+          11    SCALSR    (Y supposedly in range -9 to +9)
+          8     SCALSR+1
+          1     Y1SAVE
+          5     Y2
+
+          4     FLAGS
+          6     +32
+          7     ;+3       (Jump if flag bit worth 32 is absent)
+          4     +1        (Explicitly move with pen up)
+          5     PARAM1
+          11    QPLOT
+          8     QPLOT+1
+PARAM1    >1
+
+          4     FLAGS
+          14    13
+          9     ;+4       (Jump if flag bit worth 16 is present)
+          10    ADRES1
+          4     +2        (Generally draw with pen down)
+          8     NXLINE
+
+          4     Y1SAVE
+          5     Y2
+          4     X1SAVE
+          1     PARAM
+          5     X2
+          11    QPLOT
+          8     QPLOT+1
+          +1              (Move to Finish with pen up)
+
+          0     LINK
+          /8    2
+
+PARAM     +20
+CENTRE    +10
+SCALER    +4              (PARAM/5)
+WS        >1
+
+SCALSR    >1
+          12    SCALER    (Same SCALER for both axes)
+          14    15
+          5     WS
+          14    1
+          6     +1
+          1     WS        (Operand*SCALER/4, rounded)
+          1     CENTRE    (Same CENTRE for both axes)
+          0     SCALSR
+          /8    1
+
+(The format of these tables remains as given in the Manual)
+
+ADRES     0     SPACE
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          0     ASTERI
+          0     PLUS
+          -1
+          0     MINUS
+          0     POINT
+          -1
+          0     CHAR0
+          0     CHAR1
+          0     CHAR2
+          0     CHAR3
+          0     CHAR4
+          0     CHAR5
+          0     CHAR6
+          0     CHAR7
+          0     CHAR8
+          0     CHAR9
+          -1
+          -1
+          -1
+          0     EQUALS
+          -1
+          0     DROP10
+          -1
+          0     CHARA
+          0     CHARB
+          0     CHARC
+          0     CHARD
+          0     CHARE
+          0     CHARF
+          0     CHARG
+          0     CHARH
+          0     CHARI
+          0     CHARJ
+          0     CHARK
+          0     CHARL
+          0     CHARM
+          0     CHARN
+          0     CHAR0     (Letter O is implemented as Figure 0)
+          0     CHARP
+          0     CHARQ
+          0     CHARR
+          0     CHARS
+          0     CHART
+          0     CHARU
+          0     CHARV
+          0     CHARW
+          0     CHARX
+          0     CHARY
+          0     CHARZ
+          -1
+          -1
+          -1
+          -1
+          -1
+
+CHAR0     /15   5114
+          /15   7159
+          0     2039
+          0     4090
+          0     3590
+          0     1545
+          /15   6665
+          /15   4614
+          /15   5098
+
+CHAR1     /15   6149
+          0     9
+          0     503
+          /15   6647
+          0     2535
+
+CHAR2     /15   4614
+          /15   6665
+          0     1545
+          0     3590
+          0     3585
+          /15   5111
+          0     4071
+
+CHAR3     /15   4617
+          0     3593
+          0     3
+          0     4093
+          0     4090
+          0     2039
+          /15   7159
+          /15   5098
+
+CHAR4     0     2039
+          0     1545
+          /15   5118
+          0     4078
+
+CHAR5     /15   5114
+          /15   7159
+          0     2039
+          0     4090
+          0     4094
+          0     1537
+          /15   4609
+          /15   4617
+          0     2585
+
+CHAR6     /15   7689
+          /15   5117
+          /15   5113
+          /15   7159
+          0     2039
+          0     4089
+          0     4093
+          0     1536
+          /15   6656
+          /15   5101
+
+CHAR7     /15   4617
+          0     3593
+          /15   5095
+
+CHAR8     0     2039
+          0     4089
+          0     4093
+          0     1536
+          /15   6656
+          /15   4611
+          /15   4614
+          /15   6665
+          0     1545
+          0     3590
+          0     3587
+          0     1536
+          /15   6656
+          /15   5117
+          /15   5113
+          /15   7159
+          0     2023
+
+CHAR9     0     3587
+          0     1536
+          /15   6656
+          /15   4611
+          /15   4615
+          /15   6665
+          0     1545
+          0     3591
+          0     3587
+          0     2535
+
+CHARA     /15   5623
+          0     9
+          0     2557
+          /15   6653
+          0     2557
+          0     3559
+
+CHARB     /15   5111
+          /15   4617
+          0     1545
+          0     3591
+          0     3587
+          0     1536
+          /15   4608
+          0     1536
+          0     4093
+          0     4089
+          0     2039
+          /15   5095
+
+CHARC     0     4089
+          0     2039
+          /15   7159
+          /15   5114
+          /15   4614
+          /15   6665
+          0     1545
+          0     3607
+
+CHARD     /15   5111
+          /15   4617
+          0     1545
+          0     3590
+          0     4090
+          0     2039
+          /15   5095
+
+CHARE     0     4087
+          /15   5111
+          /15   4608
+          0     2048
+          /15   4608
+          /15   4617
+          0     3609
+
+CHARF     /15   5111
+          /15   4610
+          0     2050
+          /15   4610
+          /15   4617
+          0     3609
+
+CHARG     0     3590
+          0     1545
+          /15   6665
+          /15   4614
+          /15   5114
+          /15   7159
+          0     2039
+          0     4089
+          0     4093
+          0     2557
+          0     4093
+          0     4071
+
+CHARH     /15   5111
+          /15   4617
+          /15   4608
+          0     3584
+          0     3593
+          0     4071
+
+CHARI     /15   6647
+          0     2551
+          0     503
+          0     9
+          /15   6153
+          0     2073
+
+CHARJ     /15   5114
+          /15   6647
+          0     1015
+          0     2554
+          0     2057
+          0     9
+          0     4121
+
+CHARK     /15   5623
+          /15   5129
+          /15   5120
+          0     3081
+          /15   5120
+          0     3559
+
+CHARL     /15   5129
+          /15   5623
+          0     3559
+
+CHARM     /15   5111
+          /15   4617
+          0     0
+          0     3593
+          0     4071
+
+CHARN     /15   5111
+          /15   4617
+          0     4087
+          0     3609
+
+CHARP     /15   4608
+          0     1536
+          0     3587
+          0     3589
+          0     1545
+          /15   4617
+          /15   5095
+
+CHARQ     0     3064
+          0     2039
+          /15   7159
+          /15   5113
+          /15   4615
+          /15   6665
+          0     1545
+          0     3591
+          0     4089
+          0     3064
+          0     1018
+          0     4071
+
+CHARR     /15   5111
+          /15   4617
+          0     1545
+          0     3589
+          0     3587
+          0     1536
+          /15   4608
+          0     1536
+          0     4071
+
+CHARS     /15   5113
+          /15   7159
+          0     2039
+          0     4089
+          0     4093
+          0     1536
+          /15   6656
+          /15   4611
+          /15   4615
+          /15   6665
+          0     1545
+          0     3607
+
+CHART     0     503
+          0     9
+          /15   4617
+          0     3609
+
+CHARU     /15   4617
+          /15   5113
+          /15   7159
+          0     2039
+          0     4089
+          0     3609
+
+CHARV     /15   4617
+          0     503
+          0     3609
+
+CHARW     /15   4617
+          /15   5623
+          0     0
+          0     3575
+          0     3609
+
+CHARX     /15   5111
+          0     3593
+          0     0
+          /15   4617
+          0     4071
+
+CHARY     0     503
+          0     0
+          /15   4617
+          0     0
+          0     3609
+
+CHARZ     /15   4617
+          0     3593
+          /15   5111
+          0     4071
+
+PLUS      0     505
+          0     7
+          0     0
+          /15   4608
+          0     3600
+
+MINUS     /15   4608
+          0     3600
+
+POINT     0     504
+          0     1017
+          0     1016
+          0     505
+          0     488
+
+ASTERI    /15   4098
+          /15   7176
+          /15   5637
+          /15   4104
+          /15   7170
+          /15   5637
+          /15   3589
+          /15   7685
+          /15   5637
+          /15   5641
+          /15   5649
+
+SPACE     0     4071
+
+EQUALS    /15   5115
+          0     4091
+          /15   4645
+          0     3605
+
+DROP10    /15   4087
+          /15   3584
+          /15   6176
+          /15   7680
+          0     511
+          0     504
+          /15   8183
+          /15   6647
+          /15   6136
+          /15   6143
+          /15   6160
+
+<! halt !>

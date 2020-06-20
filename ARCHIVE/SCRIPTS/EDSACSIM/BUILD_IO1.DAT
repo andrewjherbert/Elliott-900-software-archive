@@ -1,0 +1,19 @@
+﻿C Built Initial Orders 1
+
+on 903
+
+at ptr file EDSACSIM.BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/EDSACSIM/IO1.900
+
+c CLEAR
+j 35
+c START
+j 32
+
+c Dump out loaded store
+d 3100 3132
+
+sh t

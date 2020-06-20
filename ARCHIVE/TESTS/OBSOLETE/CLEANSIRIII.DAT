@@ -1,0 +1,65 @@
+﻿c CLEANSIRIII 
+c
+c reads 920 telecode and punches out in
+c clean format (i.e., 4 blanks after each newline)
+
+
+c  8	Read first tape
+c  9 	Continue reading after a halt
+c 10	Re-read and first tape and punch a copy
+c 11	Re-read subsequent tapes and punch a copy.
+
+c Input in 920 telecode, binary mode 1, only characters in SIR alphabet 
+c (n.b., not SIR internal code) allowed.
+
+c Errors indicated by continuous punching.
+
+c 0111100	Store full.
+c 1100011	Re-read tape does not match original.
+c 1010101     	Invalid character.
+
+on 920A 8K
+
+telecode 920
+
+at ptr file ../../MASTERS/OBSOLETE/CLEANSIRIII.BIN mode1
+j 8181
+
+at ptr inline 920 mode1
+*19
+[FIRST SECOND]
+FIRST	8	STOP (comment)
+	4	+0
+ 5 WS
+STOP 8	SECOND
+
+WS	>+1
+
+<! halt !>
+[FIRST SECOND]
+
+SECOND 8 ;+0
+%
+<! halt !>
+<!!>
+
+at ptp file CLEANSIRIII_OUT.920
+j 8
+j 9
+
+rewind
+
+j 10
+j 11
+
+de ptp
+
+print CLEANSIRIII_OUT.920
+delete CLEANSIRIII_OUT.920
+
+sh t
+
+
+
+
+

@@ -1,0 +1,47 @@
+﻿C Build version of AJHALGOL built-in library with LPRINT
+C included.
+
+on 903 16K
+
+C build library
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+*1
+^%,
+CHE
+WAI
+CHE
+WAI
+DLI *1
+COP
+<! halt !><!!>
+j 13
+st 490
+de ptp
+print errors.txt
+at ptp file LPRLIBRARY(AJH).900
+at ptr file ../../MASTERS/AJHALGOL/LPRINT.900
+j 9
+st 822
+at ptr file ../../MASTERS/903SIR/QLPOUT(ISS1).900
+j 10
+st 822
+at ptr file ../../MASTERS/AJHALGOL/LIBRARY(AJH).900
+j 10
+st 1274
+de ptp
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptp file LPRLIBRARY(AJH).RLB
+at ptr file LPRLIBRARY(AJH).900
+j 8
+st 6239
+de ptp
+delete errors.txt
+sh t

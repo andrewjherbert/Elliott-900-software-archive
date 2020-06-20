@@ -1,0 +1,127 @@
+﻿
+((AMEND INPUT SUBROUTINE, 13/3/74))
+
+[AMIPL AMIPE ADDRA ERRORL ERRORE
+CHIPL CHIPE CHIP INTIPL INTIPE]
+
+AMIPL    >1
+AMIPW    >1
+COUNT    >1
+
+(-2)     11   CHIPL
+         8    CHIPE
+
+AMIPE    4    CHIP
+         1    -43
+         7    POSCON
+         1    -2
+         7    NEGCON
+         1    +7
+         7    OCTAL
+         1    -9
+         7    SLASH
+         8    INSTRU
+
+POSCON   11   INTIPL
+         8    INTIPE-2
+         8    STORE
+
+NEGCON   11   INTIPL
+         8    INTIPE-2
+         2    +0
+         8    STORE
+
+OCTAL    5    COUNT
+(+1)     5    AMIPW
+
+         11   CHIPL
+         8    CHIPE
+         2    +55
+         9    ENDOCT
+         2    +7
+         9    ENDOCT
+
+         10   COUNT
+         14   8189
+         4    AMIPW
+         14   3
+         8    OCTAL+1
+
+ENDOCT   4    COUNT
+         7    ERROR1
+         2    +6
+         9    ERROR1
+         4    AMIPW
+         8    STORE
+
+SLASH    11   CHIPL
+         8    CHIPE
+         4    =/0 0
+         8    ;+2
+INSTRU   4    =0 0
+         5    AMIPW
+
+         11   INTIPL
+         8    INTIPE
+         2    +15
+         9    ERROR2
+         2    +15
+         14   13
+         1    AMIPW
+         5    AMIPW
+
+         4    CHIP
+         1    -33
+         9    ;+2
+         8    ERROR2
+         11   CHIPL
+         8    CHIPE
+         1    -33
+         9    ;-3
+
+         1    -26
+         7    RELATIVE
+         11   INTIPL
+         8    INTIPE
+         8    COLLATE
+
+RELATIVE 11   CHIPL
+         8    CHIPE
+         1    -43
+         7    ;+4
+         1    -2
+         7    ;+6
+         8    ERROR3
+
+         11   INTIPL
+         8    INTIPE-2
+         1    ADDRA
+         8    COLLATE
+
+         11   INTIPL
+         8    INTIPE-2
+         2    ADDRA
+
+COLLATE  6    =0 8191
+         1    AMIPW
+
+STORE    5    AMIPW
+         0    AMIPL
+         /8   1
+
+ERROR1   4    +1
+         8    ;+4
+ERROR2   4    +2
+         8    ;+2
+ERROR3   4    +3
+
+         1    £R 0
+         5    ERRNO
+         11   ERRORL
+         8    ERRORE
+         £AMI
+         £P E
+         £RRO
+ERRNO    >1
+         £.
+<! Halt !>

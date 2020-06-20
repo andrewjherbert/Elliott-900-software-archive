@@ -1,0 +1,33 @@
+﻿C Assemble PERT(ISS3)
+
+on 903
+
+C load 2 pass SIR
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+c assemble
+select out tty
+at ptr file ../../MASTERS/PERT/PERT(ISS2).900
+j 8
+st 6927
+
+c load T22/23
+select out auto
+at ptp file PERT(ISS2).BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
+
++32
++4029
+<! halt !><!!>
+j 8179
+st 8113
+
+de ptp
+
+sh t
+

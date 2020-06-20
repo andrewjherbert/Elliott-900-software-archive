@@ -1,0 +1,79 @@
+﻿C ML/I Test Battery
+
+on 905 16K
+
+c Load ML/I
+at ptr file ../../SCRIPTS/MLI/MLI.BIN
+j ii
+st 8164
+
+select out auto
+
+c Issue 4 tests from Harold Thimbleby
+
+at ptr file MLI_TESTS.900
+
+c Names
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Escalate
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Alter
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Macrotime
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Overflow
+at ptp file MLI_RESULTS.900
+j 16
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Override
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c S
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Skips
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Structures
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+c Errors
+at ptp file MLI_RESULTS.900
+j 16
+de ptp
+print MLI_RESULTS.900
+
+delete MLI_RESULTS.900
+
+sh t

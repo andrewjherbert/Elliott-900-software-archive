@@ -1,0 +1,17 @@
+﻿
+C Build INT Algol code procedure
+
+on 903
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HERBERT/INT.900
+at ptp file INT.RLB
+j 8
+de ptp
+st 6239
+sh t
+
+
+

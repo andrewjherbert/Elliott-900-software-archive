@@ -1,0 +1,11 @@
+﻿
+on 903 16k
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLGLPR(AJH).BIN
+j 8181
+at ptr file ../../MASTERS/WOOD/D05104.900
+select out tty
+j 8
+j 10
+
+sh t

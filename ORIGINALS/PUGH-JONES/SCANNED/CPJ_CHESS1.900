@@ -1,0 +1,239 @@
+﻿A SIMULATION PROBLEM;
+   "BEGIN""INTEGER"C,C1,D,I,J,MC,MSI,MV,MST,N,Z,ZZ;
+   "INTEGER""ARRAY"WHM,BLM[1:64];
+   "SWITCH"SS:=AA,AB,AC,AD,AE,AF,AG,AH;
+
+"PROCEDURE"SORT(X,Y,N1);
+   "INTEGER""ARRAY"X,Y;
+   "INTEGER"N1;
+       "BEGIN"
+       "INTEGER"A,B,E,F,I,J,PEN;
+       "SWITCH"SSS:=SA;
+       I:=1;
+SA:    E:=X[I]-X[I+1];
+       "IF"E=0"THEN"F:=Y[I,1]-Y[I+1,1];
+       "IF"F<0"OR"E<0"THEN"
+         "BEGIN";
+         A:=X[I];X[I]:=X[I+1];X[I+1]:=A;
+         "FOR"J:=1"STEP"1"UNTIL"3"DO"
+           "BEGIN";
+           B:=Y[I,J];Y[I,J]:=Y[I+1,J];Y[I+1,J]:=B;
+           "END";
+         PEN:=1;
+         "END";
+       I:=I+1;
+       F:=0;
+       "IF"I<N1"THEN""GOTO"SA"ELSE""IF"PEN=1"THEN"
+         "BEGIN";
+         N1:=N1-1;
+         I:=1;
+         PEN:=0;
+         "GOTO"SA;
+         "END";
+       "END"OF SORT;
+
+"PROCEDURE"MAKEMOVE(MC,MV,MSI,MST,WHM,BLM);
+   "INTEGER"MC,MV,MSI,MST;
+   "INTEGER""ARRAY"WHM,BLM;
+   "BEGIN";
+   "IF"MC=0"THEN"
+     "BEGIN";
+     "IF"MV<7"THEN"
+       "BEGIN"
+       WHM[MST]:=MV;
+       WHM[MSI]:=BLM[MST]:=0;
+       "END"
+     "ELSE""IF"MV=69"THEN"
+       "BEGIN";
+       WHM[5]:=WHM[8]:=0;
+       WHM[7]:=6;WHM[6]:=4;
+       "END"
+     "ELSE""IF"MV=59"THEN"
+       "BEGIN";
+       WHM[5]:=WHM[1]:=0;
+       WHM[3]:=6;WHM[4]:=4;
+       "END"
+     "ELSE""IF"MV=7"THEN"
+       "BEGIN";
+       WHM[MST]:=1;
+       WHM[MSI]:=BLM[MST-8]:=0;
+       "END"
+     "ELSE"
+       "BEGIN";
+       WHM[MST]:=MV-10;
+       WHM[MSI]:=BLM[MST]:=0;
+       "END";
+     "END"
+   "ELSE"
+     "BEGIN";
+     "IF"MV<7"THEN"
+       "BEGIN"
+       BLM[MST]:=MV;
+       BLM[MSI]:=WHM[MST]:=0;
+       "END"
+     "ELSE""IF"MV=69"THEN"
+       "BEGIN";
+       BLM[61]:=BLM[64]:=0;
+       BLM[63]:=6;BLM[62]:=4;
+       "END"
+     "ELSE""IF"MV=59"THEN"
+       "BEGIN";
+       BLM[57]:=BLM[61]:=0;
+       BLM[59]:=6;BLM[60]:=4;
+       "END"
+     "ELSE""IF"MV=7"THEN"
+       "BEGIN";
+       BLM[MST]:=1;
+       BLM[MSI]:=WHM[MST+8]:=0;
+       "END"
+     "ELSE"
+       "BEGIN";
+       BLM[MST]:=MV-10;
+       BLM[MSI]:=WHM[MST]:=0;
+       "END";
+     "END";
+   "END"OF MAKEMOVE;
+
+
+"PROCEDURE"PRINTPOSITION(WHM,BLM);
+   "INTEGER""ARRAY"WHM,BLM;
+   "BEGIN"
+   "INTEGER"C,C1,I,J;
+   "SWITCH"LIST:=P,KT,BI,R,Q,K;
+   "SWITCH"SSSS:=PA,PB,PC,PD,PE;
+   PUNCH(3);
+   "PRINT"''L1S28@BLACK'L1S10@@,
+          '-----------------------------------------'L1@@;
+   C:=C1:=0;
+   "FOR"I:=56"STEP"-8"UNTIL"0"DO"
+     "BEGIN";
+     "IF"C=0"THEN""GOTO"PD"ELSE""IF"C=1"THEN"
+     "BEGIN"
+     "PRINT"''L1S10@I    I////I    I////I    I////I    I////I'L1S10@@,
+            '-----------------------------------------'L1S10@@,
+            'I////I    I////I    I////I    I////I    I'L1S10@I/@;
+     C:=2;
+     "GOTO"PE;
+     "END";
+     "PRINT"''L1S10@I////I    I////I    I////I    I////I    I'L1S10@@,
+            '-----------------------------------------'L1@@;
+PD:  "PRINT"''S10@I    I////I    I////I    I////I    I////I'L1S10@I @;
+     C:=1;
+PE:  "FOR"J:=1"STEP"1"UNTIL"8"DO"
+       "BEGIN";
+       C1:=1-C1;
+       "IF"WHM[I+J]=0"THEN""GOTO"PA"ELSE"
+         "BEGIN";
+         "PRINT"'W@;
+         "GOTO"LIST[WHM[I+J]];
+         "END";
+PA:    "IF"BLM[I+J]=0"THEN""GOTO"PB"ELSE"
+         "BEGIN";
+         "PRINT"'B@;
+         "GOTO"LIST[BLM[I+J]];
+         "END";
+ P:    "PRINT"'P@;"GOTO"PC;
+KT:    "PRINT"'N@;"GOTO"PC;
+BI:    "PRINT"'B@;"GOTO"PC;
+ R:    "PRINT"'R@;"GOTO"PC;
+ Q:    "PRINT"'Q@;"GOTO"PC;
+ K:    "PRINT"'K@;"GOTO"PC;
+PB:    "IF"C1=0"THEN""PRINT"'//@"ELSE""PRINT"'  @;
+PC:    "IF"J=8"THEN"
+        "BEGIN"
+        "IF"C1=1"THEN""PRINT"' I@"ELSE""PRINT"'/I@;
+        C1:=1-C1;
+        "END"
+       "ELSE""IF"C1=1"THEN""PRINT"' I/@"ELSE""PRINT"'/I @;
+       "IF"I=0"AND"J=8"THEN"
+         "BEGIN";
+   "PRINT"''L1S10@I////I    I////I    I////I    I////I    I'L1S10@@,
+       '-----------------------------------------'L1S28@WHITE'L1@@;
+         "END";
+       "END";
+     "END";
+   "END"OF PRINTPOSITION;
+
+   READER(3);
+   PUNCH(3);
+AF:N:=1;
+   "READ"C;
+AB:"READ"I;
+   "READ"WHM[I];
+   C:=C-1;
+   "IF"C=0"THEN""GOTO"AA"ELSE""GOTO"AB;
+AA:"READ"D;
+AC:"READ"I;
+   "READ"BLM[I];
+   D:=D-1;
+   "IF"D>0"THEN""GOTO"AC;
+   "READ"C1;
+
+   PRINTPOSITION(WHM,BLM);
+
+   "IF"C1=-1"THEN""GOTO"AD;
+   "PRINT"''L3@CHOOSE YOUR COLOUR.FOR WHITE TYPE 0,FOR BLACK TYPE 1.'L1@@;
+   "READ"Z;
+   "PRINT"''L2@TO MAKE A MOVE TYPE THE VALUE OF THE PIECE,THE SQUARE @,
+   ''L1@IT IS IN AND THE SQUARE IT IS GOING TO.IF YOU WISH TO 'L1@@,
+   'CASTLE TYPE INSTEAD 69 0 0 FOR KING SIDE OR 59 0 0 FOR 'L1@QUEEN@,
+   ' SIDE.IF IT IS AN EN PASSANT MOVE TYPE FOR THE 'L1@PIECE VALUE @,
+   'A 7.FOR PAWN PROMOTION TYPE FOR THE VALUE'L1@OF THE PIECE THE@,
+   ' VALUE OF (10+VALUE OF PIECE WANTED).'L1@@;
+   "IF"Z=0"THEN""PRINT"''L1@YOU HAVE CHOSEN WHITE.'L1@@
+     "ELSE""PRINT"''L1@YOU HAVE CHOSEN BLACK.'L1@@;
+   "IF"Z=C1"THEN"
+     "BEGIN";
+     "PRINT"''L1@YOUR MOVE FIRST.'L2@@;
+     "READ"MV,MSI,MST;
+
+     MAKEMOVE(Z,MV,MSI,MST,WHM,BLM);
+
+     "END"
+   "ELSE""PRINT"''L1@I SHALL GO FIRST.'L2@@;
+AE:"READ"N;
+   "IF"N=-1"THEN""GOTO"AG;
+     "BEGIN""INTEGER""ARRAY"X[1:N],Y[1:N,1:3];
+     "FOR"I:=1"STEP"1"UNTIL"N"DO"
+       "BEGIN"
+       "READ"X[I];
+       "FOR"J:=1"STEP"1"UNTIL"3"DO"
+        "READ"Y[I,J];
+       "END";
+     "IF"N=1"THEN""GOTO"AH;
+     D:=N;
+
+     SORT(X,Y,D);
+
+AH:  "IF"Z=1"THEN""PRINT"''S3@WHITE@"ELSE""PRINT"''S3@BLACK@;
+     "FOR"I:=1"STEP"1"UNTIL"N"DO"
+      "PRINT"ALIGNED(6,0),X[I],SAMELINE,Y[I,1],Y[I,2],Y[I,3],''L1@@;
+     MC:="IF"Z=0"THEN"1"ELSE"0;
+     MV:=Y[1,1];
+     MSI:=Y[1,2];
+     MST:=Y[1,3];
+     "END";
+
+   MAKEMOVE(MC,MV,MSI,MST,WHM,BLM);
+
+   PRINTPOSITION(WHM,BLM);
+
+   "PRINT"''L3@YOUR MOVE.'L2@@;
+   "READ"MV;
+   "IF"MV=-1"THEN""GOTO"AD;
+   "READ"MSI,MST;
+   MC:=Z;
+
+   MAKEMOVE(MC,MV,MSI,MST,WHM,BLM);
+
+   "GOTO"AE;
+
+AG:PRINTPOSITION(WHM,BLM);
+
+AD:"PRINT"''L1@FOR ANOTHER GAME TYPE 1 OTHERWISE TYPE 0.'L2@@;
+   "FOR"I:=1"STEP"1"UNTIL"64"DO"WHM[I]:=BLM[I]:=0;
+   "READ"ZZ;
+   "IF"ZZ=1"THEN""GOTO"AF;
+   "PRINT"''L3S24@END OF PROGRAM@;
+   "END";
+<! Halt !>

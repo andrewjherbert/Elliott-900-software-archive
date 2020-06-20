@@ -1,0 +1,31 @@
+﻿
+((ADDRESS OUTPUT SUBROUTINE, 13/3/74))
+
+[ADOPL ADOPE SLOPL SLOPE CHOPL CHOPE]
+
+ADOPL     >1
+ADDRA     >1
+
+ADOPE     5     ADDRA
+
+          6     =0 8191
+          11    SLOPL
+          8     SLOPE
+
+          4     ADDRA
+          6     =15 0
+          7     ;+9
+
+          4     +94
+          11    CHOPL
+          8     CHOPE
+
+          4     ADDRA
+          6     =15 0
+          14    8179
+          11    SLOPL
+          8     SLOPE
+
+          0     ADOPL
+          /8    1
+<! Halt !>

@@ -1,0 +1,601 @@
+﻿
+[ ANGLE  ANS  BASE  BOSELY  BUFOUT  BUFP
+  BUFPOINT  DIS  DNO  ENHANS  EXPNO  FITQU
+  FIVATE  FORWARD  FOURIN  FOUROUT  FULL  INBUF
+  INITVAL  LEV4  LEVEL  LIGHT  MASK  MAXMUM
+  MAXVAL  OFF  OFFP  OFFST  OUT  OUTPUT
+  PEAK  PEAKWIDTH  PERMIT  POINT  POSN  QF
+  QIN1  QOUT1  RATIO  SCAL  SD  SECOND
+  SIZE  STATE  STCOUNT  SUM  TA  TAB
+  TAB1  TAB2  TABENTRY  TAMARK  TENSEC  TIMER
+  TOTAL0  TOTAL1  TOTAL2  TOTAL3  TRIG  TRIGST
+
+DIF SHC SHL TRIAL
+
+  SENSE CORECT RSHIFT FLAG LSHIFT
+
+  MARKER  TIMEFAIL  RPT  INITSAVE  OFFSAVE  SAVEN
+
+
+STEP STSAVE CTSAVE
+
+
+ABSPOS BFLAG BSAVE GOBACK SAVDIF MOTMOV MOTNO
+TYPE VALORD WAIT WAITSTATE ]
+LEV4     4    FOURIN
+         9    IN
+         4    FOUROUT
+         9    OUTPUT+1
+
+4 BFLAG      (OVER-RUN SEPT 71)
+7 CPD
+4 +0
+5 BFLAG
+4 +2
+CPC 5 DNO
+0 DNO
+/4 SAVDIF-2
+7 ;+4
+4 +0
+/5 SAVDIF-2
+8 RETURN
+4 +1
+8 ORDIN+2
+
+CPD 4 BFLAG+1
+7 CPE
+4 +0
+5 BFLAG+1
+4 +3
+8 CPC
+
+CPE 4 TAMARK
+11 TAM
+9 TAM+1
+4 WAIT
+7 LEV4
+
+         4    -1
+         5    WAITSTATE
+            4          -720      (6 MINUTES)
+            5           TIMEFAIL
+            4          WAIT+1
+            5          DIF
+            10         MARKER
+         4    WAIT
+         1    -1
+         5    WAIT
+         4    WAIT+1
+         5    LOCAL1
+         0    LOCAL1
+
+         4    WAIT+2
+         5    WAIT+1
+         4    WAIT+3
+         5    WAIT+2
+         4    WAIT+4
+         5    WAIT+3
+
+         4    +0
+         5    WAITSTATE
+         0    LOCAL1
+         4    LOCAL1
+         2    +3
+         7    NO3
+         /4   TABENTRY
+         /2   POINT
+         1    -300
+         9    FITQU
+         4    +299
+         /1   TABENTRY
+         /5   POINT
+         8    FITQU
+NO3      /4   TABENTRY
+         /2   POINT
+   1   -900
+   9   FITQU
+   4   +899
+         /1   TABENTRY
+         /5   POINT
+FITQU    0    -177
+         4    +0
+         /5   SMALL
+         10   7
+         4    7
+         9    ;-4
+
+INC      5    MOD1
+         0    LOCAL1
+         4    YFIX
+
+         /1   TABENTRY
+         /2   POINT
+            7          OUT1      (ORDINARY FITQU PATCH)
+        /4  TABENTRY
+        1   YFIX
+        10  YFIX
+        5   QF+3
+
+         11   QF
+         8    QF+2
+         6    3
+         14   8185
+         5    YFLOAT
+         1    Y0
+         5    Y0
+         +0
+        4   YPOS
+         5    QF+3
+         4    +9
+         5    MOD3
+         11   QF
+         8    QF+2
+         6    3
+         5    XFLOAT
+MULTST   5    XWORK
+         0    MOD1
+         /1   X1
+         /5   X1
+         4    XWORK
+
+         12   XFLOAT
+         5    XWORK
+         /1   X2
+         /5   X2
+         4    YFLOAT
+         12   XFLOAT
+         5    YFLOAT
+         0    MOD3
+         /1   Y4
+         /5   Y4
+         +0
+         4    MOD1
+         1    +3
+         5    MOD1
+         2    +12
+         7    INC
+         4    MOD3
+         1    -3
+         5    MOD3
+         11   QF
+         8    QF+2
+
+         4    XFLOAT
+         12   XWORK
+         8    MULTST
+OUT1        4   YPOS
+        5   QF+3
+       4 +9
+         5    MOD2
+         5    MOD4
+         11   QF
+         8    QF+2
+
+         6    3
+         5    A+60
+
+         4    X2+9
+         5    A+12
+         4    X1+9
+         5    A+9
+         5    A+27
+         4    X2+6
+         5    A+6
+         5    A+24
+         5    A+42
+         4    X1+6
+         5    A+3
+         5    A+21
+         5    A+39
+         5    A+57
+         4    X2+3
+         5    A
+         5    A+18
+         5    A+36
+         5    A+54
+         5    A+72
+         4    X1+3
+         5    A+15
+         5    A+33
+         5    A+51
+         5    A+69
+         4    X2
+         5    A+30
+         5    A+48
+         5    A+66
+         4    X1
+         5    A+45
+         5    A+63
+         4    Y0
+         5    Y4+12
+         +0
+         4    +0
+         5    MOD2
+
+PON      4   -5
+         5   COUNT
+RESET
+4 COUNT (FITQU PATCH 2)
+2 -1
+5 MOD1
+1 MOD1
+1 MOD1
+5 MOD1
+
+END      4    +0
+         5    MOD4
+         4    +15
+         5    MOD3
+         4    MOD1
+        5   YFIX
+         2    +12
+         5    MOD2
+
+         11   QF
+         8    QF+2
+         0    MOD1
+        /4  A
+        12  ORDER
+        5   ORDER
+        /4  A
+        12  ORDER+3
+        5   ORDER+3
+        /4  A
+        12  ORDER+6
+        5   ORDER+6
+        /4  A
+        12  ORDER+9
+        5   ORDER+9
+         /4   A
+         12   ORDER+12
+         5    ORDER+12
+
+         /4   A
+         7    TROUBLE
+         0    MOD2
+         /5   ORDER
+         5    XWORK
+         +0
+         4    +0
+BACK     5    MOD2
+         4    MOD4
+         1    +3
+         5    MOD4
+         4    MOD1
+         1    +15
+         5    MOD1
+         2    +74
+         9    SHIFT
+         11   QF
+         8    QF+2
+
+         0    MOD4
+         /4   Y4
+         12   XWORK
+
+         5    XFLOAT
+         0    MOD1
+         /4   A
+         12   Y4
+
+         2    XFLOAT
+         0    MOD4
+         /5   Y4
+
+         +0
+NEXT    4   MOD2
+        2   YFIX
+        7   GO
+        11  QF
+        8   QF+2
+       0   MOD2
+         /4  A
+
+         0   MOD1
+         /12 A
+         5   XFLOAT
+         0   MOD3
+
+         /4  A
+         12  XWORK
+         2   XFLOAT
+         2   ZERO
+
+         /5  A
+         +0
+
+GO          4   +3
+         1   MOD3
+         5   MOD3
+         4   +3
+         1   MOD2
+        5   MOD2
+         2   +15
+         7   BACK
+
+        8   NEXT
+
+SHIFT    2   -1
+         5   MOD1
+         11  QF
+         8   QF+2
+         4   ZERO
+         0   MOD1
+         /5  A
+         /5   A+15
+         /5   A+30
+         /5   A+45
+         /5   A+60
+
+         4   Y4
+         5   YFLOAT
+         4   Y4+3
+         5   Y4
+         4   Y4+6
+         5   Y4+3
+         4   Y4+9
+         5   Y4+6
+         4    Y4+12
+         5    Y4+9
+         4   YFLOAT
+         5   Y4+12
+         4   A
+         5    COEFF
+         4   A+3
+         5   COEFF+3
+         4   A+6
+         5   COEFF+6
+         4   A+9
+         5   COEFF+9
+         4    A+12
+         5    COEFF+12
+
+CYCLE    0   MOD2
+         /4   A+15
+         /5  A
+
+         +0
+
+         4   MOD2
+         1   +3
+         5   MOD2
+         2   +63
+         7   EX
+         11  QF
+         8   QF+2
+         8   CYCLE
+EX       5   MOD2
+
+         11  QF
+         8   QF+2
+         4   COEFF
+         5    A+60
+         4    COEFF+3
+         5    A+63
+         4    COEFF+6
+         5    A+66
+         4    COEFF+9
+         5    A+69
+         4    COEFF+12
+         5    A+72
++0
+
+         10  COUNT
+         4   COUNT
+         9   RESET
+
+EVAL     11  QF
+         8   QF+2
+        4   Y4
+         13  ORDER
+         5   COEFF
+         4   Y4+3
+         13  ORDER+3
+         5   COEFF+3
+         4   Y4+6
+         13  ORDER+6
+         5   COEFF+6
+         4   Y4+9
+         13  ORDER+9
+         5   COEFF+9
+         4    Y4+12
+         13   ORDER+12
+         5    COEFF+12
+         +0
+0 LOCAL1
+4 LOCAL1
+2 +1
+9 ;+2
+8 NAS5
+/4 FLAG-2
+7 NAS5
+4 QA
+1 LOCAL1
+5 QF+4
+4 QB
+1 LOCAL1
+5 QF+3
+11 QF
+8 QF+2
+6 3
+5 WKG1
+4 COEFF
+12 WKG1
+1 COEFF+3
+12 WKG1
+1 COEFF+6
+12 WKG1
+1 COEFF+9
+12 WKG1
+1 COEFF+12
+14 7
+6 4
++0
+8 NAS6
+WKG1 >+3
+QA 0 CORECT-2
+QB 0 BASE
+NAS5
+
+         /4  PEAK
+         /2  BASE
+         /5   PEAK
+         11   QF
+         8    QF+2
+         4    ZERO
+         5    X1
+         +0
+         4    +1
+         5    DENOM
+GAIN     4    AST
+         5    QF+3
+         11   QF
+         8    QF+2
+         6    3
+         5    X1+3
+         4    COEFF
+         12   X1+3
+         1    COEFF+3
+         12   X1+3
+         1    COEFF+6
+         12   X1+3
+         1    COEFF+9
+         12   X1+3
+         5    X1+6
+         2    X1
+         9    TY
+RA       +0
+         0    LOCAL1
+         4    DENOM
+         /1   TABENTRY
+         /2   POINT
+         7    HOME
+         10   DENOM
+         8    GAIN
+TY       +0
+         4    DENOM
+         5    YFIX
+         11   QF
+         8    QF+2
+         4    X1+6
+         5    X1
+         8    RA
+AST      0    DENOM
+HOME     4    YPOS
+
+        5   QF+3
+
+         /4  TOT1
+         5   QF+4
+         11  QF
+         8   QF+2
+
+         6   3
+         5   X1
+
+BET      4   X1
+         12  X1
+         5   X1+3
+         12  X1
+         5   X1+6
+         4   X1+3
+         12  COEFF
+         14  1
+         5   DENOM
+
+         4   X1
+         12  COEFF+3
+         1   DENOM
+
+         5   DENOM
+         14  1
+         1   DENOM
+         1   COEFF+6
+         5   DENOM
+         4   X1+3
+         12  COEFF+3
+         5   NUM
+         14   1
+
+        1   NUM
+         1   COEFF+9
+         14  8191
+         5  NUM
+         4   X1
+         12   COEFF+6
+         1    NUM
+         5   NUM
+         4   X1+6
+         12  COEFF
+         14  1
+         1   NUM
+
+         13  DENOM
+         5   APPROX
+         2   X1
+         5   X1
+
+         4   APPROX
+         12  APPROX
+
+         2   SMALL
+         9   BET
+         4   X1
+         14   8
+         6    4
+         4    X1
+         5    Y0
+         12   COEFF
+         1    COEFF+3
+         12   X1
+         1    COEFF+6
+         12   X1
+         1    COEFF+9
+         12   X1
+         1    COEFF+12
+         14   7
+         5    X1
+         +0
+
+         4    LOCAL1
+         1    MAXP
+         5    QF+4
+         11   QF
+         8    QF+2
+         4    X1
+         6    4
+         +0
+         8    ONT
+
+TROUBLE  +0
+         0    LOCAL1
+         4    +1
+         /2   POINT
+         /5   POINT
+         8    FITQU
+
+TOT1     0    TOTAL1
+         0    TOTAL1+1
+         0    TOTAL1+2
+         0    TOTAL1+3
+MAXP     0    MAXMUM
+SDP 0 SD
+FIVATP   0    FIVATE
+RATIOP   0    RATIO
+SOMEWH   +0
+MUM      +0
+
+PHIL     /4   TYPE
+         2    +1
+         7    PHILPRO
+         11   TITLE
+         8    TITLE+1
+         4    +2
+         11   QOUT1
+         8    QOUT1+1
+         +0
+         0    LOCAL1
+         /4   TOTAL1
+         11   QOUT1
+         8    QOUT1+1
+         /0   0

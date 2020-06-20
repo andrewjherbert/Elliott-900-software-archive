@@ -1,0 +1,40 @@
+﻿C
+C DEMO1
+C
+on 903 16K
+telecode 903
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+at ptr inline
+
+TABLE OF SQUARES;
+"BEGIN"
+   "COMMENT" 13-APR-1996.
+              Prints a table of squares;
+   "INTEGER" J;
+   PUNCH(3); 
+   "PRINT" 'TABLE OF SQUARES`;
+   "FOR" J := 1 "STEP" 1 "UNTIL" 10 "DO"
+      "PRINT" DIGITS(3), J, SAME LINE, DIGITS(6), J^2
+"END"
+<! Halt Code !>
+<!!>
+c compile
+j 8
+select out tty
+nonprinting off
+j 10
+
+c demonstrate name list freezing
+j 25
+
+c demonstrate session to session locking
+j 19
+
+
+rewind
+j 8
+j 10
+
+sh t
+

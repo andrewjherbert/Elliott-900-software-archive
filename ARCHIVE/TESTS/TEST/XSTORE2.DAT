@@ -1,0 +1,9 @@
+﻿C Demonstrate XSTORE
+
+on 903 16K
+at ptr file ../../SCRIPTS/TEST/XSTORE2.BIN
+s 20000000
+nonstop on
+j 8181
+sh t
+

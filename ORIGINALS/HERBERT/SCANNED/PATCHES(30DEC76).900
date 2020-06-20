@@ -1,0 +1,982 @@
+﻿
+(903 ALGOL TRANSLATOR. ELIMINATE ERRORS 107 AND 108)
+(21 OCT 1976. CAP DGNH)
+(ACTUAL PARAMETERS WHICH ARE TO BE TREATED AS CALLED)
+(BY VALUE - TO FORMAL PROCEDURES - MUST BE ENCLOSED IN)
+(BRACKETS. SEE EXAMPLE.)
+(CORRECT ERROR HANDLING IN TRANSLATOR)
+
+*+2
+PROCPO=176
+I=178
+C=188
+ADDI=191
+M=215
+PRMCOU=223
+FAIL=706
+W=6090
+FOMPIL=1574
+NOTIN=1613
+NOTOWN=1645
+PRAMCH=1992
+FMT=2007
+EX=2075
+EXIT=2086
+REXIT=2092
+PAGTWO=2257
+N4=2322
+NAMOK=2341
+NOCBIT=2501
+OTHER=2697
+AB=2723
+K1=5912     (K1 =8 0)
+K2=5970     (K2 =&177760)
+K3=5947     (K3 =2 0)
+K4=5911     (K4 =1 0)
+K5=5952     (K5 =/5 0)
+K6=5980     (K6 =&717760)
+
+^+32
+MAYBE
+ 4 M
+ 7 REXIT    (DO NOTHING FOR CALL BY VALUE)
+ 8 EX       (USUAL ACTION FOR CALL BY NAME)
+PARAM
+ /5 0
+TEST
+ 4 ADDI+3
+ 6 K3       (=2 0)
+ 7 ;+2      (PROCEDURES)
+ 8 NAMOK    (ARRAYS)
+ 0 I
+ /4 2
+ 6 K3       (=2 0)
+ 7 ;+2
+
+ 8 FAIL-89  (INTRINSIC FUNCTIONS DIS-ALLOWED)
+ /4 2
+ 6 K4        (=1 0)
+ 7 NAMOK     (INTERNAL)
+ 4 C         (EXTERNAL)
+ 5 PARAM
+ 11 FOMPIL
+ 8 NOTIN+3
+ 4 K5        (=/5 0)
+ 5 PARAM
+ 4 W+10
+ 7 EXIT
+ 8 FAIL-5
+NOPARM
+ 4 ADDI+3   (GIVE FAILURE FOR PARAMETERLESS)
+ 2 ;+3      (NON-TYPE PROCEDURES)
+ 7 FAIL-25
+ 8 AB
+ &100120
+
+^FOMPIL+3
+ 8 NOTOWN   (SUPPRESS ERROR 107)
+^NOTIN+19
+ 4 PARAM    (SHARE PART OF FOMPIL)
+^PRAMCH+4
+ 9 MAYBE    (TEST FOR VALUE OR NAME CALL)
+^PRAMCH+10
+ 8 N4       (MUST FETCH PARAMETER WORD FROM)
+            (UNUSUAL PLACE WITH RESPECT TO PROCPO)
+^PAGTWO+6
+  8 TEST   (SUPPRESS ERROR 108)
+^N4
+ /4 2       (USE SPACE TO FETCH PARAMETER WORD)
+ 6 K1
+ 7 NORMAL   (USUAL ROUTE)
+ 4 PRMCOU   (NOW FOLLOW RECURSIVE ROUTE)
+ 1 PRMCOU
+ 1 PRMCOU
+ 1 PRMCOU
+ 2 PROCPO
+ 5 W+1
+ 0 W+1
+ /4 2
+ 6 K1
+ 5 W+7      (STORE VALUE BIT)
+ /4 3
+ 6 K2
+ 1 W+7
+ 8 FMT      (ADD VALUE BIT TO TYPE PATTERN)
+NORMAL
+ 4 PRMCOU
+ 8 PRAMCH+11
+^NAMOK+2
+  8   MATCH       (ANOTHER ACTUAL-FORMAL PAIR TOLERATED)
+^NOCBIT+2
+  8   ;+4         (STILL ANOTHER ACTUAL-FORMAL PAIR TOLERATED)
+MATCH
+  2   K6
+  7   NAMOK+3
+  8   FAIL-5
+^OTHER+9
+  8   NOPARM
+  8   FAIL-14
+  8   FAIL-14     (VALUE CALL WHEN NOT A FORMAL PARAMETER )
+%
+<! Halt !>
+(16 NOV 1976 CALL-BY -NAME)
+(903 ALGOL TRANSLATOR)
+*+2
+SP=183
+PP=185
+DELIM=207
+LASTDL=209
+COMPIL=1506
+EXIT=2086
+ITOP=2099
+RTOI=2114
+WONE=2174
+CZERO=2179
+CONE=2195
+WTWO=2214
+WFOUR=2236
+PAGTWO=2257
+N2=2272
+EXCOM=2288
+ARRY=2304
+N6=2351
+N7=2353
+AC=2656
+ARR2=2666
+OTHER=2697
+ESAVE=4408
+COMMA=4791
+ARR=4952
+OUT=5231
+D1=6085
+D2=6086
+D3=6087
+D4=6088
+W=6090
+Z1=5882   (+0)
+Z2=5977   (&106100)
+Z3=5961   (/15 0)
+Z4=5954   (+15)
+Z5=5967   (+5)
+Z6=5953   (+6)
+Z7=5911   (1 0)
+Z8=5920   (12 0)
+
+
+^+21
+T1  8  1
+TAB1
+ /12  16
+ /13  16
+ /12  16
+
+^+512
+   4  W1
+   5  D1
+   4  W2
+   5  D2
+   4  W3
+   5  D3
+   4  W4
+   5  D4
+   8  ;+0
+W1  4  LASTDL
+W2  5  DELIM
+W3  8  OUT
+W4 /9  0
+
+
+^RTOI-3
+   8  TEST2
+^RTOI+4
+   8  TEST2
+^RTOI+6
+   7  TEST2
+^WONE-1
+   8  ITOP
+^CZERO+4
+   8  ;+1
+^CONE+4
+   8  ;+1
+^WTWO+1
+   8  ;+1
+^WTWO+10
+   7  TEST2
+^WTWO+14
+   8  TEST2
+^WTWO+16
+   7  TEST2
+^WFOUR+5
+   8  ;+1   (SWITCH CALL)
+^WFOUR+11
+   8  TEST2
+^WFOUR+15
+   8  TEST2
+^PAGTWO+3
+   8  N5
+^PAGTWO+7
+   8  N5
+   8  NEWN6
+   4  W+14
+   2  Z5     (+5)
+   7  EXCOM  (IPZ OR BPZ)
+   4  Z7     (=1 p)
+   8  HERE
+^ARRY+7
+   8  IND^N6-3
+   8  ;+7
+ 4  W
+   8  ;+5
+N5
+   4  W+10
+   7  ;+2
+   8  701    (FAIL-5)
+   4  5983   (=/1 0)
+  11  1553
+   8  1555   (COMP+2)
+   8  EXIT
+^AC+3
+   4  D4
+^OTHER+15
+   8  ARR2+2
+^ESAVE-1
+   8  D1
+^COMMA+11
+   8  UJ
+^ARR-1
+   8  UJ
+^+62
+TEST2
+   4  W+8
+   7  CALL   (BY NAME)
+   8  EXIT   (BY VALUE)
+NEWN6
+   4  W+14
+   2  Z6     (+6)
+   7  EXCOM  (RPZ)
+   4  5991   (=3 0)
+HERE
+   5  W
+   4  W+10
+   7  N6-2
+   8  N2
+UJ
+   0  SP   (STACK ADDRESS OF POTENTIAL)
+  /4  1    (JUMP AROUND THUNK)
+  14  8188
+   4  PP
+  14  4
+  /5  1
+   4  T1   (8 1)
+   1  PP   (COMPILE UJ ;+1 AS NOP)
+   5  ;+4
+  11  COMPIL
+   8  COMPIL+1
+   &112000
+   +0
+   8  OUT
+CALL
+   0  W+11
+  /4  TAB1-5
+   5  L1
+  /4  TAB2-5
+   5  L2
+   0  SP
+  /4  1
+  14  8188
+   5  ADDR
+   4  5930    (+127)
+   2  212     (CHKSUM)
+   5  212
+  11  COMPIL
+   8  COMPIL+1
+   &441111
+ /15  20
+ /15  17
+  /7  16
+L1 +0         (IFUN OR RFUN)
+  11  COMPIL
+   8  COMPIL+1
+   &232170
+ADDR  +0      (NOP ADDRESS)
+L2   +0       (TRAP)
+   +15        (LOADER LINKAGE)
+   4  W+11
+   2  Z5
+   7  EXIT+6
+   8  EXIT
+TAB2
+  /0  9
+  /0  2
+  /0  1
+INDA
+   4  W+8
+   7  ;+2
+   4  Z7   (1 0)
+   1  Z8   (12 0)
+   8  ARRY+8
+%
+<! Halt !>*+2
+PERM=129
+TYPBOX=136
+ADDI=191
+FMT=2007
+EX=2075
+DEST=7723
+^PERM
+   +7723
+^EX+3
+   1  5884   (+1)
+   8  DEST
+^+520
+   8  ;+5
+^+525
+LOOP  0  COUNT
+  /4  PROG
+  /5  DEST
+  10  COUNT
+   4  COUNT
+   2  +9
+   7  ;+2
+   8  LOOP
+   8  ;+0
+PROG  7  DEST+3
+   4  ADDI+3
+   8  FMT
+   4  TYPBOX
+   7  DEST+7
+   4  EX+8
+   8  FMT
+   4  EX+9
+   8  FMT
+COUNT  +0
+%
+<! Halt !>
+
+(30 DEC 1976, FOR STATEMENTS)
+*+2
+^+256
+   4  L1
+   5  7732
+   4  L2
+   5  4808
+   8  ;+0
+L1  /15  25  (STEP2)
+L2    1  138 (LOKTYP)
+^+4173
+   4  7732
+   5  4189
+   4  6053    (12  3072)
+   8  4184
+%
+<! Halt !>
+
++4808
++4808
++4173
++4176
++7732
++7732
+
++32
++61
++1577
++1577
++1632
++1632
++1996
++1996
++2002
++2002
++2263
++2263
++2322
++2340
++2343
++2343
++2503
++2506
++2706
++2708
+
++21
++24
++2111
++2111
++2118
++2118
++2120
++2120
++2173
++2173
++2183
++2183
++2199
++2199
++2215
++2215
++2224
++2224
++2228
++2228
++2230
++2230
++2241
++2241
++2247
++2247
++2251
++2251
++2260
++2260
++2264
++2270
++2311
++231<!  32 !>+2348
++129
++129
++2078
++2079
++7723
++7731
+<! Halt !>
+1+
+26+
+8806+
+5806+
+1594+
+1594+
+2084+
+2084+
+7044+
+7044+
+2172+
+2172+
+9562+
+9562+
+753
+(903 ALGOL INTERPRETER PATCH OCT 21  1976)
+*+2
+
+
+SP=136
+EP=137
+BN=139
+W=180
+W1=181
+PRIM32=335
+SET=398
+PRIM41=406
+PRIM43=415
+PRIM49=442
+PRIM51=451
+ADPART=1315
+SUBWK1=1318
+FBAJ=1756
+FINDP2=1782
+FINDP1=1787
+FINDP3=1793
+FINDP4=1804
+TA=1842
+PE=1902
+CFF=1987
+GTL3=2000
+GTL4=2014
+GTCONW=2022
+CF=2287
+
+^PRIM41+1
+ 11  PRIM32
+  8  PRIM32+1
+ 11  SET
+  9  SET+6
+  8  SET+1
+  0  PRIM41
+ /8  1
+
+^PRIM43+1
+ 11  PRIM99
+  8  PRIM99+1
+ 11  SET
+  9  SET+1
+  8  SET+6
+  0  PRIM43
+ /8  1
+
+^PRIM49+1
+ 11 PRIM99
+  8  PRIM99+1
+ 11 SET
+  9  SET+6
+  8  SET+1
+  0  PRIM49
+ /8  1
+
+^PRIM51+1
+ 11 PRIM32
+  8  PRIM32+1
+ 11 SET
+  9  SET+1
+  8  SET+6
+  0  PRIM51
+ /8  1
+
+^FBAJ
+  8  P1
+^FINDP2+2
+  9  P2
+^PE+13
+  8  P3
+^CFF+3
+  8  P4
+^GTL3+5
+  8   GT1
+^GTL4-2
+  4   EP
+  8   GT2
+  0   EP         (GTL4)
+ /4   2
+  9   ;-4        (FOR BLOCK)
+ /4   0          (UNPACK ENVIRONMENT POINTER)
+ /2   4
+  7   GT6        (OLD ROUTE)
+ /4   4
+  8  GT3
+^CF
+  8  P7
+^+32
+ /4 0
+ 2 30     (STACKADD)
+ 7 P1+6    (CANNOT BE A FORMAL PROCEDURE)
+ /0 0
+ 8 ;+2
+P1 0 EP
+ 14  1
+  3  LOC
+ /4  2
+  9  P1-5
+  4  LOC
+   0  SP
+  /5  2
+   4  ADPART
+   8  TA+1
+P2 /4  2
+  9  FINDP1
+ /4  0
+ /2  4
+  7  EQUAL
+ /4  3
+  2  SUBWK1+1
+  7  MERGE
+ /0  4
+  8  FINDP3+1
+MERGE
+ /4  4
+ /0  4
+  8  FINDP2
+EQUAL
+ /4  3
+  2  SUBWK1+1
+  7  FINDP4
+  8  MERGE
+
+
+P3  10  SP
+  10  SP
+   4  EVN
+  /5  2
+   8  PE+14
+
+P4  0  W1
+  /4  2
+   8  JOIN
+
+P7  4  EP
+JOIN
+   5  EVN
+   0  SP
+   8  CF+1
+
+EVN  +0
+LOC  +0
+GT1
+  0   EP         (LOOP ON ENVIRONMENT POINTERS)
+ /4   2          (UNLESS A FOR BLOCK IS INVOLVED)
+  9   GTL3+6
+ /4   4
+  8   GTL3+7
+GT2
+  5  SP          (FOLLOW OLD ROUTE FOR FOR BLOCK)
+ /4   3
+  5   BN
+ /4   0
+  5   EP
+  8   GTCONW
+GT3
+  5   EP         (IN THE CASE OF A SATTERTHWAITE EXIT)
+ /4   3
+  5   BN
+GT4
+  0   EP         (SEEK EP,SP FINAL RESTING PLACES)
+ /4   5
+  2   EP
+  7   GT5
+  4   EP
+  1   +5
+  5   SP
+  8   GTCONW
+GT5
+  4   EP         (CONTINUE SEARCH FOR RESTING PLACE)
+  1   +5
+  5   EP
+  8   GT4
+GT6
+ /4   2          (USUAL ROUTE TO OUTER BLOCK)
+  8   GT2
+PRIM99
+ +0
+  0  W
+ /4  0
+  5  LOC
+ /4  3
+ /5  0
+  4  LOC
+ /5  3
+ 11  PRIM32
+  8  PRIM32+1
+  0  PRIM99
+ /8  1
+%
+<! Halt !>
+(16 NOV 1976 CALL-BY-NAME)
+(903 ALGOL INTERPRETER)
+*+2
+EVN=76
+LOC=77
+PP=135
+SP=136
+
+EP=137
+W1=181
+W3=183
+ADPART=1315
+NXPORD=1726
+FBAJ=1756
+FINDFP=1772
+TACHK=1839
+TA=1842
+PCHK7=1948
+PCHK3=1959
+CFF=1987
+TFVR=2047
+TRCN=2061
+BD=7550
+LA=7556
+FAIL=7574
+BLANK=7831
+HALT=7875
+ENDIT=7910
+Y1=3808   (-4)
+Y2=3758   (+0)
+Y3=3803   (-2)
+Y4=3794   (+7)
+Y5=3789   (7  8191)
+Y6=3759   (+1)
+Y7=3790   (-3)
+Y8=3768   (-1)
+Y9=3772   (+3)
+Y10=3785  (+256)
+Y11=3757  (/0 0)
+Y12=3754  (15 8191)
+
+^+512
+   4  ;+3
+   5  HALT+4
+   8  ;+0
+   8  NOPRNT
+^+15
+   8  DOIT
+^FBAJ-16
+   8  TRAP
+^FBAJ-7
+   8  GETADD
+^TACHK+2
+   8  CLEAR
+^PCHK7-1
+   8  TOLER
+^TFVR+2
+   0  W1
+  /4  1
+   0  SP
+  /5  1
+   0  W1
+  /4  0
+   5  W1
+  /4  2
+   8  CLEAR+1
+^TRCN+2
+   8  INVOKE
+^+119
+TRAP
+   0  SP
+   4  PP
+   1  Y1   (-4)
+  /5  0
+   4  Y4
+   2  PP
+   5  LOC
+   0  LOC
+   8  TESTIT
+^+3847
+DOIT
+   4  LA
+   1  3813    (-8)
+   5  LOC
+   0  LOC
+  /4  6
+   5  EVN
+  /0  6
+  /2  0
+   2  =8 1
+   7  ;+3
+   4  Y4   (+7)
+   8  FAIL
+   4  LA
+   1  Y5   (7 8191)
+  /5  0    (FORWARD)
+   4  EVN
+   1  =8 1
+   0  LOC
+  /5  6    (BACKWARD)
+  /4  0
+   6  =/15  0
+   2  =12    7  ;+5
+   1  =12  0
+   7  ;+2
+   8  BLANK
+   4  =1  0
+   1  =1  0
+  0
+  /5  0
+   8  BLANK
+CLEAR
+   4  Y2   (+0)
+   0  SP
+  /5  2
+   4  W1
+   8  TA+1
+
+INVOKE
+   0  W1
+  /4  2
+   7  TRCN+3   (OLD ROUTE)
+  /4  1
+   1  Y7
+   9  ADPORD   (ARRAYS)
+BACK
+   4  SP       (RESULTS AND FORMAL FUNCTIONS)
+   1  Y9
+   5  SP
+  /4  0
+   8  CFF+2
+ADPORD
+  /4  2
+   9  FIN      (GET RESULT)
+   1  Y11     (DEVELOP ADDRESS)
+  /5  2
+   4  Y8       (DECREMENT PP)
+   1  PP
+   5  PP
+   0  SP
+   4  Y2       (CLEAR WD 2)
+  /5  2
+   0  W1
+   8  BACK
+FIN
+   6  Y12      (RESTORE PARAM ENTRY)
+  /5  2
+   4  SP       (OVERWRITE ADDRESS)
+   1  Y7
+   5  SP
+   5  W1
+   0  W1
+   8  TRCN+3
+GETADD
+  11  FINDFP
+   8  FINDFP+1
+   0  W1
+  /4  2
+   7  TFVR+3
+   8  FIN-5
+NOPRNT
+   7  ;+2
+   8  ENDIT
+   4  BD
+   8  HALT+5
+TOLER
+   7  PCHK3
+   2  Y1
+   7  ;+2
+   8  PCHK7
+   4  W3
+   1  Y7
+   9  PCHK3
+   8  PCHK7
+TESTIT
+   4  ADPART
+   2  +9
+   7  ;+6
+  /4  0
+   6  =/15  0
+   2  =12  0
+   7  ;+2
+   4  3806   (+4)
+   0  SP
+   1  ADPART
+  /5  1
+   4  EP
+  /5  2
+   8  TA+2
+%
+<! Halt !>*+2
+^+514
+   8  ;+2
+^+516
+   4  ;+3
+   5  7793
+   8  ;+0
+   4  3822
+%
+<! Halt !>
+
+(30 DEC 1976, FOR STATEMENTS)
+*+2
+EP=137
+W=180
+PKDADD=203
+RSTACK=291
+SBLNK=460
+
+PRIM31=533
+W3ADDR=1316
+PBA=1326
+STSUBR=1480
+STSUB=1495
+
+NXPORD=1726
+STEP=2323
+UNTIL=2382
+GETRL2=2409
+UNTILR=2424
+
+UNTLR2=2443
+WHILE=2553
+UNTIL3=2559
+C1=3757
+C2=3786
+
+^PBA+25
+   0  STEP2
+^WHILE+5
+   7  STEP+2
+^UNTIL+5
+   9  UNTLR2
+  /4  11
+  /0  5
+  /2  0
+TEST  7  UNTIL3
+   0  EP
+   6  C1   (/0  0)
+  /2  8
+   9  UNTIL3
+   8  STEP+2
+STEP2  0  EP
+  /4  7
+ /10  7
+   7  NXPORD
+  /4  5
+   9  ADDR
+  /4  8
+  /0  5
+  /1  0
+  /5  0
+   8  NXPORD
+^UNTILR
+ADDR  4  EP
+   1  C2  (+5)
+   5  W
+  11  RSTACK
+   8  RSTACK+1
+  11  SBLNK
+   8  GETRL2
+   4  W3ADDR
+   5  W
+  11  PRIM31
+   8  PRIM31+3
+   4  EP
+  1   C2
+   5  PKDADD
+  11  STSUBR
+   8  STSUB
+   8  NXPORD
+^UNTLR2+12
+   8  TEST
+%
+<! Halt !>
++1351
++1351
++2558
++2558
++2387
++2407
++2424
++2440
++2455
++2455
++7793
++7793
+
++32
++118
++407
++413
++416
++422
++443
++449
++452
++458
++1756
++1756
++1784
++1784
++1915
++1915
++1990
++1990
++2005
++2005
++2012
++2021
++2287
++2287
++15
++15
++1740
++1740
++1749
++1749
++1841
++1841
++1947
++1947
++2049
++2057
++2063
++2063
++119
++127
++384+3950
+79
++7879
+<! Halt !>

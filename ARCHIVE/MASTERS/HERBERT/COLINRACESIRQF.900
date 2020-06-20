@@ -1,0 +1,177 @@
+﻿
+*19
+
+((COLIN EBY VINTAGE COMPUTER RACE AJH 4/6/2017)
+
+[ COLIN QF ]
+COLIN     4     DIGITS    (NUMBER OF DECIMAL PLACES)
+          2     +0
+          5     DP        (COUNTER FOR SCALING PI, 4.0)
+          4     FOUR      (F:=4.0)
+          5     F
+          4     FOUR+1
+          5     F+1
+          4     FOUR+2
+          5     F+2
+          4     PI        (PI := 3.141592653589793)
+          5     WS
+          4     PI+1
+          5     WS+1
+          4     PI+2
+          5     WS+2
+NEXTDP    11    QF        (SCALE PI AND F)
+          8     QF+2
+          4     WS        (WS *:= 10)
+          12    TEN
+          5     WS
+          4     F         (F *:= 10)
+          12    TEN
+          5     F
+          +0
+          10    DP        (TEST FOR DP=0)
+          4     DP
+          9     NEXTDP
+          4     +0        (ADD := "TRUE")
+          5     ADD
+          11    TRUNC     (PIMULT := TRUNC[W])
+          8     TRUNC+1
+          11    QF
+          8     QF+2
+          4     WS
+          14    0         (STANDARDIZE)
+          5     PIMULT 
+          4     ZERO      (APPROX := 0.0)
+          5     APPROX
+          4     ONE       (N := -1.0)
+          2     ZERO
+          5     N
+FOR       4     N         ("FOR" N := N+2.0)
+          1     TWO
+          5     N
+          4     APPROX    (TRUNCATE APPROX)
+          5     WS
+          +0
+          11    TRUNC
+          8     TRUNC+1
+          11    QF
+          8     QF+2
+          4     WS
+          14    0         (STANDARDIZE)
+          2     PIMULT
+          7     EXIT
+          +0
+          4     ADD
+          7     TRUE      (TEST ADD)
+          11    QF        (ADD="FALSE")
+          8     QF+2
+          4     F         (F)
+          13    N         (/N)
+          2     APPROX    (APPROX-F/N)
+          8     UPDATE
+TRUE      11    QF
+          8     QF+2
+          4     F         (F)
+          13    N         (/N)
+          1     APPROX    (APPROX-F/N)
+UPDATE    5     APPROX
+          +0              (LEAVE QF)
+          4     ADD       (ADD := 'NOT' ADD)
+          2     -1
+          5     ADD
+          11    QF
+          8     QF+2
+          8     FOR
+EXIT      +0              (LEAVE QF)
+          4     +141      (OUTPUT NEWLINES)
+          15    6148
+          4     +10
+          15    6148
+          15    6148
+          4     WSADD     (SET UP WS FOR FLOAT)
+          5     QF+3
+          4     DIGITS    (COPY DIGITS TO WS)
+          5     WS
+          11    QF
+          8     QF+2
+          6     3         (FLOAT DIGITS)
+          6     7         (INTEGER I/0)
+          15    6148
+          6     8         (FLOATING I/O)
+          6     8191      (SET FORMAT)
+          0     8         (SAMELINE, FREEPOINT[8])
+          4     PIMULT
+          15    6148
+          4     TWO       (N-2.0)
+          2     N
+          15    6148
+          4     APPROX
+          15    6148
+          5     WS
+          +0
+          11    TRUNC
+          8     TRUNC+1
+          11    QF
+          8     QF+2
+          4     WS
+          14    0
+          15    6148
+          +0
+          8     ;+0
+
+(S/R TO CALCULATE INTEGER PART OF A REAL)
+TRUNC     >1
+          4     WS        
+          7     TEX     (RESULT IS ZERO)
+          4     WS+2      (EXPONENT)
+          9     ;+4
+          1     -34
+          9     ;+3
+          8     TEX       (EXPONENT>= 34 IMPLIES INTEGER)
+          4     -34       (NEGATIVE EXPONENT - SHIFT OUT FRACTION)
+          6     =0 8191   (EXPONENT LESS THAN 34 - SHIFT OUT FRACTION)
+          1     =14 0
+          5     ;+4
+          0     WS+1
+          14    1
+          4     WS
+          >1               (CALCULATED SHIFT)
+          3     WS+1
+          5     WS
+          4     +34
+          5     WS+2
+TEX       0     TRUNC
+          /8    1
+
+ADD       >1              (FLAG FOR ADD OR SUBTRACT)
+APPROX    >3              (CURRENT APPROXIMATION)
+DP        >1              (NUMBER OF DECIMAL PLACES REQUIRED)
+F         >3              (4 * 10^DP)
+N         >3              (ITERATION COUNT)
+PIMULT    >3
+WS        >3
+
+WSADD     0 WS
+DIGITS    +4
+ZERO      +0              (0.0)
+          +0
+          +0
+HALF      &200000
+          &000000
+          &000000
+ONE       &200000
+          &000000
+          &000001
+TWO       &200000         (+2.0)
+          &000000
+          &000002
+FOUR      &200000         (+4.0)
+          &000000
+          &000003
+TEN       &240000         (+10.0)
+          &000000
+          &000004
+PI        &311037         (+3.14159265)
+          &265240
+          &000002
+
+<! Halt !>

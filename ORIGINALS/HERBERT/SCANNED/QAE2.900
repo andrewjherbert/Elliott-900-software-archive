@@ -1,0 +1,457 @@
+﻿
+*+0
+[E2M QAE]
+E2M /14 0
++0
+4 +0
+8 QAE
+%
+<! Halt !>*+0
+[E2R QAE]
+E2R /14 0
++0
+4 +1
+8 QAE
+%
+<! Halt !>*+0
+[ADD COPY DIV DIVIDE E2M
+ E2R MOD MPY QAE  SUB]
+QAE 8 CONT
+Z1 +0
+Z2 +0
+N +0
+K +0
+AT +0
+AV +0
+AW1 +0
+AUD +0
+AU +0
+W1 +0
+AZERO +0
+AA +0
+AVD +0
+AW2 +0
+W2 +0
+W +0
+ARD +0
+AS +0
+ES +0
+J +0
+WES +0
+RUN +0
+PS +0
+LIMIT +0
+APMQ +0
+T +0
+ONE +0
+V +0
+AP +0
+APD +0
+ANB +0
+F +0
+I +0
+M +0
+
+IF +0
+4 Z1
+1 N
+5 Z1
+4 Z2
+1 N
+5 Z2
+4 +0
+5 K
+L1 10 K
+4 K
+2 N
+9 E1
+4 Z1
+1 -1
+5 Z1
+4 Z2
+1 -1
+5 Z2
+0 Z1
+/4 0
+0 Z2
+/2 0
+0 IF
+7 L1
+/8 2
+E1 /8 1
+
+CONT 5 F
+4 138
+1 +6
+5 138
+4 133
+
+1 +4
+5 AA
+1 +4
+5 AS
+1 +6
+5 ANB
+1 +4
+5 AP
+1 +2
+5 APD
+1 +2
+5 APMQ
+1 +4
+5 ARD
+1 +2
+5 AT
+1 +2
+5 AU
+1 +2
+5 AUD
+1 +2
+5 AV
+1 +2
+5 AVD
+1 +2
+5 AW1
+1 +2
+5 AW2
+1 +6
+5 AZERO
+
+0 133
+/4 1
+5 N
+/4 38
+5 W1
+/4 40
+5 W2
+/4 52
+5 ES
+/4 54
+5 PS
+/4 7
+5 LIMIT
+/4 28
+5 T
+/4 16
+5 ONE
+/4 34
+5 V
+/4 3
+5 M
+
+4 F
+7 ;+2
+8 RES
+
+EE2 0 138
+4 AT
+/5 3
+4 AV
+/5 6
+11 COPY+1
+8 COPY+2
+
+0 138
+4 AW1
+/5 3
+4 AUD
+/5 6
+4 AU
+/5 9
+11 SUB+1
+8 SUB+2
+
+0 138
+4 AW1
+/5 3
+/5 9
+4 AZERO
+/5 6
+0 W1
+/4 0
+9 ;+2
+8 A1
+11 SUB+1
+8 SUB+2
+
+0 AA
+/4 0
+0 138
+/5 6
+11 MPY+1
+8 MPY+2
+
+0 138
+4 AZERO
+/5 6
+11 SUB+1
+8 SUB+2
+8 A2
+
+A1 0 AA
+/4 0
+0 138
+/5 6
+11 MPY+1
+8 MPY+2
+
+A2 0 138
+4 AV
+/5 3
+4 AW1
+/5 6
+4 AVD
+/5 9
+11 ADD+1
+8 ADD+2
+
+0 138
+4 AVD
+/5 3
+4 AT
+/5 6
+11 COPY+1
+8 COPY+2
+
+0 138
+4 AW1
+/5 3
+4 AW2
+/5 6
+4 AU
+/5 9
+4 AV
+/5 12
+11 DIVIDE+1
+8 DIVIDE+2
+
+4 W2
+1 N
+1 -2
+5 W
+0 W
+/4 1
+0 AA
+/5 0
+
+0 W
+/4 0
+7 ;+2
+8 ERR1
+
+0 138
+4 AUD
+/5 3
+4 AU
+/5 6
+11 COPY+1
+8 COPY+2
+
+0 138
+4 AW1
+/5 3
+4 AU
+/5 6
+4 AV
+/5 9
+11 MOD+1
+8 MOD+2
+
+0 138
+4 AU
+/5 3
+4 ARD
+/5 6
+4 AW1
+/5 9
+11 SUB+1
+8 SUB+2
+
+0 AS
+/4 0
+2 +1
+/5 0
+EE3
+0 ES
+/5 0
+
+4 +0
+5 J
+4 ES
+1 +1
+5 WES
+L2 10 J
+4 J
+2 M
+9 E2
+0 WES
+4 +0
+/5 0
+10 WES
+8 L2
+
+E2 0 138
+4 AT
+/5 3
+4 AV
+/5 6
+11 COPY+1
+8 COPY+2
+
+4 +1
+5 RUN
+
+4 +0
+5 J
+L3 10 J
+4 J
+2 M
+9 E3
+4 RUN
+7 E3
+
+4 PS
+1 J
+1 -1
+5 W
+0 W
+/4 0
+5 I
+
+2 LIMIT
+9 ;+2
+8 REPEAT
+
+0 138
+4 AW1
+/5 3
+4 AT
+/5 6
+4 APMQ
+/5 9
+11 SUB+1
+8 SUB+2
+
+0 W1
+/4 0
+9 ;+3
+4 +0
+8 ;+2
+4 +1
+5 RUN
+
+REPEAT 0 138
+4 AW1
+/5 3
+4 AT
+/5 6
+11 COPY+1
+8 COPY+2
+
+0 138
+4 AW1
+/5 3
+4 I
+/5 6
+11 DIV+1
+8 DIV+2
+11 MPY+1
+8 MPY+2
+
+4 T
+5 Z1
+4 W1
+5 Z2
+11 IF
+8 IF+1
+8 EQUAL
+8 L3
+
+EQUAL 0 138
+4 AT
+/5 3
+4 I
+/5 6
+11 DIV+1
+8 DIV+2
+
+4 ES
+1 J
+5 W
+0 W
+/10 0
+8 REPEAT
+
+E3 4 T
+5 Z1
+4 ONE
+5 Z2
+11 IF
+8 IF+1
+8 FIN
+
+RES 4 V
+5 Z1
+4 ONE
+5 Z2
+11 IF
+8 IF+1
+8 ERR2
+
+0 138
+4 AT
+/5 3
+4 AP
+/5 6
+11 COPY+1
+8 COPY+2
+
+0 138
+4 AW1
+/5 3
+11 COPY+1
+8 COPY+2
+
+0 AA
+/4 0
+0 138
+/5 6
+11 MPY+1
+8 MPY+2
+
+0 138
+4 AW1
+/5 6
+4 APD
+/5 9
+11 ADD+1
+8 ADD+2
+
+0 138
+4 AP
+/5 3
+4 ANB
+/5 9
+11 MOD+1
+8 MOD+2
+
+0 138
+4 APD
+/5 3
+4 AT
+/5 6
+11 COPY+1
+8 COPY+2
+8 EE2
+
+
+ERR1 4 \..O
+8 ;+2
+ERR2 4 \..T
+15 6144
+8 ;+0
+
+FIN 0 E2M+1
+/8 1
+%
+<! Halt !>

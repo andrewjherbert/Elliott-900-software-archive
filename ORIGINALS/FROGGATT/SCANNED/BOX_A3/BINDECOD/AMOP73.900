@@ -1,0 +1,248 @@
+﻿
+((AMEND OUTPUT SUBROUTINE, 10/12/73)
+
+[AMOPO AMOPF AMOPL
+AMOPA AMOPW AMOPJ
+AMOPI AMOPE AMOPT
+CHOPF CHOPL CHOPE
+SLOPL SLOPE]
+
+AMOPL    >1
+AMOPO    >1
+AMOPF    >1
+AMOPA    >1
+AMOPW    >1
+AMOPJ    >1
+AMOPX    >1
+AMOPC    >1
+
+AMOPT    4    &400000
+         5    AMOPA
+         8    ;+2
+
+AMOPE    5    AMOPW
+(+1)     4    AMOPF
+         9    AMOP1
+
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +42
+         11   CHOPL
+         8    CHOPE
+
+         0    +0
+         4    AMOPF
+         14   13
+         11   SLOPL
+         8    SLOPE
+
+         4    &400000
+         5    AMOPF
+
+AMOP1    4    AMOPA
+         9    AMOP2
+
+         2    AMOPX
+         7    AMOP3
+
+         4    -246
+         11   CHOPL
+         8    CHOPE
+         4    +94
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPA
+         5    AMOPX
+         11   SLOPL
+         8    SLOPE
+
+AMOP3    4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +40
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPA
+         6    =0 8191
+         11   SLOPL
+         8    SLOPE
+
+         4    AMOPA
+         6    =15 0
+         7    ;+9
+
+         4    +94
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPA
+         6    =15 0
+         14   8179
+         11   SLOPL
+         8    SLOPE
+
+         4    +41
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPO
+         9    ;+2
+         8    AMOP4
+
+         4    +9
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPW
+         9    ;+2
+         8    ;+4
+         4    +47
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPW
+         6    =15 0
+         14   8179
+         11   SLOPL
+         8    SLOPE
+
+         4    AMOPO
+         6    &300000
+         7    AMOP5
+
+         4    AMOPO
+         14   1
+         9    ;+2
+         8    ;+8
+
+         4    +9
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPW
+         6    =0 8191
+         11   SLOPL
+         8    SLOPE
+
+         4    AMOPO
+         14   2
+         9    ;+2
+         8    AMOP4
+
+AMOP6    4    +9
+         11   CHOPL
+         8    CHOPE
+         4    +59
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPA
+         2    AMOPW
+         14   5
+         14   8187
+         11   SLOPL
+         8    SLOPE+1
+         8    AMOP4
+
+AMOP5    4    AMOPW
+         6    =15 0
+         14   8179
+         2    +9
+         9    AMOP7
+         2    +2
+         9    AMOP7
+
+         4    AMOPA
+         2    AMOPW
+         14   5
+         14   8187
+         9    ;+2
+         2    +0
+         2    -7
+         9    AMOP6
+
+AMOP7    4    +9
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPW
+         6    =0 8191
+         11   SLOPL
+         8    SLOPE
+
+AMOP4    4    +0
+         5    AMOPC
+
+(+2)     0    AMOPC
+         4    AMOPO
+         /14  3
+         9    ;+2
+         8    ;+8
+
+         4    +9
+         11   CHOPL
+         8    CHOPE
+
+         0    AMOPC
+         4    AMOPW
+         11   SLOPL
+         /8   SLOPE
+
+         10   AMOPC
+         4    AMOPC
+         1    -5
+         9    AMOP4+2
+
+         10   AMOPX
+         10   AMOPA
+         8    AMOP8
+
+AMOP2    4    AMOPJ
+         9    AMOP9
+
+         4    -246
+         11   CHOPL
+         8    CHOPE
+         4    +94
+         11   CHOPL
+         8    CHOPE
+
+         4    AMOPJ
+         6    =0 8191
+         11   SLOPL
+         8    SLOPE
+
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +60
+         11   CHOPL
+         8    CHOPE
+
+AMOP9    4    -246
+         11   CHOPL
+         8    CHOPE
+         4    +37
+         11   CHOPL
+         8    CHOPE
+
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +20
+         11   CHOPL
+         8    CHOPE
+
+AMOPI    4    +0
+         5    CHOPF
+         5    AMOPF
+         4    &400000
+         5    AMOPX
+         5    AMOPJ
+
+AMOP8    0    AMOPL
+         /8   1
+<! Halt !>

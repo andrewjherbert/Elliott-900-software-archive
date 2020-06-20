@@ -1,0 +1,70 @@
+﻿c Demonstrate Algol Elliott Simulation Package (ESP)
+
+c set up algol
+on 903 16K
+
+
+at ptr file ..\..\MASTERS\MASDALGOL\ALG1(MASD).BIN
+j 8181
+st 8171
+
+at ptp file ESPDEMO_PROG.RLB
+
+c read matrix package 
+at ptr file ..\..\MASTERS\HERBERT\ESP1(AJH).903
+j 8
+st 5368
+
+c read test program
+at ptr file ..\..\MASTERS\HERBERT\ESPDEMO.900
+j 9
+de ptp
+st 9
+
+c join esp library to program rlb
+at ptr file ..\..\MASTERS\ACDUTILITIES\BINCOP.BIN
+j 8181
+st 8175
+nonstop on
+at ptp file ESPDEMO.RLB
+at ptr file  ..\..\MASTERS\ESP\ESP2(ISS2A).RLB
+c read in binary mode
+j 11
+j 9
+c runs off tape
+at ptr file ESPDEMO_PROG.RLB
+r
+j 9
+j 9
+j 9
+j 9
+j 9
+c runs off input - read and punch
+at ptr file ..\..\MASTERS\ESP\ESP2(ISS2A).RLB 
+j 10
+c runs off tape
+at ptr file ESPDEMO_PROG.RLB
+r
+de ptp
+
+c run program
+c read in large program interpreter
+at ptr file ..\..\MASTERS\MASDALGOL\ALG16KLP(MASD).BIN
+j 8181
+st 8175
+
+c load esp code procedures
+at ptr file ESPDEMO.RLB
+select out tty
+nonprinting off
+at tty inline
+R 1000
+<!!>
+c will run out of tty input
+j 12
+j 8
+nonstop off
+sh t
+
+
+

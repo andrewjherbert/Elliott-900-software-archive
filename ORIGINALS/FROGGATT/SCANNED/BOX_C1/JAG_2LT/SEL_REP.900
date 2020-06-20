@@ -1,0 +1,16 @@
+﻿
+((SELECT & REPLY TESTS, 15/9/72)
+
+(Performs an input instruction, which may be used to
+test SIP active & SOP passive, RIP below threshold and
+finally RIP above threshold. Then
+performs an output instruction, which may be used to
+test SOP active & SIP passive, ROP below threshold and
+finally ROP above threshold)
+
+SIOPTH   4    +0
+         15   0
+         4    +0
+         15   4096
+         8    SWITCH
+<! Halt !>

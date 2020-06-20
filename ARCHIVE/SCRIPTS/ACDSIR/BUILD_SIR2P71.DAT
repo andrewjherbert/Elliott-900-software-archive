@@ -1,0 +1,138 @@
+﻿C Build ACD 2-PASS SIR
+
+c Based on notes from Terry Froggatt.
+c First we build 2-PASS SIR 13/4/70 then patch it to get
+c 2-PASS SIR 7/1/71.
+
+c Note SIR2P_VOL2.900 is a version of CHIO.
+
+on 903 8K
+
+c create program tape from sources.
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c steering tape
+at ptp file errors.txt legible
+at ptr inline
+
+INS
+
+*22
+^%,
+CHE
+WAI
+CHE
+INS
+%
+^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+delete errors.txt
+st 490
+delete error.txt
+at ptp file temp1.txt
+at ptr file ../../MASTERS/ACDSIR/SIR2P_VOL1.900
+j 9
+st 822
+at ptr file ../../MASTERS/ACDSIR/SIR2P_VOL2.900
+j 10
+de ptp
+st 1274
+
+c assemble sources using 1-pass SIR.
+at ptr file ../../MASTERS/ACDSIR/SIR1P71.BIN
+j 8181
+st 8175
+select out tty
+at ptr file temp1.txt
+j &17740
+select out auto
+st 7573
+
+c dump 2-pass SIR.
+at ptp file TEMP.BIN
+j 16
+de ptp
+st 1534
+
+c edit source for input to 2-pass SIR just dumped.
+c create program tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+c steering tape
+at ptp file errors.txt legible
+at ptr inline
+
+RTS *22
+*8211^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+delete errors.txt
+st 490
+delete error.txt
+at ptp file temp2.txt
+at ptr file temp1.txt
+j 9
+de ptp
+st 1274
+
+c assemble using version of 2-pass SIR just made.
+at ptr file TEMP.BIN
+j 8181
+st 8175
+at ptr file temp2.txt
+select out tty
+j 12
+st 562
+rewind
+select out auto
+at ptp file SIR2P70.BIN
+j 10
+de ptp
+st 587
+
+c assemble correction patch.
+at ptr file SIR2P70.BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/ACDSIR/SIR2PCORRECT.900
+select out tty
+j 12
+st 562
+rewind
+select out auto
+at ptp file SIR2PCORRECT.BIN
+j 10
+de ptp
+st 587
+
+c make corrected version SIR2P71 by applying patch to SIR2P70.
+at ptr file SIR2P70.BIN
+j 8181
+st 8175
+at ptr file SIR2PCORRECT.BIN
+j 8181
+st 8175
+at ptp file SIR2P71.BIN
+j 16
+de ptp
+st 1534
+
+
+compare SIR2P71.BIN ../../MASTERS/ACDSIR/SIR2P71.BIN
+
+delete errors.txt
+delete temp1.txt
+delete temp2.txt
+delete TEMP.BIN
+delete SIR2PCORRECT.BIN
+
+sh t

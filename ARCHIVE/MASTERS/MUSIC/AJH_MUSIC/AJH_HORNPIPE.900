@@ -1,0 +1,60 @@
+﻿
+&5
+
+
+K1 j1   
+K2 D2 D2 H1 G1
+f1 H1 K1 j1 K1 m1 L1 K1
+L2 E1 \1 E2 L1 K1
+j1 H1 j1 L1 O2 P1 q1
+
+R1 q1 P1 O1 P1 O1 N1 m1
+N1 m1 L1 K1 K1 j1 I1 H1
+I1 K1 j1 L1 K1 m1 L1 N1
+m2 K1 \1 K2
+
+
+
+
+K1 j1   
+K2 D2 D2 H1 G1
+f1 H1 K1 j1 K1 m1 L1 K1
+L2 E1 \1 E2 L1 K1
+j1 H1 j1 L1 O2 P1 q1
+
+R1 q1 P1 O1 P1 O1 N1 m1
+N1 m1 L1 K1 K1 j1 I1 H1
+I1 K1 j1 L1 K1 m1 L1 N1
+m2 K1 \1 K2
+
+
+
+
+
+
+
+H1 G1
+f1 H1 K1 H1 f1 H1 K1 H1
+I2 G1 \1 G2 I1 H1
+g1 I1 L1 I1 G1 I1 L1 I1
+j2 H1 \1 H2 N1 m1
+
+N2 P2 P1 O1 N1 m1
+N1 m1 L1 K1 K1 j1 I1 H1
+I1 K1 j1 L1 K1 m1 L1 N1
+m2 K1 \1 K2
+
+
+
+H1 G1
+f1 H1 K1 H1 f1 H1 K1 H1
+I2 G1 \1 G2 I1 H1
+g1 I1 L1 I1 G1 I1 L1 I1
+j2 H1 \1 H2 N1 m1
+
+N2 P2 P1 O1 N1 m1
+N1 m1 L1 K1 K1 j1 I1 H1
+I1 K1 j1 L1 K1 m1 L1 N1
+m2 K1 \1 K2
+
+<! halt !>

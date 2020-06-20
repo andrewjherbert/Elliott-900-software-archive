@@ -1,0 +1,32 @@
+﻿C demonstrate ALGEBRA
+
+on 905 16K
+
+at ptr file ../../SCRIPTS/LOWL/ALGEBRA.BIN
+j 8181
+st 8164
+
+newline on
+select in tty 
+select out tty 
+at tty inline
+TRUE FALSE
+OPERATOR -
+UNARY
+100
+FALSE
+TRUE
+OPERATOR HOOK
+BINARY
+50
+TRUE
+FALSE
+TRUE
+TRUE
+TABLE A HOOK - (A HOOK B)
+TABLE -(P HOOK Q) HOOK (P HOOK -Q)
+TRY A HOOK - (A HOOK B)
+TRY -(P HOOK Q) HOOK (P HOOK -Q)
+)
+<!!>
+j 16

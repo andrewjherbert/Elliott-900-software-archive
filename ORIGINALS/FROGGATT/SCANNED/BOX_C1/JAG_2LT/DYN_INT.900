@@ -1,0 +1,87 @@
+﻿
+((DYNAMIC INTERRUPTS TEST, 14/9/72)
+
+(Checks that roughly the correct number of
+level 2 & 3 interrupts are received in one minute,
+and checks that their ratio is exactly 1:10)
+
+(Reset addresses)
+
+AFAIL    0    IFAIL
+
+(Workspaces)
+
+ITIME    >1   (Timing count)
+IL2CT    >1   (Level 2 interrupt count)
+IL3CT    >1   (Level 3 interrupt count)
+IRATIO   >1   (Ratio count)
+
+(Level 4: Initialises counts and permits entry to levels 2 & 3)
+
+INTTE4   4    +0
+         5    IL2CT
+         5    IL3CT
+         4    +2
+         5    INTAC
+
+(Level 4: Waits for 1 minute)
+
+         4    -24      (Adjust for 1 min.)
+         5    ITIME
+         4    &400000
+         1    +1
+         9    ;-1
+         10   ITIME
+         4    ITIME
+         9    ;-5
+
+(Level 4: Checks number of interrupts received is within
+10 percent of correct figure either way)
+
+         4    IL2CT
+         1    -2700
+         9    IFAIL
+         2    +600
+         9    IFAIL
+
+         4    IL3CT
+         1    -270
+         9    IFAIL
+         2    +60
+         9    IFAIL
+
+(Level 4: When test completed ignores further interrupts)
+
+         4    +0
+         5    INTAC
+         8    OK
+
+(Level 4: If error is detected, level 4 jumps, or
+is jumped by level 3, to this point)
+
+IFAIL    4    +0
+         5    INTAC
+         8    FAIL
+
+(Level 3: Checks number of level 2 interrupts; boosts count)
+
+INTTE3   4    IL3CT
+         7    ;+5      (Skip first time)
+
+         4    IRATIO
+         7    ;+3
+         4    AFAIL
+         5    6
+
+         4    -10
+         5    IRATIO
+
+         10   IL3CT
+         8    L3T
+
+(Level 2: Boosts counts)
+
+INTTE2   10   IRATIO
+         10   IL2CT
+         8    L2T
+<! Halt !>

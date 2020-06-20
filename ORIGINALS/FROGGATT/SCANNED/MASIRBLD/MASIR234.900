@@ -1,0 +1,1363 @@
+﻿
+
+((MASIR ISSUE  3 TAPE 2))
+   [ASTRSK   MEM2 GETELMT NEXCHAR NXCHAR POINTER POSITN NAME1
+   SPARE STACKSEARCH GETCHAR MEMMKR E15 OPNUMBER REDUCE HDOVER
+PERIPH ENTRYX ENTRYS  NAME2
+   NAME OUTEXT SUPRES QCHOPX INSTAB NUMB PICKUP E41 ]
+
+   PICKUP   +0
+
+   READ     4     -1
+            5     RTEMK       (ELEMENT TYPE MARKER)
+
+            11    GETELMT
+            8     GETELMT+1
+            4     NEXCHAR
+            5     NXCHAR
+            4     POINTER
+            5     LOCPNT
+            4     POSITN
+            5     LOCPOS
+4 PERIPH
+5 TEMPER
+
+
+            4     NAME1
+            7     TSTOPT      (RTEMK=-1 FOR CHARACTER)
+            10    RTEMK
+            4     SPARE       (RTEMK=0 FOR MNEMONIC)
+            9     CHKSTR
+            10    RTEMK       (RTEMK=+1 FOR NAME)
+
+   CHKSTR
+
+            11    STACKSEARCH
+            8     STACKSEARCH+1
+            8     TSTOPT      (NOT IN MACRO,CHECK NO FURTHUR)
+TSTERM 0 POINTER
+/0 0
+/4 2
+6 &177777
+14 8191
+5 PERIPH
+11 GETCHAR
+8 ENTRYX                      (READ CHTR AT NESTED DEPTH)
+2 ASTRSK
+7 STAR
+4 NEXCHAR
+2 +61
+7 ;+2
+8 NOTDOL  (CHTR AT THIS LEVEL NOT * OR ] )
+11 REDUCE
+8 ENTRYS
+
+4 POINTER
+1 -3
+5 POINTER
+0 POINTER
+/4 0
+6 +8191
+1 -1
+7 ;+2
+8 TSTOPT  (] DOES NOT MARK END OF TEXT)
+11 STACKSEARCH
+8 STACKSEARCH+10
+8 TSTOPT  ( NO MORE LEVELS TO CHECK)
+8 TSTERM
+
+STAR 11 GETCHAR
+8 ENTRYX
+2 +4
+7 DOLLAR
+11 REDUCE
+8 ENTRYS
+4 HDOVER
+6 +3
+2 +2
+7 NOTDOL
+11 REDUCE
+8 ENTRYS
+8 E41
+
+
+
+   DOLLAR   4     SPARE
+            1     MEMMKR      (SPARE=-1 FOR MNEMONIC)
+                              (MEMMKR=+0 FOR MNEMONIC)
+            9     E15         (MNEMONIC*$)
+
+            0     POINTER
+            /0    0
+            /4    3
+            6     &1777
+            5     SPARE       (PICK UP *$ NUMBER)
+            11    OPNUMBER
+            8     OPNUMBER+1
+4 +0
+5 NXCHAR    (CLEAR ILLEGAL TERM * )
+
+            8     TSTOPT
+NOTDOL 11 REDUCE
+8 ENTRYS
+
+TSTOPT 4 TEMPER
+5 PERIPH
+4 HDOVER
+
+            6     +2
+            7     ASEMBL
+            4     RTEMK
+            9     CHAR
+            7     MEM
+
+   NAMREAD  4     -6
+            5     NAME1-1
+            4     NAME
+            1     -1
+            11    OUTEXT
+            8     OUTEXT+1
+            8     ASEMBL
+
+   CHAR     4     NEXCHAR
+            2     +59
+            7     TSQB
+            4     SUPRES      (USED TO HOLD BACK SHR ADDRESS)
+            7     OUTPUT
+            8     ASEMBL
+
+   TSQB     4     HDOVER
+            6     +1
+            7     OUTPUT
+            8     ASEMBL      (HOLD BACK THE OUTPUT OF [ UNTIL)
+                              (ANY EUL. MESSAGES HAVE BEEN OUTPUT)
+
+   OUTPUT   11    QCHOPX
+            8     QCHOPX+1
+            8     ASEMBL
+
+   MEM
+            4     NEXCHAR
+            2     +15         (TEST FOR MNEMONIC/)
+            7     SLSOUT
+            8     DTBTHR
+
+   SLSOUT   4     NEXCHAR
+            11    QCHOPX
+            8     QCHOPX+1
+11 GETCHAR
+8 GETCHAR+1
+
+
+   DTBTHR   0     LOCPNT
+            /4    INSTAB
+            14    8179
+            5     SPARE
+            11    OPNUMBER
+            8     OPNUMBER+2
+            4     -1
+            5     NAME1-1
+            1     NAME
+            11    OUTEXT
+            8     OUTEXT+5
+
+            4     LOCPNT
+            2     +17
+            7     SHRINS
+            8     SKPRND
+
+   SHRINS   4     HDOVER
+            6     +3
+            2     +2
+            7     FNDFIG
+            8     SKPRND
+
+   FNDFIG   11    GETCHAR     (SHR ADDRESS OUTPUT OPT 2 ONLY)
+            8     GETCHAR+1
+            1     -16
+            9     FNDFIG
+            1     -10
+            9     FORMNO
+            8     FNDFIG
+
+   FORMNO   11    NUMB
+            8     NUMB+1
+            2     +8192
+            6     +8191
+            8     OPAD
+
+   SKPRND   0     LOCPNT
+            /4    INSTAB
+            6     &17777
+            7     ASEMBL
+
+   OPAD     5     SPARE
+            11    OPNUMBER
+            8     OPNUMBER+2
+            4     -2
+            5     NAME1-1
+            4     NAME
+            1     -1
+            11    OUTEXT
+            8     OUTEXT+1
+
+   ASEMBL
+4 RTEMK
+9 RESETN
+7 RESETN
+4 NAME1  (STORE NEW NAME ELEMENT FOR REF)
+5 REF1
+4 NAME2
+5 REF2
+RESETN 4 REF1  ( RESET LAST NAME READ)
+5 NAME1  ( FOR REF BY DICSRCH ETC)
+4 REF2
+5 NAME2
+4 HDOVER
+
+            6     +3
+            2     +2
+            7     READ
+
+            4     RTEMK
+            9     EXIT3
+            7     EXIT2
+
+   EXIT1   0     PICKUP
+            /8    1
+
+   EXIT2    4     LOCPNT
+            5     POINTER
+            0     POINTER
+            /4    INSTAB
+            0     PICKUP
+            /8    2
+
+   EXIT3    4     NXCHAR
+            0     PICKUP
+            /8    3
+
+   LOCPOS   +0
+   LOCPNT   +0
+   RTEMK    +0
+REF1 +0
+REF2 +0
+TEMPER +0
+
+
+
+
+   [ OPNUMBER COUNT1 NAME1 NAME2 BYTE E12 MOD NAME TEXT
+   SPARE NEXCHAR E14  MASK   ]
+   OPNUMBER   +0
+              8          NRMENT
+
+   MEMENT     4          +0
+              5          COUNT1
+              5          NAME1
+              5          NAME2
+
+   NRMENT     4          COUNT1
+              5          BYTE
+10 BYTE
+              2          +5
+              9          E12       ( NO ROOM FOR *$ NUMBER)
+
+              4          +0
+              5          MARKER
+              4          -4
+              5          MOD
+              4          NAME
+              5          TEXT
+
+              4          BYTE
+              1          -3
+              9          NEXDIG
+              7          NEXDIG
+              5          BYTE
+              10         TEXT
+
+   NEXDIG     4          +0
+              5          NUMBER
+
+   AGAIN     0          MOD
+              /4         POWER+4
+              2          SPARE
+              9          FRDIGT
+              5          SPARE
+              10         NUMBER
+              8          AGAIN
+
+   FRDIGT     4          NUMBER
+              7          TESTLZ
+
+   DIGIT      10         MARKER
+              1          +16
+              5          NEXCHAR
+
+              11         PACK
+              8          PACK+1
+              10         COUNT1
+
+   NPOWER     10         MOD
+              4          MOD
+              9          NEXDIG
+4 TEXT
+2 NAME
+1 +2
+9 E14   ( TEXT =NAME3 OR >)
+7 ;+2   ( CHCK FURTHUR)
+8 EXIT
+4 BYTE
+1 -1
+7 EXIT
+8 E14
+
+   EXIT       4          +0
+              5          SPARE
+              0          OPNUMBER
+              /8         1
+
+   TESTLZ     4          MOD
+              1          +1
+              7          ;+3
+              4          MARKER
+              7          NPOWER
+              4          NUMBER
+              8          DIGIT
+
+   POWER      +1000
+              +100
+              +10
+              +1
+   MARKER     +0
+   NUMBER     +0
+
+   PACK       +0
+              0          BYTE
+              /4         MASK-1
+              0          TEXT
+              /6         0
+              /5         0
+              0          BYTE
+              4          NEXCHAR
+              /8         ;+0
+              8          ONE
+              8          TWO
+              8          THREE
+
+   ONE        0          +0
+              14         6
+              8          ;+2
+
+   TWO        0          +0
+              14         6
+
+   THREE      0          TEXT
+              /1         0
+              /5         0
+              10         BYTE
+              4          +4
+              2          BYTE
+              9          WAYOUT
+              10         TEXT
+              4          +1
+              5          BYTE
+
+   WAYOUT     0          PACK
+              /8         1
+
+
+
+
+
+((MASIR ISSUE 3  TAPE 3))
+((DATA BLOCK))
+
+
+[  FIRST LAST NAME1 NAME2 STORE1 STORE2 POINTER
+   POSITN PARAM STACK NUMBER COUNT PERIPH STARNUM
+   MARKER WORDS IF BR X Y MAC ADDNEW TEXT BYTE ILLEGAL
+   MACDIC BEGSTACK ENDSTACK NEXCHAR MOD PARITY OUTPER
+   CHARNUM CHARAC BUFFER HDOVER NAME3 NAME4 NAME5
+   NAME6 SPARE BRKCTR SPACES ERR COUNT1 MEMMKR ASTRSK
+   COMMA BRAKOP BRAKCL REF1 REF2 STDMAC STK STKEND
+   DICTOP LENGTH MACSTD MACTOP LETCTR SPARE1 MSREND  MASK  MSKSEP
+   ERRCNT MSGDEV JWTITLE TD LD BD TOTENT BEGSTACK  SUPRES STARMK  ]
+
+
+
+FIRST         +0
+LAST          +0
+              +0
+
+NAME1         +0
+NAME2         +0
+NAME3         +0
+NAME4         +0
+NAME5         +0
+NAME6         +0
+SPARE         +0
+SPARE1        +0
+STORE1        +0
+STORE2        +0
+REF1          +0
+REF2          +0
+POINTER       +0
+POSITN        +0
+PARAM         +0
+NUMBER        +0
+COUNT         +0
+COUNT1        +0
+PERIPH        +0
+STARNUM       +0
+MARKER        +0
+WORDS         +0
+IF            +0
+BR            +0
+X             +0
+Y             +0
+ADDNEW        +0
+TEXT          +0
+BYTE          +0
+ILLEGAL       +0
+NEXCHAR       +0
+MOD           +0
+PARITY        +0
+OUTPER        +0
+BRKCTR        +0
+SPACES        +0
+HDOVER        +0
+MEMMKR        +0
+ASTRSK        +10
+COMMA         +12
+BRAKOP        +8
+BRAKCL        +9
+STK        +MSREND+128
+BEGSTACK   +MSREND+128
+STACK      +0
+STKEND
+ENDSTACK   +MSREND+256
+MACDICT    +MSREND+256
+MAC        +0
+MACTOP
+MACSTD +8110
+TD
+DICTOP +16383
+LD +12287
+LENGTH -4096
+TOTENT +1024
+SUPRES +0
+STARMK +0
+
+
+BD         +0
+LETCTR        +0
+ERRCNT        +0
+MSGDEV        +1
+JWTITLE       +1
+CHARNUM       +0
+              +0
+
+CHARAC        +0
+              +0
+
+BUFFER        >+240
+STDMAC        -116628
+              -79424
+              +65536
+              +1024
+              -32768
+              +0
+              -20479
+              +81948
+              -32767
+              +115792
+              +3584
+              +8000
+              +13
+              -58960
+              -116628
+              +65536
+              +0
+              -20479
+              +115793
+              +3174
+              -65535
+              -12288
+              +10
+              -74653
+              -95248
+              +65536
+              +0
+              -20479
+              +115796
+              +3171
+              -95248
+              +46528
+              +8000
+              +11
+
+ERR           +0
+MASK &007777
+&770077
+&777700
+MSKSEP &770000
+&007700
+&000077
+
+
+[  ADDR1 ADDR2 ADDR3 ADDR4 ADDR5 NAME PER IPH OR
+   NAME1 FACLTY ENDFAC FUNCTN NDFN ERR1 ERR2 ERR3
+   ERR4 ERR5 ERR6 ERR7 ERR8 ERR9 ERR10 ERR11 ERR12
+   ERR13 ERR14 ERR15 ERR16 ERR17 ERR18 ERR19 ERR20
+   ERR21 ERR22 ERR23 ERR24 ERR25 ERR26 ERR27 ERR28
+   ERR29 ERR30 ERR31 ERR32 ERR33 ERR34 ERR35 ERR36
+   ERR37 ERR38 ERR39 ERR40 ERR41 INSTAB ]
+
+
+ADDR1      0  FACLTY
+ADDR2      0  ENDFAC
+ADDR3      0  FUNCTN
+ADDR4      0  ENDFN
+ADDR5      0  FACLTY+2
+NAME       0  NAME1
+PER           \PER
+IPH           \IPH
+OR            \OR
+FACLTY        \IF
+              +0
+              \IFN
+              \OT
+              \DEF
+              \INE
+              \GDE
+              \FIN
+              \DEL
+              \ETL
+              \LIS
+              \TLA
+              \CHE
+              \CKW
+              \PRO
+              \G
+              \NOM
+              \EM
+              \CHA
+              \NGE
+              \SET
+              \DIC
+              \MEM
+              \
+              \NOL
+              \IST
+              \TIT
+              \LE
+              \NOT
+              \ITL
+
+ENDFAC        \ADD
+              \MAC            ( LIST OF MNEMONIC FUNCTION NAMES USED WITH CHKNAME S/R )
+
+FUNCTN        \LDB
+              \ADD
+              \NEG
+              \STQ
+              \LD
+              \ST
+              \COL
+              \JZ
+              \J
+              \JN
+              \INC
+              \STS
+              \MUL
+              \DIV
+              \SH
+              \IPO
+              \SHL
+              \SHR
+              \TER
+              \ATB
+              \BTA
+              \ATQ
+              \QTA
+              \SKS
+              \SKB
+              \RWG
+              \SRL
+
+ENDFN         \SAB            ( LIST OF INSTRUCTION CODES FOR USE WITH MNEMONICS )
+INSTAB     0  0
+           1  0
+           2  0
+           3  0
+           4  0
+           5  0
+           6  0
+           7  0
+           8  0
+           9  0
+          10  0
+          11  0
+          12  0
+          13  0
+          14  0
+          15  0
+          14  0
+          14  0
+          15  7168
+          15  7174
+          15  7175
+          15  7172
+          15  7173
+          15  7169
+          15  7170
+          15  7171
+          15  7176
+          15  7177            ( CONSTANTS FOR USE WITH ERROR ROUTINES )
+
+ERR1       0  ;+1             ( CALLED MACRO IN USE )
+                -7
+                \CAL
+                \LED
+                \ MA
+                \CRO
+                \ IN
+                \ US
+                \E
+
+ERR2         0  ;+1           ( DEFINED MACRO IN USE )
+                -7
+                \DEF
+                \INE
+                \D M
+                \ACR
+                \O I
+                \N U
+                \SE
+
+ERR3         0  ;+1           ( MACRO DICTIONARY FULL )
+                -8
+                \MAC
+                \RO
+                \DIC
+                \TIO
+                \NAR
+                \Y F
+                \ULL
+                \.
+
+ERR4         0  ;+1           ( STACK FULL )
+                -4
+                \STA
+                \CK
+                \FUL
+                \L
+
+ERR5         0  ;+1           ( LINE BUFFER FULL )
+                -6
+                \LIN
+                \E B
+                \UFF
+                \ER
+                \FUL
+                \L
+
+ERR6         0  ;+1           ( ILLEGAL CHARACTER )
+                -6
+                \ILL
+                \EGA
+                \L C
+                \HAR
+                \ACT
+                \ER
+
+ERR7         0  ;+1           ( PARITY )
+                -2
+                \PAR
+                \ITY
+
+ERR8         0  ;+1
+-8
+\COR
+\RUP
+\T P
+\ARA
+\MET
+\ER
+\LIS
+\T
+
+
+ERR9         0  ;+1           ( *$ NUMBER OVERFLOW)
+-6
+                \*$
+                \NUM
+                \BER
+                \ OV
+                \ERF
+                \LOW
+
+ERR10        0  ;+1           ( NAME DOES NOT START WITH LETTER )
+                -6
+                \NAM
+                \E S
+                \TAR
+                \TS
+                \WIT
+                \H
+
+ERR11        0  ;+1
+                -6
+                \ILL
+                \EGA
+                \L F
+                \ACI
+                \LIT
+                \Y *
+ERR12        0  ;+1
+                -9
+                \> T
+                \HAN
+                \ 5
+                \LET
+                \TER
+                \S I
+                \N N
+                \AME
+                \*$
+
+ERR13        0  ;+1
+               -13
+                \ILL
+                \EGA
+                \L T
+                \EXT
+                \ FO
+                \R P
+                \ARA
+                \MET
+               \ER
+                \COM
+                \PAR
+                \ISO
+                \N
+
+ERR14        0  ;+1
+                -11
+                \*$
+                \NO.
+                \ TO
+                \O B
+                \IG
+                \FOR
+                \ SP
+                \ACE
+                \ GI
+                \VEN
+                \.
+
+ERR15        0  ;+1
+-6
+                \MIS
+                \USE
+                \D M
+                \NEM
+                \ONI
+\C
+
+
+ERR16        0  ;+1
+                -5
+                \*IF
+                \ OR
+                \ *I
+                \FNO
+                \T
+ERR17        0  ;+1
+                -8
+                \ILL
+                \EGA
+                \L C
+                \OND
+                \ITI
+                \ONA
+
+                \L
+                \ &*
+
+ERR18        0  ;+1           ( PARAMETER CONTAINS ILLEGAL CHARACTER )
+                -8
+                \PAR
+                \AME
+                \TER
+                \ LI
+                \ST
+                \CON
+                \TAI
+                \NS
+
+
+ERR19        0  ;+1
+                -4
+                \PAT
+                \CH
+                \ERR
+                \OR
+
+
+ERR20        0  ;+1
+                -5
+                \ILL
+                \EGA
+                \L *
+                \CHA
+                \NGE
+
+
+ERR21        0  ;+1           ( *ADDMAC FOR MACRO TEXT NOT IN STORE )
+                -15
+                \ILL
+                \EGA
+                \L *
+                \ADD
+                \MAC
+                \ TE
+                \XT
+                \NOT
+                \ IN
+                \ ST
+                \ORE
+                \ FO
+                \R M
+                \ACR
+                \O
+
+
+ERR22        0  ;+1           ( PERIPH. SPECIFIED BUT NOT NO, 0     - 4 )
+                -10
+                \NO
+                \FAC
+                \ILI
+                \TY
+                \FOR
+                \ PE
+                \RIP
+                \HER
+                \AL
+                \NO.
+
+ERR23        0  ;+1
+               -12
+                \INC
+                \OMP
+                \LET
+                \E [
+                \] P
+                \AIR
+                \ OR
+                \ CO
+                \UNT
+                \ OV
+                \ERF
+                \LOW
+
+ERR24        0  ;+1
+                -5
+                \CON
+                \TEX
+                \T E
+                \RRO
+                \R
+
+ERR25        0  ;+1
+                -6
+                \GLO
+                \BAL
+                \ LI
+                \ST
+                \ERR
+                \OR
+
+
+ERR26        0  ;+1
+                -5
+                \ASS
+                \EMB
+                \LER
+                \ ER
+                \ROR
+
+
+ERR27        0  ;+1
+                -8
+                \*IF
+                \,OR
+                \ *I
+                \FNO
+                \T A
+                \ND
+                \NAM
+                \E =
+
+
+ERR28        0  ;+1
+                -7
+                \LAB
+                \EL
+                \DEC
+                \LAR
+                \ED
+                \TWI
+                \CE
+
+ERR29        0  ;+1
+                -9
+                \ASS
+                \EMB
+                \LER
+                \ DI
+                \CTI
+                \ONA
+                \RY
+                \FUL
+                \L
+
+ERR30        0  ;+1
+                -6
+                \NUM
+                \BER
+                \ TO
+                \O L
+                \ARG
+                \E
+
+ERR31        0  ;+1
+                -2
+                \EUL
+                \.
+
+
+ERR32        0  ;+1
+                -10
+                \ERR
+                \OR
+                \IN
+                \ALP
+                \HA
+                \OR
+                \OCT
+                \AL
+                \GRO
+                \UP
+
+ERR33        0  ;+1
+                -6
+                \ERR
+                  \OR
+                \IN
+                \LIT
+                \ERA
+                \L
+
+
+ERR34        0  ;+1
+                -7
+                \NUM
+                \BER
+                \ ST
+                \ART
+                \S W
+                \ITH
+                \.
+
+ERR35        0  ;+1
+                -7
+                \TOO
+                \ MA
+                \NY
+                \PAR
+                \AME
+                \TER
+                \S
+
+ERR36        0  ;+1
+                -6
+                \TOO
+                \ MA
+                \NY
+                \GLO
+                \BAL
+                \S
+
+ERR37        0  ;+1
+                -8
+                \REL
+                \ATI
+                \VE
+                \ADD
+                \RES
+                \S E
+                \RRO
+                \R
+
+ERR38        0  ;+1
+                -7
+                \TOO
+                \ MA
+                \NY
+                \FOR
+                \WAR
+                \D R
+                \EFS
+
+ERR39        0  ;+1
+                -6
+                \*IF
+                \,OR
+                \ *I
+                \FNO
+
+                \T N
+                \AME
+
+ERR40        0  ;+1
+                -2
+                \EUL
+                \.
+
+ERR41      0  ;+1
+              -5
+              \NOT
+              \ PE
+              \RMI
+              \TTE
+              \D.
+
+
+
+((MASIR ISSUE 3  TAPE 4))
+
+
+
+
+[  MACALL POSITN MACSEARCH E1 E9 X PARAM NEXCHAR
+   GETCHAR NUMBER MACOFLO MAC COUNT ENDTEXT PERIPH
+   TESTACK COMMA BRAKOP BRAKCL LNKSQ SQROP  E8 ]
+
+
+
+MACALL          +0
+             0  POSITN          ( MACRO CALLED)
+            /4  3               ( THIRD WORD OF DICTIONARY ENTRY )
+9 E1
+
+NOMORE       1  =/0 0
+            /5  3               ( SET MACRO IN USE MARKER )
+            /4  4
+             6  &1777
+             2  +1023
+             7  E9              ( *$ OVERFLOWED )
+           /10  4               ( INCREASE *$ NUMBER )
+             4  POSITN
+             1  +5
+             5  X               ( ADDRESS OF PARAMETER OR TEXT )
+/4 3
+6 +1
+7 ;+2
+8 SETSTK   (PARAMETER HAS NO PARAMETERS)
+            /4  4
+            14  8182
+             6  &377            ( NUMBER OF PARAMETERS )
+             7  SETSTK          ( NO PARAMETERS )
+             2  +0
+             5  PARAM           ( NEGATIVE COUNT )
+4 +1
+5 PARNO
+
+BRACK      11,GETCHAR 8,GETCHAR+3
+           1,-8 7,;+2 8,E8
+
+DEFPAR       5  NUMBER          ( FOR NUMBER IN ENTRY )
+             0  X
+            /4  0
+            11  MACOFLO
+             8  MACOFLO+1
+             0  X
+            /4  1               ( 2 WORD PARAMETERS )
+            11  MACOFLO         ( STORED AS NAME IN )
+             8  MACOFLO+1       ( NEW DICTIONARY ENTRY )
+             4  +1
+            11  MACOFLO         ( PARAMETER MARKER AND TEXT IN STORE )
+             8  MACOFLO+1
+0 +0
+4 PARNO
+14 10
+            11  MACOFLO         ( *$ NUMBER STARTS AT 0 )
+             8  MACOFLO+1
+             4  +59             ( [ )
+            11  MACOFLO
+             8  MACOFLO+1
+            11  GETCHAR
+             8  GETCHAR+3
+             0  MAC
+            /4  0
+            14  6
+             6  &777700
+             1  NEXCHAR
+            /5  0               ( STORE CHAR. IN TEXT )
+             4  +2
+             5  COUNT
+
+STNEXT      11  GETCHAR
+             8  GETCHAR+1
+             2  BRAKCL
+             7  END             ( CLOSE BRACKET )
+             4  NEXCHAR
+             2  COMMA
+             7  END             ( , )
+             4  COUNT
+             7  NEWORD
+             0  MAC
+            /4  0               ( STORE CHARACTER IN TEXT )
+            14  6
+             6  &777700
+             1  NEXCHAR
+            /5  0
+             4  COUNT
+             1  -2
+             9  INCREM
+             5  COUNT           ( COUNT = 2 _ 0 )
+             8  STNEXT          ( FOR NEXT WORD )
+
+NEWORD       4  NEXCHAR
+            11  MACOFLO         ( STORE CHARACTER IN NEW WORD OF TEXT )
+             8  MACOFLO+1
+
+INCREM      10  COUNT           ( INCREASE COUNT )
+             8  STNEXT          ( FOR NEXT BYTE )
+
+END         11  ENDTEXT         ( ARGUMENT STORED )
+             8  ENDTEXT+1       ( STORE ] + NUMBER IN ENTRY )
+            10  X
+            10  X               ( TO READ NEXT PARAMETER )
+            10  PARAM
+10 PARNO
+             4  PARAM
+             7  ENDBRK          ( ALL PARAMETERS DEFINED )
+
+AGAIN        4  NEXCHAR
+             2  COMMA
+             7  DEFPAR          ( > STORE NEXT )
+            11  GETCHAR
+             8  GETCHAR+1
+             8  AGAIN           ( INPUT UNTIL , )
+
+ENDBRK       4  NEXCHAR         ( ALL PARAMETERS IN )
+             2  BRAKCL
+             7  SETSTK          ( )
+            11  GETCHAR
+             8  GETCHAR+1
+             8  ENDBRK          ( INPUT UNTIL )
+
+SETSTK       0  POSITN
+            /4  3
+            14  8191
+             6  &77777          ( PERIPHERAL MARKER IN DICTIONARY ENTRY )
+             5  PERIPH
+             7  ;+2
+             4  -8192
+             1  +8192
+            11  TESTACK
+             8  TESTACK+1       (BYTE=0 IF TEXT ON PERIPH)
+             4  MAC
+            11  TESTACK
+             8  TESTACK+1
+             4  X               ( TEXT IN STORE )( BYTE = 1 TEXT ADDRESS = X )
+            11  TESTACK         ( STORE IN STACK )
+             8  TESTACK+1
+             4  POSITN
+             1  +1
+            11  TESTACK         ( ADDRESS OF FIRST WORD IN DICTIONARY )
+             8  TESTACK+1       ( ENTRY FOR MACRO STORE IN STACK )
+
+OPENBR      11  GETCHAR
+             8  GETCHAR+3
+             2  +59
+             7  ;+2
+             8  OPENBR          ( INPUT UNTIL [ )
+            11  LNKSQ
+             8  SQROP
+             0  MACALL
+            /8  1
+PARNO +0
+
+[  PERIPH POSITN MACDEL X STACK  Y PARAM DELETE
+   STACKSEARCH POINTER MACSEARCH NAME1 NAME2 E26 SPARE1 ]
+
+
+
+MACDEL          +0
+             4  STACK
+             1  -3
+             5  X
+             0  X               ( END OF MACRO TEXT )
+            /4  0
+             5  Y               ( DICT. ENTRY ADDRESS FOR MACRO )
+            /4  2
+             5  X
+             0  X
+            /4  2
+             6  &377777
+            /5  2               ( SET MACRO MKR. OFF )
+6 +1
+7 ;+2
+8 RESET
+            /4  3
+            14  8182
+             6  &377            ( NUMBER OF PARAMETERS )
+             7  RESET           ( NO PARAMETERS )
+             2  +0
+             5  PARAM           ( NEGATIVE COUNT )
+             4  X
+             5  SPARE1
+            10  SPARE1
+            10  SPARE1
+
+REMOVE      10  SPARE1
+            10  SPARE1
+             0  SPARE1
+            /4  0
+             5  NAME1
+            /4  1
+             5  NAME2
+             4  Y
+            11  MACSEARCH
+             8  MACSEARCH+2
+             8  E26
+             4  X
+             2  Y
+             5  Y
+            11  DELETE
+             8  DELETE+1
+            10  PARAM
+             4  PARAM
+             9  REMOVE
+
+RESET        4  STACK
+             1  -5
+             5  STACK           (REMOVE STACK ENTRY )
+            11  STACKSEARCH
+             8  STACKSEARCH+1
+             8  SETPER          ( NOT IN MACRO )
+             0  POINTER
+            /0  0
+            /4  2
+            14  8191
+             6  &7
+             8  SETPER+1
+
+SETPER       4  +1
+             5  PERIPH          ( SET PERIPH. = FOR TAPE READER )
+             0  MACDEL
+            /8  1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

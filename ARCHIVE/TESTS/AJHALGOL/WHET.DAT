@@ -1,0 +1,103 @@
+﻿C compare Issue 6, Hunter and AJH ALGOL WHETSTONE benchmark performance
+
+on 903
+
+at ptr file ../../MASTERS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+at ptp file TEMP.RLB
+at ptr file ../../MASTERS/AJHALGOL/BENCHMARK.900
+j 8
+de ptp
+at ptr file ../../MASTERS/903ALGOL/ALG2(ISS6).BIN
+j 8181
+at ptr file TEMP.RLB
+j 8
+tidy
+sh t
+select out tty
+nonprinting off
+j 10
+sh t
+on 903 16K
+at ptr file ../../MASTERS/903ALGOL/ALG16KLP(ISS6).BIN
+j 8181
+tidy
+sh t
+at ptr file TEMP.RLB
+select out tty
+at tty inline
+R<!!>
+nonstop on
+j 8
+sh t
+nonstop off
+
+on 903
+
+at ptr file ../../MASTERS/HUNTER/ALG1(HUNTER).BIN
+j 8181
+at ptp file TEMP.RLB
+at ptr file ../../MASTERS/AJHALGOL/BENCHMARK.900
+j 8
+de ptp
+at ptr file ../../MASTERS/HUNTER/ALG2(HUNTER).BIN
+j 8181
+at ptr file TEMP.RLB
+j 8
+on 903
+sh t
+select out tty
+nonprinting off
+j 10
+sh t
+
+on 903
+at ptr file ../../MASTERS/HUNTER/ALG1(HUNTER).BIN
+j 8181
+at ptp file TEMP.RLB
+at ptr file ../../MASTERS/AJHALGOL/BENCHMARK.900
+j 8
+de ptp
+at ptr file ../../MASTERS/HUNTER/ALG2(HUNTER).BIN
+j 8181
+at ptr file TEMP.RLB
+j 8
+tidy
+sh t
+select out tty
+nonprinting off
+j 10
+sh t
+
+on 903 16K
+at ptr file ../../MASTERS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+at ptp file TEMP.RLB
+at ptr file ../../MASTERS/AJHALGOL/BENCHMARK.900
+j 8
+de ptp
+at ptr file ../../MASTERS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+at ptr file TEMP.RLB
+j 8
+tidy
+sh t
+select out tty
+nonprinting off
+j 10
+sh t
+on 903 16K
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+tidy
+sh t
+at ptr file TEMP.RLB
+select out tty
+at tty inline
+R<!!>
+nonstop on
+j 8
+sh t
+nonstop off
+
+delete TEMP.RLB

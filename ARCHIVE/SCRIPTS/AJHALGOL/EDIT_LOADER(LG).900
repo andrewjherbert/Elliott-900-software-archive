@@ -1,0 +1,171 @@
+﻿
+RTS 7543
+7581^%,
+
+RTS AJH
+AJH LG^%,
+RTS 18/02/2015
+23/03/2015^%,
+
+CLE [ BEGLOA
+CLE [ BD E5TEST
+
+CLE [ CR INTEGR
+RTS CR INTEGR READTH W
+CR EWS1 FLAG INTEGR PGEXIT READE READTH TSTART W^%,
+CLI READTH
+INS
+	4	EWS1	(Test for LG mode)
+	9	LG
+^%,
+RTS 0 READTH
+READE 0 READTH^%,
+CLI 8 RETURN
+INS
+
+LG	4	-1	(Resume READTH)
+	5	FLAG
+	0	+TSTART/
+	/8	PGEXIT
+^%,
+	
+CLE [ BD DP
+CLE [ DP ENTRY
+CLE [ BD CLENUP
+CLE [ BLANK CLENUP
+CLE [ DP INCR
+
+CLE [ BA BASE BD BLANK
+CIE BA
+DII W
+INS
+BA BASE BD BLANK BLANKE BEGLOA CR DP ED EDNEG ENTRY EWS1 EWS3 EWS4 FLAG E5TEST
+FAIL HALT INTEGR LA LABEL LOW LOW1 LSTART NEXTCH OPTION PDADD PGEXIT READTH 
+SADRES STET ST2 SUBSTI TONE TLGFLG TSTART TTWO W^%,
+RTI START
+LSTART^%,
+CLE BLANK
+RTI BLANK
+BLANK	4	EWS1	(Test for LG mode)
+	9	LG	(Take rlb from translator)
+^%,
+RTS 7 BLANK
+7   ;-1^%,
+CLI 6 +127
+CLI 6 +127
+CLI 4 LOW1
+CLE 4 LOW1
+INS
+BLANKE ^%,
+CLI 8 BLANK
+INS
+
+LG	4	EWS3	(Test if translator started)
+	0	+TSTART/
+	/9	PGEXIT	(Yes, return to PUNGRP)
+	4	-1	(No, start translator)
+	5	EWS3
+	/5	TLGFLG	(Set translator to LG mode)
+	4	+0
+	5	FLAG	(Resume BLANK)
+	4	EWS4	(Translator mode)
+	/8	TSTART+1
+^%,
+
+CLE [ ENDLOA
+DLE %
+
+INS
+
+[ RETGRP BLANK BLANKE CODE FLAG HALT INTEGR LOW LOW1 READE ST2 TSTART TW  W ]
+
+(Returning from translator via PUNGRP)
+RETGRP	 4     FLAG	
+	 0     +TSTART/
+	 9     RDRET	(Return from READTH)
+	 /4    TW+3	(Return from BLANK)
+	 5     LOW1
+	 /4    CODE
+	 5     LOW
+	 2     +6
+	 9     SEVEN	(Code 7 - halt)
+	 7     ST2	(Code 6 - checksum)
+	 4     LOW
+	 7     BLANK	(Skip blanks)
+	 8     BLANKE	(Exit from BLANK)
+
+SEVEN	 4     LOW1	(Deal with halt)
+	 8     HALT+4
+
+RDRET	 /4    TW+3	(Return from READTH)
+	 5     INTEGR
+	 /4    CODE
+	 5     W+3
+	 4     +0	(Set return from BLANK)
+	 5     FLAG
+	 8     READE
+
+((LOCK and UNLOCK for LG AJH ALGOL - 17-03-2015))
+
+[ ENT19 ENT8 EWS1 EWS2 EWS3 EWS4 FLAG READAL UNLOCK WARN ]
+
+FLAG	>1 	        (0: resume BLANK, -ve: resume READTH)
+
+(Workspace for lock/unlock)
+EWS1	>1		(-ve if in LG mode)
+EWS2	>1
+EWS3	>1		(-ve: resume READTH, otherwise BLANK)
+EWS4	>1		(Translation mode)
+
+SUM	>1		(Checksum for lock/unlock)		
+
+LOKTAB	+9		(Regions to sum)
+	+EWS1-1		(Ignore our own workspace)
+	+EWS4+1
+	+16383
+	-1		(Sentinel)
+
+JUNLK	8	UNLOCK
+JENT8   8       ENT8
+ENT19
+LOCK	4	JUNLK	(Lock - set 8 to enter UNLOCK)
+	8	UNLOCK+1
+		
+UNLOCK	4	JENT8	(Unlock)
+(+1)	5	8	(Set entry point 8)
+	4	+0	(Initialise checksum)
+	5	EWS1
+	4	+LOKTAB
+	5	EWS2	(Pointer to lock table)	
+LKBLK	0	EWS2
+	/4	0	(Start of block)
+	9	LKEND	(End of lock table)
+	5	EWS4	(Set next address)
+	/4	1	(End of block)
+	5	EWS3
+LKADD	0	EWS4	(Add next address)
+	/4	0
+	1	EWS1
+	5	EWS1
+	10	EWS4	(Advance)
+	4	EWS4
+	2	EWS3
+	7	;+2	(Checksum complete)
+	8	LKADD	(Continue summing)
+	10	EWS2	(Go to next entry in LOKTAB)
+	10	EWS2
+	8	LKBLK
+LKEND	4	8	(Test for lock or unlock)
+	2	LOCK-1
+	7	LKSAVE	(Lock - save checksum)
+	4	SUM	(Unlock - validate checksum)
+	2	EWS1
+	7	8	(OK, normal entry at 8)
+	8	;+0	(Failed)
+LKSAVE	4	EWS1
+	5	SUM
+	8	;+0
+^%,
+
+COP
+<! halt !>

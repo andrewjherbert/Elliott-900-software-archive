@@ -1,0 +1,6 @@
+﻿
+do build_lprlibrary(ajh)
+do build_alg2pass(ajh)
+do build_alg16klg(ajh)
+do build_alg16klp(ajh)
+do build_alg64klp(ajh)

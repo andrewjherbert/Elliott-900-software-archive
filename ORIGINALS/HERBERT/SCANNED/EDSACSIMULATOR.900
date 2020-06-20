@@ -1,0 +1,1094 @@
+﻿
+*+3
+
+
+*+2
+(EDSAC 1 SIMULATOR. JULY 1988. SEE ENTRY POINTS.)
+^+16
+[CONTIN LOOP S START]
+S=2048
+8 START
+8 CONTIN
+8 LOOP
+
+^+32
+[A AD B C D E
+ F FD HA HB I
+ IORD ITAB MA MB OCHAR
+ OTAB PC]
+A +0  (ACC)
+B +0
+C +0
+D +0
+E +0
+
+HA +0 (MIER)
+HB +0
+MA +0
+MB +0 (MAND)
+
+AD +0   (ADDRESS)
+F  +0   (FUNCTION)
+FD +0   (FD BIT)
+I  +0   (INSTRUCTION)
+PC +0   (ADDRESS OF NEXT INSTRUCTION)
+
+OCHAR +0 (PREVIOUS REAL OUTPUT)
+      +0  (NEXT REAL OUTPUT)
+      +0 (INT. CODE OF OCHAR+1)
+
+IORD   (INITIAL ORDERS)
+&120000
+&060120
+&000004
+&160010
+
+&700234
+&100020
+&760000
+&620040
+
+&120000
+&200004
+&700004
+&300234
+
+&660020
+&620002
+&300234
+&060104
+
+&300034
+&700214
+&120120
+&700000
+
+&520040
+&700240
+&120254
+&700130
+
+&700010
+&120130
+&060210
+&700254
+
+&060040
+&700250
+&700240
+&060144
+
+&700130
+&120250
+&200242
+&700242
+
+&100100
+&120242
+&060040
+&000026
+
+&000002
+
+ITAB     (INPUT CODE CONVERSION)
++512
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
++512
++256
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
++1024
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
++44
+-1
+-1
+-1
+-1
+-1
+
++72
+-1
+-1
++84
+-1
++88
+-1
+-1
+
++0
+-1
+-1
++12
+-1
++20
++24
+-1
+
+-1
++36
++112
+-1
++96
+-1
+-1
+-1
+
+-1
++112
++116
+-1
++76
+-1
+-1
++108
+
++84
+-1
+-1
++56
+-1
++92
++88
+-1
+
++0
+-1
+-1
++48
+-1
++28
++124
+-1
+
+-1
++24
++52
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
++512
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
++64
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
++80
++60
+-1
+-1
+-1
+-1
+-1
+
+-1
++4
++8
+-1
++16
+-1
+-1
++28
+
++32
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
++120
+-1
++12
++68
+-1
+
+-1
++32
++40
+-1
++100
+-1
+-1
++36
+
+-1
++4
++16
+-1
++20
+-1
+-1
++8
+
++104
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+-1
+-1
+-1
+-1
+-1
+-1
+-1
++512
+
+OTAB
+&120
+&321
+&327
+&305
+&322
+&324
+&131
+&125
+
+&311
+&317
+&312
+-1
+&123
+&132
+&113
+-2
+
++0
+&306
+&215
+&104
+&240
+&110
+&116
+&115
+
+&12
+&314
+&330
+&107
+&101
+&102
+&303
+&126
+
+&60
+&261
+&262
+&63
+&264
+&65
+&66
+&267
+
+&270
+&71
++0
+-1
+&42
+&53
+&50
+-2
+
++0
+&44
+&215
+&273
+&240
+&134
+&254
+&56
+
+&12
+&251
+&257
+&245
+&55
+&77
+&72
+&275
+
+[FAIL PC]
+MESS
+&41
+&101
+&102
+&303
+&104
+&305
+&306
+&107
+&110
+&311
+&312
+COUNT +0
+10 COUNT
+10 COUNT
+10 COUNT
+10 COUNT
+10 COUNT
+10 COUNT
+10 COUNT
+10 COUNT
+10 COUNT
+10 COUNT
+FAIL 0 COUNT
+/4 MESS
+15 6148
+4 +0
+5 COUNT
+4 PC
+8 ;+0
+
+[CONTIN FAIL GET IFLAG ITAB]
+BUF >+80
+P 0 BUF
+Q +0
+W +0
+IFLAG +0 (-1 IMPLIES READ)
+
+GET +0
+4 IFLAG
+9 ;+2
+8 FAST
+4 +0
+5 IFLAG
+4 P
+5 Q
+4 +0
+15 2048
+7 ;-2
+0 Q
+/5 0
+10 Q
+2 &12
+7 ;+2
+8 ;-8
+
+4 P
+5 Q
+CONTIN
+FAST 0 Q
+/4 0
+5 W
+10 Q
+0 W
+/4 ITAB
+9 FAIL-1
+2 +256
+7 ;+2
+8 ;+4
+4 -1
+5 IFLAG
+8 GET+1
+/4 ITAB
+2 +512
+7 FAST
+/4 ITAB
+2 +1024
+7 ;+2
+8 ;+2
+8 ;+0
+/4 ITAB
+
+14 8191
+0 GET
+/8 1
+
+[OCHAR OTAB PUT SHIFT]
+SHIFT +0
+W +0
+PUT +0
+5 OCHAR+2
+4 OCHAR+1
+7 ;+2
+15 6148
+4 OCHAR+1
+5 OCHAR
+4 OCHAR+2
+1 SHIFT
+5 W
+0 W
+/4 OTAB
+2 -1
+7 FIGS
+/4 OTAB
+2 -2
+7 LETS
+/4 OTAB
+RET 5 OCHAR+1
+0 PUT
+/8 1
+FIGS 4 +32
+5 SHIFT
+4 +0
+8 RET
+LETS 4 +0
+5 SHIFT
+8 RET
+
+[A B C D E LEFT
+ RIGHT]
+LEFT +0
+4 A
+1 A
+5 A
+4 B
+1 B
+9 ;+2
+8 ;+3
+10 A
+6 =15 8190
+5 B
+4 C
+1 C
+9 ;+2
+8 ;+3
+10 B
+6 =15 8190
+5 C
+4 D
+1 D
+9 ;+2
+8 ;+3
+10 C
+6 =15 8190
+5 D
+4 E
+1 E
+9 ;+2
+8 ;+3
+10 D
+6 =8 0
+5 E
+0 LEFT
+/8 1
+
+RIGHT +0
+4 E
+14 8191
+6 =4 0
+5 E
+4 D
+6 +1
+7 ;+4
+4 E
+1 =8 0
+5 E
+4 D
+14 8191
+5 D
+4 C
+6 +1
+7 ;+4
+4 D
+1 =8 0
+5 D
+4 C
+14 8191
+5 C
+4 B
+6 +1
+7 ;+4
+4 C
+1 =8 0
+5 C
+4 B
+14 8191
+5 B
+4 A
+6 +1
+7 ;+4
+4 B
+1 =8 0
+5 B
+4 A
+14 8191
+5 A
+0 RIGHT
+/8 1
+
+[A B C D FD
+ HA HB LOOP MA MB
+ XA XN XS XV XY]
+FLAG +0
+TA +0
+TB +0
+TC +0
+TD +0
+RB +0
+RC +0
+SB +0
+SC +0
+
+XA 4 FD
+7 ;+6
+4 MA
+5 TA
+4 MB
+5 TB
+8 ADD
+4 MA
+1 A
+5 A
+8 LOOP
+
+XS 4 FD
+7 ;+6
+4 MA
+5 TA
+4 MB
+5 TB
+8 SUB
+4 MA
+2 A
+5 A
+8 LOOP
+
+XV 4 +0
+8 ;+2
+XN 4 +1
+5 FLAG
+4 FD
+7 ;+2
+8 LONG
+4 HB
+7 ;+2
+8 LONG
+4 MA
+12 HA
+5 TA
+3 TB
+4 FLAG
+7 ADD
+SUB 4 TB
+2 B
+9 ;+3
+5 B
+8 ;+6
+6 =15 8191
+5 B
+4 -1
+1 A
+5 A
+4 TA
+2 A
+5 A
+8 LOOP
+
+ADD 4 TB
+1 B
+9 ;+2
+8 ;+3
+10 A
+6 =15 8191
+5 B
+4 TA
+1 A
+5 A
+8 LOOP
+
+LONG 4 MA
+12 HA
+5 TA
+3 TB
+4 MA
+12 HB
+5 RB
+3 RC
+4 MB
+12 HA
+5 SB
+3 SC
+4 MB
+12 HB
+5 TC
+3 TD
+
+
+4 TC
+1 RC
+9 ;+2
+8 ;+3
+10 TB
+6 =15 8191
+5 TC
+
+4 TC
+1 SC
+9 ;+2
+8 ;+3
+10 TB
+6 =15 8191
+5 TC
+4 RB
+9 ;+8
+1 TB
+9 ;+2
+8 ;+3
+10 TA
+6 =15 8191
+5 TB
+8 ;+7
+4 -1
+1 TA
+5 TA
+4 RB
+6 =15 8191
+8 ;-12
+4 SB
+9 ;+8
+1 TB
+9 ;+2
+8 ;+3
+10 TA
+6 =15 8191
+5 TB
+8 ;+7
+4 -1
+1 TA
+5 TA
+4 SB
+6 =15 8191
+8 ;-12
+
+4 FLAG
+7 LADD
+4 TD
+2 D
+9 ;+3
+5 D
+8 ;+6
+6 =15 8191
+5 D
+4 -1
+1 C
+5 C
+
+4 TC
+2 C
+9 ;+3
+5 C
+8 SUB
+
+6 =15 8191
+5 C
+4 -1
+1 B
+5 B
+8 SUB
+
+LADD 4 TD
+1 D
+9 ;+2
+8 ;+3
+10 C
+6 =15 8191
+5 D
+
+4 TC
+1 C
+9 ;+2
+8 ;+3
+10 B
+6 =15 8191
+5 C
+8 ADD
+
+XY 4 =8 0
+5 TC
+4 +0
+5 TA
+5 TB
+5 TD
+8 LADD
+
+
+[A AD B C D E
+ FAIL FD GET HA HB
+ I LEFT LOOP MA MB
+ OCHAR PC PUT RIGHT S
+ XC XE XF XG XH
+ XI XL XO XR XT
+ XU XX XZ]
+FLAG +0
+W +0
+
+XE 4 A
+9 LOOP
+4 AD
+5 PC
+8 LOOP
+
+XR 11 RIGHT
+8 RIGHT+1
+4 I
+6 +2
+7 ;+2
+8 LOOP
+4 I
+14 8191
+5 I
+8 XR
+
+XT 4 +0
+8 ;+2
+XU 4 +1
+5 FLAG
+0 AD
+4 FD
+7 ;+2
+8 ;+5
+4 A
+6 =/15 8190
+/5 S
+8 ;+6
+4 A
+/5 S+1
+4 B
+1 B
+/5 S
+4 FLAG
+7 ;+2
+8 LOOP
+5 A
+5 B
+5 C
+5 D
+5 E
+8 LOOP
+ GET
+8 GET+1
+5 W
+0 AD
+4 FD
+7 ;+6
+4 W
+/5 S+1
+4 +0
+/5 S
+8 LOOP
+4 W
+/5 S
+8 LOOP
+
+XO 0 AD
+4 FD
+7 ;+3
+/4 S+1
+8 ;+2
+/4 S
+14 8179
+6 +31
+11 PUT
+8 PUT+1
+8 LOOP
+
+XZ 8 FAIL-10
+
+XF 0 AD
+4 FD
+7 ;+8
+4 OCHAR+2
+14 13
+6 =/15 0
+/5 S+1
+4 +0
+/5 S
+8 LOOP
+4 OCHAR+2
+14 13
+6 =/15 0
+/5 S
+8 LOOP
+
+XH 4 FD
+7 ;+2
+4 MB
+5 HB
+4 MA
+5 HA
+8 LOOP
+
+XL 11 LEFT
+8 LEFT+1
+4 I
+6 +2
+7 ;+2
+8 LOOP
+4 I
+14 8191
+5 I
+8 XL
+
+XX 8 LOOP
+
+XG 4 A
+9 ;+2
+8 LOOP
+4 AD
+5 PC
+8 LOOP
+
+XC 4 FD
+7 ;+9
+4 MB
+6 HB
+1 B
+9 ;+2
+8 ;+3
+10 A
+6 =15 8191
+5 B
+4 MA
+6 HA
+1 A
+5 A
+8 LOOP
+
+[IFLAG INIT IORD OCHAR PC
+ S SHIFT]
+
+J +0
+INIT +0
+4 -1
+5 J
+LOOP 10 J
+4 J
+2 +40
+9 END
+0 J
+/4 IORD
+/5 S
+8 LOOP
+END 4 +0
+5 PC
+5 SHIFT
+4 &377
+5 OCHAR+1
+4 -1
+5 IFLAG
+0 INIT
+/8 1
+
+[AD DB1 DB2 F FAIL
+ FD I JUMP MA MB
+ INIT LOOP PC S START
+ XA XC XE XF XG
+ XH XI XL XN XO
+ XR XS XT XU XV
+ XX XY XZ]
+START 11 INIT
+8 INIT+1
+LOOP 8 DB1
+0 PC
+10 PC
+/4 S
+5 I
+6 &7774
+14 8190
+5 AD
+4 I
+6 +2
+5 FD
+0 AD
+7 ;+2
+8 ;+5
+5 MB
+/4 S
+6 =/15 8190
+8 ;+6
+/4 S
+14 8191
+6 =15 8191
+5 MB
+/4 S+1
+5 MA
+4 I
+14 8179
+6 +31
+5 F
+JUMP 8 DB2
+0 F
+/8 ;+1
+
+8 FAIL-2
+8 FAIL-2
+8 FAIL-2
+8 XE
+8 XR
+8 XT
+8 XY
+8 XU
+
+8 XI
+8 XO
+8 FAIL-2
+8 FAIL-2
+8 XS
+8 XZ
+8 FAIL-2
+8 FAIL-2
+
+8 FAIL-2
+8 XF
+8 FAIL-2
+8 FAIL-2
+8 FAIL-2
+8 XH
+8 XN
+8 FAIL-2
+
+8 FAIL-2
+8 XL
+8 XX
+8 XG
+8 XA
+8 FAIL-2
+8 XC
+8 XV
+<! Halt !>[DB1 DB2 JUMP LOOP]
+DB1 8 LOOP+1
+DB2 8 JUMP+1
+%
+<! Halt !>

@@ -1,0 +1,3592 @@
+﻿
+((C&G Mnemonic Code - disassembled by Andrew Herbert 06/01/2015)
+
+(Entry points)
+(  8 - Translate)
+(  9 - Run)
+( 11 - Set trace - use after 8 and before 9, or level 1 interrupt)
+( 14 - Continue translation after WAIT, or level 2 interrupt)
+( 19 - Continue after JST, or level 3 interrupt)
+
+(Assembler/interpreter Error codes)
+(Format: ERR n CPA/SCR)
+(ERR  1 - illegal character)
+(ERR  2 - syntax error)
+(ERR  3 - numeric overflow reading number)
+(ERR  4 - current placing address out of bounds)
+(ERR  5 - unknown directive)
+(ERR  6 - number not expected in directive)
+(ERR  7 - modifier field out of range)
+(ERR  8 - invalid function mnemonic)
+(ERR  9 - address field out of range)
+(ERR 10 - EXECUTE address out of bounds)
+(ERR 11 - attempt to execute a number)
+(ERR 12 - index register contains an instruction)
+(ERR 13 - modified address out of bounds)
+(ERR 14 - unassigned function code)
+(ERR 15 - attempt to load instruction as data)
+(ERR 16 - in PCT, character code out of range)
+(ERR 17 - No program to run)
+(ERR 18 - QF error, e.g., real overflow)
+
+(Editor entry points)
+( 48 - Read steering tape)
+( 49 - Read first input tape and punch output tape)
+( 50 - Read subsequent input tape)
+( 51 - Read input tape and print and punch output)
+
+(Editor error codes)
+(ERROR 1 - illegal character)
+(ERROR 2 - Unrecognized command)
+(ERROR 3 - characters after @ in FL command string
+(ERROR 4 - Halt code in Insert Block)
+
+(Editor commands
+FL string - copy to line starting with string.
+DL string - delete to line start with string.
+    If string ends @ line must be exactly string prior to @.
+    Stops after matching string)
+FC string - copy to characters in string successively.
+DC string - delete to characters in string successively.
+    Stops after last matching character.
+IS string - insert string.
+CS string - copy (i.e., insert) string.
+IB string - insert block terminated by line containing @.
+RE - read to end of tape (i.e., halt code.)
+
+Space and tab are ignored when matching.)
+
+[CANDG]
+
+*8192
+*17 (clear 8K, start at 8, labels)
+
+STORE=3560     	       (Location of simulated store)
+
+CANDG	8	TRANS
+	8	EXEC
+
+(Translator interrupts)
+(10)	15	7168	(Level 1 Interrupt - increment TRACE)
+	10	TRACE
+	8	;-2
+
+(13)	15	7168
+	4	;+3	(Level 2 Interrupt - continue assembly)
+	5	6
+	8	;-3
+	0	ASSMBL+8
+
+(18)	15	7168
+	4	;+3	(Level 3 Interrupt - goto JUN)
+	5	6
+	8	;-3
+	0	JUN
+
+TRANS	4	+26	(Terminate)
+	5	6
+	15	7168
+(26)	4	+11	(Set level 1 interrupt address)
+	5	0
+	4	+14	(Set level 2 interrupt address)
+	5	2
+	4	+19	(Set level 3 interrupt address)
+	5	4
+	8	ASSMBL
+
+EXEC	4	+36	(Terminate)
+	5	6
+	15	7168
+(36)	4	+11	(Set Level 1 interrupt address)
+	5	0
+	8	RUN
+
+	>9
+(Editor entry points)
+(48)	8	EDIT	(Read steering tape)
+(49)	8	EDIT+1	(Read input tape)
+(50)	8	EDIT+2	(Read subsequent input tape?)
+(51)	8	EDIT+3	(Check output tape)
+
+TRACE	>1		(See [10], initialized +0 by ASSMBL)
+BUFP	>1		(Indexes BUFFER)
+BUFFER	>42		(Buffer used by READBF, READSP)
+L96	>3
+L99	>9
+L108	>8
+L116	>8
+NUMBER	>1		(Result of RDNUM)
+WORD	>1		(Result of RDWORD)
+CHAR	>1		(Workspace for RDWORD)
+CPA	>1		(Initialized +2000 by ASSMBL)
+SCR	>1		(Initialized +0 by ASSMBL)
+FNCODE	>1		(Current function ocde)
+DATA	>1		(Content of location n+m)
+	>1
+MFIELD	>1		(Current m field)
+ADDR	>1		(Current modified address)
+RUNFLG	>1		(Initialized +0 by ASSMBL)
+
+(Table for decoding 900 telecode characters
+       -1 runout
+       -2 tab
+       -3 space
+       -4 erase
+       -5 illegal
+       -6 carriage return)
+
+TCTAB	-1		(runout)
+	-5		
+	-5		
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-2		(tab)
+	+10		(line feed)
+	-5
+	-5
+	-6		(carriage return)
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-3		(space)
+	0	32	(exclamation mark)
+	0	59	(")
+	0	60	(£)
+	0	61	($)
+	0	31	(percent)
+	0	16	(&)
+	0	62	(')
+	0	11	(bra)
+	0	12	(ket)
+	0	17	(*)
+	0	20	(+)
+	0	13	(,)
+	0	21	(-)
+	0	22	(.)
+	0	18	(/)
+	0	0	(0)
+	0	1	(1)
+	0	2	(2)
+	0	3	(3)
+	0	4	(4)
+	0	5	(5)
+	0	6	(6)
+	0	7	(7)
+	0	8	(8)
+	0	9	(9)
+	0	15	(:)
+	0	23	(;)
+	0	27	(<)
+	0	19	(=)
+	0	28	(>)
+	0	26	(?)
+	0	63	(@)
+	0	33	(A)
+	0	34	(B)
+	0	35	(C)
+	0	36	(D)
+	0	37	(E)
+	0	38	(F)
+	0	39	(G)
+	0	40	(H)
+	0	41	(I)
+	0	42	(J)
+	0	43	(K)
+	0	44	(L)
+	0	45	(M)
+	0	46	(N)
+	0	47	(O)
+	0	48	(P)
+	0	49	(Q)
+	0	50	(R)
+	0	51	(S)
+	0	52	(T)
+	0	53	(U)
+	0	54	(V)
+	0	55	(W)
+	0	56	(X)
+	0	57	(Y)
+	0	58	(Z)
+	0	24	([)
+	0	14	(\)
+	0	25	(])
+	0	29	(^)
+	0	30	(_)
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-5
+	-4		(erase)
+
+CARRET	+141		(DIGIT0-6 punches carriage return)
+	+255		(DIGIT0-5 punches erase)
+	+255		(DIGIT0-4 punches erase)
+SPACE	+160	        (DIGIT0-3 punches space)
+TAB	+9	        (DIGIT0-2 punches tab)
+	+0		(DIGIT0-1 punches blank)
+DIGIT0	0	48	(0)
+DIGIT1	0	177	(1)
+DIGIT2	0	178	(2)
+DIGIT3	0	51	(3)
+	0	180	(4)
+	0	53	(5)
+	0	54	(6)
+	0	183	(7)
+	0	184	(8)
+	0	57	(9)
+
+LINEFD	0	10	(LF)
+	0	40	(11 bra)
+	0	169	(12 ket)
+	0	172	(13 ,)
+	0	92	(14 \)
+	0	58	(15 :)
+	0	166	(16 &)
+	0	170	(17 *)
+	0	175	(18 /)
+	0	189	(19 =)
+
+PLUSCH	0	43	(20 +)
+MINSCH	0	45	(21 -)
+	0	46	(22 .)
+	0	187	(23 ;)
+	0	219	(24 [)
+	0	221	(25 ])
+	0	63	(26 ?)
+	0	60	(27 <)
+	0	190	(28 >)
+	0	222	(29 ^)
+	0	95	(30 _)
+	0	165	(31 percent)
+	0	33	(32 exclamation)
+	0	65	(33 A)
+	0	66	(34 B)
+	0	195	(35 C)
+	0	68	(36 D)
+LETTRE	0	197	(37 E)
+	0	198	(38 F)
+	0	71	(39 G)
+
+	0	72	(40 H)
+	0	201	(41 I)
+	0	202	(42 J)
+	0	75	(43 K)
+	0	204	(44 L)
+	0	77	(45 M)
+	0	78	(46 N)
+	0	207	(47 O)
+	0	80	(48 P)
+LETTRQ	0	209	(49 Q)
+
+LETTRR	0	210	(50 R)
+	0	83	(51 S)
+	0	212	(52 T)
+	0	85	(53 U)
+	0	86	(54 V)
+	0	215	(55 W)
+	0	216	(56 X)
+	0	89	(57 Y)
+	0	90	(58 Z)
+	0	34	(59 ")
+
+	0	163	(60 £)
+	0	36	(61 $)
+	0	39	(62 ')
+	0	192	(63 @)
+
+(Code table for directives - entry is word
+as packed by RDWORD)
+WDTAB	&437105		(STORE)
+L334	&702464  	(WAIT)
+	&353205  	(EXECUTE)
+        &150605         (TITLE)
+	+0
+	+0
+	+0
+	+0
+	+0
+	+0
+(Table for instruction mnemonics - entry is word
+as packed by RDWORD)
+MNEMO	&030201		(LDA)
+	&002204    	(ADD)
+	&047242		(SUB)
+	&032624  	(MLT)
+	&010466   	(DIV)
+	&410056 	(LDAN)
+	&110216   	(ADDN)
+	&352116 	(SUBN)
+	&531216   	(MLTN)
+	&423316  	(DIVN)
+	&047201   	(STA)
+	&025256   	(JUN)
+	&024362  	(JGR)
+	&024261  	(JEQ)
+	&025162   	(JSR)
+	&025164  	(JST)
+	&047064   	(LOP)
+	&013420   	(SQT)
+	&030356   	(EXP)
+	&046456  	(LGN)
+	&006763    	(SIN)
+	&003103    	(COS)
+	&012724   	(ARC)
+	&044164   	(ENT)
+	&040164   	(RCT)
+	&044724  	(PCT)
+	&040724   	(RNT)
+	&040714   	(PNL)
+	&044143   	(RCC)
+	&040143   	(PCC)
+	&044703   	(RNC)
+	&040703 	(PNC)	
+
+ERRNO	>1
+
+(Routine to punch ERRNO < 999 in 3 places)
+L376
+P3DIGS	>1
+	4	+0	(Set current digit to 0)
+	5	L412
+	5	7
+L380	4	ERRNO
+L381	1	-100
+	9	L387	(Test for < 100)
+	10	L412
+	10	7
+	5	ERRNO
+	8	;-5	(Continue counting down hundreds)
+L387	4	L412	(Hundreds count)
+	7	;+2	(Print space for leading zero)
+	8	;+2
+	0	-3
+	/4	DIGIT0  (Punch digit)
+	15	6144
+	0	+0	(Loop for tens)
+	4	ERRNO
+L395	1	-10
+	9	;+5
+	10	L412
+L398	10	7
+	5	ERRNO
+	8	;-5
+L401	4	L412
+	7	;+2
+	8	;+2
+	0	-3
+	/4	DIGIT0
+	15	6144
+	0	ERRNO
+	/4	DIGIT0	(Final digit)
+	15	6144
+	0	P3DIGS	(Return)
+	/8	1
+L412	>1
+
+(Read line of input from tape)
+(Note no check for buffer overrun)
+READBF	>1
+	4	+0	(BUFP := 0)
+	5	BUFP
+	8	;+3
+L417	1	+5	(Test for illegal character)
+	7	ERR1
+L419	15	2048	(Read from tape)
+	6	+127	(7 bits)
+	5	7
+	/4	TCTAB	(Lookup in TCTAB)
+	9	L417	(Check for ignorable characters)
+	0	BUFP	(Store in BUFFER)
+	/5	BUFFER
+	10	BUFP
+	2	+10	(test for line feed)
+	7	;+2
+	8	L419	(Read next character)
+	4	+0	(Reset BUFP)
+	5	BUFP
+	0	READBF	(Exit)
+	/8	1
+
+(Read input replacing runs of spaces by line feed)	
+READSP	>1
+	4	+0	(Reset BUFP)
+	5	BUFP
+	8	;+5
+L438	1	+3	(Test for space)
+	7	L461
+	1	+2	(test for illegal)
+	7	ERR1
+L442	15	2048	(Read character from paper tape)
+	6	+127	(Strip parity)
+	5	7	(Translate to internal code)
+	/4	TCTAB
+	9	L438	(test for special characters)
+L447	0	BUFP	(Store in BUFFER)
+	/5	BUFFER
+	10	BUFP
+	2	+10	(test for line feed)
+L451	7	;+2
+	8	L442	(Continue reading)
+	4	+0	(Reset BUFP)
+	5	BUFP
+	0	READSP	(Exit)
+	/8	1	
+L457	1	+3	(Test for space)
+	7	L467
+	1	+2	(Test for illegal)
+L460	7	ERR1
+L461	15	2048	(Found space, read next character)
+	6	+127	(Strip parity)
+	5	7	(Translate to internal code)
+	/4	TCTAB
+L465	9	L457	(Test for special cases)
+	8	L447    (Otherwise store and continue)
+L467	4	+10	(Store line feed)
+L468	8	L447	(Cotinue reading)
+
+(Read natural number)
+RDNAT	>1
+	4	+0	(Reset NUMBER)
+	5	NUMBER
+L472	0	BUFP	(Fetch next character from BUFFER)
+	/4	BUFFER
+	1	-10	(test for digit)
+	9	;+3
+	0	RDNAT	(Exit)
+	/8	1
+	10	BUFP	(Advance BUFP)
+	2	+0
+	4	NUMBER	(Calculate NUMBER*10)
+	14	3
+	1	NUMBER
+	1	NUMBER
+	/1	BUFFER	(Add in digit)
+	5	NUMBER
+	9	ERR3	(Overflow)
+	8	L472	(Read next digit)
+
+(Read word)
+RDWORD	>1
+	4	+0	(Reset WORD to 0)
+	5	WORD
+L491	0	BUFP	(Fetch nect character from BUFFER)
+	/4	BUFFER
+	1	-32	(test for letter)
+	7	L506	
+	9	L506	
+	5	CHAR	(Store letter)
+	2	+26	(Test for > Z)
+	9	L506
+	4	WORD    (Pack letter)
+	0	+0
+	14	5
+	1	CHAR
+	5	WORD
+	10	BUFP	(Read next letter)
+	8	L491
+L506	0	RDWORD	(Exit)
+	/8	1	
+
+(Translator)
+ASSMBL	4	+0
+	5	RUNFLG
+	5	TRACE	
+	5	SCR
+L512	5	STORE	(Continue after WAIT)
+	5	STORE+1 (Set location 0 to 0)
+	4	+2000	(Force store full if START missing)
+	5	CPA
+NXTSYM	11	READBF	(Read from tape into BUFFER)
+	8	READBF+1
+	4	BUFFER
+	1	-33	(Test for less than A=33)
+	9	;+2
+	8	LETTER	(Letter)
+	1	+13	(Test for +=20)
+	7	SIGN	
+	1	-1	(Test for -=21)
+	7	SIGN
+	1	+10	(Test for bra=11)
+	7	BRA	
+	2	-1	(Test for line feed)
+	7	NXTSYM	(Continue reading)
+	8	ERR2	(Unexpected character)
+
+(Numeric constant)
+SIGN	11	SUBLNK	(Read real)
+	8	RDREAL	
+	11	QF	(Put number in store)
+	8	QF+1
+	0	CPA	(CPA)	
+	/5	STORE	
+	+0
+STCHCK	4	CPA	(Test for store full)
+	2	+1998
+	9	ERR4
+	2	+2000	(Increment CPA)
+	5	CPA	
+	5	SCR	
+	8	NXTSYM	
+
+(Opening backet - translate directive)
+BRA	10	BUFP
+	11	RDWORD
+	8	RDWORD+1
+	0	+0	(Look up in WDTAB)
+L549	/4	WDTAB
+	7	ERR5	(Directive not recognized)
+	2	WORD
+	7	;+3	(Found)
+	10	7	(Try next entry)
+	8	;-5
+	4	7
+	5	CHAR
+	11	RDNAT	(Read number - 0 if absent)
+	8	RDNAT+1
+	0	BUFP	(Look for closing ket)
+	/4	BUFFER
+	2	+12
+	7	;+2
+	8	ERR2	(ket not found)
+	10	BUFP
+	4	NUMBER
+	0	CHAR	(Branch on index in WDTAB)
+	/8	;+1
+	8	;+4
+	8	WAITD
+	8	EXECD
+	8	TITLD
+
+(STORE n)
+	1	NUMBER	(Check n >= 1)
+	1	-2
+	9	ERR4
+	5	CPA	(Set CPA)
+	8	STCHCK  (Check for store overflow)
+
+(WAIT)
+WAITD	7	;+2	(Check n is 0)
+	8	ERR6	
+	8	;+0	(Stop)
+	8	;+0
+
+(EXECUTE)
+EXECD	10	RUNFLG	(Set RUN flag)
+	1	NUMBER	(Check start address > 10)
+	1	-2
+	5	CPA
+	1	-18
+	9	ERR10
+	1	-1980	(Check start address <= 1000)
+	9	;+2
+	8	ERR10
+	8	;+0
+	8	;+0
+
+(TITLE)
+TITLD	7	;+2	(Check n is zero)
+	8	ERR6
+	0	BUFP	(Test for line feed)
+	/4	BUFFER
+	2	+10
+	7	;+2
+	8	ERR6
+	4	CARRET	(Output new line sequence)
+	15	6144
+	4	LINEFD
+	15	6144
+L603	15	2048	(Copy line to punch)
+	6	+127
+	5	7
+	/0	TCTAB   (Map input ch to output ch)
+	/4	DIGIT0
+	15	6144
+	2	LINEFD	(Terminating line feed?)
+	7	ASSMBL+8
+	8	L603	(Continue copying)
+
+(Instruction FN m,n Q)
+LETTER	11	RDWORD	(Read mnemonic)
+	8	RDWORD+1
+	0	+0	(Look up mnemonic in table)
+L615	/4	MNEMO
+	7	ERR8	(Not found)
+	2	WORD	(Compare to WORD)
+	7	;+3	(Found)
+	10	7	(Keep searching)
+	8	;-5
+	4	7	(Store function number in first word)
+	0	CPA
+	/5	STORE
+	11	RDNAT	(Read n)
+	8	RDNAT+1
+	4	NUMBER
+	1	-131072	(Store in second word as exponent)
+	0	CPA
+	/5	STORE+1
+	2	-130073	(Check <= 1000)
+	9	ERR9
+	0	BUFP	(Look for ,)
+	/4	BUFFER
+	2	+13
+	7	;+2     (Found)
+	8	TESTQ	
+	10	BUFP	(Read m)
+	11	RDNAT
+	8	RDNAT+1
+	4	NUMBER	(Check < 10)
+	2	+9
+	9	ERR7
+	2	+9
+	14	11	(Add into scond word)
+	0	CPA
+	/1	STORE+1
+	/5	STORE+1
+	0	BUFP
+TESTQ	/4	BUFFER	(Look for Q)
+	2	+49
+	7	;+2
+	8	L659
+	10	BUFP	(Advance BUFFP)
+	0	CPA	(Set Q)
+	/4	STORE
+	1	-131072
+	/5	STORE
+	0	BUFP
+L659	/4	BUFFER	(Check at end of line)
+	2	+10
+	7	STCHCK
+	8	ERR2
+
+STACC	11	QF	(Store accumulator and fetch next instruction)
+	8	QF+1
+	5	STORE+2
+	+0
+
+(Interpreter)
+INTERPR	0	SCR	(Fetch next instruction)
+	/4	STORE
+	9	;+2	(Test for Q)
+	8	DECODE  (No Q)
+	4	TRACE	(Test for tracing)
+	7	DECODE	(No tracing required)
+	4	CARRET	(Punch new line sequence)
+	15	6144
+	4	LINEFD
+	15	6144
+	4	LETTRQ	(Punch Q SCR)
+	15	6144
+	4	SPACE
+	15	6144
+	15	6144
+	4	SCR
+	14	8191	(N.B. double word store locations)
+	5	ERRNO
+	11	P3DIGS
+	8	P3DIGS+1
+	4	SPACE
+L688	15	6144
+	15	6144
+	4	STORE+3	(Test if ACC is data or instruction)
+	9	DECODE
+	11	QF	(Load accumulator)
+	8	QF+1
+	4	STORE+2
+	+0
+	4	+0
+	5	L1164
+	5	L1165
+	11	SUBLNK	(Print real number)
+	8	PUREAL
+	8	;+3
+
+RUN	4	RUNFLG	(Check we have a program to run)
+	7	ERR17
+
+DECODE	4	CPA	(Advance CPA and SCR)
+	1	+2
+	5	CPA
+	5	SCR
+	4	+0	(Reset BUFP)
+	5	BUFP
+	0	CPA
+	/4	STORE	(Next instruction)
+	6	+131071
+	5	FNCODE	(Function)
+	/4	STORE+1
+	9	;+2	(Check for instruction)
+	8	ERR11
+	6	+1023	(Mask out m)
+	5	MFIELD
+	/4	STORE+1
+	14	8182	(Mask out n)
+	6	+31
+	7	STAGE1	(n=0 so go straight to function)
+	5	7	(Modify m by [n], except PNT)
+	4	FNCODE
+	2	+26
+	7	;+2	(PNT)
+	8	MODIFY	(Not PNT)
+	4	7	(Store n/2 in BUFP)
+	14	8191
+	5	BUFP
+	8	STAGE1	(Look up and execute function)
+
+(Address modification)
+MODIFY	/4	STORE	(Load modified address)
+	7	STAGE1
+	5	DATA
+	/4	STORE+1
+	5	DATA+1
+	9	ERR12	(Check data not instruction)
+	4	L747	(Address of BUFP)
+	5	QF+4
+L740	11	QF
+	8	QF+1
+	4	DATA
+	1	;+5
+	6	4	(Convert real to integer)
+	+0
+	8	;+4
+L747	0	BUFP	(Modified address to go in BUFP)
+L748	8	0
+	+0
+	4	MFIELD	(Calculate m+[n])	
+	1	BUFP
+	5	MFIELD
+	9	ERR13
+	2	+999
+	9	ERR13
+	8	;+3
+	+0
+	+0
+STAGE1	0	FNCODE	(Jump on function code)
+	/8	;+1
+	8	SETADD	(LDA)
+	8	LDDATA	(ADD)
+	8	LDDATA	(SUB)
+	8	LDDATA	(MLT)
+	8	LDDATA	(DIV)
+	8	LDAN	(LDAN)
+	8	LDACC	(ADDN)
+	8	LDACC	(SUBN)
+	8	LDACC	(MLTN)
+	8	LDACC	(DIVN)
+	8	SETADD	(STA)
+	8	JUN	(JUN)
+	8	LDACC	(JGR)
+	8	LDACC	(JEQ)
+	8	JSR
+	8	JST
+	8	LDACC	(SQT)
+	8	LDACC	(EXP)
+	8	LDACC	(LGN)
+	8	LDACC	(SIN)
+	8	LDACC	(COS)
+	8	LDACC	(ARC)
+	8	LDACC	(ENT)
+	8	SETADD	(RCT)
+	8	SETADD	(PCT)
+	8	RNT
+	8	LDACC	(PNT)
+	8	PNL
+	8	ERR14	(Unassigned)
+	8	ERR14	(Unassigned)
+	8	ERR14	(Unassigned)
+	8	ERR14	(Unassigned)
+FDECOD	0	FNCODE	(Switch on function code)
+	/8	;+1
+	8	LDA
+	8	ADD
+	8	SUB
+	8	MLT
+	8	DIV
+	+0		(LDAN)
+	8	ADDN
+	8	SUBN
+	8	MLTN
+	8	DIVN
+	8	STA
+	+0		(JUN)
+	8	JGR
+	8	JEQ
+	+0		(JSR)
+	+0		(JST)
+	8	SQT
+	8	EXPF	(&202044   +66596 \00D)
+	8	LGN	(&202033   +66587 \00;)
+	8	SINF	(&201751   +66537 \0/I)
+	8	COSF	(&201757   +66543 \0/O)
+	8	ARC	(&202025   +66581 \005)
+	8	ENT	(&201765   +66549 \0/U)
+	8	RCT
+	8	PCT
+	+0		(RNT)
+	8	PNT	
+			(PNL, RCC, PCC, RNC, PNC)
+
+LDDATA	4	MFIELD	(Fetch data addressed by m+[n])
+	1	MFIELD	
+	5	7
+	/4	STORE
+	5	DATA
+	/4	STORE+1
+	5	DATA+1
+	9	ERR15
+
+LDACC	4	STORE+3	(Load accumulator with a number)
+	9	ERR15	(Store contains an instruction)	
+	11	QF	
+	8	QF+1	
+	4	STORE+2	(Accumulator)
+	+0
+	8	FDECOD	(&201431   +66329 \0,9)
+
+SETADD	4	MFIELD	(Set ADDR from m+[n])
+	1	MFIELD
+	5	ADDR
+	9	ERR13	(And check in bounds)
+	2	+1998
+	9	ERR13
+	8	FDECOD
+
+(LDA m, n A := [n+[m]]))
+LDA	0	ADDR	(Modified address)
+	/4	STORE+1	(Check not instruction)
+	9	ERR15
+	11	QF
+	8	QF+1
+	0	ADDR
+	/4	STORE
+	+0
+	8	STACC
+
+(ADD m, n A +:= [n+[m]]))
+ADD	11	QF
+	8	QF+1
+	1	DATA
+	+0
+	8	STACC
+
+(SUB m, n A -:= [n+[m]]))
+SUB	11	QF
+	8	QF+1
+	3	DATA	(Exchange data and FPA)
+	2	DATA
+	+0
+	8	STACC
+
+(MLT m, n A *:= [n+[m]])
+MLT	11	QF
+	8	QF+1
+	12	DATA
+	+0
+	8	STACC
+
+(DIV n, m A /:= [n+[m]])
+DIV	11	QF
+	8	QF+1
+	13	DATA
+	+0
+	8	STACC
+
+MFADDR	0	MFIELD	
+
+LDAN	4	;-1	(Convert MFIELD to real)
+	5	QF+3
+	11	QF
+	8	QF+1
+	6	3
+	+0
+	8	STACC
+
+(ADDN n, m A +:= n+[m])
+ADDN	4	MFADDR	(Convert MFIELD to real)
+	5	QF+3
+	11	QF
+	8	QF+1
+	6	3
+	1	STORE+2
+	+0
+	8	STACC
+
+(SUBN n, m A -:= n+[m])
+SUBN	4	MFADDR	(COnvert MFIELD to real)
+	5	QF+3
+	11	QF
+	8	QF+1
+	6	3
+	2	STORE+2
+	+0
+	8	STACC
+
+(MLTN n, m A *:= n+[m])
+MLTN	4	MFADDR	(Convert MFIELD to real)
+	5	QF+3
+	11	QF
+	8	QF+1
+	6	3
+	12	STORE+2
+	+0
+	8	STACC
+
+DIVN	4	MFADDR	(Convert MFIELD to real)
+	5	QF+3
+	11	QF
+	8	QF+1
+	6	3
+	3	STORE+2	(Exchange)
+	13	STORE+2
+	+0
+	8	STACC
+
+(STA n, m [n+[m]] := A)
+STA	4	STORE+3	(Check accumulator holds data)
+	9	ERR15
+	11	QF
+	8	QF+1
+	0	ADDR
+	4	STORE+2
+	/5	STORE
+	+0
+	8	INTERPR
+
+(JUN n, m SCR := n+[m])
+JUN	4	MFIELD
+	1	MFIELD
+	1	-2
+	5	CPA
+	1	-18	(Check address within bounds)
+	9	ERR10
+	1	-1980
+	9	INTERPR
+	8	ERR10
+
+(JGR n, m if A > 0, SCR := n+[m])
+JGR	4	STORE+2
+	9	INTERPR
+	8	JUN
+
+(JEQ n, m if A = 0, SCR := n+[m])
+JEQ	4	STORE+2
+	7	JUN
+	8	INTERPR
+
+(JSR n, m [4] := Link SCR := n+[m])
+JSR	4	CPA   (Form link address)
+	14	8191
+	5	CPA
+	10	CPA
+	4	CPAADD	(Convert link to real)
+	5	QF+3
+	11	QF
+	8	QF+1
+	6	3
+	5	STORE+8
+	+0
+	8	JUN
+
+CPAADD	0	CPA
+
+(JST n, m WAIT; SCR := n+[m])
+JST	8	;+0
+
+(RCT n, m [n+[m]] := read character from tape)
+RCT	15	2048	(Read from paper tape)
+	6	+127	(Convert to internal code)
+	5	7
+	/4	TCTAB
+	0	ADDR
+	/5	STORE+1
+	4	+0
+	/5	STORE
+	8	INTERPR
+
+(PCT n, m  punch [n+[m]])
+PCT	0	ADDR
+	/4	STORE+1
+	5	7
+	1	+6	(Test for valid character)
+	9	ERR16
+	2	+69
+	9	ERR16
+	/4	DIGIT0	(Convert to telecode)
+	15	6144	(Punch)
+	8	INTERPR
+
+(RNT n, m read number into [n+[m]])
+RNT	11	READSP	(Read line removing spaces)
+	8	READSP+1
+	4	BUFFER
+	2	+10	(Check for seperator)
+	7	;-4
+	11	SUBLNK
+	8	RDREAL
+	8	STACC
+
+(PNT n, m print number, aligned[n+m, m])
+PNT	4	MFIELD	
+	5	L1164
+	4	BUFP
+	5	L1165
+	11	SUBLNK
+	8	PUREAL
+	8	INTERPR
+
+(PNL print newline)
+PNL	4	CARRET
+	15	6144
+	4	LINEFD
+	15	6144
+	8	INTERPR
+
+(SQT n A := sqrt[A] if A<0 jump to n)
+SQT	4	FPA
+	9	JUN
+	7	INTERPR	
+	11	QF
+	8	QF+1
+	11	SQRT
+	8	SQRT+1
+	+0
+	8	STACC
+
+(SIN n A := sin[A])
+SINF	11	QF
+	8	QF+1
+	11	SIN
+	8	SIN+1
+	+0
+	8	STACC
+	
+(COS n A := cos[A])
+COSF	11	QF
+	8	QF+1
+	11	COS	
+	8	COS+1	
+	+0
+	8	STACC
+
+(ENT n A := entier[A])
+ENT	4	FPA+2	(Test exponent < 1)
+	1	-1
+	9	SMALL
+	2	+25	(Test exponent > 26)
+	9	INTERPR 
+	2	+26
+	2	=15 0	(??????)	
+	5	;+3
+	0	+0
+	4	=/0 0
+	+0		(Patched)
+	3	CHAR
+	6	FPA
+	5	FPA
+	0	+0
+	4	CHAR
+	14	1
+	6	FPA+1
+L1031	5	FPA+1
+	8	STACC
+
+SMALL	4	FPA	(Exponent < 1)
+	9	L1039   (Test mantissa < 0)
+	4	+0
+	5	FPA
+	5	FPA+2
+	8	L1031
+
+L1039	4	=/0 0	(Small and negative - set -1*2^0)
+	5	FPA	
+	4	+0	
+	5	FPA+2	
+	4	+0	
+	8	L1031	
+
+(ARC n A := arctan [A])
+ARC	11	QF
+	8	QF+2
+	11	ARCTAN
+	8	ARCTAN+1
+	+0
+	8	STACC
+
+(LGN n A := ln[A] if A<0 jump to n)
+LGN	4	FPA	
+	9	JUN
+	7	JUN
+	11	QF
+	8	QF+1
+	11	LN
+	8	LN+1
+	+0
+	8	STACC
+
+(EXP n A := exp[A] if A too large, jump to n)
+EXPF	4	FPA+2
+	2	+6
+	9	L1070	(Test exponent < 0)
+	7	L1073	(Test exponent = 0)
+L1064	11	QF
+	8	QF+1
+	11	EXP
+	8	EXP+1
+	+0
+	8	STACC
+
+L1070	4	FPA	(Test mantissa < 0)
+	9	L1064	
+	8	JUN
+
+L1073	4	FPA	(Test mantissa < 0)
+	9	L1064
+	2	+81920	(Test mantissa > 81920 ???)
+	9	JUN
+	8	L1064
+
+ERR1	4	+1
+	8	ERROR
+ERR2	4	+2
+	8	ERROR
+ERR3	4	+3
+	8	ERROR
+ERR4	4	+4
+	8	ERROR
+ERR5	4	+5
+	8	ERROR
+ERR6	4	+6
+	8	ERROR
+ERR7	4	+7
+	8	ERROR
+ERR8	4	+8
+	8	ERROR
+ERR9	4	+9
+	8	ERROR
+ERR10	4	+10
+	8	ERROR
+ERR11	4	+11
+	8	ERROR
+ERR12  	4	+12
+	8	ERROR
+ERR13	4	+13
+	8	ERROR
+ERR14	4	+14
+	8	ERROR
+ERR15	4	+15
+	8	ERROR
+ERR16	4	+16
+	8	ERROR
+ERR17	4	+17
+	8	ERROR
+ERR18	4	+18
+	8	ERROR
+ERROR	5	ERRNO	(Save error number)
+	4	CARRET	(Punch new line)
+	15	6144
+	4	LINEFD
+	15	6144
+	4	LETTRE	(Punch ERR)
+	15	6144
+	4	LETTRR
+	15	6144
+	15	6144
+	11	P3DIGS	(Punch error number)
+	8	P3DIGS+1
+	4	SPACE	(Punch spaces)
+	15	6144
+	15	6144
+	15	6144
+	4	SCR	(Punch SCR/2)
+	14	8191
+	5	ERRNO
+	11	P3DIGS
+	8	P3DIGS+1
+	8	;+0	(Stop)
+
+L1136	4	RUNFLG
+	7	ERR3
+	8	JUN
+
+L1139	4	RUNFLG
+	7	ERR2
+	8	JUN
+
+(QFINOUT)
+L1142	>1
+L1143	>1
+L1144	>1
+L1145	>1
+L1146	>1
+L1147	>1
+L1148	>1
+L1149	>1
+L1150	>1
+L1151	>1
+L1152	>1
+L1153	>2
+L1155	>1
+L1156	>1
+L1157	>5
+	+6144
+	0	8	(&000010       +8 \  ()
+L1164	0	1	(&000001       +1 \  ^)
+L1165	0	8	(&000010       +8 \  ()
+	0	10	(&000012      +10 \  *)
+	>1
+	0	68	(&000104      +68 \ ^$)
+	0	6	(&000006       +6 \  &)
+L1170	>1
+L1171	0	190	(&000276     +190 \ "^)
+L1172	>1
+	3	L1638	(&063146   +26214 \&9F)
+	1	L2293	(&024365   +10485 \"CU)
+	+4194
+	0	1677	(&003215    +1677 \ :-)
+	0	671	(&001237     +671 \ *?)
+	0	268	(&000414     +268 \ $,)
+	0	107	(&000153     +107 \ ^K)
+	0	43	(&000053      +43 \  K)
+L1181	0	160	(&000240     +160 \ "@)
+	0	10	(&000012      +10 \  *)
+	0	34	(&000042      +34 \  B)
+	0	163	(&000243     +163 \ "C)
+	0	36	(&000044      +36 \  D)
+	0	165	(&000245     +165 \ "E)
+	0	166	(&000246     +166 \ "F)
+	0	39	(&000047      +39 \  G)
+	0	40	(&000050      +40 \  H)
+	0	169	(&000251     +169 \ "I)
+	0	170	(&000252     +170 \ "J)
+	0	43	(&000053      +43 \  K)
+	0	172	(&000254     +172 \ "L)
+	0	45	(&000055      +45 \  M)
+	0	46	(&000056      +46 \  N)
+	0	175	(&000257     +175 \ "O)
+	0	48	(&000060      +48 \  P)
+	0	177	(&000261     +177 \ "Q)
+	0	178	(&000262     +178 \ "R)
+	0	51	(&000063      +51 \  S)
+	0	180	(&000264     +180 \ "T)
+	0	53	(&000065      +53 \  U)
+	0	54	(&000066      +54 \  V)
+L1204	0	183	(&000267     +183 \ "W)
+	0	184	(&000270     +184 \ "X)
+	0	57	(&000071      +57 \  Y)
+	0	58	(&000072      +58 \  Z)
+	0	187	(&000273     +187 \ "[)
+	0	60	(&000074      +60 \  \)
+	0	189	(&000275     +189 \ "])
+	0	190	(&000276     +190 \ "^)
+	0	63	(&000077      +63 \  _)
+L1213	>1
+L1214	5	L1155	(&122203   +42115 \*2£)
+	4	L1155	(&102203   +33923 \(2£)
+	9	L1225	(&222311   +74953 \23?)
+	1	-32	(&026651   +11689 \"VI)
+	9	;+3	(&222305   +74949 \23?)
+	4	L1171	(&102223   +33939 \(23)
+	8	;+5	(&202311   +66761 \03?)
+L1221	0	L1155	(&002203    +1155 \ 2£)
+	/4	L1181	(&502235   -97123 \H2=)
+	14	0	(&340000  +114688 \<  )
+	9	;+5	(&222315   +74957 \23-)
+L1225	0	1162	(&002212    +1162 \ 2*)
+	-8192		(&760000 /15    0 \^  )
+	0	L1213	(&002275    +1213 \ 2])
+	/8	1	(&600001   -65535 \P ^)
+L1229	0	1162	(&002212    +1162 \ 2*)
+	-8192		(&760000 /15    0 \^  )
+	4	L1172	(&102224   +33940 \(24)
+	-8192		(&760000 /15    0 \^  )
+	4	+0	(&106640   +36256 \(V@)
+	15	6144	(&374000  +129024 \?@ )
+	15	6144	(&374000  +129024 \?@ )
+	8	L1225	(&202311   +66761 \03?)
+L1237	>1
+L1238	4	+0	(&106640   +36256 \(V@)
+	5	L1155	(&122203   +42115 \*2£)
+	4	FPA	(&103331   +34521 \(;9)
+	7	L1252	(&162344   +58596 \.3D)
+	9	L1257	(&222351   +74985 \23I)
+L1243	14	1	(&340001  +114689 \< ^)
+	9	L1267	(&222363   +74995 \23S)
+	10	L1155	(&242203   +83075 \42£)
+	8	;-3	(&202333   +66779 \03;)
+L1247	4	+0	(&106640   +36256 \(V@)
+	5	FPA	(&123331   +42713 \*;9)
+	5	FPA+1	(&123332   +42714 \*;:)
+L1250	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1284	(&202404   +66820 \04$)
+L1252	4	+17	(&106706   +36294 \(W&)
+	5	L1155	(&122203   +42115 \*2£)
+	4	FPA+1	(&103332   +34522 \(;:)
+	7	;-5	(&162342   +58594 \.3B)
+	8	L1243	(&202333   +66779 \03;)
+L1257	1	+1	(&026700   +11712 \"W )
+	7	;+3	(&162355   +58605 \.3M)
+	4	FPA	(&103331   +34521 \(;9)
+	8	;+5	(&202361   +66801 \03Q)
+	4	+16	(&106705   +36293 \(W?)
+	5	L1155	(&122203   +42115 \*2£)
+	4	FPA+1	(&103332   +34522 \(;:)
+L1264	10	L1155	(&242203   +83075 \42£)
+        14      1
+        9       L1264
+L1267   4       L1155
+L1268   5       L1155
+        7       L1284
+        2       FPA+2
+        5       FPA+2
+        1       +64
+        9       L1247
+        4       L1155
+	6	+8191	(&146711   +52681 \,W?)
+	1	L1286	(&022406    +9478 \"4&)
+	5	;+4	(&122401   +42241 \*4^)
+	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	>1
+	3	FPA+1	(&063332   +26330 \&;:)
+	5	FPA	(&123331   +42713 \*;9)
+L1284	0	L1237	(&002325    +1237 \ 35)
+	/8	1	(&600001   -65535 \P ^)
+L1286	14	0	(&340000  +114688 \<  )
+
+(Read real number subroutine)
+SUBLNK	>1
+L1288	0	;-1	(Exit)
+	/8	1
+
+L1290	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	8188	(&357774  +122876 \=_\)
+	13	L1145	(&322171  +107641 \:1Y)
+	14	18	(&340022  +114706 \< 2)
+	5	L1155	(&122203   +42115 \*2£)
+	14	3	(&340003  +114691 \< £)
+	12	L1145	(&302171   +99449 \81Y)
+	14	1	(&340001  +114689 \< ^)
+	3	L1157	(&062205   +25733 \&2?)
+	5	L1156	(&122204   +42116 \*2$)
+	4	L1157	(&102205   +33925 \(2?)
+	2	FPA+1	(&043332   +18138 \$;:)
+	9	;+2	(&222432   +75034 \24:)
+	8	;+3	(&202434   +66844 \04<)
+	10	L1156	(&242204   +83076 \42$)
+	6	+131071	(&146667   +52663 \,VW)
+	5	L1157	(&122205   +42117 \*2?)
+	4	L1156	(&102204   +33924 \(2$)
+	2	FPA	(&043331   +18137 \$;9)
+	5	L1156	(&122204   +42116 \*2$)
+	0	L1157	(&002205    +1157 \ 2?)
+	14	1	(&340001  +114689 \< ^)
+	4	L1156	(&102204   +33924 \(2$)
+	14	11	(&340013  +114699 \< +)
+	13	L1145	(&322171  +107641 \:1Y)
+	0	+0	(&006640    +3488 \ V@)
+	14	8177	(&357761  +122865 \=_Q)
+	3	FPA+1	(&063332   +26330 \&;:)
+	1	L1155	(&022203    +9347 \"2£)
+	5	FPA	(&123331   +42713 \*;9)
+	0	L1237	(&002325    +1237 \ 35)
+	/8	1	(&600001   -65535 \P ^)
+L1324	4	+4	(&106701   +36289 \(W^)
+	1	FPA+2	(&023333    +9947 \";;)
+	5	FPA+2	(&123333   +42715 \*;;)
+L1327	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	8188	(&357774  +122876 \=_\)
+	3	FPA+1	(&063332   +26330 \&;:)
+L1332	5	FPA	(&123331   +42713 \*;9)
+L1333	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	1	(&340001  +114689 \< ^)
+	3	FPA+1	(&063332   +26330 \&;:)
+	5	FPA	(&123331   +42713 \*;9)
+	14	2	(&340002  +114690 \< ")
+	3	L1155	(&062203   +25731 \&2£)
+L1341	1	FPA	(&023331    +9945 \";9)
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1155	(&102203   +33923 \(2£)
+	1	FPA+1	(&023332    +9946 \";:)
+	9	;+4	(&222505   +75077 \25?)
+L1346	5	FPA+1	(&123332   +42714 \*;:)
+	0	L1237	(&002325    +1237 \ 35)
+	/8	1	(&600001   -65535 \P ^)
+	6	+131071	(&146667   +52663 \,VW)
+	10	FPA	(&243331   +83673 \4;9)
+	8	;-5	(&202502   +66882 \05")
+PUREAL	4	+4	(Punch real number)
+	5	L1152	(&122200   +42112 \*2 )
+	4	L1170	(&102222   +33938 \(22)
+	5	L1146	(&122172   +42106 \*1Z)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1151	(&122177   +42111 \*1_)
+	5	L1732	(&123304   +42692 \*;$)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1150	(&122176   +42110 \*1^)
+	4	FPA	(&103331   +34521 \(;9)
+	9	;+5	(&222527   +75095 \257)
+	14	1	(&340001  +114689 \< ^)
+	9	L1373	(&222535   +75101 \25=)
+	7	L1403	(&162573   +58747 \.5[)
+L1366	8	L1136	(&202160   +66672 \01P)
+L1367	14	1	(&340001  +114689 \< ^)
+	9	;-2	(&222526   +75094 \256)
+	11	L1237	(&262325   +91349 \635)
+	8	L1711	(&203257   +67247 \0:O)
+	4	+13	(&106654   +36268 \(VL)
+	5	L1151	(&122177   +42111 \*1_)
+L1373	4	FPA+2	(&103333   +34523 \(;;)
+	9	L1428	(&222624   +75156 \264)
+	4	+102400	(&106712   +36298 \(W*)
+	5	L1145	(&122171   +42105 \*1Y)
+L1377	4	FPA+2	(&103333   +34523 \(;;)
+	9	L1432	(&222630   +75160 \268)
+	7	L1435	(&162633   +58779 \.6;)
+	4	+5	(&106644   +36260 \(VD)
+	2	FPA+2	(&043333   +18139 \$;;)
+	9	L1392	(&222560   +75120 \25P)
+	1	+2	(&026650   +11688 \"VH)
+	5	FPA+2	(&123333   +42715 \*;;)
+	10	L1150	(&242176   +83070 \41^)
+L1386	11	L1237	(&262325   +91349 \635)
+	8	L1290	(&202412   +66826 \04*)
+	10	L1150	(&242176   +83070 \41^)
+	11	L1237	(&262325   +91349 \635)
+	8	L1238	(&202326   +66774 \036)
+	8	L1377	(&202541   +66913 \05A)
+L1392	4	+81920	(&106677   +36287 \(V_)
+	5	L1145	(&122171   +42105 \*1Y)
+	8	L1386	(&202552   +66922 \05J)
+L1395	4	-1	(&106655   +36269 \(VM)
+	11	L1237	(&262325   +91349 \635)
+	8	L1268	(&202364   +66804 \03T)
+	6	+131071	(&146667   +52663 \,VW)
+	5	FPA	(&123331   +42713 \*;9)
+	4	-1	(&106655   +36269 \(VM)
+	5	L1152	(&122200   +42112 \*2 )
+	8	L1392	(&202560   +66928 \05P)
+L1403	4	FPA+1	(&103332   +34522 \(;:)
+	7	;+2	(&162576   +58750 \.5^)
+	8	L1366	(&202526   +66902 \056)
+	4	+1	(&106700   +36288 \(W )
+	5	L1150	(&122176   +42110 \*1^)
+	8	L1440	(&202640   +66976 \06@)
+L1409	4	+104857	(&106713   +36299 \(W+)
+	2	FPA	(&043331   +18137 \$;9)
+	9	L1418	(&222612   +75146 \26*)
+	7	;+2	(&162606   +58758 \.6&)
+	8	L1432	(&202630   +66968 \068)
+	4	+78643	(&106714   +36300 \(W,)
+L1415	2	FPA+1	(&043332   +18138 \$;:)
+	9	;+2	(&222612   +75146 \26*)
+	8	L1432	(&202630   +66968 \068)
+L1418	4	FPA+2	(&103333   +34523 \(;;)
+	1	+4	(&026701   +11713 \"W^)
+	5	FPA+2	(&123333   +42715 \*;;)
+	11	L1237	(&262325   +91349 \635)
+	8	L1327	(&202457   +66863 \04O)
+	11	L1237	(&262325   +91349 \635)
+	8	L1238	(&202326   +66774 \036)
+	4	+1	(&106700   +36288 \(W )
+	2	L1150	(&042176   +17534 \$1^)
+	5	L1150	(&122176   +42110 \*1^)
+L1428	4	FPA+2	(&103333   +34523 \(;;)
+	1	+3	(&026647   +11687 \"VG)
+	9	L1418	(&222612   +75146 \26*)
+	7	L1409	(&162601   +58753 \.6^)
+L1432	4	FPA+2	(&103333   +34523 \(;;)
+	11	L1237	(&262325   +91349 \635)
+	8	L1268	(&202364   +66804 \03T)
+L1435	4	L1152	(&102200   +33920 \(2 )
+	9	L1506	(&222742   +75234 \27B)
+	4	L1150	(&102176   +33918 \(1^)
+	2	L1164	(&042214   +17548 \$2,)
+	9	L1511	(&222747   +75239 \27G)
+L1440	4	L1164	(&102214   +33932 \(2,)
+	1	L1165	(&022215    +9357 \"2-)
+	7	L1511	(&162747   +58855 \.7G)
+	2	+7	(&046702   +19906 \$W")
+	9	L1511	(&222747   +75239 \27G)
+	4	L1150	(&102176   +33918 \(1^)
+	1	L1165	(&022215    +9357 \"2-)
+L1447	5	L1156	(&122204   +42116 \*2$)
+	1	L1156	(&022204    +9348 \"2$)
+	2	+0	(&046640   +19872 \$V@)
+	5	L1155	(&122203   +42115 \*2£)
+	0	L1156	(&002204    +1156 \ 2$)
+	/4	L1172	(&502224   -97132 \H24)
+	0	L1155	(&002203    +1155 \ 2£)
+	/14	0	(&740000   -16384 \\  )
+	3	L1155	(&062203   +25731 \&2£)
+	11	L1237	(&262325   +91349 \635)
+	8	L1341	(&202475   +66877 \04])
+	4	FPA	(&103331   +34521 \(;9)
+	9	L1395	(&222563   +75123 \25S)
+L1460	4	L1732	(&103304   +34500 \(;$)
+	7	L1514	(&162752   +58858 \.7J)
+L1462	4	+6	(&106673   +36283 \(V[)
+	5	L1149	(&122175   +42109 \*1])
+	4	+1	(&106700   +36288 \(W )
+	5	L1148	(&122174   +42108 \*1\)
+	11	L1153	(&262201   +91265 \62^)
+	8	L1519	(&202757   +67055 \07O)
+	4	+31	(&106671   +36281 \(VY)
+	11	L1213	(&262275   +91325 \62])
+	8	L1214	(&202276   +66750 \02^)
+	4	L1150	(&102176   +33918 \(1^)
+	1	-1	(&026655   +11693 \"VM)
+	9	L1492	(&222724   +75220 \274)
+	5	L1150	(&122176   +42110 \*1^)
+	4	PLUSCH	(&100441   +33057 \($A)
+L1476	15	6144	(&374000  +129024 \?@ )
+	4	+10	(&106646   +36262 \(VF)
+	2	L1150	(&042176   +17534 \$1^)
+	9	L1496	(&222730   +75224 \278)
+	5	L1150	(&122176   +42110 \*1^)
+	1	-10	(&026643   +11683 \"VC)
+	9	;+4	(&222716   +75214 \27.)
+	5	L1150	(&122176   +42110 \*1^)
+	4	DIGIT2	(&100417   +33039 \($/)
+	8	;+2	(&202717   +67023 \07/)
+	4	DIGIT1	(&100416   +33038 \($.)
+	15	6144	(&374000  +129024 \?@ )
+L1488	0	L1150	(&002176    +1150 \ 1^)
+	/4	DIGIT0	(&500415   -98035 \H$-)
+	15	6144	(&374000  +129024 \?@ )
+	8	L1502	(&202736   +67038 \07>)
+L1492	2	+0	(&046640   +19872 \$V@)
+	5	L1150	(&122176   +42110 \*1^)
+	4	MINSCH	(&100442   +33058 \($B)
+	8	L1476	(&202704   +67012 \07$)
+L1496	4	DIGIT0	(&100415   +33037 \($-)
+	15	6144	(&374000  +129024 \?@ )
+	8	L1488	(&202720   +67024 \070)
+L1499	5	L1149	(&122175   +42109 \*1])
+	11	L1153	(&262201   +91265 \62^)
+	8	L1518	(&202756   +67054 \07N)
+L1502	4	SPACE	(&100412   +33034 \($*)
+	15	6144	(&374000  +129024 \?@ )
+	15	6144	(&374000  +129024 \?@ )
+	8	SUBLNK+1	  (Exit)
+L1506	4	L1164	(&102214   +33932 \(2,)
+	1	+1	(&026700   +11712 \"W )
+	2	L1150	(&042176   +17534 \$1^)
+	7	L1462	(&162666   +58806 \.6V)
+	8	L1460	(&202664   +66996 \06T)
+L1511	10	L1732	(&243304   +83652 \4;$)
+	4	+7	(&106702   +36290 \(W")
+	8	L1447	(&202647   +66983 \06G)
+L1514	4	L1164	(&102214   +33932 \(2,)
+	5	L1148	(&122174   +42108 \*1\)
+	4	L1165	(&102215   +33933 \(2-)
+	8	L1499	(&202733   +67035 \07;)
+L1518	4	L1150	(&102176   +33918 \(1^)
+L1519	5	L1144	(&122170   +42104 \*1X)
+L1520	4	L1148	(&102174   +33916 \(1\)
+	7	L1538	(&163002   +58882 \.8")
+	1	L1149	(&022175    +9341 \"1])
+L1523	7	L1582	(&163056   +58926 \.8N)
+L1524	4	L1144	(&102170   +33912 \(1X)
+	2	L1148	(&042174   +17532 \$1\)
+	9	L1555	(&223023   +75283 \283)
+	7	L1552	(&163020   +58896 \.80)
+	4	L1148	(&102174   +33916 \(1\)
+	1	-1	(&026655   +11693 \"VM)
+	7	;+5	(&162777   +58879 \.7_)
+	4	L1146	(&102172   +33914 \(1Z)
+	5	L1143	(&122167   +42103 \*1W)
+	7	L1570	(&163042   +58914 \.8B)
+	8	L1564	(&203034   +67100 \08<)
+L1535	4	+16	(&106705   +36293 \(W?)
+L1536	5	L1143	(&122167   +42103 \*1W)
+	8	L1564	(&203034   +67100 \08<)
+L1538	4	L1149	(&102175   +33917 \(1])
+	7	L1577	(&163051   +58921 \.8I)
+	4	+16	(&106705   +36293 \(W?)
+	5	L1146	(&122172   +42106 \*1Z)
+	4	L1151	(&102177   +33919 \(1_)
+	9	;+5	(&223014   +75276 \28,)
+	11	L1213	(&262275   +91325 \62])
+	8	L1214	(&202276   +66750 \02^)
+	4	-1	(&106655   +36269 \(VM)
+	5	L1151	(&122177   +42111 \*1_)
+L1548	4	+14	(&106635   +36253 \(V=)
+	11	L1213	(&262275   +91325 \62])
+	8	L1214	(&202276   +66750 \02^)
+	8	L1524	(&202764   +67060 \07T)
+L1552	11	L1237	(&262325   +91349 \635)
+	8	L1327	(&202457   +66863 \04O)
+	8	;+3	(&203025   +67093 \085)
+L1555	11	L1237	(&262325   +91349 \635)
+	8	L1333	(&202465   +66869 \04U)
+	4	FPA	(&103331   +34521 \(;9)
+	14	8179	(&357763  +122867 \=_S)
+	1	+16	(&026705   +11717 \"W?)
+	5	L1143	(&122167   +42103 \*1W)
+	4	FPA	(&103331   +34521 \(;9)
+	6	+8191	(&146711   +52681 \,W?)
+	5	FPA	(&123331   +42713 \*;9)
+L1564	4	L1151	(&102177   +33919 \(1_)
+	9	;+5	(&223042   +75298 \28B)
+	11	L1213	(&262275   +91325 \62])
+	8	L1214	(&202276   +66750 \02^)
+	4	-1	(&106655   +36269 \(VM)
+	5	L1151	(&122177   +42111 \*1_)
+L1570	4	L1143	(&102167   +33911 \(1W)
+	11	L1213	(&262275   +91325 \62])
+	8	L1214	(&202276   +66750 \02^)
+	4	L1148	(&102174   +33916 \(1\)
+	1	-1	(&026655   +11693 \"VM)
+	5	L1148	(&122174   +42108 \*1\)
+	8	L1520	(&202760   +67056 \07P)
+L1577	4	L1152	(&102200   +33920 \(2 )
+	7	;+4	(&163056   +58926 \.8N)
+	4	+0	(&106640   +36256 \(V@)
+	11	L1213	(&262275   +91325 \62])
+	8	L1214	(&202276   +66750 \02^)
+L1582	0	L1153	(&002201    +1153 \ 2^)
+	/8	1	(&600001   -65535 \P ^)
+
+RDREAL	4	+0	(Read real number)
+	5	L1145	(&122171   +42105 \*1Y)
+	5	L1146	(&122172   +42106 \*1Z)
+	5	FPA	(&123331   +42713 \*;9)
+	5	FPA+1	(&123332   +42714 \*;:)
+	5	FPA+2	(&123333   +42715 \*;;)
+	5	L1147	(&122173   +42107 \*1[)
+	5	L1148	(&122174   +42108 \*1\)
+	5	L1150	(&122176   +42110 \*1^)
+	4	-131072	(&106663   +36275 \(VS)
+	5	L1149	(&122175   +42109 \*1])
+L1595	0	BUFP	(&000065      +53 \  U)
+	/4	BUFFER	(&500066   -98250 \H V)
+	10	BUFP	(&240065   +81973 \4 U)
+	5	L1142	(&122166   +42102 \*1V)
+	2	+9	(&046665   +19893 \$VU)
+	9	L1663	(&223177   +75391 \29_)
+	10	L1145	(&242171   +83065 \41Y)
+	4	L1148	(&102174   +33916 \(1\)
+	7	L1616	(&163120   +58960 \.90)
+	0	+0	(&006640    +3488 \ V@)
+	4	L1150	(&102176   +33918 \(1^)
+	1	L1150	(&022176    +9342 \"1^)
+	5	L1150	(&122176   +42110 \*1^)
+	14	2	(&340002  +114690 \< ")
+	1	L1150	(&022176    +9342 \"1^)
+	1	L1142	(&022166    +9334 \"1V)
+	5	L1150	(&122176   +42110 \*1^)
+	6	-32768	(&146715   +52685 \,W-)
+	7	L1595	(&163073   +58939 \.8[)
+	8	L1136	(&202160   +66672 \01P)
+	8	L1595	(&203073   +67131 \08[)
+L1616	10	L1149	(&242175   +83069 \41])
+	4	L1145	(&102171   +33913 \(1Y)
+	2	+7	(&046702   +19906 \$W")
+L1619	9	L1136	(&222160   +74864 \21P)
+	11	L1237	(&262325   +91349 \635)
+	8	L1324	(&202454   +66860 \04L)
+	4	FPA+2	(&103333   +34523 \(;;)
+	2	+17	(&046706   +19910 \$W&)
+	6	+8191	(&146711   +52681 \,W?)
+	1	L1286	(&022406    +9478 \"4&)
+	5	;+3	(&123135   +42589 \*9=)
+	4	L1142	(&102166   +33910 \(1V)
+	0	+0	(&006640    +3488 \ V@)
+	+0
+	3	L1155	(&062203   +25731 \&2£)
+	11	L1237	(&262325   +91349 \635)
+	8	L1341	(&202475   +66877 \04])
+	11	L1237	(&262325   +91349 \635)
+	8	L1238	(&202326   +66774 \036)
+	8	L1595	(&203073   +67131 \08[)
+L1636	4	L1147	(&102173   +33915 \(1[)
+	10	L1147	(&242173   +83067 \41[)
+L1638	7	;+2	(&163150   +58984 \.9H)
+L1639	8	L1139	(&202163   +66675 \01S)
+	5	L1149	(&122175   +42109 \*1])
+	8	L1595	(&203073   +67131 \08[)
+L1642	4	+1	(&106700   +36288 \(W )
+L1643	5	L1146	(&122172   +42106 \*1Z)
+	8	L1595	(&203073   +67131 \08[)
+L1645	4	L1148	(&102174   +33916 \(1\)
+	7	;+2	(&163160   +58992 \.9P)
+	8	L1639	(&203147   +67175 \09G)
+	10	L1148	(&242174   +83068 \41\)
+	4	L1145	(&102171   +33913 \(1Y)
+	7	L1657	(&163171   +59001 \.9Y)
+L1651	4	L1146	(&102172   +33914 \(1Z)
+	5	L1151	(&122177   +42111 \*1_)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1146	(&122172   +42106 \*1Z)
+	10	L1147	(&242173   +83067 \41[)
+	8	L1595	(&203073   +67131 \08[)
+L1657	4	+65536	(&106716   +36302 \(W.)
+	5	FPA	(&123331   +42713 \*;9)
+	4	+1	(&106700   +36288 \(W )
+	5	FPA+2	(&123333   +42715 \*;;)
+	10	L1145	(&242171   +83065 \41Y)
+	8	L1651	(&203163   +67187 \09S)
+L1663	4	L1142	(&102166   +33910 \(1V)
+	1	-22	(&026717   +11727 \"W/)
+	7	L1636	(&163144   +58980 \.9D)
+	1	-4	(&026720   +11728 \"W0)
+	7	L1645	(&163155   +58989 \.9M)
+	1	+5	(&026644   +11684 \"VD)
+	7	L1642	(&163152   +58986 \.9J)
+	1	+1	(&026700   +11712 \"W )
+	7	L1643	(&163153   +58987 \.9K)
+	1	+10	(&026646   +11686 \"VF)
+	7	;+2	(&163213   +59019 \.:+)
+	8	L1139	(&202163   +66675 \01S)
+	4	L1145	(&102171   +33913 \(1Y)
+	7	L1139	(&162163   +58483 \.1S)
+	4	L1148	(&102174   +33916 \(1\)
+	7	L1686	(&163226   +59030 \.:6)
+	4	L1146	(&102172   +33914 \(1Z)
+	7	;+4	(&163224   +59028 \.:4)
+	4	L1150	(&102176   +33918 \(1^)
+	2	+0	(&046640   +19872 \$V@)
+	5	L1150	(&122176   +42110 \*1^)
+	4	L1151	(&102177   +33919 \(1_)
+	5	L1146	(&122172   +42106 \*1Z)
+L1686	4	L1149	(&102175   +33917 \(1])
+	9	;+3	(&223232   +75418 \2::)
+	2	L1150	(&042176   +17534 \$1^)
+	5	L1150	(&122176   +42110 \*1^)
+L1690	4	L1150	(&102176   +33918 \(1^)
+	7	L1706	(&163252   +59050 \.:J)
+	9	L1700	(&223244   +75428 \2:D)
+	1	-1	(&026655   +11693 \"VM)
+	5	L1150	(&122176   +42110 \*1^)
+	11	L1237	(&262325   +91349 \635)
+	8	L1324	(&202454   +66860 \04L)
+L1697	11	L1237	(&262325   +91349 \635)
+	8	L1238	(&202326   +66774 \036)
+	8	L1690	(&203232   +67226 \0::)
+L1700	10	L1150	(&242176   +83070 \41^)
+	4	+81920	(&106677   +36287 \(V_)
+	5	L1145	(&122171   +42105 \*1Y)
+	11	L1237	(&262325   +91349 \635)
+	8	L1290	(&202412   +66826 \04*)
+	8	L1697	(&203241   +67233 \0:A)
+L1706	4	L1146	(&102172   +33914 \(1Z)
+	7	;+3	(&163256   +59054 \.:N)
+	11	L1237	(&262325   +91349 \635)
+	8	;+2	(&203257   +67247 \0:O)
+	8	L1288	(&202410   +66824 \04()
+L1711	4	FPA+1	(&103332   +34522 \(;:)
+	7	L1722	(&163272   +59066 \.:Z)
+	2	+0	(&046640   +19872 \$V@)
+	6	+131071	(&146667   +52663 \,VW)
+	5	FPA+1	(&123332   +42714 \*;:)
+	10	FPA	(&243331   +83673 \4;9)
+	4	FPA	(&103331   +34521 \(;9)
+	2	+0	(&046640   +19872 \$V@)
+L1719	5	FPA	(&123331   +42713 \*;9)
+	0	L1237	(&002325    +1237 \ 35)
+	/8	1	(&600001   -65535 \P ^)
+L1722	4	FPA	(&103331   +34521 \(;9)
+	2	-131072	(&046663   +19891 \$VS)
+	7	;+5	(&163301   +59073 \.;^)
+	4	FPA	(&103331   +34521 \(;9)
+	2	+0	(&046640   +19872 \$V@)
+	5	FPA	(&123331   +42713 \*;9)
+	8	L1238	(&202326   +66774 \036)
+L1729	10	FPA+2	(&243333   +83675 \4;;)
+	4	+65536	(&106716   +36302 \(W.)
+	8	L1719	(&203267   +67255 \0:W)
+L1732	>1
+
+(Floating point interpreter)
+QF	>1
+	8	L1745	(&203321   +67281 \0;1)
+	8	L1747	(&203323   +67283 \0;3)
+L1736	>1
+L1737	>3
+L1740	8	ERR18	(&202130   +66648 \018)
+L1741	8	ERR12	(&202114   +66636 \01,)
+L1742	0	QF	(&003305    +1733 \ ;?)
+	/8	1	(&600001   -65535 \P ^)
+L1744	>1
+L1745	4	+1	(&106700   +36288 \(W )
+	8	;+2	(&203324   +67284 \0;4)
+L1747	4	+0	(&106640   +36256 \(V@)
+	5	;-4	(&123320   +42704 \*;0)
+	8	L1802	(&203412   +67338 \0<*)
+L1750	>1
+L1751	>1
+L1752	>1
+FPA	>3
+L1756	>1
+L1757	>1
+L1758	>1
+L1759	>3
+L1762	>1
+L1763	>1
+L1764	>1
+L1765	>1
+L1766	>1
+L1767	>1
+L1768	>1
+L1769	>1
+L1770	>1
+L1771	>1
+L1772	>1
+L1773	>1
+L1774	>1
+L1775	>1
+L1776	>1
+L1777	>1
+L1778	>2
+L1780	>1
+L1781	>1
+L1782	>2
+L1784	>1
+L1785	>1
+L1786	8	L1966	(&203656   +67502 \0>N)
+	8	L1970	(&203662   +67506 \0>R)
+	8	L2032	(&203760   +67568 \0?P)
+	8	L2066	(&204022   +67602 \0@2)
+	8	L2084	(&204044   +67620 \0@D)
+	8	L2088	(&204050   +67624 \0@H)
+	8	L2092	(&204054   +67628 \0@L)
+	8	L2155	(&204153   +67691 \0AK)
+	8	L2158	(&204156   +67694 \0AN)
+	8	L2165	(&204165   +67701 \0AU)
+	8	L2168	(&204170   +67704 \0AX)
+	8	L2171	(&204173   +67707 \0A[)
+	8	L2176	(&204200   +67712 \0B )
+	8	L2185	(&204211   +67721 \0B?)
+	8	L2212	(&204244   +67748 \0BD)
+	8	L1740	(&203314   +67276 \0;,)
+L1802	10	QF	(&243305   +83653 \4;?)
+L1803	0	QF	(&003305    +1733 \ ;?)
+	/4	0	(&500000   -98304 \H  )
+	7	L1742	(&163316   +59086 \.;.)
+	6	+8191	(&146711   +52681 \,W?)
+	5	L1751	(&123327   +42711 \*;7)
+	4	QF	(&103305   +34501 \(;?)
+	6	+122880	(&146676   +52670 \,V^)
+	1	L1751	(&023327    +9943 \";7)
+	5	L1751	(&123327   +42711 \*;7)
+	/4	0	(&500000   -98304 \H  )
+	14	8179	(&357763  +122867 \=_S)
+	9	;+4	(&223432   +75546 \2<:)
+	5	L1750	(&123326   +42710 \*;6)
+L1816	0	L1750	(&003326    +1750 \ ;6)
+	/8	L1786	(&603372   -63750 \P;Z)
+	6	+15	(&146704   +52676 \,W$)
+	5	L1750	(&123326   +42710 \*;6)
+	4	L1751	(&103327   +34519 \(;7)
+	1	L1752	(&023330    +9944 \";8)
+	5	L1751	(&123327   +42711 \*;7)
+	8	L1816	(&203430   +67352 \0<8)
+L1824	/4	0	(&500000   -98304 \H  )
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1744	(&103320   +34512 \(;0)
+	7	L1837	(&163455   +59181 \.<M)
+	/4	1	(&500001   -98303 \H ^)
+	14	11	(&340013  +114699 \< +)
+	14	8181	(&357765  +122869 \=_U)
+	5	FPA+2	(&123333   +42715 \*;;)
+	/4	1	(&500001   -98303 \H ^)
+	6	+130944	(&146721   +52689 \,W1)
+	5	FPA+1	(&123332   +42714 \*;:)
+L1835	0	L1759	(&003337    +1759 \ ;?)
+	/8	1	(&600001   -65535 \P ^)
+L1837	/4	1	(&500001   -98303 \H ^)
+	5	FPA+1	(&123332   +42714 \*;:)
+	/4	2	(&500002   -98302 \H ")
+	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1835	(&203453   +67371 \0<K)
+L1842	/4	0	(&500000   -98304 \H  )
+	5	L1756	(&123334   +42716 \*;<)
+	4	L1744	(&103320   +34512 \(;0)
+	7	L1854	(&163476   +59198 \.<^)
+	/4	1	(&500001   -98303 \H ^)
+	14	11	(&340013  +114699 \< +)
+	14	8181	(&357765  +122869 \=_U)
+	5	L1758	(&123336   +42718 \*;>)
+	/4	1	(&500001   -98303 \H ^)
+	6	+130944	(&146721   +52689 \,W1)
+	5	L1757	(&123335   +42717 \*;=)
+	8	L1835	(&203453   +67371 \0<K)
+L1854	/4	1	(&500001   -98303 \H ^)
+	5	L1757	(&123335   +42717 \*;=)
+	/4	2	(&500002   -98302 \H ")
+	5	L1758	(&123336   +42718 \*;>)
+	8	L1835	(&203453   +67371 \0<K)
+L1859	>1
+L1860	4	FPA	(&103331   +34521 \(;9)
+	/5	0	(&520000   -90112 \J  )
+	4	L1744	(&103320   +34512 \(;0)
+	7	L1903	(&163557   +59247 \.=O)
+	4	FPA+2	(&103333   +34523 \(;;)
+	1	+64	(&026710   +11720 \"W()
+	9	L1897	(&223551   +75625 \2=I)
+	2	+127	(&046645   +19877 \$VE)
+	9	L1740	(&223314   +75468 \2;,)
+	4	FPA+2	(&103333   +34523 \(;;)
+	6	+127	(&146645   +52645 \,VE)
+	5	L1859	(&123503   +42819 \*=£)
+	4	FPA	(&103331   +34521 \(;9)
+	9	L1901	(&223555   +75629 \2=M)
+	4	FPA+1	(&103332   +34522 \(;:)
+	1	+64	(&026710   +11720 \"W()
+L1876	6	-128	(&146722   +52690 \,W2)
+	1	L1859	(&023503   +10051 \"=£)
+	9	;+3	(&223531   +75609 \2=9)
+	/5	1	(&520001   -90111 \J ^)
+	8	L1835	(&203453   +67371 \0<K)
+	6	+131071	(&146667   +52663 \,VW)
+	/5	1	(&520001   -90111 \J ^)
+	/10	0	(&640000   -49152 \T  )
+	/4	0	(&500000   -98304 \H  )
+	9	;+2	(&223537   +75615 \2=?)
+	8	L1835	(&203453   +67371 \0<K)
+	4	+65536	(&106716   +36302 \(W.)
+	/5	0	(&520000   -90112 \J  )
+	4	FPA+2	(&103333   +34523 \(;;)
+	1	+1	(&026700   +11712 \"W )
+	2	+63	(&046723   +19923 \$W3)
+	9	L1740	(&223314   +75468 \2;,)
+	2	+63	(&046723   +19923 \$W3)
+	6	+127	(&146645   +52645 \,VE)
+	/5	1	(&520001   -90111 \J ^)
+	8	L1835	(&203453   +67371 \0<K)
+L1897	4	+0	(&106640   +36256 \(V@)
+	/5	0	(&520000   -90112 \J  )
+	/5	1	(&520001   -90111 \J ^)
+	8	L1835	(&203453   +67371 \0<K)
+L1901	4	FPA+1	(&103332   +34522 \(;:)
+	8	L1876	(&203524   +67412 \0=4)
+L1903	4	FPA+1	(&103332   +34522 \(;:)
+	/5	1	(&520001   -90111 \J ^)
+	4	FPA+2	(&103333   +34523 \(;;)
+	/5	2	(&520002   -90110 \J ")
+	8	L1835	(&203453   +67371 \0<K)
+L1908	>1
+L1909	>1
+L1910	4	+0	(&106640   +36256 \(V@)
+	5	;-3	(&123564   +42868 \*=T)
+	5	;-3	(&123565   +42869 \*=U)
+	4	FPA	(&103331   +34521 \(;9)
+	9	L1951	(&223637   +75679 \2>?)
+	7	L1937	(&163621   +59281 \.>1)
+	6	-256	(&146724   +52692 \,W4)
+	7	L1942	(&163626   +59286 \.>6)
+L1918	14	1	(&340001  +114689 \< ^)
+	9	;+3	(&223602   +75650 \2>")
+	10	L1908	(&243564   +83828 \4=T)
+	8	;-3	(&203576   +67454 \0=^)
+L1922	4	L1908	(&103564   +34676 \(=T)
+L1923	1	L1909	(&023565   +10101 \"=U)
+	5	L1908	(&123564   +42868 \*=T)
+	1	+114688	(&026725   +11733 \"W5)
+	5	;+4	(&123612   +42890 \*>*)
+	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	0	(&340000  +114688 \<  )
+	3	FPA+1	(&063332   +26330 \&;:)
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1908	(&103564   +34676 \(=T)
+	2	FPA+2	(&043333   +18139 \$;;)
+L1935	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1802	(&203412   +67338 \0<*)
+L1937	4	+17	(&106706   +36294 \(W&)
+	5	L1909	(&123565   +42869 \*=U)
+	4	FPA+1	(&103332   +34522 \(;:)
+	7	;-5	(&163617   +59279 \.>/)
+	8	L1918	(&203576   +67454 \0=^)
+L1942	4	FPA	(&103331   +34521 \(;9)
+	14	8191	(&357777  +122879 \=__)
+	7	;+3	(&163633   +59291 \.>;)
+	10	L1908	(&243564   +83828 \4=T)
+	8	;-3	(&203627   +67479 \0>7)
+	4	L1908	(&103564   +34676 \(=T)
+	2	+16	(&046705   +19909 \$W?)
+	5	L1908	(&123564   +42868 \*=T)
+	8	L1923	(&203603   +67459 \0>£)
+L1951	2	-1	(&046655   +19885 \$VM)
+	7	L1960	(&163650   +59304 \.>H)
+	4	-1	(&106655   +36269 \(VM)
+	5	L1909	(&123565   +42869 \*=U)
+	4	FPA	(&103331   +34521 \(;9)
+L1956	14	1	(&340001  +114689 \< ^)
+	10	L1908	(&243564   +83828 \4=T)
+	9	;-2	(&223644   +75684 \2>D)
+	8	L1922	(&203602   +67458 \0>")
+L1960	4	+17	(&106706   +36294 \(W&)
+	5	L1909	(&123565   +42869 \*=U)
+	4	FPA+1	(&103332   +34522 \(;:)
+	14	1	(&340001  +114689 \< ^)
+	9	L1956	(&223644   +75684 \2>D)
+	8	L1922	(&203602   +67458 \0>")
+L1966	0	L1751	(&003327    +1751 \ ;7)
+	/4	0	(&500000   -98304 \H  )
+	5	L1752	(&123330   +42712 \*;8)
+	8	L1802	(&203412   +67338 \0<*)
+L1970	0	L1751	(&003327    +1751 \ ;7)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1842	(&203462   +67378 \0<R)
+	4	L1756	(&103334   +34524 \(;<)
+	7	L1802	(&163412   +59146 \.<*)
+	4	FPA	(&103331   +34521 \(;9)
+	7	L2072	(&164030   +59416 \.@8)
+	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	8191	(&357777  +122879 \=__)
+	5	FPA	(&123331   +42713 \*;9)
+	3	FPA+1	(&063332   +26330 \&;:)
+	0	L1757	(&003335    +1757 \ ;=)
+	14	1	(&340001  +114689 \< ^)
+	4	L1756	(&103334   +34524 \(;<)
+	14	8191	(&357777  +122879 \=__)
+	5	L1756	(&123334   +42716 \*;<)
+	3	L1757	(&063335   +26333 \&;=)
+	10	FPA+2	(&243333   +83675 \4;;)
+	10	L1758	(&243336   +83678 \4;>)
+	4	FPA+2	(&103333   +34523 \(;;)
+	2	L1758	(&043336   +18142 \$;>)
+	9	L2015	(&223737   +75743 \2??)
+	2	+0	(&046640   +19872 \$V@)
+	1	+122880	(&026676   +11710 \"V^)
+	6	+122879	(&146726   +52694 \,W6)
+	5	L2003	(&123723   +42963 \*?3)
+	4	L1758	(&103336   +34526 \(;>)
+	5	FPA+2	(&123333   +42715 \*;;)
+	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+L2003	>1
+	3	FPA+1	(&063332   +26330 \&;:)
+	1	L1756	(&023334    +9948 \";<)
+	5	FPA	(&123331   +42713 \*;9)
+	4	FPA+1	(&103332   +34522 \(;:)
+	1	L1757	(&023335    +9949 \";=)
+	9	;+3	(&223734   +75740 \2?<)
+L2010	5	FPA+1	(&123332   +42714 \*;:)
+	8	L1910	(&203566   +67446 \0=V)
+	10	FPA	(&243331   +83673 \4;9)
+	6	+131071	(&146667   +52663 \,VW)
+	8	;-4	(&203732   +67546 \0?:)
+L2015	1	+122880	(&026676   +11710 \"V^)
+	6	+122879	(&146726   +52694 \,W6)
+	5	;+4	(&123745   +42981 \*?E)
+	0	L1757	(&003335    +1757 \ ;=)
+	14	1	(&340001  +114689 \< ^)
+	4	L1756	(&103334   +34524 \(;<)
+	>1
+	3	L1756	(&063334   +26332 \&;<)
+	1	FPA	(&023331    +9945 \";9)
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1756	(&103334   +34524 \(;<)
+	1	FPA+1	(&023332    +9946 \";:)
+	9	;+2	(&223755   +75757 \2?M)
+	8	L2010	(&203732   +67546 \0?:)
+	10	FPA	(&243331   +83673 \4;9)
+	6	+131071	(&146667   +52663 \,VW)
+	8	L2010	(&203732   +67546 \0?:)
+L2032	4	+0	(&106640   +36256 \(V@)
+	5	L2045	(&123775   +43005 \*?])
+	4	FPA+1	(&103332   +34522 \(;:)
+	7	L2049	(&164001   +59393 \.@^)
+L2036	2	+131071	(&046667   +19895 \$VW)
+	1	+1	(&026700   +11712 \"W )
+	9	L2046	(&223776   +75774 \2?^)
+L2039	5	FPA+1	(&123332   +42714 \*;:)
+	4	FPA	(&103331   +34521 \(;9)
+	2	-1	(&046655   +19885 \$VM)
+	1	;+3	(&023775   +10237 \"?])
+	5	FPA	(&123331   +42713 \*;9)
+	8	L1970	(&203662   +67506 \0>R)
+L2045	>1
+L2046	6	+131071	(&146667   +52663 \,VW)
+	10	;-2	(&243775   +83965 \4?])
+L2048	8	L2039	(&203767   +67575 \0?W)
+L2049	4	FPA	(&103331   +34521 \(;9)
+	1	-65536	(&026727   +11735 \"W7)
+	7	;+5	(&164010   +59400 \.@()
+	1	-65536	(&026727   +11735 \"W7)
+	7	L2062	(&164016   +59406 \.@.)
+	4	FPA+1	(&103332   +34522 \(;:)
+	8	L2036	(&203764   +67572 \0?T)
+L2056	4	-131072	(&106663   +36275 \(VS)
+	5	FPA	(&123331   +42713 \*;9)
+	4	+1	(&106700   +36288 \(W )
+	2	FPA+2	(&043333   +18139 \$;;)
+	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1970	(&203662   +67506 \0>R)
+L2062	4	+65536	(&106716   +36302 \(W.)
+	5	FPA	(&123331   +42713 \*;9)
+	10	FPA+2	(&243333   +83675 \4;;)
+	8	L1970	(&203662   +67506 \0>R)
+L2066	0	L1751	(&003327    +1751 \ ;7)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1842	(&203462   +67378 \0<R)
+	0	L1751	(&003327    +1751 \ ;7)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1860	(&203504   +67396 \0=$)
+L2072	4	L1744	(&103320   +34512 \(;0)
+	5	L2083	(&124043   +43043 \*@C)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1744	(&123320   +42704 \*;0)
+	0	2082	(&004042    +2082 \ @B)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1824	(&203440   +67360 \0<@)
+	4	;+4	(&104043   +34851 \(@C)
+	5	L1744	(&123320   +42704 \*;0)
+	8	L1802	(&203412   +67338 \0<*)
+	0	L1756	(&003334    +1756 \ ;<)
+L2083	>1
+L2084	0	L1751	(&003327    +1751 \ ;7)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1824	(&203440   +67360 \0<@)
+	8	L1802	(&203412   +67338 \0<*)
+L2088	0	L1751	(&003327    +1751 \ ;7)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1860	(&203504   +67396 \0=$)
+	8	L1802	(&203412   +67338 \0<*)
+L2092	4	L1751	(&103327   +34519 \(;7)
+	6	+8191	(&146711   +52681 \,W?)
+L2094	1	-1	(&026655   +11693 \"VM)
+	7	L1745	(&163321   +59089 \.;1)
+	1	-1	(&026655   +11693 \"VM)
+	7	L1747	(&163323   +59091 \.;3)
+	1	-1	(&026655   +11693 \"VM)
+	7	L2107	(&164073   +59451 \.@[)
+	1	-1	(&026655   +11693 \"VM)
+	7	L2115	(&164103   +59459 \.A£)
+	1	-1	(&026655   +11693 \"VM)
+	7	L2131	(&164123   +59475 \.A3)
+	1	-1	(&026655   +11693 \"VM)
+	7	L2138	(&164132   +59482 \.A:)
+	8	L1740	(&203314   +67276 \0;,)
+L2107	0	L1736	(&003310    +1736 \ ;()
+	/4	0	(&500000   -98304 \H  )
+	5	FPA	(&123331   +42713 \*;9)
+	4	+0	(&106640   +36256 \(V@)
+	5	FPA+1	(&123332   +42714 \*;:)
+	4	+17	(&106706   +36294 \(W&)
+	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1910	(&203566   +67446 \0=V)
+L2115	4	FPA+2	(&103333   +34523 \(;;)
+	9	L2129	(&224121   +75857 \2A1)
+	2	+17	(&046706   +19910 \$W&)
+	9	L1741	(&223315   +75469 \2;-)
+	7	;+3	(&164112   +59466 \.A*)
+	2	+122880	(&046676   +19902 \$V^)
+L2121	5	;+2	(&124113   +43083 \*A+)
+	4	FPA	(&103331   +34521 \(;9)
+	14	0	(&340000  +114688 \<  )
+L2124	0	L1737	(&003311    +1737 \ ;?)
+	/5	0	(&520000   -90112 \J  )
+	4	+114688	(&106725   +36309 \(W5)
+	5	;-4	(&124113   +43083 \*A+)
+	8	L1802	(&203412   +67338 \0<*)
+L2129	4	+122863	(&106730   +36312 \(W8)
+	8	L2121	(&204111   +67657 \0A?)
+L2131	0	1738	(&003312    +1738 \ ;*)
+	/4	0	(&500000   -98304 \H  )
+	5	FPA	(&123331   +42713 \*;9)
+	4	+0	(&106640   +36256 \(V@)
+	5	FPA+1	(&123332   +42714 \*;:)
+	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1910	(&203566   +67446 \0=V)
+L2138	4	FPA+2	(&103333   +34523 \(;;)
+	9	;+3	(&224136   +75870 \2A>)
+	7	L2151	(&164147   +59495 \.AG)
+	8	L1740	(&203314   +67276 \0;,)
+	1	+17	(&026706   +11718 \"W&)
+	9	L2153	(&224151   +75881 \2AI)
+	1	+122863	(&026730   +11736 \"W8)
+L2145	5	;+2	(&124143   +43107 \*AC)
+	4	FPA	(&103331   +34521 \(;9)
+L2147	14	0	(&340000  +114688 \<  )
+	0	1739	(&003313    +1739 \ ;+)
+	/5	0	(&520000   -90112 \J  )
+	8	L1802	(&203412   +67338 \0<*)
+L2151	4	+114688	(&106725   +36309 \(W5)
+	8	L2145	(&204141   +67681 \0AA)
+L2153	4	+122863	(&106730   +36312 \(W8)
+	8	L2145	(&204141   +67681 \0AA)
+L2155	4	FPA	(&103331   +34521 \(;9)
+	7	;+2	(&164156   +59502 \.AN)
+	8	L1802	(&203412   +67338 \0<*)
+L2158	4	QF	(&103305   +34501 \(;?)
+	6	+131071	(&146667   +52663 \,VW)
+	2	L1751	(&043327   +18135 \$;7)
+	7	;+0	(&164161   +59505 \.AQ)
+	4	L1751	(&103327   +34519 \(;7)
+	5	QF	(&123305   +42693 \*;?)
+L2164	8	L1803	(&203413   +67339 \0<+)
+L2165	4	FPA	(&103331   +34521 \(;9)
+	9	L2158	(&224156   +75886 \2AN)
+	8	L1802	(&203412   +67338 \0<*)
+L2168	0	L1751	(&003327    +1751 \ ;7)
+	/10	0	(&640000   -49152 \T  )
+	8	L1802	(&203412   +67338 \0<*)
+L2171	0	L1751	(&003327    +1751 \ ;7)
+	4	QF	(&103305   +34501 \(;?)
+	/5	0	(&520000   -90112 \J  )
+	/10	0	(&640000   -49152 \T  )
+	8	L1802	(&203412   +67338 \0<*)
+L2176	0	L1751	(&003327    +1751 \ ;7)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1842	(&203462   +67378 \0<R)
+	4	FPA+2	(&103333   +34523 \(;;)
+	1	L1758	(&023336    +9950 \";>)
+	5	FPA+2	(&123333   +42715 \*;;)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L2218	(&204252   +67754 \0BJ)
+	8	L1910	(&203566   +67446 \0=V)
+L2185	0	L1751	(&003327    +1751 \ ;7)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L1842	(&203462   +67378 \0<R)
+	4	FPA	(&103331   +34521 \(;9)
+	7	L1910	(&163566   +59254 \.=V)
+	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	8191	(&357777  +122879 \=__)
+	3	L1766	(&063346   +26342 \&;F)
+	5	L1765	(&123345   +42725 \*;E)
+	4	L1756	(&103334   +34524 \(;<)
+	7	L1740	(&163314   +59084 \.;,)
+	5	L1769	(&123351   +42729 \*;I)
+	4	L1757	(&103335   +34525 \(;=)
+	5	L1770	(&123352   +42730 \*;J)
+	11	L2262	(&264326   +92374 \6C6)
+	8	L2263	(&204327   +67799 \0C7)
+	4	L1780	(&103364   +34548 \(;T)
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1781	(&103365   +34549 \(;U)
+	5	FPA+1	(&123332   +42714 \*;:)
+	4	L1758	(&103336   +34526 \(;>)
+	2	FPA+2	(&043333   +18139 \$;;)
+	1	+1	(&026700   +11712 \"W )
+	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1910	(&203566   +67446 \0=V)
+L2212	4	L1751	(&103327   +34519 \(;7)
+	14	5	(&340005  +114693 \< ?)
+	14	8187	(&357773  +122875 \=_[)
+	1	FPA+2	(&023333    +9947 \";;)
+	5	FPA+2	(&123333   +42715 \*;;)
+	8	L1910	(&203566   +67446 \0=V)
+L2218	4	L1756	(&103334   +34524 \(;<)
+	12	FPA	(&303331  +100057 \8;9)
+	5	L1762	(&123342   +42722 \*;B)
+	3	L1763	(&063343   +26339 \&;C)
+	4	L1757	(&103335   +34525 \(;=)
+	12	FPA	(&303331  +100057 \8;9)
+	14	8175	(&357757  +122863 \=_O)
+L2225	3	L1764	(&063344   +26340 \&;D)
+	1	L1762	(&023342    +9954 \";B)
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1763	(&103343   +34531 \(;C)
+	1	L1764	(&023344    +9956 \";D)
+	9	L2249	(&224311   +75977 \2C?)
+L2231	5	L1763	(&123343   +42723 \*;C)
+	4	L1756	(&103334   +34524 \(;<)
+	12	FPA+1	(&303332  +100058 \8;:)
+	14	8175	(&357757  +122863 \=_O)
+	3	L1764	(&063344   +26340 \&;D)
+	1	FPA	(&023331    +9945 \";9)
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1764	(&103344   +34532 \(;D)
+	1	L1763	(&023343    +9955 \";C)
+	9	L2246	(&224306   +75974 \2C&)
+L2241	5	FPA+1	(&123332   +42714 \*;:)
+	7	L2252	(&164314   +59596 \.C,)
+L2243	4	FPA	(&103331   +34521 \(;9)
+L2244	0	L1759	(&003337    +1759 \ ;?)
+	/8	1	(&600001   -65535 \P ^)
+L2246	6	+131071	(&146667   +52663 \,VW)
+	10	FPA	(&243331   +83673 \4;9)
+	8	L2241	(&204301   +67777 \0C^)
+L2249	6	+131071	(&146667   +52663 \,VW)
+	10	FPA	(&243331   +83673 \4;9)
+	8	L2231	(&204267   +67767 \0BW)
+L2252	4	FPA	(&103331   +34521 \(;9)
+	2	-131072	(&046663   +19891 \$VS)
+	7	;+2	(&164320   +59600 \.C0)
+	8	L2243	(&204303   +67779 \0C£)
+	4	+131071	(&106667   +36279 \(VW)
+	5	FPA	(&123331   +42713 \*;9)
+	5	FPA+1	(&123332   +42714 \*;:)
+	8	L2244	(&204304   +67780 \0C$)
+L2260	0	;+2	(&004326    +2262 \ C6)
+	/8	1	(&600001   -65535 \P ^)
+L2262	>1
+L2263	4	+131071	(&106667   +36279 \(VW)
+	5	L1767	(&123347   +42727 \*;G)
+	5	L1768	(&123350   +42728 \*;H)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1772	(&123354   +42732 \*;L)
+	5	L1776	(&123360   +42736 \*;P)
+	5	L1777	(&123361   +42737 \*;Q)
+	5	L1778	(&123362   +42738 \*;R)
+	4	+1	(&106700   +36288 \(W )
+	5	L1771	(&123353   +42731 \*;K)
+	4	-6	(&106731   +36313 \(W9)
+	5	L1775	(&123357   +42735 \*;O)
+L2275	0	L1775	(&003357    +1775 \ ;O)
+	/4	L1771	(&503353   -96533 \H;K)
+	9	L2480	(&224660   +76208 \2FP)
+L2278	10	L1775	(&243357   +83695 \4;O)
+	10	L1775	(&243357   +83695 \4;O)
+	4	L1775	(&103357   +34543 \(;O)
+	9	L2275	(&224343   +76003 \2CC)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1776	(&123360   +42736 \*;P)
+	4	L1769	(&103351   +34537 \(;I)
+	7	;+5	(&164362   +59634 \.CR)
+L2286	14	1	(&340001  +114689 \< ^)
+	9	L2295	(&224367   +76023 \2CW)
+	10	L1776	(&243360   +83696 \4;P)
+	8	;-3	(&204356   +67822 \0CN)
+L2290	4	+17	(&106706   +36294 \(W&)
+	5	L1776	(&123360   +42736 \*;P)
+	4	L1770	(&103352   +34538 \(;J)
+L2293	7	L2260	(&164324   +59604 \.C4)
+	8	L2286	(&204356   +67822 \0CN)
+L2295	4	+114688	(&106725   +36309 \(W5)
+	1	L1776	(&023360    +9968 \";P)
+	5	;+4	(&124375   +43261 \*C])
+	0	L1770	(&003352    +1770 \ ;J)
+	14	1	(&340001  +114689 \< ^)
+	4	L1769	(&103351   +34537 \(;I)
+	>1
+	5	L1769	(&123351   +42729 \*;I)
+	3	L1770	(&063352   +26346 \&;J)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1777	(&123361   +42737 \*;Q)
+	4	L1765	(&103345   +34533 \(;E)
+	7	;+5	(&164410   +59656 \.D()
+L2308	14	1	(&340001  +114689 \< ^)
+	9	L2317	(&224415   +76045 \2D-)
+	10	L1777	(&243361   +83697 \4;Q)
+	8	;-3	(&204404   +67844 \0D$)
+L2312	4	+17	(&106706   +36294 \(W&)
+	5	L1777	(&123361   +42737 \*;Q)
+	4	L1766	(&103346   +34534 \(;F)
+	7	L2464	(&164640   +59808 \.F@)
+	8	L2308	(&204404   +67844 \0D$)
+L2317	4	L1777	(&103361   +34545 \(;Q)
+	2	L1776	(&043360   +18160 \$;P)
+	9	;+3	(&224422   +76050 \2D2)
+	5	L1778	(&123362   +42738 \*;R)
+	8	;+3	(&204424   +67860 \0D4)
+	4	L1776	(&103360   +34544 \(;P)
+	5	L1777	(&123361   +42737 \*;Q)
+	4	+114688	(&106725   +36309 \(W5)
+	1	L1777	(&023361    +9969 \";Q)
+	5	L2333	(&124435   +43293 \*D=)
+	4	+114688	(&106725   +36309 \(W5)
+	1	L1778	(&023362    +9970 \";R)
+	5	L2339	(&124443   +43299 \*DC)
+	0	L1766	(&003346    +1766 \ ;F)
+	14	1	(&340001  +114689 \< ^)
+	4	L1765	(&103345   +34533 \(;E)
+L2333	>1
+	5	FPA	(&123331   +42713 \*;9)
+	3	FPA+1	(&063332   +26330 \&;:)
+L2336	0	L1768	(&003350    +1768 \ ;H)
+	14	1	(&340001  +114689 \< ^)
+	4	L1767	(&103347   +34535 \(;G)
+L2339	>1
+	3	L1757	(&063335   +26333 \&;=)
+	5	L1756	(&123334   +42716 \*;<)
+	9	L2454	(&224626   +76182 \2F6)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L2218	(&204252   +67754 \0BJ)
+	2	L1769	(&043351   +18153 \$;I)
+	9	L1740	(&223314   +75468 \2;,)
+	7	L2468	(&164644   +59812 \.FD)
+L2348	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	8191	(&357777  +122879 \=__)
+	5	L1784	(&123370   +42744 \*;X)
+	3	L1785	(&063371   +26361 \&;Y)
+	14	1	(&340001  +114689 \< ^)
+	13	L1769	(&323351  +108265 \:;I)
+	14	8191	(&357777  +122879 \=__)
+	5	L1782	(&123366   +42742 \*;V)
+	5	L1756	(&123334   +42716 \*;<)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1757	(&123335   +42717 \*;=)
+	4	L1769	(&103351   +34537 \(;I)
+	5	FPA	(&123331   +42713 \*;9)
+	4	L1770	(&103352   +34538 \(;J)
+	5	FPA+1	(&123332   +42714 \*;:)
+	11	L1759	(&263337   +91871 \6;?)
+	8	L2218	(&204252   +67754 \0BJ)
+	2	L1784	(&043370   +18168 \$;X)
+	5	FPA	(&123331   +42713 \*;9)
+	4	FPA+1	(&103332   +34522 \(;:)
+	2	L1785	(&043371   +18169 \$;Y)
+	9	;+3	(&224506   +76102 \2E&)
+	5	FPA+1	(&123332   +42714 \*;:)
+	8	L2379	(&204513   +67915 \0E+)
+	6	+131071	(&146667   +52663 \,VW)
+	5	FPA+1	(&123332   +42714 \*;:)
+	4	-1	(&106655   +36269 \(VM)
+	1	FPA	(&023331    +9945 \";9)
+	5	FPA	(&123331   +42713 \*;9)
+L2379	4	L1769	(&103351   +34537 \(;I)
+	2	+131071	(&046667   +19895 \$VW)
+	7	;+4	(&164521   +59729 \.E1)
+	4	L1770	(&103352   +34538 \(;J)
+	1	+65536	(&026716   +11726 \"W.)
+	9	L2452	(&224624   +76180 \2F4)
+L2385	4	FPA	(&103331   +34521 \(;9)
+	9	L2507	(&224713   +76235 \2G+)
+	4	+0	(&106640   +36256 \(V@)
+	5	L1773	(&123355   +42733 \*;M)
+	8	L2403	(&204543   +67939 \0EC)
+L2390	4	FPA	(&103331   +34521 \(;9)
+	2	+0	(&046640   +19872 \$V@)
+	5	FPA	(&123331   +42713 \*;9)
+	4	FPA+1	(&103332   +34522 \(;:)
+	2	+0	(&046640   +19872 \$V@)
+	9	;+3	(&224536   +76126 \2E>)
+	5	FPA+1	(&123332   +42714 \*;:)
+	8	L2403	(&204543   +67939 \0EC)
+	6	+131071	(&146667   +52663 \,VW)
+	5	FPA+1	(&123332   +42714 \*;:)
+	4	-1	(&106655   +36269 \(VM)
+	1	FPA	(&023331    +9945 \";9)
+	5	FPA	(&123331   +42713 \*;9)
+L2403	4	FPA	(&103331   +34521 \(;9)
+	7	;+2	(&164546   +59750 \.EF)
+	8	L1740	(&203314   +67276 \0;,)
+	4	FPA+1	(&103332   +34522 \(;:)
+	0	+0	(&006640    +3488 \ V@)
+	14	8191	(&357777  +122879 \=__)
+	13	L1769	(&323351  +108265 \:;I)
+	5	L1774	(&123356   +42734 \*;N)
+	4	L1773	(&103355   +34541 \(;M)
+	9	;+3	(&224557   +76143 \2EO)
+	4	L1774	(&103356   +34542 \(;N)
+	8	;+3	(&204561   +67953 \0EQ)
+	4	L1774	(&103356   +34542 \(;N)
+	2	+0	(&046640   +19872 \$V@)
+	14	8176	(&357760  +122864 \=_P)
+	3	L1774	(&063356   +26350 \&;N)
+	1	L1782	(&023366    +9974 \";V)
+	5	L1773	(&123355   +42733 \*;M)
+	0	L1774	(&003356    +1774 \ ;N)
+	14	1	(&340001  +114689 \< ^)
+	4	L1773	(&103355   +34541 \(;M)
+	14	1	(&340001  +114689 \< ^)
+	3	L1781	(&063365   +26357 \&;U)
+	5	L1780	(&123364   +42740 \*;T)
+	4	L1772	(&103354   +34540 \(;L)
+	7	L2435	(&164603   +59779 \.F£)
+	0	L1781	(&003365    +1781 \ ;U)
+	14	1	(&340001  +114689 \< ^)
+	4	L1780	(&103364   +34548 \(;T)
+	14	1	(&340001  +114689 \< ^)
+	3	L1781	(&063365   +26357 \&;U)
+	5	L1780	(&123364   +42740 \*;T)
+L2435	4	L1771	(&103353   +34539 \(;K)
+	9	;+2	(&224606   +76166 \2F&)
+	8	L2260	(&204324   +67796 \0C4)
+	4	L1780	(&103364   +34548 \(;T)
+	2	+0	(&046640   +19872 \$V@)
+	5	L1780	(&123364   +42740 \*;T)
+	4	L1781	(&103365   +34549 \(;U)
+	2	+0	(&046640   +19872 \$V@)
+	9	;+3	(&224616   +76174 \2F.)
+	5	L1781	(&123365   +42741 \*;U)
+	8	L2260	(&204324   +67796 \0C4)
+	6	+131071	(&146667   +52663 \,VW)
+	5	L1781	(&123365   +42741 \*;U)
+	4	-1	(&106655   +36269 \(VM)
+	1	L1780	(&023364    +9972 \";T)
+	5	L1780	(&123364   +42740 \*;T)
+	8	L2260	(&204324   +67796 \0C4)
+L2452	10	L1769	(&243351   +83689 \4;I)
+	8	L2385	(&204521   +67921 \0E1)
+L2454	4	+1	(&106700   +36288 \(W )
+	2	L2339	(&044443   +18723 \$DC)
+	5	L2339	(&124443   +43299 \*DC)
+	0	L1770	(&003352    +1770 \ ;J)
+	14	1	(&340001  +114689 \< ^)
+	4	L1769	(&103351   +34537 \(;I)
+	14	8191	(&357777  +122879 \=__)
+	3	L1770	(&063352   +26346 \&;J)
+	5	L1769	(&123351   +42729 \*;I)
+	8	L2336	(&204440   +67872 \0D@)
+L2464	4	+0	(&106640   +36256 \(V@)
+	5	L1780	(&123364   +42740 \*;T)
+	5	L1781	(&123365   +42741 \*;U)
+	8	L2260	(&204324   +67796 \0C4)
+L2468	4	L1770	(&103352   +34538 \(;J)
+	2	FPA	(&043331   +18137 \$;9)
+	9	;+2	(&224650   +76200 \2FH)
+	8	L1740	(&203314   +67276 \0;,)
+	10	L1772	(&243354   +83692 \4;L)
+	0	FPA+1	(&003332    +1754 \ ;:)
+	14	1	(&340001  +114689 \< ^)
+	4	FPA	(&103331   +34521 \(;9)
+	14	8191	(&357777  +122879 \=__)
+	5	FPA	(&123331   +42713 \*;9)
+	3	FPA+1	(&063332   +26330 \&;:)
+	8	L2348	(&204454   +67884 \0DL)
+L2480	0	L1775	(&003357    +1775 \ ;O)
+	/4	L1771	(&503353   -96533 \H;K)
+	2	+0	(&046640   +19872 \$V@)
+	5	FPA	(&123331   +42713 \*;9)
+	/4	L1772	(&503354   -96532 \H;L)
+	2	+0	(&046640   +19872 \$V@)
+	9	;+3	(&224671   +76217 \2FY)
+	5	FPA+1	(&123332   +42714 \*;:)
+	8	L2494	(&204676   +68030 \0F^)
+	6	+131071	(&146667   +52663 \,VW)
+	5	FPA+1	(&123332   +42714 \*;:)
+	4	-1	(&106655   +36269 \(VM)
+	1	FPA	(&023331    +9945 \";9)
+	5	FPA	(&123331   +42713 \*;9)
+L2494	4	FPA	(&103331   +34521 \(;9)
+	9	L2504	(&224710   +76232 \2G()
+L2496	0	L1775	(&003357    +1775 \ ;O)
+	/5	L1771	(&523353   -88341 \J;K)
+	4	FPA+1	(&103332   +34522 \(;:)
+L2499	/5	L1772	(&523354   -88340 \J;L)
+	4	L1771	(&103353   +34539 \(;K)
+	2	+0	(&046640   +19872 \$V@)
+	5	L1771	(&123353   +42731 \*;K)
+	8	L2278	(&204346   +67814 \0CF)
+L2504	4	+131071	(&106667   +36279 \(VW)
+	5	FPA+1	(&123332   +42714 \*;:)
+	8	L2496	(&204700   +68032 \0G )
+L2507	5	L1773	(&123355   +42733 \*;M)
+	8	L2390	(&204526   +67926 \0E6)
+L2509	>1
+L2510	>1
+	4	-36	(&106732   +36314 \(W:)
+	5	L2614	(&125066   +43574 \*HV)
+L2513	0	L2614	(&005066    +2614 \ HV)
+	4	+0	(&106640   +36256 \(V@)
+	/5	L2606	(&525056   -87506 \JHN)
+L2516	10	L2614	(&245066   +84534 \4HV)
+	4	L2614	(&105066   +35382 \(HV)
+	9	;-5	(&224721   +76241 \2G1)
+	4	L2613	(&105065   +35381 \(HU)
+	1	-1	(&026655   +11693 \"VM)
+	2	+0	(&046640   +19872 \$V@)
+	5	L2614	(&125066   +43574 \*HV)
+	2	+0	(&046640   +19872 \$V@)
+	14	2	(&340002  +114690 \< ")
+	1	L2614	(&025066   +10806 \"HV)
+	5	L2614	(&125066   +43574 \*HV)
+	4	L2569	(&105011   +35337 \(H?)
+	1	L2614	(&025066   +10806 \"HV)
+	5	L2615	(&125067   +43575 \*HW)
+	4	L2612	(&105064   +35380 \(HT)
+	1	L2614	(&025066   +10806 \"HV)
+	5	L2614	(&125066   +43574 \*HV)
+	4	L2613	(&105065   +35381 \(HU)
+	2	+0	(&046640   +19872 \$V@)
+	5	L2616	(&125070   +43576 \*HX)
+L2536	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	0	L2615	(&005067    +2615 \ HW)
+	/4	3	(&500003   -98301 \H £)
+	12	L2617	(&305071  +100921 \8HY)
+	14	1	(&340001  +114689 \< ^)
+	5	L2620	(&125074   +43580 \*H\)
+	/4	6	(&500006   -98298 \H &)
+	2	L2620	(&045074   +19004 \$H\)
+	0	L2614	(&005066    +2614 \ HV)
+	/1	0	(&420000  -122880 \B  )
+	0	L2615	(&005067    +2615 \ HW)
+	/5	0	(&520000   -90112 \J  )
+	>1
+	10	L2616	(&245070   +84536 \4HX)
+	4	L2616	(&105070   +35384 \(HX)
+	9	;+2	(&224772   +76282 \2GZ)
+	8	L2561	(&205001   +68097 \0H^)
+	4	-3	(&106642   +36258 \(VB)
+	1	L2614	(&025066   +10806 \"HV)
+	5	L2614	(&125066   +43574 \*HV)
+	4	-3	(&106642   +36258 \(VB)
+	1	L2615	(&025067   +10807 \"HW)
+	5	L2615	(&125067   +43575 \*HW)
+L2560	8	L2536	(&204750   +68072 \0GH)
+L2561	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	0	L2615	(&005067    +2615 \ HW)
+	/4	6	(&500006   -98298 \H &)
+	/2	0	(&440000  -114688 \D  )
+	14	8191	(&357777  +122879 \=__)
+	0	L2509	(&004715    +2509 \ G-)
+	/8	1	(&600001   -65535 \P ^)
+L2569	0	;+1	(&005012    +2570 \ H*)
+	>36
+L2606	>6
+L2612	>1
+L2613	>1
+L2614	>1
+L2615	>1
+L2616	>1
+L2617	>3
+L2620	>3
+LN	>1
+	+0
+	4	FPA	(&103331   +34521 \(;9)
+	7	L2700	(&165214   +60044 \.J,)
+	9	L2700	(&225214   +76428 \2J,)
+	4	FPA+2	(&103333   +34523 \(;;)
+	1	-1	(&026655   +11693 \"VM)
+	5	L2651	(&125133   +43611 \*I;)
+	4	+0	(&106640   +36256 \(V@)
+	5	FPA+2	(&123333   +42715 \*;;)
+	4	+12	(&106657   +36271 \(VO)
+	5	L2613	(&125065   +43573 \*HU)
+	4	L2663	(&105147   +35431 \(IG)
+	5	L2612	(&125064   +43572 \*HT)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	1	L2654	(&025136   +10846 \"I>)
+	14	2	(&340002  +114690 \< ")
+	5	L2617	(&125071   +43577 \*HY)
+	11	L2509	(&264715   +92621 \6G-)
+	8	L2510	(&204716   +68046 \0G.)
+	5	L2657	(&125141   +43617 \*IA)
+	4	L2651	(&105133   +35419 \(I;)
+	14	0	(&340000  +114688 \<  )
+	12	L2660	(&305144  +100964 \8ID)
+	1	L2657	(&025141   +10849 \"IA)
+L2649	0	LN	(&005077    +2623 \ H_)
+	/8	1	(&600001   -65535 \P ^)
+L2651	>2
+	0	17	(&000021      +17 \  1)
+L2654	/4	0	(&500000   -98304 \H  )
+	>2
+L2657	>3
+L2660	11	L740	(&261344   +90852 \6+D)
+	2	8176	(&057760   +24560 \?_P)
+	>1
+L2663	0	;+1	(&005150    +2664 \ IH)
+	12	L380	(&300574   +98684 \8?\)
+	13	4415	(&330477  +110911 \;$_)
+	>1
+	10	8033	(&257541   +89953 \5]A)
+	9	4866	(&231402   +78594 \3,")
+	-1		(&777777 /15 8191 \___)
+	/0	7603	(&416663  -123469 \AVS)
+	3	4032	(&067700   +28608 \&_ )
+	-5		(&777773 /15 8187 \__[)
+	13	6484	(&334524  +112980 \;E4)
+L2674	12	L2560	(&305000  +100864 \8H )
+	-8		(&777770 /15 8184 \__X)
+L2676	/1	6573	(&434655  -116307 \CFM)
+	6	L2048	(&144000   +51200 \,@ )
+	-11		(&777765 /15 8181 \__U)
+	15	4832	(&371340  +127712 \?+@)
+	6	0	(&140000   +49152 \,  )
+	-14		(&777762 /15 8178 \__R)
+	/7	L688	(&561260   -73040 \N*P)
+	8	0	(&200000   +65536 \0  )
+	-16		(&777760 /15 8176 \__P)
+	10	4008	(&247650   +85928 \4^H)
+	>1
+	-19		(&777755 /15 8173 \__M)
+	/3	L3296	(&466340  -103200 \FS@)
+	>1
+	-22		(&777752 /15 8170 \__J)
+	15	2816	(&365400  +125696 \>L )
+	>1
+	-25		(&777747 /15 8167 \__G)
+	/6	4096	(&550000   -77824 \M  )
+	>1
+	-27		(&777745 /15 8165 \__E)
+L2697	10	0	(&240000   +81920 \4  )
+	>1
+	-30		(&777742 /15 8162 \__B)
+L2700	0	;+2	(&005216    +2702 \ J.)
+	8	L1740	(&203314   +67276 \0;,)
+	0	;+1	(&005217    +2703 \ J/)
+	6	L3232	(&146240   +52384 \,R@)
+	1	L334	(&020516    +8526 \"?.)
+	8	;+1	(&205222   +68242 \0J2)
+	4	+0	(&106640   +36256 \(V@)
+	5	FPA	(&123331   +42713 \*;9)
+	5	FPA+1	(&123332   +42714 \*;:)
+	5	FPA+2	(&123333   +42715 \*;;)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	8	L2649	(&205131   +68185 \0I9)
+EXP	>1
+L2714	>1
+	4	FPA	(&103331   +34521 \(;9)
+	7	L2757	(&165305   +60101 \.K?)
+	4	L2747	(&105273   +35515 \(J[)
+	5	L1737	(&123311   +42697 \*;?)
+	4	+8	(&106703   +36291 \(W£)
+	5	L2613	(&125065   +43573 \*HU)
+	4	L2764	(&105314   +35532 \(K,)
+	5	L2612	(&125064   +43572 \*HT)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	12	L2751	(&305277  +101055 \8J_)
+	5	L2614	(&125066   +43574 \*HV)
+	6	4	(&140004   +49156 \, $)
+	10	L2748	(&245274   +84668 \4J\)
+	4	L2748	(&105274   +35516 \(J\)
+	14	0	(&340000  +114688 \<  )
+	3	L2614	(&065066   +27190 \&HV)
+	2	L2614	(&045066   +18998 \$HV)
+	14	1	(&340001  +114689 \< ^)
+L2734	1	L2754	(&025302   +10946 \"K")
+	5	L2617	(&125071   +43577 \*HY)
+	11	L2509	(&264715   +92621 \6G-)
+	8	L2510	(&204716   +68046 \0G.)
+	>1
+	4	L2748	(&105274   +35516 \(J\)
+	1	FPA+2	(&023333    +9947 \";;)
+	5	FPA+2	(&123333   +42715 \*;;)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	14	0	(&340000  +114688 \<  )
+L2745	0	EXP	(&005231    +2713 \ J9)
+	/8	1	(&600001   -65535 \P ^)
+L2747	0	;+1	(&005274    +2748 \ J\)
+L2748	>2
+	0	17	(&000021      +17 \  1)
+L2751	11	4436	(&270524   +94548 \7?4)
+	7	L3230	(&166236   +60574 \.R>)
+	0	1	(&000001       +1 \  ^)
+L2754	/0	0	(&400000  -131072 \@  )
+	>2
+L2757	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+L2759	4	;+2	(&105311   +35529 \(K?)
+	8	L2745	(&205271   +68281 \0JY)
+L2761	8	0	(&200000   +65536 \0  )
+	>1
+	0	1	(&000001       +1 \  ^)
+L2764	0	;+1	(&005315    +2765 \ K-)
+	11	5373	(&272375   +95485 \73])
+	15	827	(&361473  +123707 \>,[)
+	0	1	(&000001       +1 \  ^)
+	/0	648	(&401210  -130424 \@*()
+	13	3744	(&327240  +110240 \:Z@)
+	-2		(&777776 /15 8190 \__^)
+	10	8033	(&257541   +89953 \5]A)
+	6	L96	(&140140   +49248 \,^@)
+	-5		(&777773 /15 8187 \__[)
+	/5	7184	(&536020   -82928 \KP0)
+	10	512	(&241000   +82432 \4( )
+	-9		(&777767 /15 8183 \__W)
+	14	101	(&340145  +114789 \<^E)
+	10	0	(&240000   +81920 \4  )
+	-14		(&777762 /15 8178 \__R)
+	/0	3892	(&407464  -127180 \@\T)
+	>1
+	-19		(&777755 /15 8173 \__M)
+	14	2688	(&345200  +117376 \<J )
+	>1
+	-24		(&777750 /15 8168 \__H)
+	/5	0	(&520000   -90112 \J  )
+	>1
+	-29		(&777743 /15 8163 \__C)
+SQRT	>1
+	+0
+	4	FPA	(&103331   +34521 \(;9)
+	7	L2827	(&165413   +60171 \.L+)
+	9	L2848	(&225440   +76576 \2L@)
+L2794	4	FPA+2	(&103333   +34523 \(;;)
+	5	L2837	(&125425   +43797 \*L5)
+	9	L2835	(&225423   +76563 \2L3)
+L2797	6	+1	(&146700   +52672 \,W )
+	7	;+4	(&165362   +60146 \.KR)
+	4	-1	(&106655   +36269 \(VM)
+	10	L2837	(&245425   +84757 \4L5)
+	8	;+2	(&205363   +68339 \0KS)
+	4	+0	(&106640   +36256 \(V@)
+	5	FPA+2	(&123333   +42715 \*;;)
+	4	-3	(&106642   +36258 \(VB)
+	5	L2838	(&125426   +43798 \*L6)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	14	8191	(&357777  +122879 \=__)
+	5	L2614	(&125066   +43574 \*HV)
+	1	L2839	(&025427   +11031 \"L7)
+	5	L2842	(&125432   +43802 \*L:)
+L2812	4	L2614	(&105066   +35382 \(HV)
+	13	L2842	(&325432  +109338 \:L:)
+	5	L2845	(&125435   +43805 \*L=)
+	4	L2842	(&105432   +35610 \(L:)
+	14	8191	(&357777  +122879 \=__)
+	1	L2845	(&025435   +11037 \"L=)
+	5	L2842	(&125432   +43802 \*L:)
+	>1
+	10	L2838	(&245426   +84758 \4L6)
+	4	L2838	(&105426   +35606 \(L6)
+	9	L2832	(&225420   +76560 \2L0)
+	4	L2837	(&105425   +35605 \(L5)
+	14	8191	(&357777  +122879 \=__)
+	1	FPA+2	(&023333    +9947 \";;)
+	5	FPA+2	(&123333   +42715 \*;;)
+L2827	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	14	0	(&340000  +114688 \<  )
+	0	SQRT	(&005345    +2789 \ KE)
+	/8	1	(&600001   -65535 \P ^)
+L2832	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	8	L2812	(&205374   +68348 \0K\)
+L2835	2	+0	(&046640   +19872 \$V@)
+	8	L2797	(&205355   +68333 \0KM)
+L2837	>1
+L2838	>1
+L2839	13	8008	(&337510  +114504 \;]()
+	7	8088	(&177630   +65432 \/^8)
+	-1		(&777777 /15 8191 \___)
+L2842	>3
+L2845	>3
+L2848	0	;+2	(&005442    +2850 \ LB)
+	8	L1740	(&203314   +67276 \0;,)
+	0	;+1	(&005443    +2851 \ LC)
+	2	5024	(&051640   +21408 \?.@)
+	1	L465	(&020721    +8657 \"'1)
+	8	;+1	(&205446   +68390 \0LF)
+	4	FPA	(&103331   +34521 \(;9)
+	2	+0	(&046640   +19872 \$V@)
+	5	FPA	(&123331   +42713 \*;9)
+	4	FPA+1	(&103332   +34522 \(;:)
+	7	L2869	(&165465   +60213 \.LU)
+	2	+0	(&046640   +19872 \$V@)
+	9	;+3	(&225457   +76591 \2LO)
+	5	FPA+1	(&123332   +42714 \*;:)
+	8	L2794	(&205352   +68330 \0KJ)
+	6	+131071	(&146667   +52663 \,VW)
+	5	FPA+1	(&123332   +42714 \*;:)
+	4	FPA	(&103331   +34521 \(;9)
+	1	-1	(&026655   +11693 \"VM)
+	5	FPA	(&123331   +42713 \*;9)
+	8	L2794	(&205352   +68330 \0KJ)
+L2869	4	FPA	(&103331   +34521 \(;9)
+	1	-131072	(&026663   +11699 \"VS)
+	7	;+2	(&165471   +60217 \.LY)
+	8	L2794	(&205352   +68330 \0KJ)
+	4	+65536	(&106716   +36302 \(W.)
+	5	FPA	(&123331   +42713 \*;9)
+	10	FPA+2	(&243333   +83675 \4;;)
+	8	L2794	(&205352   +68330 \0KJ)
+SIN	>1
+L2878	+0
+	4	L2918	(&105546   +35686 \(MF)
+	5	L1737	(&123311   +42697 \*;?)
+	4	FPA	(&103331   +34521 \(;9)
+	7	L2915	(&165543   +60259 \.MC)
+	4	+6	(&106673   +36283 \(V[)
+	5	L2613	(&125065   +43573 \*HU)
+	4	L2931	(&105563   +35699 \(MS)
+	5	L2612	(&125064   +43572 \*HT)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	12	L2919	(&305547  +101223 \8MG)
+	5	L2922	(&125552   +43882 \*MJ)
+	1	L2761	(&025311   +10953 \"K?)
+	14	8190	(&357776  +122878 \=_^)
+	6	4	(&140004   +49156 \, $)
+	4	L2651	(&105133   +35419 \(I;)
+	14	0	(&340000  +114688 \<  )
+	14	2	(&340002  +114690 \< ")
+	2	L2922	(&045552   +19306 \$MJ)
+	5	L2922	(&125552   +43882 \*MJ)
+	2	L2761	(&045311   +19145 \$K?)
+	9	L2911	(&225537   +76639 \2M?)
+	4	L2922	(&105552   +35690 \(MJ)
+L2902	12	L2922	(&305552  +101226 \8MJ)
+	1	L2925	(&025555   +11117 \"MM)
+	14	1	(&340001  +114689 \< ^)
+	5	L2617	(&125071   +43577 \*HY)
+	11	L2509	(&264715   +92621 \6G-)
+	8	L2510	(&204716   +68046 \0G.)
+	12	L2922	(&305552  +101226 \8MJ)
+L2909	0	SIN	(&005475    +2877 \ L])
+	/8	1	(&600001   -65535 \P ^)
+L2911	4	L2922	(&105552   +35690 \(MJ)
+	2	L2928	(&045560   +19312 \$MP)
+	5	L2922	(&125552   +43882 \*MJ)
+	8	L2902	(&205526   +68438 \0M6)
+L2915	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	8	L2909	(&205535   +68445 \0M=)
+L2918	0	L2651	(&005133    +2651 \ I;)
+L2919	10	L1523	(&242763   +83443 \47S)
+	0	+999	(&006672    +3514 \ VZ)
+	>1
+L2922	>3
+L2925	/0	0	(&400000  -131072 \@  )
+	>1
+	-1		(&777777 /15 8191 \___)
+L2928	8	0	(&200000   +65536 \0  )
+	>1
+	0	2	(&000002       +2 \  ")
+L2931	0	;+1	(&005564    +2932 \ MT)
+	10	L1722	(&243272   +83642 \4:Z)
+	3	4008	(&067650   +28584 \&^H)
+	0	2	(&000002       +2 \  ")
+	/6	7140	(&555744   -74780 \MOD)
+	6	L2124	(&144114   +51276 \,A,)
+	-1		(&777777 /15 8191 \___)
+	9	L2759	(&225307   +76487 \2K')
+	7	L3200	(&166200   +60544 \.R )
+	-6		(&777772 /15 8186 \__Z)
+	/7	L398	(&560616   -73330 \N&.)
+	2	4096	(&050000   +20480 \?  )
+	-12		(&777764 /15 8180 \__T)
+	9	7696	(&237020   +81424 \3X0)
+	>1
+	-19		(&777755 /15 8173 \__M)
+	/1	5120	(&432000  -117760 \C0 )
+	>1
+	-27		(&777745 /15 8165 \__E)
+COS	>1
+L2951	>1
+	4	L2918	(&105546   +35686 \(MF)
+	5	L1737	(&123311   +42697 \*;?)
+	4	FPA	(&103331   +34521 \(;9)
+	7	L2991	(&165657   +60335 \.NO)
+	4	+6	(&106673   +36283 \(V[)
+	5	L2613	(&125065   +43573 \*HU)
+	4	L2931	(&105563   +35699 \(MS)
+	5	L2612	(&125064   +43572 \*HT)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	12	L2919	(&305547  +101223 \8MG)
+	5	L2922	(&125552   +43882 \*MJ)
+	1	L2928	(&025560   +11120 \"MP)
+	14	8190	(&357776  +122878 \=_^)
+	6	4	(&140004   +49156 \, $)
+	4	L2651	(&105133   +35419 \(I;)
+	14	0	(&340000  +114688 \<  )
+	14	2	(&340002  +114690 \< ")
+	5	L2614	(&125066   +43574 \*HV)
+	4	L2922	(&105552   +35690 \(MJ)
+	2	L2614	(&045066   +18998 \$HV)
+	1	L2761	(&025311   +10953 \"K?)
+	5	L2922	(&125552   +43882 \*MJ)
+	2	L2761	(&045311   +19145 \$K?)
+	9	L2987	(&225653   +76715 \2NK)
+	4	L2922	(&105552   +35690 \(MJ)
+L2978	12	L2922	(&305552  +101226 \8MJ)
+	1	L2925	(&025555   +11117 \"MM)
+	14	1	(&340001  +114689 \< ^)
+	5	L2617	(&125071   +43577 \*HY)
+	11	L2509	(&264715   +92621 \6G-)
+	8	L2510	(&204716   +68046 \0G.)
+	12	L2922	(&305552  +101226 \8MJ)
+L2985	0	COS	(&005606    +2950 \ N&)
+	/8	1	(&600001   -65535 \P ^)
+L2987	4	L2922	(&105552   +35690 \(MJ)
+	2	L2928	(&045560   +19312 \$MP)
+	5	L2922	(&125552   +43882 \*MJ)
+	8	L2978	(&205642   +68514 \0NB)
+L2991	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	4	L2761	(&105311   +35529 \(K?)
+	5	FPA	(&123331   +42713 \*;9)
+	8	L2985	(&205651   +68521 \0NI)
+ARCTAN	>1
+L2997	5	L3057	(&125761   +44017 \*OQ)
+	9	L3037	(&225735   +76765 \2O=)
+	2	L2761	(&045311   +19145 \$K?)
+	9	L3051	(&225753   +76779 \2OK)
+	>1
+	4	+0	(&106640   +36256 \(V@)
+	5	L3060	(&125764   +44020 \*OT)
+	5	L3061	(&125765   +44021 \*OU)
+L3005	4	+12	(&106657   +36271 \(VO)
+	5	L2613	(&125065   +43573 \*HU)
+	4	L3072	(&106000   +35840 \(P )
+	5	L2612	(&125064   +43572 \*HT)
+	11	QF	(&263305   +91845 \6;?)
+	8	QF+2	(&203307   +67271 \0;')
+	4	L3061	(&105765   +35829 \(OU)
+	9	L3068	(&225774   +76796 \2O\)
+	4	L3057	(&105761   +35825 \(OQ)
+L3014	12	L3057	(&305761  +101361 \8OQ)
+	1	L2925	(&025555   +11117 \"MM)
+	14	1	(&340001  +114689 \< ^)
+	5	L2617	(&125071   +43577 \*HY)
+	11	L2509	(&264715   +92621 \6G-)
+	8	L2510	(&204716   +68046 \0G.)
+	12	L3057	(&305761  +101361 \8OQ)
+	5	L3057	(&125761   +44017 \*OQ)
+	4	L3061	(&105765   +35829 \(OU)
+	9	;+2	(&225721   +76753 \2O1)
+	8	L3035	(&205733   +68571 \0O;)
+	4	L3060	(&105764   +35828 \(OT)
+	9	;+5	(&225727   +76759 \2O7)
+	4	L3057	(&105761   +35825 \(OQ)
+	2	L3062	(&045766   +19446 \$OV)
+L3029	0	ARCTAN	(&005664    +2996 \ NT)
+	/8	1	(&600001   -65535 \P ^)
+L3031	4	L3057	(&105761   +35825 \(OQ)
+	1	L3062	(&025766   +11254 \"OV)
+	2	L3065	(&045771   +19449 \$OY)
+	8	;-5	(&205725   +68565 \0O5)
+L3035	4	L3057	(&105761   +35825 \(OQ)
+	8	L3029	(&205725   +68565 \0O5)
+L3037	2	L3065	(&045771   +19449 \$OY)
+	2	L2761	(&045311   +19145 \$K?)
+	9	L3046	(&225746   +76774 \2OF)
+	>1
+	4	-1	(&106655   +36269 \(VM)
+	5	L3060	(&125764   +44020 \*OT)
+	4	+0	(&106640   +36256 \(V@)
+	5	L3061	(&125765   +44021 \*OU)
+	8	L3005	(&205675   +68541 \0N])
+L3046	>1
+	4	-1	(&106655   +36269 \(VM)
+	5	L3060	(&125764   +44020 \*OT)
+	5	L3061	(&125765   +44021 \*OU)
+	8	L3005	(&205675   +68541 \0N])
+L3051	>1
+	4	+0	(&106640   +36256 \(V@)
+	5	L3060	(&125764   +44020 \*OT)
+	4	-1	(&106655   +36269 \(VM)
+	5	L3061	(&125765   +44021 \*OU)
+	8	L3005	(&205675   +68541 \0N])
+L3057	>3
+L3060	>1
+L3061	>1
+L3062	12	4639	(&311037  +102943 \9(?)
+	11	L2697	(&265211   +92809 \6J?)
+	0	1	(&000001       +1 \  ^)
+L3065	>3
+L3068	4	L2761	(&105311   +35529 \(K?)
+	13	L3057	(&325761  +109553 \:OQ)
+	5	L3057	(&125761   +44017 \*OQ)
+	8	L3014	(&205706   +68550 \0O&)
+L3072	0	;+1	(&006001    +3073 \ P^)
+	14	835	(&341503  +115523 \<-£)
+	6	BUFFCHAR	(&146057   +52271 \,PO)
+	0	1	(&000001       +1 \  ^)
+	/2	3651	(&447103  -111037 \DY£)
+	3	4368	(&070420   +28944 \'$0)
+	-3		(&777775 /15 8189 \__])
+	11	L3302	(&266346   +93414 \6SF)
+	3	L3392	(&066500   +27968 \&U )
+	-6		(&777772 /15 8186 \__Z)
+	/4	5613	(&512755   -92691 \I7M)
+	9	L1536	(&223000   +75264 \28 )
+	-9		(&777767 /15 8183 \__W)
+	12	L1415	(&302607   +99719 \86')
+	15	4096	(&370000  +126976 \?  )
+	-12		(&777764 /15 8180 \__T)
+	/2	L2094	(&444056  -112594 \D@N)
+	8	0	(&200000   +65536 \0  )
+	-15		(&777761 /15 8177 \__Q)
+	8	L108	(&200154   +65644 \0^L)
+	>1
+	-17		(&777757 /15 8175 \__O)
+	/6	3592	(&547010   -78328 \LX()
+	>1
+	-20		(&777754 /15 8172 \__L)
+	11	4992	(&271600   +95104 \7. )
+	>1
+	-23		(&777751 /15 8169 \__I)
+	/1	6144	(&434000  -116736 \C@ )
+	>1
+	-26		(&777746 /15 8166 \__F)
+	8	4096	(&210000   +69632 \1  )
+	>1
+	-28		(&777744 /15 8164 \__D)
+	/6	0	(&540000   -81920 \L  )
+	>1
+	-31		(&777741 /15 8161 \__A)
+
+((Editor utility)
+EDIT	8	MODTAP	(Read steering tape)
+	8	DATTAP  (Read input tape)
+	8	ANOTHER	(Read a further input tape)
+	8	PRINON	(Print as well as punch)
+L3113 FIND
+	>1		(-1 = Find, 0 = Delete)
+L3114 COMAND
+	>1		(Current command, e.g., FC)
+L3115 HALTED
+	>1		(Set to 0 by DATTAP, ANOTHER, 
+			incremented in CLASSIFY, -1 On halt code)
+L3116 BUFFCT
+	>1		(Set to 0 by DATTAP)
+L3117 LFSEEN
+	>1		(0 = newline, -1 otherwise; set to 0 by DATTAP)
+L3118 MATCH
+	>1		(character to match in FL etc)
+L3119 BUFFCHAR
+	>1
+L3120	>1		(BUFFCT after last command?)
+L3121 LPFLG
+	>1		(Set to 0 by MODTAP)
+
+ANOTHER	4	+0
+	5	HALTED
+	8	GETCH+1
+
+MODTAP	4	+0	(Read in steering tape, terminated by halt)	
+	5	FIRST	
+	5	LPFLG	
+	15	2048	
+	7	;-1	
+L3130 NEXTCH
+	0	FIRST	
+	/5	STORE+2	
+	2	+20	(test for halt code)	
+	7	;+5	
+	4	+0	
+	15	2048
+	10	FIRST
+	8	NEXTCH	(Read next character)
+L3138	8	;+0
+FIRST	>1		(Index into store)
+
+PRINON	10	LPFLG	(Edit and print)
+DATTAP	4	+0	(Edit)
+	5	BUFFCT
+	5	HALTED
+	5	LFSEEN
+L3145	4	+256	(Set COMAND negative)
+L3146	0	+0
+	14	9
+	5	COMAND	
+L3149	11	BUFFIN 	(Read and classify next character)
+	8	BUFFIN+1
+	8	VALIDC	(Valid char)
+	8	L3149	(Ignorable)	
+	8	LF	(Line feed)	
+	8	HLTCDE	(Halt code)
+	8	VALIDC	(???)
+
+(Seperator)
+LF	4	COMAND	(Read next char if COMAND < 0)
+	9	L3149
+	8	ERROR2	
+
+(Halt Code)
+HLTCDE	4	COMAND	(Test COMAND < 0)	
+	9	PUNHLT	
+	8	ERROR2	
+
+(Valid char)
+L3162 VALIDC
+ 	1	COMAND	(Test if 2 valids in)
+	9	L3146	(Get next character)
+	5	COMAND	(&126052   +44074 \*PJ)
+	4	-1
+	5	FIND	(&126051   +44073 \*PI)
+	5	L3194	(Index commands table)
+	0	BUFFCT	
+	/4	STORE+2	(Current char)
+	2	+160
+	7	;+2	(Test for space)
+	8	;+2	
+	10	BUFFCT	(Advance buffer)
+	4	BUFFCT	
+	5	L3120
+L3176	10	L3194	(Search table for command)	
+	0	L3194	
+	/4	L3195	(Fetch next entry from table)
+	9	ERROR2	(Off end of table)
+	2	COMAND	(test if matches input command)
+	7	;+2
+	8	L3176	(Keep looking)
+	/8	;+1
+	8	FL
+	8	DL
+	8	FC
+	8	DC
+	8	IS
+	8	IS
+	8	IB
+	8	RE
+ERROR2	4	+178	
+	8	ERRMSG	(ERROR 2 - Command error)
+L3194	>1
+L3195	&306314		(FL)
+	&104314  	(DL)
+	&306303 	(FC)
+	&104303   	(DC)
+	&311123  	(IS)
+L3200	&303123   	(CS)
+	&311102 	(IB)
+	&322305  	(RE)
+	-1
+DL	10	FIND	(Set DELETE)
+FL	4	+0
+	5	L3248
+L3207	4	LFSEEN	(Test LFSEEN - initialised 0)
+	7	SCAN  
+	11	GETCH	(Copy rest of current line)
+	8	GETCH+1
+	8	;+4
+	8	;+3
+	8	;+2
+	8	;+1
+	11	PUNCH
+	8	PUNCH+1
+	8	L3207
+
+L3218 SCAN
+	11	BUFFIN	(Get next steering character)
+	8	BUFFIN+1
+	8	L3225	(Printable)
+	8	L3218	(Non printable)
+	8	L3145	(Line feed - start next command)
+	8	PUNHLT	(Halt code)
+	4	+10	(@)
+L3225	5	BUFFCHAR
+	4	L3248	(set +0 in FL)
+	7	;+3
+	4	+51	(ERROR 3)
+	8	ERRMSG
+
+L3230 SEARCH
+	11	GETCH	(Get next character from tape)
+	8	GETCH+1
+L3232	8	;+4	(Printable)
+	8	NONPRI	(non-printable)
+	1	+0	(Line feed)
+	10	L3248	(Halt on tape - clear L3248)
+	5	MATCH	(@)
+	11	PUNCH   (Punch)
+	8	PUNCH+1	
+	4	BUFFCHAR
+	2	MATCH
+	7	SCAN	(Keep matching)
+	4	L3120	(Reset to start of command string)
+	5	BUFFCT	
+	8	FL	(Try next line)
+NONPRI	11	PUNCH	(Punch)
+	8	PUNCH+1	
+	8	SEARCH	(Continue searching)
+L3248	>1
+
+DC	10	FIND	(Flag deleting)	
+FC	11	BUFFIN	(Get next steering tape char)
+	8	BUFFIN+1
+	8	;+5	(Printable)
+	8	;-3	(Non-printing)
+	8	L3145	(Line feed - get next command)
+	8	PUNHLT	(Halt code)
+	4	+10	(@)
+L3257	5	BUFFCHAR
+L3258	11	GETCH	(Get next character from input)
+	8	GETCH+1	
+	8	;+4	(Printable)
+	8	;+3	(Unprintable)
+	8	;+2	(Line feed)
+	8	;+1	(Halt)
+	5	MATCH	(@)
+	11	PUNCH	
+	8	PUNCH+1	
+L3267	4	BUFFCHAR
+	2	MATCH
+	7	FC	(Match so move to nect steering character)
+	8	L3258	(No match so get next character)
+IS	11	BUFFIN	
+	8	BUFFIN+1
+	8	;+4	(Printable)
+	8	;+3	(Unprintable)
+	8	L3145	(Line feed terminates command)
+L3276	8	PUNHLT	(Halt in command string)
+	11	PUNCH	(Output character from command string)
+	8	PUNCH+1
+	4	COMAND	(Test for CS)
+	2	+99923
+	7	;+2
+	8	IS
+	11	GETCH	(absorb one character)
+	8	GETCH+1	
+	8	IS
+	8	IS
+	8	IS
+	8	IS
+	8	IS
+
+IB	11	BUFFIN	
+	8	BUFFIN+1	
+	8	L3304	(Punch)
+	8	L3304	(Punch)
+	8	L3304	(Punch)
+	8	ERROR4	(Halt code)
+L3296	0	BUFFCT	
+	/4	STORE	
+	7	;+2	(Test for blank)
+	8	;+2	(&206345   +68837 \0SE)
+	/4	STORE-1	(Test for line feed before)
+	2	+10	
+L3302	7	;+5	(Test for line feed)
+	4	+192	(@)
+L3304	11	PUNCH	
+	8	PUNCH+1	
+	8	IB	(&206332   +68826 \0S:)
+L3307	10	FIND	(&246051   +85033 \4PI)
+	8	IS	(&206307   +68807 \0S')
+
+ERROR4	4	+180	(ERROR 4 - halt code in IB)
+	8	ERRMSG	(&206603   +68995 \0V£)
+
+RE	11	GETCH	(&266413   +93451 \6T+)
+	8	GETCH+1	(&206414   +68876 \0T,)
+	8	;+4	(&206365   +68853 \0SU)
+	8	;+3	(&206365   +68853 \0SU)
+	8	;+2	(&206365   +68853 \0SU)
+	8	;+4	(&206370   +68856 \0SX)
+	11	PUNCH	(&266457   +93487 \6TO)
+	8	PUNCH+1	(&206460   +68912 \0TP)
+	8	RE	(&206357   +68847 \0SO)
+	11	PUNCH	(&266457   +93487 \6TO)
+	8	PUNCH+1	(&206460   +68912 \0TP)
+	10	FIND	(&246051   +85033 \4PI)
+	8	IS	(&206307   +68807 \0S')
+
+(Read and classify next character from steering tape buffer)
+BUFFIN	>1
+	0	BUFFCT
+	/4	STORE+2
+	5	BUFFCHAR
+	11	CLASSIFY
+	8	CLASSIFY+1
+	7	EERR1	(=0, signal ERROR 1)
+	10	BUFFCT	(Increment BUFFCT)
+	1	BUFFIN
+	5	BUFFIN
+	4	BUFFCHAR
+	0	BUFFIN
+	/8	0
+EERR1	4	+177	(ERROR 1 - Illegal character)
+	8	ERRMSG
+
+(get next character from tape)	
+L3339 GETCH
+	>1
+	4	HALTED	(Skip run out if were previously halted)
+	7	;+5	
+	9	;-2	(Loop if HALTED < 0)	
+	4	+0	(Read next character)	
+	15	2048
+	8	;+4
+L3346	15	2048	(Read ignoring blanks)
+	7	;-1	(Ignore blanks)
+	10	HALTED	
+	5	MATCH	
+	11	CLASSIFY
+	8	CLASSIFY+1
+	5	CLASS   
+	7	ERROR1	(Report ERROR 1 for type 0)
+	1	GETCH	(Set up return by type)
+	5	GETCH	
+	0	CLASS	(Switch on CLASS)	
+	4	-1	
+	/8	;+0	
+	8	;+4	(printable)
+	8	;+4	(Non-printing)
+	8	L3368	(Line feed)
+	8	;+5	(Halt code)
+	5	LFSEEN	(Printable, set LFSEEN := -1)
+	4	MATCH	(Character read)
+L3365	0	GETCH	(Exit)
+	/8	0
+	
+L3367	5	HALTED	(Halt code HALTED := -1)
+
+(Line feed)
+L3368	4	+0	(2  LFSEEN := 0)
+	5	LFSEEN	
+	4	+10	(Return with line feed)
+	8	L3365	
+
+ERROR1	4	+177	(ERROR 1 - illegal character)
+	8	ERRMSG	
+CLASS	>1
+
+PUNCH	>1
+	5	L3387	(Save char)
+	4	FIND	
+	7	L3385   (Exit if 3113 = 0)
+	4	L3387	(3113 <> 0 so punch char)
+	15	6144	
+	4	LPFLG	
+	7	;+3	(Test 3121, return on 0)
+	4	;+4	(Pick up character)
+	15	4352	(Line print?)
+L3385	0	PUNCH	
+	/8	1	
+L3387	>1
+
+(Classify character in A)
+(  0 illegal
+   1 A, B, ..., 0, 
+   2 Carriage return, erase, runout, tab, space
+   3 Line feed
+   4 Halt code
+   5 @)
+
+CLASSIFY	>1
+L3389	5	L3417
+	4	+0
+	5	L3418	(Zero count)
+L3392	10	L3418
+	7	L3399	(L3418 = 1?)	
+	5	L3419	(No)
+	2	+0
+	6	L3419
+	2	L3419
+	8	L3392
+L3399	4	L3418	(L3418 = 1)
+	6	+1
+	7	L3415	(Exit when count even)
+	4	L3417
+	6	+31
+	5	L3418	(Count := A & 31)
+	4	L3417
+	6	+96	(64+32 bits)
+	14	8189	(-5, 32 bit to lsb)
+	2	+0
+	5	L3419	(L3419 := shift count)
+	0	L3418	(load count word from table)
+	/4	L3420
+	0	L3419	(shift by calculated shift)
+	/14	0
+	6	+15	(mask octal digit)
+L3415	0	CLASSIFY
+	/8	1
+L3417	>1
+L3418	>1
+L3419	>1
+
+(Classification table.  4 bit fields)
+
+L3420	0	5410	(&012442    +5410 \^4B)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4370	(&010422    +4370 \^$2)
+	0	4371	(&010423    +4371 \^$3)
+	0	4370	(&010422    +4370 \^$2)
+	0	4368	(&010420    +4368 \^$0)
+	0	4370	(&010422    +4370 \^$2)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4372	(&010424    +4372 \^$4)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	4368	(&010420    +4368 \^$0)
+	0	DIGIT3	(&000420     +272 \ $0)
+	0	DIGIT3	(&000420     +272 \ $0)
+	0	DIGIT3	(&000420     +272 \ $0)
+	0	DIGIT3	(&000420     +272 \ $0)
+	1	DIGIT3	(&020420    +8464 \"$0)
+
+PUNHLT	4	-81920	(Punch run out and halt)
+	15	6144
+	1	+4096
+	9	;-2
+	4	+20
+	15	6144
+	8	;+0
+
+ERRMSG	5	L3481	(Error character)
+	4	-81920	(Type runout)
+	15	6148	
+	1	+8192	
+	9	;-2	
+	4	+0	
+	5	L3482	
+	0	l3482	
+	/4	;+5
+	15	6148
+	10	L3482
+	9	;-4
+	8	;+0
+L3472	/0	141	(RETURN)
+	/0	10	(LINE FEED)
+	/0	0	(RUNOUT)
+	/0	197	(E)
+	/0	210	(R)
+	/0	210	(R)
+	/0	207	(O)
+	/0	210	(R)
+	/0	160	(SPACE)
+L3481	+0		
+L3482   +0		(Sentinel at end)
+
+%
+
+<! Halt !>

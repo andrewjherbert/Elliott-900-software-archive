@@ -1,0 +1,248 @@
+﻿
+
+OANDXB;
+"BEGIN""INTEGER"A,Z,COMP,TEST,M,OPP,I,J,ZZ,R,D1,D2,D3,TIME1,TIME2;
+   "INTEGER""ARRAY"P,P1[1:9];
+   "SWITCH"SS:=AA,AB,AC,AD,AE,AF,AG;
+
+"PROCEDURE"PRINT(P);
+   "INTEGER""ARRAY"P;
+     "BEGIN"
+     "INTEGER"I,J;
+     "PRINT"PUNCH(3),''L1S3@I'S3@I'L1@@;
+     "FOR"I:=0"STEP"3"UNTIL"6"DO"
+       "BEGIN"
+       "FOR"J:=1"STEP"1"UNTIL"3"DO"
+         "BEGIN""IF"P[I+J]=2"THEN"
+         "PRINT"PUNCH(3),' O @,SAMELINE"ELSE""IF"P[I+J]=1"THEN"
+         "PRINT"PUNCH(3),' X @"ELSE""PRINT"PUNCH(3),''S3@@,SAMELINE;
+         "IF"J<3"THEN""PRINT"PUNCH(3),'I@;
+         "END";
+       "IF"I<6"THEN""PRINT"PUNCH(3),''L1@---I---I---'L1@@"ELSE"
+       "PRINT"PUNCH(3),''L1S3@I'S3@I'L3@@;
+       "END";
+     "END" OF PRINT;
+
+"BOOLEAN""PROCEDURE"CHECK(H);
+   "INTEGER"H;
+     "BEGIN"
+     "IF"(P[1]=H"AND"P[2]=H"AND"P[3]=H)"OR"
+         (P[1]=H"AND"P[4]=H"AND"P[7]=H)"OR"
+         (P[1]=H"AND"P[5]=H"AND"P[9]=H)"OR"
+         (P[2]=H"AND"P[5]=H"AND"P[8]=H)"OR"
+         (P[3]=H"AND"P[5]=H"AND"P[7]=H)"OR"
+         (P[3]=H"AND"P[6]=H"AND"P[9]=H)"OR"
+         (P[4]=H"AND"P[5]=H"AND"P[6]=H)"OR"
+         (P[7]=H"AND"P[8]=H"AND"P[9]=H)"THEN"
+         CHECK:="TRUE""ELSE"CHECK:="FALSE";
+     "END" OF CHECK;
+
+<! Halt !>"PROCEDURE"TRANS(P);
+   "INTEGER""ARRAY"P;
+     "BEGIN"
+     "INTEGER"B,C,I,J;
+     "INTEGER""ARRAY"P1,P2,P3[0:9];
+     "SWITCH"SA:=TA,TB,TC,TD,TE;
+     "IF"(P[9]=1"AND"P[4]=1)"OR"(P[7]=1"AND"P[6]=1)"THEN"
+       "BEGIN"
+       R:=ENTIER(ABS(10*SIN(D1+2*D2+3*D3-TIME1-2*TIME2)));
+       "IF"R>7"THEN"
+         "BEGIN"
+         "IF"P[4]=1"THEN"P[6]:=2"ELSE"P[4]:=2;
+         "GOTO"E;         "GOTO"E;
+
+    I:=s;J<! 186 !>    "J:=1,2,3,8,9,4,7,6,5"DO"
+     "BEGIN"
+       P2[J]:=P[I];
+       I:=I+1;
+       "END";
+     "IF"P[1]=1"OR"P[2]=2"THEN"
+       "BEGIN"
+       "FOR"J:=1"STEP"1"UNTIL"9"DO"
+       P3[J]:=P2[J];
+       "GOTO"TA;
+       "END";
+     "FOR"J:=3,5,7"DO"
+     "IF"P2[J]=1"THEN"
+       "BEGIN"
+       C:=J-1;
+       "GOTO"TB;
+       "END";
+     "FOR"J:=4,6"DO"
+     "IF"P2[J]=1"THEN"
+       "BEGIN"
+       C:=J-2;
+       "GOTO"TB;
+       "END";
+TB:  "FOR"J:=1"STEP"1"UNTIL"8"DO"
+     "IF"J-C<1"THEN"P3[J-C+8]:=P2[J]"ELSE"P3[J-C]:=P2[J];
+     P3[9]:=P2[9];
+TA:  I:=0;
+     "IF"P3[1]=1"THEN"
+       "BEGIN"
+       "FOR"J:=0,0,3,2,3,2,7,8,7,0"DO"
+         "BEGIN"
+         P1[I]:=J;
+         I:=I+1;
+         B:=2;
+         "END";
+       "END"
+     "ELSE""FOR"J:=0,0,0,1,1,1,1,1,1,0"DO"
+       "BEGIN"
+       P1[I]:=J;
+       I:=I+1;
+       B:=3;
+       "END";
+    "FOR"J:=B"STEP"1"UNTIL"9"DO"
+    "IF"P3[J]=1"THEN"
+       "BEGIN"
+       P3[P1[I]]:=2;
+       "GOTO"TC;
+       "END";
+TC:  "IF"P[1]=1"OR"P[2]=1"THEN""GOTO"TD;
+     "FOR"J:=1"STEP"1"UNTIL"8"DO"
+     "IF"J+C>8"THEN"P2[J+C-8]:=P3[J]"ELSE"P2[J+C]:=P3[I];
+     P2[9]:=P3[9];
+TD:  I:=1;
+     "FOR"J:=1,2,3,8,9,4,7,6,5"DO"
+       "BEGIN"
+       P[I]:=P2[J];
+       I:=I+1;
+       "END";
+TE:  "END" OF TRANS;
+
+   "PRINT"PUNCH(3),''L1@WHAT IS THE DATE'L1@@;
+   "READ"READER(3),D1,D2,D3;
+AE:"FOR"I:=1"STEP"1"UNTIL"9"DO"
+   P[I]:=0;
+   A:=0;
+   "PRINT"PUNCH(3),'WHAT IS THE TIME'L1@@;
+   "READ"READER(3),TIME1,TIME2;
+   "PRINT"PUNCH(3),''L1S8@@,DIGITS(2),SAMELINE,D1,'/@,D2,'/@,D3,''S3@@,
+          TIME1,':@,TIME2,''L2@@;
+   "PRINT"PUNCH(3),'IF YOU WISH TO GO FIRST TYPE A 1 OTHERWISE TYPE 2.'L1@@;
+   "READ"READER(3),Z;
+   COMP:=3-Z;
+   "PRINT"PUNCH(3),''L1@TO MAKE A MOVE TYPE THE NUMBER OF THE SQUARE'L1@YOU @,
+          'WANT MARKED,AS IN THIS DIAGRAM:-@;
+   "PRINT"PUNCH(3),''L4S3@I'S3@I'L1@ 1 I 2 I 3'L1@---I---I---'L1@ 4 I 5 I 6@,
+          ''L1@---I---I---'L1@ 7 I 8 I 9'L1S3@I   I'L3@@;
+   "IF"Z=1"THEN"
+     "BEGIN"
+     "PRINT"PUNCH(3),'YOU ARE CROSSES,YOUR MOVE FIRST,OFF YOU GO.'L1@@;
+     "READ"READER(3),OPP;
+     P[OPP]:=1;
+     "IF"OPP=5"THEN"
+       "BEGIN"
+       P[1]:=2;
+       M:=2;
+       "GOTO"AB;
+       "END";
+    P[5]:=2;
+
+     PRINT(P);
+
+AC:  "READ"READER(3),OPP;
+     "IF"P[OPP]"NE"0"THEN"
+       "BEGIN"
+       "PRINT"PUNCH(3),''L2S4@ILLEGAL MOVE'L2@@;
+       "GOTO"AC;
+       "END";
+     P[OPP]:=1;
+
+     TRANS(P);
+
+     M:=4;
+     "END"
+"ELSE"
+     "BEGIN"
+     "PRINT"PUNCH(3),'YOU ARE NOUGHTS,MY MOVE FIRST,GOOD LUCK.'L1@@;
+     P[5]:=1;
+
+     PRINT(P);
+
+AA:  "READ"READER(3),OPP;
+     "IF"OPP=5"THEN"
+       "BEGIN"
+       "PRINT"PUNCH(3),''L2S4@ILLEGAL MOVE'L2@@;
+       "GOTO"AA;
+       "END";
+     P[OPP]:=2;
+     I:=1;
+     "FOR"J:=9,7,7,3,0,1,3,1,1"DO"
+       "BEGIN"
+       P1[I]:=J;
+       I:=I+1;
+       "END";
+     P[P1[OPP]]:=1;
+     M:=3;
+     "END";
+
+AB:PRINT(P);
+
+AG:"READ"READER(3),OPP;
+   "IF"P[OPP]"NE"0"THEN"
+     "BEGIN"
+     "PRINT"PUNCH(3),''L2S4@ILLEGAL MOVE'L2@@;
+     "GOTO"AG;
+     "END";
+   P[OPP]:=Z;
+   "IF"CHECK(Z)"THEN"
+     "BEGIN"
+     A:=1;
+     "GOTO"AD;
+     "END";
+   M:=M+1;
+   "IF"M=9"THEN""GOTO"AD;
+   "FOR"TEST:=COMP,Z"DO"
+   "FOR"I:=1"STEP"1"UNTIL"9"DO"
+   "IF"P[I]=0"THEN"
+     "BEGIN"
+     P[I]:=TEST;
+     "IF"CHECK(TEST)"THEN"
+       "BEGIN"
+       "IF"TEST=COMP"THEN"
+         "BEGIN"
+         A:=2;
+         "GOTO"AD;
+         "END"
+       "ELSE"
+         "BEGIN"
+         P[I]:=COMP;
+         "GOTO"AF;
+         "END";
+       "END"
+     "ELSE"P[I]:=0;
+     "END";
+   "IF"M=3"AND"P[5]=Z"THEN"
+     "BEGIN"
+     P[3]:=2;
+     "GOTO"AF;
+     "END";
+   "FOR"I:=1"STEP"1"UNTIL"9"DO"
+   "IF"P[I]=0"THEN"
+     "BEGIN"
+     P[I]:=COMP;
+     "GOTO"AF;
+     "END";
+AF:M:=M+1;
+   "IF"M"NE"9"THEN""GOTO"AB;
+
+AD:PRINT(P);
+
+   "IF"A=0"THEN""PRINT"PUNCH(3),''L2S4@WELL DONE A DRAWN GAME.'L2@@
+   "ELSE""IF"A=1"THEN""PRINT"PUNCH(3),''L2S4@CONGRATULATIONS YOU HAVE WON'L2@@
+   "ELSE""PRINT"PUNCH(3),''L2S4@I HAVE WON-BAD LUCK'L2@@;
+   "PRINT"PUNCH(3),''L2S4@FOR ANOTHER GAME TYPE 1'L2@@;
+   "READ"READER(3),ZZ;
+   "PRINT"PUNCH(3),''L5@@;
+   "IF"ZZ=1"THEN""GOTO"AE;
+   "PRINT"PUNCH(3),'GOOD-BYE'L2@END OF PROGRAM'L1@@;
+
+
+
+
+
+
+"END";
+<! Halt !>

@@ -1,0 +1,45 @@
+﻿on 900 64K
+telecode 903
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+c set STKEND to 64K-1
+e 27 65535
+
+at ptr inline
+MAN OR BOY;
+"BEGIN"
+   "COMMENT" 11-MAY-1996.
+              Algol Bulletin 17.2.4 (D.E. Knuth) 1964,
+              but modified by M. Woodger so as to 
+              invoke B in a function call;
+   "INTEGER" J;
+   "REAL" "PROCEDURE" A(K, X1, X2, X3, X4, X5);
+          "VALUE" K; "INTEGER" K;
+          "REAL" X1, X2, X3, X4, X5;
+   "BEGIN"
+      "REAL" "PROCEDURE" B;
+      "BEGIN"
+         K := K - 1;
+         B := A := A(K, B, X1, X2, X3, X4)
+      "END";
+      "IF" K "LE" 0 "THEN" A := X4 + X5
+                    "ELSE" "IF" B < 0 "THEN"
+   "END";
+   PUNCH(3);
+   "FOR" J := 1 "STEP" 1 "UNTIL" 11 "DO"
+      "PRINT" DIGITS(4), J, SAME LINE, ALIGNED(4, 2),
+              A(J, 1, -1, -1, 1, 0)
+"END"
+<! Halt Code !>
+<!!>
+c compile
+j 8
+
+c run
+select out tty
+nonprinting off
+j 10
+
+sh t

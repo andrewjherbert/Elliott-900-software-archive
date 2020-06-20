@@ -1,0 +1,14 @@
+﻿C Colin's computer race
+
+on 903 16K
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+at ptr file ../../MASTERS/HERBERT/COLINRACEALG.900
+j 8
+at ptr file ../../SCRIPTS/HERBERT/INT.RLB
+j 14
+sh t
+select out tty
+j 10
+sh t

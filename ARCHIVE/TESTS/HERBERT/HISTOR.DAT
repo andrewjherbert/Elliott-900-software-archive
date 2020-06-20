@@ -1,0 +1,22 @@
+﻿C Test HISTOR
+
+on 903 16K
+
+at ptr file ../../SCRIPTS/HERBERT/HISTOR.BIN
+j 8181
+st 8175
+
+select out tty
+
+at tty inline
+CCC<!!>
+
+j 8
+
+j 9
+
+j 10
+
+j 11
+
+sh t

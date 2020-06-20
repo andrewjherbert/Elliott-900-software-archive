@@ -1,0 +1,14 @@
+﻿c Terry Froggatt plotter test
+
+on 903 8K
+
+at ptr file ../../MASTERS/TEST/QPLOTEST.BIN
+
+j 8181
+st 8175
+
+origin 100 200
+j 8
+st 113
+
+sh t

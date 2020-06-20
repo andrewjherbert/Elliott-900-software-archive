@@ -1,0 +1,19 @@
+﻿       /5   SHC-2
+       11   GET
+        8   GET+1
+        0   DNO
+       /5   SHL-2
+
+       /4   SENSE-2
+        9   ;+4
+       /4   SHC-2
+       /2   SHL-2
+        8   ;+3
+       /4   SHL-2
+       /2   SHC-2
+       /5   SHL-2
+
+   11   GET
+   8   GET+1
+   0   DNO
+   /5   GOBACK-2

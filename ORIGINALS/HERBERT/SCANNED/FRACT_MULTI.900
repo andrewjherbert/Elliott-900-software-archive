@@ -1,0 +1,205 @@
+﻿   "PROCEDURE" DUMMY MULTIPLY;
+   "BEGIN" EXTEND(ZERO,ZERO,N); RSHIFT(ZERO) "END";
+<! Halt !>
+   "BOOLEAN" "PROCEDURE" DIFFER(A,B,M); "VALUE" M;
+             "INTEGER" "ARRAY" A,B; "INTEGER" M;
+   "BEGIN"
+      "INTEGER" J;
+      "FOR" J:=1 "STEP" 1 "UNTIL" M "DO"
+                 "IF" A[J] "NE" B[J] "THEN" "GOTO" TRUE;
+      DIFFER:="FALSE"; "GOTO" FIN;
+TRUE:
+      DIFFER:="TRUE";
+FIN:
+   "END";
+<! Halt !>
+   "PROCEDURE" SETUP;
+   "BEGIN"
+      "INTEGER" J;
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO"
+         ONE[J]:=ZERO[J]:=ZERO2[J]:=ZERO2[J+N]:=0;
+      ONE[1]:=1;
+   "END";
+<! Halt !>   "PROCEDURE" READNUM(X,GROUPS,CHAN); "VALUE" GROUPS,CHAN;
+               "INTEGER" "ARRAY" X; "INTEGER" GROUPS,CHAN;
+   "BEGIN"
+      "INTEGER" J; "INTEGER" "ARRAY" WORK[1:N];
+
+      "FOR" J:=1 "STEP" 1 "UNTIL" GROUPS "DO" "READ" READER(CHAN),
+                                                     WORK[J];
+      ADD(X,ZERO,ZERO);
+      "FOR" J:=1 "STEP" 1 "UNTIL" GROUPS "DO"
+      "BEGIN"
+         DIV(X,100000); X[1]:=WORK[GROUPS-J+1]
+      "END"
+   "END";
+<! Halt !>
+   "PROCEDURE" IDIV(A,K); "VALUE" K;
+               "INTEGER" "ARRAY" A; "INTEGER" K;
+   "IF" A[1]<0 "THEN"
+   "BEGIN"
+      SUB(A,ZERO,A); DIV(A,K); SUB(A,ZERO,A)
+   "END"
+               "ELSE"
+      DIV(A,K);
+<! Halt !>   "PROCEDURE" FDIV(X,AA,B); "INTEGER" "ARRAY" X,AA,B;
+   "COMMENT" X:=AA/B ROUNDED;
+   "BEGIN"
+      "INTEGER" J,K,L; "BOOLEAN" PLUS;
+      "INTEGER" "ARRAY" XX,YY,ZZ,TS,BB[1:2*N],AC[1:2];
+      "BOOLEAN" "PROCEDURE" TOO BIG;
+      "BEGIN"
+         SUB(TS,AA,BB); TOO BIG:=TS[1] "GE" 0
+      "END" OF TOO BIG;
+
+      IF(B,ZERO,F1); "GOTO" F2;
+F1:
+      "PRINT" PUNCH(3),''L@ZERO DIVISOR@; STOP;
+F2:
+      PLUS:="TRUE";
+      "IF" AA[1]<0 "THEN"
+      "BEGIN"
+         PLUS:="NOT" PLUS; SUB(AA,ZERO2,AA)
+      "END";
+
+      "IF" B[1]<0 "THEN"
+      "BEGIN"
+         PLUS:="NOT" PLUS; SUB(B,ZERO,B)
+      "END";
+
+      EXTEND(BB,B,0); J:=0;
+F3:
+      J:=J+1; DIV(BB,2);
+      "IF" BB[1] "NE" 0 "OR" BB[2] >65535 "THEN" "GOTO" F3;
+F4:
+      J:=J-1; MPY(BB,2);
+      "IF" BB[2]<65536 "THEN" "GOTO" F4;
+      K:=-J-1;
+      "FOR" K:=K+1 "WHILE" TOO BIG "DO" DIV(AA,2);
+
+      ADD(XX,ZERO2,ZERO2);
+      ADD(YY,ZERO2,ZERO2); YY[1]:=1;
+      ADD(ZZ,ZERO2,ZERO2);
+      IF(AA,BB,F9);
+      "FOR" L:=2 "STEP" 1 "UNTIL" N "DO"
+      "BEGIN"
+         SUB(AA,AA,BB);
+         "IF" AA[1]<0 "THEN" ADD(AA,AA,BB)
+                      "ELSE" ADD(XX,XX,YY);
+      RSHIFT(BB); RSHIFT(YY); ADD(TS,BB,ZERO2);
+      "IF" AA[L]=BB[L+1] "THEN" AC[2]:=131071
+                         "ELSE"
+      "BEGIN"
+         AC[1]:=AA[L]; AC[2]:=AA[L+1]; DIV(AC,BB[L+1])
+      "END";
+      MPY(TS,AC[2]); SUB(AA,AA,TS); ZZ[L]:=AC[2];
+      ADD(XX,XX,ZZ); ZZ[L]:=0;
+F5:
+      "IF" AA[1]=0 "THEN" "GOTO" F6
+                   "ELSE" "IF" AA[1]<0 "THEN"
+      "BEGIN"
+         ADD(AA,AA,BB); SUB(XX,XX,YY)
+      "END"
+                                       "ELSE"
+      "BEGIN"
+         SUB(AA,AA,BB); ADD(XX,XX,YY)
+      "END";
+      "GOTO" F5;
+F6:
+      "END" OF WORD LOOP;
+
+F7:
+      "IF" K=0 "THEN" "GOTO" F10;
+      "IF" K>0 "THEN" "GOTO" F8;
+      "FOR" J:=1 "STEP" 1 "UNTIL" -K "DO" DIV(XX,2); "GOTO" F10;
+F8:
+      "FOR" J:=1 "STEP" 1 "UNTIL" K+1 "DO"
+      "BEGIN"
+         SUB(AA,AA,BB);
+         "IF" AA[1]<0 "THEN" ADD(AA,AA,BB)
+                      "ELSE"
+         "BEGIN"
+            ADD(XX,XX,YY); DIV(YY,2); DIV(BB,2)
+         "END"
+      "END";
+
+      "FOR" J:=1 "STEP" 1 "UNTIL" K "DO" MPY(XX,2);
+      "GOTO" F10;
+F9:
+      XX[1]:=1; "GOTO" F7;
+F10:
+      ADD(YY,ZERO2,ZERO2); YY[N+1]:=65536; ADD(XX,XX,YY);
+      "IF" "NOT" PLUS "THEN" SUB(XX,ZERO2,XX);
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" X[J]:=XX[J]
+   "END" OF FDIV;
+<! Halt !>
+   "PROCEDURE" PRINTNUM(X,GROUPS,CHAN,S); "VALUE" X,GROUPS,CHAN;
+            "INTEGER" "ARRAY" X; "INTEGER" GROUPS,CHAN; "STRING" S;
+   "BEGIN"
+      "INTEGER" LINES,J,K; "BOOLEAN" PLUS; "INTEGER" "ARRAY" Y[1:N];
+      PLUS:=X[1] "GE" 0;
+      ADD(Y,ZERO,ZERO); Y[1]:=5; DIV(Y,10);
+      "FOR" J:=1 "STEP" 1 "UNTIL" GROUPS "DO" DIV(Y,100000);
+      "IF" "NOT" PLUS "THEN" SUB(X,ZERO,X);
+      ADD(X,X,Y);
+      "IF" "NOT" PLUS "AND" X[1]=0 "THEN" "PRINT" PUNCH(CHAN),
+                                   ''L@-    0.@
+                                   "ELSE"
+
+      "PRINT" PUNCH(CHAN),DIGITS(5),
+              ("IF" PLUS "THEN" X[1] "ELSE" -X[1]),'.@; LEADZERO;
+      LINES:=1+(GROUPS-1) "DIV" 10;
+      "FOR" J:=1 "STEP" 1 "UNTIL" LINES "DO"
+      "BEGIN"
+         "PRINT" PUNCH(CHAN),''L@@;
+         "FOR" K:=1 "STEP" 1 "UNTIL"
+                  ("IF" GROUPS<10 "THEN" GROUPS "ELSE" 10) "DO"
+         "BEGIN"
+            X[1]:=0; MPY(X,100000);
+            "PRINT" PUNCH(CHAN),DIGITS(5),SAME LINE,X[1]
+         "END";
+         GROUPS:=GROUPS-10
+      "END";
+      LEADBLANK; "PRINT" PUNCH(CHAN),S
+   "END" OF PRINTNUM;
+<! Halt !>   "PROCEDURE" FMULT(A,B,C); "VALUE" B,C; "INTEGER" "ARRAY" A,B,C;
+   "BEGIN"
+      "COMMENT" A:=B*C ROUNDED;
+      "INTEGER" J; "BOOLEAN" PLUS; "INTEGER" "ARRAY" X,Y[1:2*N];
+      PLUS:="TRUE";
+      "IF" B[1]<0 "THEN"
+      "BEGIN"
+         PLUS:="NOT" PLUS; SUB(B,ZERO,B)
+      "END";
+
+      "IF" C[1]<0 "THEN"
+      "BEGIN"
+         PLUS:="NOT" PLUS; SUB(C,ZERO,C)
+      "END";
+
+      MULTIPLY(X,B,C,N); ADD(Y,ZERO2,ZERO2); Y[N+2]:=65536;
+      ADD(X,X,Y);
+      "FOR" J:=1 "STEP" 1 "UNTIL" N "DO" A[J]:=X[J+1];
+      "IF" "NOT" PLUS "THEN" SUB(A,ZERO,A)
+   "END" OF FMULT;
+<! Halt !>
+
+   "PROCEDURE" FMULT2(AA,B,C); "VALUE" B,C; "INTEGER" "ARRAY" AA,B,C;
+   "BEGIN"
+      "COMMENT" AA:=B*C;
+      "BOOLEAN" PLUS;
+      PLUS:="TRUE";
+      "IF" B[1]<0 "THEN"
+      "BEGIN"
+         PLUS:="NOT" PLUS; SUB(B,ZERO,B)
+      "END";
+
+      "IF" C[1]<0 "THEN"
+      "BEGIN"
+         PLUS:="NOT" PLUS; SUB(C,ZERO,C)
+      "END";
+
+      MULTIPLY(AA,B,C,N); MPY(AA,1024); MPY(AA,128);
+      "IF" "NOT" PLUS "THEN" SUB(AA,ZERO2,AA)
+   "END" OF FMULT2;
+<! Halt !>

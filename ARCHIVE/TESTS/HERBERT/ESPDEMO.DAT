@@ -1,0 +1,33 @@
+﻿c Demonstrate Algol Elliott Simulation Package (ESP)
+
+on 903 16K
+
+c run program
+c read in large program interpreter
+at ptr file ..\..\MASTERS\MASDALGOL\ALG16KLP(MASD).BIN
+j 8181
+st 8175
+
+c load esp code procedures
+at ptr file ...\..\MASTERS\HERBERT\ESPDEMO.RLB
+j 12
+st 15840
+
+c run program
+select out tty
+nonprinting off
+at tty inline
+R 
+<!!>
+nonstop on
+j 8
+c will demand tty
+at tty inline
+1000
+<!!>
+r
+nonstop off
+sh t
+
+
+

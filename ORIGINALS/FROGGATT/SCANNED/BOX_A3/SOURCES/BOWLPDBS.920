@@ -1,0 +1,372 @@
+﻿
+((PATCH TO FREE LOCATIONS 40 TO 43 FOR ATU)
+↑ENTRY1
+         8    45
+↑ENTRY6+1
+         8    46
+
+↑40
+         >1
+         >1
+         >1
+         +2
+         +8192
+         4    ECHOP+5
+         5    ECHOP
+         0    44
+         /8   UPTLP1
+
+((PATCH TO JUMP TO LINEPRINTER FRIG)
+
+↑PARITY+12
+         0    44
+         /8   UPTLP2
+$
+
+*11
+((UPPER MODULE LINE PRINTER FRIG)
+
+AD2      1    CONTW
+AD1      /1   BUFFER
+         /1   BUF2
+UPTLP1   4    -8218
+         5    SMWS
+SMREP    0    -8192
+         /4   TABLE
+         0    SMWS
+         /5   UPPCT
+         10   SMWS
+         4    SMWS
+         1    +8192
+         9    SMREP
+         4    +2
+         0    -8192
+         /5   43
+         4    -1492
+         /8   49
+SMWS     >3
+
+UPTLP2   5    SMWS+1
+         7    SEXIT
+         6    &177     (DELETE PARITY FROM TRACK 8)
+         5    SMWS
+         15   7171
+         9    SEXIT
+         0    -8192
+         /4   TELE
+         7    ;+2
+         8    C903
+         4    BAR      (920 CODE)
+         7    SIP
+         4    +0
+         5    BAR
+         4    SMWS
+         1    -99      (TEST IF S)
+         7    ;+6
+         1    +40      (TEST IF <)
+         7    ;+5
+         1    +15      (TEST IF >)
+         7    ;+4
+         8    SERROR   (ILLEGAL CHAR AFTER VERT BAR)
+         4    -3
+         1    -57
+         1    +96
+         8    DIP
+SIP      4    SMWS
+         1    -126     (TEST FOR VERT BAR)
+         7    ;+2
+         8    ;+3
+         10   BAR
+         8    SEXIT
+         0    SMWS
+         /4   CODTAB
+         6    &177
+         7    SERROR   (ILLEGAL CHARACTER)
+DIP      5    SMWS
+C903     4    SMWS     (PACK INTO 6 BIT CODE)
+         1    -32
+         9    L32
+         5    SMWS
+         1    -64
+         9    BUF
+         1    +32
+         8    BUF-1
+L32      1    +23
+         7    STTAB
+         1    -1
+         7    NL
+         1    -10
+         7    HT
+         4    +0
+         8    BUF-1
+HT       4    +63
+         5    SMWS
+BUF      4    BUFCT
+         1    BUFMK
+         5    SMWS+3
+         0    SMWS+3
+         4    SMWS
+         /5   BUFFER
+         10   BUFCT
+         4    BUFCT
+         2    +132
+         9    NL
+         8    SEXIT
+
+NL       0    -8192
+         /4   43
+         9    ;-1
+         2    +2
+         7    SSCONT
+         4    +141
+         15   6148
+         4    +10
+         15   6148     (OUTPUT LINEPRINTER ERROR)
+         4    +204
+         15   6148
+         4    +80
+         15   6148
+         4    +210
+         15   6148
+         4    +160
+         15   6148
+         4    -6
+         5    SSMWS
+         /4   43
+         14   11
+         5    SMWS
+SSMRE    4    SMWS
+         14   1
+         5    SMWS
+         9    ;+3
+         4    +48
+         8    ;+2
+         4    +177
+         15   6148
+         10   SSMWS
+         4    SSMWS
+         9    SSMRE
+SSMRP    4    +0
+         15   2052
+         2    +195
+         7    SSCONT
+         8    SSMRP
+SSCONT   4    BUFMK
+         7    ;+3
+         4    AD1+1
+         8    ;+2
+         4    AD1
+         /5   40       (SET UP STATUS WORDS)
+         4    BUFCT
+         7    ;+2
+         8    ADDI
+         0    BUFMK
+         /5   BUFFER
+         4    +1
+         0    -8192
+ADDI     1    &110000
+         /5   41
+         4    AD2
+         /5   42
+         4    &400000
+         /5   43
+         15   5282
+         4    +0
+         5    BAR
+         5    BUFCT
+         4    BUFMK
+         7    ;+3
+         4    +0
+         8    ;+2
+         4    +132
+         5    BUFMK
+SEXIT    0    -8192
+         /4   PARITY
+         1    +1
+         1    =/8 0
+         5    ;+2
+         4    SMWS+1
+         >1            (RETURN TO BOWDLER)
+
+SERROR   8    ;+0
+
+STTAB    4    +0
+         5    TABCT    (CLEAR COUNT USED TO INSPECT CONSTANTS)
+
+FINDTB   0    TABCT
+         /4   TAB
+         2    BUFCT    (FIND FIRST TAB ABOVE BUFCT)
+         9    INSSP
+         7    INSSP
+         10   TABCT
+         8    FINDTB
+
+INSSP    4    BUFCT
+         1    BUFMK
+         5    SMWS+3
+         0    SMWS+3
+         4    +0       (STORE SPACE IN BUFFER)
+         /5   BUFFER
+         10   BUFCT    (UPDATE BUFFER POINTER)
+         0    TABCT
+         4    BUFCT    (CHECK IF ALL SPACES FOR THIS TAB DONE)
+         /2   TAB
+         9    ;+2      (ALL SPACES DONE)
+         8    INSSP    (GOTO INSERT ANOTHER SPACE)
+         4    BUFCT
+         2    +133
+         7    NL       (CHECK IF END OF LINE REACHED)
+         8    SEXIT
+
+BUFCT    >1
+SSMWS    >1
+TABCT    >1
+BUFFER   >132
+BUF2     >132
+BUFMK    >1
+BAR      >1
+CONTW    &000100
+TAB      +12
+         +18
+         +30
+         +40
+         +132
+
+(A table for converting 920 Telecode to & from
+an internal 7-bit code. The internal code is basically
+903/ISO code, and is given below.)
+
+CODTAB   &400000 (0)
+         &400000 (1)
+         &400000 (2)
+         &400013 (3)
+         &400000 (4)
+         &400000 (5)
+         &400000 (6)
+         &400000 (7,     Bell)
+         &400000 (8)
+         &405051 (9,     Horizontal tab, <T>)
+         &404454 (10,     New line or Line feed, <N>)
+         &400600 (11,     Vertical tab or Throw)
+         &400072 (12)
+         &400000 (13)
+         &400000 (14)
+         &400057 (15)
+         &400040 (16)
+         &400000 (17)
+         &400012 (18)
+         &400000 (19)
+         &407011 (20,     Stopcode, <H>)
+         &400000 (21)
+         &400000 (22)
+         &400000 (23)
+         &400050 (24)
+         &400000 (25)
+         &400000 (26)
+         &400043 (27)
+         &400024 (28)
+         &400046 (29)
+         &400052 (30)
+         &400000 (31)
+
+         &404000 (32,     Space, <S>)
+         &400061 (33,     Exclamation mark)
+         &417462 (34,  ~  Tilde or Ditto)
+         &406600 (35,  £  Sterling sign or 1/2)
+         &030664 (36,  $  Dollar sign)
+         &413600 (37,     Percentage sign)
+         &407200 (38,  &)
+         &016667 (39,  '  Acute accent or Apostrophe)
+         &406070 (40,     Open round bracket)
+         &402335 (41,     Close round bracket)
+         &407477 (42,  *)
+         &413340 (43,  +)
+         &402476 (44,  ,)
+         &413453 (45,  -)
+         &417655 (46,  .)
+         &403645 (47,  /)
+         &414060 (48,  0)
+         &410200 (49,  1)
+         &410400 (50,  2)
+         &414663 (51,  3)
+         &411000 (52,  4)
+         &415265 (53,  5)
+         &415466 (54,  6)
+         &411600 (55,  7)
+         &412133 (56,  8)
+         &416271 (57,  9)
+         &403047 (58,  :)
+         &424074 (59,  ;)
+         &416675 (60,  <)
+         &417136 (61,  =)
+         &413042 (62,  >)
+         &412456 (63,  ❿  Suffix 10 or Question mark)
+
+         &013077 (64,  `  Grave accent or AT symbol)
+         &420301 (65,  A)
+         &420502 (66,  B)
+         &424743 (67,  C)
+         &421104 (68,  D)
+         &425345 (69,  E)
+         &425546 (70,  F)
+         &421707 (71,  G)
+         &422110 (72,  H)
+         &426351 (73,  I)
+         &426552 (74,  J)
+         &422713 (75,  K)
+         &427154 (76,  L)
+         &423315 (77,  M)
+         &423516 (78,  N)
+         &427757 (79,  O)
+         &430073 (80,  P)
+         &434341 (81,  Q)
+         &434542 (82,  R)
+         &430703 (83,  S)
+         &435144 (84,  T)
+         &431305 (85,  U)
+         &431506 (86,  V)
+         &435747 (87,  W)
+         &436150 (88,  X)
+         &432311 (89,  Y)
+         &432512 (90,  Z)
+         &416153 (91,  [)
+         &406714 (92,  £  Sterling sign or Reverse /)
+         &412355 (93,  ])
+         &417356 (94,  ↑)
+         &400117 (95,     Left-pointing arrow)
+
+         &013120 (96,  `  Grave accent or AT symbol)
+         &424361 (97,  a)
+         &424562 (98,  b)
+         &420723 (99,  c)
+         &425164 (100,  d)
+         &421325 (101,  e)
+         &421526 (102,  f)
+         &425767 (103,  g)
+         &426170 (104,  h)
+         &422331 (105,  i)
+         &422532 (106,  j)
+         &426600 (107,  k)
+         &423000 (108,  l)
+         &427200 (109,  m)
+         &427400 (110,  n)
+         &423600 (111,  o)
+         &434160 (112,  p)
+         &430321 (113,  q)
+         &430522 (114,  r)
+         &434763 (115,  s)
+         &431124 (116,  t)
+         &435365 (117,  u)
+         &435566 (118,  v)
+         &431727 (119,  w)
+         &432130 (120,  x)
+         &436371 (121,  y)
+         &436572 (122,  z)
+         &400000 (123)
+         &400000 (124)
+         &400000 (125)
+         &400000 (126)
+         &400000 (127)
+
+%
+<! Halt !>

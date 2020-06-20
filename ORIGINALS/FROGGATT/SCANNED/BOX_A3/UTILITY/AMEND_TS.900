@@ -1,0 +1,235 @@
+﻿
+((900-SERIES TELECODE AMEND, 20/7/70)
+
+[AMEND]
+
+AMEND    11   CI900L
+         8    CI900E
+         7    CI900E
+         1    -10
+         7    CI900E
+
+         1    -10
+         7    ;+0
+         1    -20
+         7    COMMEN
+         1    -54
+         7    PATCH
+
+         4    ADDRESS
+         9    ERROR
+
+         4    CI900
+         1    -62
+         7    SKIP
+         1    +19
+         7    POSCON
+         1    -2
+         7    NEGCON
+         1    +7
+         7    OCTAL
+         1    -9
+         7    SLASH
+         8    INSTRU
+
+COMMEN   11   CI900L
+         8    CI900E
+         1    -41
+         7    CHECK-2
+         1    +21
+         7    ERROR
+         8    CI900E
+
+PATCH    11   INTIPL
+         8    INTIPE-2
+         8    ;+4
+
+SKIP     11   INTIPL
+         8    INTIPE-2
+         1    ADDRESS
+         5    ADDRESS
+         8    CHECK
+
+POSCON   11   INTIPL
+         8    INTIPE-2
+         8    STORE
+
+NEGCON   11   INTIPL
+         8    INTIPE-2
+         2    +0
+         8    STORE
+
+OCTAL    5    COUNT
+(+1)     5    WORD
+
+         11   CI900L
+         8    CI900E
+         2    +55
+         9    ENDOCT
+         2    +7
+         9    ENDOCT
+
+         10   COUNT
+         14   8189
+         4    WORD
+         14   3
+         8    OCTAL+1
+
+ENDOCT   4    COUNT
+         7    ERROR
+         2    +6
+         9    ERROR
+         4    WORD
+         8    STORE
+
+SLASH    11   CI900L
+         8    CI900E
+         4    =/0 0
+         8    ;+2
+INSTRU   4    =0 0
+         5    WORD
+
+         11   INTIPL
+         8    INTIPE
+         2    +15
+         9    ERROR
+         2    +15
+         14   13
+         1    WORD
+         5    WORD
+
+         4    CI900
+         7    ;+2
+         8    ERROR
+         11   CI900L
+         8    CI900E
+         7    CI900E
+
+         1    -59
+         7    RELATIVE
+         11   INTIPL
+         8    INTIPE
+         8    COLLATE
+
+RELATIVE 11   CI900L
+         8    CI900E
+         1    -43
+         7    ;+4
+         1    -2
+         7    ;+6
+         8    ERROR
+
+         11   INTIPL
+         8    INTIPE-2
+         1    ADDRESS
+         8    COLLATE
+
+         11   INTIPL
+         8    INTIPE-2
+         2    ADDRESS
+
+COLLATE  6    =0 8191
+         1    WORD
+
+STORE    0    ADDRESS
+         /5   0
+         10   ADDRESS
+         8    ;+3
+
+(-2)     11   CI900L
+         8    CI900E
+CHECK    4    CI900
+         7    AMEND
+         1    -10
+         7    AMEND
+
+ERROR    4    +7
+(+1)     15   6144
+         8    ;-1
+
+(-2)     11   CI900L
+         8    CI900E
+INTIPE   4    +0
+         5    COUNT
+         5    INTGR
+
+         4    CI900
+(+4)     2    +57
+         9    ENDINT
+         2    +9
+         9    ENDINT
+
+         10   COUNT
+         14   8191
+         1    INTGR
+         14   8190
+         1    INTGR
+         5    EIGHTH
+         14   3
+         5    INTGR
+
+         11   CI900L
+         8    CI900E
+         8    INTIPE+4
+
+ENDINT   4    COUNT
+         7    ERROR
+         2    +6
+         9    ERROR
+
+         4    EIGHTH
+         2    &037777
+         9    ERROR
+
+         4    INTGR
+         0    INTIPL
+         /8   1
+
+CI900E   0    CI900L
+(+1)     4    +0
+         15   2048
+         5    CI900
+         14   8188
+         1    =14 1
+         5    TOTAL
+         4    +0
+         14   4
+         1    =14 1
+         5    TOTAL+3
+         2    &323130
+TOTAL    >1
+         5    TOTAL
+         2    &323130
+         >1
+         1    TOTAL
+         6    +1
+         7    ;+2
+         8    ERROR+1
+
+         4    CI900
+         6    &177
+         5    CI900
+
+         7    CI900E+1
+         1    -13
+         7    CI900E+1
+         1    -114
+         7    CI900E+1
+         1    +118
+         7    ;+5
+         1    -23
+         7    ;+3
+         4    CI900
+         /8   1
+         5    CI900
+         /8   1
+
+WORD     >1
+ADDRESS  +8
+COUNT    >1
+INTIPL   >1
+INTGR    >1
+EIGHTH   >1
+CI900L   >1
+CI900    >1
+<! Halt !>

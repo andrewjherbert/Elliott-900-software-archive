@@ -1,0 +1,32 @@
+﻿C Test StarTrek
+
+on 903 16K
+
+reset
+
+tidy
+
+clear
+
+c translate using 903 Algol Tape 1
+at ptr file ../../MASTERS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+st 8171
+
+at ptp file STARTREK.RLB
+at ptr file ../../MASTERS/GAMES/STARTREK.900
+j 8
+de ptp
+
+at ptr file ../../MASTERS/903ALGOL/ALG16KLP(ISS6).BIN
+j 8181
+st 4309
+
+at ptr file ../../MASTERS/HERBERT/IRANDOM.RLB
+j 12
+st 15840
+
+at ptr file STARTREK.RLB
+j 8
+
+

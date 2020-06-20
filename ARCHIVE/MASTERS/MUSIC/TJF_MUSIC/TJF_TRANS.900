@@ -1,0 +1,88 @@
+﻿
+((TJF MUSIC TRANSLATOR TO AJH MUSIC, 19/12/2013)
+
+(Raises notes by one octave.  Drops notes that fall outside
+of playable range.)
+
+[CHIPF CHIPL CHIPE CHOPF CHOPC CHOPL CHOPE ERRORL ERRORE]
+
+
+(Read in music tape)
+<
+START     4     +0
+          5     CHIPF
+	  5	CHOPF
+          5     SCORF
+ 	  4	+1
+	  5	CHOPC
+	  11    CHIPL
+          8     CHIPE
+          0     SCORF
+          /5    SCORE
+          1     -20
+          7     ;+3
+          10    SCORF
+          8     ;-7
+
+(Fetch score character & test which group it is in)
+
+          5     SCORF
+	  4     +0
+	  5	CHOPF
+          5     SCORF
+ 	  4	+1
+	  5	CHOPC
+          8     ;+2
+NXCHAR    10    SCORF
+(+1)      0     SCORF
+          /4    SCORE 
+
+          1     -20
+          7     EXIT      (Test for <H>)
+          1     -16
+          7     OUTCH     (Test for $)
+          1     -7
+          7     OUTCH     (Test for +)
+          1     -2
+          7     OUTCH     (Test for -)
+          1     -3
+          9     OUTCH     (Test for separator, etc.)
+          1     -16
+          9     OUTCH     (Test for digit, etc.)
+
+(Otherwise character is letter; shift up by an octave)
+	
+	  /4	SCORE
+	  1	-84	  (Can't shift notes above S)
+	  9	UPOCT
+	  1	-14
+	  9	NXCHAR
+	  1     -18	  (Or s)
+          9 	UPOCT
+          8	NXCHAR
+
+UPOCT	  /4 	SCORE
+	  1	+7
+	  8	;+2
+
+OUTCH     /4	SCORE
+	  11	CHOPL
+	  8	CHOPE
+          8     NXCHAR
+
+
+EXIT	  4	+20
+	  11	CHOPL
+	  8	CHOPE
+	  4	+10
+	  11	CHOPL
+	  8	CHOPE
+	  8	;+0
+	  
+(Workspace)
+
+SCORF     >1
+SCORE=1024
+
+<! halt !>
+

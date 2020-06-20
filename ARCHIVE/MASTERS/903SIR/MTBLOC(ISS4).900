@@ -1,0 +1,814 @@
+﻿<! Legible Header                                                                                                                                                    !>
+<! Legible Header O   O  OOOOO  OOO    O       OOO    OOO   O   O                 OOO   OOOOO  OOOO                 OOOOO   OOO    OOO   O   O  OOOOO         O      !>
+<! Legible Header OO OO    O    O  O   O      O   O  O   O  O  O                 O   O    O    O   O                  O    O   O  O   O  O   O  O             O      !>
+<! Legible Header O O O    O    O  O   O      O   O  O      O O                  O        O    O   O                  O    O      O      O   O  O             O      !>
+<! Legible Header O   O    O    OOO    O                    O                     OOO     O    OOOO                   O     OOO    OOO   O   O  OOOO          O      !>
+<! Legible Header O   O    O    O   O  O      O   O  O      O O                      O    O    O O                    O        O      O  O   O  O             O O    !>
+<! Legible Header O   O    O    O   O  O      O   O  O   O  O  O                 O   O    O    O  O                   O    O   O  O   O  O   O  O             OOOOO  !>
+<! Legible Header O   O    O    OOOO   OOOOO   OOO    OOO   O   O                 OOO   OOOOO  O   O                OOOOO   OOO    OOO    OOO   OOOOO           O    !>
+
+  (  FIND AND READ A BLOCK ROUTINE  )
+
+
+[ QMFIND QMT  QMSHR "MTLBN "MTIND "ENTRY "N "L  "MTNO
+ "MTFT "MTSTAT  "H "FAIL  "REWIND
+   QMWRITE  QMREAD     ]
+
+
+YY +20
+X +10
+PARITY +32
+COUNT1  +0
+LEN  +0
+FAILCT  +0
+LENGTH  +0
++0
+BN  +0
+N  +0
+L  +0
+H  +0
+QMSHR  +0
++1
++2
++3
+MTIND  +0
+
++0
++0
++0
+QMT  +0
+MTSTAT  +0
+MTFT  +0
+
+MTNO  +0
+MTLBN  +0
++0
++0
++0
+
+
+QMFIND   5  N
+11  ENTRY
+8  ENTRY+1
+4  N
+9  JAG
+CHANGE 11  B2
+8  B2+1
+SEARCH  4  N
+7  FAILEX
+9  FAILEX
+2  L
+9  PREPRD
+4  L
+14  8191
+2  N
+9  WIND
+10  XCT
+4  XCT
+9  ;+2
+8  FAILEX
+
+4  L
+1  +1
+2  N
+BACKNB  11  BCKSP
+8  BCKSP+1
+PREPRD  4  MTNO
+1   PARITY
+1  +640
+15  5121
+0  MTFT
+/4  2
+5  LEN
+/4  1
+5  COUNT1
+1  MODULE
+0  BLENGTH
+
+14  3072
+15  5122
+15  1025
+5  MTSTAT
+11  SUBHAR
+8  SUBHAR+1
+6  +1024
+7  ;+3
+DYD  4  +16384
+8  EREXIS
+4  MTSTAT
+6  +524
+7  BLNO
+4  LEN
+2  +3
+5  LEN
+NOISE  4  LEN
+10  LEN
+7  PREPRD
+10  COUNT1
+0  COUNT1
+/4  3
+7  NOISE
+DEETH  10  L
+4  L
+2  N
+7  DEECT
+9  DEECT
+4  H
+2  L
+7  PREPRD
+9  PREPRD
+DEECT  10  FAILCT
+4  FAILCT
+2  YY
+9  FAIL
+4 -1
+8  BACKNB
+WIND  11  REWIND
+8  REWIND+1
+8  PREPRD
+BLNO
+  0  COUNT1
+/4  1
+6  =/0  4095
+5  LENGTH
+/4  2
+5  LENGTH+1
+/4  0
+5  BN
+14  8187
+1  BN
+14  8187
+1  BN
+14  12
+6  &370000
+/2  1
+6  &370000
+7  VALID
+4  L
+1  +1
+2  N
+7  ;+3
+10  L
+8  NDO
+10  FAILCT
+4  YY
+2  FAILCT
+9  ;-5
+8  FAILEX
+
+VALID 5  FAILCT
+4  LENGTH
+0  MTFT
+/0  1
+/5 1
+4  BN
+5  L
+2  H
+9   FHH
+BHH  4  L
+2  N
+7  LONGBL
+NDO  4  LENGTH
+9  CHECK
+8  CHANGE
+FHH  4  L
+5  H
+8  BHH
+LONGBL  4  MTSTAT
+6  +32
+7  JOP
+8  FAIL
+CHECK  4  LENGTH+1
+2  \EOF
+7  FAILEX
+8  CHANGE
+JAG  1  L
+1  +1
+5  N
+8  SEARCH
+JOP
+0  MTFT
+4  H
+/5  4
+0  MTNO
+4  L
+/5  MTLBN
+/4  MTIND
+6  +65536
+0  +0
+14  1
+1  L
+0  QMT
+/8  3
+
+(  CHECK  EOT WARNING  AND STOP  )
+
+B2 +0
+
+
+0  MTNO
+/4  MTIND
+6  +65536
+7  SUBOUT
+/4  MTIND
+6  +2048
+7  ;+3
+FAILEX  4  =/0  0
+8  EREXIS
+/4  MTIND
+1  +2048
+/5  MTIND
+SUBOUT  0  B2
+/8  1
+
+
+(  CHECK  EOT AND SET EOT  WARNING  )
+
+SUBHAR  +0
+4  MTSTAT
+6  +256
+7  HAROUT-1
+0  MTNO
+/4  MTIND
+6  =/7  8191
+1  +65536
+/5  MTIND
+4  MTSTAT
+HAROUT  0  SUBHAR
+/8  1
+
+
+  (  CHECK  WRITE  SUBROUTINE  )
+
+
+CWRITE  +0
+
+
+0  MTNO
+/4  MTIND
+9  WRBL-2
+OUT  0  CWRITE
+/8  1
+6  &377777
+/5  MTIND
+WRBL  4  MTNO
+1  +128
+15  5121
+4  MTNO
+1  +256
+15  5121
+15   1025
+5  MTSTAT
+8  OUT
+
+
+
+(  BACKSPACE  SUBROUTINE  )
+
+
+
+COUNT2  +0
+BCKSP  +0
+5  COUNT2
+11  CWRITE
+8  CWRITE+1
+COUT  0  MTNO
+/4  MTIND
+6  +65536
+7 ABOT
+/4  MTIND
+6 &573777
+/5  MTIND
+4 COUNT2
+2  -20
+9  STORE
+REBSP
+ 4  MTNO
+1  +256
+15  5121
+15  1025
+5  MTSTAT
+6  +1024
+7  ;+2
+8  DYD
+4  L
+1  -1
+5  L
+10  COUNT2
+4  COUNT2
+9 ABOT
+DOUT  0  MTNO
+4  L
+/5  MTLBN
+0  BCKSP
+/8  1
+STORE  4  -20
+5  COUNT2
+8  REBSP
+ABOT  4  MTSTAT
+6  +128
+7  REBSP
+4  +0
+5  L
+
+8  DOUT
+
+
+
+
+ (  READ  A  BLOCK SUBROUTINE  )
+
+
+QMREAD  11  ENTRY
+8  ENTRY+1
+4  L
+1  +1
+5  N
+0  MTNO
+/4  MTIND
+9  FAILEX
+8  CHANGE
+
+
+
+(  ENTRY  SUBROUTINE  )
+
+
+CONSTS  +0
+MODULE +0
+XCT +0
+BLENGTH +0
+ENTRY  +0
+4  +0
+5  FAILCT
+0  QMT
+/4 1
+5  MTFT
+11  MODULE
+14  1
+3  MODULE    (CURRENT MODULE ADDRESS)
+4  -20
+5  XCT    (ATTEMPT QMFIND SEARCH 20 TIMES)
+0  MTFT
+/4  2
+6  &007777
+5  BLENGTH
+
+/4  4
+5  H
+/0  0
+/4  QMSHR
+5  MTNO
+0  MTNO
+/4  MTLBN
+5  L
+
+4  MTNO
+15  5121
+15  1025
+5  MTSTAT
+6  +2
+7  HAVAIL
+4  +32768
+EREXIS  5  CONSTS
+0  MTNO
+4  L
+/5  MTLBN
+0  MTFT
+4  H
+/5  4
+4  MTSTAT
+6  +2047
+1  CONSTS
+EXIS  0  QMT
+/8  2                (  NORMAL  EXIT  FROM  FIND AND READ SUBROUTINE  )
+
+HAVAIL  /4  MTIND
+6  +32768
+7 DT
+
+   (  FILE  NOT OPEN FOR READING  )
+
+RET   0  ENTRY
+/8  1
+DT  4  +8192
+8  EREXIS
+
+
+(   WRITEA BLOCK ROUTINE  )
+
+SAFE  +0
+COUNT  +0
++0
+QMWRITE   11  ENTRY
+8  ENTRY+1
+4  MTSTAT
+6  +64
+7 FAIL
+0  MTNO
+/4  MTIND
+6  +16384
+7 ET
+4  L
+5  SAFE
+11  B2
+8  B2+1
+B1  4  L
+1  +1
+5  N
+0  MTFT
+/4  0
+5  FT1
+4  H
+5  FT1+4
+/0  1
+4  N
+/5  0
+14  8187
+1  N
+14  8187
+1  N
+14  12
+6  &370000
+0  MTFT
+/1  2
+/0  1
+/5  1
+
+4  MTNO
+1  PARITY
+1  +768
+15  5121
+0  MTFT
+/4  1
+1  MODULE
+0  BLENGTH
+
+14  5120
+15  5122
+15  1025
+5  MTSTAT
+6  +1024
+7  ;+2
+8  DYD
+10  L
+11  SUBHAR
+8  SUBHAR+1
+6  +524
+7  NOT
+10  FAILCT
+4  FAILCT
+2  X
+9  FAIL
+4  FAILCT
+2  +2
+9  BWSR
+4  -4
+5  COUNT2
+11  BCKSP
+8  COUT
+4  MTFT
+5  MTFT1
+
+4  QMT
+5  QMWRITE-1
+4  FAILCT
+5  COUNT
+
+4  SAFE
+7  STAR
+11  QMT
+8  QMFIND
+0  FT1
+8  ERROR1
+4  QMWRITE-1
+5  QMT
+4  MTFT1
+5  MTFT
+4  COUNT
+5  FAILCT
+
+STAR  4  FAILCT
+2  +0
+5  COUNT
+4  MTNO
+1  +128
+15  5121
+10  COUNT
+4  COUNT
+9  STAR+3
+11  SUBHAR
+8  SUBHAR+1
+8  B1
+NOT   0  MTFT
+/0  1
+/4  1
+6  =/0  4095
+/5  1
+0  MTNO
+/4  MTIND
+1  =/0  0
+/5  MTIND
+
+4  L
+2  H
+9  ;+2
+8  JOP
+4  L
+5  H
+8  JOP
+ERROR1
+6  &777637
+5  CONSTS
+
+7  STAR-6
+4  QMWRITE-1
+5  QMT
+4  MTFT1
+5  MTFT
+4  CONSTS
+1  +64
+8  EXIS
+
+FAIL 4  +0
+8 EREXIS
+FT1  +0
+0  BLS
++6
++0
++0
+BLS  >+6
+BWSR  4  -2
+5  COUNT2
+11  BCKSP
+8  REBSP
+8  STAR
+MTFT1  +0
+ET  4  +4096
+8  EREXIS
+
+CONTROL  +0
+REWIND  +0
+4  =/0  384
+MID  1  MTNO
+5  CONTROL
+11  CWRITE
+8  CWRITE+1
+4  CONTROL
+15  5121
+0  MTNO
+4  +0
+5  L
+/5  MTLBN
+/4  MTIND
+6  &573777
+/5  MTIND
+4  CONTROL
+9  RSTAT
+BOO  0  REWIND
+/8  1
+RSTAT  15  1025
+6  +1
+7  BOO
+8  RSTAT
+
+
+
+[QMCLOSE  "MTNO  "MTIND "REWIND  QMT "ENTRY  QMWRITE "MTFT
+"H  "MTLBN  "L   ]
+
+
+
+P  +0
++0
+QMCLOSE
+4  QMT
+5  QMCLOSE-1
+11  ENTRY
+8  ENTRY+1
+0  QMT
+/4  3
+5  P
+9  TOP
+6  &100000
+7  SOTT
+BSOT  4  P
+6  &060000
+7  OUTQM
+6  &040000
+7  ;+2
+4  +512
+1  +384
+11  REWIND
+8  REWIND+2
+OUTQM
+0  QMCLOSE-1
+/8  4
+
+SOTT  0  MTNO
+/4  MTIND
+6  =/11  8191
+/5  MTIND
+8  BSOT
+TOP    4  MTFT
+5  MTFT2
+0  MTFT
+/4  0
+5  FT2
+/4  4
+5  FT2+4
+
+11  QMT
+8  QMWRITE
+0  FT2
+8  FAILST
+4  MTFT2
+5  MTFT
+4  QMCLOSE-1
+5  QMT
+4  P
+6  &200000
+7  ;+2
+8  OUTQM
+
+0  MTNO
+/4  MTIND
+6  &737777
+/5  MTIND
+4  P
+8  BSOT-2
+FT2  +0
+0  ADDR
+/0  6
++0
++0
+ADDR  +0
++0
+\EOF
+&777777
+&777777
+&777777
+
+MTFT2  +0
+FAILST  5  P
+4  MTFT2
+5  MTFT
+4  QMCLOSE-1
+5  QMT
+4  P
+0  QMT
+/8  2
+
+
+[QMOPEN  "ENTRY  QMT  "MTNO  "MTIND  "MTFT  QMREAD  "MTSTAT
+QMWRITE  "REWIND  QMSHR  ]
+
+P  +0
+CONSTS  +0
+SON  +0
+STFT  +0
+STORE  +0
++0
+QMOPEN  4 QMT
+5  QMOPEN-1
+0  QMT
+/4  3
+5  P
+/0  1
+
+/4  0
+5  FILEX
+/4  1
+5  STORE
+/0  0
+
+/0  QMSHR
+4  +32768
+/5  MTIND
+
+
+   (SET  MTIND  OPEN  FOR  READING  )
+
+11  ENTRY
+8  ENTRY+1
+4  MTFT
+5  PLANT
+5  MTFTX
+
+5  PLANT2
+5  STFT
+1  +8
+5  FILEX+1
+11  REWIND
+8  REWIND+1
+4   P
+9  TAY
+ROT  11  CHCK
+8  CHCK+1
+8  OUTQCL
+8  COST
+TAY  0  MTNO
+/4  MTIND
+1  +16384 (  SET  MTIND  OPEN  FOR  READING AND WRITING )
+/5  MTIND
+4  P
+6  =8  0
+7  ;+5
+4  MTSTAT
+6  +64
+7  FOUT
+8  ROT
+11  QMT
+8  QMREAD
+     (READ  HEADER  BLOCK  )
+
+PLANT  +0
+8  FOUT
+0  MTFT
+/0  1
+/4  2
+2  \SCR
+7  ;+2
+8  SOT
+/4  3
+2  \ATC
+7  ;+2
+8  SOT
+/4  4
+2  \H
+7  WRITE
+SOT  11  CHCK
+8   PLANT2+2
+8  WRITE
+COST  4   MTSTAT
+6  +2047
+1  =/0  0
+ 8  FOUT
+WRITE   11  REWIND       (REWIND  AND  WRITE  NEW  HEADER  )
+8  REWIND+1
+11  QMT
+8  QMWRITE
+0  FILEX
+8  FOUT
+OUTQCL  4  QMOPEN-1  (NORMAL  EXIT  )
+5  QMT
+4  MTFTX
+5  MTFT
+0  MTFT
+4  FILEX+4
+/5  4
+0  QMT
+/8  4
+CHCK  +0
+11  QMT          (CHECK  NAME  OF  FILE  )
+8  QMREAD
+PLANT2  +0
+8  FOUT
+4  -4
+  5  SON
+CC  4  SON
+9  ;+2
+/8  1
+0  STFT
+/4  10
+0  STORE
+/2  2
+10 STORE
+10  SON
+10  STFT
+0  CHCK
+7  CC
+/8 2
+FOUT  5  CONSTS
+4  QMOPEN-1
+5  QMT
+4  MTFTX
+5  MTFT
+0  MTNO
+/4  MTIND
+6  &637777
+/5  MTIND
+4  CONSTS
+0  QMT
+/8  2
+MTFTX  +0
+FILEX  +0
++0
+/0  28
++0
++0
+
+[ QMSTAT "MTSTAT QMSHR ]
+
+QMSTAT  +0
+ 0 QMSTAT
+ /0 1
+ /0 0
+ /4 QMSHR
+ 15 5121
+ 15 1025
+ 5 MTSTAT
+ 6 &377777
+ 0 QMSTAT
+ /8 2
+<! Halt !>

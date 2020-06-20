@@ -1,0 +1,228 @@
+﻿
+MODULE;
+"begin"
+   "comment" 30-SEP-1997; 
+
+   "integer" addr,ck1,ck2,code,fun,j,k,L,lim,m,n,pp1,pp2;
+   "integer" "array" p[1:100],a[1:10000];
+
+   "procedure" inrlb(a); "integer" "array" a;
+   "begin"
+      "integer" j;
+      "for" j:=1 "step" 1 "until" 10000 "do"
+      "begin"
+         "read" a[j];
+         "if" a[j]=255 "then" "goto" finish
+      "end";
+finish:
+   "end";
+
+   "integer" "procedure" sum(a,k); "value" k; 
+      "integer" "array" a; "integer" k; 
+      sum:=a[k]+a[k+1]+a[k+2];
+
+   "procedure" alter(a,k,dec); "value" k,dec;
+      "integer" "array" a; "integer" k,dec;
+   "begin"
+      "integer" addr;
+      addr:=(a[k+1]-(a[k+1] "div" 64)*64)*128+a[k+2];
+      "if" addr "ne" 8191 "then" addr:=addr-dec;
+      a[k+1]:=addr "div" 128 +(a[k+1] "div" 64)*64;
+      a[k+2]:=addr -(addr "div" 128)*128
+   "end" of alter;
+
+   "switch" S:=L1,L2,L3,L4,L5,L6,L7;
+
+   L:=-1;
+   lim:=0; digits(3); same line;
+   pp1:=pp2:=ck1:=ck2:=0; inrlb(a);
+   "print" ''L`  0  0  0  0  0  0  0  0  0  0'L``;
+   "for" j:=1,j+1 "while" a[j]=0 "do"
+   "begin"
+      k:=j+1; a[j]:=-1
+   "end" of for;   
+
+loop:
+   code:=a[k] "div" 16;
+   "if" code=0 "then"
+   "begin"
+      a[k]:=a[k+1]:=a[k+2]:=-1;
+      k:=k+3;
+      "goto" loop
+   "end" of if;
+
+   ck1:=ck1+sum(a,k);
+   "goto" S[code];
+
+L1:
+L2:
+   "if" pp1<15 "then"
+   "begin"
+      a[k]:=a[k+1]:=a[k+2]:=-1;
+      "goto" fin
+   "end"
+               "else"
+   "begin"
+      fun:=(a[k]-code*16)*2+a[k+1] "div" 64;
+
+      "if" code=1 "and" (fun=9 "or" fun=10 "or" fun=27) "then"
+         "print" ''L`labels and switches not allowed`, stop;
+
+      "if" code=1 "and" fun=31 "and" a[k+2]=9 "then"
+      "begin"
+         ck1:=ck1+sum(a,k+6); alter(a,k+6,672);
+         ck1:=ck1-sum(a,k+6); "goto" all
+      "end";
+
+      addr:=(a[k+1]-(a[k+1] "div" 64)*64)*128+a[k+2];
+      "if" addr=8191 "then"
+      "begin"
+         L:=L+2;
+         "if" L=101 "then" "print" ''L`too many arrays`, stop;
+         p[L]:=pp1;
+         p[L+1]:=k
+      "end" of if;
+
+      "if"   a[k+2]=16 "and"
+           ((a[k+1]=64 "and" (a[k]=27 "or" a[k]=30)) "or"
+            (a[k+1]=0  "and"  a[k]=30)) "then" "goto" all;
+
+      "if" code=1 "and"
+          (fun=5 "or"
+           fun=11 "or"
+           (fun>21 "and" fun<27) "or"
+            fun=28 "or"
+            fun=29) "then"
+      "begin"
+         alter(a,k,672); "goto" all
+      "end" of if;
+
+      "if" code=2 "then"
+      "begin"
+         alter(a,k,15); "goto" all
+      "end" of if
+   "end" of else;
+   "goto" all;
+
+L3:
+   n:=-1;
+   addr:=a[k+1]*128+a[k+2];
+   ck1:=ck1+sum(a,k+3);
+   "for" m:=1 "step" 2 "until" L "do"
+   "begin"
+      "if" addr=p[m] "then"
+      "begin"
+         m:=p[m+1];
+         "if" a[k+3]=0 "then" n:=pp2 "else" "goto" easy;
+         "goto" done
+      "end"
+   "end" of for;
+
+done:
+   "if" pp1<0 "or" n<0 "then" "goto" easy;
+   "if" a[k+3]=0 "then" a[m]:=a[m]+16;
+   a[m+1]:=(a[m+1] "div" 64)*64 + n "div" 128;
+   a[m+2]:=n-(n "div" 128)*128;
+easy:
+   "for" j:=k "step" 1 "until" k+8 "do" a[j]:=-1;
+   k:=k+9;
+   "goto" loop;
+
+   "comment" test for label QACODL;
+L4:
+   "if" a[k]=76 "and"
+        a[k+1]=48 "and"
+        a[k+2]=99 "and"
+        a[k+3]=27 "and"
+        a[k+4]=114 "and"
+        a[k+5]=44 "then"
+   "begin"
+      "for" j:=k "step" 1 "until" k+11 "do" a[j]:=-1;
+      k:=k+12;
+      ck1:=ck1+185;
+      pp1:=-1000;
+      "goto" loop
+   "end" of if;
+
+   k:=k+3;
+   ck1:=ck1+sum(a,k);
+   code:=a[k] "div" 16;
+   "if" code=2 "then"
+   "begin"
+      k:=k+3;
+      ck1:=ck1+sum(a,k);
+      pp1:=pp1+1;
+      pp2:=pp2+1
+   "end" of if;
+   k:=k+6;
+   "goto" join;
+
+L5:
+   "print" ''L`skip code error`, stop;
+
+L6:
+   ck1:=ck1-sum(a,k);
+   "if" ck1 "ne" (((a[k]-(a[k] "div" 16)*16)*128)
+                   +a[k+1])*128+a[k+2] 
+   "then" "print" ''L`checksum error`, stop;
+   ck1:=0;
+   j:=k;
+again:
+   j:=j-1;
+   "if" ck1=6 "then" "goto" output;
+   "if" a[j] "ge" 0 "then"
+   "begin"
+      a[j]:=-1;
+      ck1:=ck1+1
+   "end";
+   "goto" again;
+
+output:
+   "for" j:=1 "step" 1 "until" k-1 "do"
+      ck2:=ck2+("if" a[j]>0 "then" a[j] "else" 0);
+   a[k]:=(ck2 "div" 16384);
+   a[k+1]:=(ck2-a[k]*16384) "div" 128;
+   a[k+2]:=ck2-a[k]*16384-a[k+1]*128;
+   a[k]:=a[k]+96;
+   a[k+3]:=-2;
+
+   "for" j:=1 "step" 1 "until" 10000 "do"
+   "begin"
+      "if" a[j]=-2 "then" 
+      "begin"
+         "print" ''L`  0  0  0  0  0  0  0  0 112 0  0'L``;
+         stop
+      "end";
+
+      "if" a[j] "ge" 0 "then"
+      "begin"
+         lim:=lim+1;
+         "print" a[j];
+         "if" lim=15 "then" 
+         "begin"
+            "print" ''L``;
+            lim:=0
+         "end"
+      "end"
+   "end";
+   "print" ''L`gloom, run out of store`;
+   stop;
+
+L7:
+   "if" a[k]=112 "and" a[k+1]=0 "and" a[k+2]=15 "then"
+   "begin"
+      ck1:=ck1-127;
+      ck2:=ck2-127;
+      "goto" join
+   "end" "else" "print" ''L`halt code error`, stop;
+
+all:
+   pp2:=pp2+1;
+fin:
+   pp1:=pp1+1;
+join:
+   k:=k+3;
+   "goto" loop
+"end"
+<! halt!>
+

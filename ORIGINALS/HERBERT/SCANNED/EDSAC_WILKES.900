@@ -1,0 +1,23 @@
+﻿
+WILKES;
+"BEGIN"
+   "INTEGER" J; "REAL" ETA,X0,X1,X2,Y0,Y1,Y2;
+   PUNCH(3); "PRINT" ''L@WILKES FUNCTION@;
+   Y0:=0.35502805; Y1:=0.36796149; ETA:=Y2:=Y1;
+
+   "FOR" J:=0 "STEP" 1 "UNTIL" 99 "DO"
+   "BEGIN"
+      "IF" (J "DIV"  5) *  5 = J "THEN" "PRINT" ''L@@;
+      "IF" (J "DIV" 25) * 25 = J "THEN" "PRINT" ''L@@;
+      X0:=J*0.05; X1:=(J+1)*0.05; X2:=(J+2)*0.05;
+LOOP:
+      ETA:=2*Y1-Y0-(0.0025)*(X0*Y0+10*X1*Y1+X2*Y2)/12;
+      "IF" ABS(Y2-ETA)>0.0000001 "THEN"
+      "BEGIN"
+         Y2:=ETA; "GOTO" LOOP
+      "END";
+      "PRINT" SAME LINE,ALIGNED(2,5),Y0;
+      Y0:=Y1; Y1:=Y2:=ETA
+   "END"
+"END"
+<! Halt !>

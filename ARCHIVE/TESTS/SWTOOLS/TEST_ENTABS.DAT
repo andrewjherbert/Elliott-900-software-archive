@@ -1,0 +1,8 @@
+﻿C Test entabs
+
+do ../../scripts/swtools/entabs SIRNOTABS.900 SIRWITHTABS.900
+
+sh t
+
+print SIRWITHTABS.900
+

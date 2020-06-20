@@ -1,0 +1,8 @@
+﻿C Test entabn
+
+do ../../scripts/swtools/entabn notabs.txt withtabs.txt
+
+sh t
+
+c check withtabs.txt using NOTEPAD
+

@@ -1,0 +1,31 @@
+﻿
+C  CALCULATE SUCCESSIVE DIGITS OF PI;
+ 
+      INTEGER DIGITS
+      REAL APPROX, F, PI, N, S
+      LOGICAL ADD
+
+      DIGITS = 4
+      S = 10.0 ** DIGITS
+      F = 4.0 * S
+      ADD = .TRUE.
+      PI = AINT(3.1415926535897930 * S)
+      WRITE(2,999) PI
+999   FORMAT(F12.2)
+      APPROX = 0.0
+      N = -1.0
+
+10    N = N + 2.0
+      IF ((PI-AINT(APPROX)) .EQ. 0.0) GOTO 90
+      IF (ADD)        APPROX = APPROX + F / N
+      IF (.NOT. ADD)  APPROX = APPROX - F / N
+      ADD = .NOT. ADD
+      GOTO 10
+
+90    N = N - 2.0
+      WRITE(2,99)  DIGITS, N, PI, APPROX
+99    FORMAT(1H , //, 8HPLACES:, I7, 9H CYCLES:, F10.0, 5H PI:, F12.2, 
+     1  9H APPROX: , F12.2, //)
+      STOP
+      END
+<! halt !>

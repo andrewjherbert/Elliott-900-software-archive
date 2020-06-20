@@ -1,0 +1,30 @@
+﻿C Compute prime numbers (SIR version)
+
+on 903 16K
+
+c load assember
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+select out tty
+c assemble primes program
+at ptr file ../../MASTERS/HERBERT/PRIMES_SIR.900
+j 8
+st 6927
+c assemble library routines
+at ptr file ../../MASTERS/HERBERT/SIO.900
+j 9
+st 6927
+c terminate program
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 6927
+c run program
+sh t
+j 32
+st 78
+sh t
+

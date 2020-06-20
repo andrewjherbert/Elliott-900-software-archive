@@ -1,0 +1,14 @@
+﻿D05106;
+"BEGIN" "REAL" A,B,C,D,X,Y,Z; "SWITCH" SS:=l1;
+        "PRINT" ''L20@@,'SOLUTION OF X^3-3X+5@;  C:=-1.0;
+                  D:=1;
+ L1:    "FOR" X:=C,X+1 "WHILE" X^3 "LE" (3*X+5) "DO" X:=X;
+        "FOR" Y:=X-1,Y+0.1 "WHILE" Y^3 "LE" (3*Y+5) "DO" Y:=Y;
+        "FOR" Z:=Y-0.1,Z+0.01 "WHILE" Z^3 "LE" (3*Z+5) "DO" Z:=Z;
+        "FOR" A:=Z-0.01,A+0.001 "WHILE" A^3 "LE" (3*A+5) "DO" A:=A;
+        "FOR" B:=A-0.001,B+0.001 "WHILE" B^3 "LE" (3*B+5) "DO" 
+        B:=B; C:=B; D:=D+1;
+        "PRINT" ''LS25@@,B;
+        "IF" D<3 "THEN" "GOTO" L1;
+"END";
+<! Halt !>

@@ -1,0 +1,65 @@
+﻿
+checksheba;
+
+"begin"
+
+"comment" Program to test if tapes SHEBA and SHEBA2 are the same,
+ 	  except in as much that SHEBA2 has the duration of each
+	  note doubled.;
+
+    "integer" "array" tune[1:2, 1:2000];
+    "integer" count1, count2, pitch, duration;
+
+   count1 := count2 := 0; 
+
+    punch(3);
+
+    "print" {{L2}Load tape "SHEBA" and enter at 9.{L2}};
+    wait;
+
+FirstLoop:
+    "read" pitch; "if" pitch < 0 "then" "goto" ReadSecond;
+    "read" duration; 
+    count1 := count1+1;
+    tune[1,count1] := pitch; tune[2,count1] := duration;
+    "goto" FirstLoop;
+
+ReadSecond:
+    "print" {SHEBA has}, sameline, count1, { notes.},
+	    {{L2}Load tape "SHEBA2" and enter at 9.{L2}};
+    wait;
+
+SecondLoop:
+    "read" pitch; "if" pitch < 0 "then" "goto" Complete;
+    "read" duration;
+    count2 := count2+1;
+
+    "if" count2 > count1 "then" "begin"
+	"print" {{L2}SHEBA2 has more notes than SHEBA.{L2}};
+ 	stop;
+    "end" if;
+
+    "if" pitch "ne" tune[1,count2] "then" "begin"
+	"print" {Note}, sameline, count2, { has wrong pitch},
+		pitch, tune[1,count2],{.{L}};
+	stop
+    "end" if;
+
+    "if" duration "ne" tune[2,count2]*2 "then" "begin"
+	"print" {Note}, sameline, count2, { has wrong duration},
+		duration, tune[2,count2],{.{L}};
+	stop
+     "end" if;
+
+    "goto" SecondLoop;
+
+Complete:
+    "if" count2 < count1 "then" 
+    	"print" {SHEBA is longer than SHEBA2:}, sameline,
+		count1, count2, {.{L2}}
+    "else"
+	"print" {SHEBA is the same as SHEBA2.{L2}}
+
+"end" program
+
+    

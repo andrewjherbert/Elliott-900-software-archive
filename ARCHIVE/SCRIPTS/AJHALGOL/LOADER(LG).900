@@ -1,0 +1,674 @@
+﻿
+*PROG LOADER
+*LISTLA
+*NOMEM
+
+^7581
+((ALGOL TAPE II LOADER, FOR AJH LG ALGOL 23/03/2015))
+
+
+          +0              ( CONSTANTS )
+          \QAC
+          \ODL
+
+          +0              ( VARIABLES )
+          \QAV
+          \NDA
+
+[ BEGLOA BA BD CR DP ED EDNEG INTEGR LA LABEL LOW1 NAMONE NAMTWO OPTION W ]
+
+BEGLOA    0     ;+0
+BA        >1
+BD        >1
+CR        >1
+DP        >1
+ED        >1
+EDNEG     >1
+INTEGR    >1
+LABEL     0     ;+1
+          &070100
+NAMONE    >1
+NAMTWO    >1
+          &400000
+LOW1      >1
+OPTION    >1
+W         >1
+          >1
+          >1
+          >1
+          >1
+
+[ BD E5TEST FAIL LA ]
+
+E5TEST    >1
+          4     BD
+          2     LA
+          9     EXIT
+
+          4     +5
+FAIL      0     +0
+          14    12
+          1     &404000
+          5     LIVE
+          4     MESAGE
+          0     154
+          11    167
+          /8    0
+          8     ;+0
+
+MESAGE    0     ;+1
+          &070146
+LIVE      +0
+
+EXIT      0     E5TEST
+          /8    1
+
+[ CR EWS1 FLAG INTEGR PGEXIT READE READTH TSTART W ]
+READTH    >1
+          4     EWS1      (Test for LG mode)
+          9     LG
+          4     -3
+          5     W
+
+REPEAT    4     INTEGR
+          15    2048
+          5     INTEGR
+
+          6     +127
+          1     CR
+          5     CR
+          4     W
+          2     -3
+          7     FIRST
+
+RETURN    10    W
+          4     W
+          9     REPEAT
+READE     0     READTH
+          /8    1
+
+FIRST     4     INTEGR
+          14    8188
+          6     +7
+          5     W+3       ( HOLDS CODE ON EXIT )
+          8     RETURN
+
+LG        4     -1        (Resume READTH)
+          5     FLAG
+          0     +TSTART/
+          /8    PGEXIT
+
+[ BD DP EDNEG E5TEST LA NAMONE NAMTWO SEARCH ]
+
+SEARCH    >1
+          4     BD
+          5     DP
+
+RETURN    1     EDNEG
+          7     PLACE
+          0     DP
+          /4    1
+          2     NAMONE
+          7     WD2
+
+REPEAT    4     DP
+          1     +3
+          5     DP
+          8     RETURN
+
+WD2       /4    2
+          2     NAMTWO
+          0     SEARCH
+          /7    1
+          8     REPEAT
+
+PLACE     4     BD
+          1     -3
+          5     BD
+          5     DP
+          11    E5TEST
+          8     E5TEST+1
+
+          0     SEARCH
+          /4    2
+          1     LA
+          0     BD
+          /5    0
+
+          4     NAMONE
+          /5    1
+          4     NAMTWO
+          /5    2
+
+          0     SEARCH
+          /8    3
+
+[ DP ENTRY SADRES SUBSTI ]
+
+SUBSTI    >1
+          0     DP
+          /4    0
+          6     +8191
+          5     SWORK
+          4     SADRES
+          /5    0
+
+RETURN    4     SWORK
+          2     +8191
+
+EXIT      0     SUBSTI
+          /7    1
+          4     SWORK
+
+ENTRY     5     SWORK
+          0     SWORK
+          /4    0
+          6     +8191
+          5     SWORK
+          /2    0
+          1     SADRES
+          /5    0
+          8     RETURN
+
+SADRES    >1
+SWORK     >1
+
+[ BD CLENUP DP ED LA SADRES SUBSTI W ]
+
+CLENUP    >1
+          4     DP
+          1     =/15 0
+          5     W
+          4     ED
+          5     DP
+
+RETURN    0     DP
+          /4    1
+          2     W
+          7     FOUND
+
+REPEAT    4     DP
+          1     -3
+          5     DP
+          2     BD
+          9     RETURN
+          7     RETURN
+
+EXIT      0     CLENUP
+          /8    1
+
+FOUND     4     LA
+          0     DP
+          /1    2
+          5     SADRES
+          11    SUBSTI
+          8     SUBSTI+1
+          8     REPEAT
+
+[ BLANK CLENUP DP FAIL INTEGR LA LABEL LOW1 NAMONE NAMTWO OPTION SADRES SEARCH
+  SUBSTI TONE ]
+
+TONE      4     LOW1
+          5     NAMONE
+          4     INTEGR
+          5     NAMTWO
+          4     OPTION
+          6     +1
+          7     DONT
+
+          4     LABEL     ( PRINT LABEL NAME )
+          0     154
+          11    167
+          /8    0
+
+          4     LA        ( PRINT ADDRESS )
+          0     171
+          11    170
+          /8    5
+
+DONT      11    SEARCH
+          8     SEARCH+1
+          8     FOUND
+          +0
+          8     BLANK
+
+FOUND     0     DP
+          /4    0
+          9     ;+3
+          4     +3
+          8     FAIL
+
+          4     LA
+          5     SADRES
+          11    SUBSTI
+          8     SUBSTI+1
+
+          11    CLENUP
+          8     CLENUP+1
+          8     BLANK
+
+[ DP INCR INTEGR LA LOW1 NAMONE NAMTWO READTH SEARCH STET TTWO W ]
+
+TTWO      4     INTEGR
+          5     NAMTWO
+          11    READTH
+          8     READTH+1
+          4     INTEGR
+          5     W+4
+
+          11    READTH
+          8     READTH+1
+          4     LOW1
+          5     NAMONE
+
+          11    SEARCH
+          8     SEARCH+1
+          8     FOUND1
+          /0    0
+          4     INTEGR
+          7     NOINCR
+
+          4     =/0 8191
+          0     DP
+          /5    0
+          4     INTEGR
+
+INCR      5     NAMTWO
+          4     DP
+          1     =/15 0
+          5     NAMONE
+
+          11    SEARCH
+          8     SEARCH+1
+          8     FOUND
+          /0    0
+
+NOINCR    4     +8191
+EXTEND    1     W+4
+          8     STET
+
+FOUND     0     DP
+          /4    0
+          5     W
+          4     LA
+          1     =/0 0
+          /5    0
+          4     W
+          6     +8191
+          8     EXTEND
+
+FOUND1    0     DP
+          /4    0
+          9     ;+4
+          1     INTEGR
+          1     W+4
+          8     STET
+
+          4     INTEGR
+          7     FOUND
+          8     INCR
+
+[ BA BASE BD BLANK BLANKE BEGLOA CR DP ED EDNEG ENTRY EWS1 EWS3 EWS4 FLAG E5TEST
+  FAIL HALT INTEGR LA LABEL LOW LOW1 LSTART NEXTCH OPTION PDADD PGEXIT READTH
+  SADRES STET ST2 SUBSTI TONE TLGFLG TSTART TTWO W ]
+
+(-5)      8     ST2
+          4     +6
+          2     CONST
+          5     BD
+          8     ST3
+
+LSTART    4     BASE      (READLB, READOL: ESTABLISH OR OVERWRITE LIBRARY)
+          5     PDADD     (SET PDADD=FFL AFTER INTERPRETER)
+          4     +6
+          2     CONST
+          8     ;+2
+(+5)      4     NEXTCH+2  (READAL: INPUT PROGRAM AFTER LIBRARY)
+(RESET BD TO VALUE AFTER LIBRARY)
+          5     BD
+          4     +3
+          5     OPTION
+          4     29        ( LA:=PDADD )
+          5     LA
+          5     W
+
+REPEAT    0     W
+          4     +0
+          /5    0
+          10    W
+          4     W
+          2     BD
+          7     SETUP
+          8     REPEAT
+
+ALTER     0     BEGLOA-6
+CONST     0     BEGLOA
+NULL      0     ;+1
+          &074000
+LOW       >1
+
+SETUP     4     =/0 132
+          5     BEGLOA-6
+          4     =/0 133
+          5     BEGLOA-3
+          4     +8191
+          5     132
+          5     133
+
+
+ST3       4     LA
+          5     FIRST
+          4     CONST
+          1     -3
+          5     ED
+          2     -3
+          5     EDNEG
+
+ST2       4     LA        (READ RELATED TAPE)
+          5     BA
+          4     +0
+          5     CR
+
+          4     +3        ( SET DEVICE NO TO 3 FOR DISPLAY )
+          0     168
+          /5    0
+
+          4     NULL      ( SET NULL PREFIX )
+          0     169
+          /5    10
+          4     +4
+          /5    11        ( SET NO OF DIGITS TO FOUR )
+
+
+BLANK     4     EWS1      (Test for LG mode)
+          9     LG        (Take rlb from translator)
+          4     +0
+          15    2048
+          7     ;-1
+
+          5     LOW1
+          14    8188
+          5     LOW
+
+          2     +6
+          9     HALT
+          7     TEST
+
+          4     LOW1
+          1     CR
+          5     CR
+          4     LOW1
+          15    2048
+          5     LOW1
+          6     +127
+          1     CR
+          5     CR
+
+          4     LOW1
+          15    2048
+          5     LOW1
+          6     +127
+          1     CR
+          5     CR
+BLANKE    4     LOW1
+          0     LOW
+          /8    ;+1
+
+          8     FAIL1
+          8     STET
+          8     ADBASE
+          8     THREE
+          8     FOUR
+
+          1     LA
+          5     LA
+          8     BLANK
+
+LG        4     EWS3      (Test if translator started)
+          0     +TSTART/
+          /9    PGEXIT    (Yes, return to PUNGRP)
+          4     -1        (No, start translator)
+          5     EWS3
+          /5    TLGFLG    (Set translator to LG mode)
+          4     +0
+          5     FLAG      (Resume BLANK)
+          4     EWS4      (Translator mode)
+          /8    TSTART+1
+
+ADBASE    1     BA
+STET      0     LA
+          /5    0
+          10    LA
+
+CHECK     11    E5TEST
+          8     E5TEST+1
+          8     BLANK
+
+FAIL1     4     +1
+          8     FAIL
+
+HALT      4     LOW1
+          15    2048
+          15    2048
+          5     LOW1
+          7     ;+2
+          8     ENDIT     (HALT OTHER THAN 0, I.E. HALT 15 FOR THUNK)
+
+          4     BD
+          5     DP
+          8     BLAST
+
+RETURN    0     DP
+          /4    1
+          6     =/15 0
+          2     =/15 0
+          7     ;+3
+
+          /4    0
+          9     MESS
+
+NEXT      4     DP
+          1     +3
+          5     DP
+
+BLAST     1     EDNEG
+          7     ENDIT
+          8     RETURN
+
+MESS      /4    1
+          5     NAM1
+          /4    2
+          5     NAM2
+
+          4     MESAGE
+          0     154
+          11    167
+          /8    0
+          8     NEXT
+
+MESAGE    0     ;+1
+          &070146
+          &650000
+
+NAM1      >1
+NAM2      >1
+          &400000
+
+ENDIT     4     LOW1
+          7     END
+          2     +7
+          9     ;+4
+          4     LOW1
+          5     OPTION
+          8     ST2
+          0     LOW1
+          /8    0
+
+END       4     FINAL
+          0     154
+          11    167
+          /8    0
+          4     FIRST
+          0     171
+          11    170
+          /8    5
+
+          4     INTER
+          0     154
+          11    167
+          /8    0
+
+          4     LA
+          5     30
+          0     171
+          11    170
+          /8    5
+
+          4     175
+          9     ;+2       ( IF LIBRARY HAS JUST BEEN ESTABLISHED )
+          8     ;+5
+          4     LA        (   RESERVE CURRENT STORE AND )
+          5     29
+          4     BD        (     DICTIONARY POINTERS )
+          5     175
+          8     ;+0
+
+FINAL     0     ;+1
+          &070146
+          \IRS
+          \T
+          \NEX
+          &640140
+
+INTER     0     ;+1
+          &070000
+          &400000
+
+FIRST     >1
+
+TEST      4     LOW1
+          15    2048
+          15    2048
+          2     CR
+          7     ST2
+          4     +6
+          8     FAIL
+
+THREE     11    READTH
+          8     READTH+1
+          4     INTEGR
+          1     LA
+          5     SADRES
+
+          4     LOW1
+          1     BA
+          11    SUBSTI
+          8     ENTRY
+          8     BLANK
+
+FOUR      11    READTH
+          8     READTH+1
+          4     W+3
+          1     -3
+          9     ;+3
+          4     +4
+          8     FAIL
+
+          0     W+3
+          /8    ;+1
+
+          8     ;-4
+          8     TONE
+          8     TTWO
+
+
+[ RETGRP BLANK BLANKE CODE FLAG HALT INTEGR LOW LOW1 READE ST2 TSTART TW W ]
+
+(Returning from translator via PUNGRP)
+RETGRP    4     FLAG
+          0     +TSTART/
+          9     RDRET     (Return from READTH)
+          /4    TW+3      (Return from BLANK)
+          5     LOW1
+          /4    CODE
+          5     LOW
+          2     +6
+          9     SEVEN     (Code 7 - halt)
+          7     ST2       (Code 6 - checksum)
+          4     LOW
+          7     BLANK     (Skip blanks)
+          8     BLANKE    (Exit from BLANK)
+
+SEVEN     4     LOW1      (Deal with halt)
+          8     HALT+4
+
+RDRET     /4    TW+3      (Return from READTH)
+          5     INTEGR
+          /4    CODE
+          5     W+3
+          4     +0        (Set return from BLANK)
+          5     FLAG
+          8     READE
+
+((LOCK and UNLOCK for LG AJH ALGOL - 17-03-2015))
+
+[ ENT19 ENT8 EWS1 EWS2 EWS3 EWS4 FLAG READAL UNLOCK WARN ]
+
+FLAG      >1              (0: resume BLANK, -ve: resume READTH)
+
+(Workspace for lock/unlock)
+EWS1      >1              (-ve if in LG mode)
+EWS2      >1
+EWS3      >1              (-ve: resume READTH, otherwise BLANK)
+EWS4      >1              (Translation mode)
+
+SUM       >1              (Checksum for lock/unlock)
+
+LOKTAB    +9              (Regions to sum)
+          +EWS1-1         (Ignore our own workspace)
+          +EWS4+1
+          +16383
+          -1              (Sentinel)
+
+JUNLK     8     UNLOCK
+JENT8     8     ENT8
+ENT19
+LOCK      4     JUNLK     (Lock - set 8 to enter UNLOCK)
+          8     UNLOCK+1
+
+UNLOCK    4     JENT8     (Unlock)
+(+1)      5     8         (Set entry point 8)
+          4     +0        (Initialise checksum)
+          5     EWS1
+          4     +LOKTAB
+          5     EWS2      (Pointer to lock table)
+LKBLK     0     EWS2
+          /4    0         (Start of block)
+          9     LKEND     (End of lock table)
+          5     EWS4      (Set next address)
+          /4    1         (End of block)
+          5     EWS3
+LKADD     0     EWS4      (Add next address)
+          /4    0
+          1     EWS1
+          5     EWS1
+          10    EWS4      (Advance)
+          4     EWS4
+          2     EWS3
+          7     ;+2       (Checksum complete)
+          8     LKADD     (Continue summing)
+          10    EWS2      (Go to next entry in LOKTAB)
+          10    EWS2
+          8     LKBLK
+LKEND     4     8         (Test for lock or unlock)
+          2     LOCK-1
+          7     LKSAVE    (Lock - save checksum)
+          4     SUM       (Unlock - validate checksum)
+          2     EWS1
+          7     8         (OK, normal entry at 8)
+          8     ;+0       (Failed)
+LKSAVE    4     EWS1
+          5     SUM
+          8     ;+0
+%
+<! Halt !>

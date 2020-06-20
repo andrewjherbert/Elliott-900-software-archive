@@ -1,0 +1,57 @@
+﻿
+((INTEGER INPUT SUBROUTINE, 8/3/74))
+
+[INTIPL INTIPE INTGR CHIPL CHIPE CHIP ERRORL ERRORE]
+
+INTIPL   >1
+INTGR    >1
+COUNT    >1
+EIGHTH   >1
+
+(-2)     11   CHIPL
+         8    CHIPE
+
+INTIPE   4    +0
+         5    COUNT
+         5    INTGR
+
+         4    CHIP
+(+4)     2    +57
+         9    ENDINT
+         2    +9
+         9    ENDINT
+
+         10   COUNT
+         14   8191
+         1    INTGR
+         14   8190
+         1    INTGR
+         5    EIGHTH
+         14   3
+         5    INTGR
+
+         11   CHIPL
+         8    CHIPE
+         8    INTIPE+4
+
+ENDINT   4    COUNT
+         7    ERROR
+         2    +6
+         9    ERROR
+
+         4    EIGHTH
+         2    &037777
+         9    ERROR
+
+         4    INTGR
+         0    INTIPL
+         /8   1
+
+ERROR    11   ERRORL
+         8    ERRORE
+         £INT
+         £IP
+         £ERR
+         £OR
+         £1.
+<! Halt !>

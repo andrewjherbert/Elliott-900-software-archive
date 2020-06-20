@@ -1,0 +1,59 @@
+﻿10d9
+< (Patched AJH 20/08/2012 to deal with error reported by R Burwood.  Only affects 920A and 920M.)
+475,476c474
+< (AJH replaced 13 TENPWR[DIVIDE BY 10*2^-4 OR 100*2^-7])
+<           13 TENPWR    (DIVIDE BY 10*2^-4 OR 100*2^-7)
+---
+>           13 TENPWR(DIVIDE BY 10*2^-4 OR 100*2^-7)
+538c536
+< DECML2    6 =15 8191      ( CARRY BIT  )
+---
+> DECML2    6 =15 8191( CARRY BIT  )
+569,570c567
+< (AJH replaced 8  OTCHA1[OUTPUT NEWLINE OR SPACE])
+<           8  OTCHA1      (OUTPUT NEWLINE OR SPACE)
+---
+>           8  OTCHA1(OUTPUT NEWLINE OR SPACE)
+574,576c571
+< (change in this section suggested by R Burwood to fix problem with 920A and 920M.)
+< (9 instruction affects Q.  On 920B 9 clears Q 18-17, whereas on 920A and 920M    )
+< (these bits may be set.                                                          )
+---
+> 
+580,581c575
+<           9     OPRL1
+<        7     OPRL19    (Inserted AJH 20/08/2012)
+---
+>           9     OPRL1
+584c578
+<  (         7     OPRL19    [TEST ZERO ] Deleted AJH 20/08/2012)
+---
+>           7     OPRL19    (TEST ZERO )
+717,718c711,712
+< OPRL11     4  ADPART      (CHANGED TO CORRECT ROUNDING ERROR 21.2.72)
+<            9  OPRL20      (AVOID ADDING ROUNDING*2)
+---
+> OPRL11     4  ADPART    (CHANGED TO CORRECT ROUNDING ERROR 21.2.72)
+>            9  OPRL20    (AVOID ADDING ROUNDING*2)
+730c724
+<            5  SBW1             (TOTAL SIGNIF DIGITS)
+---
+>            5  SBW1    (TOTAL SIGNIF DIGITS)
+741,742c735
+< (AJH replaced 8   DECML4[ ADD IN ROUNDING ])
+<           8   DECML4   ( ADD IN ROUNDING )
+---
+>           8   DECML4( ADD IN ROUNDING )
+764,765c757
+< (AJH replaced 8  OTCHA1[ PRINT ? ])
+<           8  OTCHA1    ( PRINT ? )
+---
+>           8  OTCHA1( PRINT ? )
+1113a1106,1112
+> 
+> 
+> 
+> 
+> 
+> 
+> 

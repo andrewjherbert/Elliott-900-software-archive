@@ -1,0 +1,158 @@
+﻿
+((RADOS FETCH, 17/11/76))
+
+[CHOPF CHOPL CHOPE ERRORL ERRORE]
+
+START    4    +0
+         5    PREV
+         5    SUM
+         5    CHOPF
+         5    ERRNO
+
+         15   2048
+         7    ;-1
+         15   2048
+         15   2048
+         2    £CHN
+         7    ;+2
+         8    ERROR1
+
+IN1      4    +0
+         5    COUNT
+
+IN2      15   2048
+         15   2048
+         15   2048
+
+         0    COUNT
+         /5   BUFFER
+         1    SUM
+         5    SUM
+
+         10   COUNT
+         4    COUNT
+         1    -128
+         9    IN2
+
+         4    +2
+         5    COUNT
+
+OUT2     4    -18
+OUT3     5    SHIFT
+
+         0    COUNT
+         /4   BUFFER
+         0    SHIFT
+         /14  6
+         6    &77
+         5    CHAR
+
+         0    PREV
+         /8   ;+1
+         8    FIRST
+         8    FONLIN
+         8    ELSE
+
+FIRST    4    BUFFER+1
+         7    ;+2
+         8    ERROR2
+
+         4    CHAR
+         1    -1
+         7    NL
+
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         8    NOTNL
+
+FONLIN   4    CHAR
+         1    -9
+         7    LAST
+
+ELSE     4    CHAR
+         1    -1
+         7    NL
+
+NOTNL    4    +2
+         5    PREV
+         4    CHAR
+         1    +32
+         8    OUT4
+
+NL       4    +1
+         5    PREV
+         4    +10
+
+OUT4     11   CHOPL
+         8    CHOPE
+
+         4    SHIFT
+         1    +6
+         9    OUT3
+
+         10   COUNT
+         4    COUNT
+         1    -128
+         9    OUT2
+
+         4    BUFFER
+         7    ERROR3
+         8    IN1
+
+LAST     4    BUFFER
+         7    ;+2
+         8    ERROR4
+
+         10   COUNT
+         4    COUNT
+         1    -128
+         9    ;+2
+         8    ERROR5
+
+         0    COUNT
+         /4   BUFFER
+         2    -1
+         7    ;+2
+         8    ERROR6
+
+         15   2048
+         15   2048
+         15   2048
+         2    SUM
+         7    ;+2
+         8    ERROR7
+
+         4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+
+ERROR7   10   ERRNO
+ERROR6   10   ERRNO
+ERROR5   10   ERRNO
+ERROR4   10   ERRNO
+ERROR3   10   ERRNO
+ERROR2   10   ERRNO
+ERROR1   10   ERRNO
+
+         0    +0
+         4    ERRNO
+         14   12
+         1    £0.
+         5    ERRNO
+         11   ERRORL
+         8    ERRORE
+         £FET
+         £CH
+         £ERR
+         £OR
+ERRNO    >1
+
+BUFFER   >128
+COUNT    >1
+SHIFT    >1
+CHAR     >1
+SUM      >1
+PREV     >1
+<! Halt !>

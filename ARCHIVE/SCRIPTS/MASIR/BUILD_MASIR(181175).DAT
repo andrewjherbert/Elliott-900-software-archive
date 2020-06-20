@@ -1,0 +1,103 @@
+﻿C Build "903 MASIR 18/11/75 Binary Mode 3"
+
+on 903 16K
+
+clear
+
+nonstop on
+
+c load MASIR
+at ptr file ../../MASTERS/MASIR/MASIR(181175).BIN 
+j 8181
+st 8164
+
+c built PTEXEC
+at ptp file PTEXEC(181175).RLB
+at ptr file ../../MASTERS/MASIR/MASIR8.900
+at tty inline
+O4M<!!>
+j 16
+de ptp
+reverse PTEXEC(181175).RLB
+
+clear
+
+c reload MASIR
+at ptr file ../../MASTERS/MASIR/MASIR(181175).BIN 
+j 8181
+st 8164
+
+c build STMASI
+at ptp file STMASI(181175).RLB
+at ptr inline
+
+((STMASI))
+[STMASI]
+STMASI=434
+%
+<!!>
+at tty inline
+O4M<!!>
+j 16
+de ptp
+reverse STMASI(181175).RLB
+
+c reload MASIR
+clear
+at ptr file ../../MASTERS/MASIR/MASIR(181175).BIN 
+j 8181
+st 8164
+
+c built MASIR
+at ptp file MASIR(181175).RLB
+at ptr file ../../MASTERS/MASIR/MASIR1A.900
+at tty inline
+O4M<!!>
+j 16
+at ptr file ../../MASTERS/MASIR/MASIR1B.900
+r
+at ptr file ../../MASTERS/MASIR/MASIR1C.900
+r
+at ptr file ../../MASTERS/MASIR/MASIR234.900
+r
+at ptr file ../../MASTERS/MASIR/MASIR5A.900
+at tty inline
+C<!!>
+r
+at ptr file ../../MASTERS/MASIR/MASIR5B.900
+r
+at ptr file ../../MASTERS/MASIR/MASIR67.900
+r
+de ptp
+reverse MASIR(181175).RLB
+
+clear
+
+c load Loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+c link components together
+at ptp file MASIR(181175).BIN
+at ptr file STMASI(181175).RLB
+at tty inline
+O434L<!!>
+j 16
+at ptr file MASIR(181175).RLB
+at tty inline
+O435L<!!>
+r
+at ptr file PTEXEC(181175).RLB
+at tty inline
+O435L<!!>
+r
+at tty inline
+M<!!>
+r
+de ptp
+
+sh t
+
+
+

@@ -1,0 +1,149 @@
+﻿
+((900-SERIES INTEGER & FRACTION INPUT SUBROUTINE, 20/7/70)
+
+[T5 QIN1 INPUTL INPUTE]
+
+T5 QIN1
+INPUTL   >1
+
+(T5+1 QIN1+1)
+INPUTE   11   CI900L
+         8    CI900E
+         2    +45      (45-C)
+         5    SIGN
+         7    CLEAR    (Jump if -; SIGN=+0)
+         1    -2       (43-C)
+         7    CLEAR    (Jump if +; SIGN=+2)
+         8    INPUTE
+
+CLEAR    5    DIGICT
+         5    INTGR
+         11   CI900L
+         8    CI900E
+
+         1    -46      (C-46)
+         5    POINT
+         7    FRACT1   (Jump if .)
+
+TESDIG   2    +11      (57-C)
+         9    NOTDIG
+         2    +9       (C-48)
+         9    NOTDIG
+
+         0    +0
+         14   8191
+         1    INTGR
+         14   8190
+         1    INTGR
+         5    A
+         3    Q
+         14   3
+         5    INTGR
+
+         10   DIGICT
+
+FRACT1   11   CI900L
+         8    CI900E
+         1    -46      (C-46)
+         8    TESDIG
+
+NOTDIG   4    DIGICT
+         7    ERROR
+         2    +6
+         9    ERROR
+
+         4    POINT
+         7    FRACT2
+
+         4    A
+         2    &037777
+         9    ERROR
+
+         4    INTGR
+         8    TESSGN
+
+FRACT2   4    DIGICT
+         1    -6
+         7    ;+5
+
+         4    INTGR
+         5    A
+         4    +0
+         5    Q
+
+         0    DIGICT
+         /4   POWTEN-1
+         5    DIGICT
+
+         14   8191
+         2    A
+         9    ;+4
+         5    A
+         4    &200000
+         5    POINT
+
+         0    Q
+         14   1
+         4    A
+         14   1
+         13   DIGICT
+         14   8191
+         1    POINT
+
+TESSGN   0    SIGN
+         /8   ;+1
+         2    +0
+         14   0
+         0    INPUTL
+         /8   1
+
+ERROR    15   6144
+         8    ;-1
+
+POWTEN   +10
+         +100
+         +1000
+         +10000
+         +100000
+         +125000
+
+SIGN     >1
+POINT    >1
+DIGICT   >1
+INTGR    >1
+A        >1
+Q        >1
+
+CI900L   >1
+
+CI900E   4    +0
+         15   2048
+         5    CI900
+
+         14   8188
+         1    =14 1
+         5    TOTAL
+         4    +0
+         14   4
+         1    =14 1
+         5    TOTAL+3
+         2    &323130
+TOTAL    >1
+         5    TOTAL
+         2    &323130
+         >1
+         1    TOTAL
+         14   17
+         9    ERROR
+
+         4    CI900
+         6    &177
+         7    CI900E
+         2    +127
+         7    CI900E
+         2    +127
+         0    CI900L
+         /8   1
+
+CI900    >1
+<! Halt !>

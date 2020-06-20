@@ -1,0 +1,6086 @@
+﻿
+(( Reconstructed ALGOL Large Program System Issue 6 Interpreter )
+
+( Andrew Herbert 2013 )
+
+( Assemble with 2-pass SIR )
+
+*16384                    ( 16K clear store )
+
+*17                       ( labels, start at 8 )
+
+[ OTCHA GECHAR GECHEN GECH OTCHA1 OTCHA2 TABLE ALRMCH HALTCH FAILEN PAUSRT
+  BUFFER NEXTCH PCHLNK IDEV ODEV INSLOT OUTSLT SBLNK SBLNK2 HALTMK SBW4 SBW3 SBW
+  W1 W3 W4 FLNS14 FLNS15 WS SBW5 LFCH OUTPA INPA DLDIV FPA DLMULT READAL SP
+  NXPORD SERIES STAND OSTSB STOP REDAL1 REDAL2 RUNALG NOUTP SELTTY SELPTR ENT8
+  ENT9 ENT10 BASE DUMP ]
+
+^8
+( new entry points )
+          8     ENT8      ( load algol maintaining libraries & code procedures )
+          8     ENT9      ( load overwriting code procedures but not library   )
+          8     ENT10     ( load overwriting libraries and code procedures     )
+          8     ENT11     ( load additional code procedure                     )
+          8     ENT12     ( load additional code procedure replacing 
+                                                      all others                
+                         )
+          8     ENT13     ( load new library overwriting existing library and
+                                                     	 	 	 	  code procedures   
+   )
+          8     DUMP      ( dump system                                        )
+          14    0
+          +18
+          -65536
+          +1761
+          14    0
+          14    0
+          14    0
+          14    0
+          14    0
+          8     ;+0
+
+STKBASE   +6147           ( +0 25 - base of stack after program )
+
+( new values STKMOD-STACKADD )
+STKMOD    +5135           ( +0 26 - bottom of stack after library )
+STKEND    +16364          (    27 - 8172^01)
+WARNAD    +15519          (    28 - 7327^01 - start of LOADER )
+PDADD     +15480          ( +0 29 - 7288^01 - LOADER dictionary entry for 
+                                                      program )
+STACKADD  +15450          ( +0 30 - 7258^01 - start of LOADER )
+          +0
+( empty block changed )
+( was 8 ;+0           )
+( was >99             )
+
+( new contents - spurious? )
+^44
+          /0    5214
+          4     1
+
+^128
+          8     HALTCH+1
+^131
+BASE      +4510           ( was +3960 first free location after interpreter )
+          +8191
+          +8191
+WARN      +0
+PP        +6082           ( was +0 )
+SP        +6147           ( was +0 )
+EP        +6147           ( was +0 )
+FP        +6250           ( was +0 )
+BN        +800            ( was +0 )
+          0     PBA
+          0     PRIM31
+          0     PRIM33
+          0     PRIM35
+          0     PRIM37
+          0     PRIM59
+          0     DLMULT
+          0     DLDIV
+          0     RRES
+          0     SERIES
+          0     STAND
+          0     TABLE
+          0     OTCHA
+          8     GECH
+          0     OSTSB
+          -1
+STIM      -1
+          0     SBLNK1
+          8     RICONV
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+PAUSRT    0     STOP
+          8     FAILEN
+SBLNK2    +3195           ( was +3195 )
+          0     ODEV
+          0     GLOPMD
+IOLNK     +15798          ( was +0 )
+          0     OUTI
+          0     OUTR
+NEXTCH    +0
+          0     STSUBRT
+          +7288           ( was -1 - used for PDADD relative to top module )
+          +0
+          +0
+          +0
+          +0
+W         +6147
+W1
+TENPWR    +102400         ( was +0 )
+W2
+NSIGNF    +0
+FPA
+W3        +4094           ( was +0 )
+W4        +64992          ( was +0 )
+W5        +0
+FPB
+W6        +12             ( was +0 )
+W7
+BEFPT     +0
+W8
+AFTPT     +0
+W9
+DECPWR    +4              ( was +0 )
+WS        +0
+WS1       +6214
+WS2       +15878          ( was +0 )
+WS3       +0
+WS4       +0
+WS5       +32             ( was +0 )
+WS6       -1              ( was +0 )
+WS7       +32             ( was +0 )
+WS8       +0
+ODEV
+WS9       +3              ( was +0 )
+DIGM
+WS10      +5              ( was +0 )
+DIGN
+WS11      +0
+OPMD
+WS12      -1              ( was +0 )
+PKDADD
+WS13      +0
+UNPACKED
+WS14      +1              ( was +0 )
+WS15      +0
+WS16      +0
+WS17      +0
+WS18      +0
+WS19      +0
+WS20      +0
+WS21      +0
+WS22      +0
+WS23      +0
+WS24      +0
+WS25      +0
+WS26      +0
+          +0
+WS28      +0
+WS29      +0
+WS30      +0
+          +0
+WS32      +0
+WS33      +0
+SBW       +21             ( was +0 )
+NXPDAD    0     NXPORD
+          +0
+          +0
+          +0
+PCHLNK    +0
+          +3440           ( was +0 )
+BUFFER    >10
+INSLOT    0     SELPTR    ( was >10 )
+          0     SELPTR
+          0     SELTTY
+          0     SELPTR
+          0     SELPTR
+          0     SELPTR
+          0     NINP+2
+          0     SELPTR
+          0     NINP
+          0     SELPTR
+OUTSLT    0     OUTPA+4
+          0     OUTPA+4
+          0     OUTPA+2
+          0     NOUTP     ( was OUTPA+4 )
+
+          0     NOUTP+6   ( was OUTPA+4 )
+          0     OUTPA+4
+          0     NOUTP+9   ( was OUTPA+4 )
+          0     OUTPA+4
+          0     NOUTP+3   ( was OUTPA+4 )
+          0     OUTPA+4
+COUNT     +0
+N         +1761           ( was +0 )
+          >5
+MKR7      +0
+SINGLE    +0
+          0     W
+          /4    0
+          5     W3
+          /4    1
+          5     W4
+          /4    2
+          5     W5
+          0     SINGLE
+          /8    1
+FAIL      +0
+          11    PAUSRT
+          8     FAILEN
+          4     W3
+          9     ;+9
+          4     =15 8191
+          5     W3
+          4     &377600
+          5     W4
+          4     +63
+          5     W5
+          0     FAIL
+          /8    1
+          4     =/0 0
+          5     W3
+          4     +0
+          8     ;-8
+RSTACK    +0
+          0     W
+          /4    0
+          5     W3
+          /4    1
+          5     W4
+          /4    2
+          5     W5
+          /4    3
+          5     W6
+          /4    4
+          5     W7
+          /4    5
+          5     W8
+          0     RSTACK
+          /8    1
+RRES      +0
+          0     W
+          4     W3
+          /5    0
+          4     W4
+          /5    1
+          4     W5
+          /5    2
+          0     RRES
+          /8    1
+PRIM30    +0
+          0     W
+          /4    0
+          9     ;+8
+          /4    3
+          9     ;+8
+          /1    0
+          9     ;+10
+          /5    0
+          0     PRIM30
+          /8    1
+          /4    3
+          9     ;+3
+          /1    0
+          8     ;-6
+          /1    0
+          9     ;-8
+          8     INTOVR
+PRIM32    +0
+          0     W
+          /4    3
+          2     +0
+          /5    3
+          1     =/0 0
+          7     ;+4
+          4     PRIM32
+          5     PRIM30
+          8     PRIM30+2
+          /4    0
+          9     ;+2
+          8     PRIM30+17
+          /1    3
+          /5    0
+          0     PRIM32
+          /8    1
+PRIM34    +0
+          0     W
+          /4    0
+          /12   3
+          3     WS1
+          7     ;+4
+          1     +1
+          7     ;+6
+          8     PRIM30+17
+          4     WS1
+          /5    0
+          0     PRIM34
+          /8    1
+          4     WS1
+          1     =/0 0
+          8     ;-5
+PRIM38    +0
+          0     W
+          /4    0
+          7     ;+23
+          5     WS1
+          /4    3
+          9     SPARE
+          7     ;+21
+          2     +0
+          5     COUNT
+CALC      10    COUNT
+          4     COUNT
+          7     ;+12
+          4     WS1
+          /12   0
+          3     WS1
+          7     CALC
+          1     +1
+          7     ;+2
+          8     INTOVR
+          4     WS1
+          1     =/0 0
+          5     WS1
+          8     CALC
+          4     WS1
+          /5    0
+          0     PRIM38
+          /8    1
+          4     +1
+          8     ;-4
+SET       +0
+          4     +0
+          0     W
+          /5    0
+          0     SET
+          /8    2
+          4     +1
+          8     ;-5
+
+( new subroutine )
+SUB1      +0              ( link )
+          0     W
+          /4    3
+          6     &400000
+          5     SUB1W
+          /4    0
+          6     &400000
+          2     SUB1W
+          7     SUB1EX
+          4     SUB1W
+          7     ;+3
+          4     +1
+          8     ;+2
+          4     -1
+SUB1EX    0     SUB1
+          /8    1
+
+SUB1W     +0
+
+PRIM49    +0
+          11    SUB1
+          8     SUB1+1
+          7     P49Z
+          2     +0
+P49SET    11    SET
+          9     SET+6
+          8     SET+1
+          0     PRIM49
+          /8    1
+P49Z      0     W
+          /4    0
+          /2    3
+          8     P49SET
+
+PRIM51    +0
+          11    SUB1
+          8     SUB1+1
+          7     P51Z
+P51SET    11    SET
+          9     SET+1
+          8     SET+6
+          0     PRIM51
+          /8    1
+P51Z      0     W
+          /4    3
+          /2    0
+          8     P51SET
+
+PRIM47    +0
+          11    SUB1
+          8     SUB1+1
+          7     P47Z
+          11    SET
+          8     SET+6
+          +0
+          0     PRIM47
+          /8    1
+P47Z      0     W
+          /4    0
+          /2    3
+          11    SET
+          7     SET+1
+          8     SET+6
+          0     PRIM47
+          /8    1
+
+PRIM45    +0
+          11    SUB1
+          8     SUB1+1
+          7     P45Z
+          11    SET
+          8     SET+1
+          +0
+          0     PRIM45
+          /8    1
+P45Z      0     W
+          /4    0
+          /2    3
+          11    SET
+          7     SET+6
+          8     SET+1
+          0     PRIM45
+          /8    1
+
+PRIM41    +0
+          11    SUB1
+          8     SUB1+1
+          7     P41Z
+P41SET    11    SET
+          9     SET+6
+          8     SET+1
+          0     PRIM41
+          /8    1
+P41Z      0     W
+          /4    3
+          /2    0
+SBLNK     8     P41SET
+
+PRIM43    +0
+          11    SUB1
+          8     SUB1+1
+          7     P43Z
+          2     +0
+P43SET    11    SET
+          9     SET+1
+          8     SET+6
+          0     PRIM43
+          /8    1
+P43Z      0     W
+          /4    0
+          /2    3
+          8     P43SET
+
+STAND     +3424           ( was +0 )
+          4     +0
+          5     SBW
+          4     W3
+          7     STAND3
+          9     STAND4
+STAND1    14    1
+          9     STAND2
+          10    SBW
+          8     STAND1
+STAND7    4     +0
+          5     W3
+          5     W4
+STAND5    5     W5
+          8     STAND6
+STAND3    4     +17
+          5     SBW
+          4     W4
+          7     STAND5
+          8     STAND1
+STAND4    1     +1
+          7     ;+3
+          4     W3
+          8     ;+5
+          4     +16
+          5     SBW
+          4     W4
+          10    SBW
+          14    1
+          9     ;-2
+STAND2    4     SBW
+SHIFTD    5     SBW
+          2     W5
+          5     W5
+          1     +64
+          9     STAND7
+          1     -128
+          9     ;+5
+          4     STAND
+          5     FAIL
+          4     +9
+          8     FAIL+1
+          4     SBW
+          7     STAND6
+          6     +8191
+          1     SHFT1
+          5     SHIFTN
+          0     W4
+          14    1
+          4     W3
+SHIFTN    14    3
+          3     W4
+          5     W3
+STAND6    0     STAND
+          /8    1
+SHFT1     14    0
+SHIFT1    +0
+          0     W4
+          14    1
+          4     W3
+          14    8191
+          5     W3
+          3     W4
+          0     W7
+          14    1
+          4     W6
+          14    8191
+          5     W6
+          3     W7
+          10    W5
+          10    W8
+          0     SHIFT1
+          /8    1
+
+PRIM31    +0
+          11    RSTACK
+          8     RSTACK+1
+          4     W3
+          7     EXTRAT
+          4     W6
+          7     EXIT31+2
+          11    SHIFT1
+          8     SHIFT1+1
+          4     W5
+          2     W8
+          9     NEG5
+          2     +0
+          1     =15 0
+          6     =14 8191
+          5     ;+6
+          4     W8
+          5     W5
+          0     W4
+          14    1
+          4     W3
+          +0
+          3     W4
+          1     W6
+          5     W3
+          4     W4
+          1     W7
+          9     ;+8
+          5     W4
+EXIT31    11    STAND
+          8     STAND+1
+          11    RRES
+          8     RRES+1
+          0     PRIM31
+          /8    1
+          6     =15 8191
+          10    W3
+          8     ;-9
+NEG5      6     =14 8191
+          5     ;+4
+          0     W7
+          14    1
+          4     W6
+          +0
+          3     W7
+          1     W3
+          5     W3
+          4     W7
+          1     W4
+          9     ;+2
+          8     EXIT31-1
+          10    W3
+          6     =15 8191
+          8     EXIT31-1
+EXTRAT    4     W6
+          5     W3
+          4     W7
+          5     W4
+          4     W8
+          5     W5
+          8     EXIT31
+
+PRIM33    +0
+          11    RSTACK
+          8     RSTACK+1
+          4     W6
+          9     ;+16
+          4     W7
+          7     ;+11
+          2     +0
+          6     =15 8191
+          5     W7
+          4     W6
+          2     +0
+          1     =/15 8191
+          5     W6
+          4     PRIM33
+          5     PRIM31
+          8     PRIM31+3
+          4     W6
+          2     +0
+          8     ;-6
+          1     =/0 0
+          7     ;+2
+          8     ;-17
+          4     W7
+          7     ;+2
+          8     ;-18
+          4     =8 0
+          10    W8
+          8     ;-15
+DLMULT    +0
+          4     W6
+          12    W3
+          5     WS10
+          3     WS11
+          4     W7
+          12    W3
+          14    8175
+          3     WS12
+          1     WS10
+          5     W3
+          4     WS11
+          1     WS12
+          9     ;+19
+          5     WS11
+          4     W6
+          12    W4
+          14    8175
+          3     WS12
+          1     W3
+          5     W3
+          4     WS12
+          1     WS11
+          9     ;+6
+          5     W4
+          7     ;+10
+          4     W3
+          0     DLMULT
+          /8    1
+          6     =15 8191
+          10    W3
+          8     ;-7
+          6     =15 8191
+          10    W3
+          8     DLMULT+14
+          4     W3
+          1     =/0 0
+          7     ;+2
+          8     ;-12
+          4     =15 8191
+          5     W3
+          5     W4
+          8     ;-15
+
+PRIM35    +0
+          11    RSTACK
+          8     RSTACK+1
+          4     W5
+          1     W8
+          5     W5
+          11    DLMULT
+          8     DLMULT+1
+          11    STAND
+          8     STAND+1
+          11    RRES
+          8     RRES+1
+          0     PRIM35
+          /8    1
+
+PRIM37    +0
+          11    RSTACK
+          8     RSTACK+1
+          0     W4
+          14    1
+          4     W3
+          14    8191
+          3     W4
+          5     W3
+          7     ;+16
+          10    W5
+          4     W6
+          7     ;+15
+          5     WS17
+          4     W7
+          5     WS18
+          11    DLDIV
+          8     DLDIV+1
+          4     W8
+          2     W5
+          5     W5
+          11    STAND
+          8     STAND+1
+EXIT37    11    RRES
+          8     RRES+1
+          0     PRIM37
+          /8    1
+          4     +9
+          11    FAIL
+          8     FAIL+1
+          8     EXIT37
+
+PRIM42    +0
+          11    PRIM33
+          8     PRIM33+1
+          4     W3
+          11    SET
+          9     SET+6
+          8     SET+1
+          0     PRIM42
+          /8    1
+
+PRIM44    +0
+          11    PRIM33
+          8     PRIM33+1
+          4     W3
+          11    SET
+          9     SET+6
+          8     ;+3
+          0     PRIM44
+          /8    1
+          7     SET+6
+          8     SET+1
+
+PRIM46    +0
+          11    PRIM33
+          8     PRIM33+1
+          4     W3
+          11    SET
+          7     SET+6
+          8     SET+1
+          0     PRIM46
+          /8    1
+
+PRIM48    +0
+          11    PRIM33
+          8     PRIM33+1
+          4     W3
+          11    SET
+          7     SET+1
+          8     SET+6
+          0     PRIM48
+          /8    1
+
+PRIM50    +0
+          11    PRIM33
+          8     PRIM33+1
+          4     W3
+          11    SET
+          9     SET+1
+          8     ;+3
+          0     PRIM50
+          /8    1
+          7     SET+1
+          8     SET+6
+
+PRIM52    +0
+          11    PRIM33
+          8     PRIM33+1
+          4     W3
+          11    SET
+          9     SET+1
+          8     SET+6
+          0     PRIM52
+          /8    1
+
+ITOR      +0
+          0     W
+          /4    3
+          5     W3
+          4     +0
+          5     W4
+          4     +17
+          5     W5
+          11    STAND
+          8     STAND+1
+          4     W3
+          5     W6
+          4     W4
+          5     W7
+          4     W5
+          5     W8
+          0     W
+          /4    0
+          5     W3
+          4     +0
+          5     W4
+          4     +17
+          5     W5
+          11    STAND
+          8     STAND+1
+          11    RRES
+          8     RRES+1
+          0     ITOR
+          /8    1
+
+PRIM53    +0
+          0     W
+          /4    0
+          7     ;+2
+          /4    3
+          11    SET
+          7     SET+1
+          8     SET+6
+          0     PRIM53
+          /8    1
+
+PRIM54    +0
+          0     W
+          /4    0
+          11    SET
+          7     ;+4
+          8     SET+6
+          0     PRIM54
+          /8    1
+          /4    3
+          7     SET+1
+          8     SET+6
+
+PRIM55    +0
+          0     W
+          /4    0
+          7     ;+7
+          /4    3
+          11    SET
+          7     SET+1
+          8     SET+6
+          0     PRIM55
+          /8    1
+          /4    3
+          11    SET
+          7     SET+6
+          8     SET+1
+          8     ;-6
+
+PRIM56    +0
+          0     W
+          /4    0
+          11    SET
+          7     SET+6
+          8     ;+3
+          0     PRIM56
+          /8    1
+          /4    3
+          7     SET+1
+          8     SET+6
+
+PRIM57    +0
+          0     W
+          /4    0
+          11    SET
+          7     SET+6
+          8     SET+1
+          0     PRIM57
+          /8    1
+
+PRIM40    +0
+          11    RSTACK
+          8     RSTACK+1
+          4     W3
+          9     ;+23
+          7     ;+20
+          4     W6
+          7     ;+28
+          5     WS5
+          4     W7
+          5     WS6
+          4     W8
+          5     WS7
+          11    PRIM61
+          8     PRIM61+3
+          4     WS5
+          5     W6
+          4     WS6
+          5     W7
+          4     WS7
+          5     W8
+          11    PRIM35
+          8     PRIM35+3
+          11    EXP       (BLAST)
+          8     EXP+3
+          0     PRIM40
+          /8    1
+          4     +19
+          11    PAUSRT
+          8     FAILEN
+          4     +0
+          5     W3
+          5     W4
+          5     W5
+          8     ;+7
+          4     =8 0
+          5     W3
+          4     +0
+          5     W4
+          4     +1
+          5     W5
+          11    RRES
+          8     RRES+1
+          8     ;-18
+
+PRIM36    +0
+          11    ITOR
+          8     ITOR+1
+          11    PRIM37
+          8     PRIM37+3
+          0     PRIM36
+          /8    1
+
+PRIM39    +0
+          0     W
+          /4    0
+          7     EXTRA2+5
+          /4    3
+          9     EXTRA2
+          7     EXTRA2+11
+          2     +0
+          5     WS5
+          4     +0
+          5     MKR7
+          5     W4
+          /4    0
+          5     W3
+          4     +17
+          5     W5
+          11    STAND
+          8     STAND+1
+          4     W3
+          5     W6
+          4     W4
+          5     W7
+          4     W5
+          5     W8
+          10    WS5
+          4     WS5
+          9     ;+2
+          8     ;+4
+          11    PRIM35
+          8     PRIM35+3
+          8     ;-6
+          4     MKR7
+          9     ;+4
+          8     EXTRA2+8
+EXIT39    0     PRIM39
+          /8    1
+          4     W3
+          5     W6
+          4     W4
+          5     W7
+          4     W5
+          5     W8
+          4     =8 0
+          5     W3
+          4     +0
+          5     W4
+          4     +1
+          5     W5
+          11    PRIM37
+          8     PRIM37+3
+          8     ;-16
+EXTRA2    5     WS5
+          4     =/0 0
+          5     MKR7
+          4     +0
+          8     PRIM39+11
+          5     W3
+          5     W5
+          5     W4
+          11    RRES
+          8     RRES+1
+          8     EXIT39
+          4     =8 0
+          5     W3
+          4     +1
+          5     W5
+          4     +0
+          8     ;-9
+
+PRIM59    +0
+          0     W
+          /4    2
+          9     EXIT59+2
+          7     EXIT59+2
+          2     +17
+          9     PRIM30+17
+          7     ;+7
+          2     +0
+          6     =14 8191
+          5     ;+2
+          /4    0
+          +0
+          /5    0
+EXIT59    0     PRIM59
+          /8    1
+          /4    0
+          9     ;+3
+          4     +0
+          8     ;-6
+          4     -1
+          8     ;-8
+
+PRIM58    +0
+          0     W
+          /4    0
+          9     ;+3
+EXIT58    0     PRIM58
+          /8    1
+          1     =/0 0
+          7     ;+15
+          /4    0
+          2     +0
+          /5    0
+          /4    1
+          2     +0
+          9     ;+3
+          /5    1
+          8     EXIT58
+          6     =15 8191
+          /5    1
+          /4    0
+          1     =/15 8191
+          /5    0
+          8     EXIT58
+          /4    1
+          7     ;+2
+          8     EXIT58+4
+          /10   2
+          4     =8 0
+          8     ;-7
+
+PRIM62    +0
+          0     W
+          /4    0
+          7     ;+6
+          9     ;+7
+          4     +1
+          /5    0
+          0     PRIM62
+          /8    1
+          4     +0
+          8     ;-4
+          4     -1
+          8     ;-6
+DIV       4     +6
+          2     SP
+          5     W
+          1     +3
+          5     SP
+          0     W
+          /4    3
+          7     INTOVR
+          5     WS1
+          1     -1
+          7     NXPORD
+          1     +2
+          7     KMIN1
+          4     +0
+          5     WS2
+          4     WS1
+          9     KKNEG
+          /4    0
+          9     JJNEG
+DIVPOS    /4    0
+          0     +0
+          14    8176
+          13    WS1
+          14    8191
+JKRES     0     W
+          /5    0
+          4     WS2
+          7     NXPORD
+          /4    0
+          2     +0
+          /5    0
+          8     NXPORD
+KMIN1     /4    0
+          2     +0
+          /5    0
+          1     =/0 0
+          7     INTOVR
+          8     NXPORD
+KKNEG     2     +0
+          5     WS1
+          9     KKS
+          /4    0
+          9     JJNEG+1
+          10    WS2
+          8     DIVPOS
+JJNEG     10    WS2
+          2     +0
+          /5    0
+          9     ;+2
+          8     DIVPOS
+          0     +0
+          4     +2
+          13    WS1
+          8     JKRES-1
+KKS       /2    0
+          7     ;+2
+          4     -1
+          1     +1
+          8     JKRES
+
+PRIM28    4     EXIT28+1
+          5     PRIM39
+          4     SP
+          1     -6
+          5     W
+          1     +3
+          5     SP
+          11    SINGLE
+          8     SINGLE+1
+          0     W
+          /4    0
+          7     EXTRA2+5
+          /4    3
+          7     EXTRA2+11
+          9     ;+6
+          2     +0
+          5     WS5
+          4     +0
+          5     MKR7
+          8     PRIM39+18
+          5     WS5
+          4     =/0 0
+          5     MKR7
+EXIT28    8     PRIM39+18
+          0     NXPORD-1
+
+PRIM61    +0
+          11    SINGLE
+          8     SINGLE+1
+          4     FPA
+          7     LOERR
+          9     LOERR
+          0     FPA+1
+          14    1
+          4     FPA
+          14    8191
+          1     =8 0
+          5     WS+17
+          3     WS+18
+          1     =/0 0
+          5     FPA
+          3     FPA+1
+          11    DLDIV
+          8     DLDIV+1
+          5     FPB
+          4     FPA+1
+          5     FPB+1
+          11    DLMULT
+          8     DLMULT+1
+          5     FPB
+          4     FPA+1
+          5     FPB+1
+          11    SERIES
+          8     SERIES+1
+          +18142
+          +75061
+          +20153
+          +80261
+          +23831
+          +48226
+          +29127
+          +14509
+          +37449
+          +18724
+          +52428
+          +104857
+          +87381
+          +43690
+          +0
+          -1
+          11    DLMULT
+          8     DLMULT+1
+          0     WS+29
+          14    1
+          4     WS+28
+          3     FPB+1
+          5     FPB
+          14    1
+          5     WS+28
+          3     WS+29
+          11    DLMULT
+          8     DLMULT+1
+          1     WS+28
+          5     FPA
+          4     FPA+1
+          1     WS+29
+          9     LOV
+LO        5     FPA+1
+          4     FPA+2
+          5     LOK
+          4     +0
+          5     FPA+2
+          11    STAND
+          8     STAND+1
+          4     FPA
+          5     WS+28
+          4     FPA+1
+          5     WS+29
+          4     FPA+2
+          5     WS+30
+          4     LOK
+          11    STAND     ( was SBLNK )
+          8     ITRSB1
+          4     LOGE2
+          5     W6
+          4     LOGE2+1
+          5     W7
+          11    DLMULT
+          8     DLMULT+1
+          11    STAND
+          8     STAND+1
+          4     WS+28
+          5     W6
+          4     WS+29
+          5     W7
+          4     WS+30
+          5     W8
+          11    PRIM31
+          8     PRIM31+3
+LGEX      0     PRIM61
+          /8    1
+LOGE2     +90852
+          +24543
+
+LOV       6     +131071
+          10    FPA
+          8     LO
+LOERR     4     +13
+          11    PAUSRT
+          8     FAILEN
+          4     +0
+          0     W
+          /5    0
+          /5    1
+          /5    2
+          8     LGEX
+LOK       +0
+EXP       +0
+          11    SINGLE
+          8     SINGLE+1
+          4     FPA+2
+          9     EXNEGP
+          1     -17
+          9     EXPOSP
+          4     FPA
+          9     EXZERO
+          4     +12
+          11    FAIL
+          8     FAIL+1
+          8     EXPEXIT
+EXZERO    4     +0
+          5     FPA
+          5     FPA+1
+          5     FPA+2
+          8     EXPEXIT
+EXONE     4     -36
+EXNEGP    1     +36
+          9     EXONE
+          1     =14 8156
+          5     ;+4
+          0     FPA+1
+          14    1
+          4     FPA
+          +0
+          5     FPA
+          3     FPA+1
+          4     +0
+          5     FPA+2
+EXPOSP    4     FPA+2
+          1     =14 1
+          5     ;+16
+          1     =0 8175
+          6     =14 8191
+          5     ;+7
+          4     LOG2E+1
+          5     FPB+1
+          4     LOG2E
+          5     FPB
+          11    DLMULT
+          8     DLMULT+1
+          +0
+          5     FPA+2
+          10    FPA+2
+          0     FPA+1
+          14    1
+          4     FPA
+          +0
+          6     =15 8191
+          1     =/8 0
+          14    1
+          5     FPB
+          3     FPB+1
+          11    SERIES
+          8     SERIES+1
+          +0
+          +1453
+          +0
+          +29363
+          +3
+          +112955
+          +55
+          +93527
+          +643
+          +3708
+          +5566
+          +21285
+          +32121
+          +12955
+          +92681
+          +117968
+          +0
+          -1
+          11    STAND
+          8     STAND+1
+EXPEXIT   11    RRES
+          8     RRES+1
+          0     EXP
+          /8    1
+LOG2E     +94548
+          +60581
+BUFLAG    -1              ( was +0 )
+HALTMK    +0
+W10
+SIGNCH    -1              ( was +0 )
+ADPART    +0
+W3ADDR    0     W3
+SBLNK1    +3347           ( was +0 )
+SUBWK1    +0
+SBW1      +4              ( was +0 )
+SBW2      +104896         ( was +0 )
+SBW3      +0
+SBW4      +0
+SBW5      +0
+SW        +21             ( was +0 )
+SW1       +4              ( was +0 )
+PBA       0     0
+          0     CBL
+          0     CHECKB
+          0     CHECKI
+          0     CHECKR
+          0     CHECKS
+          0     DO
+          0     STW
+          0     FINISH
+          0     FOR
+          0     FR
+          0     FSE
+          0     DIV
+          0     ITOR1
+          0     ITOR2
+          0     NEGI
+          0     NEGR
+          0     RETURN
+          0     RTOI1
+          0     SPARE
+          0     ST
+          0     STA
+          0     STEP
+          0     ST
+          0     WAIT
+          0     SPARE
+          0     UNTIL
+          0     UP
+          0     PRIM28
+          0     WHILE
+          0     PRIM30
+          0     PRIM31
+          0     PRIM32
+          0     PRIM33
+          0     PRIM34
+          0     PRIM35
+          0     PRIM36
+          0     PRIM37
+          0     PRIM38
+          0     PRIM39
+          0     PRIM40
+          0     PRIM41
+          0     PRIM42
+          0     PRIM43
+          0     PRIM44
+          0     PRIM45
+          0     PRIM46
+          0     PRIM47
+          0     PRIM48
+          0     PRIM49
+          0     PRIM50
+          0     PRIM51
+          0     PRIM52
+          0     PRIM53
+          0     PRIM54
+          0     PRIM55
+          0     PRIM56
+          0     PRIM57
+          0     PRIM58
+          0     PRIM59
+          0     EXP
+          0     PRIM61
+          0     PRIM62
+          0     PRIM63
+          0     PRIM63
+          0     PRIM63
+          0     PRIM63
+          0     PRIM63
+          0     PRIM63
+          0     PRIM63
+          0     PRIM63
+FLNST1    +0
+          +0
+FAILHD    0     ;+1
+          &070101
+          \ERR
+          \OR 
+          \NO 
+          \ AD
+          \R  
+          \RET
+          &014000
+FAILEN    14    8175
+          4     W3
+          5     WS
+          3     W3
+          4     -4096
+          15    6144
+          1     +256
+          9     ;-2
+          4     +3
+          5     ODEV
+          4     FAILHD
+          11    SBLNK2
+          8     OSTSB
+          4     PRFA1
+          5     FLNST1
+          4     NULSTR+2
+          5     PRFA1
+          4     IOLNK
+          5     FLNST1+1
+          4     +6
+          11    IOLNK
+          8     OUTI5
+          4     STKMOD    ( was 4 PDADD )
+          2     PP
+          5     W3
+          4     +5
+          11    IOLNK
+          8     OUTI5
+          0     EP
+          4     EP
+          2     STKBASE   ( was 2 STACKADD )
+          7     ;+3
+          4     STKMOD    ( was 4 PDADD )
+          /2    1
+          5     W3
+          4     +5
+          11    IOLNK
+          8     OUTI5
+          4     FLNST1
+          5     PRFA1
+          4     +1
+          11    OTCHA
+          8     OTCHA1
+          4     WS
+          5     W3
+          4     FLNST1+1
+          5     IOLNK
+          8     HALTCH+1
+WAIT      11    PAUSRT
+          8     HALTCH+1
+          8     NXPORD
+FAILNS    +2
+FLNS1     +3
+FLNS2     +4
+FLNS3     +5
+FLNS4     +9
+FLNS5     +1
+FLNS6     +7
+FLNS7     +6
+FLNS14    +15
+FLNS15    +14
+FLNS16    +16
+FLNS17    +18
+FLNS19    +8
+FLNS21    +22
+FLNS22    +20
+GTSFAIL   4     FLNS2
+ENFAIL    11    PAUSRT
+          8     FAILEN
+          8     STOP-1    ( was 8 STOP )
+          4     +21
+          8     ENFAIL
+STSUBRT   +0
+          4     SP
+          1     -6
+          5     PKDADD
+          5     W
+          1     +3
+          5     SP
+          5     SBW
+          0     SBW
+          /4    0
+          5     W3
+          /4    1
+          5     W4
+          /4    2
+          5     W5
+STSUB     0     PKDADD
+          /4    0
+          5     PKDADD
+          6     =/8 0
+          7     STSUB1
+          14    1
+          9     ENFAIL+3
+          /4    1
+          9     STSUB7
+          4     W4
+          1     +64
+          9     STSUB2
+          6     &377600
+          5     W4
+STSUB3    4     W5
+          1     +64
+          9     STSUB5
+          1     -128
+          9     ;+4
+          4     FLNS4
+          11    FAIL
+          8     FAIL+1
+          4     W5
+          6     +127
+          1     W4
+          0     PKDADD
+          /5    1
+STSUB1    0     PKDADD
+          4     W3
+          /5    0
+          0     STSUBRT
+          /8    1
+STSUB7    4     W5
+          0     PKDADD
+          /5    2
+          4     W4
+          8     STSUB1-1
+STSUB5    4     +0
+          5     W3
+          5     W5
+          8     STSUB3-1
+STSUB2    4     +0
+          5     W4
+          10    W3
+          4     W3
+          6     =7 8191
+          11    STAND     ( was SBLNK )
+          7     ;+2
+          8     STSUB3
+          4     W3
+          14    1
+          0     W3ADDR
+          9     NEGR4+7
+          8     NEGR3
+W345R     4     SP
+          1     -3
+W345R1    5     W
+          0     W
+W345R2    /4    0
+          5     W3
+          /4    1
+          5     W4
+          /4    2
+          5     W5
+          0     STAND     ( was SBLNK )
+          /8    1
+RICONV    4     W5
+          1     -17
+          9     RICON1
+          7     RICON2
+NEGIE
+INTOVR    4     FLNS1
+          8     ENFAIL
+RICON1    11    STAND     ( was SBLNK )
+          8     SHIFTD
+RICON2    4     =8 0
+          2     W4
+          9     RICON3
+          4     W3
+          9     RICON4
+          1     +1
+          9     INTOVR
+          8     ;+2
+RICON4    1     +1
+          5     W3
+RICON3    4     W3
+          0     SBLNK1
+          /8    1
+ITRSB1    5     W3
+ITRSB2    4     +0
+          5     W4
+          4     +17
+          5     W5
+          8     STAND+1
+NEGR1     0     W
+NEGR6     /4    1
+          7     NEGR4
+          2     +0
+          6     =15 8191
+          /5    1
+          /10   0
+NEGR5     /4    0
+          2     +0
+NEGR2     /5    0
+          0     STAND     ( was SBLNK )
+          /8    1
+NEGR4     /4    0
+          2     =/0 0
+          7     NEGR3
+          /4    0
+          2     =8 0
+          7     ;+2
+          8     NEGR5
+          /4    2
+          1     -1
+          /5    2
+          4     =/0 0
+          8     NEGR2
+NEGR3     /10   2
+          4     =8 0
+          8     NEGR2
+GLOPMD    +0
+GLIDEV    +1              ( was +0 )
+GLODEV    +1              ( was +0 )
+GLPRFA    +2815           ( was +0 )
+GLINTD    +6              ( was +0 )
+GLDIGM    +0
+GLDIGN    +7              ( was +0 )
+OPMD1     +0
+IDEV      +1
+ODEV1     +3              ( was +1 )
+PRFA1     +15878          ( was +0 )
+INTDG     +5              ( was +4 )
+DIGM1     +0              ( was +2 )
+DIGN1     +7              ( was +8 )
+
+RELOAD    0     WARN      ( determine if reloads needed )
+          /4    RELTAB
+          0     +6
+          3     ODEV
+          11    SBLNK2
+          8     OSTSB
+          4     +0        ( clear warning )
+          5     WARN
+          8     STOP-1
+RELTAB    0     NOPROG
+          0     REL1
+          0     REL2
+          0     REL3
+NOPROG    &070101
+          \NO 
+          \PRO
+          \GRA
+          &550140
+REL1      &070162
+          \ELO
+          \AD 
+          \MAC
+          \HIN
+          \E C
+          \ODE
+          &014000
+REL2      &070162
+          \ELO
+          \AD 
+          \LIB
+          \RAR
+          &710140
+REL3      &070162
+          \ELO
+          \AD 
+          \SYS
+          \TEM
+          &014000
+
+READAL    4     WARN      ( entry to read ALGOL )
+          7     ;+2
+          8     RELOAD
+          4     +1
+          0     =1 7334
+          /8    0
+REDAL1    4     WARN      ( entry to read ALGOL overwriting code procs )
+          2     +1
+          9     RELOAD
+          4     +2
+          0     =1 7334
+          /8    0
+REDAL2    4     WARN      ( entry to read ALGOL overwriting procs and library )
+          2     +3
+          7     RELOAD
+          4     +3
+          0     =1 7334
+          /8    0
+ENT11     4     WARN      ( entry to load additional code procedure )
+          7     ;+2
+          8     RELOAD
+          4     +4
+          0     =1 7334
+          /8    0
+ENT12     4     WARN      ( entry to load additional code procedure )
+          2     +1        ( replacing all others                    )
+          9     RELOAD
+          4     +5
+          0     =1 7334
+          /8    0
+ENT13     4     WARN      ( entry to load new library replacing previous )
+          2     +3        ( library and previously loaded procedures )
+          7     RELOAD
+          4     +6
+          0     =1 7334
+          /8    0
+
+RUNALG    0     N         ( run loaded program )
+          /8    0
+
+RNALG2    4     BASE+2
+          2     +8191
+          7     RELOAD
+          4     STKBASE
+          5     SP
+          5     EP
+          4     STKMOD
+          5     PP
+          0     PP
+          /4    8
+          2     &010140   ( resume original code )
+          7     ;+3
+          4     +25
+          8     ENFAIL
+          4     -1
+          5     BUFLAG
+          4     +1
+          5     GLIDEV
+          5     GLODEV
+          4     -10
+          5     W
+          0     W
+          4     +0
+          /5    BUFFER+10
+          4     INPA
+          /5    INSLOT+10
+          4     OUTPA
+          /5    OUTSLT+10
+          10    W
+          4     W
+          9     ;-9
+          4     OUTPA+1   ( new code )
+          5     OUTSLT+2
+          4     INPA+1
+          5     INSLOT+2
+          4     +1820     ( NOUTP )
+          5     OUTSLT+3
+          4     +1826     ( NOUTP+6 )
+          5     OUTSLT+4
+          4     +1829     ( NOUTP+9 )
+          5     OUTSLT+6
+          4     +1846     ( NINP+2 )
+          5     INSLOT+6
+          4     +1823     ( NOUTP+3 )
+          5     OUTSLT+8
+          4     +1844     ( NINP )
+          5     INSLOT+8
+          4     +6
+          5     GLINTD
+          4     +7
+          5     GLDIGN
+          4     NULSTR+3
+          5     GLPRFA
+          4     +0
+          5     GLOPMD
+          4     +800
+          5     BN
+          0     NXPDAD
+          /8    0
+
+NOUTP     5     NOPW      ( fix up o/p links )
+          4     +4
+          8     UPDATN
+
+          5     NOPW
+          4     +9
+          8     UPDATN
+
+          5     NOPW
+          4     +5
+          8     UPDATN
+
+          5     NOPW
+          4     +7
+
+UPDATN    0     N+2
+          /5    0
+          0     N+4
+          4     NOPW
+          /5    10
+          4     N+4
+          6     =/15 0
+          2     +1840
+          /5    7
+          /8    8
+          0     PCHLNK+1
+          /8    1
+NOPW      +0
+
+NINP      4     +9        ( fix up input links )
+          8     ;+2
+
+          4     +7
+          0     N+1
+          /5    0
+          4     N+3
+          6     =/15 0
+          2     +1854
+          0     N+3
+          /5    0
+          /8    1
+
+          0     IDEV
+          /5    230
+          0     PCHLNK
+          /8    1
+
+PRIM      0     ADPART    ( resume original code with many [unnoted] )
+          1     -30       ( minor changes, mostly to do with address )
+          /0    PBA       ( checking for e.g., stack overflow        )
+          /9    0
+          1     -27
+          9     PRIMA
+          4     SP
+          1     -3
+          5     W
+          8     PRIMA1
+PRIMA     4     SP
+          1     -6
+          5     W
+          1     +3
+          5     SP
+PRIMA1    /11   0
+          /8    1
+NXPORD    8     NXPORD+4
+          8     NXPORD+1
+          8     NXPORD+4
+          8     NXPORD+1
+          0     PP
+          /4    0
+          10    PP
+          14    8179
+          5     W
+          /4    0
+          6     +8191
+          5     ADPART
+          0     W
+          /8    FBAJ
+          8     TRAP
+          8     TICA
+          8     TIC
+          8     TRCA
+          8     TRC
+          8     CF
+          8     CFF
+          8     PE
+          8     TFAI
+          8     L2461     ( was 8 TFVR )
+          8     TRCN
+          8     INDS
+          8     IFUN
+          8     RFUN
+          8     PEM
+          8     PRIM
+FBAJ      8     TA
+          8     TIA
+          8     TIR
+          8     TRA
+          8     TRR
+          8     INDFS
+          8     MAMPS
+          8     IFJ
+          8     UJ
+          8     GTS
+          8     GT
+          8     GTF
+          8     INDA
+          8     INDR
+          8     GTFS
+          8     INOUT
+FINDFP    0     CFF+1     ( was +0 )
+          4     ADPART
+          6     +15
+          5     W
+          2     ADPART
+          5     SUBWK1+1
+          2     BN
+          7     FINDP3
+          0     EP
+          4     EP
+FINDP2    5     SUBWK1
+          2     STKBASE
+          9     FINDP1
+SPARE     4     +20
+          8     ENFAIL
+FINDP1    /4    3
+          2     SUBWK1+1
+          7     FINDP4
+          /4    0
+          /0    0
+          8     FINDP2
+FINDP3    0     EP
+          /4    2
+          1     -3
+          1     W
+          1     W
+          1     W
+          5     W1
+          0     W1
+          /4    0
+          0     FINDFP
+          /8    1
+FINDP4    /0    0
+          8     FINDP3+1
+PEM       5     W
+          1     W
+          1     W
+          2     EP
+          0     SP
+          /5    0
+          1     -3
+          5     FP
+          4     BN
+          /5    1
+          10    SP
+          10    SP
+          0     PP
+          /11   0
+          /8    1
+RETURN    0     EP
+          /4    3
+          5     BN
+          /4    2
+          5     SP
+          /4    1
+          5     PP
+          /4    0
+          5     EP
+          8     NXPORD
+TIA       1     BASE+2
+          5     W1
+          4     +1
+          8     TACHK
+TRA       1     BASE+2
+          8     ;+3
+TRAP      0     +26
+          /1    0
+          1     =/0 0
+          5     W1
+          4     +2
+TACHK     0     SP
+          /5    1
+          4     W1
+          8     ;+3
+TA        0     +26
+          /1    0
+          0     SP
+          /5    0
+UP        4     SP
+          1     +3
+          5     SP
+          2     27
+          9     MAMPS5
+          8     NXPORD
+TRR       1     BASE+2
+STKRLV    5     W+1
+          0     W+1
+          /4    1
+          5     W+2
+          /4    0
+          0     SP
+          /5    0
+          4     W+2
+          6     &777600
+          /5    1
+          4     W+2
+          14    11
+          14    8181
+          /5    2
+          8     UP
+TIR       1     BASE+2
+          5     W
+          0     W
+          /4    0
+          8     TA+2      ( was 8 TA )
+TRCA      1     BASE+1
+          1     =/8 0
+          8     TRAP+3
+TICA      1     BASE+1
+          1     =8 0
+          8     TIA+1
+RFUN      11    FINDFP
+          8     FINDFP+1
+          4     W1
+          1     =/0 0
+          5     W1
+          4     =/0 2
+          8     TACHK
+IFUN      11    FINDFP
+          8     FINDFP+1
+          8     TIA+2
+TIC       1     BASE+1
+          8     TIR+1
+TRC       1     BASE+1
+          8     STKRLV
+IFJ       4     +3
+          2     SP
+          5     SP
+          0     SP
+          /4    0
+          7     ;+2
+          8     NXPORD
+          4     ADPART
+UJ        0     +26
+          /1    0
+          5     PP
+          8     NXPORD
+PE        6     +15
+          5     W
+          1     PP
+          1     -1
+          5     L2497
+          4     W
+          1     W
+          1     W
+          2     EP
+          0     SP
+          /5    0
+          5     W4
+          4     BN
+          /5    1
+          4     ADPART
+          6     &017760
+          5     BN
+          10    SP
+          10    SP
+PCHK4     4     EP
+          2     W4
+          9     PCHK1
+MAMPS4    0     +29       ( frig: should be +28 )
+          /4    0
+          2     SP
+          9     L2088
+          4     +3
+          5     WARN
+          8     L2100
+L2088     /4    1
+          2     SP
+          9     L2094
+          4     +2
+          5     WARN
+          8     NXPORD
+L2094     /4    2
+          2     SP
+          9     NXPORD
+          4     +1
+          5     WARN
+          8     NXPORD
+L2100     4     STKEND
+          2     SP
+          9     NXPORD
+MAMPS5    4     FAILNS
+          8     ENFAIL
+PRIM63    0     PRIMA1+1  ( was +0 )
+          4     +60
+          2     ADPART
+          0     W
+          /5    1
+          8     NXPORD
+PCHK1     0     PP
+          /4    0
+          10    PP
+          5     W2
+          14    8179
+          9     PCHK2
+          6     +15
+          5     W3
+          0     W4
+          /4    1
+          6     =15 8191
+          2     W3
+          7     PCHK3
+PCHK7     4     FLNS5
+          8     ENFAIL
+PCHK2     6     +15
+          1     -3
+          9     PCHK5
+          1     -2
+          9     COPYAR
+PCHK5     4     W4
+          1     +3
+          5     W4
+          8     PCHK4
+PCHK3     4     W2
+          6     +8191
+          5     W5
+          4     W2
+          6     +8191
+          2     +8191
+          7     PCHK5
+          4     W3
+          1     -3
+          9     PCHK5
+          1     -2
+          9     PCHK8
+          1     -3
+          9     PCHK6
+          8     PCHK5
+PCHK6     0     W4
+          /0    0
+          /4    0
+          6     +15
+PCHK9     2     W5
+          7     PCHK5
+          8     PCHK7
+PCHK8     0     W4
+          /0    0
+          /0    1
+          /4    0
+          8     PCHK9
+CFF       11    FINDFP
+          8     FINDFP+1
+          5     ADPART
+          8     CF+4
+GTF       11    FINDFP
+          8     FINDFP+1
+          8     GTL2
+GT        1     BASE+1
+GTL2      5     W
+          0     W
+          4     BN
+          /2    1
+          7     GTCONW
+GTL3      0     EP
+          /4    3
+          0     W
+          /2    1
+          7     GTL4
+          0     EP
+          /4    0
+          5     EP
+          2     STKBASE
+          9     GTL3
+          4     +24
+          8     ENFAIL
+          4     EP
+          8     ;+4
+GTL4      0     EP
+          /4    2
+          9     ;-4
+          5     SP
+          /4    3
+          5     BN
+          /4    0
+          5     EP
+GTCONW    0     W
+          /4    0
+          0     +26
+          /1    0
+          5     PP
+          8     NXPORD
+GTFS      11    FINDFP
+          8     FINDFP+1
+          8     GTL5
+GTS       1     BASE+1
+GTL5      5     W
+          4     +3
+          2     SP
+          5     SP
+          0     SP
+          /4    0
+          9     GTSFAIL
+          7     GTSFAIL
+          0     W
+          /2    0
+          9     GTSFAIL
+          0     SP
+          4     +1
+          /2    0
+          /1    0
+          1     W
+          8     GTL2
+TFAI
+TFAR
+TFVI
+TFVR      11    FINDFP
+          8     FINDFP+1
+          0     W1
+          /4    2
+          0     SP
+          /5    2
+          0     W1
+          /4    0
+          5     W1
+          /4    1
+          8     TACHK
+          /4    0
+          5     W1
+          8     TFVR+2
+TRCN      11    FINDFP
+          8     FINDFP+1
+          0     W1
+          /4    1
+          9     TRCN-3
+          /4    0
+STKVAL    5     W+1
+          9     STKRLV
+          0     W+1
+          /4    0
+          8     TA+2
+MAMPS9    4     FLNS21
+          8     ENFAIL
+MAMPS     14    8187
+          6     +126
+          5     W9
+          1     W9
+          1     W9
+          2     SP
+          5     W9
+          5     W5
+          5     W4
+          0     PP
+          /4    0
+          6     =/0 0
+          5     W2
+          7     ;+2
+          4     +1
+          1     +1
+          5     W6
+          /4    0
+          6     +8191
+          1     BASE+2
+          5     WS
+          4     ADPART
+          14    1
+          6     +126
+          1     WS
+          5     WS1
+          0     W4
+          4     W2
+          7     ;+2
+          /4    0
+          /1    0
+          2     +0
+          5     W7
+MAMPS2    /4    0
+          5     WS2
+          0     W4
+          /2    3
+          9     MAMPS9
+          1     +1
+          12    W6
+          3     W6
+          0     W5
+          4     WS2
+          /5    3
+          4     W4
+          1     +6
+          5     W4
+          2     SP
+          7     MAMPS1
+          4     W6
+          0     W5
+          /5    4
+          10    W5
+          10    W5
+          0     W4
+          /4    0
+          12    W6
+          14    17
+          2     W7
+          5     W7
+          8     MAMPS2
+MAMPS1    4     W6
+          0     W9
+          /5    1
+          4     W7
+          /5    2
+          4     ADPART
+          14    8186
+          6     +63
+          /5    0
+          4     W5
+          1     +4
+          1     W2
+          5     W5
+MAMPS3    4     W5
+          0     WS
+          /5    0
+          1     W6
+          5     W5
+          4     W9
+          /5    1
+          10    WS
+          10    WS
+          4     WS1
+          2     WS
+          9     MAMPS3
+          10    PP
+          4     W5
+          6     =15 8191
+          5     SP
+          8     MAMPS4
+COPYAR    0     W4
+          /4    0
+          5     W
+          4     SP
+          /5    0
+          0     W
+          /4    1
+          0     SP
+          /5    1
+          5     W1
+          0     W
+          /4    0
+          6     =/0 0
+          1     SP
+          1     +2
+          0     SP
+          /5    0
+          6     =15 8191
+          5     W2
+          0     W1
+          /4    1
+          1     W2
+          5     SP
+          2     STKEND
+          9     MAMPS5
+          0     W
+          /4    0
+          5     W1
+CPYAR1    0     W1
+          /4    0
+          0     W2
+          /5    0
+          10    W2
+          10    W1
+          4     SP
+          2     W2
+          9     CPYAR1
+          8     PCHK5
+INDSFL    4     FAILNS+2
+          8     ENFAIL
+INDFS     11    FINDFP
+          8     FINDFP+1
+          8     ;+2
+INDS      1     BASE+1
+          5     ADPART
+          4     +3
+          2     SP
+          5     W
+          0     W
+          /4    0
+          9     INDSFL
+          7     INDSFL
+          0     ADPART
+          /2    0
+          9     INDSFL
+          4     +1
+          2     ADPART
+          0     W
+          /1    0
+          /1    0
+          /5    0
+          8     NXPORD
+AINDSB    +0
+          4     ADPART
+          2     SP
+          5     W+5
+          1     -3
+          5     W+6
+          0     W+6
+          /4    0
+          5     W
+          0     W
+          /4    1
+          5     W1
+          5     W7
+          /4    0
+          6     &400000
+          0     W+5
+          7     ;+2
+          /4    0
+          /1    0
+          0     W+1
+          /1    2
+AINDS1    5     W+3
+          4     W+5
+          1     +3
+          5     W+5
+          2     SP
+          7     AINDS2
+          0     W+5
+          /4    0
+          0     W+1
+          /12   4
+          14    17
+          10    W+1
+          10    W+1
+          1     W+3
+          8     AINDS1
+AINDS2    4     W+6
+          5     SP
+          0     W+7
+          /4    1
+          2     W+3
+          9     ;+3
+INDWRG    4     FAILNS+3
+          8     ENFAIL
+          4     W+3
+          9     INDWRG
+          0     W
+          /1    0
+          0     AINDSB
+          /8    1
+INDA      11    AINDSB
+          8     AINDSB+1
+          9     TRAP+3
+          8     TIA+1
+INDR      11    AINDSB
+          8     AINDSB+1
+          8     STKVAL
+L2461     6     +4096
+          7     ;+3
+          10    L2496
+          8     L2477
+          4     ADPART
+          1     BASE
+          5     ADPART
+          8     L2477
+CBL       4     PP
+          1     +1
+          5     ADPART
+          8     L2477
+CF        4     ADPART
+          0     +26
+          /1    0
+          5     ADPART
+L2477     0     SP
+          4     EP
+          /5    0
+          4     PP
+          /5    1
+          4     SP
+          5     EP
+          10    SP
+          10    SP
+          4     L2496
+          7     L2493
+          4     +2498
+          5     PP
+          4     +0
+          5     L2496
+          8     NXPORD
+L2493     4     ADPART
+          5     PP
+          8     NXPORD
+L2496     +0
+L2497     +6083
+L2498     -16384          ( new code )
+L2499     +0
+          4     +0
+          5     L2649
+          0     EP
+          /4    1
+          1     -2
+L2505     5     L2650
+          2     L2497
+          7     L2525
+          0     L2650
+          /4    0
+          2     -8129
+          7     L2522
+          /4    0
+          6     =/15 0
+          2     +8192
+          7     L2521
+          2     &400000
+          7     L2521
+          2     =7 0
+          7     L2521
+          8     L2525
+L2521     10    L2649
+L2522     4     L2650
+          1     -1
+          8     L2505
+L2525     4     +0
+          5     L2589
+          4     L2649
+          7     L2593
+          1     L2649
+          1     L2649
+          0     EP
+          /2    2
+          /5    2
+          1     -3
+          5     FP
+          4     +0
+          5     L2591
+          4     FP
+L2539     1     +3
+          5     L2592
+          0     L2592
+          /4    1
+          2     +3
+          7     L2551
+L2545     10    L2591
+          4     L2591
+          2     L2649
+          7     L2560
+          4     L2592
+          8     L2539
+L2551     /0    0
+          /4    0
+          5     ADPART
+          /4    1
+          0     L2592
+          /5    1
+          4     ADPART
+          /5    0
+          8     L2545
+L2560     4     FP
+L2561     1     +3
+          5     L2651
+          0     L2651
+          /4    0
+          0     L2589
+          6     +65535
+          /5    L2574
+          10    L2589
+          4     L2589
+          2     L2649
+          7     L2593
+          4     L2651
+          8     L2561
+L2574     >15
+L2589     +0
+L2590     +0
+L2591     +0
+L2592     +0
+L2593     0     EP
+          /4    1
+          1     -1
+          5     ADPART
+          0     ADPART
+          /4    0
+          6     +8191
+          5     ADPART
+          1     ADPART
+          1     ADPART
+          5     ADPART
+          4     +16400
+          2     ADPART
+          1     +8193     ( frig: should be +8192 )
+          5     ADPART
+          0     ADPART
+          /4    0
+          5     ADPART
+          6     =/15 0
+          2     +0
+          5     L2590
+          0     ADPART
+          4     +2619
+          1     L2590
+          /5    0
+          4     L2590
+          /8    1
+          0     L2574+0
+          0     L2574+1
+          0     L2574+2
+          0     L2574+3
+          0     L2574+4
+          0     L2574+5
+          0     L2574+6
+          0     L2574+7
+          0     L2574+8
+          0     L2574+9
+          0     L2574+10
+          0     L2574+11
+          0     L2574+12
+          0     L2574+13
+          0     L2574+14
+          5     L2652
+          0     EP
+          /4    1
+          5     ADPART
+          0     ADPART
+          /4    0
+          2     -8172
+          7     L2644
+          8     L2647
+L2644     0     FP
+          4     L2652
+          /5    0
+L2647     0     L2499
+          /8    1
+L2649     +0
+L2650     +0
+L2651     +0
+L2652     +0
+ST        11    STSUBRT   ( original code )
+          8     STSUBRT+1
+          4     W
+          5     SP
+          8     NXPORD
+STA       11    STSUBRT
+          8     STSUBRT+1
+          0     W
+          /4    3
+          /5    0
+          /4    4
+          /5    1
+          /4    5
+          /5    2
+          8     NXPORD
+DO        11    STSUBRT
+          8     STSUBRT+1
+          0     EP
+          4     PP
+          /5    1
+          /4    2
+          6     =15 8191
+          5     PP
+          8     NXPORD
+STEP      11    STSUBRT
+          8     STSUBRT+1
+          4     PP
+          0     EP
+          /5    1
+          4     +0
+          /5    7
+          8     NXPORD
+FOR       0     SP        ( modified code )
+          4     EP
+          /5    0
+          0     PP
+          /4    0
+          1     =/0 0
+          0     +26
+          /1    0
+          0     SP
+          /5    2
+          4     BN
+          /5    3
+          0     PP
+          /4    1
+          5     BN
+          /4    2
+          0     +26
+          /1    0
+          0     SP
+          /5    4
+          4     SP
+          5     EP
+          1     +5
+          5     SP
+          4     PP
+          1     +3
+          5     PP
+          1     +1
+          /5    1
+          8     NXPORD
+FR        0     EP        ( original code )
+          /4    1
+          5     PP
+          8     NXPORD
+FSE       0     EP
+          /4    3
+          5     BN
+          /4    4
+          5     PP
+          4     EP
+          5     SP
+          /4    0
+          5     EP
+          8     NXPORD
+NEGI      4     +3
+          2     SP
+          5     W
+          0     W
+          /4    0
+          2     =/0 0
+          7     NEGIE
+          /4    0
+          2     +0
+          /5    0
+          8     NXPORD
+UNTIL     4     +6
+          2     SP
+          5     SP
+          0     EP
+          /4    5
+          9     UNTILR
+          /4    7
+          /3    7
+          7     UNTIL2
+          /4    8
+          /0    5
+          /1    0
+          /5    0
+UNTIL2    0     EP
+          /4    11
+          /0    5
+          /2    0
+          7     UNTIL3
+          0     EP
+          6     =/0 0
+          /2    8
+UNTIL4    9     UNTIL3
+WHILE1    0     EP
+          4     PP
+          /5    1
+          8     NXPORD
+WADDR     0     W
+GETRL2    0     EP
+          /4    6
+          /0    5
+          9     W345R2
+          /4    0
+          5     W3
+          /4    1
+          6     &777600
+          5     W4
+          /4    1
+          14    11
+          14    8181
+          5     W5
+          0     STAND
+          /8    1
+UNTILR    /4    7
+          /3    7
+          7     UNTLR2
+          4     EP
+          1     +5
+          5     W
+          11    RSTACK
+          8     RSTACK+1
+          11    STAND
+          8     GETRL2
+          4     W3ADDR
+          5     W
+          11    PRIM31
+          8     PRIM31+3
+          4     EP
+          1     +5
+          5     PKDADD
+          11    STSUBRT
+          8     STSUB
+UNTLR2    4     EP
+          1     +8
+          5     W
+          11    RSTACK
+          8     RSTACK+1
+          11    STAND
+          8     GETRL2
+          4     W3ADDR
+          5     W
+          11    PRIM33
+          8     PRIM33+3
+          4     W3
+          8     UNTIL2+4
+NULSTR    &074000
+          &070140
+          0     NULSTR
+          0     NULSTR+1
+          +0
+          &070112
+          &400000
+          0     ;-2
+CHKSBR    4     PRFA1
+          5     CHKSBR-4
+          4     CHKSBR-1
+          5     PRFA1
+          4     GLODEV
+          5     ODEV
+          8     W345R
+CHECKI    11    STAND
+          8     CHKSBR
+          4     +6
+          11    IOLNK
+          8     OUTI5
+          4     CHKSBR-4
+          5     PRFA1
+          8     NXPORD
+CHECKR    11    STAND
+          8     CHKSBR
+          4     +8
+          5     DIGN
+          4     +1
+          5     OPMD
+          11    IOLNK
+          8     OUTR+3
+          8     CHECKI+5
+          &070112
+          &026462
+          &654502
+          &000040
+          &070112
+          &024641
+          \LSE
+          &020040
+          0     ;-4
+CHECKB    11    STAND
+          8     CHKSBR+4
+          4     W3
+          7     ;+2
+          4     -4
+          1     CHECKB-1
+          11    SBLNK2
+          8     OSTSB
+          8     NXPORD
+CHECKS    11    STAND
+          8     CHKSBR+4
+          4     CHKSBR-1
+          11    SBLNK2
+          8     OSTSB
+          4     SP
+          1     -3
+          5     SP
+          4     W3
+          8     CHECKB+6
+OSTR1     5     SP
+          4     ODEV1
+          5     ODEV
+          0     SP
+          /4    0
+          8     CHECKB+6
+FINSUB    4     ALRMCH
+          15    6144
+          1     =2 0
+          9     ;-2
+          4     ALRMCH+1
+          15    6144
+          0     STAND
+          /8    1
+          &070101
+          \FIN
+          \ISH
+          &010140
+          0     ;-4
+FINISH    4     -5120
+          15    6144
+          1     +256
+          9     ;-2
+          4     +3
+          5     ODEV
+          4     FINISH-1
+          11    SBLNK2
+          8     OSTSB
+          11    STAND
+          8     FINSUB
+          4     -38400
+          15    6144
+          1     +256
+          9     ;-2
+          11    PAUSRT
+STOP      8     ALRMCH+2
+          8     STOP-1
+WHILE     4     +3
+          2     SP
+          5     SP
+          0     SP
+          /4    0
+          7     WHILE1
+UNTIL3    0     EP
+          /4    2
+          6     =15 8191
+          5     PP
+          8     NXPORD
+STW       11    STSUBRT
+          8     STSUBRT+1
+          8     NXPORD
+RTOI1     11    STAND
+          8     W345R
+          11    SBLNK1
+          8     RICONV
+          0     W
+          /5    0
+          8     NXPORD
+ITOR1     4     +3
+          8     ;+2
+ITOR2     4     +6
+          2     SP
+          5     W
+          0     W
+          /4    0
+          11    STAND
+          8     ITRSB1
+          11    RRES
+          8     RRES+1
+          8     NXPORD
+NEGR      4     SP
+          1     -3
+          5     W
+          11    STAND
+          8     NEGR1
+          8     NXPORD
+LDZERO    +0
+INOEX     0     IOLNK
+          /8    1
+RNDTBL    8     0
+          +26214
+          +10485
+          +4194
+          +1677
+          +671
+          +268
+          +107
+          +43
+          +17
+          +7
+          +3
+          +1
+          +0
+          +0
+          +0
+INOUT     2     +15
+          9     INOUT1
+          4     +0
+INOUT2    5     W10
+          4     +3
+          2     SP
+          5     W
+          0     ADPART
+          /0    INOUT3
+          11    IOLNK
+          /8    0
+          8     NXPORD
+INOUT1    4     +7
+          8     INOUT2
+INOUT4    4     -7
+          5     WS
+INOUT5    0     WS
+          /4    GLOPMD+7
+          /5    GLOPMD+14
+          10    WS
+          4     WS
+          9     INOUT5
+          8     NXPORD
+SMLN      4     NULSTR+2
+          8     PRFX1
+PRFX      5     SP
+          0     W
+          /4    0
+PRFX1     0     W10
+          /5    GLPRFA
+INOUT3    8     NXPORD
+          0     RDNM
+          0     RDNM
+          0     OUTI
+          0     OUTR
+          0     ALGN
+          0     DEST
+          0     DIGIT
+          0     FRPNT
+          0     SPARE
+          0     SPARE
+          0     PRFX
+          0     SMLN
+          0     SCLD
+          0     SRCE
+          0     OSTR1
+          0     ALGN
+          0     DEST
+          0     DIGIT
+          0     FRPNT
+          0     INOUT4
+          0     SPARE
+          0     PRFX
+          0     SMLN
+          0     SCLD
+          0     SRCE
+FRPNT     5     SP
+          0     W
+          /4    0
+FRPNT1    0     W10
+          /5    GLDIGN
+          5     W1
+          4     +0
+          /5    GLOPMD
+INOUT9    4     W1
+          1     -1
+          9     FRPNT2
+          1     -8
+          9     NXPORD
+FRPNT2    4     +7
+          8     FRPNT1
+ALGN      1     -3
+          5     SP
+          5     W
+          0     W
+          /4    3
+          0     W10
+          9     FRPNT2
+          /5    GLDIGN
+          4     -1
+          /5    GLOPMD
+          0     W
+          /4    0
+          0     W10
+          9     FRPNT2
+          /5    GLDIGM
+          /1    GLDIGN
+          7     FRPNT2
+          2     +15
+          9     FRPNT2
+          8     NXPORD
+SCLD      5     SP
+          0     W
+          /4    0
+          0     W10
+          /5    GLDIGN
+          5     W1
+          1     -2
+          9     FRPNT2
+          4     +1
+          /5    GLOPMD
+          8     INOUT9
+DEST      5     SP
+          0     W
+          /4    0
+DEST1     0     W10
+          /5    GLODEV
+          9     DEST2
+          7     DEST2
+          1     -11
+          9     NXPORD
+DEST2     4     +1
+          8     DEST1
+SRCE      5     SP
+          0     W
+          /4    0
+SRCE1     0     W10
+          /5    GLIDEV
+          9     SRCE2
+          7     SRCE2
+          1     -11
+          9     NXPORD
+SRCE2     4     +1
+          8     SRCE1
+DIGIT     5     SP
+          0     W
+          /4    0
+DIGIT1    0     W10
+          /5    GLINTD
+          1     -1
+          9     DIGIT2
+          1     -12
+          9     NXPORD
+DIGIT2    4     +6
+          8     DIGIT1
+DIVTEN    0     W4
+          14    1
+          4     W3
+          14    8188
+          13    TENPWR
+          14    18
+          5     SBW
+          14    3
+          12    TENPWR
+          14    1
+          3     SBW2
+          5     SBW1
+          4     SBW2
+          2     W4
+          9     ;+2
+          8     ;+3
+          10    SBW1
+          6     =15 8191
+          5     SBW2
+          4     SBW1
+          2     W3
+          5     SBW1
+          0     SBW2
+          14    1
+          4     SBW1
+          14    11
+          13    TENPWR
+          0     +0
+          14    8177
+          3     W4
+          1     SBW
+          5     W3
+          0     STAND
+          /8    1
+DECML5    4     +4
+          1     W5
+          5     W5
+DECML     0     W4
+          14    1
+          4     W3
+          14    8188
+          3     W4
+          5     W3
+DECML1    0     W4
+          14    1
+          4     W3
+          14    1
+          3     W4
+          5     W3
+          14    2
+          3     SBW
+DECML4    1     W3
+          5     W3
+          4     SBW
+          1     W4
+          9     DECML2
+DECML3    5     W4
+          0     STAND
+          /8    1
+DECML2    6     =15 8191
+          10    W3
+          8     DECML3
+OUTR      5     SP
+          4     ODEV1
+          5     ODEV
+          4     DIGN1
+          5     DIGN
+          4     DIGM1
+          5     DIGM
+          4     OPMD1
+OUTR2     5     OPMD
+          11    STAND
+          8     W345R1+1
+          4     +4
+          8     OINT2
+OUTI      5     SP
+          4     ODEV1
+          5     ODEV
+          0     W
+          /4    0
+OUTI4     5     W3
+          4     INTDG
+OUTI5     5     DIGM
+          4     +0
+OINT2     5     ADPART
+          4     LDZERO
+          5     NSIGNF
+          4     +0
+          5     SIGNCH
+          4     PRFA1
+          11    SBLNK2
+          8     OSTSB
+          4     ADPART
+          7     OUTI3
+OINT3     4     +0
+          5     DECPWR
+          4     W3
+          9     OPRL1
+          7     OPRL19
+          14    1
+          9     OPRL3
+OPRL2     4     FLNS6
+          11    PAUSRT
+          8     FAILEN
+          4     +10
+          11    OTCHA
+          8     OTCHA1
+          11    OTCHA
+          8     OTCHA2
+          11    OTCHA
+          8     OTCHA2
+          8     INOEX
+OPRL1     14    1
+          9     OPRL2
+          0     W3ADDR
+          11    STAND
+          8     NEGR6
+          4     +13
+          5     SIGNCH
+OPRL3
+OPRL4     4     W5
+          9     OPRL12
+          4     &310000
+          5     TENPWR
+OPRL5     4     W5
+          9     OPRL10
+          7     OPRL11
+          4     +5
+          2     W5
+          9     OPRL8
+          1     +2
+          5     W5
+          10    DECPWR
+OPRL9     11    STAND
+          8     DIVTEN
+          10    DECPWR
+          11    STAND
+          8     STAND+1
+          8     OPRL5
+OPRL8     4     =10 0
+          5     TENPWR
+          8     OPRL9
+OPRL18    10    DECPWR
+          4     &031463
+          5     W3
+          4     &063160
+          5     W4
+          8     OPRL20
+OPRL19    10    DECPWR
+          4     W4
+          7     OPRL20
+          8     OPRL2
+OPRL13    4     &314631
+          2     W3
+          9     OPRL14
+          7     ;+2
+          8     OPRL10
+          4     &231463
+          2     W4
+          9     OPRL14
+          8     OPRL10
+OPRL14    4     W5
+          1     +4
+          5     W5
+          11    STAND
+          8     DECML
+          11    STAND
+          8     STAND+1
+OPRL15    4     +1
+          2     DECPWR
+          5     DECPWR
+OPRL12    4     W5
+          1     +3
+          9     OPRL14
+          7     OPRL13
+OPRL10    4     W5
+          11    STAND
+          8     SHIFTD
+OPRL11    4     OPMD
+          7     ;+4
+          9     ;+6
+          4     DIGN
+          8     ;+6
+          4     DECPWR
+          9     ;+3
+          8     ;-4
+          4     DECPWR
+          1     DIGN
+          9     OPRL20
+          5     SBW1
+          1     SBW1
+          2     +0
+          5     SBW
+          0     SBW1
+          /4    RNDTBL
+          0     SBW
+          /14   0
+          3     SBW
+          11    STAND
+          8     DECML4
+          4     W3
+          9     OPRL18
+OPRL20    4     OPMD
+          7     OPRL21
+          9     OPRL22
+          4     +1
+          2     DIGN
+OPRL25    5     AFTPT
+          4     +1
+          5     BEFPT
+          11    SBLNK1
+          8     OTMX1
+          4     +16
+          5     NSIGNF
+          4     +11
+          5     SIGNCH
+          4     +31
+          11    OTCHA
+          8     OTCHA1
+          4     DECPWR
+          1     -1
+          5     W3
+          4     +2
+          5     DIGM
+          4     +0
+          5     ADPART
+OUTI3     5     W4
+          5     DIGN
+          4     -1
+          5     OPMD
+          4     +17
+          5     W5
+          11    STAND
+          8     STAND+1
+          8     OINT3
+OPRL27    4     +0
+          8     OPRL28
+OPRL21    4     DECPWR
+          9     OPRL27
+OPRL28    5     BEFPT
+          2     DIGN
+          9     OPRL24
+OPRL23    5     AFTPT
+          11    SBLNK1
+          8     OUTMXD
+          8     INOEX
+OPRL22    4     DECPWR
+          2     DIGM
+          9     OPRL29
+          4     DIGM
+          5     BEFPT
+          4     DIGN
+          8     OPRL23
+OPRL29    4     DIGM
+          1     DIGN
+          5     DIGN
+OPRL24    4     ADPART
+          6     +8191
+          7     ;+2
+          4     +1
+          1     DIGN
+          1     -6
+          9     OPRL26
+          1     +1
+          5     DIGN
+          4     +1
+          5     OPMD
+          5     ADPART
+          8     OPRL11
+OPRL26    2     -6
+          11    OTCHA
+          5     SW
+          4     SW
+          10    SW
+          7     ;+3
+          4     +0
+          8     OTCHA1
+          4     +40
+          11    OTCHA
+          8     OTCHA1
+          11    STAND
+          8     FINSUB
+          8     INOEX
+OUTMXD    4     DECPWR
+OTMX1     5     SW1
+OTMX2     4     BEFPT
+          7     OTMX4
+          1     AFTPT
+          7     OTMX13
+OTMX3     4     SW1
+          2     BEFPT
+          9     OTMX7
+          7     OTMX6
+          4     BEFPT
+          1     -1
+          7     OTMX11
+          4     NSIGNF
+          5     SW
+          7     OTMX10
+          8     OTMX9
+OTMX11    4     +16
+          5     SW
+          8     OTMX9
+OTMX4     4     AFTPT
+          7     OTMX12
+          4     +16
+          5     NSIGNF
+          4     SIGNCH
+          9     OTMX5
+          11    OTCHA
+          8     OTCHA1
+          4     -1
+          5     SIGNCH
+OTMX5     4     +14
+          11    OTCHA
+          8     OTCHA1
+          8     OTMX3
+OTMX6     11    STAND
+          8     DECML
+          8     OTMX8
+OTMX7     11    STAND
+          8     DECML1
+OTMX8     4     W3
+          14    8179
+          1     +16
+          5     SW
+          4     W3
+          6     +8191
+          5     W3
+OTMX9     4     SIGNCH
+          9     OTMX10
+          11    OTCHA
+          8     OTCHA1
+          4     -1
+          5     SIGNCH
+OTMX10    4     SW
+          11    OTCHA
+          8     OTCHA1
+          4     BEFPT
+          1     -1
+          5     BEFPT
+          8     OTMX2
+OTMX12    4     ADPART
+          7     OTMX13
+          4     +0
+          11    OTCHA
+          8     OTCHA1
+OTMX13    0     SBLNK1
+          /8    1
+RDNM26    4     FLNS19
+          11    PAUSRT
+          8     FAILEN
+          11    GECHAR
+          8     GECHEN
+RDNM      4     +0
+          5     W1
+          5     W2
+          5     W3
+          5     W4
+          5     W5
+          5     W6
+          5     W7
+          5     W9
+          5     WS20
+          4     =/0 0
+          5     W8
+          8     ;+5
+          4     WS22
+          5     W2
+RDNM1     11    GECHAR
+          8     GECHEN
+          0     IDEV
+          /4    BUFFER-1
+          5     WS21
+          0     WS21
+          /4    TABLE
+          6     =8 0
+          7     RDNM3
+          10    W1
+          10    WS20
+          4     W7
+          7     RDNM2
+          0     +0
+          4     W9
+          1     W9
+          5     W9
+          14    2
+          1     W9
+          1     WS21
+          1     -16
+          5     W9
+          2     +28
+          9     ;+2
+          8     RDNM1
+          1     W9
+          8     ;-5
+RDNM2     10    W8
+          11    STAND
+          8     DECML5
+          4     W5
+          2     +17
+          6     +8191
+          1     SHFT1
+          5     ;+4
+          4     WS21
+          1     -16
+          0     +0
+          +0
+          3     SBW
+          11    STAND
+          8     DECML4
+          11    STAND
+          8     STAND+1
+          8     RDNM1
+RDNM5     4     W6
+          10    W6
+          7     RDNM6
+RDNM7     4     FLNS17
+          8     RDNM26+1
+RDNM6     5     W8
+          8     RDNM1
+RDNM8     4     +1
+RDNM9     5     WS22
+          4     WS20
+          7     RDNM1-2
+          8     RDNM27
+RDNM10    5     WS20
+          4     W7
+          7     RDNM11
+          8     RDNM7
+RDNM11    10    W7
+          4     W1
+          7     RDNM12
+RDNM13    4     W2
+          5     W10
+          4     +0
+          5     W2
+          10    W6
+          8     RDNM1
+RDNM12    4     =8 0
+          5     W3
+          4     +1
+          5     W5
+          10    W1
+          8     RDNM13
+RDNM3     4     WS21
+          1     -14
+          7     RDNM5
+          1     -17
+          7     RDNM10
+          1     +18
+          7     RDNM8
+          1     +2
+          7     RDNM9
+          1     +4
+          7     RDNM26
+RDNM27    4     W1
+          7     RDNM1
+          4     W7
+          7     RDNM14
+          4     W2
+          7     RDNM4
+          4     W9
+          2     +0
+          5     W9
+RDNM4     4     W10
+          5     W2
+RDNM14    4     W8
+          9     RDNM15
+          2     W9
+          5     W9
+RDNM15    4     W9
+          7     RDNM20
+          9     RDNM16
+          1     -1
+          5     W9
+          11    STAND
+          8     DECML5
+RDNM19    11    STAND
+          8     STAND+1
+          8     RDNM15
+RDNM16    4     W3
+          7     RDNM20
+          10    W9
+          4     =10 0
+          5     TENPWR
+          11    STAND
+          8     DIVTEN
+          8     RDNM19
+RDNM20    4     W2
+          7     ;+4
+          0     W3ADDR
+          11    STAND
+          8     NEGR6
+          4     ADPART
+          2     +2
+          7     ;+3
+          11    SBLNK1
+          8     RICONV
+          4     W
+          5     SP
+          5     PKDADD
+          11    STSUBRT
+          8     STSUB
+          8     INOEX
+          0     SBLNK2
+          /8    1
+OSTSB     5     WS2
+          4     -12
+          5     WS3
+          4     -1
+          5     WS6
+          5     WS4
+OST2      0     WS2
+          /4    0
+          0     WS3
+          /14   0
+          6     +63
+          5     WS5
+          4     WS3
+          7     OST1
+          1     +6
+OST3      5     WS3
+          4     WS4
+          9     OST4
+          7     OST6
+          0     WS5
+          /4    TABLE
+          6     =8 0
+          7     OST5
+          4     WS6
+          12    +10
+          14    17
+          1     WS5
+          1     -16
+          5     WS6
+          8     OST2
+OST1      4     -12
+          10    WS2
+          8     OST3
+OST4      4     WS5
+          1     -7
+          7     OST2-1
+          4     +23
+          8     ENFAIL
+          4     +1
+          8     OST2-1
+OST6      4     WS5
+          1     -7
+          7     OST6-2
+          1     -25
+          7     OSTSB-2
+          4     WS5
+          11    OTCHA
+          8     OTCHA1
+          8     OST2
+OST5      4     WS6
+          9     OST9+3
+          4     WS7
+          1     -34
+          7     OST11
+          4     WS6
+          1     -2
+          5     WS6
+          9     OST9
+          4     WS14
+          11    OTCHA
+          8     OTCHA1
+          4     WS6
+          1     -1
+          8     ;-7
+          4     =/0 0
+          8     ;+2
+OST8      4     HALTCH
+          8     OST8+8
+          4     +1
+          5     WS7
+          4     LFCH+1
+          8     OST8+9
+          1     +25
+          1     +7
+          5     WS7
+          5     WS14
+          4     +0
+          5     WS6
+          8     OST2
+OST11     4     WS6
+          1     =/0 0
+          5     WS7
+          4     -1
+          5     WS6
+OST9      4     WS7
+          11    OTCHA
+          8     OTCHA1
+          4     WS5
+          5     WS7
+          1     -32
+          7     OST2-1
+          1     -2
+          7     OST8+10
+          1     -6
+          7     OST8
+          1     -4
+          7     OST8+2
+          1     -5
+          7     OST8+7
+          1     -1
+          7     OST8-2
+          1     -1
+          7     OST8+8
+          1     -2
+          7     OST8+6
+          4     FLNS7
+          11    PAUSRT
+          8     FAILEN
+          8     OST8+2
+
+[ SERIES FPA DLMULT ]
+SERIES    +0
+          4     +0
+          11    DLMULT
+          5     FPA+1
+          0     SERIES
+          /1    1
+          5     FPA
+          /4    2
+          10    SERIES
+          1     FPA+1
+          10    SERIES
+          9     OVERFLOW
+RETURN    5     FPA+1
+          /4    4
+          /9    5
+          8     DLMULT+1
+OVERFLOW
+          6     =15 8191
+          10    FPA
+          8     RETURN
+[ DLDIV W3 W4 WS ]
+DLDIV     +0
+          4     W3
+          5     WS+13
+          4     W4
+          5     WS+14
+          0     +0
+          14    8191
+          3     WS+16
+          5     WS+15
+          4     +0
+          5     WS+30
+          5     WS+29
+          0     +0
+          4     WS+13
+          13    WS+17
+          5     WS+32
+          12    WS+17
+          3     WS+20
+          5     WS+19
+          4     WS+20
+          7     NOCARRY
+          2     +131071
+          1     +1
+          5     WS+20
+          4     WS+19
+          2     WS+13
+          1     -1
+          8     ;+3
+NOCARRY   4     WS+19
+          2     WS+13
+          5     WS+19
+          4     WS+32
+          12    WS+18
+          14    8191
+          3     WS+33
+          2     WS+15
+          5     WS+21
+          4     WS+33
+          2     WS+16
+          5     WS+22
+          9     SUBTI
+          4     WS+21
+          8     ;+4
+SUBTI     4     WS+21
+          1     -1
+          5     WS+21
+          7     L0
+          9     LNEG
+LPOS      14    1
+          10    WS+30
+          9     JUMP1
+          8     ;-3
+L0        4     +16
+          5     WS+30
+          8     JUMP1
+LNEG      0     +0
+          14    1
+          10    WS+30
+          9     ;-2
+JUMP1     4     WS+19
+          7     JUMP2
+          1     +1
+          7     JUMP2
+          1     -1
+          14    8191
+          10    WS+29
+          8     ;-6
+JUMP2     4     WS+29
+          1     WS+30
+          2     +1
+          7     N1
+          4     WS+29
+          2     +16
+          5     WS+28
+          1     =14 0
+          5     SHIFT2
+          4     WS+29
+          2     +0
+          6     &17777
+          1     =14 0
+          5     SHIFT1
+EVALUATE
+          0     WS+22
+          14    1
+          4     WS+21
+SHIFT1    14    0
+          3     WS+22
+          5     WS+21
+          0     WS+20
+          14    1
+          4     WS+19
+SHIFT2    14    0
+          3     WS+23
+          1     WS+21
+          5     WS+24
+          4     WS+23
+          1     WS+22
+          5     WS+25
+          9     ADDI
+          8     ;+2
+ADDI      10    WS+24
+          0     WS+25
+          14    1
+          4     WS+24
+          14    8191
+          13    WS+17
+          5     WS+26
+          4     WS+28
+          2     =15 1
+          5     SHIFT3
+          0     +0
+          4     WS+26
+SHIFT3    14    0
+          3     WS+29
+          3     W4
+          1     WS+32
+          5     W3
+          5     WS+28
+          0     DLDIV
+          /8    1
+N1        4     =14 8191
+          5     SHIFT1
+          4     =14 15
+          5     SHIFT2
+          4     +15
+          5     WS+28
+          8     EVALUATE
+[ TABLE ]
+TABLE     /0    67
+          /0    192
+          2     192
+          2     64
+          2     192
+          2     64
+          2     64
+          2     2243
+          2     2240
+          2     2048
+          2     2625
+          2     2752
+          2     2112
+          2     2755
+          2     4288
+          2     2624
+          8     192
+          8     64
+          8     64
+          8     192
+          8     69
+          8     192
+          8     192
+          8     64
+          8     64
+          8     192
+          2     2240
+          2     2112
+          2     2496
+          2     2368
+          2     2368
+          2     4288
+          2     128
+          4     66
+          4     2
+          4     131
+          4     4
+          4     133
+          4     134
+          4     7
+          4     8
+          4     137
+          4     138
+          4     11
+          4     140
+          4     13
+          4     14
+          4     143
+          4     16
+          4     145
+          4     146
+          4     19
+          4     148
+          4     21
+          4     22
+          4     151
+          4     152
+          4     25
+          4     26
+          2     2203
+          2     28
+          2     2205
+          2     2718
+          2     31
+          /4    160
+          /1    5153
+          4     2082
+          /4    3235
+          4     4132
+          /4    5285
+          /4    6310
+          4     7207
+          5     40
+          /5    1193
+          /5    2218
+          5     3115
+          /5    4268
+          5     5165
+          5     6190
+          /5    7343
+          6     48
+          /6    1201
+          /6    2226
+          6     3123
+          /6    4276
+          6     5173
+          6     6198
+          /6    7351
+          /7    184
+          7     1081
+          7     2106
+          /7    3259
+          7     4156
+          /7    5309
+          /7    6334
+          7     7232
+          /8    66
+          8     1185
+          8     2210
+          /8    3107
+          8     4260
+          /8    5157
+          /8    6182
+          8     7335
+          9     168
+          /9    1065
+          /9    2090
+          9     3243
+          /9    4140
+          9     5293
+          9     6318
+          /9    7215
+          10    176
+          /10   1073
+          /10   2098
+          10    3251
+          /10   4148
+          10    5301
+          10    6326
+          /10   7223
+          /11   56
+          11    1209
+          11    2234
+          /11   3136
+          11    4288
+          /11   5184
+          /11   6208
+          11    7363
+
+[ OTCHA GECHAR GECHEN GECH OTCHA1 OTCHA2 TABLE ALRMCH HALTCH FAILEN PAUSRT
+  BUFFER NEXTCH PCHLNK IDEV ODEV INSLOT OUTSLT SBLNK HALTMK SBW4 SBW3 SBW FLNS14
+  FLNS15 SBW5 LFCH OUTPA INPA STAND W1 STOP DEV SELTTY SELPTR ]
+
+DEV       +6148           ( was +0 )
+OTCHA     +3440           ( was +0 )
+OTCHA1    5     SBW
+OTCHA2    4     OTCHA
+          5     PCHLNK+1
+          4     SBW
+          0     ODEV
+          /0    OUTSLT-1
+          /8    0
+
+OUTPA     0     ;+4
+          0     ;+1
+          4     +6148
+          8     ;+2
+          4     +6144
+          5     DEV
+          4     SBW
+          9     OTCHA6
+OTCHA4    0     SBW
+          /0    TABLE+64
+          14    8
+OTCHA6    0     DEV
+          /15   0
+          4     SBW
+          1     -1
+          7     ;+3
+OTCHA5    0     PCHLNK+1
+          /8    1
+          4     LFCH
+          /15   0
+          4     +0
+          /15   0
+          8     OTCHA5
+GECHAR    +0
+GECH      4     STAND
+          8     ;+2
+GECHEN    4     GECHAR
+          5     PCHLNK
+          0     IDEV
+          /0    INSLOT-1
+          /8    0
+INPA      0     ;+4
+          0     ;+1
+SELTTY    4     +2052
+          8     ;+2
+SELPTR    4     +2048
+          5     DEV
+          0     IDEV
+          /4    BUFFER-1
+          9     ;+3
+          5     NEXTCH
+GECHP1    8     GECH4
+          11    PAUSRT
+          8     HALTCH+1
+          4     +1
+          8     ;-5
+GECH4     4     +0
+          0     DEV
+          /15   0
+          5     SBW4
+          6     +127
+          5     SBW5
+          0     SBW5
+          2     SBW4
+          /2    TABLE
+          6     +128
+          7     ;+3
+          4     FLNS14
+          8     GECH15
+          /4    TABLE
+          6     +127
+          1     -64
+GECHP4    9     GECH13
+          5     SBW4
+          0     SBW4
+          /8    ;+1
+          8     GECH9
+          8     GECH11
+          8     GECH99
+          8     GECH4
+GECHP2    8     GECH9
+          4     =/0 1
+GECH11    5     HALTMK
+GECHP3    8     ;+2
+GECH13    6     +63
+          0     IDEV
+          /5    BUFFER-1
+          0     NEXTCH
+          /4    TABLE
+          0     PCHLNK
+          /8    1
+GECH99    4     +0
+          15    2048
+          15    6144
+          7     GECH4
+          8     ;-4
+GECH9     4     FLNS15
+GECH15    5     SUB12     ( new code )
+          4     +0
+          5     SUB13
+GECH16    0     SUB13
+          /4    W1
+          /5    SUB14
+          10    SUB13
+          4     SUB13
+          2     +12
+          7     ;+2
+          8     GECH16
+          4     SUB12
+          11    PAUSRT
+          8     FAILEN
+          4     +0
+          5     SUB13
+GECH17    0     SUB13
+          /4    SUB14
+          /5    W1
+          10    SUB13
+          4     SUB13
+          2     +12
+          7     GECH13
+          8     GECH17
+SUB12     +0
+SUB13     +0
+SUB14     >12
+LFCH      +10
+          +1
+ALRMCH    /0    135
+HALTCH    /0    20
+
+[ LPCTL DEV BASE OSTSB SBLNK2 DUMP PAUSRT NXPORD STOP ENT8 ENT9 ENT10 RUNALG
+  ENTRYP T23LEN LLDR1A LLDR1 ]
+
+( code to read D or R )
+LPCTL     4     DEV       ( save input device )
+          5     SDEV
+          4     +4161     ( frig: address of PROMPT )
+          11    SBLNK2
+          8     OSTSB
+          4     SDEV      ( restore input device )
+          5     DEV
+          4     +0
+          15    2052
+          1     -68       ( is it 'D'? )
+          7     LETD
+          2     +127
+          7     ;+4       ( is it 'C'? )
+          1     +15       ( is it 'R'? )
+          7     RUNALG
+          8     LPCTL
+          0     PAUSRT    ( test if in PAUSERT )
+          /4    1
+          2     PAUSE
+          7     LPCTL
+          4     NXPORD+2  ( resume after pause )
+          5     NXPORD
+          4     NXPORD+3
+          5     NXPORD+1
+          0     PAUSRT
+          /8    1
+PAUSE     8     STOP-1
+
+LETD      4     +1
+          5     DFLAG
+          8     DUMP
+
+SDEV      +6148
+PROMPT    \'^_            ( prompt for control loop )
+          \@
+ENT8      4     ENTRYP    ( load Algol intermediate code preserve 
+                                                       code procs and library  )
+          8     TOLOAD
+ENT9      4     ENTRYP+1  ( load, overwite code procs, preserve library )
+          8     TOLOAD
+ENT10     4     ENTRYP+2  ( load, overwrite code proc and library )
+TOLOAD    5     6         ( set entry address - READAL etc and terminate 
+                                                      level 4 )
+          4     +1
+          0     ENTRYP+3
+          /5    0
+          15    7168
+          4     ENTRYP+4  ( on level one interrupt go to LPCTL )
+          5     6
+          8     ;-3
+
+( Dump utility )
+DUMP      4     +0
+          5     WORD
+          5     SUM2
+          5     SUM1
+          4     +8193     ( frigged literal should be +8192)
+          1     +8191
+          5     MAXADR    ( highest address to punch )
+          4     T23LEN    ( addr of control loop )
+          5     COUNT
+DNEXT     4     +8        ( loop punching T23 )
+          15    6144
+          0     COUNT
+          /4    MAXADR
+          11    PUN3
+          8     PUN3+1
+          10    COUNT
+          4     COUNT
+          9     DNEXT
+          4     +2        ( loop punching out first segment )
+          5     ADDR
+          4     BASE
+          1     -1
+
+NXTSEG    5     ENDAT     ( punch next segment )
+NXTBLK    0     ADDR
+          /4    0
+          7     ZERO
+          4     +128      ( start new block )
+          5     WORD
+          4     SUM1
+          1     ADDR
+          5     SUM1
+          4     ADDR
+          11    PUN3
+          8     PUN3+1
+NXTWD     0     ADDR
+          /4    0
+          7     ZERO
+          5     WS
+          11    PUN3
+          8     PUN3+1
+          4     WS
+          1     SUM2
+          5     SUM2
+ZERO      4     ADDR
+          2     ENDAT
+          0     ADDR
+          10    ADDR
+          7     ENDSEG
+          /4    0
+          7     NXTBLK
+          8     NXTWD
+ENDSEG    4     +128      ( end segment with checksums )
+          15    6144
+          4     +0
+          15    6144
+          15    6144
+          4     SUM2
+          11    PUN3
+          8     PUN3+1
+          4     SUM1
+          11    PUN3
+          8     PUN3+1
+          4     ENDAT
+          2     MAXADR
+          7     DONE
+          4     +0        ( reset checksums )
+          5     SUM2
+          5     SUM1
+          4     MAXADR
+          8     NXTSEG
+DONE      15    6148
+          8     ;+0
+
+PUN3      0     4215      ( link - punch word subroutine )
+          14    8174      ( >> 18 )
+          4     +0
+          14    4         ( << 4 )
+          1     WORD      ( add to word )
+          15    6144      ( punch first 4 bits )
+          4     +0
+          5     WORD      ( word := 0 )
+          14    7
+          15    6144      ( punch next 7 bits )
+          4     +0
+          14    7
+          15    6144      ( punch last 7 bits )
+          0     PUN3      ( return )
+          /8    1
+
+( T23 loader below stack -- takes over from T23 at top of store )
+LOWLDR    5     SUM1
+          5     SUM2
+          4     DFLAG
+          7     LLDR1
+          4     LLDR1A
+          5     6
+          15    7168
+          8     ;-1       ( terminate on level 1 interrupt )
+LLDR1     4     +0
+          15    2048
+LDONE     5     DATA
+          6     +128
+          7     LDWD
+          4     DATA      ( new block )
+          15    2048
+          15    2048
+          7     SUMCK
+          5     ADDR
+          1     SUM1
+          5     SUM1
+LDCH      4     +0
+          15    2048
+          8     LDONE
+LDWD      0     ADDR      ( next word in block )
+          4     DATA
+          15    2048
+          15    2048
+          /5    0
+          1     SUM2
+          5     SUM2
+          10    ADDR
+          8     LDCH
+SUMCK     15    2048      ( sumchecks )
+          15    2048
+          15    2048
+          2     SUM2
+          7     ;+3
+SFAIL     15    6144      ( loop punching on sumcheck failure )
+          8     ;-1
+L4302     15    2048
+          15    2048
+          15    2048
+          2     SUM1
+          7     ;+2
+          8     SFAIL
+          4     DFLAG
+          7     ;+0
+          4     +0
+          5     DFLAG
+          8     LPCTL
+
+
+( ALGOL T23 loader )
+
+( This is the first loader punched out, it reads in the contents of memory
+   upto and including LOWLDR which then takes over to load data above it. )
+
+ALGT23    0     8179      ( load 8 words  - clear store second module )
+          8     8182
+          -8
+(8172)    +8192
+          4     1
+          2     8172
+(8175)    7     8181      ( load next section )
+          /4    8191      ( will have been left at +0 by i.i. )
+          10    1
+          /5    8191      ( copy to next word )
+          8     8173      ( loop until 8192 words cleared )
+(8180)    0     8179      ( load 5 words - clear store first module )
+          8     8182
+          -5
+          8     8177
+          8     8181
+(8177)    /5    2
+          10    1
+          8     8175
+          0     8179
+          8     8182      (load 45 words - T23 with different exit )
+          -45
+(8135)    4     8179
+          15    2048
+          7     8136
+          5     8173
+          6     8178
+(8140)    7     8151
+          4     8173
+          15    2048
+          15    2048
+          7     8160
+(8145)    5     8174
+          1     8176
+          5     8176
+          4     8179
+          15    2048
+(8150)    8     8138
+          0     8174
+          4     8173
+          15    2048
+          15    2048
+(8155)    /5    0
+          1     8175
+          5     8175
+          10    8174
+          8     8148
+(8160)    15    2048
+          15    2048
+          15    2048
+          2     8175
+          7     8167
+(8165)    15    6144
+          8     8165      ( sumcheck error )
+          15    2048
+          15    2048
+          15    2048
+(8170)    2     8176
+          7     LOWLDR    ( at end of first segment go to lower loader )
+          8     8165      ( sumcheck error )
+DATA
+COUNT     +0
+ADDR      +0
+(8175)
+SUM2      +0
+SUM1      +0
+          8     8135
+          +128
+WORD      +0              ( +0 )
+MAXADR    +16383          ( highest address to dump )
+ENDAT     +4509
+DFLAG     +0              ( before literals )
+WS        +0
+
+[ ILITS ]
+ILITS                     ( literals = loc 4384 )
+
+^ILITS+115
+
+[ ENTRYP T23LEN LLDR1A LLDR1 READAL REDAL1 REDAL2 LPCTL ]
+
+( table of entry points )
+ENTRYP    0     READAL    ( entry at 8 - read algol program )
+          0     REDAL1    ( entry at 9 - load overwriting code procs )
+          0     REDAL2    ( entry at 10 - load overwriting code procs + library 
+                          )
+          1     7693      ( set to +1 by TOLOAD )
+          0     LPCTL
+T23LEN    -67             ( length of ALGOL T23 Loader )
+LLDR1A    0     LLDR1
+
+          5     4640      ( chaff )
+          /4    2         ( chaff )
+          9     4511      ( chaff )
+          /4    4
+
+(( Built in library reconstructed from Tape 3 Issue 7 plus DECODE from Tape 3 Is
+sue 6 )
+
+^4510
+
+[ LIBRARY ]
+
+LIBRARY
+
+[ DECODE ]
+
+DECODE
+(  0;)    /14   1         ( -16383 -.124992 &740001)
+          0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /0    3         (-131069 -.999977 &400003)
+          /4    230       ( -98074 -.748245 &500346)
+          0     138       (   +138 +.001053 &000212)
+          /5    0         ( -90112 -.687500 &520000)
+          0     1;
+          /8    1         ( -65535 -.499992 &600001)
+
+[ ADVANC ]
+ADVANC
+(  0;)    /14   1         ( -16383 -.124992 &740001)
+          0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /4    3         ( -98301 -.749977 &500003)
+          0     169       (   +169 +.001289 &000251)
+          /5    8         ( -90104 -.687439 &520010)
+          0     150       (   +150 +.001144 &000226)
+          /11   0         ( -40960 -.312500 &660000)
+          8     153       ( +65689 +.501167 &200231)
+          0     1;
+( 10;)    /8    1         ( -65535 -.499992 &600001)
+
+[ LBUFFER ]
+LBUFFER
+(  0;)    /14   2         ( -16382 -.124985 &740002)
+          0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /0    6         (-131066 -.999954 &400006)
+          /4    0         ( -98304 -.750000 &500000)
+          14    8186      (+122874 +.937454 &357772)
+          6     17;
+          0     138       (   +138 +.001053 &000212)
+          /0    3         (-131069 -.999977 &400003)
+          /2    230       (-114458 -.873245 &440346)
+( 10;)    7     12;
+          4     18;
+          1     19;
+          0     138       (   +138 +.001053 &000212)
+          /5    0         ( -90112 -.687500 &520000)
+          0     1;
+          /8    1         ( -65535 -.499992 &600001)
+          0     63        (    +63 +.000481 &000077)
+          /15   8191      (     -1 -.000008 &777777)
+          0     1         (     +1 +.000008 &000001)
+
+[ QATRIG COS SIN ]
+QATRIG
+COS
+(  0;)    /14   1         ( -16383 -.124992 &740001)
+          0     0         (     +0 +.000000 &000000)
+          4     106;
+          8     9;
+SIN
+          /14   1         ( -16383 -.124992 &740001)
+          0     0         (     +0 +.000000 &000000)
+          4     5;
+          5     1;
+          4     107;
+          5     5;
+( 10;)    0     138       (   +138 +.001053 &000212)
+          /4    3         ( -98301 -.749977 &500003)
+          5     183       ( +41143 +.313896 &120267)
+          /4    4         ( -98300 -.749969 &500004)
+          5     184       ( +41144 +.313904 &120270)
+          /4    5         ( -98299 -.749962 &500005)
+          5     185       ( +41145 +.313911 &120271)
+          2     108;
+          9     99;
+          4     109;
+( 20;)    5     187       ( +41147 +.313927 &120273)
+          4     110;
+          5     186       ( +41146 +.313919 &120272)
+          0     146       (   +146 +.001114 &000222)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          4     185       ( +32953 +.251411 &100271)
+          1     111;
+          9     31;
+          1     112;
+( 30;)    9     32;
+          4     106;
+          1     113;
+          6     114;
+          5     38;
+          0     184       (   +184 +.001404 &000270)
+          14    1         (+114689 +.875008 &340001)
+          4     183       ( +32951 +.251396 &100267)
+          0     0         (     +0 +.000000 &000000)
+          1     5;
+( 40;)    3     184       ( +24760 +.188904 &060270)
+          3     187       ( +24763 +.188927 &060273)
+          5     183       ( +41143 +.313896 &120267)
+          5     186       ( +41146 +.313919 &120272)
+          0     146       (   +146 +.001114 &000222)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          5     186       ( +41146 +.313919 &120272)
+          4     184       ( +32952 +.251404 &100270)
+          5     187       ( +41147 +.313927 &120273)
+( 50;)    0     149       (   +149 +.001137 &000225)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          /15   8191      (     -1 -.000008 &777777)
+          15    8114      (+130994 +.999405 &377662)
+          0     0         (     +0 +.000000 &000000)
+          0     5724      (  +5724 +.043671 &013134)
+          /15   8189      (     -3 -.000023 &777775)
+          10    5141      ( +87061 +.664223 &252025)
+          0     85        (    +85 +.000648 &000125)
+( 60;)    3     1479      ( +26055 +.198784 &062707)
+          /15   6258      (  -1934 -.014755 &774162)
+          5     2681      ( +43641 +.332954 &125171)
+          2     7126      ( +23510 +.179367 &055726)
+          9     1242      ( +74970 +.571976 &222332)
+          /2    346       (-114342 -.872360 &440532)
+          4     5105      ( +37873 +.288948 &111761)
+          11    2569      ( +92681 +.707100 &265011)
+          14    3280      (+117968 +.900024 &346320)
+          0     0         (     +0 +.000000 &000000)
+( 70;)    /15   8191      (     -1 -.000008 &777777)
+          4     184       ( +32952 +.251404 &100270)
+          5     187       ( +41147 +.313927 &120273)
+          4     183       ( +32951 +.251396 &100267)
+          5     186       ( +41146 +.313919 &120272)
+          0     146       (   +146 +.001114 &000222)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          0     184       (   +184 +.001404 &000270)
+          14    1         (+114689 +.875008 &340001)
+( 80;)    4     183       ( +32951 +.251396 &100267)
+          14    1         (+114689 +.875008 &340001)
+          1     107;
+          3     184       ( +24760 +.188904 &060270)
+          5     183       ( +41143 +.313896 &120267)
+          4     115;
+          5     185       ( +41145 +.313911 &120271)
+          0     150       (   +150 +.001144 &000226)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+( 90;)    4     183       ( +32951 +.251396 &100267)
+          0     138       (   +138 +.001053 &000212)
+          /5    0         ( -90112 -.687500 &520000)
+          4     184       ( +32952 +.251404 &100270)
+          /5    1         ( -90111 -.687492 &520001)
+          4     185       ( +32953 +.251411 &100271)
+          /5    2         ( -90110 -.687485 &520002)
+          0     1;
+          /8    1         ( -65535 -.499992 &600001)
+          4     116;
+(100;)    11    165       ( +90277 +.688759 &260245)
+          8     166       ( +65702 +.501266 &200246)
+          4     106;
+          5     185       ( +41145 +.313911 &120271)
+          5     184       ( +41144 +.313904 &120270)
+          8     91;
+          0     0         (     +0 +.000000 &000000)
+          /8    0         ( -65536 -.500000 &600000)
+          0     19        (    +19 +.000145 &000023)
+          0     3513      (  +3513 +.026802 &006671)
+(110;)    10    1523      ( +83443 +.636620 &242763)
+          0     35        (    +35 +.000267 &000043)
+          /15   8119      (    -73 -.000557 &777667)
+          15    37        (+122917 +.937782 &360045)
+          14    8191      (+122879 +.937492 &357777)
+          0     1         (     +1 +.000008 &000001)
+          0     10        (    +10 +.000076 &000012)
+
+[ ARCTAN ]
+
+ARCTAN
+(  0;)    /14   1         ( -16383 -.124992 &740001)
+          0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /4    3         ( -98301 -.749977 &500003)
+          5     183       ( +41143 +.313896 &120267)
+          /4    4         ( -98300 -.749969 &500004)
+          5     184       ( +41144 +.313904 &120270)
+          /4    5         ( -98299 -.749962 &500005)
+          5     185       ( +41145 +.313911 &120271)
+          2     131;
+( 10;)    5     129;
+          9     13;
+          8     27;
+          1     132;
+          5     185       ( +41145 +.313911 &120271)
+          4     183       ( +32951 +.251396 &100267)
+          5     207       ( +41167 +.314079 &120317)
+          5     130;
+          4     184       ( +32952 +.251404 &100270)
+          5     208       ( +41168 +.314087 &120320)
+( 20;)    4     133;
+          5     183       ( +41143 +.313896 &120267)
+          4     134;
+          5     184       ( +41144 +.313904 &120270)
+          0     147       (   +147 +.001122 &000223)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          4     185       ( +32953 +.251411 &100271)
+          1     135;
+          9     127;
+( 30;)    1     136;
+          6     137;
+          5     36;
+          0     184       (   +184 +.001404 &000270)
+          14    1         (+114689 +.875008 &340001)
+          4     183       ( +32951 +.251396 &100267)
+          0     0         (     +0 +.000000 &000000)
+          3     184       ( +24760 +.188904 &060270)
+          3     187       ( +24763 +.188927 &060273)
+          3     219       ( +24795 +.189171 &060333)
+( 40;)    5     183       ( +41143 +.313896 &120267)
+          5     186       ( +41146 +.313919 &120272)
+          5     218       ( +41178 +.314163 &120332)
+          0     146       (   +146 +.001114 &000222)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          5     186       ( +41146 +.313919 &120272)
+          4     184       ( +32952 +.251404 &100270)
+          5     187       ( +41147 +.313927 &120273)
+          0     149       (   +149 +.001137 &000225)
+( 50;)    /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          0     23        (    +23 +.000175 &000027)
+          11    2707      ( +92819 +.708153 &265223)
+          /15   8006      (   -186 -.001419 &777506)
+          4     3252      ( +36020 +.274811 &106264)
+          0     683       (   +683 +.005211 &001253)
+          5     467       ( +41427 +.316063 &120723)
+          /15   6592      (  -1600 -.012207 &774700)
+          13    5137      (+111633 +.851692 &332021)
+( 60;)    0     2752      (  +2752 +.020996 &005300)
+          7     819       ( +58163 +.443748 &161463)
+          /15   4319      (  -3873 -.029549 &770337)
+          6     6378      ( +55530 +.423660 &154352)
+          0     4877      (  +4877 +.037209 &011415)
+          9     3365      ( +77093 +.588173 &226445)
+          /15   2272      (  -5920 -.045166 &764340)
+          5     3746      ( +44706 +.341080 &127242)
+          0     7275      (  +7275 +.055504 &016153)
+          12    955       ( +99259 +.757286 &301673)
+( 70;)    /14   7022      (  -9362 -.071426 &755556)
+          5     467       ( +41427 +.316063 &120723)
+          1     4915      ( +13107 +.099998 &031463)
+          2     5338      ( +21722 +.165726 &052332)
+          /13   2730      ( -21846 -.166672 &725252)
+          10    5581      ( +87501 +.667580 &252715)
+          7     8191      ( +65535 +.499992 &177777)
+          15    8191      (+131071 +.999992 &377777)
+          0     0         (     +0 +.000000 &000000)
+          /15   8191      (     -1 -.000008 &777777)
+( 80;)    4     218       ( +32986 +.251663 &100332)
+          5     186       ( +41146 +.313919 &120272)
+          4     219       ( +32987 +.251671 &100333)
+          5     187       ( +41147 +.313927 &120273)
+          0     146       (   +146 +.001114 &000222)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          4     132;
+          5     185       ( +41145 +.313911 &120271)
+          0     150       (   +150 +.001144 &000226)
+( 90;)    /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          4     129;
+          9     102;
+          0     138       (   +138 +.001053 &000212)
+          4     183       ( +32951 +.251396 &100267)
+          /5    0         ( -90112 -.687500 &520000)
+          4     184       ( +32952 +.251404 &100270)
+          /5    1         ( -90111 -.687492 &520001)
+          4     185       ( +32953 +.251411 &100271)
+(100;)    /5    2         ( -90110 -.687485 &520002)
+          8     125;
+          4     183       ( +32951 +.251396 &100267)
+          5     186       ( +41146 +.313919 &120272)
+          4     184       ( +32952 +.251404 &100270)
+          5     187       ( +41147 +.313927 &120273)
+          4     185       ( +32953 +.251411 &100271)
+          5     188       ( +41148 +.313934 &120274)
+          4     130;
+          9     114;
+(110;)    4     138;
+          5     183       ( +41143 +.313896 &120267)
+          4     139;
+          8     117;
+          4     140;
+          5     183       ( +41143 +.313896 &120267)
+          4     141;
+          5     184       ( +41144 +.313904 &120270)
+          4     132;
+          5     185       ( +41145 +.313911 &120271)
+(120;)    4     138       ( +32906 +.251053 &100212)
+          5     180       ( +41140 +.313873 &120264)
+          0     142       (   +142 +.001083 &000216)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    3         ( -65533 -.499977 &600003)
+          0     1;
+          /8    1         ( -65535 -.499992 &600001)
+          4     131;
+          8     30;
+          0     0         (     +0 +.000000 &000000)
+(130;)    0     0         (     +0 +.000000 &000000)
+          0     0         (     +0 +.000000 &000000)
+          0     1         (     +1 +.000008 &000001)
+          7     8191      ( +65535 +.499992 &177777)
+          15    8191      (+131071 +.999992 &377777)
+          0     36        (    +36 +.000275 &000044)
+          14    8156      (+122844 +.937225 &357734)
+          14    8191      (+122879 +.937492 &357777)
+          12    4639      (+102943 +.785393 &311037)
+          11    2697      ( +92809 +.708076 &265211)
+(140;)    /3    3552      (-102944 -.785400 &466740)
+          4     5495      ( +38263 +.291924 &112567)
+
+[ SQRT ]
+SQRT
+(  0;)    /14   1         ( -16383 -.124992 &740001)
+          0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /4    4         ( -98300 -.749969 &500004)
+          5     184       ( +41144 +.313904 &120270)
+          /4    5         ( -98299 -.749962 &500005)
+          5     185       ( +41145 +.313911 &120271)
+          /4    3         ( -98301 -.749977 &500003)
+          5     183       ( +41143 +.313896 &120267)
+          9     85;
+( 10;)    7     73;
+          4     185       ( +32953 +.251411 &100271)
+          6     112;
+          7     20;
+          0     184       (   +184 +.001404 &000270)
+          14    1         (+114689 +.875008 &340001)
+          4     183       ( +32951 +.251396 &100267)
+          14    8191      (+122879 +.937492 &357777)
+          3     184       ( +24760 +.188904 &060270)
+          5     183       ( +41143 +.313896 &120267)
+( 20;)    4     183       ( +32951 +.251396 &100267)
+          14    8191      (+122879 +.937492 &357777)
+          1     113;
+          5     207       ( +41167 +.314079 &120317)
+          4     183       ( +32951 +.251396 &100267)
+          13    207       (+106703 +.814079 &320317)
+          6     114;
+          1     207       (  +8399 +.064079 &020317)
+          14    8191      (+122879 +.937492 &357777)
+          6     115;
+( 30;)    5     207       ( +41167 +.314079 &120317)
+          4     183       ( +32951 +.251396 &100267)
+          13    207       (+106703 +.814079 &320317)
+          6     114;
+          1     207       (  +8399 +.064079 &020317)
+          14    8191      (+122879 +.937492 &357777)
+          6     115;
+          5     207       ( +41167 +.314079 &120317)
+          4     183       ( +32951 +.251396 &100267)
+          13    207       (+106703 +.814079 &320317)
+( 40;)    6     114;
+          1     207       (  +8399 +.064079 &020317)
+          14    8191      (+122879 +.937492 &357777)
+          6     115;
+          5     207       ( +41167 +.314079 &120317)
+          4     116;
+          5     208       ( +41168 +.314087 &120320)
+          0     184       (   +184 +.001404 &000270)
+          14    1         (+114689 +.875008 &340001)
+          4     183       ( +32951 +.251396 &100267)
+( 50;)    14    8191      (+122879 +.937492 &357777)
+          3     184       ( +24760 +.188904 &060270)
+          5     183       ( +41143 +.313896 &120267)
+          0     147       (   +147 +.001122 &000223)
+          /11   0         ( -40960 -.312500 &660000)
+          /8    1         ( -65535 -.499992 &600001)
+          0     208       (   +208 +.001587 &000320)
+          14    1         (+114689 +.875008 &340001)
+          4     207       ( +32975 +.251579 &100317)
+          14    8191      (+122879 +.937492 &357777)
+( 60;)    3     208       ( +24784 +.189087 &060320)
+          5     207       ( +41167 +.314079 &120317)
+          4     208       ( +32976 +.251587 &100320)
+          1     184       (  +8376 +.063904 &020270)
+          9     82;
+          5     184       ( +41144 +.313904 &120270)
+          4     207       ( +32975 +.251579 &100317)
+          1     183       (  +8375 +.063896 &020267)
+          5     183       ( +41143 +.313896 &120267)
+          10    185       ( +82105 +.626411 &240271)
+( 70;)    4     185       ( +32953 +.251411 &100271)
+          14    8191      (+122879 +.937492 &357777)
+          5     185       ( +41145 +.313911 &120271)
+          0     138       (   +138 +.001053 &000212)
+          4     183       ( +32951 +.251396 &100267)
+          /5    0         ( -90112 -.687500 &520000)
+          4     184       ( +32952 +.251404 &100270)
+          /5    1         ( -90111 -.687492 &520001)
+          4     185       ( +32953 +.251411 &100271)
+          /5    2         ( -90110 -.687485 &520002)
+( 80;)    0     1;
+          /8    1         ( -65535 -.499992 &600001)
+          10    207       ( +82127 +.626579 &240317)
+          6     115;
+          8     65;
+          4     117;
+          11    165       ( +90277 +.688759 &260245)
+          8     166       ( +65702 +.501266 &200246)
+          0     138       (   +138 +.001053 &000212)
+          /4    3         ( -98301 -.749977 &500003)
+( 90;)    5     183       ( +41143 +.313896 &120267)
+          /4    5         ( -98299 -.749962 &500005)
+          5     185       ( +41145 +.313911 &120271)
+          /4    4         ( -98300 -.749969 &500004)
+          5     184       ( +41144 +.313904 &120270)
+          7     104;
+          2     116;
+          6     115;
+          5     184       ( +41144 +.313904 &120270)
+          10    183       ( +82103 +.626396 &240267)
+(100;)    4     183       ( +32951 +.251396 &100267)
+          2     116;
+          5     183       ( +41143 +.313896 &120267)
+          8     11;
+          4     183       ( +32951 +.251396 &100267)
+          1     118;
+          7     108;
+          8     100;
+          4     113;
+          5     183       ( +41143 +.313896 &120267)
+(110;)    10    185       ( +82105 +.626411 &240271)
+          8     11;
+          0     1         (     +1 +.000008 &000001)
+          8     0         ( +65536 +.500000 &200000)
+          /15   8190      (     -2 -.000015 &777776)
+          15    8191      (+131071 +.999992 &377777)
+          0     0         (     +0 +.000000 &000000)
+          0     11        (    +11 +.000084 &000013)
+          /0    0         (-131072 -.000000 &400000)
+
+[ LOWBOU ]
+
+LOWBOU
+(  0;)    /14   2         ( -16382 -.124985 &740002)
+          0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /0    3         (-131069 -.999977 &400003)
+          /4    1         ( -98303 -.749992 &500001)
+          0     138       (   +138 +.001053 &000212)
+          /1    6         (-122874 -.937454 &420006)
+          /1    6         (-122874 -.937454 &420006)
+          5     181       ( +41141 +.313881 &120265)
+          0     181       (   +181 +.001381 &000265)
+( 10;)    /4    1         ( -98303 -.749992 &500001)
+          0     138       (   +138 +.001053 &000212)
+          /5    0         ( -90112 -.687500 &520000)
+          0     1;
+          /8    1         ( -65535 -.499992 &600001)
+
+[ RANGE ]
+
+RANGE
+(  0;)    /14   2         ( -16382 -.124985 &740002)
+          0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /4    6         ( -98298 -.749954 &500006)
+          5     183       ( +41143 +.313896 &120267)
+          /4    3         ( -98301 -.749977 &500003)
+          5     180       ( +41140 +.313873 &120264)
+          0     180       (   +180 +.001373 &000264)
+          /4    1         ( -98303 -.749992 &500001)
+          5     181       ( +41141 +.313881 &120265)
+( 10;)    1     183       (  +8375 +.063896 &020267)
+          1     183       (  +8375 +.063896 &020267)
+          5     184       ( +41144 +.313904 &120270)
+          1     41;
+          2     181       ( +16565 +.126381 &040265)
+          9     18;
+          4     42;
+          8     20;
+          0     184       (   +184 +.001404 &000270)
+          /4    0         ( -98304 -.750000 &500000)
+( 20;)    5     185       ( +41145 +.313911 &120271)
+          0     181       (   +181 +.001381 &000265)
+          /4    0         ( -98304 -.750000 &500000)
+          6     43;
+          2     183       ( +16567 +.126396 &040267)
+          7     38;
+          9     29;
+          4     44;
+          8     34;
+          0     184       (   +184 +.001404 &000270)
+( 30;)    /4    2         ( -98302 -.749985 &500002)
+          14    8176      (+122864 +.937378 &357760)
+          13    185       (+106681 +.813911 &320271)
+          14    8191      (+122879 +.937492 &357777)
+          0     138       (   +138 +.001053 &000212)
+          /5    0         ( -90112 -.687500 &520000)
+          0     1;
+          /8    1         ( -65535 -.499992 &600001)
+          0     181       (   +181 +.001381 &000265)
+          /4    1         ( -98303 -.749992 &500001)
+( 40;)    8     31;
+          /15   8189      (     -3 -.000023 &777775)
+          0     2         (     +2 +.000015 &000002)
+          0     31        (    +31 +.000237 &000037)
+          0     0         (     +0 +.000000 &000000)
+
+[ QASTRI INSTRI OUTSTR ]
+QASTRI
+(  0;)    0     0         (     +0 +.000000 &000000)
+          0     138       (   +138 +.001053 &000212)
+          /4    6         ( -98298 -.749954 &500006)
+          5     182       ( +41142 +.313889 &120266)
+          6     137;
+          7     8;
+          4     138;
+          8     18;
+          /4    3         ( -98301 -.749977 &500003)
+          5     180       ( +41140 +.313873 &120264)
+( 10;)    0     180       (   +180 +.001373 &000264)
+          /4    1         ( -98303 -.749992 &500001)
+          5     181       ( +41141 +.313881 &120265)
+          0     181       (   +181 +.001381 &000265)
+          /4    0         ( -98304 -.750000 &500000)
+          1     139;
+          7     22;
+          4     140;
+          11    165       ( +90277 +.688759 &260245)
+          8     166       ( +65702 +.501266 &200246)
+( 20;)    0     0;
+          /8    1         ( -65535 -.499992 &600001)
+          0     180       (   +180 +.001373 &000264)
+          /4    0         ( -98304 -.750000 &500000)
+          5     183       ( +41143 +.313896 &120267)
+          0     181       (   +181 +.001381 &000265)
+          /1    1         (-122879 -.937492 &420001)
+          5     184       ( +41144 +.313904 &120270)
+          /4    2         ( -98302 -.749985 &500002)
+          1     183       (  +8375 +.063896 &020267)
+( 30;)    5     185       ( +41145 +.313911 &120271)
+          0     182       (   +182 +.001389 &000266)
+          /1    0         (-122880 -.937500 &420000)
+          5     192       ( +41152 +.313965 &120300)
+          4     183       ( +32951 +.251396 &100267)
+          2     192       ( +16576 +.126465 &040300)
+          9     17;
+          4     184       ( +32952 +.251404 &100270)
+          2     192       ( +16576 +.126465 &040300)
+          0     0;
+( 40;)    /9    2         ( -57342 -.437485 &620002)
+          8     17;
+OUTSTR
+          /14   2         ( -16382 -.124985 &740002)
+          0     0         (     +0 +.000000 &000000)
+          0     169       (   +169 +.001289 &000251)
+          /4    2         ( -98302 -.749985 &500002)
+          0     168       (   +168 +.001282 &000250)
+          /5    0         ( -90112 -.687500 &520000)
+          11    0;
+          8     1;
+( 50;)    8     66;
+          4     192       ( +32960 +.251465 &100300)
+          0     154       (   +154 +.001175 &000232)
+          11    167       ( +90279 +.688774 &260247)
+          /8    0         ( -65536 -.500000 &600000)
+          4     193       ( +32961 +.251472 &100301)
+          1     141;
+          9     59;
+          10    192       ( +82112 +.626465 &240300)
+          4     192       ( +32960 +.251465 &100300)
+( 60;)    2     184       ( +16568 +.126404 &040270)
+          9     17;
+          4     185       ( +32953 +.251411 &100271)
+          2     192       ( +16576 +.126465 &040300)
+          0     182       (   +182 +.001389 &000266)
+          /5    0         ( -90112 -.687500 &520000)
+          0     43;
+          /8    1         ( -65535 -.499992 &600001)
+INSTRI
+          /14   2         ( -16382 -.124985 &740002)
+          0     0         (     +0 +.000000 &000000)
+( 70;)    0     169       (   +169 +.001289 &000251)
+          /4    1         ( -98303 -.749992 &500001)
+          /5    8         ( -90104 -.687439 &520010)
+          11    0;
+          8     1;
+          8     135;
+          4     139;
+          5     188       ( +41148 +.313934 &120274)
+          4     142;
+          5     186       ( +41146 +.313919 &120272)
+( 80;)    0     150       (   +150 +.001144 &000226)
+          /11   0         ( -40960 -.312500 &660000)
+          8     153       ( +65689 +.501167 &200231)
+          6     137;
+          7     89;
+          4     143;
+          11    165       ( +90277 +.688759 &260245)
+          8     166       ( +65702 +.501266 &200246)
+          8     135;
+          4     173       ( +32941 +.251320 &100255)
+( 90;)    1     144;
+          7     93;
+          8     80;
+          4     187       ( +32955 +.251427 &100273)
+          0     145;
+          14    6         (+114694 +.875046 &340006)
+          1     173       (  +8365 +.063820 &020255)
+          5     187       ( +41147 +.313927 &120273)
+          10    186       ( +82106 +.626419 &240272)
+          4     186       ( +32954 +.251419 &100272)
+(100;)    9     112;
+          4     142;
+          5     186       ( +41146 +.313919 &120272)
+          0     192       (   +192 +.001465 &000300)
+          4     187       ( +32955 +.251427 &100273)
+          /5    0         ( -90112 -.687500 &520000)
+          10    192       ( +82112 +.626465 &240300)
+          4     192       ( +32960 +.251465 &100300)
+          2     184       ( +16568 +.126404 &040270)
+          9     17;
+(110;)    0     182       (   +182 +.001389 &000266)
+          /10   0         ( -49152 -.375000 &640000)
+          4     173       ( +32941 +.251320 &100255)
+          1     144;
+          7     121;
+          1     146;
+          7     123;
+          0     150       (   +150 +.001144 &000226)
+          /11   0         ( -40960 -.312500 &660000)
+          8     153       ( +65689 +.501167 &200231)
+(120;)    8     93;
+          10    188       ( +82108 +.626434 &240274)
+          8     117;
+          4     188       ( +32956 +.251434 &100274)
+          1     139;
+          9     128;
+          5     188       ( +41148 +.313934 &120274)
+          8     117;
+          4     186       ( +32954 +.251419 &100272)
+          2     142;
+(130;)    7     135;
+          4     187       ( +32955 +.251427 &100273)
+          0     145;
+          14    6         (+114694 +.875046 &340006)
+          8     97;
+          0     69;
+          /8    1         ( -65535 -.499992 &600001)
+          8     0         ( +65536 +.500000 &200000)
+          0     21        (    +21 +.000160 &000025)
+          /15   8191      (     -1 -.000008 &777777)
+(140;)    0     23        (    +23 +.000175 &000027)
+          0     6         (     +6 +.000046 &000006)
+          /15   8189      (     -3 -.000023 &777775)
+          0     17        (    +17 +.000130 &000021)
+          /15   8185      (     -7 -.000053 &777771)
+          0     0         (     +0 +.000000 &000000)
+          /15   8167      (    -25 -.000191 &777747)
+
+[ ILITS ]
+
+^ILITS
+
+(( Interpreter literals )
+
+LITRAL
+
+(( LP symbols recovered from distributed binary )
+
+^"7288
+[ LPSYMS ]
+LPSYMS
+(7288^01) 0     546       (&001042    +546 \ (B)
+(7289^01) /4    7091      (&515663  -91213 \INS)
+(7290^01) /10   3241      (&646251  -45911 \TRI)
+(7291^01) 0     520       (&001010    +520 \ (()
+(7292^01) /7    7540      (&576564  -66188 \OUT)
+(7293^01) /9    7474      (&636462  -49870 \STR)
+(7294^01) 0     478       (&000736    +478 \ '>)
+(7295^01) /8    6259      (&614163  -59277 \QAS)
+(7296^01) /10   3241      (&646251  -45911 \TRI)
+(7297^01) 0     433       (&000661    +433 \ &Q)
+(7298^01) /9    2158      (&624156  -55186 \RAN)
+(7299^01) /3    6464      (&474500 -100032 \GE )
+(7300^01) 0     418       (&000642    +418 \ &B)
+(7301^01) /6    3063      (&545767  -78857 \LOW)
+(7302^01) /1    3061      (&425765 -119819 \BOU)
+(7303^01) 0     299       (&000453    +299 \ $K)
+(7304^01) /9    7282      (&636162  -50062 \SQR)
+(7305^01) /10   0         (&640000  -49152 \T  )
+(7306^01) 0     157       (&000235    +157 \ "=)
+(7307^01) /0    7331      (&416243 -123741 \ARC)
+(7308^01) /10   2158      (&644156  -46994 \TAN)
+(7309^01) 0     44        (&000054     +44 \  L)
+(7310^01) /9    6766      (&635156  -50578 \SIN)
+(7311^01) +0
+(7312^01) 0     40        (&000050     +40 \  H)
+(7313^01) /1    7155      (&435763 -115725 \COS)
+(7314^01) +0
+(7315^01) 0     40        (&000050     +40 \  H)
+(7316^01) /8    6260      (&614164  -59276 \QAT)
+(7317^01) /9    2663      (&625147  -54681 \RIG)
+(7318^01) 0     20        (&000024     +20 \  4)
+(7319^01) /1    3430      (&426546 -119450 \BUF)
+(7320^01) /3    2418      (&464562 -104078 \FER)
+(7321^01) 0     9         (&000011      +9 \  ?)
+(7322^01) /0    6454      (&414466 -124618 \ADV)
+(7323^01) /0    7075      (&415643 -123997 \ANC)
+(7324^01) +0
+(7325^01) /2    2403      (&444543 -112285 \DEC)
+LASTSYM
+(7326^01) /7    6437      (&574445  -67291 \ODE)
+
+((16K ALGOL RLB LOADER recovered from binary)
+
+( n.b. use 2 pass SIR )
+
+( NEXTCH+2 = PDADD in top module )
+
+^"7327
+
+[ BA BD PMODUL LA CR INTEGR W DP SADRES BLANK CLENUP OPTION STET ED READTH MODE
+  LBASE FIOFLG LW3 MMODUL EDNEG BEGLOA LOW1 CONST INIT FINDIO FAIL E5TEST SUBSTI
+  ENTRY TONE TTWO ]
+
+QACODL    -4378           ( +0 constants )
+          \QAC
+          \ODL
+          -4377           ( +0 variables )
+          \QAV
+          \NDA
+BEGLOA    0     BEGLOA
+          5     MODE      ( start )
+          11    PMODUL
+          14    18
+          5     PMODUL
+          2     +0
+          5     MMODUL
+          0     -8061     ( 131^00 BASE )
+          /4    0
+          5     LBASE
+          4     +3
+          5     OPTION
+          4     LBASE
+          2     +132
+          5     BEGLOA-6  ( QACODL := 132-BASE )
+          1     +1
+          5     BEGLOA-3  ( QAVNDA := 1)
+          11    INIT      ( does nothing )
+          8     INIT+1
+          4     +8191
+          0     -8061     ( 131^00 BASE )
+          /5    1         ( set BASE, BASE+1 to +8191 )
+          /5    2
+          4     CONST
+          1     -3
+          5     ED
+          2     -3
+          5     EDNEG
+          4     +3        ( set device no to 3 for display )
+          0     -7993     ( 199^00 ODEV )
+          /5    0
+          4     =1 7686   ( set null prefix )
+          0     -6521     ( 1671^00 GLOPMD )
+          /5    10        ( 1681^00 PRFA1	)
+          4     +5        ( set no of digits to 5 )
+          /5    11        ( 1682^00 INTDG )
+          4     +0
+          5     L7684
+          0     MODE
+          /8    ;+0
+          8     MODE1
+          8     MODE2
+          8     MODE3
+          8     MODE4
+          8     MODE5
+          8     MODE6
+
+( mode 1 - load ALGOL program )
+MODE1     0     -8166     ( 26^00 = STKMOD )
+          /4    0
+          5     LA        ( LA := STKMOD )
+          4     LASTBD
+          5     BD        ( BD := LASTBD )
+          8     MODEOK
+
+( mode 2 - load ALGOL program overwriting code procs )
+( mode 5 - load code proc overwriting all other code procs )
+MODE2
+MODE5     4     PROGM     ( INPUT PROGRAM AFTER LIBRARY )
+          5     LA
+          5     LIBEND    ( LA := LIBEND := PROGM )
+          0     -8166     ( 26^00 = STKMOD )
+          /5    0         ( STKMOD := PROGM )
+          0     -8017     ( 175^00 = NEXTCH+2 )
+          /4    0
+          5     BD
+          5     LASTBD    ( BD := LASTBD := NEXTCH+2 )
+          8     MODEOK
+
+( mode 3 - load ALGOL overwriting code procs and library )
+( mode 6 -  load new library )
+MODE3
+MODE6     0     -8061     ( 131^00 = BASE )
+          /4    0
+          5     LA
+          5     PROGM
+          5     LIBEND    ( LIBEND := PROGM := LA := BASE )
+          0     -8166     ( 26^00 = STKMOD )
+          /5    0
+          4     +6        ( reset dictionary )
+          2     CONST
+          5     BD
+          5     DICT      ( DICT := BD := CONST-6 )
+          0     -8017     ( 175^00 = NEXTCH+2 )
+          /5    0
+          5     LASTBD    ( LASTBD := NEXTCH+2 )
+          8     MODEOK
+
+( mode 4 - load code proc )
+MODE4     4     LIBEND
+          5     LA        ( LA := LIBEND )
+          4     DICT
+          5     BD        ( BD := DICT )
+
+MODEOK    4     LA        ( clear free store )
+          1     MMODUL
+          5     W         ( W := MMODUL )
+          4     FIOFLG    ( ??? FIOFLG is initialised to 0 )
+          7     CLEAR
+          4     LA        ( ??? )
+          5     L7671
+          11    FINDIO
+          8     FINDIO+1
+
+CLEAR     0     W         ( clear store from LA to BD )
+          4     +0
+          /5    0
+          10    W
+          4     W
+          2     BD
+          7     ;+2
+          8     CLEAR
+          4     LA
+          5     FIRST
+          4     LA
+          5     BA
+L7435     4     +0
+          5     CR
+
+BLANK     4     +0
+          15    2048
+          7     BLANK
+
+          5     LOW1
+          14    8188
+          5     LOW
+
+          2     +6
+          9     HALT
+          7     TEST
+
+          4     LOW1
+          1     CR
+          5     CR
+          4     LOW1
+          15    2048
+          5     LOW1
+          6     +127
+          1     CR
+          5     CR
+
+          4     LOW1
+          15    2048
+          5     LOW1
+          6     +127
+
+          1     CR
+          5     CR
+          4     LOW1
+          0     LOW
+          /8    ;+1
+
+          8     FAIL1
+          8     STET
+          8     ADBASE
+          8     THREE
+          8     FOUR
+
+          1     LA
+          5     LA
+          4     FIOFLG    ( ??? )
+          7     ;+2
+          8     BLANK
+
+          4     +8179
+          2     LA
+          9     BLANK
+          4     +26
+          8     FAIL
+
+ADBASE    4     FIOFLG    ( ??? )
+          7     ;+2
+          8     STET+1
+          4     LOW1
+          1     BA
+          1     L7684
+
+STET      5     LOW1
+          4     MMODUL
+          1     LA
+          5     W
+          0     W
+          4     LOW1
+          /5    0
+          10    LA
+
+CHECK     11    E5TEST
+          8     E5TEST+1
+          4     FIOFLG
+          7     ;+2
+          8     BLANK
+
+          4     +8179     ( only here if FIOFLG = 0 )
+          2     LA
+          9     BLANK
+          4     +26
+          8     FAIL
+
+THREE     11    READTH
+          8     READTH+1
+          4     FIOFLG
+          7     ;+2
+          8     L7518
+
+          4     LBASE
+          2     INTEGR
+          1     LA
+          5     SADRES
+
+          4     LOW1
+          1     BA
+          1     L7684
+          11    SUBSTI
+          8     ENTRY
+          8     BLANK
+
+L7518     4     L7671
+          2     LA
+          1     INTEGR
+          5     SADRES
+
+          4     LBASE
+          2     L7671
+          1     LOW1
+          1     L7684
+          11    SUBSTI
+          8     ENTRY-1
+          8     BLANK
+
+FOUR      11    READTH
+          8     READTH+1
+          4     LW3
+          1     -3
+          9     ;+3
+          4     +4
+          8     FAIL
+
+          0     LW3
+          /8    ;+1
+          8     ;-4
+          8     TONE
+          8     TTWO+1
+
+FAIL1     4     +1
+          8     FAIL
+
+HALT      4     LOW1
+          15    2048
+          15    2048
+          5     LOW1
+
+          4     BD
+          5     DP
+          8     BLAST
+
+RETURN    0     DP
+          /4    1
+          6     =/15 0
+          2     =/15 0
+          7     ;+3
+
+          /4    0
+          9     MESS
+
+NEXT      4     DP
+          1     +3
+          5     DP
+
+BLAST     1     EDNEG
+          7     ENDIT
+          8     RETURN
+
+MESS      /4    1
+          5     NAM1
+          /4    2
+          5     NAM2
+          4     =1 7572   ( return link )
+          0     -8025     ( 157^00 = SBLNK2 )
+          /5    0
+          0     -4582     ( 3610^00 = OSTSB )
+          4     =1 7698   ( MESAGE )
+          /8    0
+          8     NEXT
+
+ENDIT     4     LOW1
+          7     END
+          2     +7
+          9     ;+4
+          4     LOW1
+          5     OPTION
+          8     MODE5
+          0     LOW1
+          /8    0
+
+END       4     =1 7588   ( return address )
+          0     -8025     ( 167 = SBLNK2 )
+          /5    0
+          0     -4582     ( 3610 = OSTSB )
+          4     =1 7703   ( FIRST )
+          /8    0
+          4     =1 7594   ( return address )
+          0     -8022     ( 170 = IOLNK )
+          /5    0
+          0     -5013     ( 3179 = OUTI )
+          4     FIRST
+          /8    5
+          4     =1 7600   ( return address)
+          0     -8025     ( 167 = SBLNK2 )
+          /5    0
+          0     -4582     ( 3610 = OSTSB )
+          4     =1 7709   ( INTER )
+          /8    0
+          4     =1 7606   ( return address )
+          0     -8022     ( 167 = IOLNK )
+          /5    0
+          0     -5013     ( 3610 = OUTI )
+          4     LA
+          /8    5
+
+          0     MODE
+          /8    ;+0
+          8     M123      ( load ALGOL )
+          8     M123      ( load ALGOL overwriting code procs )
+          8     M123      ( load ALGOL overwriting procs and library )
+          8     M45       ( load code proc )
+          8     M45       ( load code proc overwriting others )
+          8     M6        ( reload library )
+
+M123      4     LA        ( M1 )
+          0     -8167     ( 25^00 - STKBASE )
+          /5    0         ( STKBASE := LA )
+          0     -8061     ( 131^00 = BASE )
+          /4    1         ( 132^00 = STKMOD )
+          1     LBASE
+          /5    1         ( STKMOD := STKMOD+BASE )
+          /4    2         ( 133^00 = STKEND )
+          1     LBASE
+          /5    2         ( STKEND := STKEND+BASE )
+          4     +0
+          5     FIOFLG    ( clear FIOFLG )
+          0     -8017     ( 175^00 = NEXTCH+2 )
+          /4    0
+          0     -8164     ( 28^00 = WARNAD )
+          1     PMODUL
+          /5    1         ( 29^00 = PDADD )
+          4     +6
+          2     CONST
+          1     PMODUL
+          /5    0         ( WARNAD := CONST-6 absolute )
+          4     DICT
+          1     PMODUL
+          /5    2         ( PDADD := DICT absolute )
+          0     -4062     ( LPCTL )
+          /8    0         ( return to interprete  )
+
+M45       4     LA
+          0     -8166     ( STKMOD )
+          /5    0         ( STKMOD := LA )
+          5     LIBEND    ( LIBEND := LA )
+          4     BD
+          5     LASTBD
+          5     DICT
+          8     ;+0
+
+M6        4     LA
+          0     -8166     ( STKMOD )
+          /5    0         ( STKMOD := LA )
+          5     PROGM
+          5     LIBEND
+          4     BD
+          5     LASTBD
+          0     -8017     ( NEXTCH+2 )
+          /5    0
+          8     ;+0
+
+TEST      4     LOW1
+          15    2048
+          15    2048
+          2     CR
+          7     ST2
+          4     +6
+          8     FAIL
+
+ST2       4     BA
+          2     LA
+          5     L7684
+          8     L7435
+
+MODE      +6
+L7671     +6071           ( ??? )
+LBASE     +4510
+PMODUL    +8192           ( +0 )
+MMODUL    -8192           ( +0 )
+CONST     0     BEGLOA
+BD        0     7288      ( +0 )
+OPTION    0     3         ( +0 )
+LA        0     5135      ( +0 )
+W         -3058
+FIRST     0     4510      ( +0 )
+ED        0     7330      ( +0 )
+EDNEG     /15   859       ( +0 )
+BA        0     4510      ( +0 )
+L7684     +625            ( ??? )
+CR        +0
+NULL      &074000         ( null prefix )
+LOW1      +0
+LOW       +7
+PROGM     0     5135      ( +0 first free location for program after library )
+LIBEND    0     5135      ( end of standard library + 1 )
+LASTBD    0     7288      ( +0 base of dictionary )
+DICT      0     7327      ( base of empty dictionary )
+FIOFLG    +0              ( +0 = skip FINDIO call )
+INTEGR    +0
+SADRES    +624            ( +0 )
+LW3       +0              ( was W+3 )
+DP        +7333           ( +0 )
+
+MESAGE    \'^F
+          \U
+NAM1      \QAV            ( +0 )
+NAM2      \NDA            ( +0 )
+          \@  
+
+FINAL     \'^ 
+          \FIR
+          \ST 
+          \  N
+          \EXT
+          \^@ 
+
+INTER     \'
+          \@
+
+[ BD E5TEST FAIL LA PMODUL ]
+
+E5TEST    0     7494      ( +0 )
+          4     PMODUL
+          1     BD
+          2     LA
+          9     EXIT
+          4     +5
+FAIL      0     +0
+          14    12
+          1     &404000
+          5     LIVE
+          4     =1 7726
+          0     -8025
+          /5    0
+          0     -4582
+          4     =1 7730
+          /8    0
+          8     ;+0
+
+EXIT      0     E5TEST
+          /8    1
+
+L7730     &070146         (+28774 \'^F)
+LIVE      +0
+
+[ CR INTEGR READTH W ]
+
+READTH    0     7504      ( +0 )
+          4     -3
+          5     W
+
+REPEAT    4     INTEGR
+          15    2048
+          5     INTEGR
+          6     +127
+          1     CR
+          5     CR
+          4     W
+          2     -3
+          7     FIRST
+
+RETURN    10    W
+          4     W
+          9     REPEAT
+          0     READTH
+          /8    1
+
+FIRST     4     INTEGR
+          14    8188
+          6     +7
+          5     INTEGR+2  ( was 5 W+3 )
+          8     RETURN
+
+[ BD DP EDNEG E5TEST LA NAMONE NAMTWO SEARCH LBASE MMODUL ]
+
+SEARCH    0     7849      ( +0 )
+          4     BD
+          5     DP
+
+RETURN    1     EDNEG
+          7     PLACE
+          0     DP
+          /4    1
+          2     NAMONE
+          7     WD2
+
+REPEAT    4     DP
+          1     +3
+          5     DP
+          8     RETURN
+
+WD2       /4    2
+          2     NAMTWO
+          0     SEARCH
+          /7    1
+          8     REPEAT
+
+PLACE     4     BD
+          1     -3
+          5     BD
+          5     DP
+          11    E5TEST
+          8     E5TEST+1
+          4     LBASE
+          2     LA
+          5     WS1
+          0     SEARCH
+          /4    2
+          1     WS1
+          0     BD
+          /5    0
+
+          4     NAMONE
+          /5    1
+          4     NAMTWO
+          /5    2
+
+          0     SEARCH
+          /8    3
+
+WS1       +546
+
+[ DP ENTRY SADRES SUBSTI LBASE MMODUL FIOFLG ]
+
+SUBSTI    0     7516      ( +0 )
+          0     DP
+          /4    0
+          6     =15 8191
+          5     SWORK
+          4     SADRES
+          /5    0
+
+RETURN    4     SWORK
+          2     +8191
+
+EXIT      0     SUBSTI
+          /7    1
+          4     SWORK
+          1     LBASE
+
+ENTRY     1     MMODUL
+          5     SWORK
+          0     SWORK
+          /4    0
+          6     +8191
+          5     SWORK
+          4     FIOFLG
+          7     FLAGZ
+          4     SWORK
+          /2    0
+          8     NEXT
+
+FLAGZ     4     SWORK
+          /2    0
+          1     LBASE
+
+NEXT      1     SADRES
+          /5    0
+          4     SWORK
+          2     +8191
+          0     SUBSTI
+          /7    1
+          4     SWORK
+          8     ENTRY
+
+SWORK     +8191           ( +0 )
+
+[ BLANK CLENUP DP FAIL INTEGR LA NAMONE NAMTWO OPTION SADRES SEARCH SUBSTI TONE
+  LOW1 LBASE ]
+
+TONE      4     LOW1      ( +0 )
+          5     NAMONE
+          4     INTEGR
+          5     NAMTWO
+          4     OPTION
+          6     +1
+          7     DONT
+          4     =1 7841   ( return link )
+          0     -8025     ( 167^00 = SBLNK2 )
+          /5    0
+          0     -4582     ( OSTSB )
+          4     =1 7866   ( NAMONE-1 )
+          /8    0
+          4     =1 7847   ( return link )
+          0     -8022     ( 170 = IOLNK )
+          /5    0
+          0     -5013     ( OUTI )
+          4     LA
+          /8    5
+
+DONT      11    SEARCH
+          8     SEARCH+1
+          8     FOUND
+          +0
+          8     BLANK
+
+FOUND     0     DP
+          /4    0
+          9     ;+3
+          4     +3
+          8     FAIL
+
+          4     LBASE
+          2     LA
+          5     SADRES
+          11    SUBSTI
+          8     SUBSTI+1
+          11    CLENUP
+          8     CLENUP+1
+          8     BLANK
+
+          \'^
+NAMONE    \INS
+NAMTWO    \TRI
+
+[ DP INCR INTEGR LA NAMONE NAMTWO READTH SEARCH STET TTWO W MODE LBASE LOW1
+  FIOFLG ]
+
+TTWO      /0    0         ( +0 )
+          4     INTEGR
+          5     NAMTWO
+          11    READTH
+          8     READTH+1
+          4     INTEGR
+          5     WS
+          4     MODE
+          2     +3
+          9     NORML1
+          4     WS
+          2     =/5 0
+          7     ;+2
+          8     NORML1
+          4     =/9 0
+          5     WS
+
+NORML1    11    READTH
+          8     READTH+1
+          4     LOW1
+          5     NAMONE
+          11    SEARCH
+          8     SEARCH+1
+          8     FOUND1
+          /0    0
+          4     INTEGR
+          7     NOICR
+          4     =/0 8191
+          0     DP
+          /5    0
+          4     INTEGR
+
+INCR      5     NAMTWO
+          4     DP
+          1     -8192
+          5     NAMONE
+          11    SEARCH
+          8     SEARCH+1
+          8     FOUND
+          /0    0
+
+NOICR     4     +8191
+
+EXTEND    1     WS
+          8     STET
+
+FOUND     0     DP
+          /4    0
+          5     WS+1
+          4     LBASE
+          2     LA
+          1     =/0 0
+          /5    0
+          4     WS+1
+          6     +8191
+          5     WS+1
+          4     FIOFLG
+          7     FLAGZ
+          4     WS+1
+          8     FLAGNZ
+
+FLAGZ     4     LBASE
+          1     WS+1
+
+FLAGNZ    8     EXTEND
+
+FOUND1    0     DP
+          /4    0
+          9     NORML2
+          1     INTEGR
+          1     WS
+          5     WS+1
+          4     FIOFLG
+          7     FLGZ
+          4     WS+1
+          8     ;+3
+FLGZ      4     LBASE
+          1     WS+1
+          8     STET
+
+NORML2    4     INTEGR
+          7     FOUND
+          8     INCR
+WS        /9    0         ( +0 )
+          /9    985       ( +0 )
+
+[ BD CLENUP DP ED LA SADRES SUBSTI LBASE ]
+
+CLENUP    0     7864      ( +0 )
+          4     DP
+          1     -8192
+          5     W
+          4     ED
+          5     DP
+
+RETURN    0     DP
+          /4    1
+          2     W
+          7     FOUND
+
+REPEAT    4     DP
+          1     -3
+          5     DP
+          2     BD
+          9     RETURN
+          7     RETURN
+
+EXIT      0     CLENUP
+          /8    1
+
+FOUND     4     LBASE
+          2     LA
+          0     DP
+          /1    2
+          5     SADRES
+          11    SUBSTI
+          8     SUBSTI+1
+          8     REPEAT
+
+W         /15   7330      ( +0 )
+
+( preserve QDIN, QDOUT, QCHIN, QCHOP in dictionary )
+
+[ FINDIO BD ]
+
+FINDIO    0     7422      ( +0 )
+          4     +0
+          5     INDEX
+          4     +8173     ( top of literals )
+          5     ADDR
+LOOP      0     ADDR
+          /4    0
+          7     EXIT
+          10    INDEX     ( INDEX := INDEX+1 )
+          4     BD        ( add entry to dictionary )
+          1     -3
+          5     BD
+          4     ADDR      ( ADDR := ADDR-2 )
+          1     -2
+          5     ADDR
+          0     ADDR
+          /4    0
+          2     \EX 
+          7     ;+2
+          8     NOTEX
+          /4    1
+          7     ;+2
+          8     NOTEX
+          /4    2         ( set N to address field )
+          0     -7930     ( N )
+          /5    0
+          8     DONE
+
+NOTEX     /4    0
+          2     \QDI
+          7     ;+2
+          8     NOTQDI
+          /4    1
+          2     \N  
+          7     ;+2
+          8     NOTQDI
+          /4    2
+          0     -7929     ( N+1 )
+          /5    0
+          8     DONE
+
+NOTQDI    /4    0
+          2     \QDO
+          7     ;+2
+          8     NOTQDO
+          /4    1
+          2     \UT 
+          7     ;+2
+          8     NOTQDO
+          /4    2
+          0     -7928     ( N+2 )
+          /5    0
+          8     DONE
+
+NOTQDO    /4    0
+          2     \QCH
+          7     ;+2
+          8     NOTQCH
+          /4    1
+          2     \IN 
+          7     ;+2
+          8     NTQCHI
+          /4    2
+          0     -7927     ( N+3 )
+          /5    0
+          8     DONE
+
+NTQCHI    /4    1
+          2     \OP 
+          7     ;+2
+          8     NOTQCH
+          /4    2
+          0     -7926     ( N+4 )
+          /5    0
+          8     DONE
+
+NOTQCH    /4    0
+          0     BD
+          /5    1
+          0     ADDR
+          /4    1
+          0     BD
+          /5    2
+          4     INDEX
+          2     +8192
+          /5    0
+
+DONE      4     ADDR      ( ADDR:= ADDR-1 )
+          1     -1
+          5     ADDR
+          8     LOOP
+
+EXIT      0     FINDIO
+          /8    1
+
+INDEX     +0
+ADDR      +8173           ( +0 )
+
+( This code looks like remains of some sort of
+  initialization - it does nothing when traced )
+
+[ INIT BEGLOA PMODUL CONST ]
+
+INIT      0     7351      ( +0 )
+          4     +8112     ( loc 8165 = +8112 in store )
+          5     ADDR
+          2     +8113     ( frig: loc 8166 = +8112 in store )
+          7     DONE1
+          4     =1 7327   ( BEGLOA-3 - QAVNDA address )
+          2     ADDR
+          1     +1
+          7     DONE2
+          4     -80       ( CONST := 8112^0 )
+          5     CONST
+          4     -6
+          5     STEP      ( STEP := -6 )
+
+( loop to copy QACODL, QAVNDA entries to 8106-8112^0)
+LOOP      4     BEGLOA
+          1     STEP
+          5     W         ( W := BEGLOA-STEP )
+          4     CONST
+          1     STEP
+          5     OFFSET    ( OFFSET := CONST+STEP )
+          0     W
+          /4    0         ( [8112^0-STEP] := [BEGLOA-STEP] )
+          0     OFFSET
+          /5    0
+          10    STEP      ( STEP := STEP+1 )
+          4     STEP
+          7     ;+2
+          8     LOOP
+          4     ADDR
+
+EXIT      0     -8165     ( 29^00 STKEND := ADDR )
+          /5    0
+          0     INIT
+          /8    1
+
+DONE1     4     L8172
+          1     PMODUL
+          8     EXIT
+DONE2     4     L8171
+          8     EXIT
+
+ADDR      +8112
+STEP      +0
+W         +0
+OFFSET    +0
+
+
+^"8171
+L8171     1     7326
+L8172     0     8172
+          +0
+
+[ FOOLNK ]
+FOOLNK    +0
+          0     PTR1
+          /5    3
+          4     PTR1
+          8     NEXT
+PTR1      +0
+          +0
+PTR3      +0
+AMASK     /15   0
+PTR2      +0
+          4     PTR2
+NEXT      5     PTR3
+          0     PTR3
+          6     AMASK
+          2     FOOLNK
+          /5    0
+          6     AMASK
+          /8    1
+
+(( Loader literals )
+
+^"8102
+LOLITS
+%
+
+<! Halt !>

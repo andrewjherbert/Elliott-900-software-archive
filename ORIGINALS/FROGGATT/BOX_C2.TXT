@@ -1,0 +1,620 @@
+﻿
+        MECSL 903.
+        ==========
+
+Total files listed:
+      258 file(s)      2,508,918 bytes
+
+
+Loose "MECSL 903 LIBRARY".
+--------------------------
+Directory BOX_C2\MECSL903
+      258 file(s)      2,508,918 bytes
+   All on white tape except the one marked pink.
+   All except the three 920 ALGOL tapes are marked by me
+      in red "Copy 259" or "Copy 502" or "Pontefract",
+      the right way up even if the tape name is upside down.
+   Otherwise not labelled by me except as noted.
+   Not trimmed at either end.
+
+"900 MASIR, ISS 1", "Copy 259"
+[900 SERIES MASIR ISSUE 1]
+MASIR_1  2_1        17,166 04/03/12    8:30
+MASIR_1  2_2        17,166 04/03/12   16:44
+
+"900 MASIR ISS 2, (11.11.71)", "Copy 259"
+[900 MASIR ISSUE 2]
+MASIR_2  2_1        18,389 04/03/12    8:26
+MASIR_2  2_2        18,389 04/03/12   14:33
+
+"MASIR ISS 3, SCB 13-3-73" no 900, "Copy 502"
+[MASIR ISSUE 3 SCB 13-3-73] no 900
+MASIR_3  5_1        19,005 04/03/12    8:19
+MASIR_3  5_2        19,005 04/03/12   14:28
+
+"900 SERIES LOADER, ISS 1", "Copy 259"
+[900 SERIES LOADER ISSUE 1]
+LOADER_1 2_1         9,468 04/03/12    8:14
+LOADER_1 2_2         9,468 04/03/12   13:18
+
+"900 LOADER, ISS 2", "Copy 259"
+[900 LOADER] >3" gap [ISS2] no gap after ISS
+LOADER_2 2_1         9,991 04/03/12    8:10
+LOADER_2 2_2         9,991 04/03/12   13:13
+
+"900 LOADER, ISS 3 SCB", "Copy 259"
+[900 LOADER ISSUE 3 SCB]
+LOADER_3 2_1        10,035 04/03/12   11:22
+LOADER_3 2_2        10,035 04/03/12   15:37
+"900 LOADER, ISS 3 (SCB)", "Copy 502"
+[900 LOADER ISSUE 3 SCB]
+LOADER_3 5_1        10,035 04/03/12    8:41
+LOADER_3 5_2        10,035 04/03/12   15:04
+
+"903 SIR, ISS 4" upside down, "Copy 259"
+[903 SIR ISSUE 4]
+SIR_4    2_1         8,517 04/03/12    8:45
+SIR_4    2_2         8,517 04/03/12   15:07
+
+"900 SIR, ISS 5", "Copy 259"
+[900 SERIES SIR ISSUE 5]
+SIR_5    2_1         8,648 04/03/12    8:52
+SIR_5    2_2         8,648 04/03/12   15:15
+"900 SIR, ISS 5", "Copy 502"
+[900 SERIES SIR ISSUE 5]
+SIR_5    5_1         8,648 04/03/12    8:49
+SIR_5    5_2         8,648 04/03/12   15:10
+
+"900 SIR (SCB), ISS 6 (10.12.71)", "Copy 502"
+   Lacks legible heading.
+SIR_6    5_1         8,364 04/03/12    8:55
+SIR_6    5_2         8,364 04/03/12   15:19
+
+"MAPLOD 256, ISS 2", "Copy 259"
+[MAPLOD 256 ISS2] no gap after ISS
+MAPLO256 2_1         2,432 04/03/12   12:49
+MAPLO256 2_2         2,432 04/03/12   16:15
+"MAPLOD 256, ISS 2", "Copy 502"
+[MAPLOD 256 ISS2] no gap after ISS
+MAPLO256 5_1         2,432 04/03/12   12:53
+MAPLO256 5_2         2,432 04/03/12   16:17
+
+"MAPLOD 4096, ISS 2", "Copy 259"
+[MAPLOD 4096 ISS2] no gap after ISS
+MAPL4096 2_1         2,438 04/03/12   12:56
+MAPL4096 2_2         2,438 04/03/12   16:20
+"MAPLOD 4096, ISS 2", "Copy 502"
+[MAPLOD 4096 ISS2] no gap after ISS
+MAPL4096 5_1         2,438 04/03/12   12:58
+MAPL4096 5_2         2,438 04/03/12   16:22
+
+"903 ALGOL TAPE 1, (TRANSLATOR) ISSUE 5" Stamped, "Copy 259"
+[903 ALGOL TAPE 1 (TRANSLATOR) ISSUE 5]
+ALGOL1_5 2_1        24,249 07/03/12   10:53
+ALGOL1_5 2_2        24,249 08/03/12   12:01
+"ALGOL TAPE 1, TRANSLATOR ISS 5", "Pontefract"
+   Lacks legible heading.
+ALGOL1_5 P_1        23,967 10/03/12   22:51
+ALGOL1_5 P_2        23,967 11/03/12   12:09
+
+"903 ALGOL TAPE 1, SCB ISS 6", "Copy 259"
+[903 ALGOL TAPE1 SCB ISS6] no gap after TAPE or ISS
+ALGOL1_6 2_1        20,775 11/03/12   15:55
+ALGOL1_6 2_2        20,775 11/03/12   21:52
+"903 ALGOL TAPE 1, SCB ISS 6", "Copy 502"
+   It was "900" then altered to "903" in same ink.
+[903 ALGOL TAPE1 SCB ISS6] no gap after TAPE or ISS
+ALGOL1_6 5L1        20,775 06/03/12   23:46
+ALGOL1_6 5L2        20,775 08/03/12   10:10
+"903 ALGOL TAPE 1, SCB ISS 6", "Copy 502"
+[903 ALGOL TAPE1 SCB ISS6] no gap after TAPE or ISS
+ALGOL1_6 5U1        20,775 10/03/12   21:14
+ALGOL1_6 5U2        20,775 11/03/12   11:31
+
+"903 ALGOL TAPE 2, (INTERPRETER) ISSUE 5" Stamped, "Copy 259"
+[903 ALGOL TAPE 2 (INTERPRETER) ISS5] no gap after ISS
+ALGOL2_5 2_1        16,311 07/03/12   10:47
+ALGOL2_5 2_2        16,311 08/03/12   11:58
+"903 ALGOL TAPE 2, (INTERPRETER) ISSUE 5" Stamped, "Pontefract"
+[903 ALGOL TAPE 2 (INTERPRETER) ISS5] no gap after ISS
+ALGOL2_5 P_1        16,311 10/03/12   22:47
+ALGOL2_5 P_2        16,311 11/03/12   12:02
+
+"903 ALGOL TAPE 2, (SCB) ISS 6", "Copy 259"
+[903 ALGOL TAPE2 SCB ISS6] no gap after TAPE or ISS
+ALGOL2_6 2_1        16,068 11/03/12   15:52
+ALGOL2_6 2_2        16,068 11/03/12   21:37
+"903 ALGOL TAPE 2, SCB ISS 6", "Copy 502"
+[903 ALGOL TAPE 2 SCB ISS 6]
+ALGOL2_6 5L1        16,080 06/03/12   23:40
+ALGOL2_6 5L2        16,080 08/03/12   10:08
+"903 ALGOL TAPE 2, SCB ISS 6", "Copy 502"
+[903 ALGOL TAPE 2 SCB ISS 6]
+ALGOL2_6 5U1        16,080 10/03/12   21:10
+ALGOL2_6 5U2        16,080 11/03/12   11:21
+
+"903 ALGOL TAPE 3, (LIBRARY) ISSUE 5" Stamped, "Copy 259"
+[903 ALGOL TAPE 3 (LIBRARY) ISSUE 5]
+ALGOL3_5 2_1         7,309 07/03/12   10:24
+ALGOL3_5 2_2         7,309 08/03/12   11:38
+"903 ALGOL TAPE 3, (LIBRARY) ISSUE 5" Stamped, "Pontefract"
+[903 ALGOL TAPE 3 (LIBRARY) ISSUE 5]
+ALGOL3_5 P_1         7,309 10/03/12   22:32
+ALGOL3_5 P_2         7,309 11/03/12   11:43
+
+"903 ALGOL LIBRARY, (RLB) ISS 6", "Copy 259"
+[903 ALGOL LIBRARY RLB ISS 6]
+ALGOL3_6 2_1         7,615 07/03/12   10:18
+ALGOL3_6 2_2         7,615 08/03/12   11:36
+"ALGOL MASTER, LIBRARY (TAPE 3), ISS 6" on three lines, "Pontefract", pink
+   Lacks legible heading.
+ALGOL3_6 P_1         7,091 10/03/12   22:27
+ALGOL3_6 P_2         7,091 11/03/12   11:38
+
+"900 ALGOL III LIBRARY, RLB ISS 7", "Copy 502"
+      and by me in red "No Legible Heading"
+   Lacks legible heading.
+ALGOL3_7 5L1         3,598 07/03/12   10:09
+ALGOL3_7 5L2         3,598 08/03/12   11:31
+"900 ALGOL LIBRARY, (RLB) ISS 7", "Copy 502"
+[900 ALGOL LIBRARY ISSUE 7]
+ALGOL3_7 5U1         3,808 10/03/12   22:24
+ALGOL3_7 5U2         3,808 11/03/12   11:35
+"900 ALGOL LIBRARY, (RLB) ISS 7", "Pontefract"
+[900 ALGOL LIBRARY ISSUE 7]
+ALGOL3_7 P_1         3,808 11/03/12   16:06
+ALGOL3_7 P_2         3,808 11/03/12   21:59
+
+"903 ALGOL 16K, LG ISS 5" Stamped, "Copy 259"
+[903 ALGOL 16K (LG) ISS5] no gap after ISS
+ALGOLG_5 2_1        35,241 10/03/12   22:37
+ALGOLG_5 2_2        35,241 11/03/12   11:51
+"903 ALGOL 16K, LG ISS 5", "Copy 502"
+[903 ALGOL 16K (LG) ISS5] no gap after ISS
+ALGOLG_5 5_1        35,241 07/03/12   10:31
+ALGOLG_5 5_2        35,241 08/03/12   11:51
+"903 ALGOL 16K, (LG) ISS 5", "Pontefract"
+   There is a holed patch repair of a nick on one edge.
+   Lacks legible heading.
+ALGOLG_5 P_1        35,043 11/03/12   16:02
+ALGOLG_5 P_2        35,043 11/03/12   21:57
+
+"903 ALGOL TAPE 2, 16K LP ISS 5" Stamped, "Copy 259"
+[903 ALGOL TAPE2 16K (LP) ISS5] no gap after TAPE or ISS
+ALGOLP_5 2_1        17,070 07/03/12   10:39
+ALGOLP_5 2_2        17,070 08/03/12   11:55
+"ALGOL LP ISS 5" on one line by me, "Pontefract"
+[903 ALGOL TAPE2 16K (LP) ISS5] no gap after TAPE or ISS
+ALGOLP_5 P_1        17,070 10/03/12   22:44
+ALGOLP_5 P_2        17,070 11/03/12   11:57
+
+"900 ALGOL 16K (LP) LOADER/INTERPRETER, SCB ISS 6", "Copy 502"
+[900 ALGOL 16K LP LOADER INTERPRETER ISS6] no gap after ISS
+ALGOLP_6 5_1        18,547 06/03/12   23:15
+ALGOLP_6 5_2        18,547 08/03/12    9:45
+"ALGOL 16K (LP) LOADER/INT'r, ISS 6 (FINAL)", "Pontefract"
+   Lacks legible heading.
+ALGOLP_6 P_1        18,247 10/03/12   21:04
+ALGOLP_6 P_2        18,247 11/03/12   11:17
+
+"903 FORTRAN TAPE 1, ISS 4" upside down, "Copy 259"
+      and by me in red "Slightly torn, Will not QCOPY"
+[903 FORTRAN TAPE 1 ISSUE 4]
+FORTRAN1 2_1        19,905 04/03/12   12:31
+FORTRAN1 2_2        19,905 04/03/12   16:07
+"903 FORTRAN TAPE 1, ISSUE 4", "Pontefract"
+[903 FORTRAN TAPE 1 ISSUE 4]
+FORTRAN1 P_1        19,905 04/03/12   12:44
+FORTRAN1 P_2        19,905 04/03/12   16:11
+
+"903 FORTRAN TAPE 2, ISS 4A", "Copy 259"
+[903 FORTRAN TAPE 2 ISSUE 4A]
+FORTRAN2 2_1        19,573 04/03/12   11:44
+FORTRAN2 2_2        19,573 04/03/12   15:42
+"903 FORTRAN TAPE 2, ISS 4A", "Copy 502"
+[903 FORTRAN TAPE 2 ISSUE 4A]
+FORTRAN2 5_1        19,573 04/03/12    9:03
+FORTRAN2 5_2        19,573 04/03/12   15:24
+
+"903 FORTRAN 16K, LG ISS 5" Stamped, "Copy 259"
+      and by me in pencil "Torn Legible Tape"
+[903 FORTRAN 16K LG ISS 5]
+FORTRANG 2_1        39,355 05/03/12   10:38
+FORTRANG 2_2        39,355 05/03/12   18:00
+"903 FORTRAN, 16K LG ISS 5", "Copy 502"
+[903 FORTRAN 16K LG ISS 5]
+FORTRANG 5_1        39,355 05/03/12   10:46
+FORTRANG 5_2        39,355 05/03/12   18:21
+
+"903 FORTRAN 16K, LP ISS 4" Stamped upside down, "Copy 259"
+[903 FORTRAN 16K LP ISS 4]
+FORTRANP 2_1        39,685 05/03/12   10:53
+FORTRANP 2_2        39,685 05/03/12   18:35
+"903 FORTRAN 16K LP, ISS 4", "Copy 502"
+[903 FORTRAN 16K LP ISS 4]
+FORTRANP 5_1        39,685 05/03/12   10:58
+FORTRANP 5_2        39,685 05/03/12   18:42
+
+"903 PERT 1, ISS 1", "Copy 259"
+[903 PERT1 ISSUE1] no gap after PERT or ISSUE
+PERT1_1  2_1        12,621 05/03/12   11:17
+PERT1_1  2_2        12,621 05/03/12   20:53
+
+"900 PERT 1, ISS 2", "Copy 259"
+[900 PERT 1 ISSUE 2]
+PERT1_2  2_1        12,712 05/03/12   12:18
+PERT1_2  2_2        12,712 05/03/12   20:59
+"900 PERT 1, ISS 2", "Copy 502"
+[900 PERT 1 ISSUE 2]
+PERT1_2  5_1        12,712 05/03/12   12:26
+PERT1_2  5_2        12,712 05/03/12   21:05
+
+"900 ALMAT, ISSUE 2" upside down, "Copy 259"
+[900 ALMAT ISSUE 2]
+ALMAT    2_1        24,265 11/03/12   16:08
+ALMAT    2_2        24,265 11/03/12   22:02
+
+"ESP 900 TAPE 1, ISSUE 2" upside down, "Copy 259"
+[ESP900 TAPE1(ISSUE2)] with only one gap
+ESP1_2   2_1        13,085 05/03/12   12:32
+ESP1_2   2_2        13,085 05/03/12   21:15
+"ESP 900 TAPE 1, ISS 2" inside out, "Copy 502"
+[ESP900 TAPE1(ISSUE2)] with only one gap
+ESP1_2   5_1        13,085 05/03/12   12:36
+ESP1_2   5_2        13,085 05/03/12   21:24
+
+"ESP 900 TAPE 2, ISSUE 2" upside down, "Copy 259"
+[ESP900 TAPE2(ISSUE2)] with only one gap
+ESP2_2   2_1         1,969 05/03/12   12:41
+ESP2_2   2_2         1,969 05/03/12   21:31
+
+"ESP 900 TAPE 2, ISS 2A 16-3-72" inside out, "Copy 259"
+[ESP 900 TAPE2 ISS2A] no gap after ISS
+ESP2_2A  2_1         1,971 05/03/12   12:45
+ESP2_2A  2_2         1,971 05/03/12   21:32
+"ESP 900 TAPE 2, ISS 2A 16-3-72", "Copy 502"
+[ESP 900 TAPE2 ISS2A] no gap after ISS
+ESP2_2A  5_1         1,971 05/03/12   12:48
+ESP2_2A  5_2         1,971 05/03/12   21:34
+
+"903 Q CHECK C2, ISS 2" upside down, "Copy 259"
+[903 QCHECK (C2) ISSUE 2]
+QCHECK_2 2_1         3,726 29/02/12   11:08
+QCHECK_2 2_2         3,726 29/02/12   22:20
+
+"900 Q CHECK MASIR ISS 3, 17-12-70" upside down, "Copy 259"
+[900 QCHECK MASIR ISS3] no gap after ISS
+QCHECK_3 2_1         7,351 29/02/12   12:22
+QCHECK_3 2_2         7,351 01/03/12   11:30
+
+"903 Q BINOUT, T17 ISS 1" upside down, "Copy 259"
+[903 Q BINOUT T17 ISSUE 1]
+QBINOUT  2_1         1,415 28/02/12    9:55
+QBINOUT  2_2         1,415 28/02/12   16:58
+"QBINOUT T17, ISS 1", "Copy 502"
+[903 Q BINOUT T17 ISSUE 1]
+QBINOUT  5_1         1,403 28/02/12    9:57
+QBINOUT  5_2         1,403 28/02/12   17:05
+
+"903 T2, ISS 1", "Copy 259"
+[903 T2 ISSUE 1]
+T2       2_1         2,441 29/02/12   12:04
+T2       2_2         2,441 01/03/12   11:01
+"903 T2, ISS 1 P/M MASTER", "Copy 502"
+[903 T2 ISSUE 1]
+T2       5_1         2,441 29/02/12   11:04
+T2       5_2         2,441 29/02/12   22:18
+
+"903 T2, (RELOCATABLE) ISS 1", "Copy 259"
+[903 T2 (RELOCATABLE) ISSUE 1]
+T2_RELOC 2_1         3,883 29/02/12   12:01
+T2_RELOC 2_2         3,883 01/03/12   10:49
+"903 T2 (RELOCATABLE), ISS 1", "Copy 502"
+[903 T2 (RELOCATABLE) ISSUE 1]
+T2_RELOC 5_1         3,883 29/02/12   12:07
+T2_RELOC 5_2         3,883 01/03/12   11:05
+
+"903 QT2 OUT (C9), ISS 1" upside down, "Copy 259"
+[903 QT2OUT (C9)ISSUE 1] no gap before ISSUE
+QT2OUT   2_1         3,558 29/02/12   12:42
+QT2OUT   2_2         3,558 01/03/12   11:51
+
+"903 C4, ISS 1", "Copy 259"
+[903 C4 ISSUE 1]
+C4       2_1         1,641 28/02/12   10:53
+C4       2_2         1,641 28/02/12   17:44
+"903 C4, ISSUE 1" upside down, "Copy 502"
+[903 C4 ISSUE 1]
+C4       5_1         1,641 29/02/12   12:14
+C4       5_2         1,641 01/03/12   11:27
+
+"903 T22/23, ISS 3" mainly Stamped, "Copy 259"
+[903 T2223 ISS3] no gap after ISS
+T22_23   2_1         1,255 28/02/12   10:36
+T22_23   2_2         1,255 28/02/12   17:27
+"T22/23" on one line by me, "Pontefract"
+   Lacks legible heading.
+T22_23   P_1         1,111 28/02/12   10:32
+T22_23   P_2         1,111 28/02/12   17:26
+
+"903 Edit Iss 2" on one line, "Copy 259"
+[903 EDIT ISSUE 2]
+EDIT     2_1        10,547 29/02/12   12:10
+EDIT     2_2        10,547 01/03/12   11:09
+
+"903 MONITOR, ISS 1", "Copy 259"
+[903 MONITOR ISSUE 1]
+MONITOR  2_1         6,643 29/02/12   11:10
+MONITOR  2_2         6,643 29/02/12   22:23
+"903 MONITOR, ISS 1", "Copy 502"
+[903 MONITOR ISSUE 1]
+MONITOR  5_1         6,643 29/02/12   11:12
+MONITOR  5_2         6,643 29/02/12   22:26
+
+"903 QCOPY, ISSUE 2" Stamped, "Copy 259"
+[903 QCOPY ISSUE 2]
+QCOPY    2_1         1,774 28/02/12   10:43
+QCOPY    2_2         1,774 28/02/12   17:30
+"903 QCOPY, ISS 2", "Copy 502"
+[903 QCOPY ISSUE 2]
+QCOPY    5_1         1,774 28/02/12   10:45
+QCOPY    5_2         1,774 28/02/12   17:33
+
+"903 COPY TAPE, ISSUE 4" Stamped, "Copy 259"
+[903 COPY TAPE ISSUE 4]
+COPYTAPE 2_1         1,542 28/02/12   10:49
+COPYTAPE 2_2         1,542 28/02/12   17:39
+"903 COPY TAPE, ISS 4", "Copy 502"
+[903 COPY TAPE ISSUE 4]
+COPYTAPE 5_1         1,542 28/02/12   10:51
+COPYTAPE 5_2         1,542 28/02/12   17:42
+
+"903 SSYS 1, ISS 1", "Copy 259"
+[903 SSYS 1 ISSUE 1]
+SSYS1    2_1         3,674 28/02/12   10:28
+SSYS1    2_2         3,674 28/02/12   17:19
+
+"903 QIN 1, ISS 3", "Copy 259"
+[903 QIN 1 ISSUE 3]
+QIN1     2_1         3,280 28/02/12   10:25
+QIN1     2_2         3,280 28/02/12   17:15
+
+"903 QOUT 1, ISSUE 3" Stamped, "Copy 259"
+      and by me in red "Slightly torn in sprocket track"
+[QOUT 1 ISSUE 3]
+QOUT1_3  2_1         2,356 28/02/12   10:19
+QOUT1_3  2_2         2,356 28/02/12   17:09
+
+"QOUT 1 ISS 4, 10.2.72" upside down, "Copy 259"
+   Lacks legible heading.
+QOUT1_4  2_1         2,209 28/02/12   11:30
+QOUT1_4  2_2         2,209 28/02/12   18:15
+
+"903 QSQRT, (B6) ISSUE 1" Stamped, "Copy 259"
+[903 QSQRT (B6) ISSUE 1]
+QSQRT    2_1         1,086 28/02/12   11:33
+QSQRT    2_2         1,086 28/02/12   18:17
+"903 QSQRT, B6 ISS 1", "Copy 502"
+[903 QSQRT (B6) ISSUE 1]
+QSQRT    5_1         1,086 28/02/12   11:41
+QSQRT    5_2         1,086 28/02/12   18:17
+
+"903 QSIN, (B4) ISS 1" upside down, "Copy 259"
+[903 QSIN (B4) ISSUE 1]
+QSIN     2_1         1,668 28/02/12   11:42
+QSIN     2_2         1,668 28/02/12   18:21
+"903 QSIN, B4 ISS 1", "Copy 502"
+[903 QSIN (B4) ISSUE 1]
+QSIN     5_1         1,668 28/02/12   11:43
+QSIN     5_2         1,668 28/02/12   18:26
+
+"903 QATAN B10 ISSUE 1, COPY 29/5/68" inside out, "Copy 259"
+[903 QATAN (B10) ISSUE 1]
+QATAN    2_1         2,362 28/02/12   11:52
+QATAN    2_2         2,362 28/02/12   18:30
+"903 QATAN, ISS 1", "Copy 502"
+[903 QATAN (B10) ISSUE 1]
+QATAN    5_1         2,362 28/02/12   11:55
+QATAN    5_2         2,362 28/02/12   18:34
+
+"903 QLN (B1), ISS 2", "Copy 259"
+[903 QLN (B1) ISSUE2] no gap after ISSUE
+QLN      2_1         1,406 28/02/12   11:58
+QLN      2_2         1,406 28/02/12   18:36
+"903 QLN, (B1) ISS 2", "Copy 502"
+[903 QLN (B1) ISSUE2] no gap after ISSUE
+QLN      5_1         1,282 28/02/12   12:00
+QLN      5_2         1,282 28/02/12   19:44
+
+"903 QEXP (B2), ISS 1", "Copy 259"
+[903 QEXP (B2) ISSUE 1]
+QEXP     2_1         1,654 28/02/12   12:03
+QEXP     2_2         1,654 28/02/12   19:46
+"903 QEXP, ISS 1", "Copy 502"
+[903 QEXP (B2) ISSUE 1]
+QEXP     5_1         1,654 28/02/12   12:04
+QEXP     5_2         1,654 28/02/12   19:49
+
+"903 QDLA, ISS 3", "Copy 259"
+[903 QDLA ISSUE 3]
+QDLA     2_1         9,501 28/02/12   13:50
+QDLA     2_2         9,501 28/02/12   20:01
+"903 QDLA, ISS 3", "Copy 502"
+[903 QDLA ISSUE 3]
+QDLA     5_1         9,501 28/02/12   13:53
+QDLA     5_2         9,501 28/02/12   20:04
+
+"903 QDASQRT B106A, ISS 1" upside down, "Copy 259"
+[903 QDASQRT (B106A) ISSUE 1]
+QDASQRT  2_1         1,689 28/02/12   13:59
+QDASQRT  2_2         1,689 28/02/12   20:08
+"903 QDASQRT, (B106A) ISS 1", "Copy 502"
+[903 QDASQRT (B106A) ISSUE 1]
+QDASQRT  5_1         1,689 28/02/12   14:03
+QDASQRT  5_2         1,689 28/02/12   20:11
+
+"903 QDASIN, (B104A) ISS 1" upside down, "Copy 259"
+[903 QDASIN (B104A) ISSUE 1]
+QDASIN   2_1         2,200 28/02/12   14:05
+QDASIN   2_2         2,200 28/02/12   20:14
+"903 QDASIN" on one line, "Copy 502"
+[903 QDASIN (B104A) ISSUE 1]
+QDASIN   5_1         2,200 28/02/12   14:08
+QDASIN   5_2         2,200 28/02/12   20:17
+
+"903 QDAATAN, (B105A) ISSUE 1" Stamped, "Copy 259"
+[903 QDAATAN (B105A) ISSUE 1]
+QDAATAN  2_1         3,179 28/02/12   14:10
+QDAATAN  2_2         3,179 28/02/12   20:22
+"903 QDAATAN, (B105A) ISS 1", "Copy 502"
+[903 QDAATAN (B105A) ISSUE 1]
+QDAATAN  5_1         3,179 28/02/12   14:13
+QDAATAN  5_2         3,179 28/02/12   20:25
+
+"903 QF ISS 2" on one line upside down, "Copy 259"
+[903 QF ISSUE 2]
+QF       2_1        13,076 28/02/12   14:31
+QF       2_2        13,076 28/02/12   20:30
+"903 QF, ISS 2", "Copy 502"
+[903 QF ISSUE 2]
+QF       5_1        13,076 28/02/12   14:36
+QF       5_2        13,076 28/02/12   20:35
+
+"903 Q FIN/OUT, ISS 1" upside down, "Copy 259"
+[903 QFINOUT ISSUE 1]
+QFIO_1   2_1        16,905 28/02/12   14:40
+QFIO_1   2_2        16,905 28/02/12   20:40
+
+"903 QFIN/OUT, ISS 2 21.2.72", "Copy 259"
+[903 QFIN OUT ISS2] no gap after ISS
+QFIO_2   2_1        17,490 28/02/12   14:46
+QFIO_2   2_2        17,490 28/02/12   20:46
+
+"903 QF MATH, ISS 2" upside down, "Copy 259"
+[903 QFMATH ISSUE 2]
+QFMATH   2_1         8,499 28/02/12   14:51
+QFMATH   2_2         8,499 28/02/12   20:50
+"903 QFMATH, ISS 2", "Copy 502"
+[903 QFMATH ISSUE 2]
+QFMATH   5_1         8,499 28/02/12   14:54
+QFMATH   5_2         8,499 28/02/12   20:53
+
+"900 SHELL SORT, ISS 3", "Copy 259"
+[900 SHELLSORT ISSUE3] no gap after ISSUE
+SHELLSOR 2_1         2,703 28/02/12   15:01
+SHELLSOR 2_2         2,703 28/02/12   20:56
+"900 SHELLSORT, ISS 3", "Copy 502"
+[900 SHELLSORT ISSUE3] no gap after ISSUE
+SHELLSOR 5_1         2,703 28/02/12   15:03
+SHELLSOR 5_2         2,703 28/02/12   20:58
+
+"903 MT BLOCK, ISS 3" Stamped, "Copy 259"
+[903 MTBLOCK ISS3] no gap after ISS
+MTBLOC_3 2_1         9,126 29/02/12   13:00
+MTBLOC_3 2_2         9,126 01/03/12   12:11
+
+"MTBLOCK (SIR), ISS 4" no 903, "Copy 502"
+[MTBLOCK SIR ISSUE 4] no 903
+MTBLOC_4 5_1         9,616 29/02/12   12:56
+MTBLOC_4 5_2         9,616 01/03/12   12:07
+
+"903 MT CALL, ISS 3" Stamped, "Copy 259"
+[903 MTCALL ISS3] no gap after ISS
+MTCALL   2_1         5,984 29/02/12   12:51
+MTCALL   2_2         5,984 01/03/12   12:02
+"903 MTCALL, ISS 3", "Copy 502"
+[903 MTCALL ISS3] no gap after ISS
+MTCALL   5_1         5,984 29/02/12   12:48
+MTCALL   5_2         5,984 01/03/12   11:59
+
+"903 MT INIT, ISS 3" by hand & Stamped, "Copy 259"
+[903 MTINIT ISS3] no gap after ISS
+MTINIT   2_1         5,208 29/02/12   12:44
+MTINIT   2_2         5,208 01/03/12   11:55
+"903 MT INIT, ISS 3", "Copy 502"
+[903 MTINIT ISS3] no gap after ISS
+MTINIT   5_1         5,208 29/02/12   12:37
+MTINIT   5_2         5,208 01/03/12   11:46
+
+"903 MT LIST, ISS 3" Stamped, "Copy 259"
+[903 MTLIST ISS3] no gap after ISS
+MTLIST   2_1         8,804 29/02/12   12:35
+MTLIST   2_2         8,804 01/03/12   11:43
+"903 MTLIST, ISS 3", "Copy 502"
+[903 MTLIST ISS3] no gap after ISS
+MTLIST   5_1         8,804 29/02/12   11:01
+MTLIST   5_2         8,804 29/02/12   22:14
+
+"903 MSDUMP, ISS 3" Stamped, "Copy 259"
+[903 MSDUMP ISS3] no gap after ISS
+MSDUMP   2_1         5,935 29/02/12    9:55
+MSDUMP   2_2         5,935 29/02/12   21:09
+"903 MSDUMP, ISS 3", "Copy 502"
+[903 MSDUMP ISS3] no gap after ISS
+MSDUMP   5_1         5,935 29/02/12   10:07
+MSDUMP   5_2         5,935 29/02/12   21:34
+
+"903 MT REC, ISS 3" Stamped, "Copy 259"
+[903 MTREC ISS3] no gap after ISS
+MTREC    2_1         2,682 29/02/12   10:10
+MTREC    2_2         2,682 29/02/12   21:39
+"903 MTREC, ISS 3", "Copy 502"
+[903 MTREC ISS3] no gap after ISS
+MTREC    5_1         2,682 29/02/12   10:13
+MTREC    5_2         2,682 29/02/12   21:42
+
+"900 MT ALGOL, ISSUE 3" upside down, "Copy 259"
+[900 MTALGOL ISSUE3] no gap after ISSUE
+MTALGOL  2_1         7,663 29/02/12   10:28
+MTALGOL  2_2         7,663 29/02/12   21:55
+"900 MT ALGOL, ISS 3", "Copy 502"
+[900 MTALGOL ISSUE3] no gap after ISSUE
+MTALGOL  5_1         7,663 29/02/12   10:31
+MTALGOL  5_2         7,663 29/02/12   21:58
+
+"900 MTFORTRAN, ISS 3", "Copy 259"
+[900 MTFORTRAN ISSUE3] no gap after ISSUE
+MTFORTRA 2_1        10,219 29/02/12   10:35
+MTFORTRA 2_2        10,219 29/02/12   22:03
+
+"900 MTBOOT, ISS 1", "Copy 259"
+[900 MTBOOT ISSUE 1]
+MTBOOT   2_1           881 29/02/12    9:50
+MTBOOT   2_2           881 29/02/12   21:05
+
+"903 QPLOT, ISS 1" upside down, "Copy 259"
+[903 QPLOT ISSUE 1]
+QPLOT    2_1         9,857 29/02/12   11:16
+QPLOT    2_2         9,857 29/02/12   22:29
+"903 QPLOT, ISS 1", "Copy 502"
+[903 QPLOT ISSUE 1]
+QPLOT    5_1         9,857 29/02/12   12:24
+QPLOT    5_2         9,857 01/03/12   11:34
+
+"903 QLPOUT, ISS 1", "Copy 259"
+[903 QLPOUT ISSUE 1]
+QLPOUT   2_1         2,594 29/02/12   10:38
+QLPOUT   2_2         2,594 29/02/12   22:06
+
+"903 CARDIN, ISS 1", "Copy 259"
+[903 CARDIN ISSUE 1]
+CARDIN   2_1         3,236 29/02/12   12:27
+CARDIN   2_2         3,236 01/03/12   11:38
+
+"920 ALGOL TAPE 1, ISS 6 (SCB)", no copy number
+   Lacks legible heading.
+920AL1_6 N_1        19,611 06/03/12   23:07
+920AL1_6 N_2        19,611 08/03/12    9:31
+
+"920 ALGOL TAPE 2, ISS 6 (SCB)", no copy number
+   Lacks legible heading.
+920AL2_6 N_1        15,231 10/03/12   20:48
+920AL2_6 N_2        15,231 11/03/12   10:45
+
+"920 ALGOL LIBRARY, TAPE 3", no copy number
+[900 ALGOL LIBRARY ISSUE 7] in bizzare legible font
+920AL3_7 N_1         3,808 11/03/12   15:49
+920AL3_7 N_2         3,808 11/03/12   21:26
+
+
+*** EOF ***

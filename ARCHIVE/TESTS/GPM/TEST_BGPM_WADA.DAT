@@ -1,0 +1,55 @@
+﻿C Test Eiiti Wada GPM Programs
+
+on 903 64K
+c load bgpm
+at ptr file ../../SCRIPTS/GPM/BGPM.BIN
+j 8181
+st 8175
+
+select out tty
+
+c Patch BGPM to run in 64K store
+c e 2248 65535
+
+select out tty
+
+at ptr file ../../MASTERS/GPM/BGPMWADA.900
+
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+j 8
+st 633
+
+sh t

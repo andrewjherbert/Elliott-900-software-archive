@@ -1,0 +1,24 @@
+﻿
+PRTLIB;
+"BEGIN" "COMMENT" 23-SEP-1997;
+   "INTEGER" N;
+   "CODE" "INTEGER" _
+   "CODE" "PROCEDURE" INRLB(A); "INTEGER" "ARRAY" A;
+   "ALGOL";
+
+   "READ" N; WAIT;
+   "BEGIN"
+      "INTEGER" J; "INTEGER" "ARRAY" A[1:N];
+
+      SAME LINE; DIGITS(3); PUNCH(3);
+      INRLB(A);
+      "FOR" J:=1,J+1 "WHILE" A[J] "NE" 255 "DO"
+      "BEGIN"
+<! Halt !>         "IF" (J "DIV" 20) * 20 = J-1 "THEN" "PRINT" ''L@@;
+         "PRINT" A[J];
+      "END"
+   "END"
+"END"
+  500
+  5000
+<! Halt !>

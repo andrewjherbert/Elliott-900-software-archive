@@ -1,0 +1,114 @@
+﻿
+C Build H. Thimbleby version of GPM (TGPM)
+
+on 903
+
+c correct original version
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+at ptp file errors.txt legible
+at ptr inline
+
+CLE BB=1
+DLE ST=10
+INS
+
+*17
+
+^32
+
+((GPM ORIGINALLY BY HAROLD THIMBLEBY))
+
+((RESURRECTED BY ANDREW HERBERT 16 MAY 2015))
+
+[HGPM]
+
+B=1
+
+^%,
+CLE 8 RESTART
+DSE 8
+INS
+HGPM    ^%,
+CLI RESTART
+CLE 5 E
+DSI 5
+INS
+<       5^%,
+CLI Q2
+RTS 8 LOAD+2
+8  COPY^%,
+RTS 8 LOAD+2
+8  COPY^%,
+RTS 8 LOAD+2
+8  COPY^%,
+CLI ELOOP1
+CLI 5 Z
+INS
+        7  START
+^%,
+DLE LOOP2
+CLE EXIT
+INS
+
+^%,
+CLE LOAD
+CLI 4 S
+DSE 2
+INS
+       ^%,
+CLE LP5
+CLI 4 A
+DLI 1 -2
+CLE SP
+RTS SP
+SP <    4  SETE
+        5  E
+  ^%,
+CLI %
+DHE
+INS
+
+^%,
+COP
+PNL
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+st 490
+delete errors.txt
+
+at ptr file ../../MASTERS/GPM/TGPM_ORIGINAL.900
+at ptp file TGPM_CORRECTED.900
+nonstop on
+j 9
+c read in a halt code
+at ptr inline
+
+<! halt !><!!>
+nonstop off
+r
+de ptp
+st 1274
+
+c assemble with 2-pass SIR
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+at ptr file TGPM_CORRECTED.900
+select out tty
+j 12
+st 562
+
+rewind
+select out auto
+at ptp file TGPM.BIN
+j 10
+de ptp
+st 587
+
+sh t

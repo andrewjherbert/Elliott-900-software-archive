@@ -1,0 +1,66 @@
+﻿C Build U.2 - PUNCHIT 
+
+on 903 8K
+
+nonprinting off
+
+c load SIR
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+c assemble source
+select out tty
+at ptr file ../../MASTERS/ALDENHAM/PUNCHIT.900
+j 8
+st 6927
+
+c load T22/23 and dump out program
+select out auto
+at ptp file TEMP.BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+c discard header
+de ptp
+at ptp file TEMP.BIN
+at ptr inline
++4096
++4318
+<! halt !>
+<!!>
+j 8179
+st 8113
+de ptp
+
+c convert to AldRLB format
+at ptr file ALDRLB.BIN
+j 8181
+st 8171
+at tty inline
+223 
+4096 4318
+0 0
+<!!>
+at ptr file TEMP.BIN
+at ptp file PUNCHIT.BIN
+j 33
+de ptp
+st 275
+
+c check against binary
+clear 
+at ptr file ../../MASTERS/ALDENHAM/PUNCHIT.BIN
+break on 12
+nonstop on
+j 8181
+du 8192 PUNCHIT.IMG
+clear
+at ptr file PUNCHIT.BIN
+j 8181
+vi PUNCHIT.IMG
+
+delete TEMP.BIN
+delete PUNCHIT.IMG
+
+sh t

@@ -1,0 +1,188 @@
+﻿
+*19
+
+((EXTENDED STORE TEST WITH OCTAL OUTPUT, 25/5/15)
+
+((MODIFIED BY A J HERBERT 20/02/20 TO STOP AFTER ERROR REPORT)
+
+[]
+
+<
+XSTORE    4     +141
+          15    6148
+          4     +10
+          15    6148
+
+          15    2052
+          6     +127      (Ignore Parity)
+          1     -48
+          9     ;-3       (Ignore Controls & Blanks but not Erases)
+          14    13
+          6     =7 0
+          5     MODULE
+          7     ;+4
+          5     AFIRST
+          1     =1 0
+          8     ;+4
+          4     =0 183    (From FIRST NEXT message)
+          5     AFIRST
+          4     =0 8180
+          5     ANEXT
+
+          4     +0
+          5     PHASE
+PLOOP     4     +0
+          5     ERRORS
+          4     AFIRST
+          5     POINTR
+ALOOP     2     ANEXT
+          7     AEXIT
+
+          4     PHASE
+          6     +4
+          7     ;+2       (Jump iff not ASCENDING)
+          4     POINTR
+          5     PATERN
+
+          4     PHASE
+          6     +2
+          7     ;+4       (Jump iff not INVERTED)
+          4     PATERN
+          2     -1
+          5     PATERN
+
+          4     PHASE
+          6     +8
+          7     NOTCHQ    (Jump iff not CHEQUERED)
+          4     POINTR
+          6     &003
+          7     ;+6
+          2     &003
+          7     ;+4
+          4     PATERN
+          2     -1
+          5     PATERN
+          4     POINTR
+          6     &300
+          7     ;+6
+          2     &300
+          7     ;+4
+          4     PATERN
+          2     -1
+          5     PATERN
+
+NOTCHQ    4     PHASE
+          6     +1
+          7     CONTIN    (Jump iff not READBACK)
+
+          0     POINTR
+          4     PATERN
+          5     EXPECT
+          /2    0
+          7     ;+2
+          8     FAILED
+          4     PATERN
+          2     -1
+          5     EXPECT
+          /5    0
+          /2    0
+          7     ;+2
+          8     FAILED
+          4     PATERN
+          5     EXPECT
+          /5    0
+          /2    0
+          7     CONTIN
+
+FAILED    5     ERROR
+          10    ERRORS
+          4     ERRORS
+          2     +20
+          9     ;+0    (Jump iff 20 < ERRORS)
+
+          4     +135
+          15    6148
+          4     +141
+          15    6148
+          4     +10
+          15    6148
+          4     POINTR
+          11    SLOPL
+          8     SLOPO
+          15    6148
+          4     EXPECT
+          11    SLOPL
+          8     SLOPO
+          15    6148
+          4     ERROR
+          11    SLOPL
+          8     SLOPO
+
+CONTIN    0     POINTR
+          4     PATERN
+          /5    0
+          10    POINTR
+          4     POINTR
+          8     ALOOP
+
+AEXIT     4     PHASE
+          6     +1
+          7     NEXTP     (Jump iff not READBACK)
+
+          4     +141
+          15    6148
+          4     +10
+          15    6148
+          4     PHASE
+          14    8191
+          6     +7
+          1     MODULE
+          11    SLOPL
+          8     SLOPO
+          15    6148
+          4     ERRORS
+          11    SLOPL
+          8     SLOPO
+
+NEXTP     10    PHASE
+          8     PLOOP
+
+MODULE=2
+AFIRST=3
+ANEXT=4
+POINTR=5
+PHASE=6
+PATERN=7
+EXPECT    >1
+ERROR     >1
+ERRORS    >1
+
+SLOPV     >1
+SLOPS     >1
+SLOPL     >1
+BREG=1
+
+SLOPO     5     SLOPV
+          4     -18
+(+2)      1     +3
+          5     SLOPS
+          0     SLOPS
+          4     SLOPV
+          /14   0
+          6     +7
+          5     BREG
+          4     &151      (Parity bits of octal digits)
+          /14   0
+          6     +128
+          1     +48
+          1     BREG
+          15    6148
+          4     SLOPS
+          9     SLOPO+2
+
+          4     +160
+          0     SLOPL
+          /8    1
+
+%
+<! halt !>

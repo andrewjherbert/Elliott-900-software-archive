@@ -1,0 +1,836 @@
+﻿((MASIR ISSUE  3:  TAPE 5B))
+
+
+
+
+NUMB          +0
+           4  +0
+           5  INTEGR
+           5  KOUNT
+
+AMUMBL     4  INTEGR
+          12  +10
+          14  17
+           5  INTEGR
+           4  NEXCHAR
+           6  +15
+           1  INTEGR
+           5  INTEGR
+           9  E30
+          10  KOUNT
+          11  GETCHAR
+           8  GETCHAR+1
+           4  NEXCHAR
+           1  -16
+           9  TESINT
+           2  +9
+           9  TESINT
+           8  AMUMBL
+
+TESINT     4  INTEGR
+           0  NUMB
+          /8  1
+
+INTEGR        +0
+KOUNT         +0
+DELTEL    11  STACKSEARCH
+           8  STACKSEARCH+1
+           8  ;+2
+           8  E41
+           4  MAC
+           5  POSITN
+
+TRYNXT     4  MACDIC
+           2  POSITN
+           9  INPUT
+           0  POSITN
+          /4  0
+           5  X
+           2  POSITN
+           5  POSITN
+           0  POSITN
+          /4  3
+           6  &200000
+           7  DITCH
+           8  TRYNXT
+
+DITCH     11  DELETE
+           8  DELETE+1
+           8  TRYNXT
+
+TITLE     11  GETCHAR
+           8  GETCHAR+1
+           4  NEXCHAR
+           2  +1
+           9  ;+2
+           8  TITLE
+          11  GETNAME
+           8  GETNAME+1
+           4  NAME1
+           5  PUNAME
+           4  NAME2
+           5  PUNAME+1
+           8  INPUT
+
+LSTLAB     4  +1
+           5  LISTMK
+           8  INPUT
+
+SUPLIST    4  +0
+           8  LSTLAB+1
+
+NOEARL      4  +0
+           5  JWTITLE
+           8  INPUT
+
+EARL       4  +1
+           8  NOEARL+1
+
+CHKWRD    11  GETCHAR
+           8  GETCHAR+3
+           1  -15
+           9  E34             ( NUMBER STARTS WITH )
+           1  -11
+           9  ;+2
+           8  E34
+
+NXTDGT     4  NEXCHAR
+           2  +1
+           9  ;+2
+           8  INPUT
+           2  +0
+           4  CHEKWD
+          14  3
+           5  CHEKWD
+           4  NEXCHAR
+           1  -16
+           1  CHEKWD
+           5  CHEKWD
+          11  GETCHAR
+           8  GETCHAR+1
+           8  NXTDGT
+
+NOTMEM     4  +1
+           5  MEMMKR
+           8  INPUT
+
+MEM        4  +0
+           8  NOTMEM+1
+
+CHNGE      4  +0
+           5  COUNT
+          11  GETCHAR
+           8  GETCHAR+2
+1 -1
+           7  E20
+           0  COUNT
+           4  NEXCHAR
+          /5  ASTRSK
+          10  COUNT
+           4  COUNT
+           2  +4
+           7  INPUT
+           8  CHNGE+2
+
+OPNAME        +0
+           4  -6
+           5  NAME1-1
+           4  NAME
+           1  -1
+          11  OUTEXT
+           8  OUTEXT+1
+           4  +1
+           5  NEXCHAR
+          11  QCHOPX
+           8  QCHOPX+1
+           4  SPARE
+           5  NEXCHAR
+           0  OPNAME
+          /8  1
+
+OPWORD        +0
+           4  SPARE
+           5  NEXCHAR
+          11  QCHOPX
+           8  QCHOPX+1
+           4  +1
+           5  NEXCHAR
+          11  QCHOPX
+           8  QCHOPX+1
+           4  SPARE
+           5  NEXCHAR
+           0  OPWORD
+          /8  1
+
+LNKSQ         +0
+SQROP      4  +2
+SQRCL      1  -1
+           5  X
+           4  STACK
+
+TSTNXT     1  -1
+           5  BR
+           4  BEGSTACK
+           2  BR
+           9  EXT
+           0  BR
+          /4  0
+           9  TRY
+
+GONXT      4  BR
+           8  TSTNXT
+
+TRY        2  =/8 0
+           7  LINK
+           8  GONXT
+
+LINK      /4  1
+           1  X
+          /5  1
+           6  &17777
+           2  +8191
+           7  E23
+           8  GONXT
+
+EXT        0  LNKSQ
+          /8  1
+
+OPLINE        +0
+           4  +1
+           5  NEXCHAR
+          11  QCHOPX
+           8  QCHOPX+1
+           4  PERIPH
+           7  PSTORE
+           0  PERIPH
+           4  +0
+          /5  CHARAC-1
+
+REPEAT    /4  CHARAC-1
+          11  BUFPOS
+           8  BUFPOS+1
+           0  BR
+          /4  BUFFER
+           5  NEXCHAR
+           2  +1
+           7  FINISH
+           1  +63
+           7  INSTAR
+
+OPTE       0  PERIPH
+         /10  CHARAC-1
+          11  QCHOPX
+           8  QCHOPX+1
+           0  PERIPH
+          /4  CHARAC-1
+           2  +120
+           7  FINISH+2
+           8  REPEAT
+
+FINISH    11  QCHOPX
+           8  QCHOPX+1
+           4  +0
+           0  PERIPH
+          /5  CHARNUM-1
+          /5  CHARAC-1
+
+DROP       0  OPLINE
+          /8  1
+
+INSTAR     4  +10
+           5  NEXCHAR
+           8  OPTE
+
+PSTORE     4  +0
+           5  COUNT
+
+TRYMRE    10  COUNT
+          11  REDUCE
+           8  REDUCE+1
+          11  REDUCE
+           8  REDUCE+1
+          11  GETCHAR
+           8  GETCHAR+1
+           4  NEXCHAR
+           1  -1
+           7  PRINTO
+           1  -58
+           7  PRINTO
+           8  TRYMRE
+
+PRINTO     4  COUNT
+           2  +0
+           5  COUNT
+          11  GETCHAR
+           8  GETCHAR+1
+          11  QCHOPX
+           8  QCHOPX+1
+          10  COUNT
+           4  COUNT
+           7  DROP
+           8  PRINTO+3
+
+E41       10  ERR
+E40       10  ERR
+E39       10  ERR
+E38       10  ERR
+E37       10  ERR
+E36       10  ERR
+E35       10  ERR
+E34       10  ERR
+E33       10  ERR
+E32       10  ERR
+E31       10  ERR
+E30       10  ERR
+E29       10  ERR
+E28       10  ERR
+E27       10  ERR
+E26       10  ERR
+E25       10  ERR
+E24       10  ERR
+E23       10  ERR
+E22       10  ERR
+E21       10  ERR
+E20       10  ERR
+E19       10  ERR
+E18       10  ERR
+E17       10  ERR
+E16       10  ERR
+E15       10  ERR
+E14       10  ERR
+E13       10  ERR
+E12       10  ERR
+E11       10  ERR
+E10       10  ERR
+E9        10  ERR
+E8        10  ERR
+E7        10  ERR
+E6        10  ERR
+E5        10  ERR
+E4        10  ERR
+E3        10  ERR
+E2        10  ERR
+E1        10  ERR
+          10  ERRCNT          (INCREMENT COUNT)
+           4  OUTPER
+           5  STORE1
+           4  MSGDEV
+           5  OUTPER          ( SET MARKER FOR T/P OUTPUT )
+           4  NEXCHAR
+           5  SPARE
+4 LISTMK
+7 NOBLKS
+4 HDOVER
+      6    &7
+2 +1
+7 BLKSOP
+8 NOBLKS
+
+BLKSOP 4 -10
+5 COUNT
+4 +0
+15 6148
+10 COUNT
+4 COUNT
+9 BLKSOP+2
+NOBLKS
+
+           4  +1
+           5  NEXCHAR
+          11  QCHOPX
+           8  QCHOPX+1
+4 +135
+15 6148
+15 6148
+15 6148
+
+           4  SPARE
+           5  NEXCHAR
+           0  ERR
+           4  +0
+           5  ERR
+          /8  ;+0
+           8  ER1
+           8  ER2
+           8  ER3
+           8  ER4
+           8  ER5
+           8  ER6
+           8  ER7
+           8  ER8
+           8  ER9
+           8  ER10
+           8  ER11
+           8  ER12
+           8  ER13
+           8  ER14
+           8  ER15
+           8  ER16
+           8  ER17
+           8  ER18
+           8  ER19
+           8  ER20
+           8  ER21
+           8  ER22
+           8  ER23
+           8  ER24
+           8  ER25
+           8  ER26
+           8  ER27
+           8  ER28
+           8  ER29
+           8  ER30
+           8  ER31
+           8  ER32
+           8  ER33
+           8  ER34
+           8  ER35
+           8  ER36
+           8  ER37
+           8  ER38
+           8  ER39
+           8  ER40
+           8  ER41
+
+ER1        4  ERR1
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPNAME
+           8  OPNAME+1
+           8  EREXIT
+
+ER2        4  ERR2
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPNAME
+           8  OPNAME+1
+
+DLTEXT     4  +0
+           5  Y               ( SET TEMP.[] COUNTER )
+
+RD        11  GETCHAR
+           8  GETCHAR+1
+           4  NEXCHAR
+           1  -59
+           7  INC
+           1  -2
+           7  DEC
+           8  RD
+
+DEC        4  -2
+INC        1  +1
+           1  Y
+           7  EREXIT
+           9  EREXIT
+           5  Y
+           8  RD
+
+ER3        4  ERR3
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPWORD
+           8  OPWORD+1
+           4  NUMBER
+           2  MAC
+           5  MAC
+           4  STARNUM
+           5  Y
+           8  RD              ( DELETE REMAINDER OF TEXT )
+
+ER4        4  ERR4
+          11  OUTEXT
+           8  OUTEXT+5
+           4  STORE1
+           5  OUTPER
+8 ESYSEX
+
+ER5        4  ERR5
+          11  OUTEXT
+           8  OUTEXT+5
+
+IN        11  QCHINX
+           8  QCHINX+1
+           4  NEXCHAR         ( DELETE REMAINDER OF LINE )
+           1  -1
+7 ;+2
+           8  IN
+0 PERIPH
+4 +0
+/5 CHARNUM-1
+8 EREXIT
+
+
+ER6        4  ERR6
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE          ( ILLEGAL CHARACTER )
+           8  OPLINE+1
+           8  EREXIT
+
+ER7        4  ERR7
+          11  OUTEXT
+           8  OUTEXT+5
+           0  BR
+           4  +0
+          /5  BUFFER
+4 +1
+5 NEXCHAR
+11 QCHOPX
+8 QCHOPX+1
+OPBF 0 PERIPH
+/4 CHARNUM-1
+2 +120
+9 IN
+/4 CHARNUM-1
+/2 CHARAC-1
+7 OPSTR
+/4 CHARAC-1
+/10 CHARAC-1
+11 BUFPOS
+8 BUFPOS+1
+0 BR
+/4 BUFFER
+5 NEXCHAR
+11 QCHOPX
+8 QCHOPX+1
+8 OPBF
+OPSTR 4 +10
+5 NEXCHAR
+11 QCHOPX
+8 QCHOPX+1
+0 PERIPH
+/4 CHARNUM-1
+7 ;+2
+
+/10 CHARNUM-1
+4 +0
+/5 CHARAC-1
+/4 CHARNUM-1
+2 +0
+/5 CHARNUM-1
+
+8 EREXIT
+
+
+ER8        4  ERR8
+          11  OUTEXT
+           8  OUTEXT+5
+11 OPNAME
+8 OPNAME+1
+0 POSITN
+/4 3
+6 &377777
+/5 3
+/4 4
+1 -1
+/5 4
+
+
+           8  EREXIT
+
+ER9        4  ERR9
+          11  OUTEXT
+           8  OUTEXT+5        ( *$ NO. OVERFLOW )
+          11  OPNAME
+           8  OPNAME+1
+           8  EREXIT
+
+ER10       4  ERR10
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPWORD
+           8  OPWORD+1        ( NAME STARTS WITH )
+          11  OPLINE
+           8  OPLINE+1
+           8  EREXIT
+
+ER11       4  ERR11
+          11  OUTEXT
+           8  OUTEXT+5        ( ILLEGAL FACILITY * )
+          11  OPNAME
+           8  OPNAME+1
+          11  OPLINE
+           8  OPLINE+1
+           8  EREXIT
+
+ER12       4  ERR12
+          11  OUTEXT
+           8  OUTEXT+5        ( > THAN 5 LETTERS IN NAME*$ )
+          11  OPNAME
+           8  OPNAME+1
+           8  EREXIT
+
+ER13       4  ERR13
+          11  OUTEXT
+           8  OUTEXT+5        ( ILLEGAL TEXT FOR PARAMETER COMPARISON )
+MOORE 11 GETCHAR
+           8  GETCHAR+1
+           4  NEXCHAR
+1 -59
+7 ONTOIG
+1 -2
+
+           7  ;+2
+           8    MOORE
+          11  MACDEL
+           8  MACDEL+1
+          11  GETCHAR
+           8  GETCHAR+1
+ONTOIG 4 STORE1
+           5  OUTPER
+           8  IGNORE
+
+ER14       4  ERR14
+          11  OUTEXT
+           8  OUTEXT+5        ( *$ NO. TOO BIG FOR SPACE GIVEN )
+          11  OPNAME
+           8  OPNAME+1
+           8  EREXIT
+
+ER15       4  ERR15
+          11  OUTEXT
+           8  OUTEXT+5        ( MISUSED MNEMONIC )
+          11  OPNAME
+           8  OPNAME+1
+          11  OPLINE
+           8  OPLINE+1
+8 ERAXIT
+
+ER16       4  ERR16
+          11  OUTEXT
+           8  OUTEXT+5        ( *IF OR *IFNOT AND )
+          11  OPWORD
+           8  OPWORD+1
+          11  OPLINE
+           8  OPLINE+1
+           4  STORE1
+           5  OUTPER
+           8  IGNORE
+
+ER17       4  ERR17
+          11  OUTEXT
+           8  OUTEXT+5        ( ILLEGAL CONDITIONAL &* )
+          11  OPNAME
+           8  OPNAME+1
+          11  OPLINE
+           8  OPLINE+1
+           4  STORE1
+           5  OUTPER
+           8  IGNORE
+
+ER18       4  ERR18
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPWORD
+           8  OPWORD+1
+           4  PARAM
+           0  +0
+          14  1
+           2  +0
+           1  MAC
+           5  MAC
+           4  +0
+           5  PARAM
+          11  GETCHAR
+           8  GETCHAR+1
+           4  NEXCHAR
+           1  -9
+           7  ;+2
+           8  ;-5
+           4  STORE1
+           5  OUTPER
+           8  TEXTIN
+
+ER19       4  ERR19
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER20       4  ERR20
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           4  +10
+           5  ASTRSK
+           4  +12
+           5  COMMA
+           4  +8
+           5  BRAKOP
+           4  +9
+           5  BRAKCL
+           8  EREXIT
+
+ER21       4  ERR21
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPNAME
+           8  OPNAME+1
+           8  DLTEXT
+
+ER22       4  ERR22
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPWORD
+           8  OPWORD+1
+           4  NUMBER
+           2  MAC
+           5  MAC
+           4  NEXCHAR
+           2  +61
+           7  EREXIT
+          11  GETCHAR
+           8  GETCHAR+1
+           8  ;-5
+
+ER23       4  ERR23
+          11  OUTEXT
+           8  OUTEXT+5
+8 ESYSEX
+
+ER24       4  ERR24
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER25       4  ERR25
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPNAME
+           8  OPNAME+1
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER26       4  ERR26
+          11  OUTEXT
+           8  OUTEXT+5
+8 ESYSEX
+
+ER27       4  ERR27
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPWORD
+           8  OPWORD+1
+           4  STORE1
+           5  OUTPER
+           8  IGNORE
+
+ER28       4  ERR28
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPNAME
+           8  OPNAME+1
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER29       4  ERR29
+          11  OUTEXT
+           8  OUTEXT+5
+8 ESYSEX
+
+ER30       4  ERR30
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER31       4  ERR31
+          11  OUTEXT
+           8  OUTEXT+5
+4 -2
+11 OPNAME
+
+           8  OPNAME+2
+           4  STORE1
+           5  OUTPER
+           8  LOCLOC
+
+ER32       4  ERR32
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER33       4  ERR33
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER34       4  ERR34
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPWORD
+           8  OPWORD+1
+          11  OPLINE
+           8  OPLINE+1
+           8  EREXIT
+
+ER35       4  ERR35
+          11  OUTEXT
+           8  OUTEXT+5
+8 ESYSEX
+
+ER36       4  ERR36
+          11  OUTEXT
+           8  OUTEXT+5
+8 ESYSEX
+
+ER37       4  ERR37
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           8  ERAXIT
+
+ER38       4  ERR38
+          11  OUTEXT
+           8  OUTEXT+5
+8 ESYSEX
+
+ER39       4  ERR39
+          11  OUTEXT
+           8  OUTEXT+5
+           4  STORE1
+           5  NAME1
+          11  OPNAME
+           8  OPNAME+1
+          11  OPWORD
+           8  OPWORD+1
+           8  IGNORE
+
+ER40       4  ERR40
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPNAME
+           8  OPNAME+1
+           4  STORE1
+           5  OUTPER
+           8  PCLOCK
+
+ER41       4  ERR41
+          11  OUTEXT
+           8  OUTEXT+5
+          11  OPLINE
+           8  OPLINE+1
+           8  EREXIT
+ESYSEX
+CALLG (QES)
+
+
+EREXIT     4,NOTLET-1 8,;+2
+ERAXIT     4,GODECODE 5,;+6 4,STORE1 5,OUTPER 4,+0 5,VSM 5,JWDS +0
+
+
+
+
+)

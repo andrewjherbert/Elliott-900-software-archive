@@ -1,0 +1,211 @@
+﻿
+((TAPE-COPYING PROGRAMME, 32K BINCOP, 20/7/70)
+
+[]
+
+(8)      8    PASS1    (Even parity)
+(9)      8    CONTIN
+(10)     8    PASS2
+
+(11)     8    ;+3      (Any tape)
+(12)     4    +1       (No holes in track 8)
+         8    ;+4
+         4    +0
+         8    ;+2
+
+PASS1    4    -1
+         5    MODE
+         7    ;+2
+         4    -1
+         5    BITS
+
+         4    +1
+         8    ;+2
+
+PASS2    4    +0
+
+SETFLG   5    FLAG
+
+         4    +0
+         5    BLMKR
+
+         4    -8008    (From First-Last message -8192)
+SKIP     1    +8192
+         5    B
+
+         4    +0
+SETN     5    N
+
+         4    FLAG
+         9    UNPACK
+
+IGNORE   4    +0
+         15   2048
+         5    CHIP
+
+         4    MODE
+         7    TESBLK
+         9    ;+5
+
+         4    CHIP
+         6    +128
+         7    TESBLK
+         8    ERROR
+
+         4    CHIP
+         11   BITCTL
+         8    BITCTE
+         6    +1
+         7    ;+3
+
+ERROR    15   6144
+         8    ;-1
+
+         4    CHIP
+         6    MASK
+         5    CHIP
+
+TESBLK   4    CHIP
+         7    ;+4
+         4    -1
+         5    BLMKR
+         8    ;+4
+         4    BLMKR
+         7    IGNORE
+         9    ;+4
+         4    -20
+         5    BLCT
+         8    ;+2
+         10   BLCT
+
+         4    FLAG
+         7    UNPACK
+
+         4    N        (0 N)
+         1    =14 0    (14 N)
+         5    SP2
+         5    SP3
+         2    =/13 0   (15 0 if N=0, otherwise 14 8192-N)
+         6    =14 8191 (14 0 if N=0, otherwise 14 8192-N)
+         5    SP1
+
+         0    B
+         /4   0
+SP1      >1            (Right shift N)
+         4    CHIP
+SP2      >1            (Left shift N)
+         /5   0
+
+         2    CHIP     (Set Q-register)
+SP3      >1            (Left shift N)
+         /5   1
+
+         4    B
+         5    B2
+
+         4    BLCT
+         7    ;+0
+
+TESTOV   4    B
+         2    +32765
+         9    ERROR
+
+INCBN    4    B
+         1    -8178
+         7    SKIP
+
+         4    N
+         1    -10
+         1    BITS
+         9    ;+3
+         10   B
+         8    SETN
+         1    +18
+         8    SETN
+
+UNPACK   4    N        (0 N)
+         2    =14 18   (14 18-N)
+         5    SU
+
+         0    B
+         /4   1
+         /0   0        (Set Q-register)
+SU       >1            (Left shift 18-N)
+
+         0    BITS
+         /6   MASK+1
+         5    CHOP
+
+         4    FLAG
+         9    PUNCH
+
+         4    CHIP
+         2    CHOP
+         7    OK
+         4    +2
+         8    ERROR
+
+PUNCH    4    MODE
+         9    ;+3
+
+         4    CHOP
+         8    ;+7
+
+         4    CHOP
+         11   BITCTL
+         8    BITCTE
+         2    +0
+         14   7
+         1    CHOP
+
+         15   6144
+
+OK       4    B2
+         2    B
+         9    INCBN
+
+         4    -46080   (-180*256)
+         15   6144
+         1    +256
+         9    ;-2
+
+         4    FLAG
+         9    ;+0
+
+         4    -1
+         8    SETFLG
+
+CONTIN   4    +1
+         5    BLMKR
+         8    TESTOV
+
+BITCTL=1
+BITCTE   14   8188
+         1    =14 1
+         5    TOTAL
+         4    +0
+         14   4
+         1    =14 1
+         5    TOTAL+3
+         2    &323130  (Set Q-register)
+TOTAL    >1
+         5    TOTAL
+         2    &323130  (Set Q-register)
+(+3)     >1
+         1    TOTAL
+         /8   1
+
+MASK     &177
+         &377
+
+MODE=2                 (+1 for NO TRACK 8, +0 for ANY, -1 for EVEN)
+BITS=3                 (+0 for 8 bits, -1 for 7 bits)
+FLAG=4                 (+1 for STORE, +0 for CHECK, -1 for PUNCH)
+BLMKR=5                (+1 for STORE,+0 for IGNORE, -1 for COUNT)
+N=6                    (Shift Count, ranges from 0 to 17)
+B=7                    (Store Pointer)
+B2       >1            (Max. value of B)
+CHIP     >1            (Character read from tape)
+CHOP     >1            (Character read from store)
+BLCT     >1            (Count of consecutive blanks)
+<! Halt !>

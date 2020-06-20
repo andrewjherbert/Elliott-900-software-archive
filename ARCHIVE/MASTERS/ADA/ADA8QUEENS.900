@@ -1,0 +1,95 @@
+﻿
+procedure EIGHT_QUEENS is
+  -- See Wirth: Algs + Data Strs = Progs, PP. 146-147
+  TRUE: constant INTEGER := 1;
+  FALSE: constant INTEGER := 0;
+  INDEX, PARM_I: INTEGER;
+  type QUEEN_POS is array (1..8) of INTEGER;
+  X: QUEEN_POS;
+  type CLEAR_ROW is array (1..8) of INTEGER;
+  A: CLEAR_ROW;
+  -- Same sum of coordinates
+  type RIGHT_DIAG is array (2..16) of INTEGER;
+  B: RIGHT_DIAG;
+  -- Same difference of coordinates
+  type LEFT_DIAG is array (0..14) of INTEGER;
+  C: LEFT_DIAG; -- Restriction to positive integers prevents
+                -- more properly using -7..7
+
+  procedure PRINT is
+    END_OF_LINE: constant INTEGER := 10;
+    SPACE: constant INTEGER := 32;
+    CH_0: constant INTEGER := 48;
+    K: INTEGER := 1;
+    begin -- PRINT
+      loop
+        LOW_CHAR := X(K) + CH_0; LOW_OUT_CH;
+        LOW_CHAR := SPACE; LOW_OUT_CH;
+        K := K+1;
+        exit when K > 8;
+      end loop;
+      LOW_CHAR := END_OF_LINE; LOW_OUT_CH;
+    end; -- PRINT
+
+  procedure TRY is
+    I: INTEGER;
+    J: INTEGER := 0;
+    begin -- TRY
+      I := PARM_I;
+      loop -- Pseudo for-loop
+        J := J + 1;
+        exit when J > 8;
+
+        if A(J) = TRUE then
+          if B(I + J) = TRUE then
+            if C(7 + I - J) = TRUE then
+
+              X(I) := J;
+              A(J) := FALSE;
+              B(I + J) := FALSE;
+              C(7 + I - J) := FALSE;
+
+              if I < 8 then
+                PARM_I := I + 1;
+                TRY;
+              else
+                PRINT;
+              end if;
+
+              A(J) := TRUE;
+              B(I + J) := TRUE;
+              C(7 + I - J) := TRUE;
+
+            end if;
+          end if;
+        end if;
+
+      end loop;
+    end; -- TRY
+
+  begin -- EIGHT_QUEENS
+    INDEX := 1;
+    loop
+      A(INDEX) := TRUE;
+      INDEX := INDEX + 1;
+      exit when INDEX > 8;
+    end loop;
+
+    INDEX := 2;
+    loop
+      B(INDEX) := TRUE;
+      INDEX := INDEX + 1;
+      exit when INDEX > 16;
+    end loop;
+
+    INDEX := 0;
+    loop
+      C(INDEX) := TRUE;
+      INDEX := INDEX + 1;
+      exit when INDEX > 14;
+    end loop;
+
+    PARM_I := 1;
+    TRY;
+  end;
+<! Halt !>

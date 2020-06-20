@@ -1,0 +1,49 @@
+﻿C Demonstrate WORKSHOP in offline mode
+
+on 903
+c Run with unpatched WORKSHOP
+at ptr file ../../MASTERS/WORKSHOP/ONLINE.BIN
+at tty inline
+
+\AJH001
+
+WHERE A=2
+WHERE D=0
+CALCULATE B=QATN(QEXP(QLNE(QSQT(A*A))))
+ITERATE A=QSIN(B)/QCOS(B)
+ITERATE D=D+1
+PRINT D;A
+RUN
+RUN
+RUN
+RUN
+&
+<! halt !><!!>
+j 8181
+st 2481
+
+c Run with patched WORKSHOP
+d 5603 5604
+e 5603 =5 4889
+e 5604 =13 4903
+d 5603 5604
+at tty inline
+
+\AJH002
+
+WHERE A=2
+WHERE D=0
+CALCULATE B=QATN(QEXP(QLNE(QSQT(A*A))))
+ITERATE A=QSIN(B)/QCOS(B)
+ITERATE D=D+1
+PRINT D;A
+RUN
+RUN
+RUN
+RUN
+&
+<! halt !><!!>
+j 32
+st 2481
+
+sh t

@@ -1,0 +1,105 @@
+﻿[WWG P51 Example by Don Hunter.
+
+ Tape labelled: P51 example with print out at end of each call 
+		of AUX 15 Oct 89.
+
+ Formatted and annotated by Andrew Herbert 08/11/2013.]
+
+[R9]
+....PKT56KGKT20FVDL8FA40DUDTFI40F
+A40FS39FG@S2FG23FA5@T5@E4@
+...
+...
+	PK
+	T84K
+[M1]
+GKH2FTFA42FC42FU42FA8FU22FA15@
+AFH8FT45FA10@A2FT10@E34FNFT44K
+	P78F		[Routine links at 78]
+	T100K		[Program at 100]
+...
+	PZGK
+	E84KTF		
+[H sequence]
+	&F		[lf]
+	@F		[cr]
+	K2048F		[15.2^-4]
+	RF		[4.2^-4]
+	EF		[3.2^-4]
+	IF		[8.2^-4]
+	#F		[figs]
+...
+	PZGK
+	T94KT!		[Prime M1 for routines]
+	E84KIF
+[Master routine]
+	GK
+	O6H		[figs]
+	O1H		[cr]
+	OH		[lf]
+	T72D		[Set integration limits, 0 to 72D]
+	A5H		[0.5 to 74D]
+	T74D
+[ 6]	A6@		[Call in Q2]
+	G2!
+	A8@		[Call in P1]
+	G3!		
+	P10F		[Parameter for P1]
+	O6H		[Extra output to print last figure]
+	ZF
+...
+	PZGK
+	E84KPF
+[Auxiliary routine]
+	GK
+	A3F		[Plantlink]
+	T24@
+	HD		[x^2]
+	VD
+	A3H		[4.2^-4+x^2]
+	YF
+	TD
+	H2H		[15.2^-4]
+	VD	
+	YF
+	T4D		[(15/16).(0.25+X^2)]
+	A4H
+	TD		[3/16]
+[13]	A13@		[Call in D6]
+	G4!
+	AD
+	T6D
+[17]	A17@		[Call in P1]
+	G3!
+	P10F
+	O1H		[cr]
+	OH		[lf]
+	A6D
+	TD
+	ZF		[return link]
+...
+	PZGK
+	E84KPF
+[Q2 parameters]
+	T45K
+	P72D
+	G1!
+[Q2]
+E69KT32#@805908987F3964518438F8589934592F13215350746F16373960197F
+2035186446F4111388973F4886718346F4111388973F2035186446#TZA3FT27@
+T4HS28@A30@U9@A28@T15@AHPFV2HYFTDA13@PNPFVDA4HYFT4HA9@S29@G4@H2H
+V4HYFTDZFP10FH40#@H42#@T52Z
+...
+	PZGK
+	E84KPF		
+[P1]
+GKA18@U17@S20@T5@H19@PFT5@VDUFOFFFSFL4FTDA5@A2FG6@EFU3FJFM1F
+...
+	PZGK
+	E84KPF
+[D6]
+GKA3FT34@S4DE13@T4DSDTDE2@T4DADLDTDA4DLDE8@RDU4DLDA35@T6DE25@U8D
+N8DA6DT6DH6DS6DN4DA4DYFG21@SDVDTDEFW1526D
+	E25K		[Run program]
+	E!PF
+<! Halt !>

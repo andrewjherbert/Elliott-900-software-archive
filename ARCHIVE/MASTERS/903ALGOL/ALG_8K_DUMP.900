@@ -1,0 +1,128 @@
+﻿
+
+( ALGOL TAPE 1 DUMP ROUTINE                 )
+(                                           )
+( REVERSE ENGINEERED FROM ALGOL TAPE 1      )
+( ISSUE 6.                                  )
+(                                           )
+( ANDREW HERBERT 03/06/2013                 )
+
+[ DUMP ]
+
+MKR=8179
+COUNT=8173
+ADDR=8174
+CHECK1=8175
+CHECK2=8176
+
+^8001
+
+          8     DUMP
+
+FROM      +2              ( dump from 2 to 8135 )
+TO        +8135
+
+PUNCH     >+1             ( punch word as 3 chars )
+          14    8174
+          4     +0
+          14    4
+          1     MKR
+          15    6144
+(8010)    4     +0
+          5     MKR
+          14    7
+          15    6144
+          4     +0
+          14    7
+          15    6144
+          0     PUNCH
+          /8    1
+
+DUMP      4     +0
+(8020)    5     COUNT
+          5     ADDR
+          5     CHECK1
+          5     CHECK2
+          5     MKR
+          4     -56       ( punch 8124-8179 )
+          5     COUNT
+
+L1        0     COUNT
+          4     +76
+          15    6144
+(8030)    /4    8180
+          11    PUNCH
+          8     PUNCH+1
+          10    COUNT
+          4     COUNT
+          9     L1
+          15    6144
+          4     FROM
+          5     ADDR
+          4     +128
+(8040)    5     MKR
+          4     ADDR
+          1     CHECK2
+          5     CHECK2
+          4     ADDR
+          11    PUNCH
+          8     PUNCH+1
+
+L2        0     ADDR
+          /4    0
+          1     CHECK1
+(8050)    5     CHECK1
+          /4    0
+          11    PUNCH
+          8     PUNCH+1
+          4     ADDR
+          2     TO
+          7     END
+          0     ADDR
+          /4    0
+          7     NULL
+(8060)    10    ADDR
+          8     L2
+
+NULL      /4    1
+          7     SKIP
+NEWBLK    4     +128
+          5     MKR
+          4     ADDR
+          1     CHECK2
+          5     CHECK2
+          4     ADDR
+(8070)    11    PUNCH
+          8     PUNCH+1
+          4     +0
+          11    PUNCH
+          8     PUNCH+1
+          4     ADDR
+          2     TO        ( check if done )
+          7     END
+          10    ADDR
+          8     L2
+
+SKIP      4     ADDR      ( skip over empty store )
+(8081)    2     TO
+          7     NEWBLK
+          10    ADDR
+          0     ADDR
+          8     NULL
+
+END       4     +128
+          15    6144
+          4     +0
+          15    6144
+(8090)    15    6144
+          4     CHECK1    ( punch checksums )
+          11    PUNCH
+          8     PUNCH+1
+          4     CHECK2
+          11    PUNCH
+          8     PUNCH+1
+(8097)    8     ;+0
+
+%
+
+<! Halt !>

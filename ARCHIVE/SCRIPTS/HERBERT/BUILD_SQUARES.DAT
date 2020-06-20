@@ -1,0 +1,38 @@
+﻿C Build simple squares program
+
+on 903
+
+nonprinting off
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptp file TAPE.900
+at ptr file ../../MASTERS/HERBERT/SQUARES_SIR.900
+j 8
+st 6927
+
+at ptr file ../../MASTERS/HERBERT/SIO.RLB
+j 11
+st 7815
+
+de ptp
+print TAPE.900
+delete TAPE.900
+
+at ptr file ../../MASTERS/HERBERT/T22_23(4096).BIN
+at ptp file SQUARES.BIN
+j 8181
+st 8171
+
+at ptr inline
+
++8
++662
+<! halt !><!!>
+j 4096
+st 4209
+de ptp
+sh t
+

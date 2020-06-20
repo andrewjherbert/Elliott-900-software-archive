@@ -1,0 +1,526 @@
+﻿
+((TO CONVERT STORE TO RELOCATABLE SIR, 22/2/71)
+
+[STTOSIR CHIPF CHIPL CHIPE CHIP CHOPC CHOPF CHOPL CHOPE
+PROGRAM MARKERS NAMES LENGTH BASE]
+
+STTOSIR  8    ;+3
+(+1)     4    +0
+         8    ;+2
+         4    +1
+         5    CHOPC
+         4    +0
+         5    FLAG
+         5    CHOPF
+         5    CHIPF
+
+         11   INTIPL
+         8    INTIPE
+         5    LENGTH
+
+         4    +0
+         5    POINTER
+
+         4    +0
+         0    POINTER
+         /5   MARKERS
+
+         10   POINTER
+         4    POINTER
+         2    LENGTH
+         7    ;+2
+         8    ;-7
+
+         4    -1
+         5    NAMES
+
+(-2)     11   CHIPL
+         8    CHIPE
+
+NXTORD   4    CHIP
+         1    -20
+         7    HALT
+         1    -44
+         9    ;-6
+         1    +32
+         5    CODE1
+
+         4    CODE1
+         2    £  X
+         7    COPY
+         4    CODE1
+         2    £  T
+         7    THINK
+         4    CODE1
+         2    £  N
+         7    NAME
+         4    CODE1
+         2    £  R
+         7    REL
+
+         11   INTIPL
+         8    INTIPE
+         5    POINTER
+
+         4    CHIP
+         1    -45
+         7    ;+3
+         4    POINTER
+         8    ;+3
+         11   INTIPL
+         8    INTIPE
+         5    END
+
+NXTLOC   4    CODE1
+         2    £  P
+         7    PRINT
+
+         4    CODE1
+         0    POINTER
+         /5   MARKERS
+
+ENDTES   4    POINTER
+         2    END
+         7    NXTORD
+         10   POINTER
+         8    NXTLOC
+
+REL      10   FLAG
+         8    NXTORD-2
+
+NAME     4    +0
+         5    DICPTR
+         0    DICPTR
+         /4   NAMES
+         9    ;+4
+         4    DICPTR
+         1    +3
+         8    ;-6
+         4    -1
+         /5   NAMES+3  (NO overflow protection)
+
+         11   INTIPL
+         8    INTIPE
+         1    BASE
+         0    DICPTR
+         /5   NAMES
+         4    +0
+         5    COUNT
+         /5   NAMES+1
+         /5   NAMES+2
+
+NAMLOP   4    CHIP
+(+1)     2    +90
+         9    ;+2
+         8    ;+3
+         1    +32
+         9    ENDNAM
+         2    +25
+         9    ENDNAM
+         1    +33
+
+STRLET   0    COUNT
+         /8   ;+1
+         8    ;+7
+         8    ;+9
+         8    ;+10
+         8    ;+4
+         8    ;+6
+         8    ;+7
+         8    ;+10
+
+         10   DICPTR
+         0    +0
+         14   6
+         0    +0
+         14   6
+         0    DICPTR
+         /1   NAMES
+         /5   NAMES
+         10   COUNT
+
+         11   CHIPL
+         8    CHIPE
+         2    +57
+         9    NAMLOP
+         2    +9
+         9    NAMLOP
+         1    +16
+         8    STRLET
+
+ENDNAM   4    COUNT
+         7    ;+2
+         8    NXTORD
+
+         11   CHIPL
+         8    CHIPE
+         8    NAMLOP+1
+
+THINK    4    +0
+         5    POINTER
+
+(+2)     0    POINTER
+         /4   MARKER
+         6    &77
+         2    £  I
+         7    ;+2
+         8    NOOP
+
+         /4   PROGRAM
+         6    =0 8191
+         2    BASE
+         2    +0
+         5    ADRES
+
+         9    NOOP
+         2    LENGTH
+         9    NOOP
+         7    NOOP
+
+         0    ADRES
+         /4   MARKERS
+         9    ;+3
+         1    &400000
+         /5   MARKERS
+
+NOOP     10   POINTER
+         4    POINTER
+         2    LENGTH
+         7    NXTORD-2
+         8    THINK+2
+
+PRINT    4    +10
+         11   CHOPL
+         8    CHOPE
+
+         0    POINTER
+         /4   MARKER
+         9    ;+2
+         8    NOLABL
+
+         4    POINTER
+         1    BASE
+         11   LABOPL
+         8    LABOPE
+         7    ;+4
+         4    FLAG
+         11   LLABL
+         7    LLABE
+
+NOLABL   4    +9
+         11   CHOPL
+         8    CHOPE
+
+         0    POINTER
+         /4   MARKER
+         6    &77
+         5    CODE2
+         7    HALT
+
+         4    CODE2
+         2    £  I
+         7    INS
+         4    CODE2
+         2    £  A
+         7    INS
+         4    CODE2
+         2    £  C
+         7    CONS
+         4    CODE2
+         2    £  O
+         7    OCTAL
+         8    ;+0
+
+INS      /4   PROGRAM
+         9    ;+2
+         8    ;+4
+         4    +47
+         11   CHOPL
+         8    CHOPE
+
+         0    POINTER
+         /4   PROGRAM
+         6    =15 0
+         14   8179
+         5    FUNC
+         11   INTOPL
+         8    INTOPE
+
+         4    +9
+         11   CHOPL
+         8    CHOPE
+
+         4    CODE2
+         2    £  A
+         7    ABS1
+
+         4    FUNC
+         1    -14
+         7    ABS1
+         1    -1
+         7    ABS1
+
+         0    POINTER
+         /4   PROGRAM
+         6    =0 8191
+         2    BASE
+         2    +0
+         5    ADRES
+
+         9    ABS2
+         2    LENGTH
+         9    ABS2
+         7    ABS2
+
+         0    ADRES
+         /4   MARKER
+         6    &77
+         2    £  L
+         7    CONS
+
+         0    POINTER
+         /4   PROGRAM
+         6    =0 8191
+         11   LABOPL
+         8    LABOPE
+         7    ENDTES
+
+         4    FLAG
+         7    ;+2
+         8    ;+4
+
+         11   LLABL
+         8    LLABE
+         8    ENDTES
+
+         4    +59
+         11   CHOPL
+         8    CHOPE
+
+         4    POINTER
+         1    BASE
+         2    INTGR
+         8    CONS+1
+
+ABS2     0    POINTER
+         /4   PROGRAM
+         6    =0 8191
+         11   LABOPL
+         8    LABOPE
+         11   INTOPL
+         9    INTOPE+1
+         8    ENDTES
+
+ABS1     0    POINTER
+         /4   PROGRAM
+         6    =0 8191
+         11   INTOPL
+         8    INTOPE
+         8    ENDTES
+
+CONS     /4   PROGRAM
+(+1)     9    ;+4
+         5    INTGR
+         4    +43
+         8    ;+5
+         2    +0
+         9    OCTAL+1
+         5    INTGR
+         4    +45
+         11   CHOPL
+         8    CHOPE
+
+         11   INTOPL
+         8    INTOPE+1
+         8    ENDTES
+
+OCTAL    /4   PROGRAM
+(+1)     5    INTGR
+         4    +38
+         11   CHOPL
+         8    CHOPE
+         4    -6
+         5    COUNT
+
+OCTAJ    2    INTGR
+         4    INTGR
+         14   3
+         5    INTGR
+         6    &7
+         1    +48
+         11   CHOPL
+         8    CHOPE
+
+         10   COUNT
+         4    COUNT
+         9    OCTAJ
+         8    ENDTES
+
+COPY     11   CHIPL
+         8    CHIPE
+         1    -37
+         7    NXTORD
+         4    CHIP
+         11   CHOPL
+         8    CHOPE
+         8    COPY
+
+HALT     4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+
+LABOPE   5    INTGR
+
+         4    +0
+         5    DICPTR
+         0    DICPTR
+         /4   NAMES
+         0    LABOPL
+         /9   1
+         2    INTGR
+         7    ;+4
+         4    DICPTR
+         1    +3
+         8    ;-9
+
+         0    DICPTR
+         /4   NAMES+2
+         5    W2
+         /4   NAMES+1
+         5    W1
+
+SHIFTR   14   8180
+         6    &77
+         1    +32
+         11   CHOPL
+         8    CHOPE
+
+         0    W2
+         4    W1
+         14   6
+         5    W1
+         14   18
+         5    W2
+
+         4    W1
+         0    LABOPL
+         /7   1
+         8    SHIFTR
+
+LLABE    4    +76
+         11   CHOPL
+         8    CHOPE
+         4    -4
+         5    DIGICT
+
+LABOPJ   4    +48
+         5    SUBCT
+         4    INTGR
+         0    DIGICT
+         /1   OPTENS+6
+         9    ;+4
+         5    INTGR
+         10   SUBCT
+         8    ;-4
+
+         4    SUBCT
+         11   CHOPL
+         8    CHOPE
+
+         10   DIGICT
+         4    DIGICT
+         9    LABOPJ
+         0    LLABL
+         /8   1
+
+INTOPE   5    INTGR
+(+1)     4    -5
+         5    DIGICT
+         4    +0
+         5    ZERMKR
+
+INTOPJ   4    +48
+         5    SUBCT
+         4    INTGR
+         0    DIGICT
+         /1   OPTENS+5
+         9    ;+5
+         5    INTGR
+         10   SUBCT
+         10   ZERMKR
+         8    ;-5
+
+         4    ZERMKR
+         7    ;+4
+         4    SUBCT
+         11   CHOPL
+         8    CHOPE
+
+         10   DIGICT
+         4    DIGICT
+         9    INTOPJ
+         10   ZERMKR
+         7    INTOPJ
+
+         0    INTOPL
+         /8   1
+
+INTIPE   4    +0
+         5    COUNT
+         5    INTGR
+
+         4    CHIP
+INTIJ1   2    +57
+         9    ENDINT
+         2    +9
+         9    ENDINT
+
+         14   8191
+         1    INTGR
+         14   8190
+         1    INTGR
+         14   3
+         5    INTGR
+
+         10   COUNT
+INTIJ2   11   CHIPL
+         8    CHIPE
+         8    INTIJ1
+
+ENDINT   4    COUNT
+         7    INTIJ2
+         2    +4
+         9    ;+0
+
+         4    BASE
+         2    INTGR
+         0    INTIPL
+         /8   1
+
+OPTENS   -100000 -10000 -1000 -100 -10 -1
+
+INTIPL
+INTOPL
+LABOPL
+LLABL    >1
+
+FLAG     >1
+ZERMKR   >1
+SUBCT    >1
+DIGICT   >1
+COUNT    >1
+FUNC     >1
+ADRES    >1
+INTGR    >1
+CODE1    >1
+CODE2    >1
+POINTER  >1
+DICPTR   >1
+END      >1
+W1       >1
+W2       >1
+<! Halt !>

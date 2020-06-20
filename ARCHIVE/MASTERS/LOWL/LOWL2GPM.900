@@ -1,0 +1,297 @@
+﻿
+((LOWL to GPM Translator - Andrew Herbert - 07/08/2015))
+
+[ MAIN CHIP CHIPE CHIPF CHIPL CHOPC CHOPE CHOPF CHOPL
+  INTIPL INTIPE OUTSTR SLOPE SLOPL ]
+
+
+MAIN   4   +0   	(Initialize CHIP, CHOP)
+       5   CHIPF
+       5   CHOPF
+       5   Q		(Quote counter)	
+       4   +1		(900 telecode output)
+       5   CHOPC
+
+NEXTIN 11  CHIPL	(Read next instruction)
+       8   CHIPE
+       1   -20
+       7   HALT
+       1   -13		(32 space)
+       9   WHITE
+       1   -58		(91 '[' - Label)
+       7   LABEL
+
+(Processing a directive or instruction)
+       4    +58		(Punch ':')
+       11   CHOPL
+       8    CHOPE
+       4    CHIP	(Punch character)
+       11   CHOPL
+       8    CHOPE
+ILOOP  11   CHIPL	(Get next character)
+       8    CHIPE
+(+2)   1    -10		(Newline terminates)
+       7    IEND
+       1    -29		(39 ')
+       7    QUOTE
+       4    Q		(Test if inside quotes)
+       7    ;+2
+       8    IOUT
+ICHK   4    CHIP
+       1    -79		(79 'O' - Test for OF)
+       7    OF
+       1    +70		(9 tab)
+       7    SPACE
+       1    -1          (Newline terminates)
+       7    WHITE  
+       1    -22         (32 space)
+       7    SPACE
+       1    -47         (79 'O' - Test for OF)
+       7    OF    
+IOUT   4    CHIP	(Copy to output)
+       11   CHOPL
+       8    CHOPE
+       8    ILOOP
+IEND   11   OUTSTR
+       8    OUTSTR+1
+       \;^"
+       8    NEXTIN
+       
+
+(Copying leading white space)
+WHITE  4   CHIP
+(+1)   11  CHOPL
+       8   CHOPE
+       8   NEXTIN
+
+(Halt code terminates)
+HALT   4   CHIP
+       11  CHOPL
+       8   CHOPE
+STOP   8   ;+0
+
+LABEL  11  OUTSTR
+       8   OUTSTR+1
+       \:LA \BEL \,"
+LLOOP  11  CHIPL
+       8   CHIPE
+       1   -93		(']' - end of label)
+       7   ;+5
+       4   CHIP
+       11  CHOPL
+       8   CHOPE
+       8   LLOOP
+(+5)   4   +59		(';')
+       8   WHITE+1
+
+(' encountered in instruction)
+QUOTE 4    Q
+      7    ;+7
+      4	   +0
+      5	   Q
+      11   OUTSTR
+      8	   OUTSTR+1
+      \'>"
+      8    ILOOP
+(+7)  10   Q
+      11   OUTSTR
+      8	   OUTSTR+1
+      \<'"
+      8    ILOOP
+
+Q     >1
+
+(Replace space after instruction by comma)
+SPACE  4   +44
+       11  CHOPL
+       8   CHOPE
+SLOOP  11  CHIPL
+       8   CHIPE
+       1   -9	  (9 Tab)
+       7   SLOOP
+       1   -23    (32 space)
+       7   SLOOP
+       4   CHIP
+       8   ILOOP+2
+
+(Found O, see if calling OF)
+OF     11  CHIPL
+       8   CHIPE
+       1   -70	  ('F')
+       7   INOF
+(Not OF)
+       4   +79	  ('O')
+       11  CHOPL
+       8   CHOPE
+NOTOF  4   CHIP
+       8   ILOOP+2
+(OF found)
+INOF   11  CHIPL
+       8   CHIPE
+       1   -40	  (LRBRA)
+       7   INOFB
+       11  OUTSTR
+       8   OUTSTR+1
+       \OF"
+       8   NOTOF
+(OF LBRA found)       
+INOFB  11  OUTSTR
+       8   OUTSTR+1
+       \:OF
+       \,"
+(In an OF, process expression)
+       4   +0
+       5   TOTAL
+       5   OP
+OFLOOP 11  CHIPL
+       8   CHIPE
+(+2)   1   -48     (48' 0')
+       9   OFERR   (< '0')
+       1   -10     (58 ':')
+       9   DIGIT   (<= '9')
+       1   -18     (76 'L')
+       7   LETTER
+OFERR  11  OUTSTR
+       8   OUTSTR+1
+       \***
+       \OF
+       \ERR
+       \OR*
+       \**"
+       8   ;+0
+
+(Multiplier expected)
+DIGIT  11  INTIPL   (Read unsigned integer)
+       8   INTIPE
+       5   NUMBER
+       11  SLOPL    (Output integer just read)
+       8   SLOPE
+       4   CHIP	    (Terminating character)
+       1   -42      (42 '*')
+       7   ;+2      (Expecting N*S)
+       8   OFERR
+       4   CHIP
+       11  CHOPL
+       8   CHOPE
+       11  CHIPL    (First letter)
+       8   CHIPE
+       8   LETTER+3
+
+(Symbol expected)
+LETTER 4   +1	    (Default for N)
+       5   NUMBER
+       4   CHIP
+(+3)   11  CHOPL    (N set by digit)
+       8   CHOPE
+       11  CHIPL    (Second letter)
+       8   CHIPE
+       11  CHOPL
+       8   CHOPE   
+       11  CHIPL    (Third letter)
+       8   CHIPE
+       11  CHOPL
+       8   CHOPE
+       4   CHIP
+       1   -67	    (67 'C')
+       7   LICH
+       1   -5       (72 'H')
+       7   LCH
+       1   -5       (77 'M')
+       7   LNM
+       1   -9       (86 'V')
+       7   LHV
+       8   OFERR
+
+LHV    4   +32	    (LHV=32)
+       8   LNM+1
+LICH   11  CHIPL    (Fourth letter)
+       8   CHIPE
+       11  CHOPL
+       8   CHOPE
+LCH
+LNM    4   +1	    (LCH, LNM, LICH=1)
+(+1)   12  NUMBER   (Form N*S)
+       14  17
+       5   VALUE
+       4   OP
+       7   PLUS
+MINUS  4   VALUE    (Lst op was -)
+       2   TOTAL
+(+2)   5   TOTAL
+
+(Operator or RRBRA expected)
+       11  CHIPL
+       8   CHIPE
+       1   -41	     (41 RRBRA)
+       7   OFEND
+       1   -2        (43 +)
+       7   ADD
+       1   -2        (45 -)
+       7   SUB
+       8   OFERR
+
+PLUS   4   TOTAL     (Last op was +)
+       1   VALUE
+       8   MINUS+2
+
+ADD    5   OP        ('+' seen)
+(+1)   4   CHIP
+       11  CHOPL
+       8   CHOPE
+       8   OFLOOP
+SUB    10  OP        ('-' seen)
+       8   ADD+1
+    
+OFEND  4   +44	     (44 ',')
+       11  CHOPL
+       8   CHOPE
+       4   TOTAL
+       11  SLOPL
+       8   SLOPE
+       4   +59	     (59 ';')
+       11  CHOPL
+       8   CHOPE
+       8   ILOOP
+
+NUMBER >1
+VALUE  >1
+TOTAL  >1
+OP     >1
+       
+
+(OUTPUT STRING SUBROUTINE)
+
+[ OUTSTR CHOPE CHOPL ]
+       
+OUTSTR >1
+
+LOOP1  4   -12
+       10  OUTSTR
+LOOP2  5   MASKMS
+       0   OUTSTR
+       /4  0  
+       0   MASKMS
+       /14 0
+       6   &77
+       1   -1
+       7   NL
+       1   -1
+       0   OUTSTR
+       /7  1
+       1   +34
+MOUT   11  CHOPL
+       8   CHOPE
+       4   MASKMS
+       7   LOOP1
+       1   +6
+       8   LOOP2
+NL     4   +10
+       8   MOUT
+
+MASKMS >1
+
+
+<! halt !>
+
+
+

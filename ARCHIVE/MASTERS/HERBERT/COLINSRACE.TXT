@@ -1,0 +1,72 @@
+﻿903 Colin's Race Examples 
+=========================
+
+Andrew Herbert
+
+4th June 2017
+
+
+"Colin's Race" is a challenge set by Colin Eby to determine how many
+decimal places of pi can be computed within 5 minutes using the series
+x(n+1) = 0 + 4/1 - 4/2 + 4/3 - ...
+
+This task was coded in several of the Elliott 903 programming systems
+including:
+
+1) SIR assembler, fixed point arithmetic 2) SIR assembler, long
+precision floaing point 3) SIR assembler, short precision floating
+point 4) Algol 60 5) FORTRAN II ("903 FORTRAN") 6) FORTRAN IV ("905
+FORTRAN").
+
+The 903 has only hardware support for fixed point arithmetic: floating
+point arithmetic is implemented in software, and each language uses
+almost the same code known as "QF".  Internally QF uses three 18 bit
+words to represent floating point numbers: two for the mantissa, one
+for the exponent.  However depending upon how QF is called results can
+be stored either in the three word form or as a packed two word form
+with a 28 bit mantissa and 8 bit exponent.
+
+The times for each language are as follows:
+
+                                PLACES CYCLES TIME (s)
+
+SIR (fixed point)                4       517    0.2* 
+SIR (long floating point)        4     22095  268.5*
+SIR (short floating point)       4     21663  339.1 
+Algol60                          4      3375  464.2
+FORTRAN II                       4     21635  400.7 
+FORTRAN IV                       4     21663  551.7
+
+rows marked with a "*" are times that meet Colin's challenge.
+
+The fixed point version also fails if more than 4 digits are requested
+- this is due to (undetected) numerical overflow.
+
+Note that SIR using QF with results stored in packed form takes longer
+than with the unpacked form - revealing the additional cost of packing
+and unpacking numbers are they are read and stored.
+
+Algol60 is slower than SIR showing the additional overhead of running
+an interpreted system for both control flow and arithmetic, and in
+addition full overflow checking for integer as well as real
+arithmetic.
+
+FORTRAN II by contrast is faster as control statements are compiled into
+SIR code and there is no overflow chcking for real arithmetic.
+
+FORTRAN IV is the slowest but I don't know enough of the details of
+how it translates FORTRAN to explain this.  From experimental
+investigation there is no checking for integer overflow.
+
+The Algol and FORTRAN II versions use a code procedure TRUNC to
+calculate the integral part of the current approximation to pi as a
+real number to avoid problems with integer overflow. In FORTRAN IV the
+AINT function provides the required capability.
+
+Note that in all the examples, the iteration count is held as a real
+so that it does not overflow as quickly as it would if an integer is
+used.  Similarly the factor 4 is held an an integer so it can be
+scaled beyond 4 digits.  A significant speed up can be obtained if
+these variables are held as integers and the desired digit count is 4
+or less.
+

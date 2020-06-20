@@ -1,0 +1,19 @@
+﻿C Test charcount filter
+
+on 903 16K
+
+c load Algol
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+c translate program
+at ptr file ../../MASTERS/SWTOOLS/CHARCOUNT.900
+j 11
+
+c link in library
+at ptr file ../../MASTERS/SWTOOLS/CHIOAL.RLB
+j 14
+
+at ptr file ../../MASTERS/SWTOOLS/CHARCOUNT.900
+select out tty
+j 10

@@ -1,0 +1,269 @@
+﻿<! Legible Header  OOO  O   O       OOOOO   O    !>
+<! Legible Header O   O O   O       O      OO    !>
+<! Legible Header O   O  O O        O     O O    !>
+<! Legible Header O   O   O         OOOO    O    !>
+<! Legible Header O   O                     O    !>
+<! Legible Header O  OO O   O   OO  O   O   O    !>
+<! Legible Header  OOOO O   O   OO   OOO  OOOOO  !>
+<! Legible Header                                !>
+
+(QX51 from Don Hunter collection modified by Andrew Herbert
+ to recover source code for X.51 Issue 1.  16/09/2014) 
+
+[ X51 ]
+
+X51 8 START
+ 8 CHECK
+ 8 VERIFY
+ 8 UNSURE
+
+START 4 +0
+ 5 COUNT
+ 5 C2
+BLANKS 4 +0
+ 15 6144
+ 10 COUNT
+ 4 COUNT
+ 1 -60
+ 7 PUNCH
+ 8 BLANKS
+PUNCH 4 +0
+ 5 COUNT
+PATERN 4 +85   (BINARY 01010101)
+ 15 6144
+ 4 +170   (BINARY 10101010)
+ 15 6144
+ 10 COUNT
+ 4 COUNT
+ 1 -128
+ 7 ;+2
+ 8 PATERN
+ 5 COUNT
+BINARY 4 COUNT
+ 15 6144
+ 10 COUNT
+ 4 COUNT
+ 1 -256
+ 7 ;+2
+ 8 BINARY
+ 10 C2
+ 4 C2
+ 1   -2
+ 7 ;+0
+ 8 PUNCH
+
+
+CHECK 4 +0
+ 5 FLAG1
+ 5 SWITCH
+ 5 DLASW
+ 5 COUNT
+ 5 CALT
+ 5 C2
+ 5 MODE1
+ 5 MODE2
+ 5 FIRSTF
+RESTART 4 FLAG1
+ 5 TEMP
+INALLOC 11 SUB1
+ 8 ALLOC+1
+ 4 DLASW
+ 7 READ
+ 11 RANDOM
+ 8 RANDOM+1
+DELAY1 4 RAND
+ 1 -1
+ 7 READ
+ 8 ;-2
+READ 4 FIRSTF
+ 7 ;+4  (IGNORE LEADING BLANKS)
+ 4 +0
+ 15 2048
+ 8 ;+5
+ 4 +0
+ 15 2048
+ 7 ;-1
+ 10 FIRSTF
+ 5 THIS
+ 2 CHAR
+ 7 ;+2  (CHARS AGGREE)
+ 8 ERROR
+ 10 COUNT
+ 4 COUNT
+ 1 -256
+ 7 ;+2
+ 8 INALLOC
+ 5 COUNT
+ 4 MODE2
+ 7 DONE
+ 10 C2
+ 4 C2
+ 1 -32
+ 7 DO
+ 8 INALLOC
+DONE 4 TEMP
+ 5 FLAG1
+INSR1B 11 ALLOC
+ 8 ALLOC+1
+ 4 DLASW
+ 7 ;+7
+ 11 RANDOM
+ 8 RANDOM+1
+ 4 RAND
+ 1 -1
+ 7 ;+2
+ 8 ;-2
+ 4 CHAR
+ 15 6144
+ 10 COUNT
+ 4 COUNT
+ 1 -256
+ 7 ;+2
+ 8 INSR1B (AJH 16/09/201 was 8 DELAY1)
+ 5 COUNT
+ 4 MODE1
+ 7 ;+6
+ 10 C2
+ 4 C2
+ 1 -32
+ 7 DO
+ 8 INSR1B
+ 10 C2
+ 4 C2
+ 1  -16
+ 7 DO
+ 8 RESTART
+DO 5 C2
+ 4 DLASW
+ 7 ;+4
+ 4 +0
+ 5 DLASW
+ 8 ;+2
+ 10 DLASW
+ 4 MODE1
+ 7 RESTART
+ 8 INSR1B
+VERIFY 4 +0
+ 5 MODE1
+ 10 MODE2
+ 4 +0
+ 5 FLAG1
+ 5 SWITCH
+ 5 DLASW
+ 5 COUNT
+ 5 CALT
+ 5 C2
+ 5 FIRSTF
+ 8 INALLOC
+UNSURE 10 MODE1
+ 4 +0
+ 5 FLAG1
+ 5 SWITCH
+ 5 DLASW
+ 5 COUNT
+ 5 CALT
+ 5 C2
+ 8 INSR1B
+
+SUB1 (Added by AJH 16/09/2014)
+ALLOC +0
+ 4 FLAG1
+ 7 ZERO
+ 1 -1
+ 7 ONE
+ 8 OTHER
+ZERO 4 SWITCH
+ 7 ALTERN
+ 4 +170
+ 5 CHAR
+ 4 +0
+ 5 SWITCH
+ 10 CALT
+ 4 CALT
+ 1 -128
+ 7 ;+2
+ 8 EXALLOC
+ 5 CALT
+ 10 FLAG1
+ 8 EXALLOC
+ALTERN 4 +85
+ 5 CHAR
+ 10 SWITCH
+ 8 EXALLOC
+ONE 5 CHAR
+ 10 FLAG1
+ 8 EXALLOC
+OTHER 10 CHAR
+ 4 CHAR
+ 1 -255
+ 7 ;+2
+ 8 EXALLOC
+ 5 FLAG1
+EXALLOC 0 SUB1
+ /8 1
+
+
+RANDOM +0
+ 4 RAND1
+ 1 RAND2
+ 5 RAND
+ 4 RAND1
+ 5 RAND2
+ 4 RAND
+ 5 RAND1
+ 6  +1023
+ 5 RAND
+ 1 -120
+ 9 RANDOM+1
+ 0 RANDOM
+ /8 1
+
+
+ERROR 4 +0
+ 5 COUNT
+ 4 +0
+ 15 6144   (60 BLANKS)
+ 10 COUNT
+ 4 COUNT
+ 1 -60
+ 7 ;+2
+ 8 ERROR+2
+ 4 +0
+ 5 COUNT
+ 4 CHAR
+ 15 6144   (CORRECT CHAR)
+PUN2 4 +0
+ 15 6144   (4 BLANKS)
+ 10 COUNT
+ 4 COUNT
+ 1 -4
+ 7 ;+2
+ 8 PUN2
+ 4 +0
+ 5 COUNT
+ 4 THIS
+ 15 6144   (CHAR ACTUALLY READ)
+RUNOUT 4 +0
+ 15 6144   (61 BLANKS)
+ 10 COUNT
+ 4 COUNT
+ 1  -61
+ 7 ;+0
+ 8 RUNOUT
+
+RAND1 &075270
+RAND2 &065057 (AJH 16/09/2014 was &071462)
+COUNT +0
+CALT +0
+C2  +0
+DLASW +0
+MODE1 +0
+MODE2 +0
+FLAG1 +0
+TEMP +0
+SWITCH +0
+RAND +0
+THIS +0
+CHAR +0
+FIRSTF +0
+<! Halt !>

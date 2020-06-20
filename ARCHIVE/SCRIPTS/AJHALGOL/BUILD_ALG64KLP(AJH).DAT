@@ -1,0 +1,140 @@
+﻿C Build Improved ALGOL Issue 6 Large Program Interpreter
+
+c Requires AJH 2 Pass system to be built first to obtain library.
+
+on 903 64K
+
+c edit 16KLP source 
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+c steering tape
+at ptp file errors.txt legible
+at ptr inline
+
+CLE STKEND
+RTS +16383
++65535^%,
+CLI DUMP
+RTS +16383
++65535^%,
+CLI *PROG LOADER
+RTS LPSYMS=7530^1
+LPSYMS=7530^7^%,
+COP
+<! halt !><!!>
+j 13
+de ptp
+print errors.txt
+delete errors.txt
+st 490
+
+c edit source
+at ptp file ALG64KLP(AJH).900
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLP(AJH).900
+j 9
+de ptp
+st 1274
+
+c use LODSET to create a new loader for 8 modules (64K)
+c LOADER in second module, free store in other modules
+c S sets store size, F sets free store in each module,
+c L positions LOADER, D dumps out new tape
+
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j  8181
+st 8171
+at ptp file LOADER(ISS3)(64K).BIN
+
+c input LODSET commands from teleprinter at 8
+at tty inline
+S
++65536;
+F
++7; +8192;
++6; +8192;
++5; +8192;
++4; +8192;
++3; +8192;
++2; +8192;
++1; +8192; 
++0; +8130;
+L
++1;<!!>
+nonstop on
+j 8
+c will run off tty input
+nonstop off
+de ptp
+
+nonprinting off
+
+c assemble lp interpreter using MASIR
+
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j  8181
+st 8164
+
+at ptr file ALG64KLP(AJH).900
+
+C MASIR commands
+c O4 - punch loader halt code, normal assembly
+c M  - assemble
+at tty inline
+O4MO0MO0M
+<!!>
+
+at ptp file ALG64KLP(AJH).RLB
+nonstop on
+j 16
+
+c falls off tty inline
+de ptp
+nonstop off
+
+reverse ALG64KLP(AJH).RLB
+
+c load output rlb tape by LOADER at 16, input loader commands by teleprinter
+at ptr file LOADER(ISS3)(64K).BIN
+j  8181
+st 8171
+
+at ptr file ALG64KLP(AJH).RLB
+at ptp file ALG64KLP(AJH).BIN
+
+c LOADER commands
+c O134 - set options
+c option 004 - output program to tape or backing store
+c option 010 - select paper tape
+c option 020 - no built-in routines required
+c option 100 - list labels
+c L read tape
+at tty inline
+O134LM<!!>
+nonstop on
+j 16
+
+c falls off end of teleprinter input
+de ptp
+nonstop off
+delete ALG64KLP(AJH).RLB
+
+clear
+c load newly constructed tape
+at ptr file ALG64KLP(AJH).BIN
+j 8181
+st 8164
+
+c reload standard library
+at ptr file LIBRARY(AJH).RLB
+j 13
+c st ????
+
+c dump out new system
+at ptp file ALG64KLP(AJH).BIN 
+j 14
+de ptp
+c st 4214
+
+sh t

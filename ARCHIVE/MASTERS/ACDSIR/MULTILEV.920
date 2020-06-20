@@ -1,0 +1,323 @@
+﻿
+
+(( MULTI-LEVEL-STORE MATHEMATICAL SUBROUTINE LIBRARY VERSION ))
+(( SINE COSINE SQUARE ROOT AND ARCTANGENT ))
+
+(( 920-A-B-C-M COMPATIBLE ))
+(( ISSUE 3 5/7/68 ))
+
+[ LMATH LMATH1 LMATH2 LMATH3 LMATH4 FSTOR4 FSTOR3
+FSTOR2 FSTOR1 FSTOR FLEV ESQRT EARCTAN LXARC4 LXARC3
+LXARC2 LXARC1 LXARC LYARC4 LYARC3 LYARC2 LYARC1 LYARC
+ESIN ECOS ESINCOS LSIN4 LSIN3 LSIN2 LSIN1 LSIN LCOS4
+LCOS3 LCOS2 LCOS1 LCOS ]
+
+
+
+LMATH LMATH4+0
+LMATH3    +0
+LMATH2    +0
+LMATH1    +0
+
+( SQUARE ROOT )
+
+          4 +0
+ESQRT     0 FLEV
+          7 EXIT
+          9 ;-3
+          /5 NUM
+          4 -1
+          /5 WS
+          /4 NUM
+LOOP      14 1
+          9 ODD
+          14 1
+          9 EVEN
+          /10 WS
+          8 LOOP
+EVEN      14 8190
+          1 =12 0
+          8 ;+3
+ODD       14 8190
+          1 =/0 0
+          /5 DENOM
+          /4 WS
+          9 JUMPON
+          2 +0
+          /5 WS
+          /4 DENOM
+          /0 WS
+          /14 8191
+          0 FLEV
+          /5 DENOM
+JUMPON    /4 NUM
+          2 +0
+          /11 LDIV
+          /8 EDIV
+          0 FLEV
+          /2 DENOM
+          14 8191
+          6 =15 8191
+          /5 DENOM
+          /4 NUM
+          2 +0
+          /11 LDIV
+          /8 EDIV
+          0 FLEV
+          /2 DENOM
+          14 8191
+          6 =15 8191
+
+
+
+( EXIT FROM S/R )
+
+EXIT      /5 WS
+          /4 LMATH4
+          /1 FSTOR4
+          /5 LMATH4
+          /4 WS
+          /0 LMATH4
+          /8 1
+
+
+
+(  SINCOS  )
+
+
+ESIN      0 FLEV
+          /5 ANG
+          4 +0
+          8 ST
+
+ECOS      0 FLEV
+          /5 ANG
+          4 +1
+          8 ST
+
+ESINCOS   0 FLEV
+          /5 ANG
+          4 -1
+ST        /5 FLAG3
+          7 SIN
+RCO       /4 ANG
+          8 COS
+SIN       /4 ANG
+          1 =/8 0
+
+COS       /5 K
+          7 ALLB
+          9 ;+2
+          2 +0
+          2 +0
+          9 SETZ
+          14 1
+          /5 K
+          /12 K
+          /5 LSIN
+          9 ALLB-1
+          /4 K
+          /12 K
+          14 1
+          6 +1
+          /1 LSIN
+          7 ALLB
+          /5 LSIN
+          /5 CARRY
+          4 -26
+          /12 LSIN
+          1 +1
+          14 8191
+          1 +482
+          /12 LSIN
+          1 +1
+          14 8191
+          1 -5469
+          /12 LSIN
+          1 +1
+          14 8191
+          1 +33249
+          /12 LSIN
+          1 +1
+          14 8191
+          1 -80852
+          /5 WS
+          /12 LSIN
+          14 1
+          6 =15 8191
+          /5 LSIN
+          /4 WS
+          /12 CARRY
+          14 2
+          6 +1
+          /1 LSIN
+          /5 LSIN
+          /4 K
+          9 ;+2
+          8 ;+4
+          /4 LSIN
+          2 +0
+SETZ      /5 LSIN
+EX        /4 FLAG3
+          7 SO
+          9 BOTH
+          /4 LSIN
+          /5 LCOS
+          8 EXIT
+
+SO        /4 LSIN
+          8 EXIT
+
+BOTH      /10 FLAG3
+          /4 LSIN
+          /5 LCOS
+          8 SIN
+
+          4 =/0 1
+ALLB      1 =15 8191
+          8 SETZ-6
+
+
+
+
+(  ARCTAN  )
+
+EARCTAN   0 FLEV
+          4 +0
+          /5 FLAG1
+          /5 FLAG2
+          /5 FLAG3
+          /4 LXARC
+          9 XNEG
+MODXST    /5 LXARC
+          /5 DENOM
+          /4 LYARC
+          9 YNEG
+MODYST    /5 LYARC
+          /2 LXARC
+          7 XEQUY
+          9 XBYY
+          /4 LYARC
+          /11 LDIV
+          /8 EDIV
+          0 FLEV
+          /10 FLAG3
+STOREX    /5 XTAN
+          /12 XTAN
+          /5 XSQU
+          12 +43694
+          1 +1
+          14 8191
+          1 -89268
+          /12 XSQU
+          1 +1
+          14 8191
+          1 +94446
+          /12 XSQU
+          1 +1
+          14 8191
+          1 -86586
+          /12 XSQU
+          1 +1
+          14 8191
+          1 +131054
+          /12 XTAN
+          12 +41722
+          /5 XTAN
+          /4 FLAG3
+          7 ;+4
+          /4 XTAN
+          2 +.5
+PIBY4     /5 XTAN
+          /4 FLAG2
+          7 ;+4
+          /4 XTAN
+          2 =15 8191
+          /5 XTAN
+          /4 FLAG1
+          7 ;+4
+          /4 XTAN
+          2 +0
+          8 EXIT
+          /4 XTAN
+          8 EXIT
+XNEG      2 +0
+          9 ;+3
+          /10 FLAG1
+          8 MODXST
+          1 -1
+          8 MODXST
+YNEG      2 +0
+          9 ;+3
+          /10 FLAG2
+          8 MODYST
+          1 -1
+          8 MODXST
+XBYY      /4 LYARC
+          /5 DENOM
+          /4 LXARC
+          /11 LDIV
+          /8 EDIV
+          0 FLEV
+          8 STOREX
+XEQUY     4 +.25
+          8 PIBY4
+
+
+( DIVISION SUBROUTINE )
+
+LDIV      >+4
+EDIV      8 L4DIV
+          8 L3DIV
+          8 L2DIV
+L1DIV     0 +0
+          13 DENOM+3
+EXDIV     0 FLEV
+          /0 LDIV
+          /8 1
+
+L4DIV     0 +0
+          13 DENOM
+          8 EXDIV
+
+L3DIV     0 +0
+          13 DENOM+1
+          8 EXDIV
+
+L2DIV     0 +0
+          13 DENOM+2
+          8 EXDIV
+          
+( GLOBAL LOCATIONS )
+
+LXARC LXARC4+0
+LXARC3    +0
+LXARC2    +0
+LXARC1    +0
+LYARC LYARC4+0
+LYARC3    +0
+LYARC2    +0
+LYARC1    +0
+LSIN LSIN4+0
+LSIN3     +0
+LSIN2     +0
+LSIN1     +0
+LCOS LCOS4+0
+LCOS3     +0
+LCOS2     +0
+LCOS1     +0
+FLEV      +0
+FSTOR FSTOR4+0
+FSTOR3    +0
+FSTOR2    +0
+
+FSTOR1    +0
+( LOCAL WORKSPACES )
+
+WS FLAG1  >+4
+K FLAG2   >+4
+NUM FLAG3 >+4
+CARRY XTAN>+4
+ANG XSQU  >+4
+DENOM     >+4
+<! Halt !>

@@ -1,0 +1,15 @@
+﻿C Assemble RLB for IRANDOM code procedure
+
+on 903
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/MISC/IRANDOM.900
+at ptp file IRANDOM.RLB
+j 8
+de ptp
+st 6239
+
+sh t

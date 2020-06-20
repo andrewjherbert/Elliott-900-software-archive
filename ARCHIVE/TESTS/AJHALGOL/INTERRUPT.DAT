@@ -1,0 +1,83 @@
+﻿C Test interrupt code procedure
+
+on 903 16K
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+at ptr inline
+test interrupt;
+"begin"
+    "code" "procedure" interrupt; "algol";
+    "integer" i, count;
+    "comment" set up interrupt handler;
+    punch(3);
+    interrupt;
+    "comment" program to be interrupted;
+    count := 0;
+    "for" i := 1 "step" 1 "until" 25  "do" "begin"
+    	  count := count + 1;
+	  "print" count
+    "end" for
+"end" of program
+<! halt !><!!>
+at ptp file TEMP.RLB
+j 8
+de ptp
+
+c verify with 2 Pass
+c stop part way through with interrupt and resume at 9
+at ptr file ../../SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+at ptr file TEMP.RLB
+at ptp file JUNK.BIN
+j 8
+at ptr file ../../SCRIPTS/AJHALGOL/INTERRUPT.RLB
+j 11
+nonstop on
+s 10000
+j 10
+c simulate generating interrupt on level 1
+interrupt 1
+nonstop off
+r
+at ptp file DUMP.BIN
+j 14
+de ptp
+at ptp file JUNK.BIN
+at ptr file DUMP.BIN
+j 8181
+j 9
+
+c verify with LP
+c run once, then run again with interrupt part way through.
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+at ptr file ../../SCRIPTS/AJHALGOL/INTERRUPT.RLB
+j 12
+at ptr file TEMP.RLB 
+at tty inline
+R<!!>
+nonstop on
+j 8
+s 10000
+at tty inline
+R<!!>
+r
+interrupt 1
+at tty inline
+D<!!>
+at ptp file DUMP.BIN
+r
+de ptp
+at ptp file JUNK.BIN
+at ptr file DUMP.BIN
+j 8181
+at tty inline
+C
+<!!>
+r
+de ptp
+delete TEMP.RLB
+c delete DUMP.BIN
+delete JUNK.BIN
+

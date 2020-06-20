@@ -1,0 +1,43 @@
+﻿
+primes;
+"begin" "integer" i, sieveupb, count;
+
+	sieveupb := 2000; 
+
+	count := 1;
+	punch(3);
+	same line;
+	"print" 'Table of Prime Numbers'L2@@, 1;
+
+	"begin" "boolean" "array" sieve [2:sieveupb];
+
+		"comment" initialize the sieve;
+		"for" i := 2 "step" 1 "until" sieveupb "do" sieve[i] := "false";
+
+		"comment" search for next prime;
+		"for" i := 2 "step" 1 "until" sieveupb "do"
+		
+			"if" "not" sieve[i] "then"
+
+				"begin" "integer" j;
+					sieve[i] := "true";
+
+					"print" i;
+
+					count := count+1;
+					"if" count = 10 "then"
+						"begin" count := 0;
+							"print" ''L@@
+						"end" if;
+
+					"for" j := i "step" i "until" sieveupb "do"
+						sieve[j] := "true"
+
+					
+
+				"end" if
+
+	"end" sieve
+
+"end" primes
+<! halt !>

@@ -1,0 +1,73 @@
+﻿BBINARY;
+"BEGIN""INTEGER""ARRAY" BITS[1:36];
+       "REAL" FACT,N,X;
+       "BOOLEAN"POS;
+       "INTEGER"TWOS,NUMNOS,H,L;
+       "SWITCH" SS:=L1;
+  "PROCEDURE" COMPLEMENT (NO,TOP,BOT);
+      "INTEGER""ARRAY"NO;
+       "INTEGER"TOP,BOT;
+       "BEGIN""BOOLEAN" ZEROS;
+              "INTEGER"I;
+              ZEROS:="TRUE";
+              "FOR"I:=TOP"STEP"-1"UNTIL"BOT"DO"
+              "IF"NO[I]=1"AND"ZEROS"THEN"ZEROS:="FALSE"
+                 "ELSE""IF""NOT"ZEROS"THEN"NO[I]:=1-NO[I];
+      "END"COMPLEMENT;
+ "BOOLEAN""PROCEDURE"INSCALE(X);
+       "VALUE"X;
+       "REAL"X;
+      "BEGIN""IF"X=0"OR"(X"LE"-0.5"AND"X>-1)
+                       "OR"(X"GE"0.5"AND"X<1)
+                        "THEN"INSCALE:="TRUE"
+                       "ELSE"INSCALE:="FALSE";
+       "END"OF INSCALE;
+       "PRINT"''L2S6@NUMBER'S14@BINARY PATTERN'L@@;
+       "READ"NUMNOS;
+       "FOR"H:=1"STEP"1"UNTIL"NUMNOS"DO"
+       "BEGIN""READ"N;
+              "FOR"L:=1"STEP"1"UNTIL"36"DO"
+              BITS[L]:=0;
+              X:=N;
+              "PRINT"''L2S4@@,SAMELINE,N,' = @;
+              "IF"N>0"THEN"POS:="TRUE"
+                     "ELSE"POS:="FALSE";
+              "IF"POS="TRUE""THEN""BEGIN""IF"N"GE"1
+                        "THEN"FACT:=0.5
+                        "ELSE"FACT:=2.0;
+                                   "END"
+                            "ELSE""BEGIN""IF"N"LE"-1"THEN"FACT:=0.5
+                                                    "ELSE"FACT:=2.0;
+                                 "END";
+              "IF"INSCALE(N)="TRUE""THEN""GOTO"L1;
+              "FOR"TWOS:=0,TWOS+1"WHILE""NOT"INSCALE(N)"DO"
+             N:=N*FACT;
+             "FOR"L:=36"STEP"-1"UNTIL"30"DO"
+             "BEGIN"BITS[L]:=TWOS-TWOS"DIV"2*2;
+                    TWOS:=TWOS"DIV"2;
+             "END";
+       "IF" X<1 "AND" X>-1 "THEN"COMPLEMENT(BITS,36,30);
+       "COMMENT" COMPLEMENT OF EXPONENT;
+       L1: N:=ABS(N);
+       "FOR"L:=2"STEP"1"UNTIL"29"DO"
+       "BEGIN"BITS[L]:=ENTIER(N*2);
+              N:=N*2-ENTIER(N*2);
+       "END";
+       "IF""NOT"POS"THEN"COMPLEMENT(BITS,29,1);
+       "COMMENT" COMPLEMENT OF MANTISSA;
+       "FOR"L:=1"STEP"1"UNTIL"18"DO"
+       "IF"BITS[L]=0"THEN""PRINT"'0 @
+                    "ELSE""PRINT"'1 @;
+       "PRINT"''LS16@* @;
+       "FOR"L:=19"STEP"1"UNTIL"28"DO"
+       "IF"BITS[L]=0"THEN""PRINT"'0 @
+                    "ELSE""PRINT"'1 @;
+       "FOR"L:=30"STEP"1"UNTIL"36"DO"
+       "IF"BITS[L]=0"THEN""PRINT"'0 @
+                    "ELSE""PRINT"'1 @;
+       "END";
+"PRINT"''L2S4@END OF JOB@;
+"END"OF BINARY;
+
+9 0.375 -0.375 48.375 -48.375 0.1 -0.1 0.5 -1.0 3.14195927
+<! halt !>

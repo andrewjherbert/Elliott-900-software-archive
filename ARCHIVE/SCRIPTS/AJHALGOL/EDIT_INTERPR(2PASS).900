@@ -1,0 +1,1941 @@
+﻿
+RTS *+9
+*PROG INTERP
+*LISTLA
+*NOMEM
+^%,
+RTS 903
+(AJH^%,
+RTS 29-11-67
+02-03-2015)^%,
+
+CLE [OTCHA
+DLI SERIES ]
+INS
+[ ALRMCH BASE BLANK BUFFER DLDIV DLMULT DUMP FAILEN FLNS14 FLNS15 FPA GECHAR 
+GETADD GECH GECHEN HALTCH HALTMK IDEV INPA INSLOT LA LFCH  NEXTCH 
+NXPORD ODEV OTCHA OTCHA1 OTCHA2 OUTPA OUTSLT PAUSE PAUSRT PCHLNK PDADD READAL 
+SBLNK SBW SBW3 SBW4 SBW5 SERIES SP START TABLE W3 W4 WS ]
+
+^%,
+
+CSI READAL
+INS
+	(Read Algol, keep library)^%,
+RTS HALTCH+5
+PAUSE+4 (Resume after wait)^%,
+CSI EXECUT
+INS
+	(Execute program)^%,
+RTS 7775
+START-5 (Read related tape)^%,
+CSI READLB
+INS
+	(Reload library)^%,
+CSI READOL
+INS
+	(Read Algol, overwrite library)^%, 
+RTS HALTCH+13
+DUMP (Dump system snapshot to tape)^%,
+RTS ;+0
+THUNK	(Halt 15 in RLB updates thunk)
+^%,
+CSI 0 ;+1
+INS
+	(Resume address at 9)^%,
+CLE STKMOD
+RTS +0
+>1  (0 or base of stack)^%,
+RTS +8177
++8177	(Address of block following stack)^%,
+RTS +7350
++7350	(Threshold for reload tape 2)^%,
+RTS +0
++0  (First free location for pords)^%,
+CSI STACKADD
+DSI 99
+INS
+	>1	(First free location after reading RLB)
+EVN	>1	(Used in Hunter extensions)
+LOC	>1	(Used in Hunter extensions)
+
+(This code is entered from the loader after reading in a
+  call by name thunk)
+
+(Note change from Hunter version - we only look for INDS, not
+ TFAI -> TIR or INDA -> INDR)  
+THUNK     4     LA
+          1     -8
+          5     LOC       (Start of thunk)
+          0     LOC
+          /4    6         (Points to TA n)
+          5     W
+          /0    6         (Indirect through TA n to UJ at end)
+          /2    0
+	  2     =8 1
+          7     ;+3
+          4     +7        (Parameter mismatch)
+          8     FAIL
+          4     LA
+          1     =7 8191   (Forms UJ to TRAP at end of thunk)
+          /5    0         (Store forward jump at start of thunk)
+          4     W
+          1     =8 1
+          0     LOC
+          /5    6         (Store backward jump at end of thunk)
+          /4    1         (Look for INDS before ST)
+          6     =/15 0
+          1     =5 0	  (Test for INDS = /11 n)
+          7     TINDS
+	  1     =/6 0     (Test for INDFS = 5 n)
+          7     TINDFS
+	  8	BLANK    (Return to rlb loader)
+TINDS	  /4    1         (INDS to GTF)
+          1     =14 0
+          /5    1
+          8     BLANK    (Return to rlb loader)
+TINDFS    /4    1	  (INDFS to GTFS)
+	  1     =9 0
+      	  8     ;-4
+
+(Hunter mod: new pord GETADD)
+GETADD    11    FINDFP    (get address of call by name argument)
+          8     FINDFP+1  (find argument on stack)
+          0     W1
+          /4    2         (word 2 = 0, i.e., no thunk)
+          7     TFVR+3    (yes, treat as TFAI)
+          8     BACK      (join ADPORD to call thunk)
+
+ADPORD    /4    2         (W1\2 < 0?)
+          9     FIN       (get result)
+          1     =/0 0     (develop address)
+          /5    2         (W1\2 +:= &800000)
+          4     -1        (decrement PP for UJ to thunk)
+          1     PP
+STPP      5     PP        (PP -:= 1)
+          0     SP
+          4     +0        (SP\2 := 0)
+          /5    2
+          0     W1
+
+BACK      4     SP        (scalars and formal functions)
+          1     +3        (SP +:= 3 - space for result)
+          5     SP
+          /4    0         (W1\0 - address of thunk)
+          8     CFF+2     (call thunk)
+
+FIN       6     =15 8191  (restore parameter entry)
+          /5    2         (W1\2 := W1\2 &3777777)
+          4     SP        (overwrite address)
+          1     -3
+          5     SP        (SP -:= 3 - unstack)
+          5     W1        (W1 := SP)
+          0     W1
+          8     TRCN+3    (join TRCN to decode parameter entry)
+
+(Hunter modification)
+(Call by name handling - set up address of thunk on stack)
+MKTHK     0     SP
+          4     PP
+          1     -4
+          /5    0         (SP\0 := PP-4 - PE in thunk)
+          4     +7
+          2     PP
+          5     LOC       (LOC := PP-7)
+TESTIT    4     ADPART
+          2     +9
+          7     TI1       (skip to TI1 if MKTHK 9 [label] - type 9)
+          0     LOC
+          /4    0         (test if PP-7 is INDA - 1 or 2)
+          6     =/15 0
+          2     =12 0
+          7     ;+2
+          4     +4        (PP-7 not INDA - type 4 or 5)
+TI1       0     SP        (build an address slot)
+          1     ADPART
+          /5    1         (SP\1 set type field to 1/2, 5/6 or 9)
+          4     EP
+          /5    2         (SP\2 := EP)
+          8     UP        (advance SP)
+
+(Hunter modification - new pord STEP2)
+STEP2     0     EP
+          /4    7         (test and increment STEP flag)
+          /10   7
+          7     NXPORD    (first step)
+          /4    5
+          9     UNTILR    (is controlled variable real?)
+          /4    8         (step)
+UNTIL4    /0    5         (address of controlled variable)
+          /1    0         (add)
+          /5    0         (store in controlled variable)
+          8     NXPORD
+
+GAP       >1
+LA	  >1		  (shared with rlb loader)
+^%,
+CLE BASE
+RTS 3960
+3906 (just after literals)^%,
+CLE PP
+RTS +0
+>1  (pord pointer - next pord in sequence)^%,
+RTS +0
+>1  (stack pointer - next free word on stack)^%,
+RTS +0
+>1  (entry pointer - base of current block stack frame)	^%,
+RTS +0
+>1  (formals pointer - only set for machine code routines)^%,
+RTS +0
+>1  (block number [multiple of 16])^%,
+CLI 0 PBA
+INS
+	(Pointers to routines used by libraries)
+^%,
+DLE 0 PRIM31
+CLI 0 SERIES
+DLE 0 STAND
+CLI STIM
+INS
+(Workspace for library routines)
+^%,
+CLI 8 RICONV
+DLE PAUSRT
+INS
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+^%,
+CLE NEXTCH
+RTS +0
+>1^%,
+RTS -1
+-1 (-1 or bottom of library dictionary)^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+DLE W +74
+INS
+
+(Workspace)
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+DLE W7
+INS
+
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+DLE WS
+INS
+
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+DLE WS30
+INS
+
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+DLE SBW
+INS
+
+^%,
+RTS +0
+>1^%,
+INS
+
+^%,
+
+CLE NXPDAD
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE PCHLNK
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CSI OUTPA+4
+DLE 0 OUTPA+4
+INS
+
+^%,
+
+CLE COUNT
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE SINGLE
+RTS +0
+>1^%,
+
+CLE FAIL
+INS
+
+^%,
+RTS +0
+>1^%,
+
+CLI 8 ;-8
+DLE RSTACK
+INS
+
+^%,
+RTS +0
+>1^%,
+
+CLE RRES
+RTS +0
+>1^%,
+
+CLE PRIM30
+INS
+
+^%,
+RTS +0
+>1		(I:=I+I)^%,
+
+CLI /1 0
+DLE 9 ;+10
+
+CLE PRIM32
+RTS +0
+>1		(I:=I-I)^%,
+CLI 8 PRIM30+2
+DLE /4 0
+
+CLE PRIM34
+
+RTS +0
+>1 		(I:=I*I)^%,
+
+CLI 4 WS1
+DLE /5 0
+
+CLE PRIM38
+RTS +0
+>1		(I:=I^I)^%,
+
+CLE SET
+DLE SBLNK
+INS
+(New code for relational operators and sign from Terry Froggatt)
+SET       >1
+NEGTRU    9     SETTRU
+SETFLS    4     +0
+          8     ;+3
+NEGFLS    9     SETFLS
+SETTRU    4     +1
+          0     W
+          /5    0
+SETEX     0     SET
+          /8    1
+
+PRIM41    >1              (B := I < I)
+          4     ;-1
+          5     SET
+          0     W
+          /4    0
+          9     ;+5
+          /4    3
+          9     SETFLS
+          /2    0
+          8     NEGTRU
+          /4    3
+          9     ;-3
+          8     SETTRU
+
+PRIM43    >1              (B := I le I)
+          4     ;-1
+          5     SET
+          0     W
+          /4    3
+          9     ;+5
+          /4    0
+          9     SETTRU
+          /2    3
+          8     NEGFLS
+          /4    0
+          9     ;-3
+          8     SETFLS
+
+PRIM45    >1              (B := I = I)
+          4     ;-1
+          5     SET
+          0     W
+          /4    0
+          /2    3
+ZERTRU    7     SETTRU
+          8     SETFLS
+
+PRIM47    >1              (B := I ne I)
+          4     ;-1
+          5     SET
+          0     W
+          /4    0
+          /2    3
+ZERFLS    7     SETFLS
+          8     SETTRU
+
+PRIM49    >1              (B := I > I)
+          4     ;-1
+          5     SET
+          0     W
+          /4    3
+          9     ;+5
+          /4    0
+          9     SETFLS
+          /2    3
+          8     NEGTRU
+          /4    0
+          9     ;-3
+          8     SETTRU
+
+PRIM51    >1              (B := I ge I)
+          4     ;-1
+          5     SET
+          0     W
+          /4    0
+          9     ;+5
+          /4    3
+          9     SETTRU
+          /2    0
+          8     NEGFLS
+          /4    3
+          9     ;-3
+          8     SETFLS
+
+SETSET    5     SET
+          8     PRIM33+1
+
+PRIM42    >1              (B := R < R)
+          4     ;-1
+          11    PRIM33
+          8     SETSET
+          4     W3
+          8     NEGTRU
+
+PRIM44    >1              (B := R le R)
+          4     ;-1
+          11    PRIM33
+          8     SETSET
+          4     W3
+          7     SETTRU
+          8     NEGTRU
+
+PRIM46    >1              (B := R = R)
+          4     ;-1
+          11    PRIM33
+          8     SETSET
+          4     W3
+          8     ZERTRU
+
+PRIM48    >1              (B := R ne R)
+          4     ;-1
+          11    PRIM33
+          8     SETSET
+          4     W3
+          8     ZERFLS
+
+PRIM50    >1              (B := R > R)
+          4     ;-1
+          11    PRIM33
+          8     SETSET
+          4     W3
+          7     SETFLS
+          8     NEGFLS
+
+PRIM52    >1              (B := R ge R)
+          4     ;-1
+          11    PRIM33
+          8     SETSET
+          4     W3
+          8     NEGFLS
+
+PRIM53    >1              (B := B and B)
+          4     ;-1
+          5     SET
+          0     W
+          /4    3
+          7     SETFLS
+          8     SETEX
+
+PRIM54    >1              (B := B or B)
+          4     ;-1
+          5     SET
+          0     W
+          /4    3
+          7     SETEX
+          8     SETTRU
+
+PRIM55    >1              (B := B equiv B)
+          4     ;-1
+          5     SET
+          0     W
+          /4    3
+          7     TOGGLE
+          8     SETEX
+
+PRIM56    >1              (B := B impl B)
+          4     ;-1
+          5     SET
+          0     W
+          /4    0
+          7     SETTRU
+          /4    3
+          8     ZERFLS
+
+PRIM57    >1              (B := not B)
+          4     ;-1
+          5     SET
+          0     W
+TOGGLE    /4    0
+          8     ZERTRU
+
+PRIM62    >1              (sign)
+          0     W
+          /4    0
+          7     ;+6
+          9     ;+3
+          4     +1
+          8     ;+2
+          4     -1
+          /5    0
+          0     PRIM62
+          /8    1
+
+^%,
+
+RTS +0
+>1^%,
+
+CLI 7 STAND3
+DLE 9 STAND4
+CLI STAND3
+CLI 8 STAND1
+DLE STAND4
+CLI SHIFTD
+CLI 4 W3
+DLE SHIFTN
+INS
+
+^%,
+RTS +0
+>1^%,
+
+CLE STAND6
+DLI STAND6
+INS
+STAND6	  0	SBLNK
+^%,
+
+CLE PRIM31
+RTS +0
+>1		(R:=R+R)^%,
+
+CLI 5 ;+6
+DLE 4 W8
+
+RTS +0
+>1^%,
+
+CLI NEG5
+RTS +0
+>1^%,
+
+CLI EXTRAT
+CLI 8 EXIT31
+DLE PRIM33
+INS
+
+^%,
+RTS +0
+>1		(R:=R-R)^%,
+
+CLE DLMULT
+RTS +0
+>1^%,
+CLI 12 W4
+DLE 14 8175
+
+CLE PRIM35
+RTS +0
+>1		(R:=R*R)^%,
+
+CLE PRIM37
+RTS +0
+>1		(R:=R/R)^%,
+
+CLI 11 RSTACK
+DLE 8 RSTACK+1
+
+CLE PRIM42
+DLE ITOR
+
+RTS +0
+>1^%,
+CLI 11 STAND
+CLI 4 +17
+CLI 5 W5
+DLE 11 STAND
+
+CLE PRIM53
+DLE PRIM40
+
+RTS +0
+>1		(R:=R^R)^%,
+CLI 4 W8
+DLE 5 WS7
+
+CLE PRIM36
+RTS +0
+>1		(R:=I/I)^%,
+
+CLE PRIM39
+RTS +0
+>1		(R:=I^I)^%,
+CLI 0 W
+DLE /4 0
+
+CLI EXIT39
+CLI 4 +1
+DLE 5 W5
+
+CLE PRIM59
+RTS +0
+>1		(entier)^%,
+
+CLI EXIT59
+CLI 8 ;-8
+DLE PRIM58
+INS
+
+^%,
+RTS +0
+>1		(abs)^%,
+
+CLE PRIM62
+DLE PRIM28
+INS
+(New integer divide code from Terry Froggatt)
+DIV       4     SP
+          1     -3
+          5     SP
+          1     -3
+          5     W
+
+          0     W
+          /4    3
+          5     WS1
+          9     DENNEG
+
+          7     INTOVR
+          1     -1
+          7     NXPORD
+          /4    0
+          9     SHIFTR-2
+          8     SHIFTR
+
+DENNEG    1     +1
+          7     NEGATE
+          /4    0
+          9     ;+2
+          8     SHIFTR-1
+          1     -1
+          9     SHIFTR
+
+          2     -1
+          4     -3
+          13    WS1
+          14    8191
+          6     &377777
+          8     EXIT
+
+NEGATE    /4    0
+          2     &400000
+          7     INTOVR
+          1     &400000
+          8     EXIT
+
+(-2)      1     -1
+(-1)      1     WS1
+SHIFTR    14    8176
+          13    WS1
+          14    8191
+EXIT      /5    0
+          8     NXPORD
+
+^%,
+
+CSI 28+1
+INS
+ (R:=R^I)^%,
+
+CLE PRIM61
+DLI +0
+INS
+PRIM61	  >1		(ln)
+^%,
+
+CLI 8 SINGLE+1
+DLE 4 FPA
+
+CLI +43690
+CLI 4 FPA+1
+DLE 1 WS+29
+
+CLE EXP
+RTS +0
+>1^%,
+
+CLI 11 SINGLE
+DLE 8 SINGLE+1
+
+CLI EXNEGP
+CLE +0
+RTS +0
+>1^%,
+
+CLI 8 DLMULT+1
+DLE +0
+RTS +0
+>1^%,
+
+CLI 4 FPA
+RTS +0
+>1^%,
+
+CLI 8 SERIES+1
+CLI +0
+DLE +1453
+
+CLI LOG2E
+CLI +60581
+DLE BUFLAG
+INS
+
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI W3ADDR
+DLE SBLNK1
+RTS +0
+>1^%,
+CSI SUBWK1
+DSE +0
+RTS +0
+    >1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE PBA
+CLI 0 CHECKS
+DLE 0 DO
+CLI 0 FR
+DLE 0 FSE
+CLI 0 SPARE
+CLI 0 ST
+DLE 0 STA
+CLI 0 STEP
+CLI 0 ST
+INS
+0 ST
+^%,
+DLE 0 WAIT
+CLE 0 SPARE
+RTS SPARE
+STEP2	(Hunter mod)^%,
+CLI 0 PRIM28
+DLE 0 WHILE
+
+CLE FLNST1
+INS
+
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI FAILEN
+DLE 4 W3
+CLI 11 IOLNK
+DLE 8 OUTI5
+CLI 11 IOLNK
+DLE 8 OUTI5
+CLI 5 IOLNK
+DLE 8 HALTCH+1
+RTS HALTCH+1
+PAUSE^%,
+CLE WAIT
+INS
+
+^%,
+RTS HALTCH+1
+PAUSE^%,
+
+CLI 8 NXPORD
+DLE FAILNS
+INS
+
+^%,
+
+CLE STSUBRT
+RTS +0
+>1^%,
+
+CLI 5 PKDADD
+DLE 5 W
+
+CLI STSUB2
+CLI 4 W3
+DLE 6 =7 8191
+
+CLI ITRSB2
+CLI 8 STAND+1
+DLE NEGR1
+INS
+
+^%,
+
+CLE GLOPMD
+INS
+
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI \TAP
+DLE &452201
+CLE 4 TEXT1-1
+INS
+(-2) ^%,
+CLI 8 ;+5
+INS
+
+^%,
+
+RTS 7785
+START+5^%,
+CLE 4 TEXT1
+INS
+(+3) ^%,
+CLE READLB
+INS
+
+^%,
+RTS 7774
+START^%,
+
+CLE EXECUT
+INS
+
+^%,
+
+CLI 4 +7
+CLI 4 NULSTR+3
+DLE 5 GLPRFA
+
+RTS HALTCH+6
+PAUSE+5^%,
+CLE PRIM
+INS
+
+^%,
+
+CLE NXPORD
+INS
+
+^%,
+CSI +4
+CSI +1
+CSI +4
+CLI 8 NXPORD+1
+DLE PEM
+INS
+          0     PP        (advance PP)
+          /4    0
+          10    PP
+          14    8179
+          5     W         (opcode to W)
+          /4    0
+          6     +8191
+          5     ADPART    (address to ADPART)
+          0     W
+          /8    FBAJ      (branch of FBAJ table)
+          8     MKTHK     (*Hunter mod* make thunk)
+          8     TICA      (take integer constant address)
+          8     TIC       (take integer constant)
+          8     TRCA      (take real constant address)
+          8     TRC       (take real constant)
+          8     CF        (call function)
+          8     CFF       (call formal function)
+          8     PE        (procedure/block entry)
+          8     TFAI      (take formal argument integer)
+          8     GETADD    (*Hunter mod* get address of call by name argument)
+          8     TRCN      (get value of call by name argument)
+          8     INDS      (index switch)
+          8     IFUN      (integer formal name)
+          8     RFUN      (real formal name)
+          8     PEM       (call code procedure / enter machine code)
+          8     PRIM      (primitive)
+FBAJ      8     TANEW     (take address)
+          8     TIA       (take integer address)
+          8     TIR       (take integer result)
+          8     TRA       (take real address)
+          8     TRR       (take real result)
+          8     INDFS     (index formal switch)
+          8     MAMPS     (make array)
+          8     IFJ       (if jump)
+          8     UJ        (unconditional jump)
+          8     GTS       (go to switch)
+          8     GT        (go to label)
+          8     GTF       (go to formal label)
+          8     INDA      (index address)
+          8     INDR      (index result)
+          8     GTFS      (go to formal switch)
+          8     INOUT     (i/o)
+
+(AJH modified FINDFP based on Hunter FINDFP)
+FINDFP    >1              (find formal parameter)
+          4     ADPART    (block number and parameter number)
+          6     +15
+          5     W         (argument number)
+          2     ADPART
+          5     SUBWK1+1  (block number)
+          2     BN
+          7     FINDP3    (found in top entry)
+          0     EP
+FINDP1    /4    2         (is current entry a loop?)
+          9     FNDEP     (yes - need to skip over it)
+          /4    0         (is EP' = ENV'?)
+          /2    4
+          7     FNDEP     (yes - retreat via EP)
+FNDENV    /4    4         (no - find frame ENV')
+          5     LOC
+FNDELP    2     STACKADD  (check not at end of stack)
+          9     ;+2
+          8     SPARE
+          /0    0         (go back an entry)
+          /4    0         (EP' of previous entry)
+          2     LOC       (equals our target?)
+          7     FNDEVB    (yes, resume check for block)
+          /4    0         (no, continue down EP chain)
+          8     FNDELP    (keeping looking)
+FNDEVB    /4    3
+          2     SUBWK1+1
+          7     FINDP4
+          8     FINDP1    (block doesn't match)
+
+FNDEP     /4    3         (BN' = block?)
+          2     SUBWK1+1
+          7     FINDP4    (yes - next entry matches)
+          /4    0         (check not at end of stack)
+          2     STACKADD
+          9     FNDSOK    (ok to continue)
+
+SPARE     4     +20       (corrupt program, e.g., bogus opcode,
+                                                       broken stack etc)
+          8     ENFAIL
+          8     SPARE
+
+FNDSOK    /0    0         (move down stack via EP')
+          8     FINDP1
+
+FINDP3    0     EP
+          /4    2         (previous SP)
+          1     -3        (result)
+          1     W
+          1     W
+          1     W
+          5     W1        (W1 := address of argument slot on stack)
+          0     W1
+          /4    0         (fetch address field from slot)
+          0     FINDFP
+          /8    1
+
+FINDP4    /0    0         (formal found in previous entry)
+          8     FINDP3+1
+
+^%,
+
+CLE RETURN
+INS
+
+^%,
+
+CLE TIA
+INS
+
+(Hunter modifications for TA)
+TABAK     /4    0         (go to previous entry)
+          2     STACKADD  (bottom of stack?)
+          7     TASAVE    (cannot be a formal parameter)
+          /0    0
+          8     TATST
+
+TANEW      0     EP        (Calculate current environment)
+TATST     14    1
+          3     LOC       (LOC := EP)
+          /4    2
+          9     TABAK     (EP[2] < 0 => FOR entry, need to go back further)
+TASAVE    4     LOC       (SP\2 := LOC)
+          0     SP
+          /5    2
+          4     ADPART
+          8     TA2       (rejoin original TA to store result)
+
+^%,
+
+CLE TRA
+INS
+
+^%,
+RTL TRAP 1 =/0 0
+ 1 =/0 0
+^%,
+RTL 5 W1
+TRAP3 5  W1
+^%,
+CLI /5 1 
+DLI /5 0
+INS
+CLEAR     4     +0
+CLEAR1    /5    2         (SP\2 := 0)
+          4     W1        (SP\0 := W1)
+TA1       0     SP
+TA2       /5    0
+^%,
+RTS 27
+STKEND^%,
+CLI 8 NXPORD
+
+DLE TRR
+INS
+
+^%,
+
+CLE TIR
+INS
+
+^%,
+RTS 8 TA
+ 8 TA1 (Hunter mod: was 8 TA)^%,
+
+CLE TRCA
+INS 
+
+^%,
+RTS 8 TRAP+1
+  8 TRAP3^%,
+
+CLE TICA
+INS
+
+^%,
+
+CLE RFUN
+INS
+
+^%,
+
+CLE IFUN
+INS
+
+^%,
+
+CLE TIC
+INS
+
+^%,
+
+CLE TRC
+INS
+
+^%,
+
+CLE IFJ
+INS
+
+^%,
+CLI 8 NXPORD
+DLE 4 ADPART
+
+CLE UJ
+INS
+
+^%,
+
+CLE PE
+INS
+
+^%,
+CSI &017760
+CLI 5 BN
+INS
+          4     EVN	  (Hunter modification - save EVN)
+          /5    2         (SP\2 := EVN)
+          10    SP        (SP += 3)
+^%,
+
+CLE PRIM63
+INS
+
+^%,
+RTS +0
+>1^%,
+
+CLE PCHK1
+INS
+
+^%,
+CLI 7 PCHK3
+INS
+          2     -4        (*Hunter mod* CONn = type+4?)
+          7     ;+2
+          8     PCHK7     (no - parameter mismatch)
+          4     W3        (type = integer or real function?)
+          1     -3
+          9     PCHK3
+^%,
+
+CLI PCHK7
+CLI 1 -3
+DLE 9 PCHK5
+
+CLE CFF
+INS
+
+^%,
+RTS 8 CF
+          0     W1        (*Hunter mod*  actual parameter slot)
+          /4    2         (EVN of function)
+          6     &377777   (might have bit 18 set if a thunk)
+          8     JOIN2     (join CF)^%,
+
+CLE GTF
+
+DLE GT
+
+DLE GTFS
+
+DLE GTS
+DLE MAMPS9
+INS
+
+(Hunter modified GTF, GT, GTFS, GTS)
+GTF       11    FINDFP    (go to formal label)
+          8     FINDFP+1
+          0     W1        (check for call-by-name)
+          /4    2
+          7     ;+2
+          8     BACK      (invoke thunk)
+          /4    0         (old route)
+          8     GT+1
+
+GT        1     BASE+1    (goto n)
+(+1)      5     W         (address of label on stack or in QACODL)
+          0     W
+          4     BN        (check if  label in current block)
+          /2    1
+          7     GTCURR    (yes - ok to jump)
+
+          /4    1         (save target block number)
+          5     SUBWK1+1
+          4     EP
+          5     SUBWK1+3
+          0     EP        (current entry)
+
+GTNXEP    /4    2         (check if a for entry)
+          9     GTFOR
+          /4    0         (check if EP' = ENV')
+          /2    4
+          7     GTFOR     (EP' = ENV', treat as for entry)
+          /4    4
+          5     LOC       (target entry for search)
+          4     +0
+          5     SUBWK1+2
+GTNXEV    /4    0         (check not fallen off stack)
+          2     STACKADD
+          9     ;+2
+          8     GTERR
+          /0    0         (go to next entry)
+          /4    0         (check if points to target)
+          5     SUBWK1+3
+          2     LOC
+          7     GTEVFD
+          /4    3         (check if matches target block)
+          2     SUBWK1+1
+          7     GTEVB
+          8     GTNXEV    (continue searching)
+
+GTEVB     /4    0         (remember target block seen)
+          5     SUBWK1+2
+          8     GTNXEV    (and continue searching)
+
+GTFOR     /4    3         (test to see if target block)
+          2     SUBWK1+1
+          7     GTPREV    (target block found)
+          /4    0         (not found - check not off end of stack)
+          5     SUBWK1+3
+          2     STACKADD
+          9     ;+3
+
+GTERR     4     +24       (attempt to jump to inner block)
+          8     ENFAIL
+
+          /0    0         (keep looking)
+          8     GTNXEP
+
+GTEVFD    4     SUBWK1+2  (see if target block was passed)
+          7     GTFOR
+          0     SUBWK1+2  (reset pointer and exit)
+
+GTPREV    /4    0         (set up previous entry as current)
+          5     EP
+          /4    2
+          9     GTFEX     (in a for entry)
+GTSP      5     SP
+          /4    3
+          5     BN
+GTCURR    0     W         (set PP to destination, absolute)
+          /4    0         (label address relative)
+          1     STKMOD    (label address absolute)
+          5     PP        (set PP)
+          8     NXPORD
+
+GTFEX     4     SUBWK1+3
+          8     GTSP
+
+GTFS      11    FINDFP    (go to formal switch)
+          8     FINDFP+1
+          8     GTS+1
+
+GTS       1     BASE+1    (goto switch)
+          5     W         (address of switch table in QACODL)
+          4     +3
+          2     SP
+          5     SP        (index is on stack)
+          0     SP
+          /4    0         (index)
+          9     GTSFAIL   (must be >= 0)
+          7     GTSFAIL
+          0     W
+          /2    0         (check index <= upper bound)
+          9     GTSFAIL
+          0     SP
+          4     +1
+          /2    0
+          /1    0         (calculate index in switch list - W+index-1 )
+          1     W
+          8     GT+1      (join goto)
+
+(Hunter modifications to TFAI etc)
+TFAI                      (take formal argument integer)
+TFAR                      (take formal argument real)
+TFVI
+TFVR      11    FINDFP    (search for argument)
+          8     FINDFP+1
+          0     W1
+          /4    1         (copy word 1)
+          0     SP
+          /5    1
+          0     W1
+          /4    0
+          5     W1        (W1 := word 0)
+          /4    2         (word 2)
+          0     SP
+          8     CLEAR1    (join CLEAR to set word 0, 2)
+
+(Hunter modified TRCN)
+TRCN      11    FINDFP    (take result call by name)
+          8     FINDFP+1
+          0     W1
+(+3)      /4    2         (test flag in word 2)
+          7     TRCN1     (old route)
+          /4    1         (unpick thunk type)
+          1     -3
+          9     ADPORD    (arrays)
+          8     BACK      (scalars and functions)
+
+TRCN1     /4    1         (type)
+          9     TRCN2
+          /4    0         (address)
+          5     W+1
+          9     STKRLV    (real)
+          0     W+1       (integer)
+          /4    0         (fetch value)
+          8     TA1
+
+TRCN2     /4    0         (indirect through address)
+          5     W1
+          8     TFVR+2    (and join TFAI)
+
+^%,
+
+CLI MAMPS9
+CLE MAMPS
+INS
+
+^%,
+
+CLI 4 W2
+DLE 7 ;+2
+
+CLI MAMPS3
+CLI 2 WS
+DLE 9 MAMPS3
+
+CLE INDSFL
+INS
+
+^%,
+
+CLE INDFS
+INS
+
+^%,
+CLE INDS
+INS
+
+^%,
+CLI 5 ADPART
+DLE 4 +3
+
+CLE AINDSB
+INS
+
+^%,
+RTS +0
+>1^%,
+
+CLI AINDS2
+CLI /4 1
+DLE 2 W+3
+
+CLE INDA
+INS
+
+^%,
+RTS TRAP+1
+TRAP3 (Join TRA for real)^%,
+CSI TIA+1
+INS
+ (Join TIA for integer)^%,
+
+CLE INDR
+INS
+
+^%,
+RTL 8 STKVAL
+         5     W+1 (*Hunter mod*)
+          9     STKRLV    (join TRR)
+          0     W+1
+          /4    0
+          8     TA1       (join TIR)
+^%,
+
+CLE CBL
+
+CLE CF
+
+DLE ST
+INS
+
+(Hunter modified CF)
+CF        	 	  (call function)
+JOIN1     4     EP        (EP is environment)
+JOIN2     5     EVN       (EVN of function is environment)
+          0     SP        (stack EP)
+          4     EP
+          /5    0
+          4     PP        (stack PP)
+          /5    1
+          4     SP
+          5     EP        (EP := SP)
+          10    SP
+          10    SP        (SP +:= 2)
+          4     ADPART    (set PP)
+          5     PP
+          2      +8191     (Protect CF to missing procedure)
+          7      READAL-2
+          8     NXPORD
+
+^%,
+
+CLE STA
+
+CLE DO
+INS
+
+^%,
+
+CLI 8 STSUBRT+1
+DLE 0 EP
+
+CLE STEP
+INS
+
+^%,
+
+CLE FOR
+INS
+
+^%,
+
+CLE FR
+INS
+
+^%,
+
+CLE FSE
+INS
+
+^%,
+
+CLI /4 0
+DLE 5 EP
+
+CLE NEGI
+INS
+
+^%,
+
+CLE UNTIL
+INS
+
+(Hunter modified UNTIL)
+UNTIL     4     +6        (until - assumes step and limit on stack)
+          2     SP
+          5     SP        (unstack step and limit)
+          0     EP
+          /4    5         (address of controlled variable)
+          9     UNTLR2    (real)
+          /4    11        (stacked limit)
+          /0    5         (controlled variable)
+          /2    0
+TEST      7     UNTIL3    (reached limit?)
+          0     EP
+          6     =/0 0     (sign bit)
+          /2    8
+          9     UNTIL3
+UNTIL2    8     STEP+2
+
+WADDR     0     W
+GETRL2    0     EP
+          /4    6
+          /0    5
+          9     W345R2
+          /4    0
+          5     W3
+          /4    1
+          6     &777600
+          5     W4
+          /4    1
+          14    11
+          14    8181
+          5     W5
+          0     SBLNK
+          /8    1
+
+UNTILR    4     EP
+          1     +5
+          5     W
+          11    RSTACK
+          8     RSTACK+1
+          11    SBLNK
+          8     GETRL2
+          4     W3ADDR
+          5     W
+          11    PRIM31
+          8     PRIM31+3
+          4     EP
+          1     +5
+          5     PKDADD
+          11    STSUBRT
+          8     STSUB
+          8     NXPORD
+
+UNTLR2    4     EP
+          1     +8
+          5     W
+          11    RSTACK
+          8     RSTACK+1
+          11    SBLNK
+          8     GETRL2
+          4     W3ADDR
+          5     W
+          11    PRIM33
+          8     PRIM33+3
+          4     W3
+          8     TEST
+
+^%,
+DLE NULSTR
+INS
+
+^%,
+RTS +0
+>1^%,
+
+CLE CHKSBR
+INS
+
+^%,
+CLI 5 CHKSBR-4
+DLE 4 CHKSBR-1
+
+CLE CHECKI
+INS
+
+^%,
+
+CLE CHECKR
+INS
+
+^%,
+
+CLE CHECKB
+INS
+
+^%,
+
+CLE CHECKS
+INS
+
+^%,
+
+CLE OSTR1
+INS
+
+^%,
+CLI 5 ODEV
+DLE 0 SP
+
+CLE FINSUB
+INS
+
+^%,
+
+CLE FINISH
+INS
+
+^%,
+
+CLE STOP
+RTS HALTCH+1
+PAUSE^%,
+
+CLE WHILE
+INS
+
+^%,
+RTS WHILE1
+STEP+2^%,
+
+CLE STW
+INS
+
+^%,
+CLI STW
+DLE 8 STSUBRT
+
+CLE RTOI1
+INS
+
+^%,
+
+CLE ITOR1
+INS
+
+^%,
+
+CLE ITOR2
+INS
+
+^%,
+
+CLE NEGR
+INS
+
+^%,
+
+CLE LDZERO
+INS
+
+^%,
+
+CLI +17
+CLI +7
+CLI +1
+DLE +0
+
+CLE INOUT
+INS
+
+^%,
+
+CLI INOUT3
+CLI 0 SPARE
+CLI 0 DEST
+DLE 0 DIGIT
+
+CLE ALGN
+INS
+
+^%,
+
+CLE SCLD
+INS
+
+^%,
+
+CLI /5 GLOPMD
+DLE 8 INOUT9
+
+CLE DEST
+INS
+
+^%,
+
+CLE SRCE
+INS
+
+^%,
+
+CLI DIVTEN
+CLI 5 SBW1
+DLE 4 SBW2
+
+CLE DECML
+INS
+
+^%,
+
+CLI DECML2
+CLI 8 DECML3
+INS
+
+^%,
+DLE OUTR
+
+CLE OUTI
+INS
+
+^%,
+CLI /4 0
+DLE OUTI4
+
+CLI OPRL1
+DLE 9 OPRL2
+CLI OPRL9
+CLI 10 DECPWR
+DLE 11 STAND
+
+CLI OPRL14
+CLI 8 DECML
+DLE 11 STAND
+
+CLI OPRL11
+CLI 3 SBW
+DLE 11 SBLNK
+
+CLI OPRL25
+CLI 1 -1
+DLE 5 W3
+
+CLI OPRL24
+CLI 8 OPRL11
+DLE OPRL26
+
+CLE OUTMXD
+INS
+
+^%,
+
+CLI OTMX7
+DLE 8 DECML1
+
+CLE RDNM26
+
+CLI RDNM1
+CLI 0 WS21
+DLE /4 TABLE
+
+CLI RDNM8
+DLE RDNM9
+
+CLI RDNM15
+CLI 5 W9
+DLE 11 SBLNK
+
+CLI OST3
+CLI 7 OST6
+DLE 0 WS5
+
+CLI OST6
+CLI 8 OST2
+DLE OST5
+
+CLI OST8
+CLI 5 WS7
+DLE 4 LFCH+1
+
+CLI OST9
+CLI 11 PAUSRT
+CLI 8 OST8+2
+INS
+
+^%,
+DLE [ SERIES
+CLE SERIES
+RTS +0
+>1^%,
+
+CLI RETURN
+DLE /4 4
+
+CLE DLDIV
+RTS +0
+>1^%,
+
+CLI LPOS
+DLE 10 WS+30
+
+CLI ADDI
+CLI 2 =15 1
+DLE 5 SHIFT3
+
+CLI 8 EVALUATE
+DLE [TABLE]
+INS
+
+^%,
+CLI 4 145
+DLE 4 146
+RTS 7 4156
+	&170003	(convert old pound to back slash on input)^%,
+RTS /8 66
+	&300040 (permit new grave on input, convert old grave to new grave on output)^%,
+CLI /8 5157
+DLE /8 6182
+RTS /11 3136
+	&666007 (convert curly open bracket to acute on input)^%,
+RTS 11 4288
+	&506300 (convert old pound to back slash on output)^%,
+RTS /11 5184
+	&672040 (convert curly close bracket to grave on input)^%,
+
+CLE [OTCHA
+DLE DEV
+INS
+[ OTCHA ALRMCH BUFFER FAILEN FLNS14 FLNS15 GECHAR GECHEN GECH HALTCH HALTMK 
+IDEV INPA INSLOT LFCH NEXTCH ODEV OUTSLT OTCHA1 OTCHA2 OUTPA PAUSE PAUSRT 
+PCHLNK SBLNK SBW SBW3 SBW4 SBW5 TABLE ]
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI OTCHA4
+CLI /0 TABLE+64
+DLE 14 8
+
+CLE GECHAR
+RTS +0
+>1^%,
+RTS HALTCH+1
+PAUSE^%,
+
+CLI GECH4
+CLI /4 TABLE
+CLI 6 +127
+DLE 1 -64
+CLI GECHP2
+DLE 4 =/0 1
+CLI /8 1
+DLE GECH99
+CLI 8 ;-4
+DLE GECH9
+CLI 8 GECH13
+INS
+
+^%,
+
+CLE [PAUSRT
+RTS PAUSRT
+PAUSE DUMP PAUSRT^%,
+CLE 4 PAUSRT
+INS
+PAUSE ^%,
+CLE 1 +1
+INS
+(+1) ^%,
+CLE 4 20
+INS
+(+4) ^%,
+CLE 5 20
+INS
+(+5) ^%,
+CLE 0 20
+INS
+ 4 L4A (Set up level 4 to comtinue)
+ 5 6	
+ 4 L123A (Set up levels 1, 2, 3 to terminate)
+ 5 4
+ 5 2
+ 15 7168
+ 8 ;-1 (Levels 1, 2, 3)
+L123A 0 ;-2
+L4A 0 ;+1
+^%,
+CLI /8 0
+DLE 4 SP
+INS
+
+DUMP ^%,
+CLI 8 READAL-1
+DLE %
+
+INS
+
+[ ENDINT ]
+ENDINT
+^%,
+
+COP
+<! halt !>

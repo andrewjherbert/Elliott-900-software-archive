@@ -1,0 +1,174 @@
+﻿C Build Hunter Compact ALGOL Interpreter
+
+on 903 8K
+
+c build image to verify against
+c load new tape 2 and verify
+at ptr file ../../MASTERS/HUNTER/ALG2(HUNTER)(COMPACT).BIN
+j 8181
+st 8171
+du 8192 ALG2(HUNTER)(COMPACT).IMG
+
+
+
+C **********TAPE 2**********
+
+c TAPE 2 contains five components:
+c
+c The assembled interpreter in locations    8-3359
+c The built-in library      in locations 3360-3939
+c A RLB loader              in locations 7542-8000
+c The ALGOL dump utility    in locations 8001-8101
+c The ALGOL T23 loader      in locations 8135-8179
+c
+c The dump utility allows a new TAPE 2 to be made after
+c additional procedures have been loaded into the library
+c table.  It outputs a binary clear store, then a T23 like 
+c loader followed by a store image in T22-23 like format. The
+c dump utility is essentially a specialized version of T22.
+c 
+c The build sequence is as follows:
+c
+c 1.	Assemble the RLB loader, dump utility and ALGOL T23 
+c 	loader using SIR in low store.
+c 2.	Dump out the loaders and dump as binary using QBINOUT
+c 3.	Assemble the interpreter using SIR in high store and
+c	output as RLB (the interpreter is too big to assemble
+c	'load and go').  Specify that an RLB loader is to
+c	be punched first on the tape.
+c 2.	Assemble the built-in library to RLB using SIR in
+c	high store.
+c 5.	Load in sequence, interpreter, RLB loader, dump, T23
+c	loader
+c		Note the symbols, dump and loader binary will
+c		overwrite the RLB loader used to load the
+c		translator.
+c 6.	Load the built-in library at 12
+c 7.	Enter at 14 to run the dump utility and produce a
+c	new TAPE 2. 
+c
+c Note we zealously clear store before each assembly etc to
+c ensure the result is a clean translator.
+
+
+
+C **********INTERPRETER**********
+
+clear
+c assemble Compact ALGOL Interpreter
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptp file INTERPR.BIN
+at ptr file ../../MASTERS/HUNTER/ALG2(HUNTER)(COMPACT)(SRC1).900
+j 8
+st 6927
+at ptr file ../../MASTERS/HUNTER/ALG2(HUNTER)(COMPACT)(SRC2).900
+j 9
+st 6239
+
+c build ALGOL dump and loader using SIR in low 
+c store & QBINOUT
+clear 
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
+j 8181
+st 8171
+at ptr inline
+
+^4096
+*35
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903UTILITIES/QBINOUT(ISS1).900
+j 9
+st 1939
+at ptr inline
+
+( set up QBINOUT parameters)
+^QBINOUT+39
+	-638		( size = 8180-7542  )	
+	+7542		( symbol table base )
+
+%
+<! halt !><!!>
+j 9
+st 1939
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 1939
+at ptr file ../903ALGOL/LOADER(ISS6).900
+j 8
+st 1939
+at ptr inline
+
+^4096 (put dictionary under QBINOUT)
+*35
+^8001
+
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_DUMP.900
+j 9
+st 1939
+at ptr inline
+
+^4096 (put dictionary under QBINOUT)
+*35
+^8124
+
+<! halt !><!!>
+j 8
+st 1939
+at ptr file ../../MASTERS/903ALGOL/ALG_8K_T23.900
+j 9
+st 1939
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 1939
+c output package using QBINOUT
+at ptp file ALG2_TOS.BIN
+j 4096
+st 4114
+de ptp
+
+c load tape2 contents: interpreter, library, loader and dictionary
+c load compiled interpreter
+clear
+at ptr file INTERPR.BIN
+j 8181
+st 7815
+c load ALGOL loader - runs off tape
+at ptr file ALG2_TOS.BIN
+nonstop on
+j 8181
+nonstop off
+
+c load ALGOL library
+at ptr file ../../MASTERS/903ALGOL/LIBRARY(ISS6).RLB
+j 12
+st 7943
+
+c use interpreter dump facility to create a new tape 2
+at ptp file ALG2(HUNTER)(COMPACT).BIN
+j 14
+de ptp
+
+c load new tape 2 and verify
+c differences at locations 7568, 8004, 8175, 8176 are insignificant
+at ptr file ALG2(HUNTER)(COMPACT).BIN
+j 8181
+st 8171
+vi ALG2(HUNTER)(COMPACT).IMG
+
+
+delete INTERPR.BIN
+delete ALG2(HUNTER)(COMPACT).IMG
+sh t

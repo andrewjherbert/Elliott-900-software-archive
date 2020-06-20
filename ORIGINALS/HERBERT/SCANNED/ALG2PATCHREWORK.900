@@ -1,0 +1,27 @@
+﻿
+*+2
+(TAPE 2 PATCH.  MAY 1980)
+FINDP1=1787
+BN=139
+SUBWK1=1318
+FINDP3=1793
+FINDP2=1782
+^+51
+  7  FINDP1
+  4  BN
+  2  3761  (+16)
+  7  FINDP1
+ /4  3
+  2  SUBWK1+1
+  7  ;+3
+ /0  4
+  8  FINDP3+1
+ /4  4
+ /0  4
+  8  FINDP2
+%
+<! Halt !>
+
++51
++62
+<! Halt !>

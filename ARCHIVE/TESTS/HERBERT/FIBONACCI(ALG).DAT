@@ -1,0 +1,16 @@
+﻿
+on 903 16K
+nonprinting off
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/HERBERT/FIBONACCI(ALG).900
+j 8
+st 8000
+at ptr file ../../MASTERS/AJHALGOL/UNSIGNED.RLB
+j 14
+st 8000
+reset
+j 10
+st 1715
+sh t

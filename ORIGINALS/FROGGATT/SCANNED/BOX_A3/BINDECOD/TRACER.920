@@ -1,0 +1,81 @@
+﻿
+((TO TRACE INSTRUCTIONS, 30/5/69)
+
+[TRACEE TRACET LENGTH MARKERS MBASE PROGRAM TRACE1 COMMON]
+
+TRACEE   4    +0
+JA       5    B
+         4    =/0 0
+         5    R
+
+JB       4    B
+         2    LENGTH
+         7    JI
+
+JC       0    B
+         /4   MARKERS
+         9    ;+3
+
+JD       10   B
+         8    JB
+
+         /4   PROGRAM
+         9    JG
+         6    =15 0
+         2    =7 0
+         7    JE
+         1    =1 0
+         7    JE
+         1    =1 0
+         7    JE
+         8    JH
+
+JE       /4   PROGRAM
+         6    =0 8191
+         1    MBASE
+         5    W
+
+         9    JG
+         2    LENGTH
+         9    JG
+         7    JG
+
+         0    W
+         /4   MARKERS
+         9    JF
+         1    =/0 0
+         /5   MARKERS
+
+         4    +0
+         5    R
+
+JF       0    B
+
+JG       /4   PROGRAM
+         6    =15 0
+         2    =8 0
+         7    JD
+
+JH       10   B
+         4    B
+         2    LENGTH
+         7    TRACE1
+
+         /4   MARKERS+1
+         9    ;+3
+         1    =/0 0
+         /5   MARKERS+1
+         8    JC
+
+JI       4    R
+         9    TRACET
+         8    JA
+
+↑COMMON
+
+B        >1
+R        >1
+W        >1
+
+$
+<! Halt !>

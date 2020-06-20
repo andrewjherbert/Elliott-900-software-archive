@@ -1,0 +1,220 @@
+﻿<! Legible Header OOO   OOO  OOOOO       O   O OOOOO OOOO  OOOOO   OO        OOOOO  OOO   OOO  OOOOO  !>
+<! Legible Header    O O   O    O        OO OO OOOOO OOOOO O      O  O         O   O   O O   O    O   !>
+<! Legible Header    O O   O   O         OOOOO   O   O   O O     O             O   OO    OO      O    !>
+<! Legible Header OOOO O   O   OO        O O O   O   OOOOO OOOO  O             O    OO    OO     OO   !>
+<! Legible Header    O O   O             O   O   O   OO    O                   O                      !>
+<! Legible Header    O O   O     O       O   O   O   O O   O     O             O      O     O      O  !>
+<! Legible Header OOOO O   O     O       O   O   O   O  O  O      O            O   O   O O   O     O  !>
+<! Legible Header OOO   OOO  OOOO        O   O   O   O   O OOOOO   OOO       OOOOO OOOO  OOOO  OOOO   !>
+
+[ QMR QMREND QMROUT QMRIN QMT QMWRITE QMREAD ]
+
+QMR +0
+
+RL +0
+W +0
+NEWAD +0
+SAVEL +0
+QMROUT
+ 1 +1
+ 5 RL
+ 0 QMR
+/4 1
+ 5 FTAW
+ 0 FTAW
+/4 5
+ 7 SETUP
+ 9 SETUP
+GOON
+ /4 23
+ 9 ;+2
+ 5 RL (FIXED RECORD LENGTH)
+ 4 RL
+/1 5
+ 5 NEWAD
+/4 1
+/1 2  (ADDRESS OF BLOCK END)
+ 2 NEWAD
+ 9 PUTREC
+ 7 PUTREC
+/4 2
+ 5 SAVEL
+/4 1
+/2 5
+/5 2 (SET ACTUAL BLOCK LENGTH)
+ 11 QMT
+ 8 QMWRITE
+FTAW +0
+ 8 ERRW
+ 9 EOTW
+ 0 FTAW
+/4 1
+ 1 +2
+/5 5
+ 1 RL
+ 5 NEWAD
+ 4 SAVEL
+/5 2  (RESET STANDARD BLOCK LENGTH)
+PUTREC
+ /4 5
+ 5 W
+ 4 NEWAD
+/5 5
+/4 23
+ 9 PUTVAR
+PR1
+ 0 QMR
+/4 2
+ 5 SAVEL (ADDRESS FROM WHICH RECORD IS TAKEN)
+
+PLOOP
+ 0 SAVEL
+/4 0
+ 0 W
+/5 0
+ 10 W
+ 10 SAVEL
+ 4 NEWAD
+ 2 W
+ 9 PLOOP
+EXR
+ 0 QMR
+/8 4
+
+SETUP
+/4 1
+ 1 +2
+/5 5
+ 8 GOON
+
+PUTVAR
+ 4 RL
+ 0 W
+/5 0
+ 10 W
+ 8 PR1
+
+
+EXREND
+ 4 +0
+ 0 QMT
+/8 3
+FILL
+ 4 +5
+/5 2
+/0 5
+ 4 +0
+/5 0
+ 8 QMWRITE
+
+QMREND
+ 0 QMT
+/0 1
+/4 5
+ 5 W
+ 4 -1
+/5 5
+/4 1
+ 1 +3
+ 2 W
+ 9 EXREND
+ 1 -2
+ 9 FILL (AVOID BLOCK LESS THAN 5 WORDS)
+ 1 +5
+/5 2
+ 8 QMWRITE
+EOTW
+ 4 +0
+ERRW
+
+ 5 W
+ 4 SAVEL
+ 0 FTAW
+/5 2
+ 4 W
+EREX
+ 0 QMR
+/8 3
+
+
+QMRIN
+ 0 QMR
+/4 1
+ 5 FTAR
+ 0 FTAR
+/4 5
+ 9 READNW
+ 7 READNW
+TESTF
+ /0 5
+/4 0
+ 7 READNW (IF FIRST WORD OF REC ZERO IGNORE)
+ 5 RL
+ 0 FTAR
+/4 23
+ 9 ;+2
+ 5 RL  (FIXED RECORD LENGTH)
+/4 5
+ 5 W
+ 1 RL
+ 5 NEWAD
+/5 5
+/4 1  (BLOCK ADDRESS)
+/0 1
+/1 1 ( +ACTUAL BLOCK LENGTH)
+ 2 NEWAD
+ 9 GREC
+ 7 SET5
+READNW
+ 11 QMT
+ 8 QMREAD
+FTAR +0
+ 8 RERR
+ 0 FTAR
+/0 1
+/4 1
+ 9 LABEL ( IS BLOCK A LABEL)
+ 0 FTAR
+/4 1
+ 1 +2
+/5 5
+ 8 TESTF
+
+LABEL
+ 4 +0
+ 8 EREX
+RERR
+ 6 &773777
+ 1 &004000   (MAKE NON-ZERO)
+ 8 EREX
+
+SET5
+ 4 -1
+ 0 FTAR
+/5 5
+GREC
+ 0 QMR
+/4 2
+ 5 SAVEL
+ 0 FTAR
+/4 23
+ 9 IGNORF
+GLOOP
+ 0 W
+/4 0
+ 0 SAVEL
+/5 0
+ 10 W
+ 10 SAVEL
+ 4 NEWAD
+ 2 W
+ 9 GLOOP
+ 4 RL
+ 8 EXR
+IGNORF
+ 10 W (IGNORE FIRST WORD OF VARIABLE LENGTH RECORD)
+ 4 RL
+ 1 -1
+ 5 RL
+ 8 GLOOP
+<! Halt !>

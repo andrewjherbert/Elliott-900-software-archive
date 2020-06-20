@@ -1,0 +1,27 @@
+﻿DV51W1;
+"BEGIN"
+    "INTEGER" DAY, DATE, MONTH, DAYS, WEEKS, SHOPDAYS;
+    "INTEGER" "ARRAY" K[1:12];
+    K[1]:=359;K[2]:=328;K[3]:=300;K[4]:=269;
+    K[5]:=239;K[6]:=208;K[7]:=178;K[8]:=147;
+    K[9]:=116;K[10]:=86;K[11]:=55;K[12]:=25;
+    "READ" DATE, DAY, MONTH;
+    DAYS:=K[MONTH]-DATE;
+    WEEKS:=DAYS"DIV"7;
+    DAYS:=DAYS-7*WEEKS;
+    SHOPDAYS:=6*WEEKS+("IF" DAY+DAYS > 8 "THEN"
+                           DAYS+2
+                       "ELSE" "IF" DAYS "GE" 2 "THEN"
+                           DAYS-1
+                       "ELSE"
+                           0);
+    "PRINT" ''LS20@@, 'THE NO. OF SHOPPING DAYS TILL XMAS@, ''LS28@@, SHOPDAYS;
+"END"
+
+2,2,6
+
+<! HALT !>
+                           
+                           
+
+

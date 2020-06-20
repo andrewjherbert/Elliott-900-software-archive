@@ -1,0 +1,571 @@
+﻿
+((ALGOL TAPE II, LOADER, 19/5/69)
+
+
+ 	+0 	 	( CONSTANTS )
+ 	\QAC
+ 	\ODL
+
+ 	+0 	 	( VARIABLES )
+ 	\QAV
+ 	\NDA
+
+[ BEGLOA BA BD CR DP
+ED EDNEG INTEGR LA LABEL
+LOW1 NAMONE NAMTWO OPTION W ]
+
+BEGLOA 	0 	;+0
+BA 	+0
+BD 	+0
+CR 	+0
+DP 	+0
+ED 	+0
+EDNEG 	+0
+INTEGR 	+0
+LA 	+0
+LABEL 	0 	;+1
+ 	&070100
+NAMONE 	+0
+NAMTWO 	+0
+ 	&400000
+LOW1 	+0
+OPTION 	+0
+W 	+0
+ 	+0
+ 	+0
+ 	+0
+ 	+0
+
+[ BD E5TEST FAIL LA ]
+
+E5TEST 	+0
+ 	4 	BD
+ 	2 	LA
+ 	9 	EXIT
+
+ 	4 	+5
+FAIL 	0 	+0
+ 	14 	12
+ 	1 	&404000
+ 	5 	LIVE
+ 	4 	MESAGE
+ 	0 	54
+ 	11 	67
+ 	/8 	0
+ 	8 	;+0
+
+MESAGE 	0 	;+1
+ 	&070146
+LIVE 	+0
+
+EXIT 	0 	E5TEST
+ 	/8 	1
+
+[ CR INTEGR READTH W ]
+READTH 	+0
+ 	4 	-3
+ 	5 	W
+
+REPEAT 	4 	INTEGR
+ 	15 	2048
+ 	5 	INTEGR
+
+ 	6 	+127
+ 	1 	CR
+ 	5 	CR
+ 	4 	W
+ 	2 	-3
+ 	7 	FIRST
+
+RETURN 	10 	W
+ 	4 	W
+ 	9 	REPEAT
+ 	0 	READTH
+ 	/8 	1
+
+FIRST 	4 	INTEGR
+ 	14 	8188
+ 	6 	+7
+ 	5 	W+3 	( HOLDS CODE ON EXIT )
+ 	8 	RETURN
+
+[ BD DP EDNEG E5TEST LA
+NAMONE NAMTWO SEARCH ]
+
+SEARCH 	+0
+ 	4 	BD
+ 	5 	DP
+
+RETURN 	1 	EDNEG
+ 	7 	PLACE
+ 	0 	DP
+ 	/4 	1
+ 	2 	NAMONE
+ 	7 	WD2
+
+REPEAT 	4 	DP
+ 	1 	+3
+ 	5 	DP
+ 	8 	RETURN
+
+WD2 	/4 	2
+ 	2 	NAMTWO
+ 	0 	SEARCH
+ 	/7 	1
+ 	8 	REPEAT
+
+PLACE 	4 	BD
+ 	1 	-3
+ 	5 	BD
+ 	5 	DP
+ 	11 	E5TEST
+ 	8 	E5TEST+1
+
+ 	0 	SEARCH
+ 	/4 	2
+ 	1 	LA
+ 	0 	BD
+ 	/5 	0
+
+ 	4 	NAMONE
+ 	/5 	1
+ 	4 	NAMTWO
+ 	/5 	2
+
+ 	0 	SEARCH
+ 	/8 	3
+
+[ DP ENTRY SADRES SUBSTI ]
+
+SUBSTI 	+0
+ 	0 	DP
+ 	/4 	0
+ 	6 	+8191
+ 	5 	SWORK
+ 	4 	SADRES
+ 	/5 	0
+
+RETURN 	4 	SWORK
+ 	2 	+8191
+
+EXIT 	0 	SUBSTI
+ 	/7 	1
+ 	4 	SWORK
+
+ENTRY 	5 	SWORK
+ 	0 	SWORK
+ 	/4 	0
+ 	6 	+8191
+ 	5 	SWORK
+ 	/2 	0
+ 	1 	SADRES
+ 	/5 	0
+ 	8 	RETURN
+
+SADRES 	+0
+SWORK 	+0
+
+[ BD CLENUP DP ED LA
+SADRES SUBSTI W ]
+
+CLENUP 	+0
+ 	4 	DP
+ 	1 	=/15 0
+ 	5 	W
+ 	4 	ED
+ 	5 	DP
+
+RETURN 	0 	DP
+ 	/4 	1
+ 	2 	W
+ 	7 	FOUND
+
+REPEAT 	4 	DP
+ 	1 	-3
+ 	5 	DP
+ 	2 	BD
+ 	9 	RETURN
+ 	7 	RETURN
+
+EXIT 	0 	CLENUP
+ 	/8 	1
+
+FOUND 	4 	LA
+ 	0 	DP
+ 	/1 	2
+ 	5 	SADRES
+ 	11 	SUBSTI
+ 	8 	SUBSTI+1
+ 	8 	REPEAT
+
+[ BLANK CLENUP DP FAIL INTEGR
+LA LABEL LOW1 NAMONE NAMTWO
+OPTION SADRES SEARCH SUBSTI TONE ]
+
+TONE 	4 	LOW1
+ 	5 	NAMONE
+ 	4 	INTEGR
+ 	5 	NAMTWO
+ 	4 	OPTION
+ 	6 	+1
+ 	7 	DONT
+
+ 	4 	LABEL 	( PRINT LABEL NAME )
+ 	0 	54
+ 	11 	67
+ 	/8 	0
+
+ 	4 	LA 	( PRINT ADDRESS )
+ 	0 	71
+ 	11 	70
+ 	/8 	5
+
+DONT 	11 	SEARCH
+ 	8 	SEARCH+1
+ 	8 	FOUND
+ 	+0
+ 	8 	BLANK
+
+FOUND 	0 	DP
+ 	/4 	0
+ 	9 	;+3
+ 	4 	+3
+ 	8 	FAIL
+
+ 	4 	LA
+ 	5 	SADRES
+ 	11 	SUBSTI
+ 	8 	SUBSTI+1
+
+ 	11 	CLENUP
+ 	8 	CLENUP+1
+ 	8 	BLANK
+
+[ DP INCR INTEGR LA LOW1
+NAMONE NAMTWO READTH SEARCH STET
+TTWO W ]
+
+TTWO 	4 	INTEGR
+ 	5 	NAMTWO
+ 	11 	READTH
+ 	8 	READTH+1
+ 	4 	INTEGR
+ 	5 	W+4
+
+ 	11 	READTH
+ 	8 	READTH+1
+ 	4 	LOW1
+ 	5 	NAMONE
+
+ 	11 	SEARCH
+ 	8 	SEARCH+1
+ 	8 	FOUND1
+ 	/0 	0
+ 	4 	INTEGR
+ 	7 	NOINCR
+
+ 	4 	=/0 8191
+ 	0 	DP
+ 	/5 	0
+ 	4 	INTEGR
+
+INCR 	5 	NAMTWO
+ 	4 	DP
+ 	1 	=/15 0
+ 	5 	NAMONE
+
+ 	11 	SEARCH
+ 	8 	SEARCH+1
+ 	8 	FOUND
+ 	/0 	0
+
+NOINCR 	4 	+8191
+EXTEND 	1 	W+4
+ 	8 	STET
+
+FOUND 	0 	DP
+ 	/4 	0
+ 	5 	W
+ 	4 	LA
+ 	1 	=/0 0
+ 	/5 	0
+ 	4 	W
+ 	6 	+8191
+ 	8 	EXTEND
+
+FOUND1 	0 	DP
+ 	/4 	0
+ 	9 	;+4
+ 	1 	INTEGR
+ 	1 	W+4
+ 	8 	STET
+
+ 	4 	INTEGR
+ 	7 	FOUND
+ 	8 	INCR
+
+[ BA BD BLANK BEGLOA CR
+DP ED EDNEG ENTRY E5TEST
+FAIL INTEGR LA LABEL LOW1
+OPTION READTH SADRES STET SUBSTI
+TONE TTWO W ]
+
+START 	8 	;+6
+ 	8 	ST2
+ 	4 	+6
+ 	2 	CONST
+ 	5 	BD
+ 	8 	ST3
+
+ 	4 	31 	(ESTABLISH OR OVERWRITE LIBRARY)
+ 	5 	29 	( SET PDADD=FFL AFTER INTERPRETER)
+ 	4 	+6
+ 	2 	CONST
+ 	8 	;+2
+ 	4 	75 	( INPUT PROGRAM AFTER LIBRARY)
+ 	 	 	(RESET BD TO VALUE AFTER LIBRARY)
+ 	5 	BD
+ 	4 	+3
+ 	5 	OPTION
+ 	4 	29 	( LA:=PDADD )
+ 	5 	LA
+ 	5 	W
+
+REPEAT 	0 	W
+ 	4 	+0
+ 	/5 	0
+ 	10 	W
+ 	4 	W
+ 	2 	BD
+ 	7 	SETUP
+ 	8 	REPEAT
+
+ALTER 	0 	BEGLOA-6
+CONST 	0 	BEGLOA
+NULL 	0 	;+1
+ 	&074000
+LOW 	+0
+
+SETUP 	4 	=/0 32
+ 	5 	BEGLOA-6
+ 	4 	=/0 33
+ 	5 	BEGLOA-3
+ 	4 	+8191
+ 	5 	32
+ 	5 	33
+
+ST3 	4 	LA
+ 	5 	FIRST
+ 	4 	CONST
+ 	1 	-3
+ 	5 	ED
+ 	2 	-3
+ 	5 	EDNEG
+
+ST2 	4 	LA
+ 	5 	BA
+ 	4 	+0
+ 	5 	CR
+
+ 	4 	+3 	( SET DEVICE NO TO 3 FOR DISPLAY )
+ 	0 	68
+ 	/5 	0
+
+ 	4 	NULL 	( SET NULL PREFIX )
+ 	0 	69
+ 	/5 	10
+ 	4 	+4
+ 	/5 	11 	( SET NO OF DIGITS TO FOUR )
+
+
+BLANK 	4 	+0
+ 	15 	2048
+ 	7 	BLANK
+
+ 	5 	LOW1
+ 	14 	8188
+ 	5 	LOW
+
+ 	2 	+6
+ 	9 	HALT
+ 	7 	TEST
+
+ 	4 	LOW1
+ 	1 	CR
+ 	5 	CR
+ 	4 	LOW1
+ 	15 	2048
+ 	5 	LOW1
+ 	6 	+127
+ 	1 	CR
+ 	5 	CR
+
+ 	4 	LOW1
+ 	15 	2048
+ 	5 	LOW1
+ 	6 	+127
+ 	1 	CR
+ 	5 	CR
+ 	4 	LOW1
+ 	0 	LOW
+ 	/8 	;+1
+
+ 	8 	FAIL1
+ 	8 	STET
+ 	8 	ADBASE
+ 	8 	THREE
+ 	8 	FOUR
+
+ 	1 	LA
+ 	5 	LA
+ 	8 	BLANK
+
+ADBASE 	1 	BA
+STET 	0 	LA
+ 	/5 	0
+ 	10 	LA
+
+CHECK 	11 	E5TEST
+ 	8 	E5TEST+1
+ 	8 	BLANK
+
+FAIL1 	4 	+1
+ 	8 	FAIL
+
+HALT 	4 	LOW1
+ 	15 	2048
+ 	15 	2048
+ 	5 	LOW1
+
+ 	4 	BD
+ 	5 	DP
+ 	8 	BLAST
+
+RETURN 	0 	DP
+ 	/4 	1
+ 	6 	=/15 0
+ 	2 	=/15 0
+ 	7 	;+3
+
+ 	/4 	0
+ 	9 	MESS
+
+NEXT 	4 	DP
+ 	1 	+3
+ 	5 	DP
+
+BLAST 	1 	EDNEG
+ 	7 	ENDIT
+ 	8 	RETURN
+
+MESS 	/4 	1
+ 	5 	NAM1
+ 	/4 	2
+ 	5 	NAM2
+
+ 	4 	MESAGE
+ 	0 	54
+ 	11 	67
+ 	/8 	0
+ 	8 	NEXT
+
+MESAGE 	0 	;+1
+ 	&070146
+ 	&650000
+
+NAM1 	+0
+NAM2 	+0
+ 	&400000
+
+ENDIT 	4 	LOW1
+ 	7 	END
+ 	2 	+7
+ 	9 	;+4
+ 	4 	LOW1
+ 	5 	OPTION
+ 	8 	ST2
+ 	0 	LOW1
+ 	/8 	0
+
+END 	4 	FINAL
+ 	0 	54
+ 	11 	67
+ 	/8 	0
+ 	4 	FIRST
+ 	0 	71
+ 	11 	70
+ 	/8 	5
+
+ 	4 	INTER
+ 	0 	54
+ 	11 	67
+ 	/8 	0
+
+ 	4 	LA
+ 	5 	30
+ 	0 	71
+ 	11 	70
+ 	/8 	5
+
+ 	4 	75
+ 	9 	;+2 	( IF LIBRARY HAS JUST BEEN ESTABLISHED )
+ 	8 	;+5
+ 	4 	LA 	(   RESERVE CURRENT STORE AND )
+ 	5 	29
+ 	4 	BD 	(     DICTIONARY POINTERS )
+ 	5 	75
+ 	8 	;+0
+
+FINAL 	0 	;+1
+ 	&070146
+ 	\IRS
+ 	\T
+ 	\NEX
+ 	&640140
+
+INTER 	0 	;+1
+ 	&070000
+ 	&400000
+
+FIRST 	+0
+
+TEST 	4 	LOW1
+ 	15 	2048
+ 	15 	2048
+ 	2 	CR
+ 	7 	ST2
+ 	4 	+6
+ 	8 	FAIL
+
+THREE 	11 	READTH
+ 	8 	READTH+1
+ 	4 	INTEGR
+ 	1 	LA
+ 	5 	SADRES
+
+ 	4 	LOW1
+ 	1 	BA
+ 	11 	SUBSTI
+ 	8 	ENTRY
+ 	8 	BLANK
+
+FOUR 	11 	READTH
+ 	8 	READTH+1
+ 	4 	W+3
+ 	1 	-3
+ 	9 	;+3
+ 	4 	+4
+ 	8 	FAIL
+
+ 	0 	W+3
+ 	/8 	;+1
+
+ 	8 	;-4
+ 	8 	TONE
+ 	8 	TTWO
+
+[ ENDLOA ]
+
+ENDLOA 	0 	;+0
+
+<! Halt !>

@@ -1,0 +1,486 @@
+﻿
+}[^\]{`
+GPM TESTS.
+
+Functional Tests.
+-----------------
+
+Test basic text input.
+
+Comments `have ignored
+		
+ have ignored text in them.
+
+Halt code.
+<! halt !>
+
+Resumed after halt code.
+
+{Quoted {text} will lose outer layer of quotes.}
+
+Isolated apply is just copied ].
+
+Isolated argument is just copied ^.
+
+{Nested {quotes { nested { again } } } .}
+
+End of text tests.
+
+Test DEF and UPDATE.
+
+{[DEF\abc\bluebell][abc] = }[DEF\abc\bluebell][abc].
+
+{[DEF\x\{result is ^1}][x\3] = }[DEF\x\{result is ^1}][x\3].
+
+{[DEF\y\{result is ^1 + ^2}][y\5\6] = }[DEF\y\{result is ^1 + ^2}][y\5\6].
+
+{[DEF\z\{^12}][z\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15] = }` 
+	[DEF\z\{^12}][z\1\2\3\4\5\6\7\8\9\10\11\12\13\14\15].
+
+{[DEF\abc\{pqrstuv}][UPDATE\abc\{xyz}][abc] = }[DEF\abc\{pqrstuv}][UPDATE\abc\{xyz}][abc].
+
+End of DEF and UPDATE tests.
+
+Test arithmetic.
+{
+[DEF\+\{[DEC\[BAR\+\[BIN\^1]\[BIN\^2]]]}]}`
+[DEF\+\{[DEC\[BAR\+\[BIN\^1]\[BIN\^2]]]}]
+{[DEF\-\{[DEC\[BAR\-\[BIN\^1]\[BIN\^2]]]}]}`
+[DEF\-\{[DEC\[BAR\-\[BIN\^1]\[BIN\^2]]]}]
+{[DEF\*\{[DEC\[BAR\*\[BIN\^1]\[BIN\^2]]]}]}`
+[DEF\*\{[DEC\[BAR\*\[BIN\^1]\[BIN\^2]]]}]
+{[DEF\/\{[DEC\[BAR\/\[BIN\^1]\[BIN\^2]]]}]}`
+[DEF\/\{[DEC\[BAR\/\[BIN\^1]\[BIN\^2]]]}]
+{[DEF\%\{[DEC\[BAR\%\[BIN\^1]\[BIN\^2]]]}]}`
+[DEF\%\{[DEC\[BAR\%\[BIN\^1]\[BIN\^2]]]}]
+
+7+3=[+\7\3]
+7-3=[-\7\3]
+7*3=[*\7\3]
+7/3=[/\7\3]
+7%3=[%\7\3]
+
+End of arithmetic tests.
+
+Undefined macros.
+
+{[undefinedmacro]} =>
+	[undefinedmacro]
+
+Demonstrate how to construction conditional macros.
+
+Conditional
+{[DEF\IF\{[^1\[DEF\^1\^4][DEF\^2\^3]]}]}[DEF\IF\{[^1\[DEF\^1\^4][DEF\^2\^3]]}]
+IF X=Y => [IF\X\Y\T\F]
+IF X=X => [IF\X\X\T\F]
+
+This demonstrates a subtle bug in Strachey's GPM which is
+not present in BGPM.
+
+{[DEF\args\{arg0=^0 arg1=^1 arg2=^2 arg3=^3}]}
+[DEF\args\{arg0=^0 arg1=^1 arg2=^2 arg3=^3}]
+
+{[args\aaa[DEF\junk\junkbody]xxx\bbbyyy\ccczzz]} =>
+[args\aaa[DEF\junk\junkbody]xxx\bbbyyy\ccczzz]
+
+{[args\aaaxxx\bbbyyy\ccczzz[DEF\junk\junkbody]]} =>
+[args\aaaxxx\bbbyyy\ccczzz[DEF\junk\junkbody]]
+
+{[args\aaaxxx\bbbyyy\ccczzz\[DEF\junk\junkbody]]} =>
+[args\aaaxxx\bbbyyy\ccczzz\[DEF\junk\junkbody]]
+
+This is to demonstrate that GPM macros can leave definitions
+behind.
+
+[DEF\defs\{
+Defining ^1a` {[DEF\^1a\{Macro ^0 called with argument ^1}]}`
+[DEF\^1a\{Macro ^0 called with argument ^1}]
+Defining ^1b` {[DEF\^1b\{Macro ^0 called with argument ^1}]}`
+[DEF\^1b\{Macro ^0 called with argument ^1}]
+Defining ^1c` {[DEF\^1c\{Macro ^0 called with argument ^1}]}`
+[DEF\^1c\{Macro ^0 called with argument ^1}]
+
+{[defs\A]} => [defs\A]
+{[defs\B]} => [defs\B]
+{[defs\C]} => [defs\C]
+
+{[Aa\xxx]} => [Aa\xxx]
+{[Bb\yyy]} => [Bb\yyy]
+{[Cc\zzz]} => [Cc\zzz]
+
+{Calling [DEF\a\{[DEF\b\[c]xxx[d]]}]}  [DEF\a\{[DEF\b\[c]xxx[d]]}]
+
+{Calling [DEF\c\old c][DEF\d\old d]} [DEF\c\old c][DEF\d\old d]
+
+{Calling [a\[DEF\c\ccc][DEF\d\ddd]]}  [a\[DEF\c\ccc][DEF\d\ddd]]
+{Calling [b]} => [b]
+{Calling [c]} => [c]
+{Calling [d]} => [d]
+
+Show how to use extra parameters to DEF as padding.
+{[DEF\AA\BB]}[DEF\AA\BB]
+{[DEF\AAA\BB\CC]}[DEF\AAA\BB\CC]
+{[AA]} => [AA]
+{[AAA]} => [AAA]
+{[UPDATE\AAA\x]} => [UPDATE\AAA\x]
+{[AAA]} => [AAA]
+{[UPDATE\AAA\yyyy]} => [UPDATE\AAA\yyyy]
+{[AAA]} => [AAA]
+{[UPDATE\AAA\yyyyy]} => [UPDATE\AAA\yyyyy]
+{[AAA]} => [AAA]
+{[UPDATE\AAA\zzzzzz]} => [UPDATE\AAA\zzzzzz]
+{[AAA]} => [AAA]
+
+Check error messages - with reference to "monitors" in GPM.
+
+Monitor 1: unmatched ] 
+
+{[DEF\m1\{aaa]bbb}]
+[m1]} =>  `
+[DEF\m1\{aaa]bbb}]
+[m1]
+
+Monitor 2: unquoted ^ in argument list
+
+{[xxx\aaa^2bbb]} => [xxx\aaa^2bbb]
+
+Monitor 3: Impossible character as argument number
+
+{[DEF\m3\{aaa ^n bbb}]
+[m3\qqq]} => `
+[DEF\m3\{aaa ^n bbb}]
+[m3\qqq]
+
+Monitor 4: Test too few arguments
+
+{[DEF\m4\{aaa ^5 bbb}]
+[m4\xxx\yyy\zzz\ttt]} => `
+[DEF\m4\{aaa ^5 bbb}]
+[m4\xxx\yyy\zzz\ttt]
+
+Monitor 5: Terminator in impossible place
+
+{[DEF\m5a\m5a body]
+[DEF\m5\{[m5a}]
+[m5\xxx\yyy\zzz\ttt]  ]} => `
+[DEF\m5a\m5a body]
+[DEF\m5\{[m5a}]
+[m5\xxx\yyy\zzz\ttt]  ]
+
+Monitor 7: Undefined macro name
+
+{[m7b\xxx\yyy\zzz\ttt]} => [m7b\xxx\yyy\zzz\ttt]
+
+Monitor 8: internal error
+
+Monitor 9: new value too long
+
+{[DEF\m9\xxxx]}[DEF\m9\xxxx]
+{[UPDATE\m9\aaa]}[UPDATE\m9\aaa]
+{[m9]} => [m9]
+{[UPDATE\m9\bbbb]}[UPDATE\m9\bbbb]
+{[m9]} => [m9]
+{[UPDATE\m9\ccccc]}[UPDATE\m9\ccccc]
+{[m9]} => [m9]
+
+Monitor 10: number error in BIN
+
+{[BIN\123x]} => [BIN\123x]
+
+
+End of functional tests.
+<! halt !>
+}[^\]{`
+
+Examples from Strachey's Computer Journal Paper
+-----------------------------------------------
+
+General Purpose Macrogenerator
+by C. Strachey
+CJ Vol.8 No.3, Oct 1965
+
+Examples of macro expansion.
+
+{[DEF\A\{A^1A}]}[DEF\A\{A^1A}]
+{[DEF\B\{B[A\X^1X]B}]}[DEF\B\{B[A\X^1X]B}]
+{[DEF\APA\{P^1^1P}]}[DEF\APA\{P^1^1P}]
+
+{[A\C]}       = [A\C]
+{[A\ACA]}     = [A\ACA]
+{[A\[A\C]]}   = [A\[A\C]]
+{[A\XDX]}     = [A\XDX]
+{[B\D]}       = [B\D]
+{[A\P]}       = [A\P]
+{[APA\Y]}     = [APA\Y]
+{[[A\P]\Y]}   = [[A\P]\Y]
+
+{Q{[A\C]}R}   = Q{[A\C]}R
+{[A\{[A\X]}]} = [A\{[A\X]}]
+{[B\{[A\X]}]} = [B\{[A\X]}]
+{Q{[}R{]}}    = Q{[}R{]}
+{Q{{[A\C]}}R} = Q{{[A\C]}}R
+
+{[A\X\U\[DEF\A\{^1^2^1}]]} = [A\X\U\[DEF\A\{^1^2^1}]]
+
+Functional product example.
+
+{[DEF\Log\{log(^1)}] [DEF\Sin\{sin(^1)}]}`
+	[DEF\Log\{log(^1)}] [DEF\Sin\{sin(^1)}]
+{[DEF\FNPROD\{[DEF\^1^2\{[}^1{\[}^2{\^1]]}]}]}`
+	[DEF\FNPROD\{[DEF\^1^2\{[}^1{\[}^2{\^1]]}]}]
+{[FNPROD\Log\Sin]}`
+	[FNPROD\Log\Sin]
+{[LogSin\x]} = [LogSin\x]
+
+Modified version of Sum, correcting error in original.
+
+This version corrects the bug in Successor as defined
+in Strachey's paper.
+
+[DEF\Suc\{[1\2\3\4\5\6\7\8\9\10\[DEF\1\{^}^1]]}]`
+
+`{[Suc\0]} => [Suc\0]
+`{[Suc\1]} => [Suc\1]
+`{[Suc\2]} => [Suc\2]
+`{[Suc\9]} => [Suc\9]
+
+[DEF\Successor\{[^2\[DEF\^2\^1{{\}[Suc\}^2{]}]`
+                    [DEF\9\{[Suc\}^1{]{\}0}]]}]`
+
+
+{[Successor\3\4]} => [Successor\3\4]
+{[Successor\3\9]} => [Successor\3\9]
+
+[DEF\Sum\{[S\^1\^2\0\`
+            [DEF\S\`
+              {[^3\`
+                 [DEF\^3\{[S\}[Successor\^1\^2]{\}[Suc\^3]{]}]`
+                 [DEF\}^3{\^1{\}^2]`
+               ]`
+              }`
+            ]`
+          ]`
+         }`
+]`
+
+{[Sum\3\4\2]} => [Sum\3\4\2]
+{[Sum\3\8\3]} => [Sum\3\8\3]
+
+End of examples from CJ paper.
+<! halt !>
+}[^\]{`
+
+Martin Richards Examples
+------------------------
+
+Towers of Hanoi.
+
+[DEF\-\{[DEC\[BAR\-\[BIN\^1]\[BIN\^2]]]}]
+2-1 = [-\2\1]
+
+[DEF\H\{[^1\^2\^3\^4\
+           [DEF\^1\{`
+                    [H\[-\^0\1]\^1\^3\^2]`
+                    Move disc ^0 from tower ^1 to tower ^2
+`
+                    [H\[-\^0\1]\^3\^2\^1]`
+                   }`
+           ]`
+           [DEF\0\]`
+        ]`
+       }`
+]`
+
+{[H\1\A\B\C]} =>
+[H\1\A\B\C]
+
+{[H\2\A\B\C]} =>
+[H\2\A\B\C]
+
+{[H\3\A\B\C]} =>
+[H\3\A\B\C]
+
+{[H\4\A\B\C]} =>
+[H\4\A\B\C]
+
+End of Hanoi.
+
+<! halt !>
+}[^\]{`
+Permutations.
+
+[DEF\inc\{[DEC\[BAR\+\[BIN\^1]\[BIN\1]]]}]`
+[DEF\dec\{[DEC\[BAR\-\[BIN\^1]\[BIN\1]]]}]`
+
+[DEF\perm\{`
+   [perms\1\^1\\^2\`
+     [DEF\arg\{[list\`
+                 [DEF\S\{^}^1]`
+               ]`
+              }`
+     ]`
+     [DEF\ax\{[^1\^1\`
+                 [DEF\^1\{{\}[arg\^1]}]`
+                 [DEF\^2\]`
+              ]`
+             }`
+     ]`
+     [DEF\allbut\{[ax\^1\^2]`
+                  [^1\^1\^2\^3\`
+                    [DEF\^1\{[allbut\[inc\^1]\^2\^3]}]`
+                    [DEF\^3\]`
+                  ]`
+                 }`
+     ]`
+     [DEF\perms\{`
+       [^2\^1\^2\^3\^4\`
+         [DEF\list\{[}S^4{]}]`
+         [DEF\^2\{[perms\1\[dec\^2]\^3[arg\^1]\[allbut\1\^1\^2]]`
+                  [^1\^1\^2\^3\^4\`
+                    [DEF\^1\{[perms\[inc\^1]\^2\^3\^4]}]`
+                    [DEF\^2\][debug]`
+                  ]`
+                 }`
+         ]`
+         [DEF\0\^3
+`
+         ]`
+       ]`
+      }`
+     ]`
+   ]`
+ }`
+]` End of DEF perm
+
+[DEF\debug\]`
+
+Permuting A B C
+
+{[perm\3\{\A\B\C}]} =>
+[perm\3\{\A\B\C}]
+
+
+{[perm\5\{\A\B\C\D\E}]} =>
+[perm\5\{\A\B\C\D\E}]
+
+End of permutation.
+
+<! halt !>
+}[^\]{`
+Primes.
+
+{[prime\n]} => the nth prime number.
+
+[DEF\+\{[DEC\[BAR\+\[BIN\^1]\[BIN\^2]]]}]
+[DEF\%\{[DEC\[BAR\%\[BIN\^1]\[BIN\^2]]]}]
+
+[DEF\isprime\{`
+   [p%^1=[%\^2\^1]\`
+     [DEF\p%^1=[%\^2\^1]\{[isprime\[+\}^1{\1]\}^2{]}]`
+     [DEF\p%^1=0\no]`
+     [DEF\p%^2=0\yes]`
+   ]`
+ }`
+]`
+
+[DEF\nextprime\{`
+`nextprime entered
+   [UPDATE\p\[+\[p]\1]]`
+`p now = [p]
+`{[isprime\2\[p]]} => [isprime\2\[p]]
+`Calling macro test=[isprime\2\[p]] after defining test=yes and test=no
+   [test=[isprime\2\[p]]\`
+     [DEF\test=yes\]`
+     [DEF\test=no\{[nextprime]}]`
+   ]`
+ }`
+]`
+
+[DEF\iter\{`
+   [res[n]\`
+      [DEF\res[n]\{`
+        [UPDATE\i\[+\[i]\1]]`
+        [nextprime]`
+        [iter]`
+       }`
+      ]`
+      [DEF\res[i]\{[p]}]`
+   ]`
+ }`
+]`
+
+[DEF\prime\{`
+   [iter\`
+     [DEF\n\[+\^1\0]]`
+     [DEF\i\1\padding]`[UPDATE\i\1]`
+     [DEF\p\2\padding]`[UPDATE\p\2]`
+   ]`
+ }`
+]`
+
+
+{[isprime\2\2]}   = [isprime\2\2]
+{[isprime\2\3]}   = [isprime\2\3]
+{[isprime\2\4]}   = [isprime\2\4]
+{[isprime\2\5]}   = [isprime\2\5]
+{[isprime\2\6]}   = [isprime\2\6]
+{[isprime\2\9]}   = [isprime\2\9]
+{[isprime\2\136]} = [isprime\2\136]
+
+{[prime\1]}   => [prime\1]
+{[prime\2]}   => [prime\2]
+{[prime\3]}   => [prime\3]
+{[prime\10]}  => [prime\10]
+{[prime\15]}  => [prime\15\Biggest prime we can do in 16K]
+
+End of primes.
+
+<! halt !>
+}[^\]{`
+{[collatz\n]} will output the Collatz seqence starting at n
+
+n => n/2,  if n even
+n => 3n+1, if n odd
+
+continue until n=1
+
+Collatz conjecture: Every Collatz sequence end with a one.
+
+I.e. can it ever diverge, or end in a loop not containing 1?
+
+
+[DEF\+\{[DEC\[BAR\+\[BIN\^1]\[BIN\^2]]]}]`
+[DEF\-\{[DEC\[BAR\-\[BIN\^1]\[BIN\^2]]]}]`
+[DEF\*\{[DEC\[BAR\*\[BIN\^1]\[BIN\^2]]]}]`
+[DEF\/\{[DEC\[BAR\/\[BIN\^1]\[BIN\^2]]]}]`
+[DEF\%\{[DEC\[BAR\%\[BIN\^1]\[BIN\^2]]]}]`
+
+[DEF\collatz\{[C\`
+  [DEF\n\0000000000]`
+  [UPDATE\n\[+\^1\0]]`
+  [DEF\R0\{[UPDATE\n\[/\[n]\2]]}]`
+  [DEF\R1\{[UPDATE\n\[+\[*\3\[n]]\1]]}]`
+  [DEF\next\{[R[%\[n]\2]]}]`
+  [DEF\C\{`
+    [n]
+`
+    [[n]\[DEF\[n]\{[next][C]}]`
+         [DEF\1\]]`
+}]`
+]}`
+]`
+
+{[collatz\7]} =>
+[collatz\7]
+
+{[collatz\767]} =>
+[collatz\767]
+
+`{[collatz\600000001]} =>
+`[collatz\600000001]
+
+End of Collatz.
+
+END OF GPM TESTS.
+
+<! halt !>

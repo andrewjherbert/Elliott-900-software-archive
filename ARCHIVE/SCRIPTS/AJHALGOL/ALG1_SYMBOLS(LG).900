@@ -1,0 +1,353 @@
+﻿
+*PROG SYMBOL
+*LISTLA
+*NOMEM
+
+( LG ALGOL SYMBOL TABLE                     )
+(                                           )
+( REVERSE ENGINEERED FROM ALGOL TAPE 1      )
+( ISSUE 6.                                  )
+(                                           )
+( REDUNDANT DATA REMOVED.                   )
+(                                           )
+( ANDREW HERBERT 22/02/2015                 )
+
+^7923^1                   ( see PERM and NLP in translator )
+
+[ NAMES ]
+          +0
+          +0
+          +0
+          &306500         (p1: value int)
+
+          \DEC
+          \ODE
+          1     ;-2       (on library tape)
+          &036501         (int proc [p1])
+
+          +0
+          +0
+          &000040         (p2 - string)
+          &306500         (p1 - value int)
+
+
+          \BUF
+          \FER
+          1     ;-2       (on library tape)
+          &035102         (bool proc[p1, p2])
+
+          +0
+QAPLT1    \QAP
+          \LT1
+          &306500         (p1 - value int)
+
+          \ADV
+          \ANC
+          1     ;-2       (on library tape)
+          &020101         (proc[p1])
+
+          +0
+QAPLT2    \QAP
+          \LT2
+          &306500         (p1 - value int)
+
+          \CEN
+          \CHA
+          1     QAPLT2    (on library tape)
+          &020101         (proc[p1])
+
+          +0
+          +0
+          &306500         (p2 - value int)
+          &306500         (p1 - value int)
+
+          \WAY
+          \
+          1     QAPLT2    (on library tape)
+          &020102         (proc[p1,p2])
+
+          +0
+          +0
+          &306500         (p2 - value int)
+          &306500         (p1 - value int)
+
+          \MOV
+          \EPE
+          1     QAPLT1    (on library tape)
+          &020102         (proc[p1,p2])
+
+          +0
+          +0
+          &306500         (p2 - value int)
+          &306500         (p1 - value int)
+
+          \DRA
+          \WLI
+          1     QAPLT1    (on library tape)
+          &020102         (proc[p1,p2])
+
+          +0
+          +0
+          &306500         (p2 - value int)
+          &306500         (p1 - value int)
+
+          \SET
+          \ORI
+          1     QAPLT1    (on library tape)
+          &020102         (proc[p1,p2])
+
+          +0
+          +0
+          +0
+          &306100         (p1 - value real)
+
+          \ABS
+          \
+          2     7994      (/15 58 - PRIM abs)
+          &036101         (real proc[p1])
+
+          +0
+          +0
+          &306500         (p2 - value int)
+          &306500         (p1 - value int)
+
+          \ALI
+          \GNE
+          2     3845      (15 5 - INOUT aligned)
+          &020102         (proc[p1,p2])
+
+          +0
+          +0
+          +0
+          &306100         (p1 = value real)
+
+          \ARC
+          \TAN
+          1     ;-2       (on library tape)
+          &036101         (real proc[p1])
+
+          +0
+          7     7683      (&177003   ????)
+          +0
+          &000040         (p1 = string)
+
+          \CHE
+          \CKS
+          2     7941      (/15 05 PRIM checks)
+          &020101         (proc[p1])
+
+          +0
+QATRI1    \QAT
+          \RIG
+          &306100         (p1 = value real)
+
+          \COS
+          \
+          1     QATRI1    (on library tape)
+          &036101         (real proc[p1])
+
+          +0
+          4     7744      (&117100   ????)
+          +0
+          &306500         (p1 = value int)
+
+          \DIG
+          \ITS
+          2     3847      (15 INOUT 7 digits)
+          &020101         (proc[p1])
+
+          +0
+          +0
+          +0
+          &306100         (p1 = value real)
+
+          \ENT
+          \IER
+          2     7995      (/15 59 PRIM entier)
+          &036501         (int proc[p1])
+
+          +0
+          +0
+          +0
+          &306100         (p1 = value real)
+
+          \EXP
+          \
+          2     7996      (/15 60 PRIM exp )
+          &036101         (real proc[p1])
+
+          +0
+          +0
+          +0
+          &306500         (p1 = value int)
+
+          \FRE
+          \EPO
+          2     3848      (15 8 INOUT freepoint)
+          &020101         (proc[p1])
+
+          +0
+          +0
+          &106500         (p2 - int)
+          &046500         (p1 - int array)
+
+          \INS
+          \TRI
+          1     QASTRI    (on library tape)
+          &020102         (proc[p2])
+
+          +0
+          +0
+          +0
+          &306100         (p1 - value real)
+
+          \LN
+          \
+          2     7997      (/15 61 PRIM ln)
+          &036101         (real proc[p1])
+
+          +0
+          +0
+          &306500         (p2 - value int)
+          &046100         (p1 - real array)
+
+          \LOW
+          \BOU
+          1     ;-2       (on library tape)
+          &036502         (proc[p1,p2])
+
+          +0
+          +0
+          &106500         (p2 - int)
+          &046500         (p1 - int array)
+
+          \OUT
+          \STR
+          1     QASTRI    (on library tape)
+          &020102         (proc[p1,p2])
+
+          +0
+
+QASTRI    \QAS
+          \TRI
+          &000040         (p1 - string)
+
+          \PRE
+          \FIX
+          2     3851      (15 11 INOUT prefix)
+          &020101         (proc[p1])
+
+          +0
+          +0
+          +0
+          &306500         (p1 - value int)
+
+          \PUN
+          \CH
+          2     3846      (15 6 INOUT punch)
+          &020101         (proc[p1])
+
+          +0
+          +0
+          &306500         (p2 - value int)
+          &046100         (p1 - real array)
+
+          \RAN
+          \GE
+          1     ;-2       (on library tape)
+          &036502         (proc[p1,p2])
+
+          +0
+          +0
+          +0
+          &306500         (p1 - value int)
+          \REA
+          \DER
+          2     3854      (15 14 INOUT reader)
+          &020101         (proc[p1])
+
+          \SAM
+          \ELI
+          2     3852      (15 12 INOUT sameline)
+          &100120         (proc)
+
+          +0
+          +0
+          +0
+          &306500         (p1 - value int)
+          \SCA
+          \LED
+          2     3853      (15 13 INOUT scaled)
+          &020101         (proc[p1])
+
+          +0
+          +0
+          +0
+          &306100         (p1 - value real)
+
+          \SIG
+          \N
+          2     7998      (/15 62)
+          &036501         (real proc[p1])
+
+          +0
+QATRI2    \QAT
+          \RIG
+          &306100         (p1 - value real)
+
+          \SIN
+          \
+          1     QATRI2    (on library tape)
+          &036101         (real proc[p1])
+
+          +0
+          +0
+          +0
+          &306100         (p1 - value real)
+
+          \SQR
+          \T
+          1     ;-2       (on library tape)
+          &036101         (real proc[p1])
+
+          \STO
+          \P
+          2     7944      (/15 08 PRIM finish)
+          &100120         (proc[])
+
+          \WAI
+          \T
+          2     7960      (/15 24 PRIM wait)
+          &100120         (proc[])
+
+          +0
+          8     7474      (&216462   ????)
+          +0
+          &305100         (p1 - value bool)
+          \CHE
+          \CKB
+          2     7938      (/15 02 PRIM checkb)
+          &035101         (bool proc[p1])
+
+          +0
+          1     7103      (& 35677  ????)
+          +0
+          &306500         (p1 - value int)
+
+          \CHE
+          \CKI
+          2     7939      (/15 03 PRIM checki)
+          &036501         (int proc[p1])
+
+          +0
+          +0
+          +0
+          &306100         (p2 - value real)
+
+NAMES     \CHE
+          \CKR
+          2     7940      (/15 04 PRIM checkr)
+          &036101         (real proc[p1])
+%
+
+<! Halt !>

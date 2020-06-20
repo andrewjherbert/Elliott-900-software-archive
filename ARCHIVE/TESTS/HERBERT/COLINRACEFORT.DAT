@@ -1,0 +1,13 @@
+﻿C Colin's computer race
+
+on 903 16K
+
+at ptr file ../../MASTERS/903FORTRAN/903FORT16KLG(ISS5).BIN
+j 8181
+select out tty
+at ptr file ../../MASTERS/HERBERT/COLINRACEFORT.900
+j 12
+j 10
+sh t
+j 11
+sh t

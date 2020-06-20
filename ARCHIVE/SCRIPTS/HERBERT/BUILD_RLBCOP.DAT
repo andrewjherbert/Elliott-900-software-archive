@@ -1,0 +1,19 @@
+﻿C Build RLBCOP utility
+
+on 903
+
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+select out tty
+at ptr file ../../MASTERS/AJHALGOL/RLBCOP.900
+j 12
+st 562
+select out auto
+rewind
+at ptp file RLBCOP.BIN
+j 10
+st 587
+de ptp
+
+sh t

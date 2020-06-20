@@ -1,0 +1,1338 @@
+﻿
+( Original version by Don Hunter, July 1988.                 )
+( Updated by Andrew Herbert, March 2013 to accept same input )
+( as Martin Campbell-Kelly simulator.                        )
+( Last edit: 27 March 2014: translate function tidy up.      )
+( Input characters:     )
+( A-Z, 0-9, +, -        )
+( *            = erase  )
+( space, .     = blank  )
+( #, "         = pi     )
+( @, (         = theta  )
+( exclaim, ket = phi    )
+( &, <         = delta  )
+( [ .... ]     comment  )
+
+^32
+[ CONTIN RESET S START OUTSTR QDOUT IFLAG IOP ITAB A B C D E QOUT1 
+  QCHOP TAPE GET ]
+S=3000
+ENTRY
+(32)      8     START     ( load and enter initial orders )
+(33)      8     CONTIN    ( continue after halt code on input )	
+(34)      8     RESET     ( execute next instruction after stop )
+(35)      8     CLEAR
+(36)      8	IO1	  ( set initial orders 1 )
+(37)	  8  	IO2	  ( set initial orders 2 )
+(38)	  8	NOSP	  ( spaces treated as runout )
+(39)	  8	SPOK	  ( spaces treated as comment )
+(40)	  8	TAPE5	  ( read EDSAC 5 hole tape code )
+(41)      8	TAPE8	  ( read Elliott 900 8 hole tape code )
+(42)	  8	TRANS	  ( translate telecode to EDSAC code )
+
+
+IO1	  4	-1	  ( select initial orders 1 )
+	  5	IOP
+	  8	;+0
+
+IO2	  4	+0	  ( select initial orders 2 [presumed] )
+	  5	IOP
+	  8	;+0
+
+NOSP	  4	+64	  ( treat space as runout )
+	  5	ITAB+160
+	  8	;+0
+	
+SPOK	  4	+512	  ( ignore space [presumed] )
+	  8	NOSP+1
+
+^63
+DIAL	 +0
+(64)	  10	DIAL	  
+	  10	DIAL	  ( entry points to simulate telephone dial)
+	  10 	DIAL
+	  10 	DIAL
+	  10 	DIAL
+	  10 	DIAL	  
+	  10	DIAL
+	  10 	DIAL
+	  10 	DIAL
+	  10 	DIAL
+	  4	DIAL
+	  2	+10
+	  7	DIAL0
+DSTORE	  5	DIAL
+	  11	OUTSTR
+	  8	OUTSTR+1
+	  \^DI
+	  \AL
+	  \\
+	  4	DIAL
+	  11	QOUT1
+	  8	QOUT1+1
+	  0 0
+	  4	+1
+	  11	QCHOP
+	  8	QCHOP+1
+	  4	DIAL
+	  14	1	  ( add digit * 2^-15 to A )
+	  1	A
+	  5	A
+	  4	+0
+	  5	DIAL
+	  8	RESET
+
+DIAL0	  4	+10
+	  8	DSTORE
+
+CLEAR     4     +3        ( clear store )
+          5     QDOUT
+          11    OUTSTR
+          8     OUTSTR+1
+          \^CL
+          \EAR
+          \^\
+          4     -1024
+          5     W
+CLOOP      0     W
+          4     +0
+          /5    S+1024
+          10    W
+          4     W
+          9     CLOOP
+          8     ;+0
+
+TAPE5	  4	-1	  ( select EDSAC code )
+	  5	TAPE
+	  5	IFLAG	  ( force new input )
+	  8	;+0
+
+TAPE8	  4	+0	  ( select Elliott code )
+	  5	TAPE
+	  4 	-1
+	  8 	;-5
+
+TRANS	  4	+3
+	  5	QDOUT
+	  4	+0	  ( select telecode input)
+	  5	TAPE
+	  4	-1	  ( force new input )
+	  5	IFLAG
+TLOOP	  11	GET	  ( read input tape )
+	  8	GET+1
+	  14	8191
+	  1	+16	  ( flip top bit )
+	  6	+31
+	  15	6144	  ( punch EDSAC code )
+	  8	TLOOP
+
+W         >1
+
+[ A AD B C D E F FD HA HB I ITAB MA MB OCHAR ITAB OTAB IOP IORD1 IORD2 PC ]
+
+A         >1              (ACC)
+B         >1
+C         >1
+D         >1
+E         >1
+HA        >1              (MULTIPLIER)
+HB        >1
+MA        >1              (MULTIPLICAND)
+MB        >1
+AD        >1              (ADDRESS)
+F         >1              (FUNCTION)
+FD        >1              (FD BIT)
+I         >1              (INSTRUCTION)
+PC        >1              (ADDRESS OF NEXT INSTRUCTION)
+OCHAR     >1              (PREVIOUS REAL OUTPUT)
+
+IOP	  +0	  	  (Initial orders 2 presumed)
+
+IORD1	  		  (INITIAL ORDERS 1)
+ 	  &120000
+ 	  &520010
+ 	  &120000
+ 	  &060030
+ 	  &000004
+ 	  &000024
+ 	  &120000
+ 	  &200000
+ 	  &700000
+ 	  &100100
+ 	  &120002
+ 	  &200010
+ 	  &700010
+ 	  &300024
+ 	  &060124
+ 	  &120014
+ 	  &760004
+ 	  &620040
+ 	  &700010
+ 	  &120004
+ 	  &060054
+ 	  &100020
+ 	  &700004
+  	  &620002
+ 	  &700000
+ 	  &120174
+ 	  &700144
+ 	  &700020
+ 	  &160144
+ 	  &300174
+ 	  &660030
+ 	  &320000
+	  +0
+	  +0
+	  +0
+	  +0
+	  +0
+	  +0
+	  +0
+	  +0
+	  +0
+
+IORD2                     (INITIAL ORDERS 2)
+          &120000
+ 	  &060120
+ 	  &000004
+ 	  &160010
+ 	  &700234
+ 	  &100020
+ 	  &760000
+ 	  &620040
+ 	  &120000
+ 	  &200004
+ 	  &700004
+  	  &300234
+ 	  &660020
+ 	  &620002
+ 	  &300234
+ 	  &060104
+ 	  &300034
+ 	  &700214
+ 	  &120120
+ 	  &700000
+ 	  &520040
+ 	  &700240
+ 	  &120254
+ 	  &700130
+ 	  &700010
+ 	  &120130
+ 	  &060210
+ 	  &700254
+ 	  &060040
+ 	  &700250
+ 	  &700240
+ 	  &060144
+ 	  &700130
+ 	  &120250
+ 	  &200242
+ 	  &700242
+ 	  &100100
+ 	  &120242
+ 	  &060040
+ 	  &000026
+ 	  &000002
+ITAB                      (INPUT CODE CONVERSION)
+			  ( 900 telecode to EDSAC )
+		    	  ( code * 4              )
+(000)     +512            ( ignore runout )
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          +512            ( ignore tab )
+(010)     +256            ( read more input on newline )
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(020)     +1024           (stop on halt code )
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(030)     -1
+          -1
+          -1
+          +80             ( EXCLAIM = phi )
+          +44             ( QUOTE = pi )
+          -1
+          -1
+          -1
+          -1
+          -1
+(040)     +72             ( BRA = theta )
+          -1
+          -1
+          +84             ( PLUS )
+          -1
+          +88             ( MINUS )
+          +64             ( blank )
+          -1
+          +0
+          -1
+(050)     -1
+          +12             ( 3 )
+          -1
+          +20             ( 5 )
+          +24             ( 6 )
+          -1
+          -1
+          +36             ( 9 )
+          -1
+          -1
+(060)     +96             ( LESS = delta )
+          -1
+          -1
+          -1
+          -1
+          +112            ( A )
+          +116            ( B )
+          -1
+          +76             ( D )
+          -1
+(070)     -1
+          +108            ( G )
+          +84             ( H )
+          -1
+          -1
+          +56             ( K )
+          -1
+          +92             ( M )
+          +88             ( N )
+          -1
+(080)     +0              ( P )
+          -1
+          -1
+          +48             ( S )
+          -1
+          +28             ( U )
+          +124            ( V )
+          -1
+          -1
+          +24             ( Y )
+(090)     +52             ( Z )
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(100)     -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(110)     -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(120)     -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(130)     -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(140)     -1
+          +512            ( ignore return )
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(150)     -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(160)     +512            ( ignore space )
+          -1
+          -1
+          +44             ( Currency sign = pi )
+          -1
+          -1
+          +96             ( AMPERSAND = delta )
+          -1
+          -1
+          +80             ( KET = phi )
+(170)     +60             ( STAR = erase )
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          +4              ( 1 )
+          +8              ( 2 )
+          -1
+(180)     +16             ( 4 )
+          -1
+          -1
+          +28             ( 7 )
+          +32             ( 8 )
+          -1
+          -1
+          -1
+          -1
+          -1
+(190)     -1
+          -1
+          +72             ( AT = theta )
+          -1
+          -1
+          +120            ( C )
+          -1
+          +12             ( E )
+          +68             ( F )
+          -1
+(200)     -1
+          +32             ( I )
+          +40             ( J )
+          -1
+          +100            ( L )
+          -1
+          -1
+          +36             ( O )
+          -1
+          +4              ( Q )
+(210)     +16             ( R )
+          -1
+          +20             ( T )
+          -1
+          -1
+          +8              ( W )
+          +104            ( X )
+          -1
+          -1
+          +2048		  ( [ )
+(220)     -1
+          +4096	    	  ( ] )
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(230)     -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(240)     -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+          -1
+(250)     -1
+          -1
+          -1
+          -1
+          -1
+(255)     +512            ( ignore erase )
+
+OTAB   			  ( Letter shift range )   
+	  &120		  ( P )
+          &321		  ( Q )
+          &327		  ( W )
+          &305		  ( E )
+          &322		  ( R )
+          &324		  ( T )
+          &131		  ( Y )
+          &125		  ( U )
+          &311		  ( I )
+          &317		  ( O )
+          &312	   	  ( J )
+          -1		  ( figs )
+          &123		  ( S )
+          &132		  ( Z )
+          &113		  ( K )
+          -2		  ( lets )
+          +0		  ( no effect )
+          &306		  ( F )
+          &215		  ( cr )
+          &104		  ( D )
+          &240		  ( sp )
+          &110		  ( H )
+          &116		  ( N )
+          &115		  ( M )
+          &12		  ( lf )
+          &314		  ( L )
+          &330		  ( X )
+          &107		  ( G )
+          &101		  ( A )
+          &102		  ( B )
+          &303		  ( C )
+          &126		  ( V )
+			  ( figure shift range )
+          &60		  ( 0 )
+          &261		  ( 1 )
+          &262		  ( 2 )
+          &63		  ( 3 )
+          &264		  ( 4 )
+          &65		  ( 5 )
+          &66		  ( 6 )
+          &267		  ( 7 )
+          &270		  ( 8 )
+          &71		  ( 9 )
+          +0		  ( no effect )
+          -1		  ( figs )
+          +34		  ( " )
+          &53		  ( + )
+          &50		  ( bra )
+          -2		  ( lets )
+          +0		  ( no effect )
+          &44		  ( $ )
+          &215		  ( cr )
+          &273		  ( ; )
+          &240		  ( sp )
+          +92		  ( pound - output as \ )
+          +172		  ( , )		
+          &56		  ( . )
+          &12		  ( lf )
+          &251	 	  ( ket )
+          &257		  ( / )
+          +163		  ( hash - output as pound )
+          &55		  ( - )
+          &77		  ( ? )
+          &72		  ( : )
+          &275		  ( = )
+
+[ STOP PC OUTSTR QOUT1 QCHOP IFLAG CFLAG ]
+
+STOP      11    OUTSTR
+          8     OUTSTR+1
+          \^ST
+          \OP^
+          \SCT
+          \=\
+          4     PC
+          11    QOUT1
+          8     QOUT1+1
+          +0
+          4     \  ^
+          11    QCHOP
+          8     QCHOP+1
+          8     ;+0
+
+[ OUTSTR QCHOP ]
+
+OUTSTR    +0
+LOOP      0     OUTSTR
+          /4    1         (next word in string)
+          14    8180      (first char)
+          6     +63
+          1     -60       ( \ )
+          7     EXIT
+          1     +60
+          11    QCHOP
+          8     QCHOP+1
+          0     OUTSTR
+          /4    1
+          14    8186
+          6     +63       (second char)
+          1     -60
+          7     EXIT
+          1     +60
+          11    QCHOP
+          8     QCHOP+1
+          0     OUTSTR
+          /4    1
+          6     +63       (third char)
+          1     -60
+          7     EXIT
+          1     +60
+          11    QCHOP
+          8     QCHOP+1
+          10    OUTSTR
+          8     LOOP
+EXIT      0     OUTSTR
+          /8    2
+
+[ CONTIN GET IFLAG ITAB OUTSTR QCHOP CFLAG QOUT1 TAPE IOP ]
+
+BUF       >80
+P         0  BUF
+Q         >1
+W         >1
+IFLAG     -1              ( -1 implies READ)
+CFLAG     +0	          ( -1 inside a comment )
+TAPE	  +0		  ( -1 if EDSAC code )
+
+GET       >1
+	  4	TAPE
+	  9	RAW
+          4     IFLAG
+          9     ;+2
+          8     FAST
+          4     +0
+          5     IFLAG
+READ      4     P
+          5     Q
+          4     +0
+          15    2048
+          7     ;-1
+          0     Q
+          /5    0
+          10    Q
+          2     &12
+          7     ;+2
+          8     ;-8
+          4     P
+          5     Q
+CONTIN
+FAST      0     Q
+          /4    0
+          5     W
+          10    Q
+	  0     W
+          /4    ITAB
+          9     BADCH
+          1	-256
+          7     READ	  ( lf - fetch next line )
+          1	-256	  ( skip space, tab )
+          7     FAST
+          1	-512	  ( stop on halt )
+          7     HALT
+	  1	-1024	  ( [ )
+	  7	COMIN
+	  1	-2048	  ( ] )
+	  7	COMOUT
+	  4	CFLAG	  ( skip if in a comment )
+	  9	FAST
+          /4    ITAB	  
+          14    8191
+EXIT	  0     GET
+          /8    1
+
+RAW	  4	IFLAG	  ( skip blank tape )
+	  9	;+2
+	  8	READCH
+          4	IOP	  ( only position tape if IO1 )
+	  9	;+2
+	  8	READCH
+	  4	+0
+	  5	IFLAG
+	  15 	2048
+ 	  6	+31
+	  7	;-2	  ( skip runout )
+	  8	;+3
+READCH	  4	+0 	  ( read 5 hole tape )
+	  15	2048
+	  1     &20	  ( flip top bit )
+	  14	1
+	  6	&76
+	  8	EXIT
+	  
+HALT	  4	+0
+	  5	CFLAG
+	  11	OUTSTRI
+	  8	OUTSTRI+1
+	  \^TA
+	  \PE
+	  \HAL
+	  \T^\
+	  8	;+0
+
+COMIN     4	CFLAG	  ( complain if already in a comment )
+	  9	BADCH
+	  4     -1
+          5     CFLAG
+          8     FAST
+
+COMOUT    4	CFLAG
+	  7	BADCH	  ( complain if not in a comment )
+	  4     +0
+          5     CFLAG
+          8     FAST
+
+BADCH     4	CFLAG	  ( in a comment? )
+	  9	FAST	  ( ignore ) 
+	  11    OUTSTR
+          8     OUTSTR+1
+          \^IN
+          \VAL
+          \ID
+          \INP
+          \UT
+          \COD
+          \E =
+          \ \
+          4     W
+          1     =/0 0
+          11    QCHOP
+          8     QCHOP+1
+          4     \  (
+          11    QCHOP
+          8     QCHOP+1
+          4     W
+          11    QOUT1
+          8     QOUT1+1
+          +0
+          11    OUTSTR
+          8     OUTSTR+1
+          \)^\
+          8     ;+0	  
+
+[ OCHAR OTAB PUT SHIFT QCHOP QOUT1 ]
+
+SHIFT     >1
+W         >1
+CHAR	  >1
+
+PUT       >1
+          5     CHAR
+	  4	OCHAR
+          1     SHIFT
+          5     W
+          0     W
+          /4    OTAB
+          1     +1
+          7     FIGS
+          1     +1
+          7     LETS
+          /4    OTAB
+          1     =/0 0
+          11    QCHOP
+          8     QCHOP+1
+RET       4	CHAR
+	  5	OCHAR
+	  0     PUT
+          /8    1
+FIGS      4     +32
+          5     SHIFT
+          8     RET
+LETS      4     +0
+          5     SHIFT
+          8     RET
+
+[ A B C D E LEFT RIGHT ]
+
+LEFT      >1
+          4     A
+          1     A
+          5     A
+          4     B
+          1     B
+          9     ;+2
+          8     ;+3
+          10    A
+          6     =15 8190
+          5     B
+          4     C
+          1     C
+          9     ;+2
+          8     ;+3
+          10    B
+          6     =15 8190
+          5     C
+          4     D
+          1     D
+          9     ;+2
+          8     ;+3
+          10    C
+          6     =15 8190
+          5     D
+          4     E
+          1     E
+          9     ;+2
+          8     ;+3
+          10    D
+          6     =8 0
+          5     E
+          0     LEFT
+          /8    1
+
+RIGHT     >1
+          4     E
+          14    8191
+          6     =4 0
+          5     E
+          4     D
+          6     +1
+          7     ;+4
+          4     E
+          1     =8 0
+          5     E
+          4     D
+          14    8191
+          5     D
+          4     C
+          6     +1
+          7     ;+4
+          4     D
+          1     =8 0
+          5     D
+          4     C
+          14    8191
+          5     C
+          4     B
+          6     +1
+          7     ;+4
+          4     C
+          1     =8 0
+          5     C
+          4     B
+          14    8191
+          5     B
+          4     A
+          6     +1
+          7     ;+4
+          4     B
+          1     =8 0
+          5     B
+          4     A
+          14    8191
+          5     A
+          0     RIGHT
+          /8    1
+
+[ A B C D FD HA HB PULSE MA MB XA XN XS XV XY ]
+
+FLAG      >1
+TA        >1
+TB        >1
+TC        >1
+TD        >1
+RB        >1
+RC        >1
+SB        >1
+SC        >1
+
+XA        4     FD
+          7     ;+6
+          4     MA
+          5     TA
+          4     MB
+          5     TB
+          8     ADD
+          4     MA
+          1     A
+          5     A
+          8     PULSE
+
+XS        4     FD
+          7     ;+6
+          4     MA
+          5     TA
+          4     MB
+          5     TB
+          8     SUB
+          4     MA
+          2     A
+          5     A
+          8     PULSE
+
+XV        4     +0
+          8     ;+2
+
+XN        4     +1
+          5     FLAG
+          4     FD
+          7     ;+2
+          8     LONG
+          4     HB
+          7     ;+2
+          8     LONG
+          4     MA
+          12    HA
+          5     TA
+          3     TB
+          4     FLAG
+          7     ADD
+SUB       4     TB
+          2     B
+          9     ;+3
+          5     B
+          8     ;+6
+          6     =15 8191
+          5     B
+          4     -1
+          1     A
+          5     A
+          4     TA
+          2     A
+          5     A
+          8     PULSE
+
+ADD       4     TB
+          1     B
+          9     ;+2
+          8     ;+3
+          10    A
+          6     =15 8191
+          5     B
+          4     TA
+          1     A
+          5     A
+          8     PULSE
+
+LONG      4     MA
+          12    HA
+          5     TA
+          3     TB
+          4     MA
+          12    HB
+          5     RB
+          3     RC
+          4     MB
+          12    HA
+          5     SB
+          3     SC
+          4     MB
+          12    HB
+          5     TC
+          3     TD
+          4     TC
+          1     RC
+          9     ;+2
+          8     ;+3
+          10    TB
+          6     =15 8191
+          5     TC
+          1     SC
+          9     ;+2
+          8     ;+3
+          10    TB
+          6     =15 8191
+          5     TC
+          4     RB
+          9     ;+8
+          1     TB
+          9     ;+2
+          8     ;+3
+          10    TA
+          6     =15 8191
+          5     TB
+          8     ;+7
+          4     -1
+          1     TA
+          5     TA
+          4     RB
+          6     =15 8191
+          8     ;-12
+          4     SB
+          9     ;+8
+          1     TB
+          9     ;+2
+          8     ;+3
+          10    TA
+          6     =15 8191
+          5     TB
+          8     ;+7
+          4     -1
+          1     TA
+          5     TA
+          4     SB
+          6     =15 8191
+          8     ;-12
+
+          4     FLAG
+          7     LADD
+          4     TD
+          2     D
+          9     ;+3
+          5     D
+          8     ;+6
+          6     =15 8191
+          5     D
+          4     -1
+          1     C
+          5     C
+          4     TC
+          2     C
+          9     ;+3
+          5     C
+          8     SUB
+          6     =15 8191
+          5     C
+          4     -1
+          1     B
+          5     B
+          8     SUB
+
+LADD      4     TD
+          1     D
+          9     ;+2
+          8     ;+3
+          10    C
+          6     =15 8191
+          5     D
+          4     TC
+          1     C
+          9     ;+2
+          8     ;+3
+          10    B
+          6     =15 8191
+          5     C
+          8     ADD
+
+XY        4     =8 0
+          5     TC
+          4     +0
+          5     TA
+          5     TB
+          5     TD
+          8     LADD
+
+[ A AD B C D E STOP OUTSTR FD GET HA HB I LEFT PULSE MA MB OCHAR PC PUT RIGHT S
+  XC XE XF XG XH XI XL XO XR XT XU XX XZ ]
+
+FLAG      >1
+W         >1
+
+XE        4     A
+          9     PULSE
+          4     AD
+          5     PC
+          8     PULSE
+
+XR        11    RIGHT
+          8     RIGHT+1
+          4     I
+          6     +2
+          7     ;+2
+          8     PULSE
+          4     I
+          14    8191
+          5     I
+          8     XR
+
+XT        4     +0
+          8     ;+2
+
+XU        4     +1
+          5     FLAG
+          0     AD
+          4     FD
+          7     ;+2
+          8     ;+5
+          4     A
+          6     =/15 8190
+          /5    S
+          8     ;+6
+          4     A
+          /5    S+1
+          4     B
+          1     B
+          /5    S
+          4     FLAG
+          7     ;+2
+          8     PULSE
+          5     A
+          5     B
+          5     C
+          5     D
+          5     E
+          8     PULSE
+
+XI        11    GET
+          8     GET+1
+          5     W
+          0     AD
+          4     FD
+          7     ;+6
+          4     W
+          /5    S+1
+          4     +0
+          /5    S
+          8     PULSE
+          4     W
+          /5    S
+          8     PULSE
+
+XO        0     AD
+          4     FD
+          7     ;+3
+          /4    S+1
+          8     ;+2
+          /4    S
+          14    8179
+          6     +31
+          11    PUT
+          8     PUT+1
+          8     PULSE
+
+XZ        4	+11	  (force out last character)
+	  11	PUT
+	  8	PUT+1
+	  11    OUTSTR
+          8     OUTSTR+1
+          \^BE
+          \LL\
+          8     STOP
+
+XF        0     AD
+          4     FD
+          7     ;+8
+          4     OCHAR
+          14    13
+          6     =/15 0
+          /5    S+1
+          4     +0
+          /5    S
+          8     PULSE
+          4     OCHAR
+          14    13
+          6     =/15 0
+          /5    S
+          8     PULSE
+
+XH        4     FD
+          7     ;+2
+          4     MB
+          5     HB
+          4     MA
+          5     HA
+          8     PULSE
+
+XL        11    LEFT
+          8     LEFT+1
+          4     I
+          6     +2
+          7     ;+2
+          8     PULSE
+          4     I
+          14    8191
+          5     I
+          8     XL
+
+XX        8     PULSE
+
+XG        4     A
+          9     ;+2
+          8     PULSE
+          4     AD
+          5     PC
+          8     PULSE
+
+XC        4     FD
+          7     ;+9
+          4     MB
+          6     HB
+          1     B
+          9     ;+2
+          8     ;+3
+          10    A
+          6     =15 8191
+          5     B
+          4     MA
+          6     HA
+          1     A
+          5     A
+          5     A
+          8     PULSE
+
+[ IFLAG INIT IOP IORD1 IORD2  OCHAR A B C D E HA HB MA MB PC S SHIFT ]
+
+J         >1
+INIT      >1
+          4     -1        (Load initial instructions)
+          5     J
+LOOP      10    J
+          4     J
+          2     +40
+          9     END
+          0	J
+	  4	IOP	  (Initial orders 1 or 2 selected?)
+	  7	;+3
+	  /4	IORD1	  (Initial orders 1)
+	  8	;+2
+          /4	IORD2	  (Initial orders 2)	  
+          /5    S
+          8     LOOP
+END       4     +0
+          5     PC
+          5     A          (Clear registers)
+          5     B
+          5     C
+          5     D
+          5     E
+          5     HA
+          5     HB
+          5     MA
+          5     MB
+          5     SHIFT
+          4     -1
+          5     IFLAG
+          0     INIT
+          /8    1
+
+[ A B AD F STOP OUTSTR FD I MA MB INIT RESET PC S START PULSE XA XC XE
+  XF XG XH XI XL XN XO XR XS XT XU XV XX XY XZ CFLAG QDOUT QCHOP QOUT1 
+  OTAB CFLAG OCHAR IFLAG]
+
+RESET     4     +3
+          5     QDOUT
+          11    OUTSTR
+          8     OUTSTR+1
+          \^^R
+          \ESE
+          \T^\
+          8     PULSE
+
+START     4     +3	  (select teleprinter)
+          5     QDOUT
+	  4	+0	  (clear comment)
+	  5	CFLAG
+	  4	-1	  (force reading new buffer)
+	  5	IFLAG
+	  4	+11	  (preload telprinter with fig shift)
+	  5	OCHAR
+          11    OUTSTR
+          8     OUTSTR+1
+          \^^S
+          \TAR
+          \T^\
+          4     +0
+          5     CFLAG
+          11    INIT
+          8     INIT+1
+PULSE     0     PC
+          10    PC
+          /4    S	  (Fetch next order)
+          5     I
+          6     &7774	  (Mask out address)
+          14    8190
+          5     AD
+          4     I
+          6     +2
+          5     FD	  (Length bit)
+          0     AD
+          7     ;+2	  (Short?)
+          8     ;+5
+          5     MB	  (Short - MA := C[AD], MB := 0)
+          /4    S
+          6     =/15 8190
+          8     ;+6
+          /4    S	  (Long - MA, MB : C[AD,AD+1])
+          14    8191
+          6     =15 8191
+          5     MB
+          /4    S+1
+          5     MA	  
+          4     I
+          14    8179
+          6     +31
+          5     F
+	  0     F
+          /8    ;+1
+          8     BADINS
+          8     BADINS
+          8     BADINS
+          8     XE
+          8     XR
+          8     XT
+          8     XY
+          8     XU
+          8     XI
+          8     XO
+          8     BADINS
+          8     BADINS
+          8     XS
+          8     XZ
+          8     BADINS
+          8     BADINS
+          8     BADINS
+          8     XF
+          8     BADINS
+          8     BADINS
+          8     BADINS
+          8     XH
+          8     XN
+          8     BADINS
+          8     BADINS
+          8     XL
+          8     XX
+          8     XG
+          8     XA
+          8     BADINS
+          8     XC
+          8     XV
+
+BADINS    11    OUTSTR
+          8     OUTSTR+1
+          \^^B
+          \AD
+          \INS
+          \TRU
+          \CTI
+          \ON
+          \\
+          0     F
+          /4    OTAB
+          1     =/0 0
+          11    QCHOP
+          8     QCHOP+1
+	  4	+0
+	  11	QCHOP
+	  8	QCHOP+1
+	  4	F
+	  11	QOUT1
+	  8	QOUT1+1
+	  0 0
+          8     STOP
+
+<! Halt !>

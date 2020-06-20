@@ -1,0 +1,19 @@
+﻿0
+NOTPHI 11   GET
+        8   GET+1
+        0   DNO
+       /5   LEVEL
+       /5   LEVEL+4
+REJOIN 11   GET
+         8    GET+1
+         0    DNO
+         /5   FULL
+         11   GET
+         8    GET+1
+         0    DNO
+         /5   INITVAL
+         /5   POSN
+         11   GET
+         8    GET+1
+         0    DNO
+         /5   MAXV

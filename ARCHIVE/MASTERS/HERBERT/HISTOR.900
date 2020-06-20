@@ -1,0 +1,370 @@
+﻿
+((PROGRAM TO INVESTIGATE HIGH STORE 8180-8191, ANDREW HERBERT, 31 MAY 2015)
+
+(First look to see if enabling initial instructions has any effect
+on content of 8180-8191.  Then see if program can be execute from 
+8180-8191. Finally see what running the initial orders does to 
+locations 8180-8191)
+
+[ HISTOR CHIPF CHIPE CHIPL CHOPC CHOPE CHOPF CHOPL 
+  MESS "MRDIS "MREN MWDIS "MWEN PAUSE "READ
+  SLOPE SLOPL "WRITE ]
+
+HISTOR
+(8)	8     START
+(9)	8     TEST4R
+(10)	8     TEST5R
+(11)	8     TEST7R
+
+START	4     +0	(Initialize i/o)
+        5     CHIPF
+	5     CHOPF
+	4     +1
+	5     CHOPC	(Select 900 telecode)
+	11    MESS
+	8     MESS+1
+	\HIS \TOR \ ST \ART \ING \^
+
+(Write pattern, initial instructions enabled)
+TEST1	11    MWEN
+	8     MWEN+1
+	4     PATTAD
+	11    WRITE
+	8     WRITE+1
+
+(Read back, initial instructions enabled)
+        11    MREN
+	8     MREN+1
+	4     PATTAD
+	11    READ
+	8     READ+1
+	11    PAUSE
+	8     PAUSE+1
+
+(Read back, initial instructions disabled)
+        11    6
+        15    7168
+        11    MRDIS
+	8     MRDIS
+        4     PATTAD
+	11    READ
+	8     READ+1
+	11    PAUSE
+	8     PAUSE+1
+      
+(Write pattern, initial instructions disabled)
+
+TEST2  11     MWDIS
+	8     MWDIS+1
+        4     PATTAD
+	11    WRITE
+	8     WRITE+1
+
+(Read back, initial instructions disabled)
+
+TEST3	11    MRDIS
+	8     MRDIS+1
+	4     PATTAD
+	11    READ
+	8     READ+1
+
+(Read back initial instructions enabled)
+TEST4   11    MESS	(Force i.i. enabled)
+	8     MESS+1
+	\JUM \P T \O 9 \^
+	8    ;+0
+
+TEST4R  11   MESS
+        8    MESS+1
+        \RES \UME \D F \ROM \ 9^
+
+(Read back initial instructions disabled)
+	11   6
+	15   7168
+	11   MRDIS
+	8    MRDIS+1
+	11   READ
+	8    READ+1
+
+TEST5   11   MESS
+	8    MESS+1
+	\JUM \P T \O 1 \0^
+	8    ;+0
+
+TEST5R	11   MESS
+	8    MESS+1
+        \RES \UME \D F \ROM \ 10 \^
+
+(Write initial instructions enabled)
+       11    MWEN
+       8     MWEN+1
+       4     PATTAD
+       11    WRITE
+       8     WRITE+1
+
+(Read back initial instructions disabled)
+      11     6
+      15     7168
+      11     MRDIS
+      8	     MRDIS+1  
+      4	     PATTAD
+      11     READ
+      8	     READ+1
+      11     PAUSE
+      8	     PAUSE+1
+
+(Run program from high store)
+TEST6   11   MESS
+ 	8    MESS+1
+	\PRO 
+	\GRA 
+	\M I 
+	\N H 
+	\IGH 
+	\ ST 
+	\ORE 
+	\^ 
+	11   MWDIS
+	8    MWDIS+1
+	4    PRGAD
+	11   WRITE
+	8    WRITE+1
+	11   MESS
+	8    MESS+1
+	\JUM \PIN \G T \O 8 \180 \^
+	8    8180
+
+TEST6R	11   MESS
+	8    MESS+1
+	\BAC \K F \ROM \ 81 \80^
+	4    PRGAD
+	11   READ
+	8    READ+1
+
+(Read back after running initial instructions)
+ TEST7  11   MESS
+	8    MESS+1
+	\REL
+	\OAD
+	\ PR
+	\OGR
+	\AM
+	\AND
+	\ JU
+	\MP
+	\TO
+	\11^
+	8    ;+0
+
+TEST7R  11   MESS
+        8    MESS+1
+        \RES \UME \D F \ROM \ 11 \^
+	11   6
+	15   7168
+	4    PRGAD
+	11   READ
+	8    READ+1
+	11   MESS
+	8    MESS+1
+	\FIN \ISH \^
+	8    ;+0
+       
+PATTAD  0    ;+1
+	&555500
+	&555501
+	&555502
+	&555503
+	&555504
+	&555505
+	&555506
+	&555507
+	&555510
+	&555511
+	&555512
+        &555513
+
+
+WS	>1
+
+PRGAD	0	;+1
+	4	+42
+        14	0
+	11	CHOPL
+	8	CHOPE	
+	11	MESS
+	8	MESS+1
+	\PRO 
+	\GRA 
+	\M O
+	\K^
+	14	0
+        8       TEST6R
+
+[ WRITE CHOPE CHOPL SLOPE SLOPL ]
+WRITE	>1
+	1     =/4 11
+	5     PATCH
+        4     -11  	(11 locations to overwrite)
+        5     COUNT
+ LOOP   0     COUNT
+ PATCH  >1
+        /5    8191	(To high store)
+        11    SLOPL	(Punch as octal)
+	8     SLOPE+3
+	4     +10
+	11    CHOPL	(Punch newline)
+	8     CHOPE
+	4     COUNT
+	7     ;+3
+        10    COUNT
+        8     LOOP	(Do next location)
+	0     WRITE	(Exit)
+	/8    1   
+
+COUNT	>1
+
+[ READ CHOPE CHOPL SLOPE SLOPL ]
+READ	>1
+	1     =/4 11
+        5     PATCH
+        4     -11   	(11 locations to read)
+        5     COUNT
+ LOOP   0     COUNT
+        /4    8191
+	11    SLOPL	(Punch as octal)
+	8     SLOPE+3
+        0     COUNT
+PATCH	>1
+	/2    8191
+	7     ;+7
+	4     +32	(Punch * if wrong)
+	11    CHOPL
+	8     CHOPE
+	4     +42	('*')
+	11    CHOPL
+	8     CHOPE
+	4     +10	(Punch new line)
+	11    CHOPL
+	8     CHOPE
+	4     COUNT
+	7     ;+3
+    	10    COUNT
+	8     LOOP
+	0     READ
+	/8    1
+
+COUNT	>1
+
+[MREN MESS]
+
+MREN	>1
+        11    MESS
+	8     MESS+1
+	\REA 
+	\D W 
+	\ITH 
+	\ I. 
+	\I. 
+	\ENA 
+	\BLE 
+	\D^
+        0     MREN
+        /8    1
+
+[ MRDIS MESS ]
+
+MRDIS	>1
+        11    MESS
+	8     MESS+1
+	\REA 
+	\D W 
+	\ITH 
+	\ I. 
+	\I. 
+	\DIS 
+	\ABL 
+	\ED^
+        0     MRDIS
+        /8    1
+
+[ MWEN MESS ]
+
+MWEN	>1
+        11    MESS
+	8     MESS+1
+	\WRI 
+	\TE  
+	\WIT 
+	\H I 
+	\.I. 
+	\ENA 
+	\BLE 
+	\D^
+        0     MWEN
+        /8    1
+
+[ MWDIS MESS ]
+
+MWDIS	>1
+        11    MESS
+	8     MESS+1
+	\WRI 
+	\TE  
+	\WIT 
+	\H I 
+	\.I. 
+	\DIS 
+	\ABL 
+	\ED^
+        0     MWDIS
+        /8    1
+
+[ MESS CHOPE CHOPL ]
+
+MESS   >1
+
+        4     -3
+	5     COUNT
+	0     MESS
+	/4    1
+	14    8180
+PUNCH	3     RESID
+	6     &77
+	1     -1
+	7     NEWLIN
+	1     +33
+	11    CHOPL
+	8     CHOPE
+	10    COUNT
+	4     COUNT
+	9     NEXTCH
+	10    MESS
+	8     MESS+1
+NEXTCH	4     RESID
+	14    8181
+	8     PUNCH
+NEWLIN	4     +10
+	11    CHOPL
+	8     CHOPE
+	0     MESS
+	/8    2
+
+COUNT	>1
+RESID	>1
+
+[ PAUSE CHOPE CHOPL MESS ]
+
+PAUSE	>1
+	11    MESS
+	8     MESS+1
+	\TYP \E A \NY  \CHA \RAC \TER \ TO \ CO \NTI \NUE \^
+	15   2052
+	4    +10
+	11   CHOPL
+	8    CHOPE
+	0    PAUSE
+	/8   1
+
+<! halt !>
+	
+

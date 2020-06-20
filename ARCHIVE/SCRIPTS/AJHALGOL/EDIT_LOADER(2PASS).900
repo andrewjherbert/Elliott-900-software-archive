@@ -1,0 +1,152 @@
+﻿
+INS
+
+*PROG LOADER
+*LISTLA
+*NOMEM
+^%,
+
+RTS ^7542
+^7543^%,
+
+DLI *35
+
+RTS 903
+AJH^%,
+
+RTS 25/11/2014)
+18/02/2015))^%,
+
+CLE BA
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+CLE LA +0
+DLI LA +0
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE E5TEST
+RTS +0
+>1^%,
+
+CLE READTH
+RTS +0
+>1^%,
+
+CLE SEARCH
+RTS +0
+>1^%,
+
+CLE SUBSTI
+RTS +0
+>1^%,
+
+CLE SADRES
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE CLENUP
+RTS +0
+>1^%,
+
+CLE TONE
+
+CLE TTWO
+
+CLE [ BA
+CSI BA
+INS
+ BASE^%,
+CSE OPTION
+INS
+NEXTCH ^%,
+CSE READTH
+INS
+PDADD ^%,
+CSE SADRES
+INS
+START ^%,
+
+CLE START
+DLI START
+CLE 8 ST2
+INS
+(-5) ^%,
+CLE 4 131
+INS
+START ^%,
+RTS 131
+BASE^%,
+RTS (ESTABLISH
+(READLB, READOL: ESTABLISH^%,
+RTS 29
+PDADD^%,
+RTS ( S
+(S^%,
+CLE 4 175
+INS
+(+5) ^%,
+RTS 175
+NEXTCH+2^%,
+RTS ( INPUT
+(READAL: INPUT^%,
+
+CLE LOW
+RTS +0
+>1^%,
+
+CLE ST2
+RTS LA
+LA  (READ RELATED TAPE)^%,
+
+CLE HALT
+CLI 5 LOW1
+INS
+	7 	;+2
+ 	8 	ENDIT 	(HALT OTHER THAN 0, I.E. HALT 15 FOR THUNK)
+^%,
+
+CLE NAM1
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE FIRST
+RTS +0
+>1^%,
+
+CLI ENDLOA
+
+COP
+<! halt !>

@@ -1,0 +1,7 @@
+﻿
+((SAMPLE SIR)
+
+LABEL     1     99        (COMMENT)
+          2     LABEL
+          +99             (COMMENT)
+%

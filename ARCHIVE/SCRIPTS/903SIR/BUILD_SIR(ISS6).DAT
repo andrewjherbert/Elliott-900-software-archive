@@ -1,0 +1,239 @@
+﻿c build 1-pass SIR Issue 6 sources
+
+on 903 8K
+
+nonprinting off
+
+c high store version
+
+clear
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
+j 8181
+st 8171
+
+select out tty
+
+c position assembler in high store
+
+at ptr inline
+
+^5500
+*35
+
+<! halt !>
+<!!>
+j 8
+st 1939
+
+c asssemble assembler source code
+at ptr file ../../MASTERS/903SIR/SIR(ISS6).900
+j 9
+st 1939
+j 9
+st 1939
+j 9
+st 1939
+j 9
+st 1939
+j 9
+st 1939
+j 9
+st 1939
+j 9
+st 1939
+j 9
+st 1939
+
+c assemble entry points
+at ptr inline
+
+^8
+[START CONTIN STARTA STARTB STARTC]
+8 START
+8 CONTIN
+8 STARTA
+8 STARTB
+8 STARTC
+8 ;+0
+8 ;+0
+8 ;+0
+8 ;+0
+
+%
+
+<! Halt !>
+<!!>
+
+j 9
+st 1939
+
+select out auto
+
+c use T22-23 @ 4096 to dump out sumchecked binary
+at ptp file SIR(ISS6)(5500).BIN
+at ptr file ../../MASTERS/HERBERT/T22_23(4096).BIN
+j 8181
+st 8171
+at ptr inline
++8
++16
++5500
++8089
+<! halt !>
+<!!>
+j 4096
+de ptp
+st 4209
+
+leg SIR(ISS6)(5500).BIN 903 sir iss 6 [5500] scb
+
+sh t
+
+c verify SIR by assembling a trivial program
+
+clear
+
+select out tty
+
+at ptr file SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptr inline
+
+*3
+[GLOB]
+GLOB 8 GLOB
+%
+<! halt !>
+<!!>
+j 8
+st 6927
+sh t
+
+c lowstore version
+
+clear
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+select out tty
+
+c position assembler in low store
+at ptr inline
+
+^512
+*3
+
+<! halt !>
+<!!>
+j 8
+st 6927
+
+c asssemble assembler source code
+at ptr file ../../MASTERS/903SIR/SIR(ISS6).900
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+j 9
+st 6927
+
+c assemble entry points
+at ptr inline
+
+^8
+[START CONTIN STARTA STARTB STARTC]
+8 START
+8 CONTIN
+8 STARTA
+8 STARTB
+8 STARTC
+8 ;+0
+8 ;+0
+8 ;+0
+8 ;+0
+
+%
+
+<! Halt !>
+<!!>
+
+j 9
+st 6927
+sh t
+
+select out auto
+
+c use T22_23 to dump out sumchecked binary
+at ptp file SIR(ISS6)(512).BIN
+at ptr file ..\..\MASTERS\903UTILITIES\T22_23(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
++8
++16
++512
++3101
+<! halt !>
+<!!>
+j 8179
+de ptp
+st 8113
+
+leg SIR(ISS6)(512).BIN 903 sir iss 6 [512] scb
+
+sh t
+
+c verify SIR by assembling a trivial program
+
+clear
+
+select out tty
+
+at ptr file SIR(ISS6)(512).BIN
+j 8181
+st 8171
+
+at ptr inline
+
+^4096
+*35
+[GLOB]
+GLOB 8 GLOB
+%
+<! halt !>
+<!!>
+j 8
+st 1939
+sh t
+
+c verify output using C4 - should flag an error for location 8
+
+at ptr file SIR(ISS6)(512).BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/903UTILITIES/C4(ISS1).BIN
+j 8181
+st 8179
+
+at ptr file SIR(ISS6)(512).BIN
+j 8
+st 8155
+
+sh t
+

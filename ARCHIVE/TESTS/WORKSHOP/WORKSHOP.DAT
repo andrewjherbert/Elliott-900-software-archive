@@ -1,0 +1,14 @@
+﻿C Demonstrate WORKSHOP in offline mode
+
+on 903
+at ptp file TEMP.900
+nonstop on
+select in ptr
+at ptr file ../../MASTERS/WORKSHOP/OFFLINE.BIN
+j 8181
+at ptr file ../../MASTERS/WORKSHOP/WORKSHOP_EXAMPLES.900
+r
+de ptp
+print TEMP.900
+delete TEMP.900
+sh t

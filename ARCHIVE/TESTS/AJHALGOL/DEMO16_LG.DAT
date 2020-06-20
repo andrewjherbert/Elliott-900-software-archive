@@ -1,0 +1,29 @@
+﻿c curves plotting
+
+on 903 16K
+
+nonprinting off
+
+c translate program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+
+at ptr file ../../MASTERS/HERBERT/CURVES.900
+at ptp file TEST.RLB
+
+c translate in library mode
+j 12
+
+at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
+j 9
+
+c plot lengthways, reduced to one third size
+swapxy
+scale 3
+
+c run program with full 16K
+e 27 16383
+j 10
+
+sh t

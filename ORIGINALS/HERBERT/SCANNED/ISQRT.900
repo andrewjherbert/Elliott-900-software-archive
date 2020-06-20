@@ -1,0 +1,11 @@
+﻿<!  38 !><! 121 !><! 15 >!<!  19 !><!  38 !>dPROCEDURE" LSQRT(A); "INTEGER" "ARRAY" A;
+"BEGIN"
+   "INTEGER" "ARRAY" X,Y[1:N],AA[1:2*N];
+   ADD(Y,ONE,ZERO);
+LOOP:
+   ADD(X,Y,ZERO);
+   EXTEND(AA,A,0); FDIV(Y,AA,X); ADD(Y,X,Y); DIV(Y,2);
+   "IF" DIFFER(X,Y,N-1) "THEN"  "GOTO" LOOP;
+   ADD(A,Y,ZERO)
+"END";
+<! Halt !>

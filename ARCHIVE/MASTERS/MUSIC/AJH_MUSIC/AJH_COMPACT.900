@@ -1,0 +1,116 @@
+﻿
+*19
+
+((AJH MUSIC COMPACTOR 17/01/2014)
+
+(Compacts music tapes in AJH music format)
+
+[CHIPF CHIPL CHIPE CHOPF CHOPL CHOPE]
+
+(Read in & process score up to & inc. <H>)
+
+
+(Entry point)
+START	  4     +0
+          5     CHIPF
+	  5	CHOPF
+	  5	CHARS
+	  8	;+4
+
+NXCHAR 	  4	CHARS
+	  1	-80
+	  9	;+6 
+	  4	+10	  (Output a new line)
+	  11	CHOPL
+	  8	CHOPE
+	  4	+0
+	  5	CHARS
+  	  11    CHIPL	  (Read next character)
+          8     CHIPE
+          1     -20
+          7     HALT      (Test for <H>)
+          1     -16
+          7     SHARP     (Test for $)
+	  1	-7
+          7     PLUS      (Test for +)
+          1     -2
+          7     MINUS     (Test for -)
+	  1	+7
+	  7	AMPSND	  (Test for &)
+          1     -4
+	  7	STAR	  (Test for *)
+	  1	-5
+	  7	SLASH	  (Test for /)
+          1     -1
+          9     NXCHAR    (Test for separator, etc.)
+          1     -16
+          9     TIME      (Test for digit, etc.)
+	  7	TIME
+
+(Otherwise character is letter)
+
+          5     NOTE
+          8     NXCHAR
+
+HALT	  4	+20
+	  11	CHOPL	  (Output halt code)
+	  8	CHOPE
+	  8	;+0
+
+(Move note up or down one octave; or raise by one semitone)
+
+SHARP     4	NOTE	  (Sharp - convert to upper case)
+	  1	+32
+UPDATE	  5	NOTE
+	  8	NXCHAR
+
+PLUS      4	NOTE	  (Raise by an octave)
+	  1	+7
+	  8	UPDATE
+
+MINUS     4	SHIFT	  (Drop by an octave)
+	  1	-8
+	  8	UPDATE
+
+STAR	  4	+42
+OUTPUT	  11	CHOPL
+	  8	CHOPE
+	  10	CHARS
+	  8	NXCHAR
+
+SLASH	  4	+47	  
+	  8	OUTPUT
+
+AMPSND	  4	+38
+	  11	CHOPL
+	  8	CHOPE
+	  10	CHARS
+	  11	CHIPL
+	  8	CHIPE
+	  11	CHOPL
+	  8	CHOPE
+	  10	CHARS
+          8     NXCHAR
+
+(Output note and duration)
+
+TIME  	  5	COUNT
+	  4	NOTE
+	  1	+64
+	  11	CHOPL
+	  8	CHOPE
+	  10	CHARS
+	  4	COUNT
+	  1	+64
+	  11	CHOPL
+	  8	CHOPE
+	  10	CHARS
+	  8	NXCHAR    
+
+(Workspace)
+CHARS	  >1
+NOTE      >1
+SHIFT	  >1
+COUNT	  >1
+
+<! halt !>

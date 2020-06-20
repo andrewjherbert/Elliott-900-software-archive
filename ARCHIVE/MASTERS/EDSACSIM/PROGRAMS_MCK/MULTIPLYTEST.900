@@ -1,0 +1,245 @@
+﻿[Don Hunter Multiply Test.
+
+ Tape labelled: MULTIPLIER TEST 20 Nov 89
+
+ Prints out a run of numbers then falls into a loop.
+
+ Purpose of program not yet understood.
+
+ Andrew Herbert 09/11/2013.]
+
+
+[R9]
+...PKT56KGKT20FVDL8FA40DUDTFI40F
+A40FS39FG@S2FG23FA5@T5@E4@...
+...PKT82K
+[M1]
+GKH2FTFA42FC42FU42FA8FU22FA15@
+AFH8FT45FA10@A2FT10@E34FNFT44K
+	P76F
+	T100K
+...
+	PZGK
+	E82K
+	TD
+[H sequence @100]
+	G16K		[Leave 16 words]
+	TZ
+...
+	PZGK
+	E82K
+	TF
+[N sequence @116]
+	G8K		[Leave 8 words]
+	TZ
+...
+	PZGK
+	T92KT!
+	E82KIF
+[Main routine @124]
+	GK
+	E8@		[Jump over constants]
+[ 1]	TH
+[ 2]    TN
+[ 3]	T16H
+[ 4]	AH
+[ 5]	AN
+[ 6]	A16H
+[ 7]	P2F
+	A1@		[Start]
+	T20@		[Place TH in 20@]
+	A2@
+	T24@		[Place TN in 24@]
+	A4@
+	T96@		[Place AH in 96@]
+	A5@
+	T100@		[Place AN in 100@]
+[16]	TF		[Clear acc.]
+[17]	A17@
+	G1!		[Call in Auxiliary routine 1]
+	AD		
+[20]	TH		[Place result in nH]	
+[21]	A21@
+	G1!		[Call in Auxiliary routine 1]
+	AD
+[24]	TN		[Place result in nN]
+	A24@
+	A2F
+	T24@		[Increment 24@ by 1]
+	A20@
+	A7@
+	U20@		[Increment 20@ by 2]
+	S3@
+	G16@		[Stop after 8 numbers set up, 0N to 14N]
+	HN		
+	V1N		
+	H2N
+	VH
+	H3N
+	N4N
+	H5N
+	N2H
+	H4H
+	V6N
+	H6H
+	V8H
+	H10H
+	N7N
+	H12H
+	N14H
+	U8D		[Store in 8D]
+	S8D
+	L1024F
+	L1024F
+	L256F
+	T10D		[Store in 10D]
+	H1N
+	VN
+	HH
+	V2N
+	H4N
+	N3N
+	H2H
+	N5N
+	H6N
+	V4H
+	H8H
+	V6H
+	H7N
+	N10H
+	H14H
+	N12H
+	U12D		[Store in 12D]
+	S12D
+	L1024F
+	L1024F
+	L256F
+	T14D		[Store in 14D]
+[77]	YF		[eps - rounding digit]
+	S12D
+	E82@		[Goto 82@ if eps>=12D]
+	TF
+	E96@		[Otherwise goto 96@]
+[82]	TD		[0D := eps-12D]	
+	SD		[12D-eps]
+	E87@		[Goto 87@ if 12D>=eps]
+	TF
+	E96@		[Otherwise goto 96@]
+[87]	A10D
+	S14D
+	E92@		[Goto 92@ if 10D >= 14D]
+	TF
+	E96@		[Otherwise goto 96@]
+[92]	TD		[0D := 1D-14D]
+	SD		[Clear]
+	E@		[Restart]
+	TF
+[96]	AH
+	TD
+[98]	A98@
+	G2!		[Print nH]
+[100]	AN
+	TD
+[102]	A102@
+	G2!		[Print nN]
+	A100@
+	A2F
+	T100@		[Increment 100@]
+	A96@
+	A7@
+	U96@		[Increment 96@]
+	S6@
+	G95@		[Repeat]
+	TF
+[113]	A8D
+	TD
+[115]	A115@
+	G2!		[Print 8D]
+	A10D
+	TD
+	A119@
+[119]	G2!		[Print 10D]
+	A12D
+	TD
+[123]	A123@
+	G2!		[Print 12D]
+	A14D
+	TD
+[127]	A127@
+	G2!		[Print 14D]
+	O137@		[Print lf]
+	A77@		[77@ initially YF]
+	E133@
+	ZF
+[133]	TF
+	A113@		[Set 77@ to A8D (<0)]
+	T77@
+	E@		[Continue]
+[137]	&F
+...
+	PZGK
+	E82KPF
+GKE69KT10#@		[Call in R9 to read two numbers to 10@ 12@]
+17179869143F
+3141592621#
+[Auxiliary routine 1]
+[Calculates 10#@ := (10#@ * 12#@) << 16]
+	TZ
+	A3F		[Form return link]
+	T8@
+	H10#@		[ 10@   (.17179869143)]
+	V12#@		[*12@   (.3141592621)]
+	L256F		[Shift left 10 places]
+	L32F		[Shift left  6 places]
+	U10#@		[Place in 10@]
+   	TD		[Copy to 0D]
+[ 8] 	ZF		[Return link]
+	ZF
+	T14Z		[Leave 14 words]
+...
+	PZGK
+	E82KPF
+GKE69KT28#@		[Call in R9 to read one number to 28@]
+10000000000#
+[Auxiliary routine 2]
+	TZ
+	A3F		[Form return link]
+	T22@
+	O23@		[Print cr]
+	O24@		[Print lf]
+	O25@		[Print fig]
+	AD
+	E11@		[Go to 11 if 0D >= 0]
+	O@		[Print -]
+	T6D		[Place 0D in 6D]
+	SD		[Negate 0D]
+	E12@		[Go to 12]
+[11]	O26@		[Print sp]
+[12]	S28#@		[Place in 28@]
+	G17@		[Test if < 0]
+	O27@		[Print 1]
+	TD		[Clear acc.]
+	E20@		[Go to 20@]
+[17]	A28#@		[Saved number]
+	O26@		[Print sp]
+	TD		[Clear Acc.]
+[20]	A20@
+	G3!		[Call in P7 to print 0D]
+[22]	ZF
+	@F		[cr]
+	&F		[lf]
+	#F		[figs]
+	!F		[sp]
+	QF		[Digit 1]
+	T30Z		[Leave 30 words]
+...
+	PZGK
+	E82KPF
+[P7]
+GKA3FT26@H28#@NDYFLDT4DS27@TFH8@S8@T1FV4DAFG31@SFLDUFOFFFSFL4F
+T4DA1FA27@G11@T28#ZPFT27ZP1024FP610D@524D!FO30@SFL8FE22@
+...
+	PK
+	E25K
+	E!PF
+<! Halt !>

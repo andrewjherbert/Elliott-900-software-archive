@@ -1,0 +1,73 @@
+﻿
+                        BOWDLER ERROR INDICATIONS.
+
+                        A: Haltcode found whilst declaring repeditive group,
+                           possibly because an END is missing.
+
+                        B: Not all repeditive groups have been cancelled,
+                           some REP has no matching CAN.
+
+                        C: Haltcode found whilst in comment,
+                           possibly because a closing bracket is missing.
+
+                        D: Haltcode found within a command,
+                           possibly because an insert string
+                           is incorrectly terminated.
+
+                        E: Unrecognised command mnemonic.
+
+                        F: More than 120 characters
+                           in matching string or in line of main tape,
+                           there are no such limits on insert strings.
+
+                        G: Telecode commands not at start of steering tape.
+
+                        H: Another REP found nested in repeditive group,
+                           possibly because an END is missing.
+
+                        I: A CAN found in a repeditive group,
+                           could cause edit-time suicide,
+                           perhaps END was intended.
+
+                        J: A COP found in a repeditive group,
+                           COP cancels all repeditive groups,
+                           so would cause edit-time suicide.
+
+                        K: An END found outside a repeditive group,
+                           perhaps COP or PSC was intended.
+
+                        L: Repeditive group contains no instructions,
+                           END directly follows REP.
+
+                        M: First instruction inside a repeditive group
+                           is not a copy instruction.
+
+                        N: Repeditive group does not cause input to advance,
+                           and so will be executed repeatedly.
+
+                        O: Not exactly one label character following REP or CAN.
+
+                        P: Label following CAN has never been declared by a REP,
+                           or has already been CANcelled.
+
+                        Q: Label following REP has been used in an earlier REP,
+                           and has not yet been CANcelled.
+
+                        R: More than 32 repeditive groups active at once.
+
+                        S: Spurious characters on same line as command mnemonic,
+                           where none is expected.
+
+                        T: No string on same line as command mnemonic,
+                           where one is expected.
+
+                        U: More than 3 characters in escape sequence.
+
+                        V: Spurious characters following the terminating
+                           sequence of an insertion string.
+
+                        W: Haltcode found whilst attempting a match,
+                           steering tape string not found in main tape.
+
+                        X: Steering tape command buffer full.
+<! Halt !>

@@ -1,0 +1,96 @@
+﻿
+BCR5Y;
+"BEGIN""INTEGER"R0,R1,R4,R5,R6,R7;
+  "INTEGER""ARRAY"A[1:59],T[1:12],R[0:7];
+  "REAL"E,RATING;
+  "SWITCH"SS:=LP1,LP2;
+
+  "PROCEDURE"ERROR;"BEGIN"
+    "PRINT"''L@DATA ERROR@;
+    STOP;
+  "END";
+
+  "INTEGER""PROCEDURE"HEX;"BEGIN"
+    "SWITCH"SP:=LIN;
+LIN:  ADVANCE(1);
+    R5:=DECODE(1);
+    "IF"R5<2"THEN""GOTO"LIN;
+    "IF"R5<16"OR"(R5>25"AND"R5<33)"OR"R5>38"THEN"ERROR;
+    R5:=R5-16;
+    "IF"R5>9"THEN"R5:=R5-7;
+    HEX:=R5;
+  "END";
+
+  "INTEGER""PROCEDURE"BYTE;
+    "BEGIN"
+      BYTE:=HEX*16+HEX;
+      ADVANCE(1);
+      "IF"DECODE(1)>1"THEN"ERROR;
+    "END";
+
+  "INTEGER""PROCEDURE"SUM;"BEGIN"
+    R7:=0;
+    "FOR"R4:=4"STEP"-1"UNTIL"1"DO""BEGIN"
+      R7:=R7+A[R1];
+      R1:=R1+1;
+    "END";
+    SUM:=R7;
+  "END";
+
+  "PROCEDURE"LINE;"BEGIN"
+    "PRINT"''L@@;
+    "FOR"R4:=4"STEP"-1"UNTIL"1"DO""BEGIN"
+      E:=7*A[R6]/T[R0];
+      A[R7]:=ENTIER((7*A[R6]+T[R0]/2)/T[R0]);
+      RATING:=RATING-(ABS(A[R7]-E)/48);
+      "PRINT"SAMELINE,A[R7],E;
+      R7:=R7+1;
+      R6:=R6+1;
+    "END";
+  "END";
+
+  "PROCEDURE"CORRECT;"BEGIN"
+    A[R1]:=A[R1]+R[R0];
+    R1:=R1+1;
+    A[R1]:=A[R1]-R[R0];
+  "END";
+
+"COMMENT" MAIN PROG. STARTS HERE;
+
+  READER(3);
+  PUNCH(3);
+  DIGITS(8);
+  "FOR"R6:=1"STEP"1"UNTIL"59"DO"A[R6]:=BYTE;
+
+  R1:=4;
+  "FOR"R0:=1"STEP"1"UNTIL"6"DO"T[R0]:=SUM;
+  R1:=33;
+  "FOR"R0:=7"STEP"1"UNTIL"12"DO"T[R0]:=SUM;
+
+"COMMENT"R[N] & RN ARE COMMON, E.G. R[5]=R5;
+  R[5]:=A[28]+A[32]-A[29]-A[31]+4;
+  R[6]:=ENTIER((2*A[58]-A[57]-A[59]+R[5])/8);
+  R[5]:=ENTIER((2*A[2]-A[1]-A[3]+R[5])/8);
+  "PRINT"''L@CORRECTION FACTORS:@,SAMELINE,R[5],R[6];
+
+  R0:=5;
+  R1:=2;
+LP1: R1:=R1+1;
+    CORRECT;
+  "IF"R1<28"THEN""GOTO"LP1;
+  R0:=R0+1;
+  R1:=32;
+LP2: R1:=R1+1;
+    CORRECT;
+  "IF"R1<56"THEN""GOTO"LP2;
+
+  RATING:=1;
+  R7:=1;
+  R6:=4;
+  "FOR"R0:=1"STEP"1"UNTIL"6"DO"LINE;
+  R6:=33;
+  "FOR"R0:=7"STEP"1"UNTIL"12"DO"LINE;
+  "PRINT"''L2@RATING=@,SAMELI,RATING;
+"END";
+
+<! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !><! Halt !>

@@ -1,0 +1,9 @@
+﻿C algebraic to polish expression translator
+
+on 903 16k
+
+at ptr file ../../MASTERS/HERBERT/POLISH.BIN
+j 8181
+
+at tty console
+j 16

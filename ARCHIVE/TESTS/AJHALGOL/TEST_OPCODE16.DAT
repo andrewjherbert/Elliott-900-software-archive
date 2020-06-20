@@ -1,0 +1,48 @@
+﻿c Algol function codes: procedure call with value integer argument
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin" 
+    "integer" j;
+    "procedure" p(i);  "value" i; "integer" i;
+    "begin"
+	i := 10; 
+"print" i
+    "end";
+    j := 20;
+    p(j);
+    "print" j
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run trivial program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t

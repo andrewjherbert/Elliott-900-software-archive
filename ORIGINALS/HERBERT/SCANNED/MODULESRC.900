@@ -1,0 +1,189 @@
+﻿
+
+MODULE;
+"BEGIN"
+   "CODE" "PROCEDURE" OUT(X); "VALUE" X; "INTEGER" X; "ALGOL";
+  "CODE" "PROCEDURE" INRLB(A); "INTEGER" "ARRAY" A; "ALGOL";
+
+   "INTEGER" J,K,CK1,CK2,CODE,FUN,PP1,PP2;
+
+   "INTEGER" L,M,N,ADDR;
+
+   "INTEGER" "ARRAY" P[1:100];
+
+   "INTEGER" "ARRAY" A[1:2000];
+   "INTEGER" "PROCEDURE" SUM(A,K); "VALUE" K;
+             "INTEGER" "ARRAY" A; "INTEGER" K;
+             SUM:=A[K]+A[K+1]+A[K+2];
+
+   "PROCEDURE" ALTER(A,K,DEC); "VALUE" K,DEC;
+               "INTEGER" "ARRAY" A; "INTEGER" K,DEC;
+   "BEGIN"
+      "INTEGER" ADDR;
+      ADDR:=(A[K+1]-(A[K+1] "DIV" 64)*64)*128 + A[K+2];
+      "IF" ADDR "NE" 8191 "THEN" ADDR:=ADDR-DEC;
+      A[K+1]:=ADDR "DIV" 128 +(A[K+1] "DIV" 64)*64;
+      A[K+2]:=ADDR -(ADDR "DIV" 128)*128
+   "END";
+
+   "SWITCH" S:=L1,L2,L3,L4,L5,L6,L7;
+
+   L:=-1;
+   PP1:=PP2:=CK1:=CK2:=0; INRLB(A);
+
+   "FOR" J:=1,J+1 "WHILE" A[J]=0 "DO"
+   "BEGIN"
+      K:=J+1; A[J]:=-1
+   "END";
+
+LOOP:
+   CODE:=A[K] "DIV" 16;
+   "IF" CODE=0 "THEN"
+   "BEGIN"
+      A[K]:=A[K+1]:=A[K+2]:=-1; K:=K+3; "GOTO" LOOP
+   "END";
+
+   CK1:=CK1+SUM(A,K);
+   "GOTO" S[CODE];
+
+L1:
+L2:
+   "IF" PP1<15 "THEN"
+   "BEGIN"
+      A[K]:=A[K+1]:=A[K+2]:=-1; "GOTO" FIN
+   "END"
+               "ELSE"
+   "BEGIN"
+      FUN:=(A[K] - CODE*16)*2 + A[K+1] "DIV" 64;
+      "IF" CODE=1 "AND" (FUN=9 "OR" FUN=10 "OR" FUN=27) "THEN"
+           "PRINT" PUNCH(3),''L@LABELS AND SWITCHES NOT ALLOWED@,
+           STOP;
+      "IF" CODE=1 "AND" FUN=31 "AND" A[K+2]=9 "THEN"
+      "BEGIN"
+         CK1:=CK1+SUM(A,K+6);  ALTER(A,K+6,672);
+         CK1:=CK1-SUM(A,K+6); "GOTO" ALL
+      "END";
+
+   ADDR:=(A[K+1]-(A[K+1] "DIV" 64)*64)*128+A[K+2];
+   "IF" ADDR=8191 "THEN"
+   "BEGIN"
+      L:=L+2;
+      "IF" L=101 "THEN" "PRINT" PUNCH(3),''L@TOO MANY ARRAYS@,STOP;
+      P[L]:=PP1; P[L+1]:=K
+   "END";
+      "IF" A[K+2]=16 "AND"
+          ((A[K+1]=64 "AND" (A[K]=27 "OR" A[K]=30)) "OR"
+           (A[K+1]=0 "AND" A[K]=30)) "THEN" "GOTO" ALL;
+      "IF" CODE=1 "AND"
+           (FUN=5  "OR"
+           FUN=11 "OR"
+           (FUN>21 "AND" FUN<27) "OR"
+           FUN=28 "OR"
+           FUN=29) "THEN"
+      "BEGIN"
+         ALTER(A,K,672); "GOTO" ALL
+      "END";
+      "IF" CODE=2 "THEN"
+      "BEGIN"
+         ALTER(A,K,15);  "GOTO" ALL
+      "END"
+   "END";
+   "GOTO" ALL;
+
+L3:
+   N:=-1;
+   ADDR:=A[K+1]*128+A[K+2]; CK1:=CK1+SUM(A,K+3);
+   "FOR" M:=1 "STEP" 2 "UNTIL" L "DO"
+   "BEGIN"
+      "IF" ADDR=P[M] "THEN"
+      "BEGIN"
+         M:=P[M+1];
+         "IF" A[K+3]=0 "THEN" N:=PP2 "ELSE" "GOTO" EASY;
+         "GOTO" DONE
+      "END"
+   "END";
+DONE:
+   "IF" PP1<0 "OR" N<0 "THEN" "GOTO" EASY;
+   "IF" A[K+3]=0 "THEN" A[M]:=A[M]+16;
+   A[M+1]:=(A[M+1] "DIV" 64)*64 + N "DIV" 128;
+   A[M+2]:=N-(N "DIV" 128)*128;
+EASY:
+   "FOR" J:=K "STEP" 1 "UNTIL" K+8 "DO" A[J]:=-1;
+   K:=K+9; "GOTO" LOOP;
+L4:
+   "IF" A[K]=76  "AND"
+        A[K+1]=48 "AND"
+        A[K+2]=99 "AND"
+        A[K+3]=27 "AND"
+        A[K+4]=114 "AND"
+        A[K+5]=44 "THEN"
+   "BEGIN"
+      "FOR" J:=K "STEP" 1 "UNTIL" K+11 "DO" A[J]:=-1;
+      K:=K+12; CK1:=CK1+185; PP1:=-1000; "GOTO" LOOP
+   "END";
+
+
+   K:=K+3;
+   CK1:=CK1+SUM(A,K);
+   CODE:=A[K] "DIV" 16;
+   "IF" CODE=2 "THEN"
+   "BEGIN"
+      K:=K+3;
+      CK1:=CK1+SUM(A,K);
+      PP1:=PP1+1; PP2:=PP2+1
+   "END";
+   K:=K+6; "GOTO" JOIN;
+
+L5:
+   "PRINT" PUNCH(3),''L@SKIP CODE ERROR@; STOP;
+L6:
+   CK1:=CK1 - SUM(A,K);
+   "IF" CK1 "NE" (((A[K] -(A[K] "DIV" 16)*16)*128)
+                 +A[K+1])*128+A[K+2] "THEN"
+   "BEGIN"
+      "PRINT" PUNCH(3),''L@CHECKSUM ERROR@; STOP
+   "END";
+   CK1:=0;
+   J:=K;
+AGAIN:
+   J:=J-1;
+   "IF" CK1=6 "THEN" "GOTO" OUTPUT;
+   "IF" A[J] "GE" 0 "THEN"
+   "BEGIN"
+      A[J]:=-1; CK1:=CK1+1
+   "END";
+   "GOTO" AGAIN;
+OUTPUT:
+   "FOR" J:=1 "STEP" 1 "UNTIL" K-1 "DO"
+         CK2:=CK2+("IF" A[J]>0 "THEN" A[J] "ELSE" 0);
+   A[K]:=(CK2 "DIV" 16384);
+   A[K+1]:=(CK2 - A[K]*16384) "DIV" 128;
+   A[K+2]:=CK2 - A[K]*16384 - A[K+1]*128;
+   A[K]:=A[K]+96;
+   A[K+3]:=-2;
+
+
+   "FOR" J:=1 "STEP" 1 "UNTIL" 2000 "DO"
+   "BEGIN"
+      "IF" A[J]=-2 "THEN" STOP;
+      "IF" A[J] "GE" 0 "THEN" OUT(A[J])
+   "END";
+   STOP;
+
+L7:
+   "IF" A[K]=112 "AND" A[K+1]=0 "AND" A[K+2]=15 "THEN"
+   "BEGIN"
+
+      CK1:=CK1-127; CK2:=CK2-127; "GOTO" JOIN
+   "END"
+   "ELSE" "PRINT" PUNCH(3),''L@HALT CODE ERROR@,STOP;
+
+ALL:
+   PP2:=PP2+1;
+FIN:
+   PP1:=PP1+1;
+JOIN:
+   K:=K+3;
+   "GOTO" LOOP
+"END";
+<! Halt !>

@@ -1,0 +1,161 @@
+﻿
+
+((MODE 3 BINARY DUMP, 15/4/70)
+
+[]
+
+↑8001
+
+BEGIN <  4    +1       (Set counts & markers initially)
+         5    J
+         4    -34
+         5    SN
+         4    -8
+         5    COUNT    (For clear-store)
+
+BLANKS   4    -46080   (i.e. -180*256)
+         15   6144
+         1    +256
+         9    ;-2
+
+         5    SUMCHK
+         5    MARKER
+         4    COUNT
+         7    ;+0      (Stop at end of dump)
+
+(-2)     4    +8035
+         5    LINKB
+WDPNCH   4    &114     (Binary marker)
+         15   6144
+(+2)     10   SN
+         0    SN
+         /4   INST+33  (Punch clear-store, loader, & tail)
+
+ENTRYB   5    WORD     (To punch WORD as three characters)
+         14   8178
+         1    &100
+         15   6144     (Leading character)
+         4    WORD
+         14   8185
+         6    &177
+         15   6144
+         4    WORD
+         6    &177
+         15   6144
+         4    WORD
+         0    LINKB
+         /8   1
+
+(8036)   10   COUNT
+         4    COUNT
+         9    WDPNCH
+
+         4    MARKER
+         7    LOADER
+         9    BLANKS
+
+ZERO     4    NOUGHT
+(+1)     5    MARKER   (To show previous word zero)
+ADDONE   10   J
+         4    +8001
+         2    J        (To test if end of store)
+         9    DMPNCH
+         7    DMPEND
+
+         4    NOUGHT
+         11   LINKB
+         8    ENTRYB
+         4    -9
+         5    MARKER
+         5    COUNT    (Count for tail)
+         10   SN
+         8    WDPNCH-2
+
+DMPEND   15   6144     (+0 in accumulator)
+         4    TAIL     (TAIL = 8 8180 inst.)
+         8    DMPNCH+7
+
+DMPNCH   0    J
+         /4   0
+         7    ZERO+1
+         5    WORD
+         4    MARKER
+         7    EXTRAP
+         4    WORD
+
+(+7)     11   LINKB
+         8    ENTRYB
+         1    SUMCHK   (WORD in accumulator)
+         5    SUMCHK
+         8    ADDONE
+
+EXTRAP   15   6144
+         4    WORD
+         5    COUNT    (Temporary store)
+         4    J
+         1    =/4 8191 (WORD = /5 J-1)
+         11   LINKB
+         8    ENTRYB
+         1    SUMCHK   (WORD in accumulator)
+         5    SUMCHK
+         4    COUNT
+         5    MARKER   (Set MARKER non-zero)
+         8    DMPNCH+7 (Temp. store becomes WORD)
+
+LOADER   15   6144
+         15   6144
+         15   6144
+         15   6144
+         1    -15
+         5    COUNT    (Count for loader)
+         2    NOUGHT
+         5    MARKER   (Set MARKER positive)
+         8    WDPNCH
+
+INST     0    8179     (8177; Clear-store)
+         8    8182     (8178)
+         -5            (8179)
+
+         8    8177     (8175)
+         8    8181     (8176)
+         5    2        (8177)
+         10   8177     (8178)
+         8    8175     (8179)
+
+         0    8179     (8177; Loader)
+         8    8182     (8178)
+         -12           (8179)
+
+         4    8169     (8168)
+         5    8175     (8169)
+         4    1        (8170)
+         15   2048     (8171)
+         7    8168     (8172)
+         15   2048     (8173)
+         15   2048     (8174)
+NOUGHT   +0            (8175; also a literal)
+         1    8167     (8176)
+         5    8167     (8177)
+         10   8175     (8178)
+         8    8170     (8179)
+
+TAIL     8    8180     (Extra inst. at end of the dump)
+
+         0    8179     (8177; Tail)
+         8    8182     (8178)
+         -6            (8179)
+
+SUMCHK   +0            (8174; varies during the dump)
+         7    8175     (8175)
+         15   6144     (8176)
+         4    8174     (8177)
+         2    8167     (8178)
+         8    8175     (8179)
+
+MARKER   >1
+J        >1
+SN       >1
+COUNT    >1
+LINKB    >1
+WORD     >1
+<! Halt !>

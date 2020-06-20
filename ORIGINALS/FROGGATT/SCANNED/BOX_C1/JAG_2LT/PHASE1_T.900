@@ -1,0 +1,23 @@
+﻿
+((JAGUAR SECOND-LINE TEST PHASE 1, 16/9/72)
+
+(This program performs both a store-chequerboard test
+and a store-addressing test on a 920M computer with
+a fast 8192-word store; and it may also be used to
+perform a store-retention test. Thus it performs the
+functions of X17, 1/1/71, and X4, 1/1/71, combined.
+The chequerboard and addressing tests are both
+performed with an appropriate bit-pattern and its inverse.
+The whole store from location 2 to location 8176
+is tested using 2 copies of the test program.
+The first copy occupies locations 102 to 201 when in use,
+and tests locations 202 to 8176; during which time
+the second copy is saved in locations 2 to 101.
+The second copy occupies locations 7977 to 8076 when in use,
+and tests locations 2 to 7976; during which time
+the first copy is saved in locations 8077 to 8176.
+Of the remaining locations, 0 & 1 and 8178 & 8179
+are tested by continual use during the test,
+8180 to 8191 are initial instructions not needing test,
+and 8177, the autostart location, is tested as such)
+<! Halt !>

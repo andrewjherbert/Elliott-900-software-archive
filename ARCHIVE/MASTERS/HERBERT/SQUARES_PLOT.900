@@ -1,0 +1,31 @@
+SQUARES;
+
+"BEGIN" "REAL" SIDE, HSIDE, HYP, RAD, ANGLE, X1, X2, Y1, Y2, XX1, XX2, YY1, YY2;
+
+RAD := 6.283;
+
+SETORIGIN(600, 1);
+
+"FOR" SIDE := 10.0 "STEP" -1.0 "UNTIL" 1.0 "DO"
+"BEGIN"
+   HSIDE := SIDE/2.0;
+   HYP := SQRT(HSIDE*HSIDE + HSIDE*HSIDE);
+   ANGLE := RAD*(SIDE/10.0);
+   X1 := SIN(ANGLE)*HSIDE;
+   X2 := -X1;
+   Y1 := COS(ANGLE)*HSIDE;
+   Y2 := -Y1;
+   XX1 := 300.0 + X1 * 50.0; XX2 := 300.0 + X2 * 50.0; 
+   YY1 := 300.0 + Y1 * 50.0; YY2 := 300.0 + Y2 * 50.0;
+   MOVEPEN(XX1,YY1);
+   DRAWLINE(YY1,XX2);
+   DRAWLINE(XX2,YY2);
+   DRAWLINE(YY2,XX1);
+   DRAWLINE(XX1,YY1)
+"END" 
+
+"END"
+
+
+"END"
+<! halt !>

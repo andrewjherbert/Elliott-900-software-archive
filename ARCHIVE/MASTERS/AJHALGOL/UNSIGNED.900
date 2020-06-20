@@ -1,0 +1,83 @@
+﻿
+((UNSIGNED, LEADZERO, REVRTU, REVRTL code procedures - Non LP Version)
+( Andrew Herbert - 07 September 2014 )
+
+(LEADZERO - force leading zeros in place of spaces in digits[n] format)
+(REVRTL   - restore leading spaces in digits[n] format)
+(UNSIGNED - omit sign printing in digits[n] format)
+(REVRTU   - restore sign printing in digits[n] format)
+
+(This code is designed for use with Elliott Issue 6 Algol, Hunter
+Algol and AJH Algol.  It is sensitive to any changes in the coding
+of the INOUT pord.  Three locations are patched. One is defined
+relative to OUTI and the other two relative to OSTSB.  The addresses
+of OUTI and OSTSB are part of the standard Algol interface Algol and
+therefore accessible in all versions.  There are however differences
+in the code of INOUT between versions, mostly to deal with fault 
+handling.  For a new version of Algol it will be necessary to check
+the relative addresses for patching are still valid.)
+
+*1
+
+[ LEADZERO UNSIGNED REVRTL REVRTU ]
+
+OSTSBA=154 	    	  (Address of OSTSB at BN+15)
+OUTIA=171                 (Address of OUTI at BN+32)
+OINT2=9                   (Relative to OUTI)
+
+LEADZERO		  (Print leading zeros rather than spaces)
+          /14   0
+          >1
+          0     OUTIA
+          /4    OINT2+1
+          5     SAVE
+          4     PATCH
+          /5    OINT2+1
+          0     LEADZERO+1
+          /8    1
+UNSIGNED		  (Omit space in sign position for +ve integers)
+          /14   0
+          >1
+          4     OSTSBA	  (Construct address of OTMX9+2)
+          1	-176	  (OTMX9+2 relative to OSTSB)	
+	  5	ADD
+	  0	ADD
+	  /4	0
+          5     SAVE+1
+	  /4	1
+	  5	SAVE+2
+          4     PATCH	  (Use 4 +16 as a NOP)
+          /5	0
+	  /5	1
+          0     UNSIGNED+1
+          /8    1
+REVRTL			  (Revert after LEADZERO)
+          /14   0
+          >1
+          0     OUTIA
+          4     SAVE
+          /5    OINT2+1
+          0     REVRTL+1
+          /8    1
+REVRTU			  (Revert after UNSIGNED)
+          /14   0
+          >1
+          4     OSTSBA	  (Construct address of OTMX9+2)
+          1	-176	  (OTMX9+2 relative to OSTSB)	
+	  5	ADD
+	  0	ADD
+          4     SAVE+1
+          /5    0
+	  4	SAVE+2
+	  /5	1
+          0     REVRTU+1
+          /8    1
+
+SAVE      >3
+ADD	  >1
+
+PATCH     4     +16       (force leading zeros to be output)
+
+%
+
+<! Halt !>

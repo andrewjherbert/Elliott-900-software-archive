@@ -1,0 +1,264 @@
+﻿<! Legible Header  OOO   OOO  OOOOO       O   O OOOOO OOOOO O   O OOOO        OOOOO  OOO   OOO  O   O OOOOO          O  !>
+<! Legible Header O   O O   O    O        O   O O   O   O   OO  O O   O         O   O   O O   O O   O O            OOO  !>
+<! Legible Header O   O O   O   O          O O  O       O   OO  O O   O         O   OO    OO    O   O O            OOO  !>
+<! Legible Header  OOOO O   O   OO          O   OOOO    O   O O O O   O         O    OO    OO   O   O OOOO           O  !>
+<! Legible Header     O O   O                   O       O   O   O O   O         O               O   O O              O  !>
+<! Legible Header     O O   O     O        O O  O       O   O  OO O   O         O      O     O  O   O O              O  !>
+<! Legible Header OOOOO O   O     O       O   O O       O   O  OO O   O         O   O   O O   O OOOOO O              O  !>
+<! Legible Header OOOO   OOO  OOOO        O   O O     OOOOO O   O OOOO        OOOOO OOOO  OOOO  OOOOO OOOOO          O  !>
+
+*+22
+          4     +0
+          5     COUNT
+LOOP      4     +0
+          5     POUND1
+          4     +0
+          5     SHILL1
+          4     +1
+          5     PENCE1
+          4     +960
+          5     FARTHP
+          4     +48
+          5     FARTHS
+          4     +4
+          5     FARTHD
+BEGIN     4     POUND1
+          12    FARTHP
+          3     A1
+          4     A1
+          5     POUND2
+          4     SHILL1
+          12    FARTHS
+          3     A2
+          4     A2
+          5     SHILL2
+          4     PENCE1
+          12    FARTHD
+          3     A3
+          4     A3
+          5     PENCE2
+          4     POUND2
+          1     SHILL2
+          1     PENCE2
+          5     ANS
+          4     PENCE1
+          2     +10
+          7     UPYESD
+          9     UPYESD
+          8     UPNOD
+UPYESD    4     SHILL1
+          2     +10
+          7     UPYESP
+          9     UPYESP
+          8     UPNOP
+UPYESP    4     POUND1
+          12    +10000
+          3     A4
+          4     A4
+          5     NEWP
+          4     SHILL1
+          12    +100
+          3     A5
+          4     A5
+          5     NEWS
+          4     PENCE1
+          1     NEWS
+          1     NEWP
+          5     ANS2
+          8     COMP
+UPNOD     4     SHILL1
+          2     +10
+          7     UPYEP
+          9     UPYEP
+          8     UPNP
+UPYEP     4     POUND1
+          12    +1000
+          3     A6
+          4     A6
+          5     NEWP
+          4     SHILL1
+          12    +10
+          3     A7
+          4     A7
+          5     NEWS
+          4     PENCE1
+          1     NEWS
+          1     NEWP
+          5     ANS2
+          8     COMP
+UPNOP     4     POUND1
+          12    +1000
+          3     A8
+          4     A8
+          5     NEWP
+          4     SHILL1
+          12    +100
+          3     A9
+          4     A9
+          5     NEWS
+          4     PENCE1
+          1     NEWS
+          1     NEWP
+          5     ANS2
+          8     COMP
+UPNP      4     POUND1
+          12    +100
+          3     A10
+          4     A10
+          5     NEWP
+          4     SHILL1
+          12    +10
+          3     A11
+          4     A11
+          5     NEWS
+          4     PENCE1
+          1     NEWS
+          1     NEWP
+          5     ANS2
+COMP      4     ANS
+          2     ANS2
+          7     OUTPUT
+          4     PENCE1
+          1     +1
+          5     PENCE1
+          4     PENCE1
+          2     +12
+          7     UPSHIL
+          9     UPSHIL
+          8     BEGIN
+UPSHIL    4     PENCE1
+          1     -12
+          5     PENCE1
+          4     SHILL1
+          1     +1
+          5     SHILL1
+          4     SHILL1
+          2     +20
+          7     UPPODS
+          9     UPPODS
+          8     BEGIN
+UPPODS    4     SHILL1
+          1     -20
+          5     SHILL1
+          4     POUND1
+          1     +1
+          5     POUND1
+          8     BEGIN
+OUTPUT    4     POUND1
+          2     +12
+          7     B1
+          8     WR
+B1        4     PENCE1
+          2     +8
+          7     B2
+          8     WR
+B2        4     SHILL1
+          2     +12
+          7     B3
+          8     WR
+B3        4     COUNT
+          1     +1
+          5     COUNT
+          4     COUNT
+          2     +150
+          7     OUT2
+          8     LOOP
+OUT2      4     +112
+          15    6144
+          4     +136
+          15    6144
+          4     +136
+          15    6144
+          4     +136
+          15    6144
+          4     +0
+          15    6144
+          4     +248
+          15    6144
+          4     +32
+          15    6144
+          4     +32
+          15    6144
+          4     +248
+          15    6144
+          4     +0
+          15    6144
+          4     +248
+          15    6144
+          4     +168
+          15    6144
+          4     +136
+          15    6144
+          4     +0
+          15    6144
+          4     +112
+          15    6144
+          4     +136
+          15    6144
+          4     +136
+          15    6144
+          4     +136
+          15    6144
+          4     +0
+          15    6144
+          4     +248
+          15    6144
+          4     +32
+          15    6144
+          4     +80
+          15    6144
+          4     +136
+          15    6144
+          4     +0
+          15    6144
+          4     +0
+          15    6144
+          4     +112
+          15    6144
+          4     +136
+          15    6144
+          4     +136
+          15    6144
+          4     +112
+          15    6144
+          4     +0
+          15    6144
+          4     +248
+          15    6144
+          4     +32
+          15    6144
+          4     +80
+          15    6144
+          4     +136
+          15    6144
+FIN       8     FIN
+WR        4     +255
+          15    6144
+          8     WR
+COUNT     +0
+POUND1    +0
+SHILL1    +0
+PENCE1    +0
+POUND2    +0
+SHILL2    +0
+PENCE2    +0
+FARTHP    +0
+FARTHS    +0
+FARTHD    +0
+ANS       +0
+ANS2      +0
+NEWS      +0
+NEWP      +0
+A1        +0
+A2        +0
+A3        +0
+A4        +0
+A5        +0
+A6        +0
+A7        +0
+A8        +0
+A9        +0
+A10       +0
+A11       +0
+%
+<! halt !>

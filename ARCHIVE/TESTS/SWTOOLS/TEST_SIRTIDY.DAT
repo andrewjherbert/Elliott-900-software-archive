@@ -1,0 +1,79 @@
+﻿
+on 903 16K
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+at ptr file ../../MASTERS/SWTOOLS/SIRTIDY.900
+j 11
+
+at ptr file ../../MASTERS/SWTOOLS/CHIOAL.RLB
+j 14
+
+at ptr inline
+
+[]
+()
+
+[SINGLE]
+
+[ GLOBAL	GLOB2                  GLOB3
+GLOB4 GLOB5 GLOB5B
+GLOB6 GLOB7 GLOB8 GLOB9 GLOB10 GLOB11 GLOB12 GLOB13 ]
+
+LAB1 LAB2 LAB3 5 LAB9+15 (Commentary) 4 +5 (More stuff) >1
+>+99
+			>1089
+
+(Comment text) ((Followed by title)
+
+*19 (No plus)
+	*+17 (With plus)
+
+
+*MEM
+*NOMEM
+*TITLE (comment)
+*NOTITLE
+*PROG FRED (Comment)
+
+			^ALPHA+1 (No plus)
+		^+BETA-99 (With plus)
+LONG 4 +0 (here is a very, very long comment that should overflow; with an additional comment that should overflow)
+
+LONGER 4 +1 (here is a very,        very long         comment that should overflow; it contains 
+variable length      gaps; with an additional comment that should overflow         )
+DOLLAR $
+TRIGGR < 14 99
+TRIGGER < 14 888
+< TRIGGER 14 100
+TRIGGER 14 101 <
+'8 99'
+LABEL '8 99'
+LABEL /15 99 (COMMENT)
+4 +15
+4 &123456
+4 \A
+4 \ A
+4 \  A
+4 \BB
+4 \B
+	6	&101010
+(Comment) 10 =/15                  9
+ 11 =2 565
+XXX 8 99(Comment with no space between)
++99
+-.25
+&33
+
+XA	4	:ABSADD/
+
+\AJH
+%
+<! halt !><!!>
+select out tty
+sh t
+
+j 10
+
+sh t

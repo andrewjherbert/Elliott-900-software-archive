@@ -1,0 +1,211 @@
+﻿translate;
+"begin"
+
+"comment" Program to translate music tapes from 903MUSIC to AJHMUSIC;
+
+    "integer" "array" digit[0:33], note[1:45], name[1:200];
+    "integer" lo, hi, mid, i, j, lastf, freq, dur, notes, names, count;
+    "integer" min, max, long, new, total, unit, nn;
+    "real" r;
+
+    "comment"
+	digit is used to hold strings for duration 'digits' 0, 1, 2, ..., @.
+	    N.B. two words per digit to handle {{U}} for @.
+        note is used to hold shift count of each note.
+        duration is used to hold number of cycle count for one second of note playout.
+        name is used to hold textual name of note as 3 word string.
+        lo, mid, hi are used in binary search: mid is index of note at end of search.
+        i, j are used as integer workspace.
+  	lastf is used to record last cycle countread to ensure input in descending order.
+    	freq, dur are used to hold input cycle count and duration.
+        notes, names are used to inde next free slot in note and name respectively.
+	count is used to output a newline after every 20 notes output.
+        transp is used to transpose the output up or down by n semitones.
+        min and max are used to record lowest and highest notes translated.
+        long records longest duration translated.
+	total is number of notes to translate.
+	unit is time of unit beat in 10ms
+	nn is for loop index for copying tune;
+
+    "comment" Diagnostic output to teleprinter;
+    punch(3);
+
+    "comment" Read in table of digits;
+    "print" {{L2}Reading table of digits.{L2}};
+    "for" i := 0 "step" 1 "until" 16 "do" "begin"
+    	"integer" j; j := i+i; instring(digit, j)
+    "end" for;
+
+    "comment" Read in translation table.
+	Consists of a sequence of pairs f s where:
+	f is a integer note shift count, The sequence is terminated if f is negative.
+	s is a string containing the textual form of the note, e.g., {A}.
+	The sequence must be in descending order of f values.;
+
+    "comment" initialize variables;
+    notes := names := 1; lastf := min := 131071; count := long := max := 0;
+    "print" {{L2}Reading translation table.{L2}};
+
+    "comment" read in next triple of translation table;
+ReadTable:
+    "read" freq;  
+    "if" freq < 0 "then" "goto" ReadTune; 
+    "if" freq "ge" lastf "then" "begin"
+	"print" {{L3}Translation table not in descending order.{L3}}; stop;
+    "end" if;
+    lastf := freq;
+    "if" notes > 45 "then" "begin"
+	"print" {{L3}Translation table full{L3}}; stop
+    "end" if;
+    note[notes] := freq; 
+    i := names; instring(name,i);
+    notes := notes+1; names := names+3;
+    "goto" ReadTable;
+   
+    "comment" Translate tune;    
+ReadTune: 
+    "print" {{L2}Load tune tape and jump to 9.{L2}};
+    wait;
+
+    "comment" AJHMUSIC requires an initial newline;
+    "print" punch(1), {{L}};
+
+    "read" total, unit;
+
+    "for" nn := 1 "step" 1 "until" total "do" "begin"
+    	"read" freq, dur;
+
+	"comment" Don't translate "slurs" etc;
+	"if" freq "ge" 100 "then" "goto" EndLoop;
+	"comment" Handle rests;
+	"if" freq = 0 "then" freq := 900;
+
+    	"comment" Binary search for the note;
+    	lo := 1; hi := notes-1;
+Search:  
+    	"if" lo > hi "then" "begin"
+	    mid := lo; "goto" NotFound
+    	"end";
+    	mid := (lo+hi)"div"2;
+    	"if" note[mid] = freq "then" "goto" Found;
+    	"if" note[mid] > freq "then" 
+            lo := mid+1
+    	"else"
+	    hi := mid-1;
+    	"goto" Search;
+
+    	"comment" Here if input not not defined;
+NotFound:
+    	"print" {{L3}Note }, freq, { not defined.{L3}};
+    	stop;
+
+    	"comment" Convert to TJF notation and punch to tape;
+Found:
+
+    	"if" note[mid] "ne" 900 "and" mid < min "then"
+	    min := mid
+    	"else" "if" mid > max "then"
+	    max := mid;
+
+    	"if" mid < 1 "then" "begin"
+	    "print" punch(3), {{L3}Transposition takes}, sameline, freq, 
+				{ below available notes.{L3}};
+            stop
+            "end"
+    	"else" "if" mid > notes "then" "begin"
+	    "print" punch(3), {{L3}Transposition takes}, sameline, freq, 
+				{ above available notes.{L3}};
+            stop
+            "end";
+
+    	punch(1);
+
+    	"comment" Punch note name;
+    	i := mid*3-2; outstring(name,i);
+
+    	"comment" Calculate duration of note;
+    	r := dur; i := r / (20.0 / unit);
+
+    	"comment" Check duration is within range permitted;
+    	"if" i "le" 0 "then" "begin"
+	    "print" punch(3), {{L3}Duration too short in:}, sameline, freq, 
+			  dur, {{L3}}; i := 1;
+    	"end" if;
+    	"if" i > 16 "then" "begin"
+	    "print" punch(3), {{L3}Duration too long (}, sameline, i, { ) in:}, freq, 
+			  dur, {{L3}}; 
+    	"end" if;
+
+    	"comment" Update long if appropriate;
+    	"if" i > long "then" long := i;
+
+    	"comment" Punch duration symbol;
+    	"if" i > 16 "then" "begin" "comment" split into two notes;
+	    j := 32; 
+            i := i-16; 
+            outstring(digit,j);
+            j := mid*3-2; outstring(name,j)
+    	"end"; 
+    	i := i+i; outstring(digit,i);
+
+    	"comment" Insert a new line every 25 notes;
+    	count := count+1;
+    	"if" count "ge" 25 "then" "begin"
+	    "print" {{L}}; count := 0
+    	"end" if;
+    	punch(3);
+EndLoop:
+    "end" for loop;
+
+    "comment" Put halt sequence at end of tape;
+    "print" punch(1), {{LB20}};
+    "print" {{L2}Lowest note: };
+    i := min*3-2; outstring(name, i);
+    "print" sameline, {.{L}Highest note: };
+     i := max*3-2; outstring(name, i);
+    "print" {.{L}Longest duration:}, sameline, long, {.{L2}}
+"end"
+
+{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{:}{;}{<}{=}{>}{?}{{U}}
+
+        rest	900	{[}
+   	D$	38	{d}     
+	E	37	{E}
+	F	36	{F}
+        F$      34      {F$} 
+        G       33      {G}   (guess)   
+        G$      32      {G$}
+	A	31	{H}
+	A$	30	{H$}
+	B	29	{I}
+	C	28	{J}
+	C$	27	{J$}
+	D	26	{K}
+	D$	25	{K$}
+	E	24	{L}
+	F	23	{M}
+	F$	22	{M$}
+	G	21	{N}
+	G$	20	{N$}
+	A^	19	{O}
+	A$^	18	{O$}
+	B^	17	{P}
+	C^	16	{Q}
+	C$^	15	{Q$}
+        D^	14	{R}
+	D$^	13	{R$}
+        E^	12	{S}
+	F^	11	{S$}
+	G^	10	{T}
+	G$^	9	{T$}
+	A^^	8	{U}
+	A$^^	7	{U$}
+	B^^	6	{V}
+	C^^	5	{W}
+		-1
+
+
+<! halt !>
+
+    
+

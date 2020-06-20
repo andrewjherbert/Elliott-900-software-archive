@@ -1,0 +1,1347 @@
+﻿
+DLE [
+INS
+
+*8192 (Clear store)
+*17 (Start at 8, list labels)
+
+((AJH ALGOL 8K TRANSLATOR - 23/03/2015)
+
+(Algol issue 6 translator with Don Hunter, Terry Froggatt and AJH improvements applied)
+
+^%,
+
+CLI [CODL
+INS
+
+(This block modified by AJH)
+
+^%,
+
+RTS 6090
+6230		(Set W to be above literals)^%,
+RTS 6106
+6246^%,
+RTS 6237
+6377^%,
+
+CLE [ADDI
+CII TYPE
+INS
+ UJON UJOFF^%,
+
+CLE 8 START
+INS
+(This block modified by AJH)
+
+^%,
+CLI 8 ;+0
+DLE 8 SETPERM
+RTS DUMP
+Freeze names and dump^%,
+CLE REPMOD
+INS
+	8	UJON	(Enable call-by-name thunks)
+	8	UJOFF	(Disable call-by-name thunks)
+^%,
+CLE >+96
+DLE OPTION
+RTS +0
+>1^%,
+
+CLE PERM
+RTS +7731
++7733^%,
+
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+DLI 0 7995
+INS
+ +7997 (First entry of Namelist)
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+
+CLE BUFLAG
+RTS +0
+>3
+^%,
+DLE LINE
+
+RTS +0
+>1^%,
+
+CLE LASTCH
+RTS +0
+>2
+^%,
+DLI +0
+
+CLE GRPCOD
+RTS +0
+>1^%,
+
+CLE CONSTA
+RTS +0
+>2
+^%,
+
+DLE DELIM
+RTS +0
+>2
+^%,
+
+DLE LASTDL
+RTS +0
+>2
+^%,
+DLE CODE
+
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE NAM
+RTS +0
+>4
+^%,
+DLE P
+
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE 0 W+1
+INS
+(-1)^%,
+
+CLE TABLE
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS 7 4156
+&170003	(Convert \ to old pound on input)^%,
+RTS /8 64
+&300040	(Permit ` on input, convert old ` to new @ on output)^%,
+RTS /11 3136
+&666007	(Convert open curly bracket to ' on output )^%,
+RTS 11 4288
+&506300	(Convert old pound to new \ on output)^%,
+RTS /11 5184
+&672040	(Convert close curly bracket to @ on input)^%,
+
+CLI [PRINT
+CLI PRINT
+RTS +0
+>1^%,
+
+CLE [PCHAR
+INS
+
+^%,
+RTS +0
+>1^%,
+
+CLI [LISTAD
+CLI LISTAD
+RTS +0
+>1^%,
+
+CLI [REPORT
+CLI REPORT
+RTS +0
+>1^%,
+CLE INSERT
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+CLI &62000
+DLE  [FAIL
+INS
+
+^%,
+
+CLI [FAIL
+CLE FNO
+INS
+
+(This block modified by AJH)
+
+^%,
+CLE FNO
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>+1^%,
+RTS 9 RCLAPS
+9 P101^%,
+CLE OK
+INS
+P101
+	0	NLP
+	/4 	0
+	5	P112
+	/4	1
+	5	P112+1
+	11	PRINT
+	8	PRINT+1
+	0	P110
+	8	RCLAPS
+P110	+11
+	+7
+P112	+0
+	+0
+	&400000
+
+^%,
+CLE WMESS
+RTS +0
+>1^%,
+CLI CHAT
+CLI +0
+DLE [TAKCHA
+INS
+
+^%,
+
+CLI [TAKCHA
+CLI TAKCHA
+RTS +0
+>1^%,
+
+CLI [IDENT
+CLI ADDCHA
+RTS +0
+>1^%,
+CLI IDENT
+RTS +0
+>1^%,
+
+CLI [EVALNA
+RTS +0
+>1^%,
+CLI T
+CLI +66101
+CLI -1
+DLE [NUMBER
+INS
+
+^%,
+
+CLI [NUMBER
+CLI STAND
+RTS +0
+>1^%,
+
+CLI POWER
+RTS +0
+>1^%,
+
+CLE PWS
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI NUMBER
+RTS +0
+>1^%,
+CLE SIGN
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI [BCR
+RTS +0
+>1^%,
+
+CLI [COMPIL
+RTS +0
+>1^%,
+
+CLI [COMP
+CLI [COMP2
+RTS +0
+>1^%,
+
+CLE [FOMPIL
+CII FAIL
+INS
+ FPARAM
+^%,
+CII OPTION
+INS
+ NOTIN^%,
+CLE FOMPIL
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+RTS 8 FAIL-107
+8 NOTOWN	(SUPPRESS ERROR 107)^%,
+CLI NOTIN
+RTS 4 =/5 0
+4 FPARAM	(SHARE PART OF FOMPIL)^%,
+CLI NOTOWN
+CLI 8 EXIT
+INS
+FPARAM	/5 0
+^%,
+
+CLI [FOMCOM
+RTS +0
+>1^%,
+
+CLI [RESTO
+RTS +0
+>1^%,
+
+CLI [UNSTAK
+RTS +0
+>1^%,
+
+CLI [EXP
+RTS +0
+>1^%,
+
+CLI [PAMTAB
+
+CLE [PRAMCH
+RTI C
+C CHKSUM^%,
+RTI FOMCOM
+FOMCOM FOMPIL FPARAM^%,
+RTI I
+I M NAMOK NOTIN^%,
+RTS RESTO Q
+Q RESTO SP^%,
+CLE PRAMCH
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+RTS 9 EX
+9 	MAYBE	(TEST FOR VALUE OR NAME)^%,
+CLE 4 PRMCOU
+INS
+	/4	2	(MUST FETCH PARAMETER WORD FROM USUAL PLACE WITH RESPECT TO PROCPO)
+	6	=8 0
+	7	NORMAL	(USUAL ROUTE)
+TESNAM	4	PRMCOU	(NOW FOLLOW RECURSIVE ROUTE)
+	1	PRMCOU
+	1	PRMCOU
+	1 	PRMCOU
+	2	PROCPO
+	5	W+1
+	0	W+1
+	/4	2
+	6	=8 0
+	5	W+7	(STORE VALUE BIT)
+	/4	3
+	6	&177760
+	1	W+7
+	8	FMT	(ADD VALUE BIT TO TYPE PATTERN)
+NORMAL	^%,
+CLE 2 PROCPO
+INS
+(+11)	^%,
+CLI FMT
+CLI 8 JOIN
+INS
+MAYBE
+	4	M
+	7	REXIT	(DO NOTHING FOR CALL BY VALUE)
+	8	EX
+^%,
+CLI EX
+RTS 4 ADDI+3
+1	+1^%,
+RTS 8 FMT
+8	PATCH^%,
+CLE &106100
+INS
+EXTAB ^%,
+CLI &105100
+INS
+PATCH
+	7	;+3
+	4	ADDI+3
+	8	FMT
+	4	TYPBOX
+	7	;+3
+	4	EXTAB
+	8	FMT
+	4	EXTAB+1
+	8	FMT
+^%,
+CLI ITOP
+RTS 8 EXIT
+8 	TEST2^%,
+CLI ITOR
+RTS 8 EXIT
+8	TEST2^%,
+CLI TEST
+RTS 7 EXIT
+7	TEST2^%,
+CLE FRED
+RTS +0
+>1^%,
+CLI COMBIN
+RTS 8 FAIL-5
+8 ITOP^%,
+CLI CZERO
+CLE 4 W+8
+DLI 7 FAIL-5
+CLI CONE
+CLE 4 W+8
+DLI 7 FAIL-5
+CLI WTWO
+CLE 4 W+8
+DLI 7 FAIL-5
+CLI 2 &105100
+RTS EXIT
+TEST2^%,
+CLI PR
+RTS EXIT
+TEST2^%,
+CLI PI
+RTS EXIT
+TEST2^%,
+CLI WFOUR
+CLE 4 W+8
+DLE 4 ADDI+2
+RTS ADDI+2
+ADDI+2	(SWITCH CALL)^%,
+RTS 8 EXIT
+8	TEST2^%,
+CLI COMEX
+RTS 8 EXIT
+8	TEST2^%,
+CLI PAGTWO
+RTS 8 N1
+8 NEWN5^%,
+RTS 8 N4
+8 TEST1^%,
+CLE 8 N5
+DLI 8 COMEX
+INS
+	8	NEWN5
+	8	NEWN6
+	4	W+14
+	2	+5	
+	7	P35	(IPZ OR BPZ)
+	4	=1 0
+	8	HERE
+TEST1
+	4	ADDI+3
+	6	=2 0
+	7	;+2	(PROCEDURES)
+	8	NAMOK
+	0	I
+	/4	2
+	6	=2 0
+	7	;+2
+	8	FAIL-89	(INTRINSIC FUNCTIONS NOT ALLOWED)
+	/4	2
+	6	=1 0
+	7	NAMOK	(INTERNAL)
+	4	C	(EXTERNAL)
+	5	FPARAM
+	11	FOMPIL
+	8	NOTIN+3
+	4	=/5 0
+	5	FPARAM
+	4	W+10
+	7	EXIT
+	8	FAIL-5
+TEST2
+	4	W+8
+	7	CALL	(BY NAME)
+	8	EXIT	(BY VALUE)
+P35	
+	0	I
+	/4	2
+	6	=1 0
+	7	EXCOM	(USUAL ROUTE)
+	4	C
+	5	FPARAM
+	11	FOMPIL
+	8	NOTIN+3
+	4	=/5 0
+	5	FPARAM
+	8	EXIT
+^%,
+CLI ARRY
+RTS 4 =13 0
+8	INDA^%,
+CLE N4
+DLE NZ
+
+CLE NAMOK
+CSI W+10
+INS
+	(ANOTHER ACTUAL FORMAL PAIR TOLERATED)^%,
+RTS 8 FAIL-5
+8	MATCH^%,
+CLI 4 =1 0
+DLI 4 =3 0
+DLI 8 COMEX
+INS
+	8	;+7
+	4	W
+	8	;+5
+
+NEWN5
+	4	W+10
+	7	;+2
+	8	FAIL-5
+	4	=/1 0
+	11	COMP
+	8	COMP+2
+	8	EXIT
+MATCH
+	2	&717760
+	7	NAMOK+3
+	8	FAIL-5
+NEWN6
+	4	W+14
+	2	+6
+	7	P35	(RPZ)
+	4	=3 0
+HERE
+	5	W
+	4	W+10
+	7	NEWN5-2
+	8	N2
+CALL
+	0	W+11
+	/4	TAB1-5
+	5	L1
+	/4	TAB2-5
+	5	L2
+	0	SP
+	/4	1
+	14	8188
+	5	ADDR
+	4	+127
+	2	CHKSUM
+	5	CHKSUM
+	11	COMPIL
+	8	COMPIL+1
+	&441111
+	/15 20
+	/15 17
+	/7 16
+L1	>1	(IFUN OR RFUN)
+	11	COMPIL
+	8	COMPIL+1
+	&232171
+ADDR	>1	(NOP ADDRESS)
+L2	>1	(TRAP)
+	+15	(LOADER LINKAGE)
+	4	W+11
+	2	+5
+	7	EXIT+6
+	8	EXIT
+TAB1
+	/12 16
+	/13 16
+	/12 16
+TAB2
+	/0 9
+	/0 2
+	/0 1
+INDA
+	4	W+8
+	7	;+2
+	4	=1 0
+	1	=12 0
+	8	ARRY+8
+^%,
+
+CLI [ADDI
+CLE ADJI 
+RTS +0
+>1^%,
+
+CLE [SEARCH
+RTS DECTYP
+DECL DECTYP^%,
+RTS EXPTYP
+E EXPTYP^%,
+RTS NAM
+NAM NAMOK^%,
+CLE SEARCH
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+CLI FIN
+RTS 8 FAIL-18
+P8
+	4	LASTDL	(IS LAST DELIMITER A GOTO QUERY)
+	2	&202000	("GOTO")
+	7	P15
+	4	DELIM	(HAVE WE GOT A : QUERY)
+	2	&064000	(TYPE=LABEL)
+	7	P15
+P124
+	4	PROC
+	7	FAIL-18
+	4	E
+	7	FAIL-18
+P15
+	4	W
+	7	P20
+	2	+3
+	7	FILLIN
+	8	FAIL-18
+P20
+	4	DECTYP	(MUST NOT BE IN ARRAY DECLARATION)
+	7	;+2
+	8	FAIL-18
+P23
+	4	SEARCH	(SAVE RETURN ADDRESS)
+	5	P1
+	4	&100200	(TYPE=LABEL)
+	5	DECTYP
+	4	+4
+	11	DECL
+	8	DECL+1
+	4	P1	(RESTORE RETURN ADDRESS)
+	5	SEARCH
+	4	+0
+	5	DECTYP
+	8	SEARCH+1	(RESUME SEARCH[W] WITH W=0)
+P1	>1
+^%,
+CLI NOCBIT
+CLE 0 I
+DLE 4 ADDI+3
+CSI ADDI+3
+INS
+	(STILL ANOTHER ACTUAL-FORMAL PAIR TOLERATED)^%,
+
+CLI [CHECK
+RTS +0
+>1^%,
+CLI 0 CODL
+DLE [SECODL
+INS
+
+^%,
+
+CLI [SECODL
+
+CLI CONSTA
+DLE SECODL
+RTS +0
+>1^%,
+
+CLI [STACK
+RTS +0
+>1^%,
+
+CLE[TAKID
+CLE TAKID
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+CLE AF
+RTS 4 =/8 0
+4	=/9 0^%,
+CLE L1
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+CLI OTHER
+CLI 8 AA
+RTS 8 AB
+8	NOPARM^%,
+RTS 8 AA
+8	FAIL-14^%,
+RTS 8 AB
+8	FAIL-14	(VALUE CALL WHEN NOT A FORMAL PARAMETER)^%,
+RTS 8 AF
+8	ARR+2^%,
+CLE AB
+INS
+NOPARM
+	4	ADDI+3	(GIVE FAILURE FOR PARAMETERLESS)
+	2 	&100120
+	7	FAIL-25
+^%,
+
+CLI [TAKE
+RTS +0
+>1^%,
+
+CLI [TYPCHK
+RTS +0
+>1^%,
+
+CLI [UPDATE
+RTS +0
+>1^%,
+
+CLI [ACTOP
+RTS +0
+>1^%,
+
+CLI [ARRBND
+RTS +0
+>1^%,
+
+CLI [DEC
+CLE DEC
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+CLI EXIT
+CLI 5 BN+4
+DLE 8 ;+4
+RTS 7 TWO
+7 P133^%,
+CLE L2
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+CLE L4
+RTS +0
+>1^%,
+CLI 8 COM
+INS
+P133
+	4	BN+4
+	5	BN
+	5	L2
+	8	TWO
+^%,
+
+CLI [DECL
+RTS +0
+>1^%,
+
+CLI [ENDSTA
+RTS +0
+>1^%,
+
+CLI [FORCOM
+RTS +0
+>1^%,
+
+CLI [FCLAPS
+RTS C
+BN C CNL CODL DELIM^%,
+RTS NLP
+NCLAPS NLP P46 P56^%,
+CLE FCLAPS
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+RTS /5 4
+P137
+	/5	4
+	/4 	5
+	5	BN^%,
+CLE EXIT
+DLE W0
+INS
+EXIT
+	4	DELIM
+	2	=9 1024
+	7	P117	("ALGOL")
+	4	+4
+
+P56
+	2	NLP
+	5	P46+1
+P58
+	4	P46
+	2	P46+1
+	0	CNL
+	/9 	P115	(EXIT)
+	0	P46+1
+	/4	0
+	9	P66	(MUST BE A NAME)
+P97
+	4	+4
+	2	P46+1
+	5	P46+1
+	8	P58
+P66
+	/4	3
+	6	&177760
+	2	&100200
+	7	P71	(LABEL)
+        8       P97
+P115
+	0	NCLAPS
+	/8	1
+P117
+	0	FCLAPS
+	/8	1
+P71
+	/4	2
+	6	+8191
+	5	W
+	0	W
+	/4 	CODL
+	7	P78	(SO TRANSFER)
+	8	P97
+P78
+	4	+4
+	2	NLP
+	5	NLP
+	0	P46+1
+	/4	0
+	0	NLP
+	/5	0
+	0	P46+1
+	/4	1
+	0	NLP
+	/5	1
+	0	P46+1
+	/4	2
+	0	NLP
+	/5 	2
+	0	P46+1
+	/4	3
+	0	NLP
+	/5	3
+	8	P97
+
+P46	+0		(I)
+	+0		(J)
+
+^%,
+
+CLI [STATRM
+RTS +0
+>1^%,
+
+CLI [INOUT
+CLI SETPRO
+RTS +0
+>1^%,
+
+CLE [NCLAPS
+RTS NLP
+NLP P46 P56^%,
+RTS RCLAPS
+RCLAPS SP^%,
+CLE NCLAPS
+INS
+
+(Block modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+RTS ;+3
+P49^%,
+CLE 5 NLP+2
+DLE RETURN
+INS
+P48
+	5	NLP+2
+P49
+	4	NLP
+	5	P46
+^%,
+RTS FAIL-79
+P52^%,
+CLE 0 NCLAPS
+DLI /8 1
+INS
+	4	+8
+	8	P56
+P52
+	4	SP
+	2	SP+1
+	7	FAIL-79
+	8	END
+^%,
+
+CLE (*)
+DLI (*)
+
+CLI [ARRAY
+CLI [BOOL	
+
+CLE [BEGIN
+RTS DECSTA
+DEC DECSTA^%,
+RTS STACK
+SP STACK^%,
+CLE 8 OUT
+INS
+P141
+	4	+3
+	1	SP+1
+	2	SP
+	7	;+2	(FIRST TIME)
+	8	OUT
+	4	+2
+	11	DEC
+	8	DEC+1
+^%,
+
+CLI [DO	
+CLE LIV
+RTS +0
+>1^%,
+CLE L2
+RTS +0
+>1^%,
+
+CLI [ELSE
+CLE ALIVO
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+CLE LIVE
+RTS +0
+>1^%,
+
+CLI [END
+CLI [FOR
+CLI [GOTO
+
+CLI [IF
+CLE ALIVO
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI [PROCED
+
+CLI [STEP
+CLE STEP
+INS
+
+(This block modified by AJH)
+
+^%,
+CLI NTL
+CLI 7 FAIL-80
+DLI 8 COMBIN
+INS
+	4	=/15 25	(STEP2)
+	5	ALIVO
+	4	=12 3072
+	8	JOIN
+^%,
+CLE ALIVO
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI [SWITCH
+
+CLI [THEN
+RTS TAKE THEN
+TAKE^%,
+
+CLI [BECOMS
+CLE ALIVE
+RTS +0
+>1^%,
+
+CLE [SEMICO
+RTS COMPIL
+COMPIL CNL^%,
+RTS OUT
+P46 OUT^%,
+CLE SEMICO
+INS
+
+(Block modified by AJH)
+
+^%,
+RTS PROCBG
+P119^%,
+CLE NLMASK
+INS
+P119
+	4	+2
+	5	CNL
+	4	NLP
+	5	P46
+	8	PROCBG
+^%,
+CLE LIV
+RTS +0
+>1^%,
+
+CLI [AOP
+CLE AOP
+INS
+
+(This block modified by AJH)
+
+^%,
+CLI MZ
+RTS 8 OUT
+4 LASTDL
+	5 DELIM
+	8	OUT
+^%,
+CLE ESAVE
+RTS +0
+>1^%,
+
+CLI [RLT
+
+CLI [LOGOP
+
+CLI [LSBRAK
+CLE LA
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE LP
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE ALIVE
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLI 8 TWO
+DLE [RSBRAK
+INS
+
+^%, 
+
+CLE COLON
+CLI UPDATE
+CLI 8 OUT
+INS
+
+[UJ COMPIL OUT PP SP UJON UJOFF]
+
+(New code by AJH)
+
+UJ	0	SP	(STACK ADDRESS OF POTENTIAL)
+	/4	1	(JUMP AROUND THUNK)
+	14	8188
+	4	PP
+	14	4
+	/5	1
+	4	=8 1
+	1	PP	(COMPILE UJ ;+1 as NOP)
+UJPAT	5	;+4
+	11	COMPIL
+	8	COMPIL+1
+	&112000
+	+0
+OFF	8	OUT
+ON	5	UJPAT+4
+UJON	4	ON
+	8	;+2
+UJOFF	4	OFF
+	5	UJPAT
+	8	;+0
+^%,
+
+CLE [COMMA
+CII INOUT
+INS
+ LOKTYP^%,
+RTS TYPBOX
+UJ^%,
+CLE COMMA
+INS
+
+(This block modified by AJH)
+
+^%,
+RTS 8 OUT
+8	UJ^%,
+RTS 1 TYPBOX
+1 LOKTYP^%,
+CLI MAMP
+CLI 8 OUT
+DLE [LRBRAK
+INS
+
+^%,
+
+CLE [LRBRAK
+RTS TS
+TS UJ^%,
+CLE LRBRAK
+INS
+
+(This block modified by AJH)
+
+^%,
+CLE L1
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS 8 OUT
+8	UJ^%,	
+
+CLI [RRBRAK
+CLE RRBRAK
+INS
+
+(This block modified by AJH)
+
+^%,
+CLI /5 3
+INS
+	6	&177760
+	5	ADDI+3
+^%,
+CLE L1
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+
+CLE [AOP
+CSI [
+INS
+OUT ^%,
+RTS OUT OUT2
+OUT2^%,
+CLI CHKINO
+RTS +0
+>1^%,
+
+CLI [WAIT
+RTS +0
+>1^%,
+
+CLI [BLANKS
+RTS +0
+>1^%,
+
+CLI [PUNCHA
+RTS +0
+>1^%,
+
+CLI [PUNGRP
+RTS +0
+>1^%,
+
+CLE [GETCHA
+CLE RW
+INS
+
+(Modified by AJH)
+
+^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+RTS +0
+>1^%,
+CLE ACTAB
+INS
+
+DELETE	4	RW+3	(TEST FOR _ FACILITY)
+	2	+95
+	7	FILBUF
+	8	VOID
+^%,
+RTS VOID
+DELETE^%,
+
+CLI [ENDPRO
+CLE PUNGLB
+RTS +0
+>1^%,
+
+COP
+
+<! halt !>

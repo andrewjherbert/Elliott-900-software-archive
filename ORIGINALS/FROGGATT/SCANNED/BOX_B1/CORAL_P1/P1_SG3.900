@@ -1,0 +1,772 @@
+﻿
+($ PASS 1   SEGMENT 3)
+
+
+
+
+
+
+
+
+
+
+
+
+(! SIDOUTPUT1)
+
+"OCTAL"(401000);
+/4,0;
+"OCTAL"(401004);
+/4,0;
+"OCTAL"(401010);
+8,"SELF"+7;
+12,F1;
+0,55;
+0,55;
+12,F81;
+12,F20;
+/0,55;
+"OCTAL"(003020);
+"OCTAL"(004024);
+"OCTAL"(400014);
+8,"SELF"+4;
+/8,"SELF"+414;
+8,"SELF"+417;
+/8,"SELF"-6;
+"OCTAL"(003030);
+"OCTAL"(204072);
+"OCTAL"(405000);
+8,"SELF"+5;
+/8,"SELF"+18;
+8,"SELF"+20;
+/8,"SELF"+34;
+/8,"SELF"+398;
+"OCTAL"(203024);
+"OCTAL"(205022);
+"OCTAL"(611074);
+0,20;
+8,"SELF"-19;
+/0,21;
+12,F22;
+0,18;
+8,"SELF"-23;
+0,19;
+/12,F23;
+12,F25;
+0,60;
+/12,F24;
+"OCTAL"(002020);
+"OCTAL"(400034);
+/8,"SELF"-24;
+"OCTAL"(601072);
+12,F1;
+0,58;
+12,F5;
+8,"SELF"+2;
+/12,F4;
+"OCTAL"(203072);
+"OCTAL"(005000);
+"OCTAL"(400040);
+0,58;
+12,F6;
+/8,"SELF"-5;
+8,"SELF"-56;
+12,F6;
+
+
+
+
+
+
+
+
+
+
+/8,"SELF"-8;
+"OCTAL"(002044);
+"OCTAL"(603022);
+12,F3;
+/8,"SELF"+7;
+12,F7;
+0,18;
+8,"SELF"+11;
+0,19;
+12,F12;
+/8,"SELF"-27;
+"OCTAL"(202024);
+"OCTAL"(400034);
+0,20;
+12,FOSQ;
+8,"SELF"+3;
+0,21;
+/12,FCSQ;
+"OCTAL"(401050);
+12,F8;
+8,"SELF"+3;
+12,F9;
+/8,"SELF"+338;
+"OCTAL"(003020);
+"OCTAL"(004060);
+"OCTAL"(400054);
+8,"SELF"-65;
+/8,"SELF"+3;
+8,"SELF"+6;
+/8,"SELF"-6;
+"OCTAL"(002060);
+"OCTAL"(400054);
+8,"SELF"+2;
+/8,"SELF"-10;
+"OCTAL"(002004);
+"OCTAL"(402064);
+/8,"SELF"-92;
+12,F1;
+/8,"SELF"+1;
+"OCTAL"(222040);
+"OCTAL"(223041);
+"OCTAL"(230042);
+"OCTAL"(232043);
+"OCTAL"(233044);
+"OCTAL"(234045);
+"OCTAL"(235046);
+"OCTAL"(241047);
+"OCTAL"(246050);
+"OCTAL"(247053);
+"OCTAL"(250056);
+"OCTAL"(251057);
+"OCTAL"(262061);
+"OCTAL"(270062);
+"OCTAL"(271063);
+"OCTAL"(272064);
+"OCTAL"(274065);
+"OCTAL"(701066);
+0,32;
+/8,"SELF"+69;
+0,33;
+
+
+
+
+
+
+
+
+
+
+0,36;
+0,38;
+0,40;
+0,45;
+/12,F58;
+0,34;
+0,46;
+/8,"SELF"+78;
+0,35;
+/8,"SELF"+96;
+0,36;
+/8,"SELF"+142;
+0,37;
+/8,"SELF"+149;
+0,38;
+0,46;
+0,51;
+0,46;
+/12,F83;
+0,39;
+0,32;
+0,43;
+12,F26;
+0,51;
+/12,F24;
+0,40;
+/8,"SELF"+146;
+0,43;
+/8,"SELF"+155;
+0,46;
+/8,"SELF"+176;
+0,47;
+0,49;
+0,46;
+0,34;
+0,36;
+0,35;
+0,52;
+0,49;
+0,36;
+/12,F67;
+0,49;
+0,36;
+0,44;
+0,46;
+0,53;
+0,36;
+/12,F95;
+0,50;
+/8,"SELF"+192;
+0,51;
+/8,"SELF"+225;
+0,52;
+0,45;
+/8,"SELF"+233;
+0,53;
+0,32;
+0,43;
+0,52;
+0,36;
+
+
+
+
+
+
+
+
+
+
+/12,F69;
+0,54;
+0,39;
+0,40;
+0,43;
+0,36;
+/12,F82;
+"OCTAL"(202055);
+"OCTAL"(603061);
+0,45;
+/8,"SELF"+6;
+0,49;
+0,49;
+0,32;
+0,56;
+/12,F62;
+"OCTAL"(202043);
+"OCTAL"(603062);
+0,35;
+/12,F77;
+0,50;
+0,54;
+0,36;
+0,49;
+/12,F71;
+"OCTAL"(202043);
+"OCTAL"(604054);
+0,35;
+0,36;
+/12,F84;
+0,44;
+/8,"SELF"+1;
+"OCTAL"(202054);
+"OCTAL"(607057);
+0,44;
+0,36;
+0,45;
+12,F21;
+0,51;
+/12,F24;
+0,47;
+0,46;
+0,46;
+0,43;
+/12,F90;
+"OCTAL"(202044);
+"OCTAL"(603056);
+0,36;
+/8,"SELF"+3;
+0,46;
+/12,F73;
+"OCTAL"(202045);
+"OCTAL"(621053);
+0,37;
+0,40;
+0,45;
+0,36;
+12,F18;
+8,"SELF"-192;
+12,F13;
+
+
+
+
+
+
+
+
+
+
+8,"SELF"+17;
+12,F16;
+0,60;
+12,F8;
+8,"SELF"-230;
+12,F9;
+0,61;
+0,26;
+/12,F17;
+0,43;
+0,36;
+0,51;
+0,36;
+12,F18;
+8,"SELF"-208;
+0,26;
+/12,F19;
+"OCTAL"(202022);
+"OCTAL"(604074);
+0,18;
+8,"SELF"+3;
+/0,19;
+/12,F14;
+"OCTAL"(601072);
+8,"SELF"-218;
+12,F15;
+/8,"SELF"+1;
+"OCTAL"(202026);
+"OCTAL"(604023);
+0,22;
+8,"SELF"-7;
+/12,F11;
+/12,F10;
+"OCTAL"(202053);
+"OCTAL"(605055);
+0,43;
+0,50;
+0,36;
+/12,F76;
+0,45;
+0,35;
+/12,F59;
+"OCTAL"(202050);
+"OCTAL"(606056);
+0,40;
+0,55;
+0,36;
+0,35;
+/12,F60;
+0,46;
+0,49;
+/12,F72;
+"OCTAL"(202045);
+"OCTAL"(603055);
+0,37;
+/12,F74;
+0,45;
+0,51;
+0,36;
+0,38;
+
+
+
+
+
+
+
+
+
+
+0,36;
+0,49;
+/12,F61;
+"OCTAL"(203040);
+"OCTAL"(207050);
+"OCTAL"(615056);
+0,32;
+0,33;
+0,36;
+0,43;
+/12,F68;
+0,40;
+0,33;
+0,49;
+0,32;
+0,49;
+0,56;
+/12,F93;
+0,46;
+0,34;
+0,32;
+0,51;
+0,40;
+0,46;
+0,45;
+/12,F70;
+"OCTAL"(204042);
+"OCTAL"(210055);
+"OCTAL"(211061);
+"OCTAL"(612064);
+0,34;
+0,51;
+0,32;
+0,43;
+/12,F87;
+0,45;
+/8,"SELF"+6;
+0,49;
+/12,F78;
+0,52;
+0,51;
+/12,F92;
+"OCTAL"(202050);
+"OCTAL"(613061);
+0,40;
+0,45;
+0,51;
+0,36;
+0,49;
+0,49;
+0,52;
+0,47;
+0,51;
+/12,F89;
+0,49;
+0,36;
+0,47;
+0,46;
+0,49;
+0,51;
+
+
+
+
+
+
+
+
+
+
+/12,F91;
+"OCTAL"(204044);
+"OCTAL"(207050);
+"OCTAL"(214063);
+"OCTAL"(615066);
+0,36;
+0,43;
+0,37;
+/12,F85;
+0,40;
+0,38;
+0,45;
+0,36;
+0,35;
+/12,F65;
+0,51;
+/8,"SELF"+7;
+0,54;
+0,40;
+0,51;
+0,34;
+0,39;
+/12,F66;
+"OCTAL"(202044);
+"OCTAL"(604056);
+0,36;
+0,47;
+/12,F79;
+0,46;
+0,49;
+0,36;
+0,50;
+0,40;
+0,57;
+0,36;
+/12,F94;
+"OCTAL"(202040);
+"OCTAL"(606047);
+0,32;
+0,33;
+0,43;
+0,36;
+/12,F63;
+0,39;
+0,36;
+0,45;
+/12,F75;
+"OCTAL"(202062);
+"OCTAL"(610063);
+0,50;
+0,40;
+0,38;
+0,45;
+0,36;
+0,35;
+/12,F64;
+0,51;
+0,40;
+0,43;
+/12,F86;
+
+
+
+
+
+
+
+
+
+
+"OCTAL"(202026);
+"OCTAL"(404070);
+0,22;
+8,"SELF"-345;
+/12,F11;
+/12,F10;
+"OCTAL"(401000);
+8,"SELF"-425;
+/8,"SELF"+1;
+"OCTAL"(002000);
+"OCTAL"(400034);
+/8,"SELF"-5;
+"OCTAL"(002024);
+"OCTAL"(400014);
+8,"SELF"+2;
+/8,"SELF"-421;
+"OCTAL"(002060);
+"OCTAL"(602026);
+/8,"SELF"-344;
+/0,22;
+PROG:/8,"SELF"-434;
+STREAM:/8,"SELF"-427;
+BOOLWD:
+"OCTAL"(777400);"OCTAL"(000000);"OCTAL"(000000);"OCTAL"(000000);;
+"OCTAL"(000374);"OCTAL"(603760);"OCTAL"(000000);"OCTAL"(000100);;
+"OCTAL"(777774);"OCTAL"(727760);"OCTAL"(777114);"OCTAL"(376340);;
+"OCTAL"(000000);"OCTAL"(050000);"OCTAL"(000000);"OCTAL"(002020);;
+"OCTAL"(777400);"OCTAL"(120000);"OCTAL"(000000);"OCTAL"(000240);;
+"OCTAL"(000374);"OCTAL"(607760);"OCTAL"(777114);"OCTAL"(374100);;
+"OCTAL"(000000);"OCTAL"(120000);"OCTAL"(000000);"OCTAL"(000040);;
+"OCTAL"(000374);"OCTAL"(657760);"OCTAL"(777114);"OCTAL"(376120);;
+"OCTAL"(000374);"OCTAL"(777760);"OCTAL"(777114);"OCTAL"(376160);;
+"OCTAL"(000374);"OCTAL"(677760);"OCTAL"(777114);"OCTAL"(376120);;
+"OCTAL"(777774);"OCTAL"(777760);"OCTAL"(777114);"OCTAL"(374340);;
+"OCTAL"(000000);"OCTAL"(054000);"OCTAL"(000000);"OCTAL"(000000);;
+"OCTAL"(000374);"OCTAL"(603760);"OCTAL"(777114);"OCTAL"(374100);;
+"OCTAL"(000000);"OCTAL"(000000);"OCTAL"(777114);"OCTAL"(374000);;
+"OCTAL"(000000);"OCTAL"(050000);"OCTAL"(000000);"OCTAL"(000000);;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              ($ ANALYSER)
+              LIT1:14,0;
+              LIT2:/4,BOOLWD;
+              LIT3:/0,PROG;
+              LIT4:/0,STARTOP-64;
+              LIT5:/0,STREAM;
+              START:0,8177;
+              /4,25;
+              1,-1;
+              5,STAK;
+              /4,27;
+              5,BOTTOM
+
+       "END";
+       CHECK(-1);
+       ENTRY;
+       "GOTO"EXPPROG;
+       "IF"ERROR=0"THEN"OUTFAIL"ELSE BEGIN"
+              QOUT(10);  PUNCH(59);
+              COPY('COMPILED PASS ONE,NO ERRORS@);
+              "END";
+       BLANKTAPE(100);
+       "GOTO"FINISH;
+       "CODE
+       BEGIN"EXPPROG:4,LIT3;
+              SETP:5,P
+       "END";
+       READER:
+       "BEGIN"TT:=TI;
+              NEXTROW:TI:=IN;
+              "IF"TI=18"THEN
+
+              ""BEGIN""IF"TT=26"OR"IGNORE=1"OR"TT=31"AND"DUMMYSPACE=1"THEN
+
+                     ""BEGIN"TI:=TAPEROW;
+                            "IF"TI<>92"THEN
+
+                            ""BEGIN"BRACOUNT:=1;
+                                   "GOTO"EE;
+                                   DD:TI:=TAPEROW;
+                                   EE:"IF"TI=18"THE<! 142 >!""N"
+                                   "BEGIN"BRACOUNT:=BRACOUNT+1;
+                                          "GOTO"DD
+                                   "END
+                                   ""ELSE""IF"TI=19"THEN
+
+                                   ""BEGIN"BRACOUNT:=BRACOUNT-1;
+                                          "IF"BRACOUNT<>0"THEN""GOTO"DD
+
+                                   "END
+                                   ""ELSE""GOTO"DD
+
+                            "END ELSE
+
+                            ""BEGIN""IF"ERROR<>0"THEN
+
+                                   ""BEGIN"PUNCH(59);
+                                          BLANKTAPE(10)
+                                   "END";
+                                   COUNT:=LINECOUNT:=PAGE:=0;
+                                   WRITE(72);
+                                   ($ ANALYSER  PAGE 1.5)
+                                   "FOR"TI:=TAPEROW"WHILE"TI<>19"DO
+
+                                   ""BEGIN"
+                                          "IF"PAGE<=11"THEN
+
+                                          ""BEGIN"WRITE(TI);PAGENAME[PAGE]:="IF"TI<=57"THEN"TI"ELSE"TI+38;
+                                                 PAGE:=PAGE+1
+
+                                          "END
+
+                                   ""END";
+                                   WRITE(TI)
+
+                            "END";
+                            "GOTO"NEXTROW
+
+                     "END
+
+              ""END";
+              "IF"OUTSTATE=0"OR"OUTSTATE=2"THEN"WRITE(TT)
+              "ELSE""IF"OUTSTATE=3"THEN"STACKM(TT);
+              SETTI
+       "END";
+       "CODE
+       BEGIN
+              "NEXTERM:0,P;
+              /4,0;
+              10,P;
+              5,WS1;
+              6,"OCTAL"(17777);
+              5,BWNO;
+              4,WS1;
+              14,1;
+              9,ACTCLASS;
+              14,1;
+              9,EXITEREAD;
+              4,CH;
+              2,BWNO;
+              7,TEST;
+              8,FAILS;
+              ACTCLASS:14,1;
+              9,ACTION;
+              4,WS1;
+              9,LAST1;
+              4,P;
+              0,STAK;
+              /5,0;
+              4,STAK;
+              1,-1;
+              5,STAK;
+              2,BOTTOM;
+              7,FULL;
+              LAST1:4,BWNO;
+              1,-131072;
+              5,P;
+              TESTER:0,P;
+              /4,0;
+              5,WS1;
+              6,"OCTAL"(777);
+              5,BWNO;
+              4,WS1;
+              14,1;
+              9,SINGLEBIT;
+              0,BWNO;
+              WORDNO:/4,BOOLWD;
+              PLACES:14,0;
+              9,TERM;
+              4,WS1;
+              9,FAIL;
+              10,P;
+              8,TESTER;
+              SINGLEBIT:4,BWNO;
+              2,CH;
+              7,TERM;
+              4,WS1;
+              9,FAILS;
+              10,P;
+              8,TESTER;
+              TERM:4,WS1;
+              14,8183;
+              6,"OCTAL"(177);
+              7,EXITER;
+              1,P;
+              5,P;
+              8,NEXTERM;
+              FAIL:
+              "BEGIN"FLT("CODE
+                     BEGIN"4,P;
+                            2,LIT4
+                     "END");
+                     "GOTO"CARRYON;
+                     FAILS:FLT(-BWNO);
+                     CARRYON:"FOR"TI:=IN"WHILE"TI>=32"AND"TI<58"DO";
+                     "GOTO"START;
+                     FULL:FLT(20)
+              "END";
+              8,"SELF";
+              ($ANALYSER PAGE 2)
+              EXITER:10,STAK;
+              0,STAK;
+              /4,0;
+              5,P;
+              9,NEXTERM;
+              0,P;
+              /8,2;
+              ACTION:0,BWNO;
+              /11,0;
+              /8,1;
+              4,WS1;
+              9,EXITER;
+              8,NEXTERM;
+              TEST:4,WS1;
+              9,EXITEREAD;
+              8,READER;
+              EXITEREAD:10,STAK;
+              0,STAK;
+              /4,0;
+              9,SETP;
+              /0,0;
+              /8,2;
+              EXPAND:
+              "BEGIN"ST:=CONS(CONS(INSOURCE,INSH),ST);
+                     ST:=CONS(TI,ST);
+                     INSOURCE:=HD[TL[IDEN]]+1;
+                     INSH:=1;
+                     OUTSTATE:=0;
+                     TI:=TUNI:=31;
+                     DUMMYSPACE:=0;
+                     ENTRY;
+                     "GOTO"EXPSTREAM;
+                     TI:=HD[ST];
+                     INSOURCE:=HD[HD[TL[ST]]];
+                     INSH:=TL[HD[TL[ST]]];
+                     ST:=TL[TL[ST]];
+                     SETTI;
+                     "GOTO"EXITER
+
+              "END";
+              EXPSTREAM:4,LIT5;
+              8,SETP
+
+       "END";
+       FINISH:
+"END""XXXX"'
+<! Halt !>

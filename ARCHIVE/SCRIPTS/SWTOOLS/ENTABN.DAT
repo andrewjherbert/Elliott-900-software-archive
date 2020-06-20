@@ -1,0 +1,15 @@
+﻿C Replace blanks with tabs at columns 9, 17, 25, ...
+
+on 903 8K
+
+at ptr file ../../MASTERS/SWTOOLS/ENTABN.BIN
+j 8181
+st 8175
+
+at ptr file %1
+at ptp file %2
+j 8
+
+de ptp
+
+sh t

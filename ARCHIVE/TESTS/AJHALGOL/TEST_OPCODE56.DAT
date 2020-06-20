@@ -1,0 +1,58 @@
+﻿c Algol function codes: test call by name expressions
+
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin"
+   "array" b[1:5,1:5]; "integer" i, j, k; "real" c;
+   "real" "procedure" SUM (a, i); "real" a; "integer" i;
+        "begin"
+	    "real" total;
+             total := 0; i := 1;
+	loop:
+	    total := total+a;
+	    "if" i = 5 "then" "goto" finish;
+	    i := i + 1; "goto" loop;
+	finish:
+	    SUM := total
+	"end";
+    "for" i := 1 "step" 1 "until" 5 "do"
+	"for" j := 1 "step" 1 "until" 5 "do"
+	    b[i,j] := 1.0;
+    c :=SUM(SUM(b[j,k],j),k);
+    "print" c   
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run trivial program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t
+

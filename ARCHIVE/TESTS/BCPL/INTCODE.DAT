@@ -1,0 +1,38 @@
+﻿c BCPL INTCODE test
+
+on 903 16k
+
+c assemble using sir
+
+nonprinting off
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+select out tty
+
+at ptr file ../../MASTERS/BCPL/INTCODE.900
+j 8
+st 6927
+
+c intcode input to assembler
+at ptr inline
+$ 1 JL5
+$ 3 L0 LIP2 X10 FL7 L1 SP3 JL6 
+7 LIP2 L1 X9 SP5 LIL4 K3 LIP2 
+X5 SP3 
+6 LIP3 X4
+5 L1 SP2 JL8 
+9 LL499 SP5 LIP2 SP6 LIP2 SP9 LIL4 K7
+SP7 LIG76 K3 LIP2 A1 SP2
+8 LIP2 L10 X15 TL9 X4 
+2
+4 DL3 
+499 C11 C70 C40 C37 C78 C41 C32 C61 C32 C37 C78 C10
+76 X24 X4 G76L76
+G1L1
+Z
+<! halt !>
+<!!>
+j 32

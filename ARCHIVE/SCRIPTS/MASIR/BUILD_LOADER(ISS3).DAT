@@ -1,0 +1,75 @@
+﻿  C Build 900 Loader Issue 3
+
+on 903 8K
+
+c revert source to SIR
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptr inline
+
+CLE *P
+DLI *N
+CHE
+WAI
+COP
+<! halt !><!!>
+j 13
+st 490
+at ptr file ../../MASTERS/MASIR/LOADSRC.900
+at ptp file LOADSRC.900
+j 9
+st 822
+j 10
+de ptp
+st 1274
+
+c Assemble with SIR
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+
+select out tty
+at ptr inline
+
+*+6
+<! halt !><!!>
+j 8
+st 6927
+at ptr file LOADSRC.900
+j 9
+st 6927
+
+c Add in garbage!
+e 19 =4 116
+
+c Dump out with T22/23
+select out auto
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+at ptp file LOADER(ISS3).BIN
+j 8181
+st 8070
+at ptr inline
+      +8
+      +8
+      +15
+      +19
+      +128
+      +3203
+<! halt !><!!>
+j 8179
+de ptp
+st 8113
+
+sh t
+
+c verify
+clear
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+du 8192 LOADER(ISS3).IMG
+clear
+at ptr file LOADER(ISS3).BIN
+j 8181
+vi LOADER(ISS3).IMG
+delete LOADER(ISS3).IMG

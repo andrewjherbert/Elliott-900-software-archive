@@ -1,0 +1,23 @@
+﻿c Lissajous figuresPlot squares
+
+on 903 16K
+
+nonprinting off
+
+c translate program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/HERBERT/SQUARES_PLOT.900
+
+c translate in library mode
+j 12
+st 1715
+
+at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
+j 9
+st 8000
+
+j 10
+de plt
+sh t

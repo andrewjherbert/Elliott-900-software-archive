@@ -1,0 +1,270 @@
+﻿
+(MODULE 0 PATCH, AUG.  1978)
+(ASSEMBLE; DUMP; INPUT LAST; DUMP BOTH MODULES WITH)
+(THE T22/23 WHICH STARTS AT 10 USING A DATA TAPE +8,+7999,)
+(+8200,+16383, HALT)
+
+*3
+SUM=8129
+W4=8130
+W3=8131
+W2=8132
+W1=8133
+FLAG=8134
+			  (  8 Normal translation )
+^9
+          8     21	  (  9 entry at 9 -> 21, then continue after halt )
+(  10)    8     4540      ( 10 Initialization, then Run program )
+          8     8022	  ( 11 Translation with check functions and reports )
+          8     8024	  ( 12 Translate in library mode )
+          8     8031	  ( 13 Translate in library mode with check functions and reports )
+          8     8033	  ( 14 Load code procedures )
+          +0		  ( 15 Unused )
+          8     8039	  ( 16 Translate in report mode )
+          8     8042	  ( 17 Translate to paper tape )
+          8     8036	  ( 18 Re-establish the library )
+          8     8086	  ( 19 Checksum )
+(  20)    +0
+
+(  21)    4     3955	  (  start of initialization =0 1413 )
+          8     8123
+
+(  23)    4     3956	  ( entry at 10 after initialization =0 1659 )
+(  24)    8     8123
+
+(  25)    8     2523	  ( 25 Freeze translator known names - FINSUB+1 )
+          +0
+          +16370
+
+^1412
+          8     1416
+(1413)    0     20
+
+          /8    0
+^1922			  
+          9     ;+2	  ( modified store full test in MAMPS4 )
+^2522			  
+          8     2528	  ( suppress printing ALARMCH in FINSUB )
+
+(2523)    0     8002	  (+8192)
+          /8    304	  (RSTACK+13)
+
+(2525)    4     7562	
+          8     3920	  (NOPRNT in TAPE2PATCH )
+^2535
+          8     2539	  ( suppress punching in FINISH )
+
+(2536)    2     3765      (+8191)
+          7     1642      (READAL-2)
+          8     1726      (NXPORD)
+^2298
+          8     2536      (PROTECT CF TO UNLOADED PROCEDURE)
+^2546
+          8     2550
+
+^3952			  
+          4     3954
+          8     8123
+
+(3954)    0     8015
+(3955)    0     1413
+(3956)    0     1659
+(3957)    0     3958
+(3958)    15    7168	  ( terminate )
+          8     3958
+
+^4540
+          4     A	  ( initialization )
+          5     8
+          4     B
+          5     10
+          4     C
+          5     D
+          4     E
+          5     F
+LOOP      0     D
+          /4    0
+          0     F
+          /5    0
+          0     D
+          4     G
+          /5    0
+          10    D
+          10    F
+          4     F
+          2     H
+          7     ;+2
+          8     LOOP
+
+          8     5120
+
+A         8     3952
+B         8     23
+C         0     I
+D         +0
+E         +8000
+F         +0
+G         +0
+
+H         0     8128
+(8000)
+I         8     8000
+          +0
+          +8192
+          +6
+          +20
+          +28
+          +18
+          +9
+          +8128
+          +8192
+(8010)    +16383          (8010)
+          -3
+          8     3952
+          8     8088
+          +8007
+          4     8001      (FROM 8)
+(8016)    5     W4	  ( W4 := 0 )
+          4     8011
+          5     W1	  ( W1 := -3 )
+          4     8001	  ( W3 := 0 )
+          5     W3        (8020)
+          8     1644	  ( READAL )
+
+          4     8004      (FROM 11)
+          8     8016	  ( W4 := +20 )
+
+          4     8122      (FROM 12)
+(8025)    5     W4	  ( W4 := +8 )
+          4     8011	  ( W1 := -3 )
+          5     W1
+          4     8001
+          5     W3	  ( W3 := 0 )
+(8030)    8     1655      ( READOL )
+
+          4     8005      (FROM 13)
+          8     8025	  ( W4 := 28 )	
+	
+          4     8001      (FROM 14)
+          5     W1	  ( W1 := 0 )
+          8     7775
+
+          4     8001      (FROM 18 I.E. THE OLD 15)
+          5     W1	  ( W1 := 0 )
+          8     1653	  ( READLB )
+
+          4     8006      (FROM 16)
+(8040)    0     8002
+          /8    237	  ( START+1 in translator )
+
+          0     8002      (FROM 17)
+          /8    11	  ( 8 11 in translator )
+
+(8044)    4     FLAG      (AT START)
+          0     8002
+          9     8057	  ( punching or loading RLB? )
+          /4    6093	  ( [int]  LOW1 := [tran] W+3 )
+          5     7562	  
+          /4    211	  ( [int] LOW := [tran] CODE )
+(8050)    5     7804      
+          2     8003	  ( +6 )
+          9     2525	  ( FINSUB+3 )
+          7     7819	  ( ST2 )
+          4     7804	  ( LOW )
+          7     8068	  ( LOW = 0? )
+(8057)    8     7855	  ( BLANK+24, also in SWITCH patch )
+
+(8058)    /4    6093	  ( W+3 )	 
+          5     7555	  ( INTEGR )
+          /4    211       ( CODE )
+(8060)    5     7567 	  ( E5TEST-2 )     
+          4     8001	  ( +0 )
+          5     FLAG	  ( FLAG := 0 )
+          8     7603	  ( FIRST-2 )
+
+(8064)    4     W1        (FROM LOADER A)
+          9     8072
+          4     8011	  ( -3 )
+          8     7590	  ( REPEAT-1 )
+
+(8068)    4     W1        (FROM LOADER B)
+          9     8076
+(8070)    4     8001 	  ( +0 )
+          8     7832	  ( BLANK+1 )
+
+(8072)    4     8011	  ( -3 )
+          5     FLAG
+          0     8002
+          /8    5415	  ( EXIT in translator )
+
+(8075)    4     W3
+(8076)    0     8002
+          /9    5415	  ( EXIT in translator )
+          4     8011	  ( -3 )
+(8080)    5     W3
+          /5    10
+          4     8001
+          5     FLAG	  ( FLAG := +0 )
+          4     W4
+          /8    237	  ( START+1 in translator )
+
+(8086)    4     8013      ( LOCK  =8 8088 - checksum store )
+          8     8089
+
+(8088)    4     8012      (UNLOCK = 8 3952 [patch above])
+(8089)    5     8
+
+(8090)    4     8001 	  ( +0 )
+          5     W1
+          4     8014	  ( +8007 )
+          5     W2
+(8094)    0     W2
+          /4    0	  
+          9     8112
+          5     W4
+          /4    1
+          5     W3
+(8100)    0     W4
+          /4    0
+          1     W1
+          5     W1
+          10    W4
+          4     W4
+          2     W3
+          7     8109
+          8     8100
+
+(8109)    10    W2
+(8110)    10    W2
+          8     8094
+
+(8112)    4     8
+          2     8013
+          7     8119
+          4     SUM
+          2     W1
+          7     8
+(8118)    8     8118	  ( loop stop )
+
+          4     W1
+(8120)    5     SUM       
+          8     8121	  ( 8 ;+0 )
+          +8
+
+(8123)    5     6	  (from entry at 10 via 21 )
+          4     3957 	  (+0)
+          5     2
+          5     4
+          8     3958	  (terminate)
+
+
+^5120
+          4     ;+5	  (=8 8064)
+          5     7589
+          4     ;+4	  (=8 8068)
+          5     7831
+          8     ;+0
+          8     8064
+          8     8068
+%
+<! Halt !>

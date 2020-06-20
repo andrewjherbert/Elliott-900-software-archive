@@ -1,0 +1,37 @@
+﻿
+((INITIAL SETTING-UP ROUTINE, 16/9/72)
+
+(Absolute Declarations)
+
+[COPY]
+^2
+LENGTH -100
+
+(Inhibits restart after switching off & on, since, at
+certain times, this will cause loss of test program)
+
+<        4    ERROR
+         5    8177
+
+(Initially gives OK display and clears it)
+
+         4    ALL1S
+         15   4103
+         4    ZERO
+         15   4103
+
+(Transfers 1st copy of test to the other end of
+the store, then jumps to 2nd copy)
+
+         0    LENGTH
+         8    COPY
+
+(Autostart Address)
+
+ERROR    8    8181
+
+(Constants: needed since literals cannot be used)
+
+ZERO     +0
+ALL1S    &777777
+<! Halt !>

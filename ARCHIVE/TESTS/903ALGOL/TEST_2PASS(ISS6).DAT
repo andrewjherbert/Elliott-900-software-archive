@@ -1,0 +1,46 @@
+﻿C Test 2-Pass ALGOL System (Issue 6)
+
+on 903 8K
+
+C **********TAPE 1 / TRANSLATOR**********
+
+c load new tape 1 
+clear
+at ptr file ../../SCRIPTS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+st 8171
+
+c compile a trivial program
+at ptp file TEST.RLB
+at ptr inline
+test;
+"begin" 
+    punch (3);
+    "print" ''L@hello world'L@@,
+            freepoint (5), sqrt (2.0), ''L@@;
+ "end"
+<! halt !><!!>
+j 14
+st 9
+de ptp
+
+
+C **********TAPE 2 / INTERPRETER**********
+
+c load new tape 2 
+at ptr file ../../SCRIPTS/903ALGOL/ALG2(ISS6).BIN
+j 8181
+st 8171
+
+c load and run trivial program
+at ptr file TEST.RLB
+select out tty
+j 8
+st 7943
+nonprinting off
+j 10
+st 1727
+
+delete TEST.RLB
+
+sh t

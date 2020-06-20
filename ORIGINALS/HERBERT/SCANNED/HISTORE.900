@@ -1,0 +1,66 @@
+﻿
+^+128
++*2
+  4  AL4
+  5  6
+  4  AL3
+  5
+  4  AL2
+  5  2
+ 15  7168
+  8  ;-1
+
+PAT +0
+ADR +0
+COUNT +0
+
+AL2 0  ;+1
+ 15  7168
+  8  ;-1
+8
+  8  ;-1
+AL3 0  ;+1
+ 15  7168
+  8  ;-1
+
+AL4 0  ;+1
+
+REPEAT
+  4  345
+  5  PAT
+  4  +8100
+  5  ADR
+  4  -92  5  COUNT
+
+LOOP1  4  PAT
+  0  ADR
+ /5  0
+ 10  PAT
+ 10  AR 10
+  4  COUNT
+  9  LOOP1
+
+  4  +12345
+  5  PAT
+  4  +8100
+  5  ADR
+  4  -92
+  5  COUNT
+
+LOOP2
+  0  ADR
+ /4  0
+  2  PAT
+  7  ;+3
+ 15  6144
+  8  ;-1
+ 10  PAT
+ 10  ADR
+ 10  COUNT
+  4  COUNT
+  8  REPEAT
+%
+<! Halt !>
++128
++182
+<! Halt !>

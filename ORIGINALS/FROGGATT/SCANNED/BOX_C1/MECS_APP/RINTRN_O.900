@@ -1,0 +1,635 @@
+﻿<! Legible Header OOO   OOO  OOOOO       OOOO  OOOOO O   O OOOOO OOOO  O   O        OOO  OOOO  OOOOO OOOOO   OO  OOOOO  !>
+<! Legible Header    O O   O O           OOOOO   O   OO  O OOOOO OOOOO OO  O       O   O O   O OOOOO O      O  O OOOOO  !>
+<! Legible Header    O O   O O           O   O   O   OO  O   O   O   O OO  O       O   O O   O   O   O     O       O    !>
+<! Legible Header OOOO O   O OOOO        OOOOO   O   O O O   O   OOOOO O O O       O   O OOOO    O   OOOO  O       O    !>
+<! Legible Header    O O   O             OO      O   O   O   O   OO    O   O       O   O O   O   O   O             O    !>
+<! Legible Header    O O   O     O       O O     O   O  OO   O   O O   O  OO       O   O O   O O O   O     O       O    !>
+<! Legible Header OOOO O   O OOOOO       O  O    O   O  OO   O   O  O  O  OO       O   O OOOOO OOO   O      O      O    !>
+<! Legible Header OOO   OOO  OOOO        O   O OOOOO O   O   O   O   O O   O        OOO  OOOOO  OO   OOOOO   OOO   O    !>
+
+(*)
+
+(  THIS PROGRAM TESTS THE SUB-PROGRAM  RINTRN)
+(GLOBAL ,TEST,RINTRN,COS])
+[TEST
+RINTRN
+COS
+QF
+QYO
+QZCOM]
+TEST
+Q1
+(1    FORMAT [11HTEST RINTRN/1X,)
+8 QYG0+1
++66944
+&644563
+&640062
+&515664
+&625600
++98432
++82048
++68352
+&510000
+&006251
+&566462
+&560000
+&435763
+&105117
+&213020
+&110000
+QYG0 -16384
+Q3
+(3    FORMAT [I3,2F9.7])
+8 QYG1+1
++33152
+-114432
++17543
+QYG1 -16384
+(     WRITE [3,1])
+11 QYO
+8 QYO+2
+/0 +3
+0 Q1+1
++0
+(     DO 4 I=1,30)
+4 +1
+5 I
+8 QZF0
+QZD0 4 +1
+1 I
+5 I
+2 +30
+9 QZE0
+QZF0
+(     ANS1=RINTRN[0.0,I*0.017453293,1E-5])
+11 QYO
+8 QYO+9
+0 I
+/0 QYR+0
+11 QF
+8 QF+1
+4 QYR+0
+12 QZN0+2
+5 QYR+2
++0
+11 RINTRN
+8 RINTRN+1
++3
+-32768
++0
+0 QZN0+0
+0 QYR+2
+0 QZN0+4
+0 QYR+4
+11 QF
+8 QF+1
+4 QYR+4
+5 ANS1
++0
+(     ANS2=COS[I*0.017453293])
+11 QYO
+8 QYO+9
+0 I
+/0 QYR+0
+11 QF
+8 QF+1
+4 QYR+0
+12 QZN0+2
+5 QYR+2
++0
+11 COS
+8 COS+1
++1
+&400000
++0
+0 QYR+2
+0 QYR+4
+11 QF
+8 QF+1
+4 QYR+4
+5 ANS2
++0
+Q4
+(4    WRITE [3,3]I,ANS1,ANS2)
+11 QYO
+8 QYO+2
+/0 +3
+0 Q3+1
++3
++98304
++0
+0 I
+0 ANS1
+0 ANS2
+8 QZD0
+QZE0
+(     END)
+11 QYO
+8 QYO+8
+I +0
+ANS1 +0
++0
+ANS2 +0
++0
+QZERO +0
++0
+QYR >+6
+8 ;+7
+QZN0 +0
++0
++73204
++54651
++85899
++45296
+(     GLOBAL,RINTRN,ABS,QFUNC] )
+[RINTRN
+ABS
+QFUNC
+QF
+QYO
+QZCOM]
+RINTRN
+(     FUNCTION RINTRN[A,B,EPS])
+ +0
+11 QYO
+8 QYO+1
++3
+-32768
++0
+QYP >+4
+
+(  COMPUTES THE INTEGRAL FROM A TO B OF QFUNC DX)
+
+(  WITH AN ABSOLUTE TOLERANCE OF EPS)
+
+(  QFUNC MUST BE DEFINED AS A FORTRAN FUNCTION BY THE USER)
+
+(  THIS IS A TRANSLITERATION OF THE ALGOL PROCEDURE INTRNR)
+(     DIMENSION S[30])
+
+(  S IS USED AS A PUSH DOWN STACK.IT MAY BE NECESSARY TO )
+
+(  INCREASE ITS SIZE FOR CERTAIN FUNCTIONS)
+(     DELTA=180.*EPS/ABS[B-A])
+11 QF
+8 QF+1
+0 QYP+0
+/4 0
+0 QYP+1
+/2 0
+5 QYR+0
++0
+11 ABS
+8 ABS+1
++1
+&400000
++0
+0 QYR+0
+0 QYR+2
+11 QF
+8 QF+1
+0 QYP+2
+/4 0
+13 QYR+2
+5 QYR+4
+4 QZN0+0
+12 QYR+4
+5 DELTA
++0
+(     RI=0.)
+11 QF
+8 QF+1
+4 QZN0+2
+5 RI
++0
+(     X0=A)
+11 QF
+8 QF+1
+0 QYP+0
+/4 0
+5 X0
++0
+(     F0=QFUNC[X0])
+11 QFUNC
+8 QFUNC+1
++1
+&400000
++0
+0 X0
+0 QYR+0
+11 QF
+8 QF+1
+4 QYR+0
+5 F0
++0
+(     S[1]=B)
+11 QYO
+8 QYO+5
+3 QYM+0
++0
++1
+5 QYR+0
+11 QF
+8 QF+1
+0 QYP+1
+/4 0
+0 QYR+0
+/5 0
++0
+(     S[2]=QFUNC[B])
+11 QFUNC
+8 QFUNC+1
++1
+&400000
++0
+1 QYP+1
+0 QYR+0
+11 QYO
+8 QYO+5
+3 QYM+0
++0
++2
+5 QYR+2
+11 QF
+8 QF+1
+4 QYR+0
+0 QYR+2
+/5 0
++0
+(     X=[A+B]/2.)
+11 QF
+8 QF+1
+0 QYP+0
+/4 0
+0 QYP+1
+/1 0
+13 QZN0+4
+5 X
++0
+(     S[3]=QFUNC[X])
+11 QFUNC
+8 QFUNC+1
++1
+&400000
++0
+0 X
+0 QYR+0
+11 QYO
+8 QYO+5
+3 QYM+0
++0
++3
+5 QYR+2
+11 QF
+8 QF+1
+4 QYR+0
+0 QYR+2
+/5 0
++0
+(     IC=3)
+4 +3
+5 IC
+Q1
+(1    F2=S[IC])
+11 QYO
+8 QYO+5
+2 QYM+0
+0 IC
+5 QYR+0
+11 QF
+8 QF+1
+0 QYR+0
+/4 0
+5 F2
++0
+(     F4=S[IC-1])
+11 QYO
+8 QYO+5
+3 QYM+0
+0 IC
+-1
+5 QYR+0
+11 QF
+8 QF+1
+0 QYR+0
+/4 0
+5 F4
++0
+(     X4=S[IC-2])
+11 QYO
+8 QYO+5
+3 QYM+0
+0 IC
+-2
+5 QYR+0
+11 QF
+8 QF+1
+0 QYR+0
+/4 0
+5 X4
++0
+(     IC=IC-3)
+4 +3
+2 IC
+5 IC
+Q2
+(2    X2=[X0+X4]/2.0)
+11 QF
+8 QF+1
+4 X0
+1 X4
+13 QZN0+4
+5 X2
++0
+(     X=[X0+X2]/2.0)
+11 QF
+8 QF+1
+4 X0
+1 X2
+13 QZN0+4
+5 X
++0
+(     F1=QFUNC[X])
+11 QFUNC
+8 QFUNC+1
++1
+&400000
++0
+0 X
+0 QYR+0
+11 QF
+8 QF+1
+4 QYR+0
+5 F1
++0
+(     X=[X2+X4]/2.0)
+11 QF
+8 QF+1
+4 X2
+1 X4
+13 QZN0+4
+5 X
++0
+(     F3=QFUNC[X])
+11 QFUNC
+8 QFUNC+1
++1
+&400000
++0
+0 X
+0 QYR+0
+11 QF
+8 QF+1
+4 QYR+0
+5 F3
++0
+(     T=6.0*F2-4.0*[F1+F3]+F0+F4)
+11 QF
+8 QF+1
+4 F1
+1 F3
+5 QYR+0
+4 QZN0+6
+12 F2
+5 QYR+2
+4 QZN0+8
+12 QYR+0
+2 QYR+2
+1 F0
+1 F4
+5 T
++0
+(     IF[ABS[T]-DELTA]4,4,5)
+11 ABS
+8 ABS+1
++1
+&400000
++0
+0 T
+0 QYR+0
+11 QF
+8 QF+1
+4 DELTA
+2 QYR+0
+5 QYR+2
++0
+4 QYR+2
+9 Q4
+7 Q4
+8 Q5
+Q5
+(5    S[IC+1]=X4)
+11 QYO
+8 QYO+5
+3 QYM+0
+0 IC
++1
+5 QYR+0
+11 QF
+8 QF+1
+4 X4
+0 QYR+0
+/5 0
++0
+(     S[IC+2]=F4)
+11 QYO
+8 QYO+5
+3 QYM+0
+0 IC
++2
+5 QYR+0
+11 QF
+8 QF+1
+4 F4
+0 QYR+0
+/5 0
++0
+(     S[IC+3]=F3)
+11 QYO
+8 QYO+5
+3 QYM+0
+0 IC
++3
+5 QYR+0
+11 QF
+8 QF+1
+4 F3
+0 QYR+0
+/5 0
++0
+(     IC=IC+3)
+4 IC
+1 +3
+5 IC
+(     X4=X2)
+11 QF
+8 QF+1
+4 X2
+5 X4
++0
+(     F4=F2)
+11 QF
+8 QF+1
+4 F2
+5 F4
++0
+(     F2=F1)
+11 QF
+8 QF+1
+4 F1
+5 F2
++0
+(     GO TO 2)
+8 Q2
+Q4
+(4    RI=RI+[X4-X0]*[4.*[F1+F3]+F2+F2+F0+F4-T/15.])
+11 QF
+8 QF+1
+4 F1
+1 F3
+5 QYR+0
+4 T
+13 QZN0+10
+5 QYR+2
+4 QZN0+8
+12 QYR+0
+5 QYR+4
+4 QYR+2
+2 F4
+5 QYR+6
+4 QYR+4
+1 F2
+1 F2
+1 F0
+1 QYR+6
+5 QYR+14
+4 X0
+2 X4
+12 QYR+14
+5 QYR+18
+4 RI
+1 QYR+18
+5 RI
++0
+(     IF [IC]6,3,6)
+4 IC
+7 Q3
+8 Q6
+Q6
+(6    X0=X4)
+11 QF
+8 QF+1
+4 X4
+5 X0
++0
+(     F0=F4)
+11 QF
+8 QF+1
+4 F4
+5 F0
++0
+(     GOTO 1)
+8 Q1
+Q3
+( 3   RINTRN=RI/12.0)
+11 QF
+8 QF+1
+4 RI
+13 QZN0+12
+0 QYP+3
+/5 0
++0
+(RETURN)
+0 0;
+/8 1
+(     END)
+11 QYO
+8 QYO+8
+QYM 0 S
++30
+&400000
+S >+60
+DELTA +0
++0
+RI +0
++0
+X0 +0
++0
+F0 +0
++0
+X +0
++0
+IC +0
+F2 +0
++0
+F4 +0
++0
+X4 +0
++0
+X2 +0
++0
+F1 +0
++0
+F3 +0
++0
+T +0
++0
+QZERO +0
++0
+QYR >+22
+8 ;+15
+QZN0 +92160
++8
++0
++0
++65536
++2
++98304
++3
++65536
++3
++122880
++4
++98304
++4
+(     GLOBAL,QFUNC,SIN])
+[QFUNC
+SIN
+QF
+QYO
+QZCOM]
+QFUNC
+(     FUNCTION QFUNC[X])
+ +0
+11 QYO
+8 QYO+1
++1
+&400000
++0
+QYP >+2
+
+(  THIS BLOCK DEFINES THE FUNCTION TO BE INTEGRATED AS SIN)
+(     QFUNC=SIN[X])
+11 SIN
+8 SIN+1
++1
+&400000
++0
+1 QYP+0
+0 QYR+0
+11 QF
+8 QF+1
+4 QYR+0
+0 QYP+1
+/5 0
++0
+(     RETURN)
+0 0;
+/8 1
+(     END)
+11 QYO
+8 QYO+8
+QZERO +0
++0
+QYR >+2
+<! Halt !>

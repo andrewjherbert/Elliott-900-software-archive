@@ -1,0 +1,199 @@
+﻿
+
+RTI ALGOL
+LG ALGOL^%,
+RTS 02-03
+22-03^%,
+
+CLE [ ALRMCH
+
+RTI DUMP
+DUMP ENT8 ENT16 ENT17 ENT18 ENT19 EWS1 EWS3 EWS4^%,
+RTI INSLOT
+INSLOT LSTART^%,
+RTI SP
+SETPERM SP^%,
+RTI START
+^%,
+RTI W3
+TORLB TSTART UJOFF UJON WARN W3^%,
+
+CLE 8 READAL
+DLE STKMOD
+INS
+(N.B ENT16 to ENT19 are zapped by MASIR Loader. Fixed up by DUMPER.)
+
+	8	ENT8	(Normal translate)
+	8	CONTIN	(Continue)
+	8	EXECUT	(Run program)
+	8	ENT11	(Normal translate with checks and report)
+	8	ENT12	(Library mode translate)
+	8	ENT13	(Library mode translate with checks and report)
+	8	ENT14	(Load code procedures)
+	8	THUNK	(Halt 15 in rlb)
+	8	ENT16	(Normal translate with report)
+	8	ENT17	(Translate to rlb tape)
+	8	ENT18	(Reload library)
+	8	ENT19	(Checksum store)
+	0	;+1   	(Return address for continue)  
+CONTIN	0	;-1	
+	/8	0
+	8	ENT23	(Enable call-by-name extensions)
+	8	ENT24	(Disable call-by-name extensions)
+	8	ENT25	(Freeze known names)
+
+^%,
+
+CLE STKEND
+DLI STKEND
+INS
+STKEND +16383 (Limit of stack)
+^%,
+
+CLE BASE
+RTS +3906
++3908^%,
+	
+CLI FAILEN
+CLE 4 -4096
+DLE 4 +3
+
+CLI DIGN1
+INS		
+
+ENT8	4	+0	(Normal translation)
+(+1)	5	EWS4
+	4	-1	(Set LG mode)
+	5	EWS1
+	4	+0	(Loader must start translator)
+	5	EWS3
+	8	READAL
+
+ENT11	4	+20	(Normal translation with checks and report)
+	8	ENT8+1
+
+ENT12	4	+8	(Library mode translate)
+	5	EWS4
+	4	-1	(Set LG mode)
+	5	EWS1
+	4	+0	(Loader must start translator)
+	5	EWS3
+	8	READOL
+
+ENT13	4	+28	(Library mode translate with checks and report)
+	8	ENT12+1
+
+ENT14	4	+0	(Load rlb tape)
+	5	EWS1	(Set not LG mode)
+	8	LSTART-5
+
+ENT16	4	+18	(Normal translate with report)
+(-3)	0	+TSTART/
+	/8	TSTART+1
+
+ENT17	0	+TSTART/	(Translate to rlb tape)
+	/8	TORLB
+
+ENT18	4	+0	(Reload library)
+	5	EWS1	(Set not LG mode)
+	8	READLB
+
+(ENT19 is in Loader, no ENT20, ENT21, ENT22)
+
+ENT23  0  +TSTART/	(Enable extended call-by-name)
+       /8  UJON
+
+ENT24  0  +TSTART/	(Disable extended call-by-name)
+       /8  UJOFF	
+
+ENT25  0  +TSTART/
+       /8  SETPERM
+
+^%,
+
+CLI READAL
+RTI START
+LSTART^%,
+CLI READLB
+CLI READOL
+RTI START
+LSTART^%,
+CLI EXECUT
+CLI PRIM
+CLI NXPORD
+CLI FINDFP
+CLI PEM
+CLI RETURN
+CLI TABAK
+CLI TIA
+CLI TRA
+CLI TRR
+CLI TIR
+CLI TRCA
+CLI TICA
+CLI RFUN
+CLI IFUN
+CLI TIC
+CLI TRC
+CLI IFJ
+CLI UJ
+CLI PE
+
+CLI MAMPS4
+RTI NXPORD
+;+2^%,
+
+CLI CFF
+CLI GTF
+CLI GT
+CLI GTFS
+CLI GTS
+CLI TFAI
+CLI TRCN
+CLI MAMPS
+CLI INDA
+CLI INDR
+CLI CBL
+CLI CF
+CLI ST
+CLI STA
+CLI DO
+CLI STEP
+CLI FOR
+CLI FR
+CLI FSE
+CLI NEGI
+CLI UNTIL
+CLI CHECKI
+CLI CHECKR
+CLI CHECKB
+CLI CHECKS
+
+CLE FINSUB
+DLI /8 1
+
+CLE FINISH
+DLE 4 +3
+INS
+FINISH ^%,
+CLI 11 SBLNK2
+CLE 11 SBLNK
+DLE STOP
+
+CLI WHILE
+CLI STW
+CLI RTOI
+CLI ITOR1
+CLI ITOR2
+CLI NEGR
+CLI INOUT
+
+CLI OPRL26
+CLE 11 SBLNK
+DLI 8 FINSUB
+
+CLE DUMP
+DLE [ ENDINT
+
+COP
+<! halt !>

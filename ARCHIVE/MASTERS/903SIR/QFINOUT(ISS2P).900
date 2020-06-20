@@ -1,0 +1,1114 @@
+﻿<! Legible Header  OOO   OOO  OOOOO        OOO  OOOOO OOOOO O   O        OOO  O   O OOOOO             OOOOO  OOO   OOO   OOO   !>
+<! Legible Header O   O O   O    O        O   O O   O   O   OO  O       O   O O   O OOOOO               O   O   O O   O O   O  !>
+<! Legible Header O   O O   O   O         O   O O       O   OO  O       O   O O   O   O                 O   OO    OO        O  !>
+<! Legible Header  OOOO O   O   OO        O   O OOOO    O   O O O       O   O O   O   O                 O    OO    OO     OOO  !>
+<! Legible Header     O O   O             O   O O       O   O   O       O   O O   O   O                 O                      !>
+<! Legible Header     O O   O     O       O   O O       O   O  OO       O   O O   O   O                 O      O     O  OO     !>
+<! Legible Header OOOOO O   O     O       O  O  O       O   O  OO       O   O OOOOO   O                 O   O   O O   O O      !>
+<! Legible Header OOOO   OOO  OOOO         OO O O     OOOOO O   O        OOO  OOOOO   O               OOOOO OOOO  OOOO  OOOOO  !>
+
+(Patched AJH 20/08/2012 to deal with error reported by R Burwood.  Only affects 920A and 920M.)
+
+(THIS PART IS COMMON TO THE INPUT AND OUTPUT ROUTINES)
+
+
+IORTRN
+
+ ^DECODE+15 (ALTER JUMP TO ALLOW 15 INSTRUCTIONS)
+ 8 QFIO
+
+ ^QF6JMP (ALTER JUMPS TO ALLOW OTHER 6 INSTRUCTIONS)
+ 8 PSTAND
+>+6
+ 8 IOINT
+ 8 IORL
+>+1
+ 8 PSET
+
+ ^IORTRN
+
+
+NUMTYP -1 (=0 IF INTEGER ; <0 IF REAL )
+PARAM +0 (OUTPUT FORMAT PARAMETER)
+PARAM2 +0 (WS FOR PROCESSING ABOVE)
+IOMOD +0 (USED TO ACCESS LOOK-UP-TABLES)
+
+
+QFIO 4 ADDRESS (SEE WHETHER INPUT OR OUTPUT)
+ 6 +8191
+ 5 ADDRESS
+ 4 +0
+ 5 IOMOD
+
+ 0 IOMOD
+ /4 DEVNO
+ 9 ERRF
+ 2 ADDRESS
+ /7 DCODDV
+ 10 IOMOD
+ 8 ;-6
+
+DEVNO +2048
+ +2052
+ +6144
+ +6148
+ -1
+
+DCODDV 8 QFIN
+ 8 QFIN
+ 8 QFOUT
+ 8 QFOUT
+
+
+QFIN 4 ADDRESS
+ 5 IDEV
+ 4 NUMTYP
+ 9 ;+6
+ 11 IOLNK
+ 8 RDINT
+ 0 QF+4
+ /5 0
+ 8 INTERP
+
+ 11 IOLNK
+ 8 RDRL
+ 4 FPMS
+ 5 FPA
+ 4 FPMS+1
+ 5 FPA+1
+ 4 FPMS+2
+ 5 FPA+2
+ 8 INTERP
+
+
+QFOUT 4 ADDRESS
+ 5 ODEV
+ 4 NUMTYP
+ 9 ;+6
+ 0 QF+3
+ /4 0
+ 11 IOLNK
+ 8 OUTI
+ 8 INTERP
+
+ 4 FPA
+ 5 FPMS
+ 4 FPA+1
+ 5 FPMS+1
+ 4 FPA+2
+ 5 FPMS+2
+ 11 IOLNK
+ 8 OUTR
+ 8 INTERP
+
+
+PSTAND 4 +0 (RESET PRESUMED SETTINGS)
+ 5 OPMD1
+ 4 +1
+ 5 DIGM1
+ 4 +8
+ 5 DIGN1
+ 4 +6
+ 5 INTDG
+ 4 +1
+ 5 PREF
+ 4 +0
+ 5 LDZERO
+ 8 INTERP
+
+PSET 10 QF
+ 0 QF
+ /4 0
+ 5 PARAM
+ 14 8175 (SET NEW- OR SAME-LINE)
+ 6 +1
+ 5 PREF
+
+ 4 +0
+ 5 IOMOD (SET FORMAT REQUIRED)
+ 4 PARAM
+ 6 =15 0
+ 5 PARAM2
+ 0 IOMOD
+ /4 FRMLUT
+ 9 ERRF
+ 2 PARAM2
+ /7 DCODFRM
+ 10 IOMOD
+ 8 ;-6
+
+FRMLUT 0 0
+ 1 0
+ 2 0
+ 4 0
+ -1
+
+DCODFRM 8 PFREE
+ 8 PALIGN
+ 8 PSCALE
+ 8 PINT
+
+PFREE 4 +0 (FREEPOINT FORMAT)
+ 8 PRL
+PALIGN 4 -1 (ALIGNED FORMAT)
+ 8 PRL
+PSCALE 4 +1 (SCALED FORMAT)
+
+PRL 5 OPMD1
+ 4 PARAM
+ 14 8188
+ 6 +15
+ 5 DIGM1
+ 4 PARAM
+ 6 +15
+ 5 DIGN1
+ 8 INTERP
+
+PINT 4 PARAM
+ 6 +15
+ 5 INTDG
+ 8 INTERP
+
+IORL 4 -1
+ 5 NUMTYP
+ 8 INTERP
+
+IOINT 4 +0
+ 5 NUMTYP
+ 8 INTERP
+
+
+( REST OF PROGRAM IS BASED ON ALGOL ROUTINES)
+
+
+
+
+
+
+IOLNK     +0
+OPMD1     +0
+DIGM1     +1
+DIGN1     +8
+INTDG     +6
+PREF      +1
+LDZERO    +0
+IDEV      +2048
+ODEV      +6144
+
+N
+FPMS
+W3        +0
+W4        +0
+W5        +0
+
+W1
+TENPWR    +0
+W2
+NSIGNF    +0
+W6        +0
+W7
+BEFPT     +0
+W8
+AFTPT     +0
+W9
+DECPWR    +0
+W10
+SIGNCH    +0
+ADPART    +0
+
+SBLNK1    +0
+SBLNK2    +0
+
+SBW       +0
+SBW1      +0
+SBW2      +0
+
+SBW4      +0
+SBW5      +0
+
+
+SW        +0
+SW1       +0
+
+
+NEXTCH    +0
+DIGM      +1
+DIGN      +8
+
+OPMD      +0
+
+FLNS16    +1
+FLNS6     +2
+
+FLNS1     +3    ( INTEGER OVERFLOW )
+FLNS17    +4    ( ILLEGAL CHAR ON INPUT )
+                (   OF NUMBER     )
+
+
+FLNS14    +6
+FLNS18    +7
+FLNS15    +5    ( ILLEGAL CODE ON INPUT)
+INOEX     0   IOLNK
+          /8   1
+
+
+RNDTBL
++65536
++26214
++10485
++4194
++1677
++671
++268
++107
++43
++17
++7
++3
++1
++0
++0
++0
+
+
+
+BUFLAG    -1
+CHADD     +0
+CHPSN     +0
+HALTMK    +0
+LFCH +10
+ECH /0 197 (E)
+ALRMCH /0 72 (H)
+VOID +36 ($)
+
+
+PARITY +0
+PTYCH +0 (S/R;FIND PARITY OF CHARACTER)
+ 5 SBW5
+ 4 +0
+ 5 PARITY
+ 4 SBW5
+ 2 +0
+ 6 SBW5
+ 7 ;+5
+ 10 PARITY
+ 2 SBW5
+ 5 SBW5
+ 8 ;-6
+ 4 PARITY
+ 6 +1
+ 0 PTYCH
+ /8 1
+
+
+
+OTCHA     +0
+OTCHA1    5     SBW
+OTCHA2    4     SBW
+          9     OTCHA3 (JUMP IF EXTERNAL CODE GIVEN)
+          1     -32
+          9     ;+3
+          4     VOID
+          8     OTCHA3
+
+ 1 +31
+ 7 OTCHA4 (NEWLINE)
+ 1 +33
+ 5 SBW
+ 11 PTYCH
+ 8 PTYCH+1
+ 0 +0
+ 14 7
+ 1 SBW
+OTCHA3    0     ODEV
+          /15   0
+          0     OTCHA
+          /8    1
+OTCHA4    0     ODEV
+ 4 +141
+          /15   0
+          4     LFCH
+          /15   0
+          4     +0
+          8     OTCHA3
+
+( THIS PART IS USED BY THE INPUT ROUTINES)
+
+GECH 4 +0
+ 5 HALTMK
+GECH4 4 +0
+ 0 IDEV
+ /15 0
+ 5 SBW4
+ 11 PTYCH
+ 8 PTYCH+1
+ 7 ;+3
+ 4 FLNS14 (PARITY ERROR)
+ 8 IOFAIL
+
+ 4 SBW4 (EVEN PARITY CHARACTER)
+ 6 +127
+ 5 SBW4
+ 2 +63
+ 9 CDCV3
+ 2 +20
+ 9 CDCV3
+
+CDCV5 4 SBW4 (FORM SIR INTERNAL CODE)
+ 1 -32
+
+CDCV4 5 NEXTCH (SET GROUP CODE IF A DIGIT)
+ 2 +25
+ 9 NOTDIG
+ 2 +9
+ 9 NOTDIG
+ 4 =8 0
+
+GECHEX 0 SBLNK
+ /8 1
+
+NOTDIG 4 +0
+ 8 GECHEX
+
+CDCV3 4 SBW4 (SPECIAL ACTION)
+ 7 GECH4 (FIRST TEST IF IGNORABLE)
+ 1 -13
+ 7 GECH4
+ 1 -114
+ 7 GECH4
+ 1 +117 (NOW TEST IF MEANINGFUL)
+ 7 CDCV6 (LINEFEED)
+ 7 CDCV6
+ 1 -10
+ 7 WAIT (HALT)
+ 1 -19
+ 7 STRING (GRAVE)
+ 4 +0 (READ AS SPACE)
+ 8 CDCV4
+
+WAIT 4 ;+3 (THIS ROUTINE MUST BE CHANGED FOR EXTRA STORE)
+ 5 9
+ 8 ;+0
+ 8 GECH4
+
+STRING 4 FLNS15 (ATTEMPT TO INPUT STRING)
+ 8 IOFAIL
+
+CDCV6 10 HALTMK
+ 4 +1
+ 8 CDCV4
+
+
+
+
+SBLNK
+STAND     +0
+
+          4     +0
+          5     SBW
+          4     W3
+          7     STAND3
+          9     STAND4
+STAND1    14    1
+          9     STAND2
+          10    SBW
+          8     STAND1
+
+STAND7    4     +0
+          5     W3
+          5     W4
+STAND5    5     W5
+          8     STAND6
+
+STAND3    4     +17
+          5     SBW
+          4     W4
+          7     STAND5
+          8     STAND1
+
+
+STAND4    1     +1
+          7     ;+3       (IF FULL HOUSE IN MS PART)
+          4     W3
+          8     ;+5
+          4     +16       (ADJUST EXP AND TAKE LS )
+          5     SBW
+          4     W4
+          10    SBW
+          14    1
+          9     ;-2       (SHIFT TILL +VE )
+STAND2    4     SBW
+SHIFTD    5     SBW       (ENTRY FOR DOUBLE )
+          7     STAND6    (  LENGTH SHIFT   )
+
+          2     W5        (   DOUBLE LENGTH SHIFT  )
+          5     W5
+          1     +64
+          9     STAND7
+          4     SBW
+          6     +8191
+          1     SHFTI
+          5     SHFTN
+          0     W4
+          14    1
+          4     W3
+SHFTN     +0
+          3     W4
+          5     W3
+STAND6    0     SBLNK
+          /8    1
+SHFTI     14    0
+
+
+
+
+
+
+
+
+(903 ALG INT INPUT AND OUTPUT PT2 )
+
+DIVTEN    0     W4        ( SUBRT DIVIDE FRACTION )
+          14 1            (  BY 10  OR  100*2^-3  )
+          4     W3
+          14    8188      (FORM F*2^-4 )
+(AJH replaced 13 TENPWR[DIVIDE BY 10*2^-4 OR 100*2^-7])
+          13 TENPWR	  (DIVIDE BY 10*2^-4 OR 100*2^-7)
+
+          14    18
+          5     SBW
+          14    3         ( QA*2^3  OR QA*2^6  )
+          12    TENPWR
+          14    1         ( QA*10 OR QA*100*2^3 )
+          3     SBW2
+          5     SBW1
+          4     SBW2      ( FORM 10*DQ =F-QA*10 )
+          2     W4
+          9     ;+2       ( SUBTRACT LEAST SIGNIFICANT )
+          8     ;+3
+          10    SBW1      ( CARRY DIGIT  )
+          6     =15 8191
+          5     SBW2
+          4     SBW1
+          2     W3        ( SUBTRACT MOST SIG )
+          5 SBW1
+          0     SBW2
+          14    1
+          4     SBW1      ( DQ*2^11 )
+          14    11
+          13    TENPWR    (    )
+          0     +0
+          14    8177      (FORM DQ )
+          3     W4        (  TRUE QUOTIENT =QA+DQ )
+          1     SBW
+          5     W3
+          0     SBLNK     (  EXIT  )
+          /8    1
+
+
+DECML5    4     +4
+          1     W5
+          5     W5        (EXPONENT +4 )
+
+DECML     0     W4
+          14    1         ( SCALE  F*2^-4 )
+          4     W3
+          14    8188
+          3     W4
+          5     W3
+
+DECML1    0     W4
+          14    1
+          4     W3
+          14    1         ( F*2 )
+          3     W4
+          5     W3
+          14    2         ( F*8 )
+          3     SBW
+
+DECML4    1     W3        ( ADDN ENTRY ALSO 10F=F*8+F*2 )
+          5     W3
+          4     SBW
+          1     W4        (ADD L S )
+          9     DECML2
+DECML3    5     W4
+          0     SBLNK     ( EXIT )
+          /8    1
+
+DECML2    6 =15 8191      ( CARRY BIT  )
+          10    W3
+          8     DECML3
+
+
+
+( LIBRARY FP INPUT - OUTPUT :OUTPUT )
+
+
+
+OUTR      4  DIGN1
+          5  DIGN
+          4  DIGM1
+          5  DIGM
+          4  OPMD1
+          5  OPMD
+          4  +4
+          8  OINT2
+
+
+OUTI      5  W3
+          4  INTDG
+          5   DIGM
+          4  +0
+OINT2     5  ADPART
+          4  LDZERO
+          5  NSIGNF
+          4  +0
+          5  SIGNCH
+          4  PREF
+          11  OTCHA
+(AJH replaced 8  OTCHA1[OUTPUT NEWLINE OR SPACE])
+          8  OTCHA1      (OUTPUT NEWLINE OR SPACE)
+          4  ADPART
+          7  OUTI3
+OINT3
+(change in this section suggested by R Burwood to fix problem with 920A and 920M.)
+(9 instruction affects Q.  On 920B 9 clears Q 18-17, whereas on 920A and 920M    )
+(these bits may be set.                                                          )
+          4  +0
+          5  DECPWR
+          4     W3
+          9     OPRL1
+	  7	OPRL19    (Inserted AJH 20/08/2012)
+          14    1
+          9     OPRL3
+ (         7     OPRL19    [TEST ZERO ] Deleted AJH 20/08/2012)
+OPRL2     4     FLNS6     (NON STANDARD FP NUMBER )
+
+IOFAIL    5  W3 (FORM ERROR MESSAGE )
+ 1 +48
+ 11 PTYCH (OUTPUT *EE<N>)
+ 8 PTYCH+1
+ 0 +0
+ 14 7
+ 1 +48
+ 1 W3
+ 14 8
+ 1 +197
+ 5 IOERR+1
+
+ 0 ;+2
+ 8 ERROR
+ 0 IOERR
+
+
+IOERR +50602 (E*)
+ +131071 (<N>E)
+ 8 ;+1
+ 0 W3
+ /8 ERRANS-1
+
+ERRANS 8 IOFAIL (RECOVERY ROUTINES)
+ 8 ERR2 (O/P;NON-STANDARDISED)
+ 8 ERR3 (I/P;INTEGER OVERFLOW)
+ 8  QFIO (I/P;CONTEXTUAL ERROR)
+ 8 GECH (I/P;ILLEGAL CHARACTER)
+ 8 GECH (I/P;ODDPARITY)
+ 8 ERR7 (I/P;REAL OVERFLOW)
+
+ERR2 4 +0 (OUTPUT +0)
+ 5 FPMS
+ 5 FPMS+1
+ 5 FPMS+2
+ 8 OUTR
+
+ERR3 4 W2 (INPUT LARGEST INTEGER OF CORRECT SIGN)
+ 14 17
+ 0 QF+4
+ 8 ERRI+8
+
+ERR7 4 +131071
+ 5 FPMS
+ 4 &377600
+ 5 FPMS+1
+ 4 +63
+ 5 FPMS+2
+ 8 RDNM20
+
+
+
+
+
+
+OPRL1     14    1
+          9     OPRL2     (NON STANDARD )
+          11    SBLNK
+          8     NEGR1     ( NEGATE )
+          4     +13
+          5     SIGNCH    (SET TO PRINT MINUS )
+OPRL3
+OPRL4     4     W5
+          9     OPRL12    ( JUMP IF EXP NEG )
+          4     &310000   ( SET DIVISOR 100*2^-7 )
+          5     TENPWR
+OPRL5     4     W5
+          9     OPRL10
+          7     OPRL11    (JUMP IF POWER CORRECT )
+          4     +5
+          2     W5
+          9     OPRL8     (IF EXP < 5 JUMP )
+          1     +2
+          5     W5        ( ADJUST SCALE )
+          10    DECPWR
+OPRL9     11    SBLNK
+          8     DIVTEN    ( DIVIDE BY 10 OR 100*2^-3 )
+          10    DECPWR
+
+          11    STAND
+          8     STAND+1
+          8     OPRL5
+
+OPRL8     4     =10 0
+          5     TENPWR    ( SET DIVISOR 10*2^-4 )
+          8     OPRL9
+
+OPRL18    4     -1        ( IF RESULT >OR= 1.0 )
+          11    SBLNK     (HALVE AND ADJUST EXPONENT )
+          8     SHIFTD
+          6     =15 8191
+          5     W3
+          4     -1
+          5     ADPART    ( AVOID ADDING RNDFC NEXT TIME)
+          8     OPRL8     (GO BACK TO DIVIDE BY TEN )
+
+
+OPRL19    4  W4
+          10 DECPWR
+          7     OPRL20
+          8     OPRL2     ( GO TO FAIL NON STANDARD )
+
+
+OPRL13    4     &314631   ( IF EXP=-3 )
+          2     W3
+          9     OPRL14    ( TEST MS )
+          7     ;+2
+          8     OPRL10    ( IF > .800001 OK )
+          4     &231463
+          2     W4
+          9     OPRL14    ( TEST EXACT )
+          8     OPRL10
+
+OPRL14    4     W5        ( EXP:=EXP+4 )
+          1     +4
+          5     W5
+          11    SBLNK     ( MULT BY 10*2^-4 )
+          8     DECML
+          11    STAND
+          8     STAND+1
+OPRL15    4     +1
+          2     DECPWR
+          5     DECPWR
+OPRL12    4     W5
+          1     +3
+          9     OPRL14    ( EXP>-3 )
+          7     OPRL13    ( EXP=-3 )
+OPRL10    4     W5
+          11    SBLNK     ( *2^EXP )
+          8     SHIFTD
+OPRL11     4  ADPART      (CHANGED TO CORRECT ROUNDING ERROR 21.2.72)
+           9  OPRL20      (AVOID ADDING ROUNDING*2)
+           4  OPMD
+           7  ;+4
+           9 ;+6
+           4  DIGN
+           8  ;+6
+           4  DECPWR
+           9  ;+3
+           8  ;-4
+           4  DECPWR
+           1  DIGN
+           9  OPRL20
+           5  SBW1    	  (TOTAL SIGNIF DIGITS)
+           1  SBW1
+           2  +0
+           5  SBW
+           0  SBW1
+           /4  RNDTBL
+
+          0  SBW
+          /14  0
+          3  SBW
+          11  SBLNK
+(AJH replaced 8   DECML4[ ADD IN ROUNDING ])
+          8   DECML4	  ( ADD IN ROUNDING )
+          4  W3
+          9  OPRL18
+
+OPRL20    4     OPMD      (WHAT FORMAT )
+          7     OPRL21    (FREEPOINT )
+          9     OPRL22    ( ALIGNED )
+          4     +1        ( SCALED )
+          2     DIGN
+OPRL25    5     AFTPT
+          4     +1
+          5     BEFPT
+
+          11    SBLNK1
+          8     OTMX1
+          4     +16
+          5     NSIGNF
+          4     +11
+          5     SIGNCH
+
+          4  +31
+          11 OTCHA
+(AJH replaced 8  OTCHA1[ PRINT ? ])
+          8  OTCHA1	  ( PRINT ? )
+
+          4  DECPWR
+          1  -1
+          5  W3
+          4  +2
+          5  DIGM
+          4  +0
+          5  ADPART
+OUTI3     5  W4
+          5  DIGN
+
+          4  -1
+          5  OPMD
+          4  +17
+          5  W5
+          11  STAND
+          8   STAND+1
+          8 OINT3
+
+OPRL27    4     +0
+          8     OPRL28
+
+OPRL21    4     DECPWR
+          9     OPRL27
+OPRL28    5     BEFPT
+          2     DIGN
+          9     OPRL24
+OPRL23    5     AFTPT
+
+          11    SBLNK1
+          8     OUTMXD
+
+          8  INOEX
+
+
+
+OPRL22    4  DECPWR
+          2  DIGM
+          9  OPRL29
+          4  DIGM
+          5  BEFPT
+          4  DIGN
+          8  OPRL23
+
+OPRL24    4  DIGN
+          8  ;+3
+
+OPRL29    4  DIGN
+          1  DIGM
+          1  -5
+          9  ;+3(NO ROOM FOR NORMAL ALARM PRINT )
+          1  +1
+          8  ;+2
+          4  +1
+          4  DIGN
+          4 +1
+          5  OPMD
+          5  ADPART
+          8  OPRL11
+
+
+
+OUTMXD    4     DECPWR    (SUBRT OUTPUT MIXED NUMBER)
+OTMX1     5     SW1
+OTMX2     4     BEFPT
+          7     OTMX4     ( NO MORE DIGITS BEFORE POINT)
+          1     AFTPT
+          7     OTMX13    ( ALL DIGITS PRINTED )
+OTMX3     4     SW1
+          2     BEFPT
+          9     OTMX7
+          7     OTMX6
+          4     BEFPT
+          1     -1
+          7     OTMX11
+          4     NSIGNF
+          5     SW        ( SET CHARACTER )
+          7     OTMX10    ( IF SPACE OUTPUT )
+          8     OTMX9     (OTHERWISECHECK IF SIGN PRINTED)
+
+OTMX11    4     +16
+          5     SW
+          8     OTMX9
+
+OTMX4     4     AFTPT
+          7     OTMX12
+          4     +16
+          5     NSIGNF
+          4     SIGNCH
+          9     OTMX5     ( IF SIGN NOT OUTPUT )
+          11    OTCHA
+          8     OTCHA1    ( OUTPUT SIGN )
+          4     -1
+          5     SIGNCH
+OTMX5     4     +14
+          11    OTCHA     ( OUTPUT POINT )
+          8     OTCHA1
+          8     OTMX3
+
+OTMX6     11    SBLNK
+          8     DECML     ( F*2^-4*10 )
+          8     OTMX8
+
+OTMX7     11    SBLNK
+          8     DECML1    ( F*10 )
+OTMX8     4     W3
+          14    8179
+          1     +16
+          5     SW        ( SET CHAR = DIGIT PART )
+          4     W3
+          6     +8191     ( LEAVE FRACTIONAL )
+          5     W3        ( PART IN STORE )
+OTMX9     4     SIGNCH
+          9     OTMX10
+          11    OTCHA
+          8     OTCHA1
+          4     -1
+          5     SIGNCH
+OTMX10    4     SW
+          11    OTCHA
+          8     OTCHA1    ( OUTPUT CHAR )
+          4     BEFPT
+          1     -1        ( REDUCE NO OF CHARS  )
+          5     BEFPT
+          8     OTMX2
+
+OTMX12    4     ADPART
+          7     OTMX13
+          4     +0
+          11    OTCHA     ( IF REAL NO .  PRINT  )
+          8     OTCHA1    ( SPACE INSTEAD OF POINT )
+OTMX13    0     SBLNK1    (EXIT)
+          /8    1
+
+
+( LIBRARY NUMBER INPUT )
+
+RDINT     4     +1
+          8     ;+2
+RDRL      4     -1
+          5     ADPART
+RDNM      4     +0
+          5     W1        ( DIGIT TOTAL :=0)
+          5     W2        (SIGN FLAG )
+          5     W3        ( NUMBER:=0 )
+          5     W4
+          5     W5
+          5     W6        (REAL NUMBER FLAG)
+          5     W7        ( EXP FLAG )
+          5     W9        ( DECIMAL EXP :=0 )
+          4     =/0 0
+          5     W8        ( SET NO DIGITS AFTER PT )
+
+RDNM1     11    SBLNK
+          8     GECH
+          6     =8 0
+          7     RDNM3     (JUMP IF NOT DIGIT )
+          10    W1        (TOTAL DIGITS )
+          4     W7
+          7     RDNM2     (JMP IF EXP NOT SET)
+          0     +0
+          4     W9
+          1     W9        (DECIMAL EXP*10 )
+          5     W9
+          14    2
+          1     W9
+          1     NEXTCH
+          1     -16       (ADD IN DIGIT )
+          5     W9
+
+
+          5  W9
+          2  +128
+          9  ;+2
+          8  RDNM1
+
+          1  W9
+          8  ;-5( IF>28 MAKE=28 )
+
+
+
+RDNM2     10    W8
+          11    SBLNK     (NUMBER*10*2^-4)
+          8     DECML5
+          4     W5
+          2     +17
+          6     +8191     ( SCALING )
+          1     SHFTI
+          5     ;+4
+          4     NEXTCH
+          1     -16       ( SCALE DIGIT )
+          0     +0
+          +0
+          3     SBW
+          11    SBLNK     ( ADD TO NUMBER )
+          8     DECML4
+          11    STAND
+          8     STAND+1
+          8     RDNM1
+
+
+RDNM5     4     W6        (IS REAL SET )
+          10    W6
+          7     RDNM6
+RDNM7     4     FLNS17    ( ILLEGAL CHAR )
+          8     IOFAIL
+
+
+
+RDNM6     5     W8        (START COUNT FOR DIGITS  )
+          8     RDNM1     (   AFTER POINT  )
+
+RDNM8     4     +1        (SET SIGN )
+RDNM9     5     W2        (IF + CLEAR SIGN )
+          8     RDNM1
+
+RDNM10    4     W7
+          7     RDNM11    (IF EXP SET FAIL )
+          8     RDNM7
+RDNM11    10    W7        ( SET EXP )
+          4     W1
+          7     RDNM12    (JUMP IF NO DIGITS YET )
+RDNM13    4     W2        ( STORE SIGN )
+          5     W10
+          4     +0
+          5     W2        ( CLEAR SIGN )
+          10    W6        (SET REAL )
+          8     RDNM1
+
+
+RDNM12    4     =8 0
+          5     W3        (SET +1 IN NUMBER)
+          4     +1
+          5     W5
+          10    W1        ( COUNT ONE DIGIT )
+          8     RDNM13
+
+RDNM3     4     NEXTCH
+          1     -14
+          7     RDNM5     ( POINT )
+          1     -17
+          7     RDNM10    ( ? )
+          1     +18
+          7     RDNM8     ( - )
+          1     +2
+          7     RDNM9     ( + )
+          2     +21
+          7     RDNM7     ( < )
+          4     W1        ( TERMINATOR )
+          7     RDNM1     (IF NO DIGITS YET IGNORE )
+          4     W7
+          7     RDNM14    (EXP NOT SET )
+          4     W2
+          7     RDNM4     (SIGN OF EXP )
+          4     W9
+          2     +0
+          5     W9
+RDNM4     4     W10       (RESTORE SIGN )
+          5     W2
+RDNM14    4     W8
+          9     RDNM15    (JUMP IF NO DIGITS AFTER PT )
+
+2         W9
+5         W9    ( SUBTRACT NUMBER FROM DEC EXP )
+
+RDNM15 4 W3
+ 7 RDNM20
+ 4 W9
+ 1 -100
+ 9 RDNM27
+
+ 4 FLNS18 (REAL OVERFLOW)
+ 8 IOFAIL
+
+RDNM27 4 W9
+          7     RDNM20    (DEC EXP ZERO )
+          9     RDNM16    (       <0   )
+          1     -1        ( IF >0 REDUCE )
+          5     W9
+          11    SBLNK
+          8     DECML5    (  MULTIPLY BY TEN )
+RDNM19    11    STAND
+          8     STAND+1
+          8     RDNM15
+
+
+RDNM16    10    W9
+          4     =10 0
+          5     TENPWR    ( SET DIVISOR =+10 )
+          11    SBLNK
+          8     DIVTEN    ( DIVIDE )
+          8     RDNM19
+
+
+RDNM20    4     W2
+          7     ;+3
+          11    SBLNK     ( IF SIGN SET NEGATE )
+          8     NEGR1
+          4     ADPART
+          9     INOEX     ( IF REAL REQUIRED EXIT )
+          4     W5        (IF INTEGER REQUIRED CONVERT )
+          1     -17
+          9     RDNM21
+          7     RDNM22
+RDNM23    4     FLNS1     ( INTEGER OVERFLOW )
+          8     IOFAIL
+
+
+RDNM21    11    SBLNK
+          8     SHIFTD
+RDNM22    4     =8 0
+          2     W4
+          9     RDNM24
+          4     W3
+          9     RDNM25
+          1     +1
+          9     RDNM23    (NUMBER > 2^17 - 0.5 )
+          8     ;+2
+RDNM25    1     +1
+          5     W3
+RDNM24    4     W3
+          8     INOEX
+
+
+NEGR1     4     W4
+          7     NEGR4     (TEST FOR  -1.0 & +0.5 )
+          2     +0
+          6     =15 8191
+          5     W4
+          10    W3
+          4     W3
+          2     +0
+NEGR2     5     W3
+          0     SBLNK
+          /8    1
+
+NEGR4     4     W3
+          2     =/0 0
+          7     NEGR3
+          4     W3
+          2     +0
+          5     W3
+          8     STAND+1
+
+NEGR3     10    W5
+          4     =8 0
+          8     NEGR2
+
+<! Halt !>

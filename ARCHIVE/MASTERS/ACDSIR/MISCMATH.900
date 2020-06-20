@@ -1,0 +1,151 @@
+﻿
+((GUARDED DIVISION SUBROUTINE, 13/12/67)
+
+(Divides two single-length numbers,
+but saturates wherever overflow would occur)
+
+[G13L G13E G13Y]
+
+G13L      >1
+G13X      >1
+G13Y      >1
+MODX      >1
+
+G13E      5     G13X
+          9     ;+2
+          8     ;+3
+          2     +0
+          9     XBOO
+          5     MODX
+
+          4     G13Y
+          9     ;+2
+          8     ;+3
+          2     +0
+          9     YBOO
+
+          2     MODX
+          9     OK
+
+          4     G13X
+          12    G13Y
+TEST      9     ;+3
+          4     &377777
+          8     EXIT
+          4     &400000
+          8     EXIT
+
+OK        0     +0
+          4     G13X
+          13    G13Y
+
+EXIT      0     G13L
+          /8    1
+
+XBOO      4     G13Y
+          1     &400000
+          8     TEST
+
+YBOO      4     G13X
+          2     +0
+          8     EXIT
+<! Halt !>
+((FAST SQUARE ROOT SUBROUTINE, 6/12/68)
+
+[SSSRL SSSRE]
+
+SSSRL     >1
+A         >1
+GUESS     >1
+
+          4     +0
+SSSRE     7     EXIT
+          9     ;-2
+          5     A
+
+          0     +0        (Clear Q-register)
+          3     COUNT
+
+          14    1
+          9     ODD       (Jump if A "ge" 2^-[1+2*COUNT])
+          14    1
+          9     EVEN      (Jump if A "ge" 2^-[2+2*COUNT])
+          10    COUNT
+          8     ;-5
+
+ODD       14    8190
+          1     &400000   (Remove regenerated bits; add +.5)
+          8     ;+3
+EVEN      14    8190
+          1     &300000   (Remove regenerated bits; add +.25)
+          5     GUESS
+
+          4     COUNT
+          7     ;+6
+          2     =15 0     (14 8192 - COUNT)
+          5     COUNT
+          4     GUESS
+COUNT     >1              (Shift GUESS right COUNT places)
+          5     GUESS
+
+          4     A
+          2     +0        (-A; Clear Q-register)
+          13    GUESS     (-A/GUESS)
+          2     GUESS     (GUESS+[A/GUESS])
+          14    8191      ([GUESS+[A/GUESS]] /2)
+          6     &377777   (Remove regenerated sign bit)
+          5     GUESS
+
+          4     A
+          2     +0        (-A; Clear Q-register)
+          13    GUESS     (-A/GUESS)
+          2     GUESS     (GUESS+[A/GUESS])
+          14    8191      ([GUESS+[A/GUESS]] /2)
+          6     &377777   (Remove regenerated sign bit)
+
+EXIT      0     SSSRL
+          /8    1
+<! Halt !>
+((SINE & COSINE SUBROUTINE, 16/12/69)
+
+[SICOL SICOE SICOS SINL SINE COSL COSE]
+
+SICOL
+SINL
+COSL      >1
+SICOS     >1
+THETA     >1
+X         >1
+XSQ       >1
+
+SICOE     5     THETA
+          0     ;+2
+          8     SINE+1
+          0     ;+0
+          5     SICOS
+          4     THETA
+
+COSE      1     +.5
+SINE      0     SICOL
+(+1)      9     ;+5
+          14    1
+          1     +1
+          9     ;+4
+          8     ;+4
+          14    1
+          9     J2
+          2     +0
+J1        5     X
+          12    X
+          5     XSQ
+          12    -.002181
+          1     +.039744
+          12    XSQ
+          1     -.322960
+          12    XSQ
+          1     +.785397
+          12    X
+          /8    1
+J2        1     +1
+          8     J1
+<! Halt !>

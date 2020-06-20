@@ -1,0 +1,144 @@
+﻿
+c Build composite music tapes
+
+on 903
+
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+c Classical
+
+at ptr inline
+
+CHE
+WAI
+INS
+&0[@[@[@^%,
+CHE
+WAI
+INS
+&0[@[@[@^%,
+CHE 
+WAI
+INS
+&0[@[@[@^%,
+CHE
+WAI
+INS
+&0[@[@[@^%,
+CHE
+INS
+&0[@[@[@^%,
+COP
+<! halt !><!!>
+at ptp file errors.txt legible
+j 13
+de ptp
+print errors.txt
+st 490
+delete errors.txt
+
+at ptp file AJH_CLASSICAL.900
+
+at ptr file AJH_JESU.900
+j 9
+st 822
+
+at ptr file AJH_TRUMPET.900
+j 10
+st 822
+
+at ptr file AJH_BEE.900
+j 10
+st 822
+
+at ptr file AJH_WEDDING.900
+j 10
+st 822
+
+at ptr file AJH_SHEBA.900
+j 10
+de ptp
+st 1274
+
+sh t
+
+c Folk
+
+at ptr inline
+
+CHE
+WAI
+INS
+&0[@[@[@^%,
+CHE
+WAI
+INS
+&0[@[@[@^%,
+CHE
+WAI
+INS
+&0[@[@[@^%,
+COP
+<! halt !><!!>
+at ptp file errors.txt legible
+j 13
+de ptp
+print errors.txt
+st 490
+delete errors.txt
+
+at ptp file AJH_FOLK.900
+
+at ptr file AJH_ASH.900
+j 9
+st 822
+
+at ptr file AJH_HARLECH.900
+j 10
+st 822
+
+at ptr file AJH_LAND.900
+j 10
+st 822
+
+at ptr file AJH_LUBBERS.900
+j 10
+
+de ptp
+st 1274
+
+delete errors.txt
+
+c compact each tape
+
+at ptr file AJH_COMPACT.BIN
+j 8181
+st 8175
+
+at ptr file AJH_CLASSICAL.900
+at ptp file AJH_CLASSICAL.900
+j 8
+de ptp
+st 47
+
+at ptr file AJH_FOLK.900
+at ptp file AJH_FOLK.900
+j 8
+de ptp
+st 47
+
+at ptr file AJH_CAROLS.900
+at ptp file AJH_CAROLS.900
+j 8
+de ptp
+st 47
+
+at ptr file AJH_ENTERTAINER.900
+at ptp file AJH_ENTERTAINER.900
+j 8
+de ptp
+st 47
+
+sh t

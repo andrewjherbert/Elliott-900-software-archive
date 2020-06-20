@@ -1,0 +1,118 @@
+﻿
+ERRORS;
+
+"BEGIN"
+
+"COMMENT" This program aims to test the various
+faults cured, present, or suspected, in the various
+issues of GECL 903 ALGOL;
+
+
+
+"BEGIN"
+
+"COMMENT" This section tests problems associated with
+certain symbol code differences between old 903 code
+& current 905 code, particularly regarding the two values
+of the HASHMARK=POUND=HALF=BACKSLASH symbol and the two
+values of the AT=CLOSEQUOTE symbol. The input & output
+routines of the translators and interpreters are
+all tested;
+
+"INTEGER" C,M;
+"INTEGER" "ARRAY" A[0:20];
+
+"PRINT" ''L`1`;
+"PRINT" ''L@2@;
+"PRINT" {{L}3};
+
+"PRINT" '{L}{Q}{U}4`;
+"PRINT" ''L@£\5`;
+<! Halt !>
+"COMMENT" This line compiled to test translator output
+but ommitted normally: bracketed by <H>;
+....'{}`@£\....
+<! Halt !>
+"FOR" C := 1 "STEP" 1 "UNTIL" 5 "DO"
+"BEGIN" M := 0; INSTRING (A,M);
+        M := 0; OUTSTRING (A,M);
+"END";
+
+"END";
+
+
+
+"BEGIN"
+
+"COMMENT" This section tests the integer subtraction
+implied in a condition, i.e. "IF" A>B "THEN" ....
+Normally this calculation is overflow checked, e.g.
+C := A-B will give an error on integer overflow.
+However in conditions this appears not to be tested;
+
+"INTEGER" A,B,C;
+A := +100000;
+B := -100000;
+
+C := A-B;
+
+"IF" A>B
+"THEN" "PRINT" ''L`ALGOL OK`
+"ELSE" "PRINT" ''L`ALGOL WRONG`;
+
+"END";
+
+
+
+"BEGIN"
+
+"COMMENT" This section tries to invoke the
+error of SAN ALGOL/1 whereby re-entry at location
+9 after calling square root with a negative argument
+does not give SQRT(MODULUS(X)) as stated;
+
+"INTEGER" C;
+"FOR" C := 1 "STEP" 1 "UNTIL" 10 "DO"
+"PRINT" ''L``,SQRT(-C), ''S``,SQRT(C);
+
+"END";
+
+
+
+"BEGIN"
+
+"COMMENT" This section tries to invoke the
+error of SAN ALGOL/2 whereby the first call
+of an integer procedure as a parameter of
+an integer procedure gives an incorrect result;
+
+"INTEGER" C;
+
+"INTEGER" "PROCEDURE" ACTPROC;
+ACTPROC := +12345;
+
+"INTEGER" "PROCEDURE" CALL (FORMPROC);
+"INTEGER" "PROCEDURE" FORMPROC;
+"BEGIN" "PRINT" ''L``,FORMPROC, ''S``,FORMPROC;
+        CALL := 0;
+"END";
+
+c := CALL (ACTPROC);
+
+"END";
+
+
+
+"END";
+
+"COMMENT" And now the DATA for INSTRING & OUTSTRING,
+check by eye that the translator copies this exactly;
+
+''L`1`
+''L@2@
+{{L}3}
+'{L}{Q}{U}4`
+''L@£\5`
+
+<H>
+<! Halt !>

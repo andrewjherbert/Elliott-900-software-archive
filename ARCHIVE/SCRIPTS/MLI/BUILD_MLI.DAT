@@ -1,0 +1,63 @@
+﻿C Build ML/I System
+
+on 905 16K
+
+c unpack Thimbleby tape
+at ptr file .././MISC/FETCH.BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/MLI/THIMBLEBY_T4.BIN
+at ptp file TEMP.900
+j 8
+de ptp
+st 106
+
+c edit in changes to make work with exec
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptr file ../../MASTERS/MLI/MLI_EDIT.900
+at ptp file errors.txt legible
+j 13
+de ptp
+print errors.txt 
+st 490
+delete errors.txt
+at ptp file MLI.900
+at ptr file TEMP.900
+j 9
+st 1274
+de ptp
+
+delete TEMP.900
+
+c assemble with MASIR
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j 8181
+st 8164
+at tty inline
+O4M<!!>
+at ptr file ../../MASTERS/LOWL/EXEC.900
+at ptp file MLI.RLB
+nonstop on
+j 16
+at ptr file MLI.900
+at tty inline
+C<!!>
+r
+de ptp
+reverse MLI.RLB
+
+c Generate binary with loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+at tty inline
+O134LM<!!>
+at ptr file MLI.RLB
+at ptp file MLI.BIN
+j 16
+de ptp
+delete MLI.RLB
+
+sh t

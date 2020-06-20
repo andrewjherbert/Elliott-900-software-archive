@@ -1,0 +1,85 @@
+﻿ *19
+
+(PRIMES - Andrew Herbert 07/04/2019)
+
+(Calculate all the primes numbers from 1 to 1000 using the sieve method)
+
+(Use a vector to represent numbers 2,3,4,5,6,7...,1000)
+
+[PRIMES QOUT1]
+
+(ZERO LOCATIONS SIEVE+998, ..., SIEVE)
+
+PRIMES  11 NL          (START A NEW LINE)
+	 8 NL+1
+
+         4 -998        (INITIALISE SIEVE)            
+         5 I
+CLEAR    0 I
+         4 +0
+        /5 SIEVE+998   (CLEAR LOCATION SIEVE+500+I)
+        10 I           (INCREMENT I)
+         4 I
+         9 CLEAR       (CONTINUE UNTIL I >= 0)
+
+         4 -5          (SET UP COUNT OF PRIMES PER LINE)
+         5 COUNT
+
+         4 +2          (START SEARCH FROM 3)
+         5 I
+TEST	 0 I           (CHECK TO SEE IF I IS PRIME)
+        /4 SIEVE-2
+         7 MARK        (I IS PRIME)
+
+ADVANC  10 I           (I IS NOT PRIME, MOVE ON TO NEXT)
+         4 I
+         1 -1001       (CHECK FOR END OF SEARCH)
+         7 STOP
+         8 TEST
+         
+MARK     4 I
+        11 QOUT1       (OUTPUT THE NUMBER)
+         8 QOUT1+1
+         3 0           (3 DIGITS)
+
+        10 COUNT       (TEST IF LINE IS FULL)   
+         4 COUNT
+         9 TICK
+        11 NL          (OUTPUT NEWLINE)
+         8 NL+1
+         4 -5           (RESET COUNT)
+         5 COUNT
+
+TICK     4 I
+         5 J
+(+2)     0 J
+         4 +1          (REMOVE MULTIPLES OF J)
+        /5 SIEVE-2
+         4 J           (ADVANCE IN STEPS OF I)
+         1 I
+         5 J
+         1 -1001       (UP TO BUT NOT BEYOND 1000)
+         9 TICK+2
+         8 ADVANCE        
+
+STOP    11 NL          (ALL DONE, PRINT FINAL NEWLINE)
+         8 NL+1
+         8 ;+0    
+
+(SUBROUTINE TO TYPE A NEWLINE)
+NL     >1              (RETURN LINK)
+         4 +141        (CARRIAGE RETURN)
+        15 6144
+         4 +10
+        15 6144        (LINE FEED)
+         0 NL          (RETURN VIA LINK)
+        /8 1
+
+I      >1              (LOOP COUNTER 1)
+J      >1              (LOOP COUNTER 2)
+COUNT  >1              (COUNT OF PRIMES FOUND)
+SIEVE  >998            (SIEVE FOR NUMBERS)
+
+*2
+
+<! halt !>

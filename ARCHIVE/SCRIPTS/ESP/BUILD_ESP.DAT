@@ -1,0 +1,16 @@
+﻿c assemble ESP code procedures
+
+on 903 8K
+at ptr file ..\..\MASTERS\903SIR\SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptp file ESP2(ISS2A).RLB
+at ptr file ..\..\MASTERS\ESP\ESP2(ISS2A).900
+
+j 8
+st 6239
+
+de ptp
+
+sh t

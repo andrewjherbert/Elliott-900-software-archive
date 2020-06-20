@@ -1,0 +1,67 @@
+﻿c demonstrate Terry Froggatt's BASIC system
+c
+c n.b. must run in a 903
+
+on 903 16K
+nonstop on
+
+c run EASTER program
+
+at ptr file ../../MASTERS/TJFBASIC/BASIC16K.BIN
+
+c set up to demand paper tape input on triggering
+at tty inline
+OLD
+<!!>
+J 8181
+
+c will have stopped awaiting paper tape and tty
+at ptr file ../../MASTERS/TJFBASIC/EASTERD.900
+at tty inline
+RUN
+1954
+2010
+0
+<!!>
+
+c will have stopped awaiting tty input
+r
+
+c run GCDLOOP program
+
+c set a stop to allow interrupt to be simulated
+step 2000000
+
+c read in, list and run GCDLOOP program
+at tty inline
+OLD
+LIST
+RUN
+<!!>
+at ptr file ../../MASTERS/TJFBASIC/GCDLOOP.900
+r
+c will hit step limit
+
+c set level 3 trace interrupt and resume
+at tty tty
+step 2000
+tint 3 on
+r
+
+c halt waiting for tty in response to interrupt
+tint 3 off
+step 2000000
+at tty inline
+PRINT "INTERRUPT TAKEN HERE...."
+CONTINUE
+<!!>
+r
+
+c hit second step limit
+
+
+
+
+
+
+

@@ -1,0 +1,259 @@
+﻿
+        BCPL, & MECSL CORAL.
+        ====================
+
+Total files listed:
+      118 file(s)      1,448,233 bytes
+
+
+Bag "MECSL CORAL 1970".
+-----------------------
+Directory BOX_B1\CORAL_70
+       14 file(s)         68,088 bytes
+
+"900 CORAL SERVICE AMEND 1/6/70, Intermediate (RLB)"
+AMEND    1           1,399 14/06/08   17:32
+AMEND    2           1,399 14/06/08   17:48
+"900 CORAL LIBRARY 1/6/70, Intermediate (RLB)"
+LIB      1           6,008 14/06/08   17:40
+LIB      2           6,008 14/06/08   17:53
+"900 CORAL LOADER 8K 1/6/70, Binary Mode 3"
+LOAD_8   1           1,794 14/06/08   17:31
+LOAD_8   2           1,794 14/06/08   17:46
+"900 CORAL PASS 1 8K 1/6/70, Binary Mode 3"
+P1_8     1          16,337 14/06/08   17:41
+P1_8     2          16,337 14/06/08   17:56
+"SAMPLE CORAL RLB TAPES, Intermediate (RLB)"
+   In annotated sections, with disassembly markings.
+SAMPLE   1           4,339 14/06/08   17:36
+SAMPLE   2           4,339 14/06/08   17:52
+"900 CORAL LIBRARY SPECS 1/6/70, 903 Telecode"
+SPECS    1           1,097 14/06/08   17:33
+SPECS    2           1,097 14/06/08   17:49
+"900 CORAL SERVICE DUMP 1/6/70, Intermediate (RLB)"
+S_DUMP   1           3,070 14/06/08   17:35
+S_DUMP   2           3,070 14/06/08   17:50
+
+
+Bag "MECSL CORAL 1971".
+-----------------------
+Directory BOX_B1\CORAL_71
+       28 file(s)        169,650 bytes
+   Unusual labelling but all my handwriting.
+
+"900 CORAL SERVICE/AMEND"
+AMEND    1           1,399 14/06/08   16:06
+AMEND    2           1,399 14/06/08   16:38
+"900 CORAL DICTIONARY (SCB) 19-4-69"
+DICT     1           2,403 14/06/08   16:12
+DICT     2           2,403 14/06/08   16:47
+"900 CORAL LIBRARY CORAL 3"
+[900 CORAL LIBRARY CORAL 3]
+LIB      1          13,537 14/06/08   16:24
+LIB      2          13,537 14/06/08   16:55
+"16K LOADER SCB"
+   Note no 900 CORAL here.
+LOAD_16  1           1,882 14/06/08   15:59
+LOAD_16  2           1,882 14/06/08   16:34
+"900 CORAL DIAGNOSTIC LOADER 16K 11-8-69"
+LOAD_16D 1           2,212 14/06/08   16:03
+LOAD_16D 2           2,212 14/06/08   16:37
+"900 CORAL LOADER (8K) (SCB)"
+LOAD_8   1           1,794 14/06/08   15:58
+LOAD_8   2           1,794 14/06/08   16:32
+"900 CORAL (SCB) DIAGNOSTIC LOADER (8K) 11-8-69"
+LOAD_8D  1           2,124 14/06/08   16:01
+LOAD_8D  2           2,124 14/06/08   16:35
+"900 CORAL/SCB PASS 1 8K 4-8-69"
+P1_8     1          16,337 14/06/08   16:21
+P1_8     2          16,337 14/06/08   16:52
+"903 CORAL 16K PASS 2 (SCB) 4-8-69"
+   Note 903 not 900 here.
+P2_16    1          31,631 14/06/08   16:28
+P2_16    2          31,631 14/06/08   16:59
+"900 CORAL/SERVICE PRINT BASES ISS 1"
+[900 CORAL SERVICE PRINT BASES ISSUE 1]
+P_BASES  1           2,539 14/06/08   16:11
+P_BASES  2           2,539 14/06/08   16:44
+"900/CORAL/SERVICE PRINT SEGMENT"
+P_SEG    1           2,059 14/06/08   16:09
+P_SEG    2           2,059 14/06/08   16:43
+"900 CORAL PRINT STORE"
+P_STORE  1           1,979 14/06/08   16:08
+P_STORE  2           1,979 14/06/08   16:41
+"900 CORAL SPECS (CODE) CORAL 3"
+[900 CORAL SPECS CODE CORAL 3]
+SPECS    1           1,859 14/06/08   16:07
+SPECS    2           1,859 14/06/08   16:40
+"900 CORAL SERVICE DUMP R.L.B."
+S_DUMP   1           3,070 14/06/08   16:14
+S_DUMP   2           3,070 14/06/08   16:48
+
+
+Bag "MECSL CORAL 1973".
+-----------------------
+Directory BOX_B1\CORAL_73
+       30 file(s)        248,942 bytes
+   Labelling not my handwriting or mine in pencil.
+
+"900 CORAL AMEND"
+AMEND    1           1,399 14/06/08   14:29
+AMEND    2           1,399 14/06/08   15:16
+"900 CORAL DICTIONARY (SCB) 19-4-69"
+DICT     1           2,403 14/06/08   14:41
+DICT     2           2,403 14/06/08   15:25
+"900 CORAL LIBRARY (RLB) Iss 4"
+[900 CORAL LIBRARY RLB ISS 4]
+LIB_ISS4 1          13,185 14/06/08   14:53
+LIB_ISS4 2          13,185 14/06/08   15:34
+"900 CORAL 16K LOADER SCB"
+LOAD_16  1           1,882 14/06/08   14:26
+LOAD_16  2           1,882 14/06/08   15:13
+"900 CORAL DIAGNOSTIC LOADER 16K 11/8/69"
+LOAD_16D 1           2,212 14/06/08   14:28
+LOAD_16D 2           2,212 14/06/08   15:15
+"900 CORAL LOADER (8K) SCB"
+LOAD_8   1           1,794 14/06/08   14:25
+LOAD_8   2           1,794 14/06/08   15:11
+"CORAL PASS 1 16K (SCB) Iss 3"
+[CORAL PASS 1 16K SCB ISS 3]
+   Note no 900 here, twice.
+P1_ISS3  1          17,439 14/06/08   14:50
+P1_ISS3  2          17,439 14/06/08   15:32
+"900 CORAL PASS 2 Issue 4 (SCB)"
+P2_ISS4  1          33,307 14/06/08   14:56
+P2_ISS4  2          33,307 14/06/08   15:41
+"900 CORAL 27/9/73 PASS 2 ISS 5"
+[900 CORAL PASS 2 ISSUE 5]
+P2_ISS5  1          34,014 14/06/08   15:02
+P2_ISS5  2          34,014 14/06/08   15:46
+"900 CORAL/SERVICE PRINT BASES ISS 1"
+[900 CORAL SERVICE PRINT BASES ISSUE 1]
+P_BASES  1           2,442 14/06/08   14:39
+P_BASES  2           2,442 14/06/08   15:23
+"900 CORAL/SEGMENT PRINT SEGMENT"
+   Should /SEGMENT be /SERVICE?
+P_SEG    1           2,059 14/06/08   14:38
+P_SEG    2           2,059 14/06/08   15:21
+"900 CORAL PRINT STORE"
+P_STORE  1           1,979 14/06/08   14:36
+P_STORE  2           1,979 14/06/08   15:19
+"900 CORAL ROUTINE GENERATOR"
+[900 CORAL ROUTINE GENERATOR]
+R_GEN    1           5,427 14/06/08   14:46
+R_GEN    2           5,427 14/06/08   15:28
+"900 CORAL SPECS (CODE) CORAL 3"
+[900 CORAL SPECS CODE CORAL 3]
+SPECS    1           1,859 14/06/08   14:35
+SPECS    2           1,859 14/06/08   15:18
+"900 CORAL SERVICE DUMP (RLB)"
+S_DUMP   1           3,070 14/06/08   14:43
+S_DUMP   2           3,070 14/06/08   15:27
+
+
+Bag "MECSL CORAL 1974 Edits & Pass 1".
+--------------------------------------
+Directory BOX_B1\CORAL_P1
+       10 file(s)        148,176 bytes
+   Labelling not my handwriting.
+
+"ATOB EDIT CORAL SEG 1, 24.6.74"
+EDIT_SG1 1             544 14/06/08   12:57
+EDIT_SG1 2             544 14/06/08   13:14
+"bR PASS 2 SEG 2, 15.7/74"
+EDIT_SG2 1             580 14/06/08   12:58
+EDIT_SG2 2             580 14/06/08   13:15
+"PASS 1 (16K) SEGMENT 1, 22-4-71 COMPILER 27-4-71"
+P1_SG1   1          22,305 14/06/08   13:04
+P1_SG1   2          22,305 14/06/08   13:23
+"PASS 1 (16K) SEGMENT 2, 22.4.71 COMPILER 27.4.71"
+P1_SG2   1          36,060 14/06/08   13:12
+P1_SG2   2          36,060 14/06/08   13:57
+"PASS 1 (16K) SEG 3, COMPILER 22.4.71 27.4.71"
+   Labelled on inside of tape.
+P1_SG3   1          14,599 14/06/08   13:01
+P1_SG3   2          14,599 14/06/08   13:19
+
+
+Bag "MECSL CORAL 1974 Pass 2".
+------------------------------
+Directory BOX_B1\CORAL_P2
+       10 file(s)        251,536 bytes
+   Labelling not my handwriting.
+
+"COMPOOL S/C, 14.3.73"
+COMPOOL  1           5,904 14/06/08   12:08
+COMPOOL  2           5,904 14/06/08   12:31
+"900 CORAL PASS 2 SC 1, 21.3.73"
+P2_SC1   1          50,522 14/06/08   12:24
+P2_SC1   2          50,522 14/06/08   12:49
+"900 CORAL PASS 2 SC 2, 26.3.73"
+P2_SC2   1          29,241 14/06/08   12:19
+P2_SC2   2          29,241 14/06/08   12:42
+"900 CORAL PASS 2 SC 3, 22.3.73"
+   The assumed word CORAL is unreadable.
+P2_SC3   1          16,841 14/06/08   12:11
+P2_SC3   2          16,841 14/06/08   12:34
+"900 CORAL PASS 2 SC 4, 23.3.73"
+P2_SC4   1          23,260 14/06/08   12:14
+P2_SC4   2          23,260 14/06/08   12:38
+
+
+Loose "BCPL".
+-------------
+Directory BOX_B1\BCPL
+       26 file(s)        561,841 bytes
+   Each of the 2 or 3 copies has been read once.
+   Tapes start with square-cut (not pointed) ends,
+      then unusually short leading blanks.
+   Labelled by me above the sprocket in blue marker
+      with the NAME.EXTN as shown below.
+   Labelled by me below the sprocket in pencil with
+      the copy number shown below (and usually a tick).
+   Tapes end with 90 blanks & 5 ctrl-Zs unless noted
+      then unusually short trailing blanks.
+
+"LIB.BCL"
+   Copy 2 lacks the 5 trailing ctrl-Zs, but is OK.
+LIB_BCL  1           2,583 13/06/08   15:19
+LIB_BCL  2           2,488 13/06/08   17:23
+"LIB.GET"
+LIB_GET  1             793 13/06/08   15:34
+LIB_GET  2             793 13/06/08   17:21
+"LIB.OCO"
+LIB_OCO  1           4,904 13/06/08   15:30
+LIB_OCO  2           4,904 13/06/08   17:24
+"NTRN.BCL"
+NTRN_BCL 1          27,448 13/06/08   16:19
+NTRN_BCL 2          27,448 13/06/08   18:18
+"NTRN.GET"
+NTRN_GET 1           2,851 13/06/08   15:27
+NTRN_GET 2           2,851 13/06/08   17:30
+"NTRN.OCO"
+   Copy 2 has a 117-blank splice in it, UNCHECKED.
+NTRN_OCO 1          37,343 13/06/08   15:43
+NTRN_OCO 2          37,460 13/06/08   18:09
+NTRN_OCO 3          37,343 13/06/08   18:37
+"TRAN.BCL"
+TRAN_BCL 1          32,476 13/06/08   15:58
+TRAN_BCL 2          32,476 13/06/08   17:53
+"TRAN.GET"
+TRAN_GET 1           3,482 13/06/08   15:23
+TRAN_GET 2           3,482 13/06/08   17:26
+"TRAN.OCO"
+   Copy 2 lacks the 5 trailing ctrl-Zs, but is OK.
+TRAN_OCO 1          49,319 13/06/08   16:31
+TRAN_OCO 2          49,224 13/06/08   17:36
+TRAN_OCO 3          49,319 13/06/08   18:27
+"TSYN.BCL"
+TSYN_BCL 1          32,424 13/06/08   16:51
+TSYN_BCL 2          32,424 13/06/08   18:01
+"TSYN.GET"
+TSYN_GET 1           2,543 13/06/08   15:38
+TSYN_GET 2           2,543 13/06/08   17:29
+"TSYN.OCO"
+TSYN_OCO 1          41,460 13/06/08   17:00
+TSYN_OCO 2          41,460 13/06/08   17:46
+
+
+*** EOF ***

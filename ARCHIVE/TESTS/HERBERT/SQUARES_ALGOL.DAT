@@ -1,0 +1,10 @@
+﻿C Run Algol squares
+
+on 903 16K
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+at ptr file ../../MASTERS/HERBERT/SQUARES_ALGOL.900
+j 8
+j 10

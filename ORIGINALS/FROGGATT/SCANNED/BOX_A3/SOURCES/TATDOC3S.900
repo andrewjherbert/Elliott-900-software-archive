@@ -1,0 +1,847 @@
+﻿
+((DOCUMENTATION PROGRAM, 27/11/73)
+
+(All-singing All-dancing Version)
+
+(Same as 27/7/70 version plus EXACT, MASIR, & LINEPRINTER facilities)
+
+[CHIPF CHIPL CHIPE CHIP
+CHOPF CHOPC CHOPL CHOPE
+LPOPF LPOPL LPOPE
+ERRORL ERRORE]
+
+(No attempt has been made to optimise workspace)
+
+(TRIGGER JUMPS)
+
+(I will never remember this lot)
+
+(8)      8    START
+(9)      8    CONTIN
+(10)     8    END
+(11)     8    LABLIS
+(12)     8    HEADIN
+(13)     8    HEADST
+(14)     8    HEADLL
+(15)     8    S903
+(16)     8    S920
+(17)     8    SLINEP
+(18)     8    SM
+(19)     8    SMME
+(20)     8    SSAME
+(21)     8    SNEW
+(22)     8    SNEXAC
+(23)     8    SEXACT
+(24)     8    STAB
+(25)     8    SDETAB
+(26)     8    S80
+(27)     8    S120
+(28)     8    SPCOPY
+(29)     8    SPOLD
+(30)     8    SPNEW
+(31)     8    SPLP
+(32)     8    SACOPY
+(33)     8    SAOLD
+(34)     8    SANEW
+(35)     8    SACURL
+
+(NEWLINE SEQUENCE)
+
+NLSEQU
+(36)     -1
+(37)     -1
+(38)     -1
+(39)     -1
+(40)     -1
+
+(TABULATOR LIST)
+
+TABLIS
+(41)     +10  (LABEL)
+(42)     +6   (FUNCTION; change to +10 for General tapes)
+(43)     +10  (ADDRESS)
+(44)     +10  (Start of COMMENT)
+
+         +10 +10 +10 +10 +10 +10 +10 +10
+         >3   (Spares)
+
+(MODIFICATIONS TO CH I/O S/R & LP S/R)
+
+(This method avoids editing the S/R tapes)
+
+<        4    =1 0
+         2    LPOPE+19
+         5    LPOPE+19
+
+         4    JX
+         5    CHIPE+7
+         4    RECHIP
+         5    CHIPE+76
+         4    JY
+         5    CHIPE+77
+         4    JZ
+         5    CHOPE+38
+         8    ;+0
+
+JX       8    CHIPE+20
+RECHIP   4    CHIP
+JY       8    CHIPE+18
+JZ       7    ;+1
+
+         5    C
+         0    C
+         /4   NLSEQU
+         9    CHOPE+90
+         15   6144
+         10   C
+         8    ;-5
+
+C        >1
+
+(OPTION SETTINGS)
+
+SLINEP   4    -1
+         8    ;+4
+S903     4    +1
+         8    ;+2
+S920     4    +0
+         5    TDOPC
+         8    ;+0
+
+SM       4    APM      (For our friends across the sea)
+         8    ;+2
+SMME     4    APMME    (For the jolly old R.A.F.)
+         5    APROG
+         8    ;+0
+
+APM      0    PM
+APMME    0    PMME
+
+SSAME    4    +0
+         8    ;+2
+SNEW     4    -1
+         5    SAMNEW
+         8    ;+0
+
+SAMNEW   +0
+
+SNEXAC   4    +0
+         8    ;+2
+SEXACT   4    -1
+         5    EXACFG
+         8    ;+0
+
+EXACFG   +0
+
+STAB     4    +0
+         8    ;+2
+SDETAB   4    -1
+         5    TABFLG
+         8    ;+0
+
+TABFLG   +0
+
+S80      4    +80
+         8    ;+2
+S120     4    +120
+         5    WIDTH
+         8    ;+0
+
+WIDTH    +80
+
+SPCOPY   4    +0
+         8    ;+6
+SPOLD    4    +92
+         8    ;+4
+SPNEW    4    +35
+         8    ;+2
+SPLP     4    +127
+         5    POUND
+         8    ;+0
+
+POUND    +0
+
+SACOPY   4    +0
+         8    ;+6
+SAOLD    4    +64
+         8    ;+4
+SANEW    4    +96
+         8    ;+2
+SACURL   4    +125
+         5    ACCENT
+         8    ;+0
+
+ACCENT   +0
+
+(READ IN HEADING)
+
+HEADIN   4    +0       (This for Norma)
+         5    TDIPF
+         5    COUNT
+         4    -3296    (-[26*128]+32)
+         5    LSPACE
+         4    -3424    (-[27*128]+32)
+         5    RSPACE
+
+         11   TDIPL
+         8    TDIPE
+         1    -10
+         7    ;+2
+         8    EHEAD
+
+HEAD1    11   TDIPL
+         8    TDIPE
+         1    -20
+         0    COUNT
+         7    HEAD2
+         1    -12
+         9    EHEAD
+
+         4    COUNT
+         1    -52
+         7    EHEAD
+
+         4    TDIP
+         /5   HEAD+1
+
+         4    COUNT
+         6    +1
+         5    HEAD
+         0    HEAD
+         /4   LSPACE
+         1    +128
+         /5   LSPACE
+
+         10   COUNT
+         8    HEAD1
+
+HEAD2    /5   HEAD+1
+         4    LSPACE
+         5    HEAD
+
+         4    -1
+         5    LOCK2
+         8    ;+0
+
+LSPACE   >1
+RSPACE   >1
+
+HEAD     >60
+
+(MAIN LOGIC & LINE INPUT/OUTPUT)
+
+START    4    +0
+         8    ;+3
+HEADST   4    LOCK2
+         7    EENTRY
+         5    HDGFLG
+         4    +2
+         8    SETTYP
+
+LABLIS   4    +0
+         8    ;+3
+HEADLL   4    LOCK2
+         7    EENTRY
+         5    HDGFLG
+         4    -3
+
+SETTYP   5    TYPE
+         4    +0
+         5    PAGECT
+
+         5    TDIPF
+         11   TDIPL
+         8    TDIPE
+         1    -10
+         7    ;+2
+         8    ETITLE
+
+FILBUF   4    +0
+         5    COUNT
+         5    SCOUNT
+(+3)     11   TDIPL
+         8    TDIPE
+(+5)     4    +0
+         5    LOCK1
+
+         4    TDIP
+         1    -10
+         7    NEWLIN
+         1    -10
+         7    HALTIP
+         1    -12
+         7    SPACE
+
+         2    +25
+         9    SPACE-1
+         2    +9
+         9    SPACE-1
+         4    SCOUNT
+         7    ;+2
+         8    SPACE-1
+         4    TYPE
+         1    +2
+         7    SAPEND
+
+(-1)     10   SCOUNT
+SPACE    4    COUNT
+         2    WIDTH
+         7    EWIDTH   (Go on a diet)
+
+         4    TDIP
+         0    COUNT
+         /5   LINE
+         10   COUNT
+         8    FILBUF+3
+
+SAPEND   4    +1
+         8    SLOCK1
+
+HALTIP   4    PAGECT
+         7    EHALT
+
+         0    TYPE
+         4    COUNT
+         /8   ;+4
+
+         8    LLEND    (SIR LL)
+         8    EHALT    (SAP LL1)
+         8    LLEND    (SAP LL2)
+         8    SLOCK1-1 (GEN)
+         7    SLOCK1-1 (ALG)
+         7    SLOCK1-1 (SIR P)
+         7    SLOCK1-1 (SAP P)
+         8    EHALT
+
+LLEND    7    EHALT
+         8    NEWLIN-2
+
+(-1)     4    -1
+SLOCK1   5    LOCK1
+         8    ;+0
+
+CONTIN   4    LOCK1
+         7    EENTRY
+         0    +0
+         3    TDIPF
+         9    FILBUF+3
+
+         10   TYPE
+         4    +0
+         5    COUNT
+         11   TDIPL
+         8    TDIPE
+         1    -10
+         7    TDIPE
+         8    FILBUF+5
+
+END      4    LOCK1
+         9    ;+2
+         8    EENTRY
+
+(-2)     4    +0
+         5    LOCK1
+
+NEWLIN   0    COUNT
+         /5   LINE
+
+         4    EXACFG
+         9    ;+3
+         4    COUNT
+         7    EMPTY
+
+         4    PAGECT
+         7    STRTIT
+         4    LINECT
+         7    ENDPGE
+
+         4    SAMNEW   (This for Margaret & Sue)
+         7    LINEOP
+         4    TYPE     (2 SIR, 3 SAP)
+         1    -2
+         9    LINEOP   (0 SIR, 1 SAP)
+         1    TYPE     (2 SIR, 4 SAP)
+         1    +38      (40 SIR, 42 SAP)
+         2    LINE+1
+         7    ;+2
+         8    LINEOP
+         4    LINE
+         1    -40
+         7    ;+2
+         8    LINEOP
+         0    COUNT
+         /4   LINE-1
+         1    -41
+         7    ENDPGE
+
+LINEOP   11   MESSL
+         8    MESSE
+         0    LINE
+         8    ;+5
+
+EMPTY    4    PAGECT
+         7    NONL
+         4    LINECT
+         7    NONL
+
+         4    +10
+         11   TDOPL
+         8    TDOPE
+         10   LINECT
+
+NONL     4    TDIP
+         1    -20
+         7    ENDALL
+         8    FILBUF
+
+LOCK1    +0
+LOCK2    +0
+
+HDGFLG   >1
+TYPE     >1
+PAGECT   >1
+LINECT   >1
+
+LINE     >122
+
+(STORE TITLE & INITIALISE OUTPUT)
+
+STRTIT   0    COUNT
+         5    COUNT    (Acctr. clear on entry)
+         5    BRCT
+         4    +1
+         5    TLAST
+         4    +2
+         5    TFIRST
+
+         4    LINE
+         1    -40
+         7    ;+2
+         8    NOTSIR
+         4    LINE+1
+         1    -40
+         7    ;+2
+         8    NOTSIR
+         /4   LINE-1
+         1    -41
+         7    MOVE
+
+NOTSIR   4    TYPE
+         9    TSAPLL
+
+         4    LINE
+         1    -40
+         7    ;+2
+         8    NOTSAP
+         4    LINE+1
+         1    -42
+         7    ;+2
+         8    NOTSAP
+         /4   LINE-1
+         1    -41
+         7    MOVE-1
+
+NOTSAP   /4   LINE-1
+         1    -59
+         7    ALGOL
+
+         4    +0
+         5    TYPE
+         8    GENRL
+
+ALGOL    5    TFIRST
+         4    +1
+         5    TYPE
+         8    MOVE
+
+TSAPLL   4    LINE
+         1    -42
+         7    ;+2
+         8    ETITLE
+
+         5    TLAST
+         4    +1
+         5    TFIRST
+
+(-1)     10   TYPE
+
+MOVE     4    TFIRST
+         1    TLAST
+         5    W
+         0    W
+         /4   LINE
+         7    GENRL
+         0    TFIRST
+
+         /4   LINE
+         1    -40
+         7    ORB
+         1    -1
+         7    CRB
+         8    NOTBRC
+
+ORB      10   BRCT
+         8    NOTBRC
+
+CRB      4    BRCT
+         7    GENRL
+         1    -1
+         5    BRCT
+
+NOTBRC   /4   LINE
+         1    -32
+         9    ETITLE   (Jump if <32)
+         2    +64
+         9    ETITLE   (Jump if >96)
+
+         /4   LINE
+         0    COUNT
+         /5   TITLE
+
+         10   TFIRST
+         10   COUNT
+         8    MOVE
+
+GENRL    0    COUNT
+         /5   TITLE
+
+         5    TDOPF
+         4    +10
+         11   TDOPL
+         8    TDOPE
+         8    CUT
+
+TFIRST   >1
+TLAST    >1
+BRCT     >1
+W        >1
+
+TITLE    >122
+
+(COMPLETE PAGE & PRINT NEW PAGE TOP)
+
+ENDALL   4    -1
+         5    PAGECT
+
+ENDPGE   4    EXACFG
+         7    ;+4
+         4    +45
+         11   TDOPL
+         8    TDOPE
+
+         2    +0
+         4    LINECT
+         14   7
+         1    -374     (-[3*128]+10)
+         11   TDOPL
+         8    TDOPE
+
+         4    HDGFLG
+         7    ;+4
+         11   MESSL
+         8    MESSE
+         0    HEAD
+
+         4    TDOPC
+         9    ;+3
+         4    -1270    (-[10*128]+10)
+         8    ;+2
+         4    -374     (-[3*128]+10)
+         11   TDOPL
+         8    TDOPE
+
+CUT      4    TDOPC
+         9    ;+4
+         4    -339     (-[3*128]+45)
+         11   TDOPL
+         8    TDOPE
+
+         4    PAGECT
+         9    HALTOP
+
+         4    TDOPC
+         9    ;+3
+         4    -1270    (-[10*128]+10)
+         8    ;+2
+         4    -374     (-[3*128]+10)
+         11   TDOPL
+         8    TDOPE
+
+         4    HDGFLG
+         7    ;+6
+
+         11   MESSL
+         8    MESSE
+         0    HEAD
+         4    RSPACE
+         8    ;+2
+
+         4    -6752    (-[53*128]+32)
+         11   TDOPL
+         8    TDOPE
+
+         4    TYPE
+         14   8191
+         9    ;+10
+         7    ;+5
+
+         11   MESSL
+         8    MESSE
+APROG    0    PMME
+         8    ;+8
+
+         4    -1248    (-[10*128]+32)
+         11   TDOPL
+         8    TDOPE
+         8    ;+4
+
+         11   MESSL
+         8    MESSE
+         0    LL
+
+         11   MESSL
+         8    MESSE
+         0    PAGE
+
+         10   PAGECT
+         4    PAGECT
+         9    ;+0      (Throw cold water on Flexowriter)
+         5    INTGR
+
+         4    +0
+         5    DIGICT
+         5    ZERMKR
+
+NXTDIG   4    +48
+         5    SUBCT
+         0    DIGICT
+         4    INTGR
+         /1   TENS
+         9    ;+5
+         5    INTGR
+         10   SUBCT
+         10   ZERMKR
+         8    ;-5
+
+         4    ZERMKR
+         7    ;+4
+         4    SUBCT
+         11   TDOPL
+         8    TDOPE
+
+         10   DIGICT
+         4    DIGICT
+         1    -5
+         9    NXTDIG
+         10   ZERMKR
+         7    NXTDIG
+
+         4    -246     (-[2*128]+10)
+         11   TDOPL
+         8    TDOPE
+
+         11   MESSL
+         8    MESSE
+         0    TITLE
+         4    +10
+         11   TDOPL
+         8    TDOPE
+
+         4    +0
+         5    COUNT
+         0    COUNT
+         /4   TITLE
+         7    ;+6
+         4    +45
+         11   TDOPL
+         8    TDOPE
+         10   COUNT
+         8    ;-7
+
+         4    -374     (-[3*128]+10)
+         11   TDOPL
+         8    TDOPE
+
+
+         4    EXACFG
+         7    ;+4
+         4    +45
+         11   TDOPL
+         8    TDOPE
+
+         4    +10
+         11   TDOPL
+         8    TDOPE
+
+         4    -50
+         5    LINECT
+         8    LINEOP
+
+HALTOP   4    -2550    (-[20*128]+10)
+         11   TDOPL
+         8    TDOPE
+         4    +20
+         11   TDOPL
+         8    TDOPE
+         8    ;+0      (Finish)
+
+PMME     +32 +80 +114 +111 +103 +114 +97 +109 +109 +101 +0
+PM       +32 +32 +32 +80 +114 +111 +103 +114 +97 +109 +0
+LL       +76 +97 +98 +101 +108 +32 +76 +105 +115 +116 +0
+PAGE     +32 +80 +97 +103 +101 +32 +0
+
+TENS     -100000 -10000 -1000 -100 -10 -1
+
+INTGR    >1
+DIGICT   >1
+ZERMKR   >1
+SUBCT    >1
+
+(MESSAGE PRINT SUBROUTINE)
+
+MESSL    >1
+
+MESSE    4    +0
+         5    SCOUNT
+         5    TCOUNT
+
+         0    MESSL
+         /4   1
+         5    COUNT
+
+MESSJ    0    COUNT
+         /4   0
+         0    MESSL
+         /7   2
+
+         1    -9
+         7    MESST
+         1    -26
+         7    MESSP
+         1    -57
+         7    MESSP
+         1    +28
+         7    MESSG
+         1    -32
+         7    MESSG
+         1    +57
+         7    MESSA
+
+MESSC    0    COUNT
+         /4   0
+(+2)     11   TDOPL
+         8    TDOPE
+         10   SCOUNT
+         4    SCOUNT
+         9    PSPACE
+         10   COUNT
+         8    MESSJ
+
+MESSP    4    POUND
+         7    MESSC
+         8    MESSC+2
+
+MESSG    4    ACCENT
+         7    MESSC
+         8    MESSC+2
+
+MESSA    4    ACCENT
+         1    -125
+         7    ;+2
+         8    MESSC
+         4    +123
+         8    MESSC+2
+
+MESST    4    TABFLG
+         7    MESSC
+
+         0    TCOUNT
+         /4   TABLIS
+         2    SCOUNT
+         5    SCOUNT
+         10   TCOUNT
+
+PSPACE   4    +32
+         8    MESSC+2
+
+COUNT    >1
+SCOUNT   >1
+TCOUNT   >1
+
+(ERROR INDICATIONS)
+
+(Included for programmers who cannot be bothered to read
+instruction book, but like to see legible tape)
+
+EENTRY   4    +1
+         8    ;+8
+EHEAD    4    +2
+         8    ;+6
+ETITLE   4    +3
+         8    ;+4
+EWIDTH   4    +4
+         8    ;+2
+EHALT    4    +5
+
+         1    £R 0
+         5    ERRNO
+         11   ERRORL
+         8    ERRORE
+         £DOC
+         £UME
+         £NTA
+         £TIO
+         £N E
+         £RRO
+ERRNO    >1
+         £.
+
+(CHARACTER INPUT & OUTPUT)
+
+TDIPF    >1
+TDIPL    >1
+TDIP     >1
+
+TDIPE    4    TDIPF
+         7    ;+2
+         8    ;+3
+         5    CHIPF
+         10   TDIPF
+
+         11   CHIPL
+         8    CHIPE
+
+         5    TDIP
+         0    TDIPL
+         /8   1
+
+TDOPC    +1
+TDOPF    >1
+TDOPL    >1
+TDOP     >1
+
+TDOPE    5    TDOP
+
+         4    TDOPF
+         7    ;+2
+         8    ;+4
+         5    CHOPF
+         5    LPOPF
+         10   TDOPF
+
+         4    TDOPC
+         9    ;+6
+         5    CHOPC
+
+         4    TDOP
+         11   CHOPL
+         8    CHOPE
+         8    ;+4
+
+         4    TDOP
+         11   LPOPL
+         8    LPOPE
+
+         0    TDOPL
+         /8   1
+<! Halt !>

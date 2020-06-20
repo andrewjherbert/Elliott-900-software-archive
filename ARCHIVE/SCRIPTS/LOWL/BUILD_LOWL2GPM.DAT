@@ -1,0 +1,57 @@
+﻿C Build LOWL to GPM
+
+on 903
+
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+at ptr inline
+
+CLE (
+INS
+*17
+^%,
+CHE
+WAI
+CHE
+WAI
+CHE
+WAI
+CHE
+INS
+%^%,
+COP
+<! halt !><!!>
+j 13
+st 490
+at ptr file ../../MASTERS/LOWL/LOWL2GPM.900
+at ptp file TEMP.900
+j 9
+st 822
+at ptr file ../../MASTERS/ACDSIR/CHIO.900
+j 10
+st 822
+at ptr file ../../MASTERS/ACDSIR/INTIP.900
+j 10
+st 822
+at ptr file ../../MASTERS/ACDSIR/SLOP.900
+j 10
+st 1274
+de ptp
+
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+at ptr file TEMP.900
+select out tty
+j 12
+st 562
+rewind
+select out auto
+at ptp file LOWL2GPM.BIN
+j 10
+de ptp
+st 587
+delete TEMP.900
+sh t

@@ -1,0 +1,273 @@
+﻿<! Legible Header  OOOO      OOO      OOOO             OOOO     OOOO    O     O    OOOO     O            OOO    OOOO     OOOO    O    O   OOOOO            O  !>
+<! Legible Header O    O    O   O    O    O           O    O   O    O    O   O    O    O   OO             O    O    O   O    O   O    O   O               OO  !>
+<! Legible Header O    O   O     O        O           O        O          O O     O         O             O    O        O        O    O   O                O  !>
+<! Legible Header  OOOOO   O     O     OOO             OOOO     OOOO       O       OOOO     O             O     OOOO     OOOO    O    O   OOOO             O  !>
+<! Legible Header      O   O     O        O                O        O      O           O    O             O         O        O   O    O   O                O  !>
+<! Legible Header      O   O     O        O                O        O      O           O    O             O         O        O   O    O   O                O  !>
+<! Legible Header O    O    O   O    O    O           O    O   O    O      O      O    O    O             O    O    O   O    O   O    O   O                O  !>
+<! Legible Header  OOOO      OOO      OOOO             OOOO     OOOO       O       OOOO    OOO           OOO    OOOO     OOOO     OOOO    OOOOO           OOO !>
+
+(903 SSYS SIR ISSUE 1)
+
+[ QCHOP QCHIN QDOUT QDIN
+   QERROR QPAUSE  ]
+QDIN +1
+QDOUT +1
+PW +0
+PW1 +0
+CH +0
+
+PARITY
+ +0
+ 0 +0
+ 3 PW
+P1
+ 7 P2
+ 10 PW
+ 5 PW1
+ 1 -1
+ 6 PW1
+ 8 P1
+P2
+ 4 PW
+ 0 PARITY ( PARITY BIT IS L.S. ACC)
+/8 1
+
+
+QCHOP
+ +0
+ 8 ;+1
+ 6 =/0 255
+ 9 SPEC  ( OUTPUT BINARY PATTERN )
+ 1 -1
+ 7 NL ( TEST FOR NEWLINE )
+ 1 +33
+ 5 CH
+ 11 PARITY
+ 8 PARITY+1
+ 14 7
+ 6 +128
+ 1 CH ( ADD CORRECT PARITY BIT )
+SPEC
+ 5 CH
+ 4 QDOUT
+ 1 -3
+ 7 PTP ( JUMP IF TELEPRINTER REQIRED )
+ 4 CH
+ 15 6144 ( OUTPUT TO PUNCH)
+EXIT
+ 0 QCHOP
+ 6 &377400
+/7 1
+ 14 8184
+ 1 -1 ( FORM NEXT CHARACTER IN NEWLINE SEQUENCE)
+ 8 SPEC
+PTP
+ 4 CH
+ 15 6148 (TELEPRINTER)
+
+ 8 EXIT
+NL
+ 4 &205615 ( SEQUENCE FOR NEWLINE )
+
+ 8 SPEC
+
+
+CHAR +0
+QCHIN +0 ( INPUT INTERNAL CODE CHAR )
+ 4 QDIN
+ 1 -3
+ 7 TPIN ( JUMP IF TELEPRINTER INPUT)
+ 4 +0
+ 15 2048
+GOT
+ 5 CHAR
+ 11 PARITY
+ 8 PARITY+1
+ 6 +1
+ 7 EVPAR ( CORRECT PARITY )
+
+INERR
+ 4 CHAR
+ 11 QERROR
+ 8 QERROR+1
+ 0 DATA
+ 4 +0
+ 8 EXIT2
+TPIN
+ 15 2052 ( TELEPRINTER INPUT)
+ 8 GOT
+EVPAR
+ 4 CHAR
+ 6 +127
+ 1 -32
+ 9 LESS
+ 1 -64
+ 9 KCODE
+ 1 -27
+ 9 LOWCAS ( LOWER CASE CHARS )
+ 1 -4
+ 7 QCHIN+1 ( ERASE )
+ 8 INERR
+LOWCAS 1 +58
+NWLF 1 -63 ( ADD 1 )
+KCODE 1 +64 (ADD 64 )
+EXIT2
+ 0 QCHIN
+/8 1
+
+LESS
+ 1 +22
+ 7 NWLF ( NEWLINE )
+ 1 +1
+ 7 EXIT2 ( TAB )
+ 1 -4
+ 7 QCHIN+1 ( CARRIAGE RETURN)
+ 1 -7
+ 7 HALT
+ 4 CHAR
+ 7 QCHIN+1 ( BLANK )
+ 8 INERR
+
+HALT
+ 11 QPAUSE
+ 8 QPAUSE+1
+ 8 QCHIN+1
+
+DATA
+ 0 QCHIN
+ 0 1
+ \CHN
+
+
+[ QPAUSE QSTOP ]
+
+QPAUSE +0
+ 11 W
+ 14 18
+ 6 =7 0
+ 2 +0    ( FOR ONE MODULE THIS )
+ 5 W     ( COULD BE  :  )
+ 2 +0   ( 4 QPAUSE)
+ 1 QPAUSE (1 +1 )
+
+ 1 +1     ( 5 20 )
+ 0 W
+/5 20    ( 8 ;+0 )
+4 W
+9 QSTOP
+ 4 CONT
+ 5 9
+QSTOP
+ 8 ;+0
+W +0
+CONT 8 ;+1
+
+ 4 20
+ 5 6
+ 15 7168
+ 8 ;-1 (DUMMY LEVEL 1 PROGRAM )
+
+
+
+
+[QERROR QCHOP QDOUT QPAUSE ]
+W +0
+W1 +0
+PA +0
+SAFE +0
+
+QERROR
+ +0
+ 5 W
+ 4 QDOUT
+ 5 SAFE
+ 4 +3 (SET TELEPRINTER OUTPUT )
+ 5 QDOUT
+ 4 +1
+ 11 QCHOP ( OUTPUT NEWLINE )
+ 8 QCHOP+1
+ 4 +10
+ 11 QCHOP ( OUTPUT * )
+
+ 8 QCHOP+1
+ 0 QERROR
+/0 1
+/4 2
+PNAM
+ 5 W1
+ 14 8180
+ 6 +63 (OUTPUT 3 INTERNAL CODE CHARS)
+
+ 11 QCHOP
+ 8 QCHOP+1
+
+ 4 W1
+ 0 +0
+ 14 6
+ 7 ;+2
+8 PNAM
+ 11 QCHOP ( SPACE )
+ 8 QCHOP+1
+ 4  -5
+ 5 W1
+OCTAL
+ 4 W
+ 14 3
+ 5 W
+ 14 8177
+ 6 +7
+ 1 +16
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 W1
+ 4 W1
+ 9 OCTAL
+ 11 QCHOP ( SPACE )
+ 8 QCHOP+1
+
+ADDRES
+ 4 -6
+ 5 W1
+ 0 QERROR
+/0 1
+/0 0
+/4 0
+ 6 =3 8191
+ 5 W
+LOOP
+ 4 +16
+ 5 PA  ( SET ZERO CHARACTER)
+ 0 W1
+ /4 T+6 (DIVIDE BY REPEATED SUBTRACTION)
+ 2 W
+ 9 RR
+ 10 PA
+ 5 W
+ 8 ;-5
+
+T
++100000
++10000
++1000
++100
++10
++1
+RR
+ 4 PA
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 W1
+ 4 W1
+ 9 LOOP
+
+
+ 4 SAFE
+ 5 QDOUT
+ 11 QPAUSE
+ 8 QPAUSE+1
+ 0 QERROR
+/8 2
+
+
+<! Halt !>

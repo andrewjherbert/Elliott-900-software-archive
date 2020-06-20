@@ -1,0 +1,106 @@
+﻿
+REP 1
+CLE (7
+DSI)
+END
+
+CLE ( ANDREW
+INS
+( REDUNDANT DATA REMOVED.                   )
+(                                           )
+^%,
+
+RTS 21/02/2015
+22/02/2015^%,
+
+RTS 7731
+7733^%,
+
+CSI PERM
+INS
+ and NLP^%,
+
+CLE (7732)
+DLE  (7733)
+INS
+	+0
+^%,
+
+CLE (7796)
+DLE  (7797)
+INS
+	+0
+^%,
+
+CLE (7812)
+DLE  (7813)
+INS
+	+0
+^%,
+
+CLE (7844)
+DLE  (7845)
+INS
+	+0
+^%,
+
+CLE (7852)
+DLE  (7853)
+INS
+	+0
+^%,
+
+CLE (7860)
+DLE (7861)
+INS
+	+0
+^%,
+
+CLE (7876)
+DLE (7877)
+INS
+	+0
+^%,
+
+CLE (7908)
+DLE (7909)
+INS
+	+0
+^%,
+
+CLE (7924)
+DLE (7925)
+INS
+	+0
+^%,
+
+CLE (7936)
+DLE (7937)
+INS
+	+0
+^%,
+
+CLE (7944)
+DLE (7945)
+INS
+	+0
+^%,
+
+CLE (7960)
+DLE (7961)
+INS
+	+0
+^%,
+
+CLE (7992)
+DLE (7993)
+INS
+	+0
+^%,
+
+CLE (7999)
+DLE %
+
+COP 
+<! halt !>
+

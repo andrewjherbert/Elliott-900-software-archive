@@ -1,0 +1,120 @@
+﻿
+((BOWDLER COMMAND CONVERTOR, 28/7/76))
+
+[CHIPF CHIPL CHIPE CHIP
+CHOPF CHOPL CHOPE]
+
+(8)      4    +0
+         5    PTR1
+         5    CHIPF
+         5    CHOPF
+LAB1     11   CHIPL
+         8    CHIPE
+         1    -20
+         7    LAB2
+         1    -13
+         9    LAB1
+         4    CHIP
+         0    PTR1
+         /5   LIST
+         10   PTR1
+         8    LAB1
+
+LAB2     5    PTR2
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    PTR2
+         2    PTR1
+         7    LAB3
+         4    +9
+         11   CHOPL
+         8    CHOPE
+         4    +35
+         11   CHOPL
+         8    CHOPE
+         0    PTR2
+         /4   LIST
+         11   CHOPL
+         8    CHOPE
+         0    PTR2
+         /4   LIST+1
+         11   CHOPL
+         8    CHOPE
+         0    PTR2
+         /4   LIST+2
+         11   CHOPL
+         8    CHOPE
+         4    PTR2
+         1    +12
+         8    LAB2
+
+LAB3     5    PTR2
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    PTR2
+         2    PTR1
+         7    LAB4
+         4    +9
+         11   CHOPL
+         8    CHOPE
+         4    +38
+         11   CHOPL
+         8    CHOPE
+         4    &32070
+         5    WORD
+         4    -15
+         5    COUNT
+         4    PTR2
+         5    PTR3
+LAB5     4    WORD
+         14   17
+         9    LAB7
+         4    PTR3
+         1    -1
+         5    PTR3
+         0    PTR3
+         /4   LIST+12
+         1    -48
+         5    PART
+LAB7     2    WORD
+         4    PART
+         14   8191
+         5    PART
+         14   18
+         5    WORD
+         10   COUNT
+         4    COUNT
+         9    LAB5
+         4    -5
+         5    COUNT
+LAB6     4    WORD
+         14   8177
+         6    +7
+         1    +48
+         11   CHOPL
+         8    CHOPE
+         4    WORD
+         14   3
+         5    WORD
+         10   COUNT
+         4    COUNT
+         9    LAB6
+         4    PTR2
+         1    +12
+         8    LAB3
+
+LAB4     4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+
+LIST     >1000
+PTR1     >1
+PTR2     >1
+PTR3     >1
+WORD     >1
+PART     >1
+COUNT    >1
+<! Halt !>

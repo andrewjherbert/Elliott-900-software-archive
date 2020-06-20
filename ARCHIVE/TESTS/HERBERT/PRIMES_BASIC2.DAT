@@ -1,0 +1,16 @@
+
+c Run Primes calculation in BASIC
+
+on 903 16K
+
+nonstop on
+at tty inline
+OLD
+RUN
+<! halt !><!!>
+at ptr file ../../MASTERS/TJFBASIC/BASIC16K.BIN
+j 8181
+at ptr file ../../MASTERS/HERBERT/PRIMES_BASIC2.900
+sh t
+r
+sh t

@@ -1,0 +1,24 @@
+﻿
+on 903 16K
+
+at ptr file ../../MASTERS/HUNTER/ALG16KLG(HUNTER).BIN
+j 8181
+
+select out tty
+at ptr inline
+err79;
+
+"begin"
+
+"comment" Demonstrate how undefined actual argument can be report as
+missing label (error 79) in Hunter Algol;
+
+"procedure" test (l); "label" l; "goto" l;
+
+test(beta);
+
+"print" sqrt(alpha);
+
+"end"<! halt !><!!>
+
+j 8

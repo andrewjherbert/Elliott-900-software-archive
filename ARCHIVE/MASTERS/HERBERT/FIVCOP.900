@@ -1,0 +1,125 @@
+﻿
+((Program to copy five hole paper tape - Andrew Herbert - 24/04/2014)
+
+*19
+
+[FIVCOP]
+
+FIVCOP	8	READ	  (Read master tape)
+        8       CONTIN	  (Continue after 30 blanks)
+	8	CHECK	  (Check against store and punch new tape)
+
+BLKCNT	>1		  (Count down of blanks in possible trailer)
+INCNT	>1		  (Count of characters read in)
+OUTCNT	>1		  (Count of characters punched out)
+
+BUFFER=100		  (Buffer to store copy of input)
+BUFMAX 	+8092
+
+
+(Read master tape and store in buffer)
+
+READ	4	+0
+	5	INCNT
+
+	15	2048	  (Skip initial blanks)
+     	6	+31
+	7	;-2
+        8       STCHR
+  
+CONTIN  15      2048	  (Read next character)
+        6	+31
+STCHR	0       INCNT	  (Store current character)
+	/5      BUFFER
+        10      INCNT
+        7       BLANK     (Blank might be start of trailer)
+        4       INCNT
+	2	BUFMAX	  (Check store not overflowed)
+	7	OVFLO
+        8       CONTIN 	  (Otherwise store and read next)
+   
+BLANK	4	-29	  (Look for trailer of 30 blanks)
+	5	BLKCNT
+BLKLOP	15      2048
+        6       +31
+	7	;+2
+        8       STCHR	  (Non-blank found, resume reading)
+  
+        0       INCNT	  (Store the blank)
+        /5      BUFFER
+        10      INCNT
+        10      BLKCNT	  (Check if 30 blanks seen)
+        4       BLKCNT
+        7       ;+0	  (Stop when trailer found)
+        4       INCNT
+	2       BUFMAX
+	7       OVFLO	  (Check store not overflowed)
+        8       BLKLOP  
+
+(Read master or copy tape and check against store, punch a new copy)
+
+CHECK   4       +0	  
+        5       OUTCNT
+
+ 	15      2048	  (Skip initial blanks)
+	6       +31
+        7	;-2
+
+CINCHR  0       OUTCNT
+	/2      BUFFER	  (Check input matches buffered data)
+	7	;+2
+	8	ERROR	  (Mismatch)
+        10      OUTCNT
+	4       OUTCNT	  (Check to see if all copied)
+	2       INCNT
+	7	PUNCH	  (If so, punch copy)
+        
+        15      2048
+	6       +31
+	8	CINCHR	  (Otherwise continue checking)
+
+PUNCH   4	+7424	  (Punch header of 30 blanks)
+	15      6144
+	1	-256
+	7	;+2
+	8	;-3
+
+	5	OUTCNT	  (Punch buffered tape)
+PUNLOP	0	OUTCNT
+	/4      BUFFER
+	15 	6144
+        10      OUTCNT
+	4	OUTCNT	  (Check for end of buffer )
+	2	INCNT
+	7	;+0	  (Stop when done - buffer includes trailer)
+        8	PUNLOP
+
+ERCH	>1
+
+OVFLO	4	+11
+	5	ERCH
+	8       ERROR
+
+MISMAT	4	+31
+	5       ERCH
+
+ERROR   4	-29	  (Punch 30 erases)
+        5       OUTCNT
+        4       ERCH
+        15	6144
+        10      OUTCNT
+        4       OUTCNT
+	9	;+0
+	8	;-5	
+
+%
+<! halt !>
+
+
+        
+
+
+        
+       
+
+        

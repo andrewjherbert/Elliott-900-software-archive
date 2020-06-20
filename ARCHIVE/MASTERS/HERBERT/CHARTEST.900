@@ -1,0 +1,1134 @@
+﻿
+*18
+
+(CHARACTER TEST - Andrew Herbert - 13/10/2015)
+
+[ CHTEST QCHOP QOUT1 QSTOP ]
+
+CHTEST   4     +1
+	 11    QCHOP
+	 8     QCHOP+1	
+	 4     +1
+	 11    QCHOP
+	 8     QCHOP+1
+LOOP	 4     +0
+	 15    2048
+	 5     INCHAR
+	 7     LOOP
+	 1     -10	(Line feed)
+	 7     LOOP
+	 1     -10	(Halt code)
+	 7     STOP
+	 1     -121	(Carriage return)
+	 7     LOOP
+	 1     -114	(Erase)
+	 7     LOOP
+	 4     \  [
+	 11    QCHOP
+	 8     QCHOP+1
+	 4     INCHAR
+	 15    6144
+	 4     \  ]
+	 11    QCHOP
+	 8     QCHOP+1
+	 4     INCHAR
+	 11    QOUT1
+	 8     QOUT1+1
+	 0 0
+	 4     INCHAR
+	 6     +127
+	 11    QOUT1
+	 8     QOUT1+1
+	 0 0
+	 4     +1
+	 11    QCHOP
+	 8     QCHOP+1
+	 8     LOOP
+STOP     4     +20
+	 15    6144
+	 8     QSTOP
+
+INCHAR	 >1
+
+
+(SINGLE LENGTH FRACTIONS & INTEGERS PACKAGE - 24/02/12)
+
+(SSYS1  ISSUE 1)
+(QATAN 	ISSUE 1)
+(QEXP 	ISSUE 1)
+(QIN1 	ISSUE 3)
+(QOUT1 	ISSUE 4)
+(QSIN	ISSUE 1)
+(QSQRT	ISSUE 1)
+
+(903 SSYS SIR ISSUE 1)
+
+[ QCHOP QCHIN QDOUT QDIN
+   QERROR QPAUSE  ]
+QDIN +1
+QDOUT +1
+PW +0
+PW1 +0
+CH +0
+
+PARITY
+ +0
+ 0 +0
+ 3 PW
+P1
+ 7 P2
+ 10 PW
+ 5 PW1
+ 1 -1
+ 6 PW1
+ 8 P1
+P2
+ 4 PW
+ 0 PARITY ( PARITY BIT IS L.S. ACC)
+/8 1
+
+
+QCHOP
+ +0
+ 8 ;+1
+ 6 =/0 255
+ 9 SPEC  ( OUTPUT BINARY PATTERN )
+ 1 -1
+ 7 NL ( TEST FOR NEWLINE )
+ 1 +33
+ 5 CH
+ 11 PARITY
+ 8 PARITY+1
+ 14 7
+ 6 +128
+ 1 CH ( ADD CORRECT PARITY BIT )
+SPEC
+ 5 CH
+ 4 QDOUT
+ 1 -3
+ 7 PTP ( JUMP IF TELEPRINTER REQIRED )
+ 4 CH
+ 15 6144 ( OUTPUT TO PUNCH)
+EXIT
+ 0 QCHOP
+ 6 &377400
+/7 1
+ 14 8184
+ 1 -1 ( FORM NEXT CHARACTER IN NEWLINE SEQUENCE)
+ 8 SPEC
+PTP
+ 4 CH
+ 15 6148 (TELEPRINTER)
+
+ 8 EXIT
+NL
+ 4 &205615 ( SEQUENCE FOR NEWLINE )
+
+ 8 SPEC
+
+
+CHAR +0
+QCHIN +0 ( INPUT INTERNAL CODE CHAR )
+ 4 QDIN
+ 1 -3
+ 7 TPIN ( JUMP IF TELEPRINTER INPUT)
+ 4 +0
+ 15 2048
+GOT
+ 5 CHAR
+ 11 PARITY
+ 8 PARITY+1
+ 6 +1
+ 7 EVPAR ( CORRECT PARITY )
+
+INERR
+ 4 CHAR
+ 11 QERROR
+ 8 QERROR+1
+ 0 DATA
+ 4 +0
+ 8 EXIT2
+TPIN
+ 15 2052 ( TELEPRINTER INPUT)
+ 8 GOT
+EVPAR
+ 4 CHAR
+ 6 +127
+ 1 -32
+ 9 LESS
+ 1 -64
+ 9 KCODE
+ 1 -27
+ 9 LOWCAS ( LOWER CASE CHARS )
+ 1 -4
+ 7 QCHIN+1 ( ERASE )
+ 8 INERR
+LOWCAS 1 +58
+NWLF 1 -63 ( ADD 1 )
+KCODE 1 +64 (ADD 64 )
+EXIT2
+ 0 QCHIN
+/8 1
+
+LESS
+ 1 +22
+ 7 NWLF ( NEWLINE )
+ 1 +1
+ 7 EXIT2 ( TAB )
+ 1 -4
+ 7 QCHIN+1 ( CARRIAGE RETURN)
+ 1 -7
+ 7 HALT
+ 4 CHAR
+ 7 QCHIN+1 ( BLANK )
+ 8 INERR
+
+HALT
+ 11 QPAUSE
+ 8 QPAUSE+1
+ 8 QCHIN+1
+
+DATA
+ 0 QCHIN
+ 0 1
+ \CHN
+
+
+[ QPAUSE QSTOP ]
+
+QPAUSE +0
+ 11 W
+ 14 18
+ 6 =7 0
+ 2 +0    ( FOR ONE MODULE THIS )
+ 5 W     ( COULD BE  :  )
+ 2 +0   ( 4 QPAUSE)
+ 1 QPAUSE (1 +1 )
+
+ 1 +1     ( 5 20 )
+ 0 W
+/5 20    ( 8 ;+0 )
+4 W
+9 QSTOP
+ 4 CONT
+ 5 9
+QSTOP
+ 8 ;+0
+W +0
+CONT 8 ;+1
+
+ 4 20
+ 5 6
+ 15 7168
+ 8 ;-1 (DUMMY LEVEL 1 PROGRAM )
+
+
+
+
+[QERROR QCHOP QDOUT QPAUSE ]
+W +0
+W1 +0
+PA +0
+SAFE +0
+
+QERROR
+ +0
+ 5 W
+ 4 QDOUT
+ 5 SAFE
+ 4 +3 (SET TELEPRINTER OUTPUT )
+ 5 QDOUT
+ 4 +1
+ 11 QCHOP ( OUTPUT NEWLINE )
+ 8 QCHOP+1
+ 4 +10
+ 11 QCHOP ( OUTPUT * )
+
+ 8 QCHOP+1
+ 0 QERROR
+/0 1
+/4 2
+PNAM
+ 5 W1
+ 14 8180
+ 6 +63 (OUTPUT 3 INTERNAL CODE CHARS)
+
+ 11 QCHOP
+ 8 QCHOP+1
+
+ 4 W1
+ 0 +0
+ 14 6
+ 7 ;+2
+8 PNAM
+ 11 QCHOP ( SPACE )
+ 8 QCHOP+1
+ 4  -5
+ 5 W1
+OCTAL
+ 4 W
+ 14 3
+ 5 W
+ 14 8177
+ 6 +7
+ 1 +16
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 W1
+ 4 W1
+ 9 OCTAL
+ 11 QCHOP ( SPACE )
+ 8 QCHOP+1
+
+ADDRES
+ 4 -6
+ 5 W1
+ 0 QERROR
+/0 1
+/0 0
+/4 0
+ 6 =3 8191
+ 5 W
+LOOP
+ 4 +16
+ 5 PA  ( SET ZERO CHARACTER)
+ 0 W1
+ /4 T+6 (DIVIDE BY REPEATED SUBTRACTION)
+ 2 W
+ 9 RR
+ 10 PA
+ 5 W
+ 8 ;-5
+
+T
++100000
++10000
++1000
++100
++10
++1
+RR
+ 4 PA
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 W1
+ 4 W1
+ 9 LOOP
+
+
+ 4 SAFE
+ 5 QDOUT
+ 11 QPAUSE
+ 8 QPAUSE+1
+ 0 QERROR
+/8 2
+
+
+(QATAN - arctan function)
+
+[ QATAN ]
+QATAN
+
++0
+4 98;
+5 95;
+5 96;
+5 97;
+4 89;
+7 68;
+9 117;
+4 89;
+2 98;
+5 91;
+4 90;
+9 15;
+4 90;
+2 98;
+2 91;
+9 84;
+7 76;
+0 98;
+4 89;
+13 90;
+5 95;
+9 74;
+1 99;
+5 92;
+2 99;
+12 100;
+1 101;
+5 93;
+0 98;
+4 92;
+13 93;
+5 93;
+12 93;
+5 94;
+4 107;
+5 112;
+4 102;
+5 96;
+4 96;
+12 94;
+0 112;
+/1 107;
+5 96;
+8 113;
+4 96;
+12 93;
+1 108;
+5 96;
+4 97;
+7 54;
+4 96;
+2 109;
+5 96;
+4 90;
+9 61;
+4 95;
+9 65;
+4 96;
+0 0;
+/8 1
+4 96;
+1 110;
+5 96;
+8 56;
+4 96;
+2 98;
+8 59;
+4 90;
+7 72;
+5 95;
+8 54;
+15 6144
+8 72;
+2 98;
+8 23;
+4 89;
+1 90;
+7 80;
+8 82;
+4 99;
+5 95;
+4 111;
+8 48;
+0 98;
+4 90;
+13 89;
+5 97;
+8 21;
++0
++0
++0
++0
++0
++0
++0
++0
++0
++0
+/9 3052
+/13 2087
+6 5140
++1
+/15 8180
+0 101
+/15 7204
+2 897
+-4
+2 0
+8 0
+/0 0
+4 0
++0
+10 112;
+4 112;
+9 39;
+8 45;
+1 110;
+7 121;
+4 89;
+8 10;
+4 90;
+1 110;
+7 125;
+8 119;
+4 127;
+8 59;
+/4 0
+
+(QEXP - exponential function)
+
+[ QEXP ]
+QEXP
++0
+ 9 4;
+ 15 6144
+ 8 2;
+ 5 52;
+ 4 50;
+ 5 51;
+ 4 43;
+ 5 54;
+ 4 54;
+ 12 52;
+ 5 54;
+ 4 42;
+ 14 1
+ 7 16;
+ 10 54;
+ 4 54;
+ 0 51;
+ /1 50;
+ 5 54;
+ 10 51;
+ 4 51;
+ 9 9;
+ 10 54;
+ 4 53;
+ 9 2;
+ 7 39;
+ 2 42;
+ 5 53;
+ 4 54;
+ 12 54;
+ 5 54;
+ 4 42;
+ 14 1
+ 7 36;
+ 10 54;
+ 10 53;
+ 4 53;
+ 9 29;
+ 4 54;
+ 0 0;
+ /8 1
+ +0
+ +112
+ +1005
+ +5405
+ +21826
+ +65532
+ +131071
+ +131071
+ -6
+ +0
+ +0
+ +0
+ +0
+
+(QIN1 - input integrs and single length fractions)
+
+ [QIN1 QDIN QCHIN QERROR]
+QIN1  +0
+  8  ;+2
+SCALE  +0
+  4  DEVICE
+  5  QDIN
+  4  +0
+  5  NUMBER
+  5  NOMARK
+  5  DECMARK
+  5  ERROR
+  5  SIGN
+  10  SIGN
+Q   11  QCHIN
+  8  QCHIN+1
+D  5  CHAR
+ 1 -16
+ 9 ;+3
+ 1 -10
+ 9 ASSEMB
+
+  4  CHAR
+  2  +13
+  7  MINUS
+  1  +1
+  7  POINT
+  4  NOMARK
+  7  ;+2
+  8  NE
+  10  SIGN
+  5  DECMARK
+  8  Q
+ASSEMB
+4  DECMARK
+7  RET
+4  PLACES
+ 1 -5
+ 7 PL5
+RET    0  DECMARK
+   /4  NUMBER
+  5  SOFAR
+2  +13107
+9  TOOBIG
+4  SOFAR
+14  3
+1  SOFAR
+1  SOFAR
+1  -16
+
+  1  CHAR
+  /5  NUMBER
+  9  TOOBIG
+  10  NOMARK
+  10  PLACES
+  8  Q
+TOOBIG  4  DECMARK
+  7  ;+2
+  8  SKIP
+  10  ERROR
+  4  +2
+8  ERS
+MINUS  4  NOMARK
+  7  ;+2
+  8  NE
+  5  SIGN
+Q2  11  QCHIN
+  8  QCHIN+1
+  7  Q2
+  8  D
+POINT  4  DECMARK
+  7  SETMK
+  10  ERROR
+  4  +1
+ERS  11  QERROR
+  8  QERROR+1
+  0  DATAREA
+  8  SKIP
+SETMK  5  PLACES
+  5  FRACT
+  4  +1
+  5  DECMARK
+  8  Q
+PL5
+ 4 CHAR
+ 1 -21
+ 9 SKIP
+ 10 FRACT (ROUND UP,DIGIT=>5)
+ 4 FRACT
+ 2 +100000
+ 7 ONE
+
+
+SKIP
+Q3  11  QCHIN
+  8  QCHIN+1
+ 1 -14
+ 7 Q3 (IGNORE  POINT)
+ 1 -2
+ 9 ;+3
+ 1 -10
+ 9 Q3 (IGNORE DIGITS)
+
+  4  ERROR
+  7  NE
+  8  QIN1+1
+
+NE  4  DECMARK
+  7  CHKSGN
+OK  4  PLACES
+  11  POWER
+  8  POWER+1
+  4  FRACT
+  11  QSCALE
+  8  QSCALE+1
+  5  FRACT
+
+  4  SCALE
+  9  NEGSCL
+  11  POWER
+  8  POWER+1
+ 4  FACTOR
+2  NUMBER
+9  ;+2
+8  OFLO
+ 4  FRACT
+  11  QSCALE
+  8  QSCALE+2
+  5  NUMBER
+
+CHKSGN  4  SIGN
+  7  NEG
+  4  NUMBER
+ 8 EXIT
+PLACES +0
+NUMBER +0
+FRACT +0 (MUST FOLLOW NUMBER)
+
+FACTOR +0
+
+DECMARK +0 ( QIN1+125)
+DEVICE +1 (+3 FOR TELEPRINTER)
+CHAR +0
+SIGN  +0
+NOMARK  +0
+ERROR +0
+HP  +0
+
+SOFAR +0
+
+NEG  4  NUMBER
+  2  +0
+EXIT  0  QIN1
+  /8  1
+NEGSCL  4  +4
+  11  QERROR
+  8  QERROR+1
+  0  DATAREA
+  8  EXIT
+DATAREA  0  QIN1
+  0  1
+    \QIN
+
+ONE
+ 10 NUMBER
+ 4 +0
+ 5 FRACT
+ 8 SKIP
+
+
+RESULT +0
+QSTORE +0
+QN +0
+QR +0
+
+
+QSCALE +0
+ 8 S2
+ 14 8175
+ 4 NUMBER
+ 8 S3
+S2 0 +0
+S3
+ 5 QSTORE
+ 3 QN
+ 13 FACTOR
+ 5 RESULT
+ 12 FACTOR
+ 3 QR
+ 2 QSTORE
+ 9 REDUCE
+ 7 ;+2
+ 8 INCR
+ 4 QR
+ 2 QN
+9 TBQ
+ 2 HP
+ 9 INCR
+NEAR
+ 4 RESULT
+ 8 EXACT+1
+TBQ
+ 1 HP
+ 9 REDUCE
+ 8 NEAR
+
+INCR
+ 4 +1
+ 8 ;+2
+REDUCE
+ 4 -1
+EXACT
+ 1 RESULT
+ 0 QSCALE
+/8 1
+
+POWER +0
+ 5 QR
+ 2 +5
+ 9 NEGSCL  (SCALE FACTOR>5)
+ 0 QR
+/4 TABL
+ 5 FACTOR
+ 14 8191
+ 5 HP
+
+ 0 POWER
+/8 1
+TABL +1
+  +10
+ +100
++1000
++10000
++100000
+
+OFLO  4  +3
+  11  QERROR
+  8  QERROR+1
+  0  DATAREA
+  8  QIN1+1
+
+(QLN - logarithm function)
+
+[ QLN ]
+QLN
+
++0
+5 52;
+9 39;
+7 39;
+4 42;
+5 53;
+4 52;
+14 1
+9 11;
+10 53;
+8 7;
+14 8190
+6 41;
+5 52;
+12 43;
+14 1
+1 44;
+5 54;
+4 45;
+1 52;
+0 46;
+13 54;
+5 52;
+12 52;
+5 54;
+12 48;
+1 49;
+12 54;
+1 50;
+12 52;
+5 54;
+4 53;
+12 51;
+14 13
+2 54;
+1 47;
+5 52;
+9 56;
+8 55;
+15 6144
+8 39;
+7 8191
+-1
+2 6105
+1 7709
+/10 2812
++0
+/14 7867
++16
++221
++5622
+11 740
++0
++0
++0
+4 46;
+0 0;
+/8 1
+
+(QOUT1 - Output single length fractions and integers)
+
+
+[QOUT1 QCHOP QERROR]
+QOUT1  +0
+ 8 INT
+ 5 NUMBER
+ 4 +0
+IPLINK 5 SCALE
+ 5 TYPMK
+ 0 QOUT1
+ /4 1
+ 6 +8191
+ 1 SCALE
+ 9 ;+2
+ 2 +0
+ 5 SCALE
+ /4 1
+ 9 NL
+ 4 +0
+ 8 QCH
+NLRET 6 =15 0
+ 14 8179
+ 1 -6
+ 5 DC
+ 4 +0
+ 5 DIGMK
+ 4 NUMBER
+ 9 CHKSGN
+ 4 PLUS
+SGNRET 5 SIGN
+LOOP2 4 +0
+ 5 DIGIT
+ 4 SCALE
+ 7 OPDECPT
+COMP 4 TYPMK
+ 7 CALCFR
+DPRET 0 DC
+ 4 NUMBER
+LOOP1 /1 CONST
+ 9 CONTIN
+ 10 DIGIT
+ 8 LOOP1
+CALCFR 4 NUMBER
+ 12 +10
+ 3 NUMBER
+ 5 DIGIT
+ 8 FRDTCC
+CONTIN /2 CONST
+ 2 +0
+SETNN
+ 5 NUMBER
+FRDTCC 4 DIGIT
+ 7 OPSPCE
+ 2 +9
+ 9 ERROR
+TESTDC 4 DC
+ 7 EXIT
+ 4 DIGMK
+ 7 OPSIGN
+OPDGT 4 DIGIT
+ 1 +16
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 DIGMK
+RETURN 10 DC
+ 10 SCALE
+ 8 LOOP2
+INT 5 NUMBER
+ 4 -6
+ 5 TYPMK
+ 8 IPLINK
+NL 4 +1
+QCH 11 QCHOP
+ 8 QCHOP+1
+ 0 QOUT1
+ /4 1
+ 8 NLRET
+CHKSGN 2 +0
+ 5 NUMBER
+ 4 +13
+ 8 PATCH2
+OPDECPT 4 TYPMK
+ 9 ;+2
+ 8 ;+3
+ 4 DC
+ 7 EXIT
+ 4 DIGMK
+ 7 OPS
+DPOPUT 4 +14
+ 11 QCHOP
+ 8 QCHOP+1
+ 10 DIGMK
+ 8 COMP
+OPSPCE 4 DIGMK
+ 7 ;+2
+ 8 TESTDC
+ 4 DC
+ 1 +1
+ 7 OPSIGN
+ 4 +0
+ 11 QCHOP
+ 8 QCHOP+1
+ 8 RETURN
+
+OPS 4 SIGN
+ 11 QCHOP
+ 8 QCHOP+1
+ 8 DPOPUT
+OPSIGN 4 SIGN
+ 11 QCHOP
+ 8 QCHOP+1
+ 8 OPDGT
+EXIT 4 TYPMK
+ 2 SCALE
+ 9 ERROR
+OUT 0 QOUT1
+ /8 2
+ERROR 4 +10
+ 11 QCHOP
+ 8 QCHOP+1
+ 4 +0
+ 11 QERROR
+ 8 QERROR+1
+ 0 ERRDTA
+ 8 OUT
+ERRDTA 0 QOUT1
+ 0 1
+  \QO1
+  -100000
+  -10000
+  -1000
+  -100
+  -10
+  -1
+CONST  -1
+SIGN  +0
+NUMBER  +0
+SCALE  +0
+DC  +0
+DIGIT  +0
+PLUS  +0 ( 0 FOR <SPACE>: INSERT  +11 FOR <PLUS> )
+DIGMK  +0
+TYPMK  +0
+
+PATCH2
+ 5 SIGN
+ 4 NUMBER
+ 9 ;+2
+ 8 LOOP2
+ 4 +1
+ 5 DIGIT
+ 4 TYPMK
+ 7 FM1
+ 4 +31072
+ 8 SETNN
+
+FM1
+ 4 -1
+ 1 SCALE
+ 5 SCALE
+ 4 +0
+ 8 SETNN
+
+(QSIN - sine function)
+
+[ QSIN ]
+QSIN
+
++0
+1 59;
+5 66;
+6 60;
+5 70;
+4 59;
+2 70;
+5 67;
+12 67;
+1 61;
+5 68;
+14 2
+5 69;
+12 63;
+1 62;
+14 8185
+1 64;
+12 69;
+1 62;
+14 8189
+2 65;
+12 67;
+13 68;
+2 73;
+5 67;
+1 67;
+12 67;
+1 59;
+1 59;
+5 72;
+4 67;
+13 72;
+5 68;
+4 72;
+1 61;
+14 8191
+13 72;
+5 67;
+4 66;
+9 47;
+4 67;
+2 71;
+5 67;
+4 68;
+2 71;
+5 68;
+4 66;
+1 66;
+9 56;
+4 68;
+5 72;
+4 67;
+5 68;
+4 72;
+2 71;
+5 67;
+4 67;
+0 0;
+/8 1
+4 0
+7 8191
+/0 0
++1
+8 5122
+4 3784
+12 4640
++0
++0
++0
++0
++0
++0
++0
+-1
+
+(QSQRT - square root function)
+
+[ QSQRT ]
+QSQRT
+
++0
+8 5;
+8 47;
++0
++0
+5 4;
+9 30;
+7 33;
+1 42;
+9 38;
+4 41;
+5 45;
+2 3;
+14 1
+4 4;
+13 45;
+1 45;
+1 42;
+14 8191
+6 41;
+5 46;
+2 45;
+9 27;
+7 27;
+4 46;
+8 11;
+5 45;
+4 45;
+0 0;
+/8 1
+4 43;
+15 6144
+8 31;
+4 3;
+7 26;
+4 40;
+5 45;
+8 12;
+4 41;
+8 26;
++362
+15 8191
++1
++45
++0
++0
++0
+5 4;
+4 44;
+5 3;
+4 4;
+8 5;
+
+%
+
+<! Halt !>
+
+	 
+	 

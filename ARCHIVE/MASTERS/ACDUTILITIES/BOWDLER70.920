@@ -1,0 +1,1805 @@
+﻿
+
+((BOWDLER, 20/7/70)
+
+ENTRY1   8    STTAPE
+ENTRY2   8    EDIT
+ENTRY3   +0
+ENTRY4   8    E2-3
+ENTRY5   8    SCHECK
+ENTRY6   4    PARITY+3
+         8    STTAPE+1
+SCHECK   4    TABLE
+         5    SRWS
+         4    CHARCT
+         2    -120
+         5    WS
+         11   BININ
+         8    BININ+1
+         7    ;-2
+         1    SRWS
+         5    SRWS
+         10   WS
+         4    WS
+         7    ;+4
+         11   BININ
+         8    BININ+1
+         8    ;-7
+         4    SUMCHK
+         2    SRWS
+         7    EXIT
+         0    E
+         3    LETTER
+         4    +10
+         11   EPRINT
+         8    EPRINT+1
+         8    NEXT02-3
+STTAPE   4    ECHOP+5
+         5    ECHOP
+         0    -26
+         4    TABLE
+         /5   UPPCT
+         10   1
+         4    1
+         9    ;-4
+         4    -1492
+         5    CHLTCT
+         4    PLANTO+24
+         5    PO04
+         4    PLANTO+3
+         5    PO05
+         5    PO06
+         5    PO07
+         11   FILBUF
+         8    FILBUF+1
+         4    +1
+         5    MBLFFG
+         5    BUFCTA
+         5    BUFCTC
+         11   NEXINS
+         8    NEXINS+1
+         0    8180
+         4    5
+         /2   CODENO+3
+         10   1
+         7    ERROR+5
+         4    1
+         9    ;-5
+         5    INSTR
+ERROR    0    E
+         3    LETTER
+         11   WARN
+         8    WARN+1
+         8    NEXT02-3
+         4    1
+         5    TELE
+         4    INSTR
+         2    +2
+         7    REPEAT-11
+         4    TELE
+         5    MIN
+         7    FAULT5
+         /4   PLANTO+3
+         5    TABLE+31
+         8    ERROR-10
+         5    INSTR
+         4    TELE
+         2    MIN
+         7    REPEAT-2
+         4    TELE
+         9    REPEAT
+         4    PLANTO+10
+         5    PO07
+         8    REPEAT
+         4    PLANTO+10
+         5    PO06
+REPEAT   11   NEXINS
+         8    NEXINS+1
+         0    -34
+         4    5
+         /2   INSTNO+34
+         10   1
+         7    ;+5
+         4    1
+         9    ;-5
+         4    +1
+         8    ERROR
+         4    1
+         1    +31
+         5    2
+         4    REPINM
+         7    ;+6
+         4    1
+         1    +27
+         9    ;+3
+         4    +6
+         8    ERROR
+         4    2
+         2    +7
+         9    NONCAN
+         4    TABLE
+         5    REPINM
+         5    CHARCT
+         5    EINSTR
+         4    CHLTCT
+         5    3
+         10   CHLTCT
+         11   LOREM
+         8    LOREM+1
+         8    E2
+REPACK   11   CONVRT
+         8    CONVRT+1
+         5    4
+         4    CHARCT
+         2    +64
+         7    E2+2
+         10   CHARCT
+         11   LOREM
+         8    LOREM+1
+         8    E2+11
+         11   CONVRT
+         8    CONVRT+1
+         14   7
+         6    COLCST
+         1    4
+         5    4
+         10   CHARCT
+         4    CHLTCT
+         9    E2+13
+W3       4    +3
+         0    W
+         3    LETTER
+         11   WARN
+         8    WARN+1
+         4    REPFLG
+         7    ;+3
+         4    REPMRK
+         5    INSTR
+         0    INSTR
+         4    +26
+         /5   INLIST-1
+         10   INSTR
+         4    INSTR
+         5    EINSTR
+         1    -1
+         5    INSTR
+         11   WARN
+         8    WARN+3
+         8    NEXT02-3
+E2       4    +2
+         8    ERROR
+         4    +4
+         0    W
+         3    LETTER
+         11   WARN
+         8    WARN+1
+         11   LOREM
+         8    LOREM+1
+         8    PACK-4
+         8    ;-3
+         10   EINSTR
+         8    W3-2
+         5    1
+         4    4
+         /5   CHLIST+1492
+         10   CHLTCT
+         4    EINSTR
+         7    NONCAN-6
+         10   MBLFFG
+         0    3
+         4    CHARCT
+         /5   CHLIST+1492
+PACK     4    2
+         9    RPLACE
+         14   8187
+         4    3
+         14   5
+         5    2
+         4    INSTR
+         5    1
+         1    -119
+         7    W3
+         4    2
+         /5   INLIST-1
+         8    REPEAT
+         11   LOREM
+         8    LOREM+1
+         8    PACK-4
+         8    REPACK
+         4    +5
+         8    NONCAN+5
+NONCAN   1    +3
+         9    SINGLE
+         4    REPFLG
+         7    ;+9
+         4    +2
+         0    W
+         3    LETTER
+         11   WARN
+         8    WARN+1
+         11   NEXINS
+         8    NEXINS+2
+         8    REPEAT+2
+         0    2
+         /4   STOPM-8
+         9    NONCAN-2
+         4    -1
+         /5   STOPM-8
+         8    PACK+6
+SINGLE   1    +18
+         9    ;+3
+         7    INS
+         8    PACK+6
+         1    +2
+         9    CANCEL
+         7    END
+         4    REPFLG
+         7    ;+3
+E4       4    +4
+         8    ERROR
+         4    INSTR
+         5    REPMRK
+         10   REPINM
+         10   REPFLG
+CANCEL   10   ERASEM
+         11   LOREM
+         8    LOREM+1
+         8    E3
+         11   CVT920
+         8    CVT920+1
+         1    -16
+         9    E3
+         5    3
+         2    +9
+         9    E3
+         4    -1
+         1    ERASEM
+         5    ERASEM
+         0    3
+         /4   REPLST
+         1    REPFLG
+         1    -1
+         7    ;+5
+         4    +5
+         8    ERROR
+E3       4    +3
+         8    ERROR
+         /4   REPLST
+         1    +1
+         6    +1
+         /5   REPLST
+         8    PACK
+END      4    -1
+         1    REPFLG
+         5    REPFLG
+         7    PACK+6
+         8    E4
+INS      5    CHARCT
+         4    CHLTCT
+         5    3
+         4    -1
+         5    EINSTR
+         11   LOREM
+         8    LOREM+1
+         8    ;+3
+         10   CHARCT
+         8    ;-4
+         4    CHARCT
+         7    LOOP01
+         4    +1
+         0    W
+         3    LETTER
+         11   WARN
+         8    WARN+1
+         4    TABLE
+         5    CHARCT
+LOOP01   11   MORECH
+         8    MORECH+1
+         11   INSERT
+         8    INSERT+1
+         11   CONVRT
+         8    CONVRT+1
+         5    4
+         10   CHLTCT
+         11   MORECH
+         8    MORECH+1
+         11   INSERT
+         8    INSERT+1
+         11   CONVRT
+         8    CONVRT+1
+         14   7
+         6    COLCST
+         1    4
+         5    4
+         4    CHLTCT
+         9    ;+2
+         8    W3
+         5    1
+         4    4
+         /5   CHLIST+1492
+         8    LOOP01
+RPLACE   1    +2
+         0    TABLE
+         3    CHARCT
+         14   8188
+         4    3
+         14   5
+         5    2
+         4    INSTR
+         5    1
+         2    +117
+         9    W3
+         4    2
+         /5   INLIST-1
+         1    +5
+         /5   INLIST
+         4    +2
+         1    INSTR
+         5    INSTR
+         4    CHLTCT
+         5    3
+         4    -1
+         5    EINSTR
+         4    +28
+         5    2
+         8    LOOP01
+FAULT5   4    COLCST+1
+         5    TABLE+31
+         8    ERROR-10
+EDIT     0    -40
+         4    TABLE
+         10   1
+         /5   STOPM
+         4    1
+         9    ;-4
+         4    UPCTF+25
+         5    PO04
+         4    -1
+         5    CHLTCT
+         4    TELE
+         7    ;+11
+         4    +10
+         5    LF
+         4    +4
+         5    SC
+         4    PLANTO+15
+         5    PO08
+         4    PLANTO+5
+         5    PO14
+         4    PLANTO+12
+         8    ;+10
+         4    +2
+         5    LF
+         4    +76
+         5    SC
+         4    PLANTO+14
+         5    PO08
+         4    CRTEST
+         5    PO14
+         4    UPCTF+12
+         5    PO12
+         5    PO13
+         4    LAYOUT+2
+         5    PO02
+         4    CRTEST-1
+         5    PO03
+         4    PLANTO+4
+         5    PO11
+         11   PBLANK
+         8    PBLANK+1
+         4    +1
+         5    STOPM
+         5    BUFCTA
+         5    BUFCTC
+         11   FILBUF
+         8    EXFIL2+4
+NEXT01   10   INSTR
+         4    EINSTR
+         2    INSTR
+         9    NEXT02
+         11   PBLANK
+         8    PBLANK+1
+         4    -2305
+         11   PBLANK
+         8    PBLANK+2
+         11   PBLANK
+         8    PBLANK+1
+         8    EXIT
+NEXT02   0    INSTR
+         /4   INLIST-1
+         14   8187
+         5    2
+         4    TABLE
+         14   5
+         1    -8
+         9    COPDEL
+         1    8180
+         9    ;+9
+         2    +6
+         9    ;+16
+         5    1
+         /4   CHAR
+PO12     +0
+         11   BINOUT
+         8    BINOUT+1
+         8    NEXT01
+         1    +1
+         5    1
+         9    ;+3
+         4    -1
+         5    ERASEM
+         /4   PLANTO+19
+         /0   PLANTO+22
+         /5   0
+         8    NEXT01
+         1    +7
+         5    1
+         /9   SWITCH+7
+         /4   CHAR
+PO13     +0
+         5    2
+         4    +1
+         5    4
+         4    BUFCTA
+         5    BUFCTB
+         2    BUFCTC
+         7    PO09-8
+NEXT03   4    +1
+         1    BUFCTB
+         6    +255
+         5    BUFCTB
+         5    1
+         /4   MBUF
+         11   LAYOUT
+         8    LAYOUT+1
+         8    ;+2
+         8    PO10+1
+         0    BUFCTB
+         /4   MBUF
+         2    2
+         7    PO10+1
+         4    BUFCTB
+         8    NEXT03-2
+         4    NOSTRF
+         7    ;+2
+         8    NEXT03
+         4    ;-1
+         5    PO09
+         5    PO10
+         11   UPCTF
+         8    UPCTF+1
+PO09     +0
+PO10     +0
+         5    2
+         4    BUFCTB
+         5    BUFCTD
+         1    -1
+         6    +255
+         5    BUFCTB
+         11   PRBUF
+         8    PRBUF+1
+         4    2
+         7    ;+2
+         8    NEXT01
+         4    BUFCTD
+         5    BUFCTA
+         8    NEXT01
+SWITCH   8    CAN
+         8    END2
+         8    REP
+         8    INS2
+         8    PSC
+         8    COP
+         4    PLANTO+23
+         5    ENTRY3
+         4    TABLE
+         5    MIDCT
+         5    BLANK2
+         5    SCOST
+         5    BUFCTE
+         5    BUFCTF
+         8    EXIT
+COP      4    +1
+         5    4
+         4    NOSTRF
+         7    ;+6
+         4    BUFCTC
+         5    BUFCTD
+         5    BUFCTB
+         11   PRBUF
+         8    PRBUF+1
+         11   UPCTF
+         8    UPCTF+1
+         8    ;-7
+         8    ;-8
+INS2     0    2
+         /4   CHLIST+1492
+         2    TABLE
+         5    3
+         7    NEXT01
+         10   2
+         0    2
+         /4   CHLIST+1492
+         14   8185
+         5    WSG
+         4    TABLE
+         14   7
+         11   BINOUT
+         8    BINOUT+1
+         10   3
+         4    3
+         7    NEXT01
+         4    WSG
+         11   BINOUT
+         8    BINOUT+1
+         10   3
+         4    3
+         8    INS2+4
+REP      4    INSTR
+         0    2
+         /5   REPLST
+         10   INSTR
+         0    INSTR
+         /4   INLIST-1
+         1    -30
+         7    NEXT01
+         8    ;-5
+PSC      4    SC
+         8    PO12+1
+END2     4    TABLE
+         5    REPFLG
+         4    REPMRK
+         5    INSTR
+         8    NEXT02
+CAN      0    2
+         4    TABLE
+         /5   REPLST
+         8    NEXT01
+COPDEL   1    +8
+         5    4
+         0    2
+         /4   CHLIST+1492
+         2    TABLE
+         5    3
+         5    5
+NEXT04   10   2
+         0    2
+         /4   CHLIST+1492
+         14   8185
+         5    WS
+         4    TABLE
+         14   7
+         0    5
+         /5   CBUF+64
+         10   5
+         4    5
+         7    ;+6
+         4    WS
+         /5   CBUF+65
+         10   5
+         4    5
+         9    NEXT04
+         4    3
+         5    5
+         4    BUFCTA
+         5    BUFCTB
+         5    BUFCTD
+         4    4
+         6    +2
+         7    ;+3
+         4    STOPM
+         7    NEXT08
+         4    NOSTRF
+         7    NEXT07
+NEXT05   4    BUFCTD
+         1    +1
+         6    +255
+         5    BUFCTD
+         5    1
+         6    +254
+         1    +1
+         2    BUFCTB
+         6    +254
+         7    E8
+         /4   MBUF
+         0    TABLE
+         3    LOLFFG
+         11   LAYOUT
+         8    LAYOUT+1
+         8    NEXT07+4
+         0    5
+         /2   CBUF+64
+         7    NEXT08+3
+         /2   CBUF+64
+         2    SC
+         7    FAULT1
+         4    4
+         6    +2
+         7    NEXT06
+ROUND1   4    BUFCTB
+         1    +1
+         6    +255
+         5    BUFCTB
+         5    1
+         /4   MBUF
+         2    LF
+         7    NEXT06+4
+         4    BUFCTB
+         2    BUFCTC
+         7    NEXT12
+         8    ROUND1
+NEXT06   4    BUFCTB
+         1    +1
+         6    +255
+         5    BUFCTB
+         4    BUFCTB
+         5    BUFCTD
+         4    3
+         5    5
+NEXT07   4    BUFCTC
+         2    BUFCTD
+         7    NEXT13
+         8    NEXT05
+         4    LOLFFG
+         7    ;+4
+         4    BUFCTD
+         5    BUFCTB
+         8    ;-10
+         4    5
+         2    3
+         9    NEXT07
+         4    4
+         6    +3
+         7    NEXT06
+         8    NEXT07
+NEXT08   4    NOSTRF
+         7    ROUND1+8
+         8    ROUND1
+         10   5
+         4    5
+         7    ;+2
+         8    NEXT07
+         0    CHLTCT
+         /10  STRFND+1
+         4    4
+         2    +3
+         9    NEXT16
+         4    REPFLG
+         7    NEXT14
+         4    REPINM
+         7    NEXT16
+         4    BUFCTA
+         2    BUFCTB
+         9    NEXT11+4
+         7    NEXT11
+         4    BUFCTB
+NEXT09   5    WS
+         2    MIN
+         2    TABLE
+         9    NEXT11+7
+NEXT10   4    -1
+         1    CHLTCT
+         5    CHLTCT
+         9    NEXT15
+         5    1
+         /4   REPLST
+         7    NEXT10
+         5    INSTR
+         8    NEXT01
+NEXT11   4    BUFCTB
+         2    BUFCTD
+         7    ;+2
+         8    NEXT09-1
+         4    BUFCTB
+         1    +256
+         8    NEXT09
+         4    WS
+         5    MIN
+         4    BUFCTD
+         5    MAX
+         4    CHLTCT
+         5    REPNOM
+         8    NEXT10
+NEXT12   4    BUFCTB
+         5    BUFCTD
+         4    NEXT06-1
+         5    PO09
+         5    PO10
+         4    REPINM
+         7    ;+2
+         8    NEXT09-5
+         4    NOSTRF
+         7    PO09-2
+         8    NEXT08+9
+NEXT13   4    NEXT07+3
+         8    NEXT12+3
+NEXT14   4    INSTR
+         5    REPMRK
+         10   REPFLG
+         10   REPINM
+         4    BUFCTA
+         2    BUFCTB
+         9    ;+15
+         7    ;+10
+         4    BUFCTB
+         5    MIN
+         4    BUFCTD
+         5    MAX
+         4    -1
+         5    REPNOM
+         4    +9
+         5    CHLTCT
+         8    NEXT10+4
+         4    BUFCTD
+         2    BUFCTB
+         7    ;+2
+         8    ;-12
+         4    BUFCTB
+         1    +256
+         8    ;-14
+NEXT15   4    TABLE
+         5    REPINM
+         4    REPNOM
+         9    ROUND3
+         5    1
+         /4   STRFND+1
+         7    ROUND3-6
+         5    STRFND
+         /4   REPLST
+         1    +1
+ROUND2   5    INSTR
+         0    INSTR
+         /4   INLIST-1
+         5    4
+         4    MIN
+         6    +255
+         5    BUFCTB
+         4    MAX
+         5    BUFCTD
+NEXT16   4    STRFND
+         7    NEXT17+12
+         4    4
+         6    +1
+         7    NEXT17
+         4    BUFCTD
+         5    BUFCTB
+         4    4
+         6    +2
+         7    NEXT17
+         0    BUFCTB
+         /4   MBUF
+         2    LF
+         7    NEXT17-2
+         4    BUFCTB
+         2    BUFCTC
+         7    ;+6
+         4    BUFCTB
+         1    +1
+         6    +255
+         5    BUFCTB
+         8    ;-11
+         4    BUFCTC
+         5    BUFCTB
+         5    BUFCTD
+         11   PRBUF
+         8    PRBUF+1
+         11   UPCTF
+         8    UPCTF+1
+         8    ;-12
+         8    ;-13
+         4    BUFCTB
+         5    BUFCTD
+NEXT17   11   PRBUF
+         8    PRBUF+1
+         0    -11
+         4    TABLE
+         /5   STRFND+11
+         10   1
+         4    1
+         9    ;-4
+         8    NEXT01
+         0    TABLE
+         14   7
+         8    PO04-4
+         11   PRBUF
+         8    PRBUF+1
+         4    4
+         2    +3
+         9    ;+3
+         4    REPFLG
+         7    NEXT02
+         4    PLANTO+16
+         8    PO09-4
+         0    -11
+         4    TABLE
+         /5   STRFND+11
+         10   1
+         4    1
+         9    ;-4
+ROUND3   4    TABLE
+         5    REPFLG
+         4    REPMRK
+         8    ROUND2
+E8       4    +8
+         8    ERROR
+FAULT1   4    PO11
+         2    PLANTO+4
+         7    ROUND1-3
+         4    MIDCT
+         2    UPPCT
+         7    ;+2
+         8    ROUND1-3
+         5    MIDCT
+         4    PLANTO+29
+         5    ENTRY3
+         4    RCHAR
+         5    6
+         2    SC
+         7    EXIT-1
+         4    RCHAR
+         2    LF
+         7    FAULT4
+         4    +1
+         5    BLANK2
+EXIT     8    EXIT
+         4    ;+2
+         5    EXIT
+         8    EXIT
+FAULT2   11   FILBUF
+         8    EXFIL2+4
+         11   UPCTF
+         8    UPCTF+9
+         0    8191
+         0    BUFCTD
+         8    NEXT05+10
+FAULT3   4    MORECH
+         6    ;-4
+         2    PO04-6
+         7    NI
+         8    OUT11+6
+FAULT4   10   BUFCTC
+         4    -1
+         8    EXIT-1
+PBLANK   +0
+         4    -30720
+         15   6144
+         1    +256
+         9    ;-2
+         0    PBLANK
+         /8   1
+BININ    +0
+         4    TABLE
+         15   2048
+         11   BITCT
+         8    BITCT+1
+         6    +1
+         7    ;+3
+         4    +14
+         8    ERROR
+         4    CH
+         14   8187
+         5    CH
+         14   1
+         4    CH
+         14   4
+         0    BININ
+         /8   1
+BINOUT   +0
+         7    EXBIN
+         5    5
+PO02     +0
+         7    EXBIN
+PO14     +0
+         1    SUMCHK
+         5    SUMCHK
+         4    5
+         11   PARITY
+         8    PARITY+1
+         10   CHARCT
+PO03     +0
+         2    LF
+         7    ;+3
+EXBIN    0    BINOUT
+         /8   1
+         4    -1024
+         15   6144
+         10   CHARCT
+         1    +256
+         9    ;-3
+         8    EXBIN
+CRTEST   4    5
+         1    -10
+         7    ;+5
+         1    -67
+         7    EXBIN
+         4    5
+         8    PO14+1
+         4    +141
+         15   6144
+         10   CHARCT
+         4    +87
+         8    PO14+1
+EPRINT   +0
+         5    5
+         4    -2560
+         11   PBLANK
+         8    PBLANK+2
+         4    +2
+         11   PARITY
+         8    ECHOP
+         4    LETTER
+         11   PARITY
+         8    ECHOP
+         4    +64
+         11   PARITY
+         8    ECHOP
+         4    TABLE
+         5    6
+         4    -2
+         5    7
+NEXTDG   4    TABLE
+         5    SRWS
+         4    5
+         0    7
+         /1   POWTEN+2
+         9    ;+5
+         5    5
+         10   SRWS
+         10   6
+         8    ;-5
+         4    6
+         7    ;+5
+         4    SRWS
+LASTDG   1    +16
+         11   PARITY
+         8    ECHOP
+         10   7
+         4    7
+         9    NEXTDG
+         7    ;+3
+         0    EPRINT
+         /8   1
+         4    5
+         8    LASTDG
+         4    +141
+         15   6144
+         8    ;+4
+ECHOP    +0
+         1    -2
+         7    ;-5
+         /4   TABLE
+         14   8184
+         8    PARITY+1
+WARN     +0
+         11   EPRINT
+         8    EPRINT+1
+         0    I
+         3    LETTER
+         4    INSTR
+         11   EPRINT
+         8    EPRINT+1
+         0    WARN
+         /8   1
+LAYOUT   +0
+         7    EXLAY1
+         2    +127
+         7    EXLAY1+2
+PO08     +0
+         7    EXLAY1
+         1    +60
+         7    EXLAY1
+         1    +1
+         7    EXLAY1
+         1    +1
+         7    ;+3
+         1    +2
+         8    EXLAY2
+         10   LOLFFG
+EXLAY1   0    LAYOUT
+         /8   1
+         4    ERASEM
+         9    ;+2
+         8    EXLAY1
+         4    +127
+         8    EXLAY2
+         2    +47
+         7    EXLAY1
+         1    +3
+         7    EXLAY1
+         1    +2
+         7    EXLAY1
+         1    +4
+         7    EXLAY1
+         1    +61
+         7    EXLAY1-1
+         1    +1
+         7    EXLAY1
+         1    +9
+EXLAY2   0    LAYOUT
+         /8   2
+PRBUF    +0
+         4    BUFCTB
+         2    BUFCTD
+         7    ;+4
+         4    BUFCTA
+         2    BUFCTB
+         7    UIT
+         4    +1
+         1    BUFCTA
+         6    +255
+         5    BUFCTA
+         5    1
+         /4   MBUF
+         7    ;+7
+         2    LF
+         7    ;+4
+         4    TABLE
+         5    STOPM
+         8    ;+2
+         10   STOPM
+         4    4
+         2    +3
+         9    ;+5
+         0    BUFCTA
+         /4   MBUF
+         11   BINOUT
+         8    BINOUT+1
+         4    BUFCTA
+         2    BUFCTB
+         7    ;+2
+         8    PRBUF+7
+         4    BUFCTE
+         1    +2
+         6    +254
+         2    BUFCTA
+         7    UIT
+         4    TABLE
+         5    NOSTRF
+         4    BUFCTA
+         1    -1
+         6    +254
+         5    BUFCTE
+UIT      0    PRBUF
+         /8   1
+CVT920   +0
+         5    1
+PO05     +0
+         6    +255
+         2    +128
+         7    E7
+         2    +128
+         0    CVT920
+         /8   1
+E7       4    +7
+         8    ERROR
+CONVRT   +0
+         5    1
+PO06     +0
+         6    +255
+         2    +128
+         7    E7
+         2    +128
+         5    1
+PO07     +0
+         14   8184
+         2    +128
+         7    E7
+         2    +128
+         0    CONVRT
+         /8   1
+MORECH   +0
+         4    BUFCTA
+         2    BUFCTC
+         7    ;+9
+         4    BUFCTA
+         1    +1
+         6    +255
+         5    BUFCTA
+         5    1
+         /4   MBUF
+         0    MORECH
+         /8   1
+         4    BUFCTA
+         1    -1
+         6    +254
+         5    BUFCTE
+         4    TABLE
+         5    NOSTRF
+         11   UPCTF
+         8    UPCTF+1
+         8    ;-16
+         8    ;-17
+LOREM    +0
+         11   MORECH
+         8    MORECH+1
+         11   LAYOUT
+         8    LAYOUT+1
+         8    ;+3
+         0    LOREM
+         /8   2
+         4    LOLFFG
+         7    ;-8
+         4    TABLE
+         5    LOLFFG
+         0    LOREM
+         /8   1
+NEXINS   +0
+         10   INSTR
+         10   ERASEM
+         4    TABLE
+         5    CHARCT
+         11   LOREM
+         8    LOREM+1
+         8    IGNORE+2
+         5    5
+         4    MBLFFG
+         7    IGNORE
+         4    5
+         11   CVT920
+         8    CVT920+1
+         0    TABLE
+         3    MBLFFG
+         6    +31
+         5    5
+         11   LOREM
+         8    LOREM+1
+         8    REPEAT+9
+         11   CVT920
+         8    CVT920+1
+         14   8187
+         4    5
+         14   5
+         5    5
+         11   LOREM
+         8    LOREM+1
+         8    REPEAT+9
+         11   CVT920
+         8    CVT920+1
+         14   8187
+         4    5
+         14   5
+         5    5
+         4    +1
+         2    ERASEM
+         5    ERASEM
+         0    NEXINS
+         /8   1
+IGNORE   10   CHARCT
+         8    NEXINS+5
+         10   MBLFFG
+         4    CHARCT
+         7    ;+6
+         0    W
+         3    LETTER
+         4    +1
+         11   WARN
+         8    WARN+1
+         11   LOREM
+         8    LOREM+1
+         8    ;-2
+         8    NEXINS+12
+PARITY   +0
+         11   BITCT
+         8    BITCT+1
+         5    1
+         4    CH
+         14   8188
+         5    CH
+         4    1
+         14   8191
+         4    CH
+         14   5
+         15   6144
+         0    PARITY
+         /8   1
+BITCT    +0
+         5    CH
+         14   8188
+         1    =14 1
+         5    POA
+         4    TABLE
+         14   4
+         1    =14 1
+         5    POB
+         2    &323130
+POA      +0
+         5    1
+         2    &323130
+POB      +0
+         1    1
+         0    BITCT
+         /8   1
+FILBUF   +0
+         11   BININ
+         8    BININ+1
+         7    BININ+1
+         5    LF
+         1    -10
+         7    ;+7
+         1    -67
+         7    BININ+1
+         1    +75
+         7    ;+13
+         4    +13
+         8    ERROR
+         4    PLANTO+11
+         5    PO15
+         4    PLANTO+27
+         5    PO16
+         4    PLANTO+13
+         5    PO17
+         4    PLANTO+15
+         5    PO08
+         4    +4
+         8    ;+14
+         4    FILBUF+5
+         5    PO15
+         4    PLANTO+8
+         5    PO16
+         4    PLANTO+9
+         5    PO17
+         4    PLANTO+14
+         5    PO08
+         4    PLANTO
+         5    PO05
+         4    PLANTO+6
+         5    PO06
+         4    +76
+         5    SC
+         11   BININ
+         8    BININ+1
+         7    ;-2
+         5    7
+         4    BLANK2
+         9    ;+2
+         8    NORC
+         4    TABLE
+         5    UPPCT
+         5    BLANK2
+         5    SRWS
+         4    7
+         8    OUT01+6
+NORC     14   8191
+         5    SRWS
+         5    UPPCT
+         3    WS
+         0    -1
+         4    TABLE
+         10   1
+         /5   STORE
+         4    UPPCT
+         2    1
+         9    ;-5
+         5    BLANK2
+         5    6
+         0    WS
+         14   2
+         7    ;+2
+         8    NORC-2
+         4    7
+OUT01    5    6
+         2    LF
+         7    OUT03
+         11   BININ
+         8    BININ+1
+         5    7
+         14   7
+         6    COLCST
+         1    6
+         0    UPPCT
+         /5   STORE
+OUT02    10   UPPCT
+         4    UPPCT
+         2    LOWCT
+         7    EXFIL2-7
+         4    7
+         2    LF
+         7    OUT04+5
+         11   BININ
+         8    BININ+1
+         8    OUT01
+         10   BLANK2
+OUT03    11   BININ
+         8    BININ+1
+         5    7
+         14   7
+         6    COLCST
+         1    6
+         0    UPPCT
+         /5   STORE
+         4    7
+         7    OUT04
+         2    SC
+         7    OUT05+3
+         4    +4
+         2    BLANK2
+         9    ;+5
+         4    +1
+         5    WS
+         4    UPPCT
+         5    SRWS
+         4    TABLE
+         5    BLANK2
+         8    OUT02
+OUT04    10   BLANK2
+         10   UPPCT
+         4    UPPCT
+         2    LOWCT
+         7    EXFIL1
+         11   BININ
+         8    BININ+1
+         5    6
+         7    OUT03-1
+         2    SC
+         7    OUT05
+         4    +4
+         2    BLANK2
+         9    ;+5
+         4    TABLE
+         5    WS
+         4    UPPCT
+         5    SRWS
+         4    TABLE
+         5    BLANK2
+         4    6
+         8    OUT01+1
+OUT05    4    6
+         0    UPPCT
+         /5   STORE
+         10   UPPCT
+         8    LCISSC
+EXFIL1   5    6
+         8    ;+3
+         10   BLANK2
+         10   6
+         11   BININ
+         8    BININ+1
+         7    ;-4
+         2    SC
+         7    ;+6
+         4    +4
+         2    BLANK2
+         9    EXFIL2-4
+         4    6
+         8    EXFIL2-1
+         10   SCOST
+         4    6
+         5    BLANK2
+LCISSC   4    8180
+         5    SRWS
+         11   BININ
+         8    BININ+1
+         10   SRWS
+         4    SRWS
+         9    ;-4
+         8    EXFIL2
+         4    7
+         2    LF
+         7    EXFIL1
+         4    SRWS
+         5    UPPCT
+         4    WS
+         5    BLANK2
+EXFIL2   4    UPPCT
+         7    ;+8
+         0    FILBUF
+         /8   1
+         11   BININ
+         8    BININ+1
+         7    FILBUF+37
+         4    +11
+         8    ERROR
+         4    +12
+         8    ERROR
+UPCTF    +0
+         4    MIDCT
+         2    UPPCT
+         7    OUT1
+         4    +2
+         1    BUFCTF
+         6    +255
+         5    BUFCTC
+         5    BUFCTF
+         10   MIDCT
+         0    MIDCT
+         /4   STORE-1
+         14   8185
+         5    LCHAR
+         4    TABLE
+         14   7
+         5    RCHAR
+         0    BUFCTF
+         /5   MBUF
+         4    LCHAR
+         0    BUFCTF
+         /5   MBUF+1
+         4    BUFCTE
+         2    BUFCTF
+         7    ;+9
+         4    RCHAR
+         2    LF
+         7    OUT10-5
+         10   BUFCTC
+         4    LCHAR
+         2    LF
+         7    OUT10-5
+         8    UPCTF+1
+         10   NOSTRF
+         0    UPCTF
+         /8   1
+OUT1     5    MIDCT
+         4    SCOST
+         7    PO04
+         4    BLANK2
+         14   8191
+         5    UPPCT
+         3    WS
+         0    -1
+         10   1
+         4    TABLE
+         /5   STORE
+         4    UPPCT
+         2    1
+         9    ;-5
+         5    SCOST
+         5    BLANK2
+         0    WS
+         14   2
+         7    ;+4
+         4    SC
+         8    NEXT17+9
+         0    LOREM+2
+         4    SC
+         0    UPPCT
+         /5   STORE
+         10   UPPCT
+         8    UPCTF+4
+PO04     +0
+         5    6
+         2    SC
+         7    PO11+2
+         4    LCHAR
+         2    SC
+         7    ;+4
+         4    PLANTO+25
+         5    ENTRY3
+         8    EXIT
+         4    RCHAR
+         2    LF
+         7    PO11+7
+         4    +1
+         5    BLANK2
+         0    INSTR
+         /4   INLIST-1
+         2    +26
+         7    COPBUF
+PO11     +0
+         8    PO04+8
+         4    -1
+         1    BUFCTC
+         5    BUFCTC
+         4    TABLE
+         8    PO11-5
+         10   BUFCTC
+         4    -1
+         8    PO11-5
+COPBUF   4    BUFCTC
+         5    BUFCTB
+         2    BUFCTA
+         7    ;+3
+         11   PRBUF
+         8    PRBUF+1
+         4    EINSTR
+         2    INSTR
+         1    +1
+         7    NEXT01+4
+         4    -120
+         2    CHARCT
+         5    CHARCT
+         4    PLANTO+28
+         8    SWITCH+7
+NI       4    REPFLG
+         7    W3+13
+         4    TABLE
+         0    W
+         3    LETTER
+         11   WARN
+         8    WARN+1
+         8    W3+7
+         0    UPCTF
+         /8   2
+         11   FILBUF
+         8    EXFIL2+4
+         8    UPCTF+4
+OUT10    11   FILBUF
+         8    EXFIL2+4
+         8    UPCTF+9
+OUT11    4    BUFCTC
+         1    +1
+         6    +254
+         5    BUFCTB
+         11   PRBUF
+         8    PRBUF+1
+         4    +9
+         8    ERROR
+INSERT   +0
+         5    SRWS
+         4    EINSTR
+         9    OUT09+6
+         7    OUT09
+         4    SRWS
+PO15     +0
+         7    PACK-3
+         10   CHARCT
+         8    OUT09+3
+OUT09    4    SRWS
+PO16     +0
+         7    ;+11
+         10   CHARCT
+         4    -1
+         5    EINSTR
+         4    SRWS
+PO17     +0
+         7    ;+5
+         10   CHARCT
+         4    SRWS
+         0    INSERT
+         /8   1
+         10   EINSTR
+         8    ;-4
+STORE=3813
+LOWCT    +4367
+E        +74
+I        +82
+W        +110
+POWTEN   -100
+         -10
+COLCST   &037600
+         &017000
+PLANTO   8    CVT920+7
+         &017132
+         &017140
+         /4   TABLE
+         8    OUT11
+         8    CRTEST
+         8    CONVRT+8
+         8    OUT10
+         1    -95
+         2    +93
+         8    CONVRT+13
+         2    +92
+         6    +127
+         2    +110
+         2    +63
+         8    EXLAY1+7
+         8    NEXT05-12
+         4    PLANTO+7
+         4    5
+         8    PO02+2
+         0    PO11
+         0    PO03
+         0    PO02
+         8    NEXT01-6
+         8    FAULT3
+         8    OUT10-3
+         8    EXBIN+5  (Not used in this issue)
+         1    -85
+         8    NEXT01-9
+         8    FAULT2
+INSTNO   &045223
+         &045214
+         &007145
+         &007151
+         &006605
+         &006611
+         &011145
+         &011151
+         &010605
+         &010611
+         &057223
+         &022702
+         &047005
+         &040714
+         &040424
+         &041160
+         &040114
+         &040105
+         &040162
+         &041324
+         &010714
+         &010424
+         &011160
+         &010114
+         &010105
+         &010162
+         &011324
+         &056051
+         &006760
+         &041143
+         &022723
+         &044260
+         &012704
+         &006056
+CODENO   &063023
+         &023157
+         &063120
+TABLE    +0
+         &100200
+         &005200
+         &045600
+         &004514
+         &100200
+         &027600
+         &100200
+         &014200
+         &054404
+         &056002
+         &026200
+         &015200
+         &053200
+         &055200
+         &057600
+         &010020
+         &050600
+         &051136
+         &011423
+         &052200
+         &012425
+         &013026
+         &053600
+         &054010
+         &014431
+         &100014
+         &100035
+         &056533
+         &015436
+         &016437
+         +0
+         &055460
+         &020441
+         &021042
+         &061463
+         &022044
+         &062465
+         &063066
+         &023447
+         &024050
+         &064471
+         &065072
+         &025453
+         &066013
+         &026455
+         &027056
+         &067406
+         &020076
+         &060561
+         &061162
+         &021543
+         &062164
+         &022545
+         &023146
+         &063567
+         &064170
+         &024551
+         &025152
+         &100200
+         &100154
+         &100200
+         &030200
+         &100157
+         &050200
+         &100200
+         &100200
+         &100200
+         &100200
+         &100200
+         &100200
+         &100200
+         &100200
+         &100200
+         &100200
+         &100003
+         &002200
+         &100200
+         &100200
+         &100200
+         &100100
+         &100021
+         &100022
+         &100200
+         &100024
+         &100137
+         &100015
+         &100027
+         &065430
+         &066411
+         &017416
+         &016040
+         &057012
+         &067034
+         &011134
+         &052417
+         &017576
+         &070461
+         &071062
+         &031443
+         &072064
+         &032445
+         &033046
+         &073467
+         &074070
+         &034451
+         &035052
+         &075530
+         &036054
+         &076531
+         &077135
+         &037457
+         &070160
+         &030541
+         &031142
+         &071563
+         &032144
+         &072565
+         &073166
+         &033547
+         &034150
+         &074571
+         &075172
+         &100153
+         &100200
+         &100155
+         &060156
+         &077577
+CHAR     &000713
+         &000115
+         &000107
+         +0
+         &020120
+         &001011
+         &000412
+WS       +0
+SRWS     +0
+WSG      +0
+CBUF     >+64
+MBUF     >+256
+CHLIST   >+1492
+INLIST   >+119
+RCHAR    +0
+LCHAR    +0
+LETTER   +0
+LF       +0
+SC       +0
+TELE     +0
+MIN      +0
+MAX      +0
+CHLTCT   +0
+REPNOM   +0
+EINSTR   +0
+MBLFFG   +0
+REPMRK   +0
+CHARCT   +0
+NOSTRF   +0
+SUMCHK   +0
+BLANK    +0
+STRFND   >+11
+BLANK2   +0
+MIDCT    +0
+SCOST    +0
+BUFCTA   +0
+BUFCTB   +0
+BUFCTC   +0
+BUFCTD   +0
+BUFCTE   +0
+BUFCTF   +0
+LOLFFG   +0
+REPLST   >+10
+INSTR    +0
+REPFLG   +0
+REPINM   +0
+STOPM    +0
+BLANKM   +0
+ERASEM   +0
+UPPCT    +0
+CH       +0
+<! Halt !>

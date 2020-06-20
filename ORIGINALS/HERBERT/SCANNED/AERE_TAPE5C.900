@@ -1,0 +1,59 @@
+﻿
++0
+THQART +.75
++0
+-7
++.75
++0
+-7
++.75
++0
+-7
++.75
++0
+-7
+
+HTYP +0
++0
+HC +0
++0
+HT +0
++0
+HL +0
++0
+FACTOR +0
++0
+ADSHC   0   SHC-2
+ADSHL   0   SHL-2
+WKA    +0
+WKB    +0
+WKC    +0
+WKL    +0
+WKT    +0
+NAS9
+
+         /4   SD
+         11   QOUT1
+         8    QOUT1+1
+         +0
+         0    LOCAL1
+         /4   MAXMUM
+         11   QOUT1
+         8    QOUT1+1
+         +0
+
+         0    LOCAL1
+         4    +0
+         /5   FIVATE
+         /5   RATIO
+         /4   BASE
+         7    ACCUM-4
+         /4   MAXMUM
+5 YFIX
+
+4 LOCAL1
+1 LOCAL1
+1 LOCAL1
+5 THQART-1
+4 YPOS
+

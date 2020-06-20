@@ -1,0 +1,8 @@
+﻿ALGOL7;
+"BEGIN" "REAL" X,Y;
+"FOR" X:=0 "STEP" 0.1 "UNTIL" 2.0 "DO"
+"BEGIN" Y :=EXP(X)- LN(4*X+1) + SIN(COS(2*X));
+"PRINT" X,SAMELINE,Y;
+"END";
+"END";
+

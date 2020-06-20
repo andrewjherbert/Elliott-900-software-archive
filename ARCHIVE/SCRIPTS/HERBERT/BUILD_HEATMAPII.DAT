@@ -1,0 +1,59 @@
+﻿c heat map in 903 FORTRAN
+
+on 903 16k
+
+at ptr file ../../MASTERS/903FORTRAN/903FORT16KLP(ISS4).BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/HERBERT/HEATMAPII.903
+
+C translate - compile
+
+at ptp file HEATMAPII.RLB
+j 13
+st 15118
+
+C indicate complete
+
+j 10
+de ptp
+st 14430
+
+c concatenate data to rlb
+
+at ptr file ../../MASTERS/ACDUTILITIES/BINCOP.BIN
+j 8181
+st 8175
+nonstop on
+
+at ptr file HEATMAPII.RLB
+j 11
+j 9
+c should run off tape
+at ptr file ../../MASTERS/HERBERT/HEATMAPII_DATA.900
+r
+
+at ptp file HEATMAPII_RLB_DATA.BIN
+at ptr file HEATMAPII.RLB
+j 10
+at ptr file HEATMAPII_DATA.900
+r
+
+de ptp
+
+at ptr file ../../MASTERS/903FORTRAN/903FORT16KLP(ISS4).BIN
+j 8181
+st 8171
+
+select out tty
+nonprinting off
+
+C load RLB
+at ptr file HEATMAPII_RLB_DATA.BIN
+j 14
+st 16006
+j 11
+st 10111
+
+sh t

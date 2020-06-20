@@ -1,0 +1,1651 @@
+﻿(( INTCODE ASSEMBLER & INTERPRETER)
+
+(A.J. HERBERT 22/04/2018)
+
+(Based on INTCODE assembler and interpreter in "BCPL the language)
+(and its compiler", by M. Richards andC Whitby-Strevens.         )
+
+(Notes                                                           )
+
+(On input halt code will be interpreted as ENDSTREAMCH           )
+(LABMAX must be index of last element of LABV                    )
+(true = 0, false = -1)
+(<< and >> do not check for negative values, or values > 4095    )
+
+(TO DO                                                           )
+(  None                                                          )
+
+
+
+(entry point)
+^32
+[START]
+	11	START	
+	8	START+1
+	8	;+0
+
+
+(manifests)
+[ FSHIFL FSHIFR DBIT PBIT GBIT IBIT ABITS WSIZE BSIZE LABMAX ]
+FSHIFL=15
+FSHIFR=8177
+DBIT	&040000
+PBIT	&020000
+GBIT	&010000
+IBIT	&004000
+ABITS	&003777
+
+WSIZE	+18	(wordsize for strings)
+BSIZE	+9	(bytesize for strings)
+LABMAX	+500
+
+
+(globals)
+[ G P CH CCOUNT LABV CP A B C D W ]
+G	>1
+P	>1
+CH	>1
+CCOUNT 	>1	(cyclecount)
+LABV	>501
+CP	>1
+A	>1
+B	>1
+C	>1
+D	>1
+W	>1
+
+
+[ ASSEMB LABV LABMAX CP SETLAB LABREF STW STC 
+  ABITS IBIT DBIT GBIT PBIT FSHIFL W G P 
+  RCH CH RDN WRCH WRN WRSTR WRNL ]
+F	>1
+I	>1
+A	>1
+
+ASSEMB	>1	(link)
+
+	(let assemble[] be)
+	($[1 let v = vec labmax)
+	(    let f = 0)
+	4	+0
+	5	F
+	(    labv := v)
+
+CLEAR	(clear: for i = 0 to labmax labv\i := 0)
+	4	+0
+	5	I
+FOR1	0	I
+	4	+0
+	/5	LABV
+	10	I	(end of loop)
+	4	I
+	2	LABMAX
+	7	;+2
+	8	FOR1
+	(cp := 0)
+	5	CP
+
+NEXT	(next: rch[])
+	11	RCH
+	8	RCH+1
+
+SW	(sw: switchon ch into)
+	($s)
+CASE1	(case '0':case '1':case '2':case '3':case '4':)
+	(case '5':case '6':case '7':case '8':case '9':)
+	4	CH
+	1	-48	(48='0')
+	9	CASE2
+	1	-10	(57='9')
+	9	;+2
+	8	CASE2
+	(setlab[rdn[]])
+	11	RDN
+	8	RDN+1
+	11	SETLAB
+	8	SETLAB+1
+	(cp := 0)
+	(goto sw)
+	4	+0
+	5	CP
+	8	SW
+
+CASE2	(case '$':case '*s':case'*n': goto next)
+	4	CH	
+	1	-32	(32='*s')
+	7	NEXT
+	1	+22	(10='*n')
+	7	NEXT
+	1	-26	(36='$')
+	7	NEXT
+	
+	(case 'l': f := 0; endcase)
+	1	-40	(76='L')
+	7	STORF
+CASE3	(case 's': f := 1; endcase)
+     	1	-7	(83='S')
+	7	;+2
+	8	CASE4
+	4	+1
+	8	STORF
+CASE4	(case 'a': f := 2; endcase)
+	1	+18	(65='A')
+	7	;+2
+	8	CASE5
+	4	+2
+	8	STORF
+CASE5	(case 'j': f := 3; endcase)
+	1	-9	(74='J')
+	7	;+2
+	8	CASE6
+	4	+3
+	8	STORF
+CASE6	(case 't': f := 4; endcase)
+	1	-10	(84='T')
+	7	;+2
+	8	CASE7
+	4	+4
+	8	STORF
+CASE7	(case 'f': f := 5; endcase)
+	1	+14	(70='F')
+	7	;+2
+	8	CASE8
+	4	+5
+	8	STORF
+CASE8	(case 'k': f := 6; endcase)
+	1	-5	(75='K')
+	7	;+2
+	8	CASE9
+	4	+6
+	8	STORF
+CASE9	(case 'x': f := 7; endcase)
+	1	-13	(88='X')
+	7	;+2
+	8	CASE10
+	4	+7
+STORF	5	F
+	8	ENDCAS
+
+CASE10	(case 'c': rch[]; stc[rdn[]]; goto sw)
+	1	+21	(67='C')
+	7	;+2
+	8	CASE11
+	11	RCH
+	8	RCH+1
+	11	RDN
+	8	RDN+1
+	11	STC
+	8	STC+1
+	8	SW
+
+CASE11	(case 'd': rch[])
+	1	-1	(68='D')
+	7	;+2
+	8	CASE12
+	11	RCH
+	8	RCH+1
+	(test ch='l')
+	(then $[ rch[]; stw[0]; labref[rdn[],p-1] $])
+	4	CH
+	2	+76	(76='L')
+	7	;+2
+	8	ELSE1	(else)
+THEN1	11	RCH
+	8	RCH+1
+	4	+0
+	11	STW
+	8	STW+1
+	11	RDN
+	8	RDN+1
+	5	P1
+	4	P
+	1	-1
+	5	P1+1
+	11	LABREF
+	8	LABREF+1
+P1	>2
+	8	SW	(goto sw after test...then..else)
+ELSE1	(else stw[rdn[]])
+	11	RDN
+	8	RDN+1
+	11	STW
+	8	STW+1
+	(goto sw)
+	8	SW
+
+CASE12	(case 'g': rch[])
+	1	-3	(71='G')
+	7	;+2
+	8	CASE13
+	11	RCH
+	8	RCH+1
+	(a := rdn[]+g)
+	11	RDN
+	8	RDN+1
+	1	G
+	5	A
+	(test ch='l' then rch[])
+	4	CH
+	2	+76	(76="L")
+	7	;+2
+	8	ELSE2	(else)
+THEN2	11	RCH
+	8	RCH+1
+	8	FI2
+ELSE2	(else writef["*nbad code at p = %n*n, p])
+	11	WRSTR
+	8	WRSTR+1
+	\^Ba
+	\d c
+	\ode
+	\ at
+	\ p 
+	\= \
+	4	P
+	11	WRN
+	8	WRN+1
+	+0
+	11	WRNL
+	8	WRNL+1
+FI2	(\a := 0)
+	0	A
+	4	+0
+	/5	0
+	(labref[rdn[], a])
+	11	RDN
+	8	RDN+1
+	5	P2
+	4	A
+	5	P2+1
+	11	LABREF
+	8	LABREF+1
+P2	>2
+	(goto sw)
+	8	SW
+
+CASE13	(case 'z': for i = 0 to labmax do)
+	1	-19	(90='Z')
+	7	;+2
+	8	CASE14
+	4	+0
+	5	I
+	(if labv\i>0 do writef["l%n unset*n, i])
+FOR2	0	I
+	/4	LABV
+	9	OD2
+	7	OD2
+THEN3	8	CLEAR	
+OD2	10	I	(end of loop)
+	4	I
+	2	LABMAX
+	7	CLEAR
+	8	FOR2
+
+CASE14 	(default: if ch=endstreamch return)
+	4	CH
+	1	-20	(halt code)
+	7	;+2
+	8	L2
+	0	ASSEMB
+	/8	1
+
+L2	1	-77	(97='a')
+	9	BADCH
+	1	-26	(122='z')
+	9	;+2
+	8	BADCH
+	1	+52	(convert a-z to A-Z)
+	8	CASE2	(try again with upper case)			
+
+	(writef["*nbad ch %c at p = %n*n", ch, p])
+BADCH	11	WRSTR
+	8	WRSTR+1
+	\^Ba
+	\d c
+	\h \
+	4	CH
+	11	WRCH
+	8	WRCH+1
+	11	WRSTR
+	8	WRSTR+1
+	\ at
+	\ p 
+	\= \
+	4	P
+	11	WRN
+	8	WRN+1
+	11	WRNL
+	8	WRNL+1
+	(goto next)
+	8	NEXT
+ENDCAS	($]s)
+
+	(w := f<<fshft)
+	2	+0	(clear Q)
+	4	F
+	14	FSHIFL
+	5	W	
+	(rch[])
+	11	RCH
+	8	RCH+1
+	(if ch='i' do $[ w := w+ibit; rch[] $])
+IF4	4	CH
+	1	-73	(73='I')
+	7	;+2
+	8	IF5
+THEN4	4	W
+	1	IBIT
+	5	W
+	11	RCH
+	8	RCH+1
+
+	(if ch='p' do $[ w := w+pbit; rch[] $])
+IF5	4	CH
+	1	-80	(80='P')
+	7	;+2
+	8	IF6
+	4	W
+	1	PBIT	
+	5	W
+	11	RCH
+	8	RCH+1
+
+	(if ch='g' do $[ w := w+gbit; rch[] $])
+IF6	4	CH
+	1	-71	(71='G')
+	7	;+2
+	8	IF7
+THEN5	4	W
+	1	GBIT
+	5	W
+	11	RCH
+	8	RCH+1
+
+IF7	(test ch = 'l')
+	4	CH
+	1	-76	(76='L')
+	7	;+2
+	8	ELSE7
+	(then $[ rch[])
+	11	RCH
+	8	RCH+1
+	(stw[w+dbit])
+	4	W
+	1	DBIT
+	11	STW
+	8	STW+1
+	(stw[0])
+	4	+0
+	11	STW
+	8	STW+1
+	(labref[rdn[],p-1] $])
+	11	RDN
+	8	RDN+1
+	5	P3
+	4	P
+	1	-1
+	5	P3+1
+	11	LABREF
+	8	LABREF+1
+P3	>2
+	8	SW
+ELSE7	(else $[ let a = rdn[])
+	11	RDN
+	8	RDN+1
+	5	A
+IF8	(test [a&abits]=a)
+	6	ABITS
+	2	A
+	7	;+2
+	8	ELSE8
+	(then stw[w+a])
+	4	W
+	1	A
+	11	STW
+	8	STW+1
+	8	SW
+ELSE8	(else $[ stw[w+dbit];stw[a]; $] $])
+	4	W
+	1	DBIT
+	11	STW
+	8	STW+1
+	4	A
+	11	STW
+	8	STW+1
+	(goto sw $]1)
+	8	SW
+
+
+
+[ STW P CP ]
+
+STW	>1		(link)
+
+	(and stw[w] be $[ \p := w)
+	0	P
+	/5	0
+	(p, cp := p+1, 0 $])
+	10	P
+	4	+0
+	5	CP
+	0	STW
+	/8	1
+
+
+[ STC CP STW WSIZE P BSIZE ]
+
+C	>1
+ADR	>1
+STC	>1		(link)
+
+	(and stc[c] be $[ if cp=0 do $[ stw[0]; cp := wordsize $])
+	5	C
+	4	CP
+	7	;+2
+	8	L1
+	11	STW
+	8	STW+1
+	4	WSIZE
+	5	CP
+L1	(cp := cp - bytesize)
+	4	BSIZE
+	2	CP
+	5	CP
+	(\[p-1] := \[p-1] + [c<<cp] $])
+	4	P
+	1	-1
+	5	ADR
+	0	CP	
+	4	C
+	/14	0
+	0	ADR
+	/1	0
+	/5	0
+	0	STC
+	/8	1      
+	
+
+[ SETLAB INRANG LABV QCHOP WRCH WRN WRSTR WRNL P ]
+
+N	>1
+NN	>1
+K	>1
+
+SETLAB	>1		(link)
+	(and setlab[n] be if inrange[n] then )
+	5	N
+	11	INRANG
+	8	INRANG+1
+	7	;+3
+	0	SETLAB
+	/8	1
+	($[ let k = labv\n)
+	0	N
+	/4	LABV
+	5	K
+	(if k<0 then)
+	9	;+2
+	8	WHILE
+	(writef("l%n already set to %n at p = %n*n",n,-k,p])
+	4	+76	('L')
+	11	WRCH
+	8	WRCH+1
+	4	N
+	11	WRN
+	8	WRN+1
+	11  	WRSTR
+	8	WRSTR+1
+	\ al
+	\rea
+	\dy
+	\set
+	\ to
+	\ \
+	4	K
+	2	+0
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+	8	WRSTR+1
+	\ at
+	\ P 
+	\= \
+	4	P
+	11	WRN
+	8	WRN+1
+	11	WRNL
+	8	WRNL+1
+WHILE 	(while k>0 do $[ let n = \k)
+	4	K
+	7	L1
+	9	L1
+	0	K
+	/4	0
+	5	NN
+	(\k := p)
+	4	P
+	/5	0
+	(k := n $])
+	4	NN
+	5	K
+	8	WHILE+1
+L1	(labv\n := -p $])
+	4	P
+	2	+0
+	0	N
+	/5	LABV
+	0	SETLAB
+	/8	1	
+	
+
+[ LABREF INRANG LABV ]
+
+N	>1
+A	>1
+K	>1
+
+LABREF	>1		(link)
+	(and labref[n, a] be if inrange[n] then)
+	0	LABREF
+	/4	2
+	5	A
+	/4	1
+	5	N
+	11	INRANG
+	8	INRANG+1
+	7	;+2
+	8	EXIT
+	($[ let k = labv\n)
+	0	N
+	/4	LABV
+	5	K
+	(test k<0 then k := -k or labv\n := a)
+	9	;+2
+	8	OR
+	2	+0
+	5	K
+	8	L1
+OR	4	A
+	/5	LABV
+L1	(\a := \a + k $])
+	0	A
+	/4	0
+	1	K
+	/5	0
+EXIT	0	LABREF
+	/8	3	(skip over parameters on exit)
+	
+
+[ INRANG LABMAX WRSTR WRN WRNL P ]
+
+N	>1
+
+INRANG	>1		(link)
+	(and inrange[n] = valof)
+	5	N
+	(if 0<=n<=labmax resultis true)
+	9	L1
+	4	LABMAX
+	2	N
+	9	;+3
+	7	;+2
+	8	L1
+	4	+0
+RETURN	0	INRANG
+	/8	1
+
+L1	11	WRSTR
+	8	WRSTR+1
+	\Lab
+	\el
+	\l\
+	4	N
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+	8	WRSTR+1
+	\ ou
+	\t o
+	\f r
+	\ang
+	\e a
+	\t P
+	\ =
+	\\
+	4	P
+	11	WRN
+	8	WRN+1
+	11	WRNL
+	8	WRNL+1
+	4	+0						
+	8	RETURN
+
+[ INTERP CCOUNT A B W C D P G 
+  DBIT ABITS PBIT GBIT IBIT FSHIFR 
+  WRCH WRNL WRN WR8 WRSTR WRBSTR QDOUT]
+
+(interpreter)
+
+WS	>1
+OPTAB	+76	(L)	(INTCODE instruction mnenmonics)
+	+83	(S)
+	+65	(A)
+	+74	(J)
+	+84	(T)
+	+70	(F)
+	+75	(K)
+	+88	(X)
+
+INTERP	>1	(link)
+	
+	(cyclecount := cyclecount+1)
+	10	CCOUNT
+	(w := \c)
+	0	C
+	/4	0
+	5	W
+	(c := c + 1)
+	10	C
+
+(DEBUG  11	WRSTR
+	8	WRSTR+1
+	\C=\
+	4	C
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+        8	WRSTR+1
+        \ W=
+	\\
+	4	W
+	11	WR8
+	8	WR8+1
+
+	4	+32
+	11	WRCH
+	8	WRCH+1
+	4	W
+	14	FSHIFR
+	6	&7
+	5	WS
+	0	WS
+	/4	OPTAB
+	11	WRCH
+	8	WRCH+1	DEBUG)
+	
+	(test [w&dbit]=0 then d := w&abits)
+	4	W
+	6	DBIT
+	7	THEN1
+	8	ELSE1
+THEN1	4	W
+	6	ABITS
+	5	D
+	8	FI1
+ELSE1	(else $[ d := \c; c := c+1 $])
+	0	C
+	/4	0
+	5	D
+	10	C
+(DEBUG	4	+68	
+	11	WRCH
+	8	WRCH+1	DEBUG)	
+
+FI1	(if [w & pbit] ne 0 then d := d + p)
+	4	W
+	6	PBIT
+	7	FI2
+	4	D
+	1	P
+	5	D
+(DEBUG  4	+80	
+	11	WRCH
+	8	WRCH+1	DEBUG)
+
+FI2	(if [w & gbit] ne 0 then d := d + g)
+	4	W
+	6	GBIT
+	7	FI3
+	4	D
+	1	G
+	5	D
+(DEBUG	4	+71	
+	11	WRCH
+	8	WRCH+1	DEBUG)
+
+FI3	(if [w & ibit] ne 0 then d := \d)
+	4	W
+	6	IBIT
+	7	FI4
+	0	D
+	/4	0
+	5	D
+(DEBUG	4	+73	
+	11	WRCH
+	8	WRCH+1	DEBUG)
+
+FI4	
+(DEBUG	4	W
+	6	ABITS
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+	8	WRSTR+1
+	\ A=
+        \\
+	4	A
+	11	WRN
+	8	WRN+1
+        11	WRSTR
+	8	WRSTR+1
+	\ B=
+	\\
+	4	B
+	11	WRN
+	8	WRN+1
+        11 	WRSTR
+	8	WRSTR+1
+	\ D=
+        \\
+	4	D
+	11	WRN
+	8	WRN+1
+        11	WRSTR
+	8	WRSTR+1
+	\ P=
+        \\
+	4	P
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+	8	WRSTR+1
+	\ G=
+	\\
+	4	G
+	11	WRN
+	8	WRN+1
+	11	WRNL
+	8	WRNL+1	DEBUG)
+	
+	(switchon w>>>FSHIFL into)
+	4	W
+	14	FSHIFR
+	6	&7
+	1	J1
+	5	;+1
+	>1		(patched instruction 8 JTAB1+n)
+JTAB1	8	CASE0
+	8	CASE1
+	8	CASE2
+	8	CASE3
+	8	CASE4
+	8	CASE5
+	8	CASE6
+	8	CASE7
+J1	8	JTAB1
+
+ERROR 	($[error:0)
+	(  default: selectoutput[sysprint])
+	4	+3
+	5	QDOUT
+	(  writef["*nINTCODE error at C = %n*n", c-1])
+	11	WRSTR
+	8	WRSTR+1
+	\^IN
+	\TCO
+	\DE
+	\ERR
+	\OR
+	\AT
+	\C =
+	\ \
+	4	C
+	11	WRN
+	8	WRN+1
+	11	WRNL
+	8	WRNL+1
+	4	-1
+EXIT	(resultis -1)
+	8 FINISH
+
+CASE0	(b := a; a := d; loop)
+	4	A
+	5	B
+	4	D
+	5	A
+	8	INTERP+1
+
+CASE1	(\d := a; loop)
+	4	A
+	0	D
+	/5	0
+	8	INTERP+1
+
+CASE2 	(a := a + d; loop)
+	4	A
+	1	D
+	5	A
+	8	INTERP+1
+
+CASE3 	(c := d; loop)
+	4	D
+	5	C
+	8	INTERP+1
+
+CASE4	(if a then c := d; loop)
+	4	A
+	7	;+2
+	8	INTERP+1
+	4	D
+	5	C
+	8	INTERP+1
+
+CASE5	(unless a do c := d; loop)
+	4	A
+	7	INTERP+1
+	4	D
+	5	C
+	8	INTERP+1
+
+CASE6	(d := p + d)
+	4	P
+	1	D
+	5	D
+	(d\0, d\1 := p, c)
+	(p, c := d, a)
+	0	D
+	4	P
+	/5	0
+	4	C
+	/5	1
+	(p, c := d, a)
+	4	D
+	5	P
+	4	A
+	5	C
+	8	INTERP+1
+
+CASE7	(switchon d into)
+	($[ default: goto error)
+	0	D
+	/8	JTAB2	(n.b. will go wrong if D>24)
+
+JTAB2	8	ERROR
+	8	CASE01
+	8	CASE02
+	8	CASE03
+	8	CASE04
+	8	CASE05
+	8	CASE06
+	8	CASE07
+	8	CASE08
+	8	CASE09
+	8	CASE10
+	8	CASE11
+	8	CASE12
+	8	CASE13
+	8	CASE14
+	8	CASE15
+	8	CASE16
+	8	CASE17
+	8	CASE18
+	8	CASE19
+	8	CASE20
+	8	CASE21
+	8	CASE22
+	8	CASE23
+	8	CASE24
+	8	NOTIMP	(safety net)
+	8	NOTIMP
+	8	NOTIMP
+	8	NOTIMP
+	8	NOTIMP
+	8	NOTIMP
+	8	NOTIMP
+	 		
+CASE01	(a := \a; loop)
+	0	A
+	/4	0
+	5	A
+	8	INTERP+1
+
+CASE02	(a := -a; loop)
+	4	A
+	2	+0
+	5	A
+	8	INTERP+1
+
+CASE03	(a := NOT a)
+	4	A
+	2	-1
+	5	A
+	8	INTERP+1
+
+CASE04	(c := p\1; p := p\0; loop // RETURN)
+	0	P
+	/4	1
+	5	C
+	/4	0
+	5	P
+	8	INTERP+1
+
+CASE05	(a := b * a; loop)
+	4	B
+	12	A
+	3	A
+	8	INTERP+1
+
+CASE06	(a := b / a)
+	4	B
+	0	+0
+	14	8176
+	13	A
+	14	8191
+	5	A
+	8	INTERP+1
+
+
+CASE07	(a := b rem a; loop)
+	4	B
+	0	+0
+	14	8176
+	13	A
+	14	8191	([b/a])
+	12	A
+	14	17  	([b/a]*a)
+	2	B	(b-[b/a]*a)
+	5	A
+	8	INTERP+1
+
+CASE08	(a := b + a; loop)
+	4	B
+	1	A
+	5	A
+	8	INTERP+1	
+
+CASE09	(a := b - a; loop)
+	4	A
+	2	B
+	5	A
+	8	INTERP+1
+
+CASE10	(a := a = b; loop)
+	4	A
+	2	B
+	7 	;+2
+FALSE	4	-1
+	5	A
+	8	INTERP+1
+
+CASE11	(a := b ne a; loop)
+	4	A
+	2	B
+	7	FALSE
+TRUE	4	+0
+	5	A
+	8	INTERP+1
+
+CASE12 (a := b < a; loop)
+	4	A
+	2	B
+	9	TRUE
+	8	FALSE
+
+CASE13 (a := b >= a; loop)
+	4	A
+	2	B
+	9	FALSE
+	7	FALSE
+	8	TRUE
+CASE14 	(a := b > a; loop)
+	4	B
+	2	A
+	9	FALSE
+	8	TRUE
+
+CASE15	(a := b <= a; loop)
+	4	A
+	2	B
+	9	TRUE
+	7	TRUE
+	8	FALSE
+
+CASE16	(a := b << a; loop -- assumes 0<=a<=48)
+	0	A
+	2	+0	(clear Q)
+	4	B
+	/14	0
+	5	A
+	8	INTERP+1
+
+CASE17 (a := b >> a; loop -- assumes 0 <= a<= 48)
+	4	A
+	7	INTERP+1
+	2	+8192
+	1	=14 0
+	5	;+2
+	4	B
+	>1			(patched instruction)
+	6	&277777
+	5	A
+	8	INTERP+1
+
+CASE18	(a := b /\ a; loop)
+	4	B
+	6	A
+	5	A
+	8	INTERP+1
+
+CASE19	(a := b \/ a; loop)
+	4	A
+	6	B               (common bits)
+	2	A               (bits in A not in B)
+        1       B
+	5	A
+	8	INTERP+1
+
+CASE20	(a := b neqv a; loop)
+        4       B
+        6       A               (common bits)
+        2       +0              (also clears Q)
+        14      1               (common bits as negative carry)
+        1       B               (A \/ B - A /\ B)
+        1       A
+	8	INTERP+1
+
+CASE21	(a := b eqv a; loop)
+        4       B
+        6       A
+        2       +0              (also clears Q)
+        14      1
+        1       B
+        1       A
+        2       -1
+	8	INTERP+1
+
+CASE22 (result is 0 // finish)
+	4	+0
+FINISH	0	INTERP
+	/8	1
+
+CASE23	(b, d := c\0, c\1 // switchon)
+	0	C
+	/4	1
+	5	D
+	/4	0
+	5	B
+	(until b=0 do)
+	7	OD1
+	($[ b, c := b-1, c+2)
+UNTIL1	1	-1
+	5	B
+	10	C
+	10	C
+        (if a=c\0 do)
+	0	C
+	/4	0
+	2	A
+	7	;+2
+	8	FI5
+	($[ d := c\1; break $] $])
+	0	C
+	/4	0
+	5	D
+	8	OD1
+FI5	4	B
+	7	OD1
+	8	UNTIL1
+OD1	(c := d; loop)
+	4	D
+	5	C
+	8	INTERP+1
+
+CASE24	(writef)
+        11	WRSTR
+	8	WRSTR+1
+	\WRI
+	\TEF
+	\("\
+	0	p
+	/4	2
+	11	WRBSTR
+	8	WRBSTR+1
+	11	WRSTR
+	8	WRSTR+1
+	\", 
+	\\
+	0	P
+	/4	3
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+	8	WRSTR+1
+        \, \
+	0	P
+	/4	4
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+	8	WRSTR+1
+        \)^\
+	8	INTERP+1
+
+NOTIMP 	11	WRSTR
+	8	WRSTR+1
+	\^NO
+	\T I
+	\MPL
+	\EME
+	\NTE
+	\D^\
+
+
+[ START ASSEMB INTERP 
+  A C P PVP GV GVP CCOUNT 
+  WRN WRNL WRSTR G QDIN QDOUT ]
+
+START	>1		(link)
+
+	(let start[parm] be)
+	($[1)
+
+	(let progvec = vec 20000)
+	(let globvec = vec 400)
+
+	(g, p := globvec, progvec)
+	4	GVP
+	5	G
+	4	PVP
+	5	P
+
+	(sysprint := findoutput["sysprint"])
+	(selectoutput[sysprint])
+	4	+3
+	5	QDOUT
+
+	(writes["INTCODE system entered*n"])
+	11	WRSTR
+	8	WRSTR+1
+	\^^^
+	\INT
+	\COD
+	\E s
+	\yst
+	\em
+	\ent
+	\ere
+	\d^^
+	\\
+
+	(source := findinput[intin])
+	(selectinput[source])
+	4	+1
+	5	QDIN
+	(assemble[])
+	11	ASSEMB
+	8	ASSEMB+1
+	(source := findinput["sysin"])
+	(unless source=0 do selectinput[source])
+
+	(writef["Program size = %n*n:, p-progvec])
+	11	WRSTR
+	8	WRSTR+1
+	\Pro
+	\gra
+	\m s
+	\ize
+	\ = 
+	\\
+	4	P
+	2	PVP
+	2	+0
+	11	WRN
+	8	WRN+1
+	11	WRNL
+	8	WRNL+1
+	11	WRNL
+	8	WRNL+1
+
+	(c := table lig1, k2, x22)
+	4	INIT
+	5	C
+	(cyclecount := 0)
+	4	+0
+	5	CCOUNT
+	(a := interp[])
+	11	INTERP
+	8	INTERP+1
+	5	A
+	(selectoutput[sysprint])
+	4	+3
+	5	QDOUT
+	(writef["*nExecution cycles = %n, code = %n*n",)
+	(cyclecount, a)
+	11	WRSTR
+	8	WRSTR+1
+	\^Ex
+	\ecu
+	\tio
+	\n c
+	\ycl
+	\es
+	\= \
+	4	CCOUNT
+	11	WRN
+	8	WRN+1
+	11	WRSTR
+	8	WRSTR+1
+	\, C
+	\ode
+	\ = 
+	\\
+	4	A
+	11	WRN
+	8	WRN+1
+	11	WRNL
+	8	WRNL+1
+
+FINISH	8	;+0
+
+INIT	0 LIG1
+LIG1	&014001		(call global 1)
+K2	&600002
+X22	&700026		(finish)	
+
+
+[ QCHOP QCHIN QDOUT QDIN WRSTR WR8 WRNL ]
+QDIN 	+1		( input  device 1 = paper tape, 3 = teleprinter )
+QDOUT 	+1		( output device 1 = paper tape, 3 = teleprinter )
+PW 	>1
+PW1 	>1
+CH 	>1
+
+(s/r to check parity)
+PARITY 	+0		( link )
+ 	0 	+0
+ 	3 	PW
+P1	7 	P2
+ 	10 	PW
+ 	5 	PW1
+ 	1 	-1
+ 	6 	PW1
+ 	8 	P1
+P2	4 	PW
+ 	0 	PARITY 	( PARITY BIT IS L.S. ACC)
+	/8 	1
+
+(s/r to output a character)
+(if top bit set, output binary, otherwise SIR internal code)
+QCHOP 	+0		(link)
+ 	6 	=/0 255
+ 	9 	SPEC  	( OUTPUT BINARY PATTERN )
+ 	1 	-1
+ 	7 	NL 	( TEST FOR NEWLINE )
+ 	1 	+33
+ 	5 	CH
+ 	11 	PARITY
+ 	8 	PARITY+1
+ 	14 	7
+ 	6 	+128
+ 	1 	CH 	( ADD CORRECT PARITY BIT )
+SPEC 	5 	CH
+ 	4 	QDOUT
+ 	1 	-3
+ 	7 	PTP 	( JUMP IF TELEPRINTER REQUIRED )
+ 	4 	CH
+ 	15 	6144 	( OUTPUT TO PUNCH )
+EXIT	0 	QCHOP
+ 	6 	&377400
+	/7 	1
+ 	14 	8184
+ 	1 	-1 	( FORM NEXT CHARACTER IN NEWLINE SEQUENCE )
+ 	8 	SPEC
+
+PTP	4 	CH
+ 	15 	6148 	(TELEPRINTER )
+	8 	EXIT
+
+NL	4 	&205615 ( SEQUENCE FOR NEWLINE )
+	8 	SPEC
+
+CHAR 	>1
+SAVE	>1
+
+(s/r to input character and check parity)
+QCHIN 	+0 		( link )
+ 	4 	QDIN
+ 	1 	-3
+ 	7 	TPIN 	( JUMP IF TELEPRINTER INPUT )
+ 	4 	+0
+ 	15 	2048
+GOT	7	QCHIN+1	( skip runout )
+	1	-141
+	7	QCHIN+1	( skip return )
+	1	-114
+	7	QCHIN+1	( skip delete )
+	1 	+255	( restore input )
+	5 	CHAR
+ 	11 	PARITY
+ 	8 	PARITY+1
+ 	6 	+1
+ 	7 	EVPAR 	( CORRECT PARITY )
+
+INERR 	4	QDOUT	( report error to tty) 
+	5	SAVE
+	4	+3
+	5	QDOUT
+	11	WRSTR
+     	8	WRSTR+1
+	\PAR
+        \ITY
+	\ ER
+	\ROR
+	\ &\
+ 	4	CHAR
+	11	WR8
+	8	WR8+1
+	4	\  )
+	11	QDOUT
+	8	QDOUT+1
+	11	WRNL
+	8	WRNL+1
+	4	SAVE
+	5	QDOUT
+	4	ERRET	( set up continue at 9 )
+	5	9
+	8	;+0	( stop until user continues )
+
+ERRET	8	QCHIN+1
+	
+TPIN	15	2052 	( TELEPRINTER INPUT )
+ 	8 	GOT
+
+EVPAR	4 	CHAR
+ 	6 	+127
+	0	QCHIN
+	/8	1
+
+	
+[ WRSTR QCHOP ]
+
+(output string in parameter words following call)
+(string in SIR alphanumeric form with \ to      )
+(terminate.  Terminating \ is not output, nor   )
+(can \ appear in string as ordinary character.  )
+
+WRSTR	>1	(link)
+
+LOOP	0 	WRSTR
+	/4 	1		(next word in string)
+	14 	8180		(first char)
+	6 	+63
+	1 	-60		(60=\  \)
+	7 	EXIT
+	1 	\  \
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	WRSTR
+	/4 	1
+	14 	8186
+	6 	+63		(second char)
+	1 	-60		(60=\  \)
+	7 	EXIT
+	1 	\  \
+	11 	QCHOP
+	8 	QCHOP+1
+	0 	WRSTR
+	/4 	1
+	6 	+63		(third char)
+	1 	-60		(60=\  \)
+	7 	EXIT
+	1 	\  \
+	11 	QCHOP
+	 8 	QCHOP+1
+	10 	WRSTR
+	8 	LOOP
+EXIT	0 	WRSTR
+	/8 	2
+
+
+[ WRBSTR WR8 WRN WRCH ]
+(Output a BCPL format string -- two characters per word)
+
+STRADD	>1
+COUNT	>1
+
+WRBSTR	>1		(link)
+	5	STRADD	(save string address)
+	0	STRADD
+	/4	0
+	14	8183
+	2	+0
+	7	EXIT	(exit if count = 0)
+	5	COUNT
+L2	/4	0
+	6	+127
+	11	WRCH
+	8	WRCH+1
+	10	COUNT
+	4	COUNT
+	7	EXIT
+	10	STRADD
+	0	STRADD
+	/4	0
+	14	8183
+	11	WRCH
+	8	WRCH+1
+	10	COUNT
+	4	COUNT
+	7	EXIT
+	0	STRADD
+	8	L2
+
+EXIT	0	WRBSTR
+	/8	1
+
+
+[ WRN QCHOP WRSTR ]
+(output an integer)
+
+N	>1		(number to output)
+DIGCNT	>1		(digit count -6 to -1)
+PA	>1		(current digit)
+DIGMK	>1		(-1 if no digit output else >=0)
+WRN	>1		(link)
+
+
+	9	NEG
+ 	5	N	(number to output)
+POS	4 	-6
+ 	5 	DIGCNT
+	4	-1
+	5	DIGMK
+
+LOOP	4 	\  0	(output next digit position)	
+ 	5 	PA  	
+SUB 	0 	DIGCNT
+ 	/4 	T+6 	(divide by repeated subtraction)
+ 	2 	N
+ 	9 	RR
+ 	10 	PA	(increment digit character)
+ 	5 	N
+ 	8 	SUB	(repeat)
+
+T	+100000
+	+10000
+	+1000
+	+100
+	+10
+	+1
+
+RR	4	PA
+	2	\  0
+	7	ZERO
+OUT 	10	DIGMK	(stop suppressing leading zeros)
+	4 	PA
+ 	11 	QCHOP
+ 	8 	QCHOP+1
+NEXT 	10 	DIGCNT	(do next digit position)
+ 	4 	DIGCNT
+ 	9 	LOOP
+
+	(here when all printed)
+	4	DIGMK	(still supressing zeros?)
+	9	OUT	(yes - force output of final 0)
+EXIT	0	WRN	(no - exit)
+	/8	1
+
+ZERO	4	DIGMK	(leading zero?)
+	9	NEXT	(yes, ignore)
+	8	OUT	(no, output 0)
+
+NEG	2	+0	(deal with negative numbers)
+	9	MAXNEG	(special case -131072)
+	5	N
+	4	\  -	(print - sign)
+	11	QCHOP
+	8	QCHOP+1
+	8	POS
+
+MAXNEG	11	WRSTR
+	8	WRSTR+1
+	\-13
+	\107
+	\2\
+	8	EXIT
+
+
+(output octal)
+[ WR8 QCHOP ]
+
+N	>1
+DIGS	>1
+
+WR8	>1		(link)
+	5	N
+	4	\  &
+	11	QCHOP
+	8	QCHOP+1
+	4	-6
+	5	DIGS
+LOOP	4	N
+	14	8177	(SHR 15)
+	6	&7
+	1	\  0
+	11	QCHOP
+	8	QCHOP+1
+	4	N
+	14	3
+	5	N
+	10	DIGS
+	4	DIGS
+	9	LOOP
+	0	WR8
+	/8	1
+
+
+(output a newline)
+[ WRNL QCHOP ]
+
+WRNL	>1		(link)
+	4	+1
+	11	QCHOP
+	8	QCHOP+1
+	0	WRNL
+	/8	1
+
+
+(output a BCPL character)
+[ WRCH QCHOP ]
+
+WRCH	>1
+	1	=/0 0
+	11	QCHOP
+	8	QCHOP+1
+	0	WRCH
+	/8	1
+
+[ RCH CH QCHIN ]
+
+RCH	>1		(link)
+
+	(and rch[] be $[1 ch := rdch[])
+REPEAT	11	QCHIN
+	8	QCHIN+1
+	5	CH
+
+	(unless ch='/' return)
+	1	-15	(15=/)
+	7	;+3
+RETURN	0	RCH
+	/8	1
+	(until ch='*n' do ch := rdch[] $]1 repeat)
+UNTIL  	11	QCHIN
+	8	QCHIN+1
+	5	CH
+	1	-1
+	7	RETURN
+	8	UNTIL
+
+
+[ RDN RCH CH ]
+
+A	>1
+B	>1
+
+RDN	>1		(link)
+
+	(and rdn [] = valof)
+        ($[ let a, b = 0, false)
+	4	+0
+	5	A
+	5	B
+	(if ch='-' do $[ b := true; rch[] $])
+	4	CH
+	1	-45	(45='-')
+	7	;+2
+	8	WHILE
+	4	-1
+	5	B
+	11	RCH
+	8	RCH+1
+WHILE 	(while '0' <=ch<='9' do $[ a := 10*a+[ch-'0']; rch[] $])
+	4	CH
+	1	-48	(48='0')
+	9	IF
+	1	-10	(57='9')
+	9	;+2
+	8	IF
+	4	CH
+	1	-48	(48='0')
+	5	CH
+	4	A
+	12	+10
+	14	17
+	1	CH
+	5	A
+	11	RCH
+	8	RCH+1
+	8	WHILE
+IF	(if b do a := -a)
+	4	B
+	9	;+2
+	8	RESULT
+	4	A
+	2	+0
+	8	;+2
+RESULT	(resultis a $])
+	4	A
+	0	RDN
+	/8	1
+%
+
+(dynamic space)
+[ GVP GV PVP PV ]
+GVP	0 GV
+GV	>400		(global vector)
+PVP	0 PV
+PV	>1   		(program code)
+
+%
+<! halt !>

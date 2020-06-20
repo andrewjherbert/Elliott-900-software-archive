@@ -1,0 +1,28 @@
+﻿
+OLD
+05 REM A program for calculating Easter.
+10 REM Terry Froggatt, Fri 2nd April 2010.
+15 PRINT "Input a Year >= 1752, or 0 to Exit"
+20 INPUT Y
+25 IF Y=0 STOP
+30 C = INT(Y/100)
+35 REM Century.
+40 N = FNM(Y,19)
+45 REM Golden Number - 1.
+50 I = FNM( C - INT(C/4) - INT((C-INT((C-17)/25))/3) + 19*N + 15 ,30)
+55 REM (23-Epact) mod 30.
+60 IF I=29 OR I=28 AND N>10 LET I=I-1
+65 REM Paschal Full Moon date relative to 21st March.
+70 E = I - 3 - FNM( Y + INT(Y/4) - C + INT(C/4) + I + 2 ,7)
+75 REM In range -9 for 22nd March to +25 for 25th April.
+80 IF E>0 PRINT "Easter Sunday "E" April "Y
+85 IF E<=0 PRINT "Easter Sunday "E+31" March "Y
+90 GOTO 15
+95 DEF FNM(X,Y) = X - INT(X/Y)*Y
+100 END
+LIST
+RUN
+1954
+2010
+0
+<! Halt !>

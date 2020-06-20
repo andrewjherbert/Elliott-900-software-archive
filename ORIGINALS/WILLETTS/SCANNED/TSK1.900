@@ -1,0 +1,81 @@
+﻿
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID.TSK1.
+       AUTHOR.  TSK.
+       INSTALLATION.   WCT.
+       REMARKS.   TEST PROGRAM.
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER.   EDUCOMPUTER WITH 16K.
+       OBJECT-COMPUTER.   EDUCOMPUTER WITH 12K.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT INADDR ASSIGN TO IN1.
+           SELECT OUT-ADDR ASSIGN TO LPT.
+       DATA DIVISION.
+       FILE SECTION.
+       FD  IN-ADDR
+           LABEL RECORDS OMITTED.
+       01  TAPE-IN.
+       FD  OUT-ADDR
+           LABEL RECORDS OMITTED.
+       01  LIST-OUT.
+       WORKING-STORAGE SECTION.
+       01  WS-IN.
+           02 SURN          PIC X(20).
+           02  NAM.
+              03  HN          PIC X(1).
+              03  REM         PIC X(14).
+           02  TITL         PIC X(4).
+           02  ADDRS.
+              03  NOSTR       PIC X(25).
+              03  DIST         PIC X(25).
+              03  TOW          PIC X(25).
+              03  PC           PIC X(10).
+       01  WS-OUT.
+           02  LINE1.
+              03  O-TITL        PIC X(4).
+              03  FILLER        PIC X(1).
+              03  O-IN           PIC X(1).
+              03  FILLER          PIC X(1).
+
+    
+            03  O-SNAME        PIC X(20).
+           02  LINE2            PIC X(25).
+           02  LINE3             PIC X(25).
+           02  LINE4            PIC X(25).
+           02  LINE5          PIC X(10).
+       01  PRINT-REC          PIC X(30).
+       77  ONE                 PIC 9 VALUE 1.
+       PROCEDURE DIVISION.
+       START-PARA.
+           OPEN INPUT INADDR OUTPUT OUT-ADDR.
+       READ-PARA.
+           READ INADDR AT END GO TO FINISH.
+           MOVE TAPE-IN TO WS-IN.
+       AS<! 144 !><! 144 !><! 145 !>UUUEM-PARA.
+           MOVE SP@ACE TO WS-OUT.
+           MOVE TITL TO O-TITL
+           MOVE IN TO O-IN
+           MOVE SURN TO O-SUNAME.
+           MOVE NOSTR TO LINE2
+           MOVE DIST TO LINE3
+           MOVE TOW TO LINE4
+           MOVE PC TO LINE5.
+       WRIT-PARA.
+           WRITE PRINT-REC FROM LINE1 AFTER ONE
+           WRITE PRINT-REC FROM LINE2 AFTER ONE
+           WRITE PRINT-REC FROM LINE3 AFTER ONE
+           WRITE PRINT-REC FROM LINE4 AFTER ONE
+           WRITE PRINT REC FROM LINE5 AFTER ONE.
+           MOVE SPACES TO PRINT-REC.
+           WRITE PRINT-REC AFTER ONE
+           WRITE PRINT-REC AFTER ONE
+           WRITE PRINT-REC AFTER ONE.
+           GO TO READ-PARA.
+       FINISH.
+           CLOSE INADDR OUT-ADDR.
+           STOP RUN.
+****
+
+

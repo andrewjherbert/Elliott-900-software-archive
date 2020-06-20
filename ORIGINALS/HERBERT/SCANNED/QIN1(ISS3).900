@@ -1,0 +1,250 @@
+﻿<! Legible Header OOO   OOO  OOOOO        OOO  OOOOO O   O          O        OOOOO  OOO   OOO  O   O OOOOO       OOOOO  !>
+<! Legible Header    O O   O    O        O   O   O   OO  O        OOO          O   O   O O   O O   O O              O   !>
+<! Legible Header    O O   O   O         O   O   O   OO  O        OOO          O   OO    OO    O   O O             O    !>
+<! Legible Header OOOO O   O   OO        O   O   O   O O O          O          O    OO    OO   O   O OOOO          OO   !>
+<! Legible Header    O O   O             O   O   O   O   O          O          O               O   O O                  !>
+<! Legible Header    O O   O     O       O   O   O   O  OO          O          O      O     O  O   O O               O  !>
+<! Legible Header OOOO O   O     O       O  O    O   O  OO          O          O   O   O O   O OOOOO O               O  !>
+<! Legible Header OOO   OOO  OOOO         OO O OOOOO O   O          O        OOOOO OOOO  OOOO  OOOOO OOOOO       OOOO   !>
+
+ [QIN1 QDIN QCHIN QERROR]
+QIN1  +0
+  8  ;+2
+SCALE  +0
+  4  DEVICE
+  5  QDIN
+  4  +0
+  5  NUMBER
+  5  NOMARK
+  5  DECMARK
+  5  ERROR
+  5  SIGN
+  10  SIGN
+Q   11  QCHIN
+  8  QCHIN+1
+D  5  CHAR
+ 1 -16
+ 9 ;+3
+ 1 -10
+ 9 ASSEMB
+
+  4  CHAR
+  2  +13
+  7  MINUS
+  1  +1
+  7  POINT
+  4  NOMARK
+  7  ;+2
+  8  NE
+  10  SIGN
+  5  DECMARK
+  8  Q
+ASSEMB
+4  DECMARK
+7  RET
+4  PLACES
+ 1 -5
+ 7 PL5
+RET    0  DECMARK
+   /4  NUMBER
+  5  SOFAR
+2  +13107
+9  TOOBIG
+4  SOFAR
+14  3
+1  SOFAR
+1  SOFAR
+1  -16
+
+  1  CHAR
+  /5  NUMBER
+  9  TOOBIG
+  10  NOMARK
+  10  PLACES
+  8  Q
+TOOBIG  4  DECMARK
+  7  ;+2
+  8  SKIP
+  10  ERROR
+  4  +2
+8  ERS
+MINUS  4  NOMARK
+  7  ;+2
+  8  NE
+  5  SIGN
+Q2  11  QCHIN
+  8  QCHIN+1
+  7  Q2
+  8  D
+POINT  4  DECMARK
+  7  SETMK
+  10  ERROR
+  4  +1
+ERS  11  QERROR
+  8  QERROR+1
+  0  DATAREA
+  8  SKIP
+SETMK  5  PLACES
+  5  FRACT
+  4  +1
+  5  DECMARK
+  8  Q
+PL5
+ 4 CHAR
+ 1 -21
+ 9 SKIP
+ 10 FRACT (ROUND UP,DIGIT=>5)
+ 4 FRACT
+ 2 +100000
+ 7 ONE
+
+
+SKIP
+Q3  11  QCHIN
+  8  QCHIN+1
+ 1 -14
+ 7 Q3 (IGNORE  POINT)
+ 1 -2
+ 9 ;+3
+ 1 -10
+ 9 Q3 (IGNORE DIGITS)
+
+  4  ERROR
+  7  NE
+  8  QIN1+1
+
+NE  4  DECMARK
+  7  CHKSGN
+OK  4  PLACES
+  11  POWER
+  8  POWER+1
+  4  FRACT
+  11  QSCALE
+  8  QSCALE+1
+  5  FRACT
+
+  4  SCALE
+  9  NEGSCL
+  11  POWER
+  8  POWER+1
+ 4  FACTOR
+2  NUMBER
+9  ;+2
+8  OFLO
+ 4  FRACT
+  11  QSCALE
+  8  QSCALE+2
+  5  NUMBER
+
+CHKSGN  4  SIGN
+  7  NEG
+  4  NUMBER
+ 8 EXIT
+PLACES +0
+NUMBER +0
+FRACT +0 (MUST FOLLOW NUMBER)
+
+FACTOR +0
+
+DECMARK +0 ( QIN1+125)
+DEVICE +1 (+3 FOR TELEPRINTER)
+CHAR +0
+SIGN  +0
+NOMARK  +0
+ERROR +0
+HP  +0
+
+SOFAR +0
+
+NEG  4  NUMBER
+  2  +0
+EXIT  0  QIN1
+  /8  1
+NEGSCL  4  +4
+  11  QERROR
+  8  QERROR+1
+  0  DATAREA
+  8  EXIT
+DATAREA  0  QIN1
+  0  1
+    \QIN
+
+ONE
+ 10 NUMBER
+ 4 +0
+ 5 FRACT
+ 8 SKIP
+
+
+RESULT +0
+QSTORE +0
+QN +0
+QR +0
+
+
+QSCALE +0
+ 8 S2
+ 14 8175
+ 4 NUMBER
+ 8 S3
+S2 0 +0
+S3
+ 5 QSTORE
+ 3 QN
+ 13 FACTOR
+ 5 RESULT
+ 12 FACTOR
+ 3 QR
+ 2 QSTORE
+ 9 REDUCE
+ 7 ;+2
+ 8 INCR
+ 4 QR
+ 2 QN
+9 TBQ
+ 2 HP
+ 9 INCR
+NEAR
+ 4 RESULT
+ 8 EXACT+1
+TBQ
+ 1 HP
+ 9 REDUCE
+ 8 NEAR
+
+INCR
+ 4 +1
+ 8 ;+2
+REDUCE
+ 4 -1
+EXACT
+ 1 RESULT
+ 0 QSCALE
+/8 1
+
+POWER +0
+ 5 QR
+ 2 +5
+ 9 NEGSCL  (SCALE FACTOR>5)
+ 0 QR
+/4 TABL
+ 5 FACTOR
+ 14 8191
+ 5 HP
+
+ 0 POWER
+/8 1
+TABL +1
+  +10
+ +100
++1000
++10000
++100000
+
+OFLO  4  +3
+  11  QERROR
+  8  QERROR+1
+  0  DATAREA
+  8  QIN1+1
+(*)
+<! Halt !>

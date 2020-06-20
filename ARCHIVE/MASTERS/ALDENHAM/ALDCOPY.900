@@ -1,0 +1,153 @@
+﻿
+*16
+
+(ALDENHAM COPY TAPE FOR ASSEMBLY WITH 2-PASS SIR)
+(ISSUE 2)
+(TRIGGER AT 8)
+(TYPE L TO LOAD MASTER)
+(TYPE C TO CHECK MASTER OR COPY)
+(TYPE P TO PUNCH)
+
+[ ALDCOPY ]
+
+ALDCOPY
+T < 4 +141
+ 15 6148
+ 4 +10
+ 15 6148
+ 4 +0
+ 15 6148
+ 4 +170
+ 15 6148
+ 4 +0
+ 15 2052
+ 1 -80
+ 7 P
+ 1 -115
+ 7 C
+ 1 -9
+ 7 L
+ 8 T
+
+
+L 0 LOCATE
+ 4 +0
+ 15 2048
+ 7 ;-1
+ 8 LOAD
+R1 4 +0
+ 15 2048
+LOAD 14 8184
+ 4 +0
+ 15 2048
+ 14 8
+/5 0
+ 10 1
+ 4 1
+ 2 +8180
+ 7 ;+2
+ 8 ;+2
+ 0 =1 0
+ 4 1
+ 5 LIMIT
+ 2 =2 0
+ 7 T
+ 8 R1
+
+
+P 11 PRO
+ 8 PRO+1
+ 0 LOCATE
+READ /4 0
+ 15 6144
+ 14 8184
+ 15 6144
+ 10 1
+ 4 1
+ 2 +8180
+ 7 ;+2
+ 8 ;+2
+ 0 =1 0
+ 4 1
+ 2 LIMIT
+ 7 ;+2
+ 8 READ
+ 11 PRO
+ 8 PRO+1
+ 8 T
+
+
+C 0 LOCATE
+ 4 +0
+ 15 2048
+ 7 ;-1
+ 8 R2+2
+R2 4 +0
+ 15 2048
+ 5 X1
+/4 0
+ 6 &377
+ 5 ST
+ 2 X1
+ 7 ;+2
+ 8 ERR
+ 4 +0
+ 15 2048
+ 5 X1
+/4 0
+ 14 8184
+ 5 ST
+ 2 X1
+ 7 ;+2
+ 8 ERR
+ 10 1
+ 4 1
+ 2 +8180
+ 7 ;+2
+ 8 ;+2
+ 0 =1 0
+ 4 1
+ 2 LIMIT
+ 7 OK
+ 8 R2
+
+ERR 11 PRO
+ 8 PRO+1
+ 4 ST
+ 15 6144
+ 4 +0
+ 15 6144
+ 15 6144
+ 4 X1
+ 15 6144
+ 11 PRO
+ 8 PRO+1
+ 8 T
+
+OK 4 +207
+ 15 6148
+ 4 +75
+ 15 6148
+ 8 T
+
+PRO +0
+ 4 +0
+ 15 6144
+ 1 +1024
+ 9 ;+2
+ 8 ;-3
+ 0 PRO
+/8 1
+
+LIMIT +0
+X1 +0
+ST +0
+
+LOCATE 0 START
+^LOCATE+18
+START +0
+$
+
+%
+
+<! Halt !>

@@ -1,0 +1,57 @@
+﻿C Convert all tunes
+
+c Entertainer (Maestro)
+do build_ajh_entertainer
+
+c Carols (TJF)
+do build_ajh_carols
+
+c Trumpet voluntary and Jesu, Soul of Man's Desiring (TJF)
+do build_ajh_mandymus
+
+c Flight of the Bumble Bee
+do build_ajh_bee
+
+c Wedding March
+do build_ajh_wedding
+
+c Entrance of Queen of Sheba
+do build_ajh_sheba
+
+c Auld Lang Syne
+do build_ajh_auld
+
+c Ash Grove
+do build_ajh_ash
+
+c Men of Harlech
+do build_ajh_harlech
+
+c Land of My Fathers
+do build_ajh_land
+
+c Lubbers Down Below
+do build_ajh_lubbers
+
+c Hark the Herald Angels Sing
+do build_ajh_hark
+
+c Away in a Manger
+do build_ajh_manger
+
+c We Shall Overcome
+do build_ajh_over1
+do build_ajh_over2
+
+c Whatever Happened to the Rain?
+do build_ajh_rain
+
+c Fascinating Rythm
+do build_ajh_rhythm
+
+c The Sting
+do build_ajh_sting
+
+c White Christmas
+do build_ajh_white
+

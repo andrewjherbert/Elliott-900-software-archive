@@ -1,0 +1,27 @@
+﻿
+C Test character input output
+
+on 903
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/HERBERT/CHARTEST.900
+select out tty
+j 8
+st 6927
+
+at ptr inline
+1234567890-=
+!#@$%^&*()_+
+`1234567890-=
+QWERTYUIOP{}
+qwertyuiop[]
+ASDFGHJKL:"|
+asdfghjkl;'\
+~ZXCVBNM<>?
+`zxcvbnm,./
+<! halt !><!!>
+j 32
+
+sh t

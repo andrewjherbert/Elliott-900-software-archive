@@ -1,0 +1,85 @@
+﻿ON
+TELECODE 903
+AT PTR FILE ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+J 8181
+
+AT PTP FILE TEST.RLB
+AT PTR INLINE
+
+Dickman;
+"begin"
+   "comment" 17-MAY-1996
+             Art of Computer Programming, D.E. Knuth,
+             Vol. 2, Ed. 2, page 367.
+             Van de Lune and Wattel (Math. Comp. 23
+             1969, pages 417 to 421);
+   "integer" lim, n;
+loop:
+   "read" lim, n;
+
+   "if" lim < 3 "then" 
+   "begin"
+      "print" ''L`limit must exceed 2`;
+      "goto" loop
+   "end";
+
+   "if" (n "div" 2) * 2 "ne" n "then"
+   "begin"
+      "print" ''L`n must be even`;
+      "goto" loop
+   "end";
+
+   "print" ''L`LIMIT = `, digits(2), same line, lim,
+           '   2N = `, digits(3), n, 
+           ''L2S9`D(X)'LS3`X'S3`A  *  10 ^'LS7`------------`;
+   "begin"
+      "integer" j, k, x, pow; 
+      "real" s; 
+      "real" "array" y[0:n];
+      x := 1;
+      pow := 0;
+      "for" k := 0 "step" 1 "until" n "do" 
+                 y[k] := 1 - ln(1 + k/n);
+      "for" j := 0 "step" 1 "until" n * (lim - 2 ) "do"
+      "begin"
+         s := 0.5 * (y[0] - y[n]);
+         "for" k := 2 "step" 2 "until" n "do"
+                    s := s + 2 * y[k-1] + y[k];
+         y[n] := 2 * s / (3 * n * (2 + j/n));
+         "if" (j "div" n) * n = j "then"
+         "begin"
+            "if" y[n] < 1?-10 "then"
+            "begin"
+               pow := pow - 10;
+               "for" k := 0 "step" 1 "until" n 
+                     "do" y[k] := y[k] * 1?10
+            "end";
+            x := x + 1;
+            "print" digits(3), x, same line, '  `, 
+                    scaled(3), y[n], pow
+         "end";
+         "for" k := 1 "step" 1 "until" n "do" y[k-1] := y[k];
+         y[n] := 3 * y[n-1] - 3 * y[n-2] + y[n-3]
+      "end"
+   "end"
+"end"
+ 2 50
+ 12 17
+ 12 10
+<! halt !><!!>
+J 8
+DE PTP
+
+AT PTR FILE ../../SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+nonprinting off
+nonstop on
+select out tty
+
+at ptr file TEST.RLB
+j 8
+j 10
+
+delete TEST.RLB
+
+SH T

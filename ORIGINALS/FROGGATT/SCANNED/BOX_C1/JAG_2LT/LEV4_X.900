@@ -1,0 +1,55 @@
+﻿
+((LEVEL 4 EXECUTIVE, 14/9/72)
+
+(Workspaces)
+
+L4W      >1   (Switch index)
+
+(Initially gives OK display. Subsequently gives OK or
+FAIL display for those tests needing a displayed result.
+After giving display, clears it so that arrival of next
+result can be seen)
+
+L4S
+OK       4    &777777
+         8    ;+2
+FAIL     4    &525252
+         15   4103
+         4    +0
+         15   4103
+
+(Waits for control bit 18, then waits 0.5 sec. to
+allow for non-simultaneous switch contacts, then
+switches to appropriate routine)
+
+SWITCH   15   7
+         9    ;+2
+         8    ;-2
+
+         4    -25000   (Adjust for 0.5 sec.)
+         1    +1
+         9    ;-1
+
+         15   7
+         6    &000017
+         5    L4W
+         0    L4W
+         /8   ;+1
+
+(0)      8    SWITCH
+(1)      8    FUNC
+(2)      8    SIOPTH
+(3)      8    INTTH4
+(4)      8    DITH
+(5)      8    DOTH
+(6)      8    AOTH
+(7)      8    DTD
+(8)      8    IATD
+(9)      8    OATD
+(10)     8    INTTE4
+(11)     8    FTIME4
+(12)     8    SWITCH
+(13)     8    SWITCH
+(14)     8    SWITCH
+(15)     8    SWITCH
+<! Halt !>

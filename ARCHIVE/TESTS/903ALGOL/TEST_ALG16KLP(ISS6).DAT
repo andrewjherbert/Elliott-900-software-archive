@@ -1,0 +1,41 @@
+﻿C Test 903 ALGOL 16K Large Program System
+
+on 903 16k
+
+c translate trivial program
+at ptr file ../../SCRIPTS/903ALGOL/ALG1(ISS6).BIN
+j 8181
+st 8171
+at ptr inline
+trivial;
+"begin"
+    "integer" i;
+    punch (3);
+    "for" i := 0 "step" 1 "until" 9 "do"
+        "print" sameline, ''l@sqrt(@, i+1, ') =@, sqrt(i+1), ''l@@
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+c load new LP system
+at ptr file ../../SCRIPTS/903ALGOL/ALG16KLP(ISS6).BIN
+j 8181
+st 4309
+
+c run trivial program
+at ptr file TEST.RLB
+at tty inline
+R
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+
+sh t

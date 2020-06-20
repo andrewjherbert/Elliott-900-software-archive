@@ -1,0 +1,8 @@
+﻿C Test detabs filter
+
+do ../../scripts/swtools/detabs SIRTABS.900 SIRNOTABS.900
+
+sh t
+
+print SIRNOTABS.900
+

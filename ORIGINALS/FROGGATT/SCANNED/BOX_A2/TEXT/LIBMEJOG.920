@@ -1,0 +1,316 @@
+﻿
+A.C.D. LIBRARY MEMORY JOGGER, 14/4/72.
+
+For 920B Rig with 8K Store,
+Punch & Reader but Not On-Line Teletype,
+Fitted with 5640/1544 WG.
+
+**BINCOP.
+
+8.   Read & Store, Even Parity.
+12.  Read & Store, Track 8 Blank.
+11.  Read & Store, Otherwise.
+9.   Read & Store, Continue after 2inches Blank.
+10.  Read & Check then Punch.
+
+00000.001  Parity Error.
+10000.000  Track 8 Not Blank.
+11111.111  Store Full.
+00000.010  Reader & Store Disagree.
+
+**TELECOP.
+
+8.   Read & Store, First Tape.
+9.   Read & Store, Subsequent Tape.
+10.  Read & Check then Punch Clean, First Tape.
+11.  Read & Check then Punch Unclean, First Tape.
+9.   Read & Check then Punch, Subsequent Tape.
+
+00000.001  Parity Error.
+11111.111  Store Full.
+00000.010  Reader & Store Disagree.
+
+**DO-ALL 4.
+
+8.   Convert to Legible Tape.
+
+9.   Select 920 Telecode.
+10.  Select 900 Telecode.
+19.  Select 903 Telecode for ALGOL.
+11.  Select Clean.
+12.  Select Unclean.
+16.  Read & Punch Telecode, First Tape.
+17.  Read & Punch Telecode, Subsequent Tape.
+18.  Punch <H>.
+
+20.  Read & form Sumchecks, Even Parity.
+21.  Read & form Sumchecks, Otherwise.
+17.  Read & form Sumchecks, Continue after 2inches Blank.
+22.  Read & Punch (QCOPY), Check sumchecks.
+23.  Read & Check sumchecks.
+
+CH I/O ERROR 1.  Parity Error.
+CH I/O ERROR 2.  First Character Not <N>.
+CH I/O ERROR 3.  Illegal Character.
+CH I/O ERROR 4.  Over 120 Characters on Line.
+QCOPY ERROR 1.   Parity Error.
+QCOPY ERROR 2.   Sumchecks Disagree.
+
+**BOWDLER.
+
+Beware Erases.
+Beware Various 900 Problems: <N>,',`,$,£,❿.
+
+920 or 903:  Telecode of Steering Tape.
+920 or 903:  Telecode of Main Tape.
+INB
+
+CSE  CSI  CLE  CLI  DSE  DSI  DLE  DLI String
+PNL  PHT  PSP  PSC  DNL  DHT  DSP
+
+INS            RTS String     RTL String
+String↑%,      String↑%,      String↑%,
+
+REP Digit      END            CAN Digit
+WAI            WTS            COP
+
+8.   Read Steering Tape, Errors in 920 Telecode.
+13.  Read Steering Tape, Errors in 900 Telecode.
+9.   Read & Edit Main Tape.
+10.  Read & Edit Main Tape, Continue after 70feet or Wait.
+12.  Sumcheck.
+
+E0.  Telecode Directives Wrong.
+E1.  Meaningless Instruction.
+E2.  String Missing.
+E3.  Digit Missing after REP or CAN.
+E4.  Sequence of REPs and ENDs wrong.
+E5.  Digit in REP or CAN wrong.
+E6.  REP Not Followed by Copy-type Instruction.
+E7.  Illegal Character.
+E8.  String Too Long on Main Tape.
+E9.  <H> Found Too Soon.
+E10. Sumchecks Disagree.
+E11. Tape Not Pulled Back.
+E12. No Blanks in 70feet.
+E13. First Character of Steering Tape Not <N>.
+E14. Parity Error.
+
+W0.  Steering Tape Ends in REP set.
+W1.  Spurious Characters After Instruction.
+W2.  Non-Cancel Instruction in REP set.
+W3.  Instruction List or Character List Full.
+W4.  String Too Long on Steering Tape.
+W5.  Non-Cancel Instruction used Twice.
+
+**TATDOC.
+
+15.  Select 900 Telecode.
+16.  Select 920 Telecode.
+
+8.   Read & Doc Program or General Tape, First Tape.
+9.   Read & Doc Program or General Tape, Subsequent Tape.
+10.  Punch end of Final Page and <H>.
+11.  Read & Doc Label List, SIR or SAP pass 1.
+9.   Read & Doc Label List, SAP pass 2.
+
+12.  Read in Top & Tail, <N>******<H>.
+13.  As 8 but Punch Top & Tail.
+14.  As 11 but Punch Top & Tail.
+
+CH I/O ERROR 1.  Parity Error.
+CH I/O ERROR 2.  First Character Not <N>.
+CH I/O ERROR 3.  Illegal Character.
+DOCUM. ERROR 1.  Illegal Entry Point.
+DOCUM. ERROR 2.  Top & Tail Wrong.
+DOCUM. ERROR 3.  Title Wrong.
+DOCUM. ERROR 4.  Over 74 Characters on Line.
+DOCUM. ERROR 5.  <H> Wrong.
+
+**DUMP, CLEAR STORE.
+
+Self-Triggering.
+
+**VERIFY.
+
+&17501.  Verify.
+
+&Address, &Word on Tape, &Word in Store.
+
+EL.  Wrong Loader.
+EF.  Format Error.
+ES.  Sumcheck Error.
+EA.  Users Program Corrupted by Verify.
+
+**AMEND.
+
+Title, Comment, Absolute Patch, Skip,
+Absolute & Relative Instruction, Integer, Octal.
+
+00000.001  Parity Error.
+00000.111  Any Other Error.
+
+**STORE PRINT.
+
+Unsigned Address, Optional Unsigned Address, Letter.
+
+O.  Instruction.       I.  Integer.
+F.  Fraction.          B.  Octal.
+
+**1-PASS SIR.
+
+*1.  Labels (Decimal & Octal).
+*2.  Load & Go (otherwise RLB).
+*4.  Clear Store.
+*16. Assemble from 8.
+*64. Checks only.
+
+&17740.  Read Telecode, First Tape, Labels in 900 Telecode.
+&17741.  Read Telecode, First Tape, Labels in 920 Telecode.
+&17742.  Read Telecode, Subsequent Tape.
+&17743.  Enter at <.
+
+&17734.  Read RLB, Start A, Labels in 900 Telecode.
+&17735.  Read RLB, Start A, Labels in 920 Telecode.
+&17736.  Read RLB, Start B.
+&17737.  Read RLB, Start C.
+
+E0.  Instruction Error.
+E1.  Contextual Error.
+E2.  Octal or Alphanumeric Error.
+E3.  Label Declared Twice.
+E4.  Global Identifier not Beginning with Letter.
+E5.  Store Full.
+E6.  Number Overflow.
+E7.  Over 120 Characters on Line.
+E8.  Illegal Character, or Parity Error.
+E9.  <H> not First on Line.
+EG.  Global Label Error.
+EL.  Literal Error.
+EP.  Patch Error.
+EU.  Unlocated Identifier.
+
+STOPS if First Character Not <N>.
+
+**2-PASS SIR.
+
+*1.  Labels, Decimal.
+*2.  Labels, Octal.
+*16. Assemble from 8.
+*32. Split Binary Tape Here.
+*N.  (Mult. of 8192) Punch N-word Clear Store.
+
+8.   Read First Tape, First Pass, Labels in 920 Telecode.
+12.  Read First Tape, First Pass, Labels in 900 Telecode.
+9.   Read Subsequent Tape, First Pass.
+10.  Read First Tape, Second Pass.
+11.  Read Subsequent Tape, Second Pass.
+16.  Dump Assembler & Dictionary.
+
+13.  As 10 but Ignore First Pass Errors.
+14.  As 8 or 12 but Retain Dictionary.
+15.  As 8 or 12 but Retain Dictionary & Frig Literals.
+
+Error Indications Basically as 1-PASS SIR.
+STOPS if First Character Not <N> or Passes Disagree.
+
+**ALGOL.
+
+Beware 900 ` Problems.
+
+8.   Normal.
+9.   Continue.
+10.  Report Mode.
+11.  Checking Mode.
+12.  Library Mode.
+13.  Library Checking Mode.
+
+8.   Read Object Program.
+9.   Continue.
+10.  Execute.
+11.  Read Code Procedure.
+12.  Establish Library.
+13.  Read Object Program Over Library.
+
+**ALGCON.
+
+8.   Read & Punch First Tape, for 903 ALGOL.
+9.   Read & Punch First Tape, for 920 ALGOL.
+10.  Read & Punch First Tape, for 503 ALGOL.
+11.  Read & Punch Subsequent Tape.
+12.  Punch <H>.
+
+Error Indications in Message Form.
+
+**FORTRAN.
+
+8.   Normal.
+9.   Continue.
+10.  Report Mode.
+
+8.   Read Object Program.
+12.  Load Object Program & Print Map.
+9.   Continue.
+10.  To Indicate Program Complete.
+11.  Execute.
+
+**GENSORT.
+
+8.   Read & Store Alphabet Tape, <N>******<N><H>.
+9.   Read & Store Unsorted Tape, First Tape.
+10.  Read & Store Unsorted Tape, Subsequent Tapes.
+11.  Read Sorted Tape, Merge with Store, & Punch.
+12.  Punch Remainder of Store.
+
+00000.001  First Character Not <N>.
+00000.010  Character Not in Alphabet.
+00000.011  Character in Alphabet Twice.
+00000.100  Over 63 Characters in Alphabet.
+00000.101  <H> or <N> Wrong in Alphabet.
+00000.110  Character Store Full.
+
+**102C/902 SIMULATOR.
+
+Switch IFU On & Interrups to Manual.
+Beware 900 £ Problems.
+
+26.  Clear 8K Store.
+24.  Select Errors in 900 Telecode
+25.  Select Errors in 920 Telecode.
+22.  Read 5640/1544.
+8.   Read Binary Tape.
+10.  Read Telecode Tape.
+11.  Stop (Order Stop).
+12.  Start (Cancel 11 & Restart).
+13.  Single Shot (Restart).
+15.  Read, Address in Acc. [15-1].
+16.  Write, Word in Acc. [18-7].
+17.  Interrupt.
+31.  Reset.
+
+32 [18-7]   A.
+33 [18-8]   E.
+33 [18-7]   B.
+34 [18-7]   S [12-1].
+35 [15-13]  S [15-13].
+36 [18-14]  D [5-1].
+37 [15-13]  D [8-6].
+38 [18-7]   I Just Obeyed.
+
+Error Indications in Message Form.
+
+**E.H.B.
+
+10 [1]  0 for 900 or 1 for 920 Labels.
+10 [2]  Octal Labels.
+10 [3]  A;B Labels.
+10 [4]  C*D Labels.
+10 [5]  Maps, Titles, Globals, Locals.
+10 [6]  Maps, Titles, Globals.
+10 [7]  Maps, Titles.
+
+8.   Read First Tape, First Pass, Using New Dictionaries.
+9.   Read Tape, Other than Above.
+
+Error Indications in Message Form.
+<! Halt !>

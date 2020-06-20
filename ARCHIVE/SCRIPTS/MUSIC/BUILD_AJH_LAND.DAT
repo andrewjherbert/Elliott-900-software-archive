@@ -1,0 +1,45 @@
+﻿C Convert Land of My Fathers from 903 to AJH format.
+C Andrew Herbert 29/12/2013
+on 903 16K
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+at ptr file ../../MASTERS/MUSIC/903_MUSIC/903_TRANS.900
+j 8
+
+c initialize
+j 10
+at ptp file AJH_LAND.900
+at ptr file ../../MASTERS/MUSIC/PF_MUSIC/PF_LAND.900
+j 9
+de ptp
+
+c Edit translated tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+c Slow down 50%
+
+at ptr inline
+
+CLE K
+INS 
+&5^%,
+COP
+<! halt !><!!>
+at ptp file errors.txt legible
+j 13
+de ptp
+print errors.txt
+st 490
+delete errors.txt
+
+at ptr file AJH_LAND.900
+at ptp file AJH_LAND.900
+j 9
+de ptp
+st 1274
+
+sh t

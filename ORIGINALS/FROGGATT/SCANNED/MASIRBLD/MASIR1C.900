@@ -1,0 +1,593 @@
+﻿((MASIR ISSUE  3:  TAPE 1C))
+
+
+RHLAB      4 FUNCT
+5 SPECFN
+4 +0
+5 LITMK
+4 MODMK
+7 LABB
+4 =/15,0
+5 SPECFN
+LABB       4 NAME1
+2 \QPA
+7 ;+2
+8 ;+4
+4 NAME2
+2 \RAM
+7 E24
+4 +0
+5 INC
+11 PICKUP
+8 PICKUP+1
+8 E24
+8 E24
+SECINC     4 NXCHAR
+7 NOTSLSH
+1 -1
+7 NOTSLSH
+1 -7
+7 NOTSLSH
+1 -1
+7 NOTSLSH
+1 -2
+7 POS
+1 -1
+7 NOTSLSH
+1 -1
+7 NEGG
+1 -2
+7 SLUSH
+8 E24
+
+SLUSH      4  SPECFN
+6  &377777         (REMOVE BIT 18 FROM SPECFN)
+5  SPECFN
+
+NOTSLSH    4  INC
+8  INCA
+
+NEGG       4  +1
+POS        5  SIGN            (SET SIGN=1FOR NEG AND 0 FOR POS)
+11  NUMBR
+8  NUMBR+1
+2  +4095
+9  E30
+4  SIGN
+7  SETTA           (SIGN NOT SET)
+4  INTEGR
+2  +0              (NEGATE INTEGR)
+8  ;+2
+
+SETTA      4  INTEGR
+1  INC
+5  INC
+8  SECINC
+
+INCA       1  +4096
+5  INC             (INC = A +4096)
+4  +0
+5  GLOBMK          (GLOBMK =0 NULL)
+11  DICSRCH
+8  DICSRCH+1
+8  RENTER          (LOCAL LABEL FOUND)
+8  EXT2
+8  EXT3
+
+RENTER     4  +1              (SET GLOBMK =1 FOR LOCAL LABEL)
+5  GLOBMK
+8  DICSRCH+2       (RE-ENTER AT ENTRY2 TO CONT SEARCH FOR LOCAL LABEL)
+
+EXT2       4  FREEMK          (THIS EXIT FOR A LOCAL LABEL WHICH IS UNLOCATED)
+5  DP
+11  SETNEW
+8  SETNEW+1
+
+SFRT      11  FRTSET
+8  FRTSET+1
+0  DP
+5  FRTNUM
+/1  2
+/5  2
+
+RTEST      4  INC
+1  -4096
+9  COPINK          (IS 4096 GE.INC.GE.4103)
+1  -8
+9  SETINK
+
+COPINK     4  INC
+/5  3               (SET INCREMENT)
+4  FRTNUM
+8  RLB6-2
+
+SETINK     4  +4096
+/5  3               (SET INCREMENT = 4096)
+4  INC
+1  -4096
+0  +0
+14  10
+1  FRTNUM
+1  SPECFN
+5  WORD
+
+RLB6       4  +6
+5  RLBTYP          (CODE 6)
+4  LITMK
+7  TESSPEC         (OUTPUT RLB IF LITMK0 I.E. NOT LITERAL)
+(JUST A LABEL NAME)
+4  SPECFN
+2  &760000
+7  IS15            (IS SPECFN = /15 0)
+8  E33
+
+TESSPEC    4  SPECFN          (CHECK FOR +LOC)
+2  &760000
+7  ;+2
+8  OPWORD
+4  WORD
+6  &017777
+5  WORD
+8  OPWORD
+
+IS15       4  SPECFN
+2  WORD
+5  WORD
+
+SLIT       0  DP
+/4  2
+6  &010000
+7  ;+2
+8  ;+4
+/4  2
+1  &010000         (SPECIAL FUNCTION)
+/5  2
+4  +64
+
+SLIT9      5  LIT1
+4  WORD
+5  LIT2
+
+LABD      11  LITSRCH
+8  LITSRCH+1
+1  FUNCT
+5  WORD
+4  +3
+8  STRLB           (O.P. CODE3 , WORD =FUNCT + LIT. OFFSET)
+
+EXT3       0  DP
+/4  2
+9  LOCCT           (LOCATED)
+6  &200000
+7  LLOCC           (LOCAL)
+4  GLOBMK
+1  -1
+7  E26             (GLOBMK SET FOR LOCAL)
+/4  2
+6  &100000
+7  NONSUB          (DICT ITEM NOT SUB GLOB)
+4  +2
+5  GLOBMK          (SUB GLOB)
+8  COPFRT
+
+NONSUB     4  +3
+5  GLOBMK          (GLOBAL)
+4  SPECFN
+1  INC
+5  INC             (INC = INC + SPECFN)
+
+LABA      /4  3
+2  INC
+7  RLB12           (INC = DICT INC)
+
+SENT2     11  DICSRCH
+8  DICSRCH+2
+8  GLOBLOC
+8  SETADDR
+0  DP
+/4  2
+6  &200000
+7  COPFRT          (LOCAL)
+/4  2
+6  &100000
+7  LABA
+8  COPFRT          (SUBGLOB)
+
+LLOCC      4  +1
+5  GLOBMK          (SET TO LOCAL)
+
+COPFRT     0  DP
+/4  2
+6  &001777
+5  FRTNUM          (STORE FRT NR FROM DICT IN FRTNUM)
+4  INC
+1  -4096
+9  GREAT
+1  -8
+9  SAMAS
+
+GREAT     /4  3
+2  INC
+7  RTEST           (INC = DICT INC)
+/4  2
+6  &100000
+7  SENT2
+/4  3               (SUB GLOB)
+7  ZERINC
+8  SENT2
+
+S4096      4  +4096
+8  ;+2
+
+ZERINC     4  INC             (DICT INC ZERO)
+/5  3
+8  SFRT
+
+SAMAS     /4  3
+7  S4096
+2  +4096
+7  RTEST           (DICT INC =0 OR 4096)
+8  SENT2
+
+SETADDR    4  FREEMK
+5  ADDR
+8  SEDP
+
+GLOBLOC    4  GLOBMK
+2  +1
+7  SENT2           (LOCAL)
+0  DP
+/4  0
+5  COPYD           (IF NOT LOCAL, PUT A NEW GLOB ENTRY IN DICT AT END OF)
+(GLOBALS AND COPY THE FIRST LOCAL LABEL MET TO A POSN)
+(AT THE END OF DICT)
+/4  1
+5  COPYD+1
+/4  2
+5  COPYD+2
+/4  3
+5  COPYD+3
+4  DP
+5  ADDR
+
+INDIC     11  DICSRCH
+8  DICSRCH+2
+8  INDIC
+8  COBACK
+8  INDIC
+
+COBACK     0  FREEMK
+4  COPYD
+/5  0
+4  COPYD+1
+/5  1
+4  COPYD+2
+/5  2
+4  COPYD+3
+/5  3
+
+SEDP       4  ADDR
+5  DP
+0  DP
+4  NAME1           (PUT NEW ITEM IN DICT FOR NAME1)
+/5  0
+4  NAME2
+/5  1
+10  NENT
+4  +0
+5  TEMP
+4  GLOBMK
+1  -1
+7  MARKLOC
+1  -1
+7  MARKSUB         (MARK GLOB, SUB GLOB OR LOCAL ACCORDING TO GLOBMK)
+4  &200000
+10  TEMP
+8  MARKLOC
+
+MARKSUB    4  &300000
+MARKLOC   /5  2
+4  TEMP            (TEMP IS SET FOR GLOBAL)
+7  SFRT
+10  HGNUM           (HIGHEST GLOB NR)
+4  HGNUM
+2  +1024
+7  E36
+/4  2
+1  HGNUM
+/5  2
+4  INC
+/5  3
+
+RLB12      4  -12
+5  RLBTYP          (CODE 7 TYPE 12)
+0  DP
+/4  2
+6  &001777         (GLOB CODE NR)
+5  WORD
+4  LITMK
+7  NOLITS
+4  MODMK
+7  ;+2
+8  NOLITS
+4  LMODMK
+7  NOMOD
+4  +0
+5  LMODMK
+4  -9
+5  RLBTYP
+
+NOMOD      4  RLBTYP
+8  SLIT9
+
+NOLITS     4  MODMK           (MODMK SET IN MODCOD)
+7  OPWORD
+10  SP
+4  +0
+5  MODMK           (SPECIAL < CODE)
+4  FUNCT
+1  WORD
+5  WORD
+4  +7
+5  RLBTYP
+8  OPWORD
+
+LOCCT      0  DP
+/4  2
+6  &200000
+7  PICKAD
+/4  2
+6  &100000
+7  ;+2
+8  PICKAD
+4  SPECFN          (LOCATED GLOBAL)
+6  =15 0
+2  =13 0
+9  NONSUB          (SPECIAL GLOBAL)
+
+PICKAD    /4  3
+6  &017777         (13 BIT ADDRESS FROM DICT)
+1  SPECFN
+1  INC
+1  -4096
+5  WORD            (WORD = ADDRESS + SPECFN + INC -4096)
+/4  2
+6  &020000
+7  RLB2            (IF DICT ADDRESS ABSOLUTE)
+4  +1
+8  ;+2
+
+RLB2       4  +2
+5  RLBTYP
+4  MODMK
+7  ;+2
+8  NOLITS
+4  LITMK
+7  TESSPEC
+
+LABC       4  SPECFN          (LOCATED, LOCAL OR SUB GLOB)
+2  &760000
+7  SWORD           (/15 0)
+4  SPECMK
+7  SPEC
+8  E24
+
+SWORD      4  LITMK
+7  ;+2
+8  ;+2
+5  SPECFN
+
+SPEC       4  SPECFN
+2  WORD
+5  LIT2
+4  RLBTYP
+5  LIT1
+8  LABD
+
+LMODCOD    4  =/15 0
+5  SPECFN
+10  LMODMK
+4  +1
+5  LITMK
+8  LCOLON+4
+
+LCOLON     4  +1              (ENTRY FOR : LABEL)
+5  LITMK
+4  &740000         (/14 0)
+5  SPECFN
+11  PICKUP
+8  PICKUP+1
+8  LABB
+8  E24
+8  E24
+
+LPLUS      4  +1              (ENTRY FOR +LABEL)
+5  LITMK
+4  &760000         (/15 0)
+5  SPECFN
+4  +0
+8  ASSIGN
+
+LMINUS     4  +1
+5  LITMK
+
+ASSIGN     5  SIGN
+11  PICKUP
+8  PICKUP+1
+8  LABB
+8  E24
+1  -14
+7  FULSTOP
+1  -2
+9  E24
+1  -10
+9  DIGITT
+8  E24
+
+DIGITT    11  NUMBR
+8  NUMBR+2
+8  TESIGN
+
+FULSTOP   11  NUMBR
+8  NUMBR+3
+
+TESIGN     4  SIGN
+7  SLOT
+4  INTEGR
+2  +0
+5  INTEGR
+
+SLOT       4  INTEGR
+5  LIT2
+4  +1
+5  LIT1
+8  LABD
+
+NXCHAR        +0
+CONT          +0
+BRKCOU        +0
+CBB           +0
+SP            +0
+HFRTN         +0
+HGNUM         +0
+TOPCOD        +0
+NENT          +0
+FUNCT         +0
+SPECFN        +0
+SGM           +0
+DP            +0
+FREEMK        +0
+INTEGR        +0
+WORD          +0
+RLBTYP        +0
+MASKNAM       +0
+OLDBD         +0
+NEWBD         +0
+HASH          +0
+INC           +0
+HASHAD        +0
+TEMP          +0
+MK            +0
+LASTLAB       >+2
+W3            +0
+W4            +0
+W5            +0
+W7            +0
+W8            +0
+NEWLD         +0
+ACTADR        +0
+ABSADR        +0
+SIGN          +0
+LITMK         +0
+GLOBMK        +0
+LIT1          +0
+LIT2          +0
+ADDR          +0
+FRTNUM        +0
+COPYD         >+4
+LISTMK        +0
+FRT           >+64
+FRTAD      0  FRT
+CHEKWD        +0
+PSF           +0
+INCXX         +0
+PLABEL        >+3
+PATCHMK       +0
+MODMK         +0
+SPECMK        +0
+LMODMK        +0
+ROOMAV +0
+CHATYP +3
++6
++11
++13
++26
++29
++60
+FUNCOD
+0 0
+1 0
+2 0
+4 0
+6 0
+12 0
+13 0
+/0 0
+
+TABLE         +1
++10
++100
++1000
++10000
++100000
++125000
+
+QPUTRLB      +0
+4  HDOVER
+      6   &7
+7  ;+2
+2  +4
+11  QOUTRLB
+7  QOUTRLB+1
+0  QPUTRLB
+/8  1
+
+M1        /0  ;+1
+-8
+\PRO
+\GRA
+\M L
+\ENG
+\TH
+\ =
+M11           +0
++0
+
+M2        /0  ;+1
+-8
+\LIT
+\ERA
+\L L
+\ENG
+\TH
+\ =
+M21           +0
++0
+
+M3        /0  ;+1
+-8
+PUNAME        >+2
+\  L
+\ENG
+\TH
+\ =
+M31           +0
++0
+
+M4        /0  ;+1
+-6
+\^NO
+\ ER
+\ROR
+\S F
+\OUN
+\D
+
+M5        /0  ;+1
+-8
+\ERR
+\ORS
+\ FO
+\UND
++0
+\ =
+M51           +0
++0
+
+M6        /0  ;+1
+-1
+\^
+
+
+
+

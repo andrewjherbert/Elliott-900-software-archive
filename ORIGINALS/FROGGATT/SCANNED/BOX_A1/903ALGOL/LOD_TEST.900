@@ -1,0 +1,27 @@
+﻿
+CALLOT;
+"BEGIN"
+"CODE""PROCEDURE" LOTEST;
+"ALGOL";
+LOTEST;
+"END";
+<! Halt !>
+*0
+
+((TO TEST ALGOL LOADERS, 5/1/74))
+
+[LOTEST]
+
+LOTEST   /14  0
+         >1
+
+         4    LAB
+LAB=8
+         2    LAB
+         7    ;+2
+         4    -1
+         15   6144
+         8    ;-1
+
+%
+<! Halt !>

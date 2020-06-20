@@ -1,0 +1,142 @@
+﻿on
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+
+at ptr inline
+kdf9;
+"begin"
+   "comment" Specimen ALGOL program from Appendix 1 of KDF9 ALGOL manual;
+   "comment" This is a program for a practically arising problem.  It 
+    illustrates the use of many of the facilities available to the 
+    ALGOL user;
+
+    "real" alpha, lambda, Delta alpha; "integer" i;
+
+    "real" "procedure" erfca (z); "value" z; "real" z;
+	"begin" "comment" approximation to complementary error function
+		accurate to 2.5?-5 from Wikipedia;
+
+		"real" erf, t, t2, t3, t4; 
+
+		t := 1 / (1 + 0.47047 * z);
+		t2 := t * t; t3 := t2 * t; t4 := t3 * t;
+
+		erf := 1 - (0.3480242 * t - 0.0958798 * t2 +
+			0.7478556 * t3) * exp (-(z^2));
+
+		erfca := 1 - erf
+
+	"end" erfca;
+		
+
+
+    "real" "procedure" erfc (z); "value" z; "real" z;
+        "begin" "comment" This procedure evaluates the complementary
+		error function of z using the trapezoidal rule.  It
+		halves the interval until the required accuracy is 
+		attained, but avoids repeating the evaluation of
+		ordinates more than once;
+
+		"real" x, h, J0, J1; "integer" n, i;
+
+		h := 0.1; J0 := 0; n := 0; i := 1;
+
+	    R:	J1 := J0;
+
+		"for" n := n, n + i "while" 
+				n * h * (n * h + 2 * z) < 11.51 "do"
+
+		    "begin" 	x := z + n * h;
+
+				J0 := J0 + exp(-(x^2))
+					* ("if" n = 0 "then" 0.5 "else" 1);
+
+		    "end"	;
+
+		"if" abs(1 - 2 * J1/J0) > 0.00001 "then"
+
+		    "begin"	i := 2; n := 1; h := h/2;
+
+				"goto" R
+
+		    "end"	;
+
+ 		erfc := 1.128379 * J0 * h
+
+	"end"   erfc;
+
+	reader (1);
+
+	"read" Delta alpha;
+
+	"comment" Delta alpha is the only input data item required by the
+	program;
+
+	punch (3);
+
+	"print" 'Propagation of an Impulse into a Viscous-locking @,
+		'Medium'L4S4@@, sameline,
+		'Delta alpha = @, aligned (1,4), Delta alpha, ''L3@@,
+		''S5@alpha'S16@lambda'S8@lambda*sqrt(2*alpha)'S9@g'L2@@,
+		''S5@0.0000'S14@INFINITY'S14@1.00000'S13@1.00000@;
+
+	i := 1;
+
+	"for" alpha := Delta alpha "step" Delta alpha "until" 1.0 "do"
+
+	    "begin"	"real" l1, l2;
+
+			i := i + 1;
+
+			lambda := (1 - alpha)/sqrt (2 * alpha);
+
+			"if" alpha = 1 "then" "goto" SKIP;
+
+	    Repeat:	l1 := lambda;
+
+			l2 := sqrt (0.886227 * (1-alpha)/alpha * l1
+				* erfc (l1) * exp(+l1^2));
+
+			lambda := l2 + 0.835 * alpha * (l2-l1);
+
+			"if" abs (1-l2/lambda)>?-5 "then" "goto" Repeat;
+
+	    SKIP:	"print"          aligned (5, 4), alpha, sameline,
+				''S12@@, scaled (5), lambda,
+				''S12@@, aligned (1, 5), lambda * sqrt (2 * alpha),
+				''S12@@, ("if"   lambda "ge" .70710678
+                                          "then" 2 * lambda^2 * alpha * (1-alpha)
+					  "else" "if" lambda "ne" 0
+                                          "then" alpha * (1 - alpha) * exp (lambda^2)/
+							(lambda * 2.3282180)
+					  "else" 0.48394);
+				"if"   i - i "div" 5 * 5 = 0
+    				"then" "print" ''L@@
+
+	    "end"	;
+
+			        
+		
+"end" program
+
+0.1
+<! halt !>
+<!!>
+at ptp file TEST.RLB
+j 8
+j 9
+de ptp
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+
+at ptr file TEST.RLB
+j 8
+
+select out tty
+j 10
+
+delete TEST.RLB
+
+sh t

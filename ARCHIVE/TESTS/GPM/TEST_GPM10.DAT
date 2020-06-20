@@ -1,0 +1,34 @@
+﻿c Test  GPM10
+
+on 903
+
+c load gpm10
+at ptr file ../../SCRIPTS/GPM/GPM10.BIN
+j 8181
+st 8175
+
+select out tty
+
+at ptr file ../../MASTERS/GPM/GPM10DATA.900
+
+c Statchey examples
+j 8
+st 21
+
+c Strachey examples with original warning characters
+j 11
+st 21
+j 8
+st 21
+
+c GPM quirks
+j 11
+st 21
+j 8 
+st 635
+
+c Hanoi
+j 8
+st 21
+
+sh t

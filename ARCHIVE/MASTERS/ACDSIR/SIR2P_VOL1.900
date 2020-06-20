@@ -1,0 +1,1620 @@
+﻿
+((2-PASS SIR, 13/4/70)
+
+[CHIPF CHIPL CHIPE CHIPS
+CHOPF CHOPL CHOPE CHOPC
+BTOPL BTOPI BTOPE BTOPT
+BTOPF BTOPA BTOPJ]
+
+(TRIGGER)
+
+(8)      8    STA920
+(9)      8    CONTIN
+(10)     8    START2
+(11)     8    CONTIN
+(12)     8    STA903
+(13)     8    IGNER
+(14)     8    FRIGSA
+(15)     8    FRIGSB
+(16)     8    DUMP
+
+(DECODE)
+
+DECODE   4    +0
+         5    CFLAG
+         11   READL
+         8    READE
+         9    READE
+         6    -65600
+         7    FNTWO
+         6    -32832
+         7    LHLAB
+         4    NXCHAR
+         1    -6
+         7    OCTAL
+         1    -2
+         7    COMMEN
+         1    -3
+         7    POSLIT
+         1    -2
+         7    NEGLIT
+         1    -2
+         7    FNONE
+         1    -15
+         7    SKIP
+         1    +27
+         7    ALPHA
+         1    -57
+         7    ALPHA
+         1    +1
+         7    SQBRAK
+         1    -3
+         7    PATCH
+         1    +52
+         7    ASTERI
+         1    +6
+         7    RESTOR
+         1    -24
+         7    TRIG
+         8    E1
+CFLAG    +0
+
+(FNONE)
+
+FNONE    4    &400000
+         5    BDIGIT
+         11   READL
+         8    READE
+         6    -65600
+         7    GOON1
+         8    E1
+FNTWO    4    +0
+         5    BDIGIT
+GOON1    11   NUMBER
+         8    REST
+         4    GRPCOD
+         9    ;+2
+         8    E1
+         4    INTGR
+         2    +15
+         9    E0
+         4    INTGR
+         0    +0
+         14   13
+         1    BDIGIT
+         0    CFLAG
+         /5   F2
+         4    +0
+         5    INTGR
+         11   READL
+         8    READE
+         9    READE
+         6    -65600
+         7    NUMADD
+         4    CFLAG
+         9    E0
+         4    GRPCOD
+         6    -32832
+         7    RHLAB
+         4    NXCHAR
+         1    -27
+         7    SEMICO
+         4    -1
+         5    CFLAG
+         4    NXCHAR
+         1    -6
+         7    OCTAL
+         1    -5
+         7    POSLIT
+         1    -2
+         7    NEGLIT
+         1    -16
+         7    ;+6
+         1    +26
+         7    ALPHA
+         1    -57
+         7    ALPHA
+         8    E1
+         11   READL
+         8    READE
+         6    -65600
+         7    FNTWO
+         4    NXCHAR
+         1    -15
+         7    FNONE
+         8    E1
+E0       4    +0
+         8    E
+BDIGIT   +0
+
+(NUMADD)
+
+NUMADD   11   NUMBER
+         8    REST
+         4    NXCHAR
+         1    -27
+         7    ;+5
+         4    INTGR
+         8    COMBIN
+         4    CFLAG
+         9    E1
+         11   READL
+         8    READE
+         4    CBB
+         1    INTGR
+         8    COMBIN
+
+(SEMICO)
+
+SEMICO   11   INTAL
+         8    INTAE
+         1    SP
+         8    COMBIN
+
+(POSLIT)
+
+POSLIT   11   NUMBER
+         8    FRACT
+         8    ;+4
+NEGLIT   11   NUMBER
+         8    FRACT
+         2    +0
+         5    WORD
+         8    PACK2
+
+(OCTAL)
+
+OCTAL    4    +0
+         5    WORD
+         4    -6
+         5    COUNT1
+RETUR1   11   READL
+         8    READE
+         9    PACK2
+         6    +65536
+         7    E2
+         4    NXCHAR
+         2    +23
+         9    E2
+         4    NXCHAR
+         14   8189
+         4    WORD
+         14   3
+         5    WORD
+         4    COUNT1
+         10   COUNT1
+         9    RETUR1
+E2       4    +2
+         8    E
+COUNT1   +0
+
+(ALPHA)
+
+ALPHA    4    -3
+         5    W1
+         4    +0
+         5    W4
+RETUR2   11   READL
+         8    READE
+         4    NXCHAR
+         1    -1
+         7    SPCFIL
+         1    -59
+         7    ;+4
+         1    -2
+         7    ;+3
+         8    ;+4
+         4    +2
+         1    +1
+         5    NXCHAR
+         4    NXCHAR
+         11   ADDCHL
+         8    ADDCHE
+         8    RETUR2
+         11   READL
+         8    READE
+         9    FINISH
+         4    +2
+         8    E
+SPCFIL   4    +0
+         11   ADDCHL
+         8    ADDCHE
+         8    SPCFIL
+FINISH   4    W3
+         8    PACK1
+
+(RHLAB)
+
+LABINL   +0
+LABINE   4    +0
+         5    INTGR
+         11   STACKL
+         8    STACKE
+         4    GRPCOD
+         9    GOON2
+         11   INTAL
+         8    INTA1
+GOON2    11   SEARCL
+         8    SEARCE
+         /0   0
+         5    BD
+         0    DP
+         /4   DEBUT
+         1    INTGR
+         0    LABINL
+         /8   1
+RHLAB    11   LABINL
+         8    LABINE
+         8    COMBIN
+
+(COMBIN)
+
+COMBIN   6    +8191
+         0    CFLAG
+         /1   F2
+PACK1    5    WORD
+PACK2    4    GRPCOD
+         9    ;+2
+         8    E1
+         4    PASS
+         9    PASS1
+         4    CFLAG
+         9    LIT
+         4    WORD
+         11   BTOPL
+         8    BTOPE
+         8    GOON3
+LIT      11   LITRAL
+         8    LITRAE
+         4    +0
+         5    CFLAG
+         0    CURSTO
+         4    PLIT
+         /1   BELIT2
+         8    COMBIN
+PASS1    4    CFLAG
+         7    ;+3
+         11   LITRAL
+         8    LITRAE
+         4    SP
+         2    FIRST
+         9    ;+3
+         4    SP
+         5    FIRST
+         11   E5TESL
+         8    E5TESE
+GOON3    10   SP
+         8    DECODE
+
+(LITRAL)
+
+LITRAL   +0
+LITRAE   4    CURSTO
+         9    LOWST
+         4    MIDLIT
+         5    PLIT
+TESLIT   4    PLIT
+         2    TOPLIT
+         0    PLIT
+         7    ;+6
+         /4   BELITS
+         2    WORD
+         7    K
+         10   PLIT
+         8    TESLIT
+         4    WORD
+         /5   BELITS
+         8    NEWLIT
+LOWST    4    +0
+         5    PLIT
+TEST1    4    PLIT
+         2    MIDLIT
+         0    PLIT
+         7    ;+6
+         /4   BELITS
+         2    WORD
+         7    GOON4
+         10   PLIT
+         8    TEST1
+         /4   BELITS
+         0    TOPLIT
+         /5   BELITS
+         4    WORD
+         0    MIDLIT
+         /5   BELITS
+         10   MIDLIT
+NEWLIT   10   TOPLIT
+         4    PASS
+         7    ;+0
+GOON4    11   E5TESL
+         8    E5TESE
+         0    LITRAL
+         /8   1
+K        4    MIDLIT
+         2    PLIT
+         5    PLIT
+         8    GOON4
+
+(LHLAB)
+
+LHLAB    11   STACKL
+         8    STACKE
+         4    GRPCOD
+         9    SEP
+         4    NXCHAR
+         1    -29
+         7    ;+2
+         8    E1
+         11   INTAL
+         8    INTAE
+         5    W9
+         4    GRPCOD
+         9    LOOK
+         8    E1
+SEP      4    SP
+         5    W9
+LOOK     11   SEARCL
+         8    SEARCE
+         /0   0
+         5    BD
+         0    DP
+         4    PASS
+         7    PASS21
+         /4   DEBUT
+         9    GO1
+         8    E3
+PASS21   4    W9
+         /2   DEBUT
+         7    DECODE
+         8    ;+0
+GO1      4    W9
+         /5   DEBUT
+         4    OPTION
+         6    +3
+         7    DECODE
+         8    LISTLA
+E3       4    +3
+         8    EPLUS1
+
+(LISTLA)
+
+LISTLA   4    +10
+         11   CHOPL
+         8    CHOPE
+         4    BG
+         2    DP
+         9    ;+8
+         11   PRINTL
+         8    PRINTE
+         0    SIX2
+         4    -224
+         11   CHOPL
+         8    CHOPE
+         8    ;+7
+         4    -224
+         11   CHOPL
+         8    CHOPE
+         11   PRINTL
+         8    PRINTE
+         0    SIX2
+         4    OPTION
+         6    +2
+         7    A1
+         11   TABOCL
+         8    TABOCE
+A1       4    OPTION
+         6    +1
+         7    DECODE
+         4    W9
+         11   LISTL
+         8    TABAD
+         8    DECODE
+
+(E)
+
+E1       4    +1
+E        10   SP
+EPLUS1   10   ERGON
+         5    W2
+         4    &400000
+         5    BUFLAG
+         0    +0
+         4    W2
+         1    £^E0
+         5    ERRMES
+         11   PRINTL
+         8    ERRENT
+         0    THREE
+         4    BRKCOU
+         11   LISTL
+         8    TABAD
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         11   PRINTL
+         8    PRINTE
+         0    CHRCOU
+         4    ERRMES
+         2    £^E5
+         7    STPCOD
+         1    +4
+         7    STPCOD
+         8    DECODE
+THREE    +3
+ERRMES   +0
+
+(COMMEN)
+
+COMMEN   11   READL
+         8    READE
+         4    NXCHAR
+         1    -8
+         5    LFLAG
+R1       11   READL
+         8    READE
+         4    NXCHAR
+         1    -9
+         7    ;+2
+         8    R1
+         4    LFLAG
+         7    LAB
+GO2      11   READL
+         8    READE
+         8    DECODE
+LAB      4    PASS
+         7    GO2
+         4    -246
+         11   CHOPL
+         8    CHOPE
+         11   PRINTL
+         8    PRINTE
+         0    CHRCOU
+         8    GO2
+LFLAG    +0
+
+(SQBRAK)
+
+SQBRAK   10   BRKCOU
+         4    SP
+         5    CBB
+         4    PASS
+         7    RGLOBS
+         0    BD
+         4    +0
+         /5   DEBUT-1
+         /5   DEBUT-2
+         /5   DEBUT-3
+         4    OPTION
+         6    +3
+         7    ;+4
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +0
+         11   TESLAL
+         8    TESLAE
+RGLOBS   4    BD
+         1    -6
+         5    BLOC
+         11   MGLOB
+         8    MASKIT
+INSERT   11   READL
+         8    READE
+         9    INSERT
+         6    -32832
+         7    NXGLOB
+TESBRK   4    NXCHAR
+         1    -2
+         7    INSERT
+         4    NXCHAR
+         1    -61
+         7    ;+3
+         4    +4
+         8    EPLUS1
+         4    BLOC
+         1    +3
+         5    BD
+         4    PASS
+         7    PASS22
+         8    DECODE
+PASS22   0    BD
+         /4   DEBUT-2
+         7    DECODE
+         4    BD
+         1    -3
+         5    BD
+         8    PASS22
+NXGLOB   11   STACKL
+         8    STACKE
+         4    NAMONE
+         6    +131071
+         5    NAMONE
+         11   SEARCL
+         8    GLOBON
+         /0   0
+         5    BG
+         0    DP
+         /4   DEBUT+1
+         1    &400000
+         /5   DEBUT+1
+         4    GRPCOD
+         9    INSERT
+         8    TESBRK
+
+(PRCENT)
+
+PRCENT   11   MGLOB
+         8    UNMASK
+         4    PASS
+         7    PASS23
+         4    +0
+         11   TESLAL
+         8    TESLAE
+         4    +0
+         0    BD
+         /5   DEBUT-1
+         /5   DEBUT-2
+         /5   DEBUT-3
+         4    +1
+         11   TESLAL
+         8    TESLAE
+         4    LITFLG
+         9    ;+4
+         0    CURSTO
+         4    SP
+         /5   BELIT2
+         11   PRINTL
+         8    PRINTE
+         0    END1
+         4    FIRST
+         11   LISTL
+         8    LISTE1
+         4    MIDLIT
+         1    BELIT1
+         5    NEXT1
+         11   LISTL
+         8    TABAD
+         4    BELIT2
+         2    MIDLIT
+         2    TOPLIT
+         5    NEXT2
+         11   LISTL
+         8    TABAD
+         4    LITAD
+         2    DICAD
+         5    LISTL
+         4    BG
+         1    BD
+         2    BELOC
+         1    TOPLIT
+         12   +102400
+         13   LISTL
+         1    +512
+         14   8182
+         11   LISTL
+         8    LISTE1
+         4    +37
+         11   CHOPL
+         8    CHOPE
+         0    CURSTO
+         /4   NEXT2
+         5    SP
+         4    NEXT1
+         2    +8166
+         9    E52
+         4    NEXT2
+         2    +16383
+         9    E52
+STPCOD   4    +20
+         11   CHOPL
+         8    CHOPE
+         4    CHIPS
+         5    P1SUM
+         8    ;+0
+END1     +29
+         £^^^
+         £FIR
+         £ST
+         £ NE
+         £XT1
+         £  N
+         £EXT
+         £2
+         £DIC
+         £T^
+P1SUM    +0
+PASS23   4    CHIPS
+         2    P1SUM
+         7    ;+2
+         8    ;+0
+         5    PLIT
+         11   PUNBLL
+         8    PUNBLE
+         4    +1
+         11   PUNBLL
+         8    PUNBLE
+         11   BTOPL
+         8    BTOPT
+         8    ;+0
+
+(MGLOB)
+
+MGLOB    +0
+MASKIT   4    +0
+MASKIJ   5    MASK
+         4    BG
+         5    DP
+RETUR3   4    DP
+         0    MGLOB
+         /7   1
+         0    DP
+         /4   DEBUT+1
+         6    +131071
+         1    MASK
+         /5   DEBUT+1
+         4    +3
+         1    DP
+         5    DP
+         8    RETUR3
+UNMASK   4    &400000
+         8    MASKIJ
+MASK     +0
+
+(START)
+
+STA920   4    +0
+         8    ;+2
+STA903   4    +1
+         5    CHOPC
+         4    +0
+         5    BG
+FRIGSA   4    +0
+         5    LITFLG
+         5    BELIT1
+X1       5    BELIT2
+         4    +0
+         5    DEBUT
+         5    DEBUT+1
+         5    MIDLIT
+         5    TOPLIT
+         5    ERGON
+         4    +16383
+         5    FIRST
+         5    BRKCOU
+         4    -1
+GO3      5    PASS
+         4    BELOC
+         5    BLOC
+         4    BRKCOU
+         7    ;+4
+         4    BLOC
+         1    +3
+         5    BD
+         4    +0
+         5    BRKCOU
+         5    FLAG
+         5    CHIPS
+         5    CHOPF
+         4    -1
+         5    CURSTO
+         4    +7
+         5    OPTION
+CONTIN   4    &400000
+         5    BUFLAG
+         4    +0
+         5    CHIPF
+         8    DECODE
+START2   4    ERGON
+         7    IGNER
+         8    ;+0
+IGNER    11   BTOPL
+         8    BTOPI
+         4    SP
+         5    BTOPA
+         4    +0
+         8    GO3
+FRIGSB   4    -1
+         5    LITFLG
+         4    NEXT1
+         5    BELIT1
+         4    NEXT2
+         8    X1
+
+(SKIP)
+
+SKIP     11   INTAL
+         8    INTAE
+         1    SP
+         5    SP
+         4    OPTION
+         6    +4
+         7    PSP
+         4    PASS
+         9    TESTO
+PAZ      4    +0
+         11   BTOPL
+         8    BTOPE
+         4    -1
+         1    INTGR
+         5    INTGR
+         7    TESTO
+         8    PAZ
+TESTO    11   E5TESL
+         8    E5TESE
+         8    DECODE
+PATCH    4    FLAG
+         9    ;+5
+         4    SP
+         5    RESERV
+         4    -1
+         5    FLAG
+         11   READL
+         8    READE
+         4    NXCHAR
+         1    -11
+         11   READL
+         7    READE
+         4    GRPCOD
+         14   1
+         9    PLUSX
+         14   1
+         9    LETTER
+         4    NXCHAR
+         1    -2
+         7    UPSTO
+         1    -25
+         7    ;+2
+         8    E51
+         11   INTAL
+         8    INTAE
+         1    SP
+         8    GO4
+PLUSX    11   NUMBER
+         8    REST
+         8    GOPLU1
+UPSTO    11   NUMBER
+         8    NBEGIN
+         1    +8192
+         8    GO4
+LETTER   11   LABINL
+         8    LABINE
+         9    E51
+GO4      5    INTGR
+GOPLU1   4    LITFLG
+         9    NOCH
+         4    PASS
+         7    NOCH
+CSP      4    SP
+         0    CURSTO
+         /5   BELIT2
+NOCH     4    INTGR
+         5    SP
+         1    -8191
+         14   8175
+         5    CURSTO
+PSP      4    SP
+         5    BTOPA
+         8    TESTO
+ASTERI   11   INTAL
+         8    INTAE
+         5    OPTION
+         6    +32
+         7    ;+9
+         4    PASS
+         9    ;+7
+         11   BTOPL
+         8    BTOPT
+         11   BTOPL
+         8    BTOPI
+         4    SP
+         5    BTOPA
+         4    BTOPF
+         7    ;+2
+         8    ;+4
+         4    OPTION
+         14   8179
+         5    BTOPF
+         4    OPTION
+         6    +8
+         7    ;+3
+         4    +8192
+         8    GO4
+         4    OPTION
+         6    +16
+         7    DECODE
+         4    +8
+         8    GO4
+E51      4    +5
+         8    EPLUS1
+RESTOR   4    FLAG
+         7    DECODE
+         4    +0
+         5    FLAG
+         4    RESERV
+         8    GO4
+FLAG     +0
+RESERV   +0
+TRIG     4    CURSTO
+         7    E51
+         4    SP
+         1    =7 0
+         5    BTOPJ
+         8    DECODE
+
+(PUNBLK)
+
+PUNBLL   +0
+PUNBLE   5    BLKPO
+         0    BLKPO
+         /4   MIDLIT
+         2    PLIT
+         7    EX
+         /4   BELIT1
+         5    BTOPA
+AW       0    PLIT
+         /4   BELITS
+         11   BTOPL
+         8    BTOPE
+         10   PLIT
+         0    BLKPO
+         /4   MIDLIT
+         2    PLIT
+EX       0    PUNBLL
+         /7   1
+         8    AW
+
+(READ)
+
+RW0      +0
+RW1      +0
+RW2      +0
+RW3      +0
+RW4      +0
+RW5      +0
+BUFLAG   +0
+NXCHAR   +0
+GRPCOD   +0
+CHRCOU   +0
+I        >42
+READL    +0
+READE    4    BUFLAG
+         9    FILBUF
+         4    RW5
+REPEAT   5    NXCHAR
+         1    -1
+         7    NLCR
+         10   RW0
+         4    RW0
+         9    NEWCHA
+         4    -3
+         5    RW0
+         0    RW1
+         4    +0
+         /0   I+40
+         14   6
+         5    RW5
+         3    RW4
+         10   RW1
+         8    EXIT1
+NEWCHA   0    RW4
+         4    +0
+         14   7
+         5    RW5
+         3    RW4
+         8    EXIT1
+NLCR     4    &400000
+         5    BUFLAG
+EXIT1    4    +0
+         5    GRPCOD
+         4    NXCHAR
+         0    GRPCOD
+         /1   LIST1
+         9    ;+3
+         10   GRPCOD
+         8    ;-4
+         /4   LIST2
+         5    GRPCOD
+         0    READL
+         /8   1
+LIST1    -2
+         -14
+         -10
+         -7
+         -26
+         -5
+LIST2    /0   0
+         2    0
+         8    0
+         2    0
+         4    0
+         2    0
+FILBUF   4    +0
+         5    BUFLAG
+         5    W7
+         5    CHRCOU
+         4    -40
+         5    RW1
+NEXWR1   4    -3
+         5    RW0
+         4    +0
+         5    RW2
+NEXCHA   11   CHIPL
+         8    CHIPE
+         10   CHRCOU
+         7    VOID
+         1    -10
+         7    NEWLIN
+         1    -10
+         7    STOP
+         1    -17
+         7    PCTEST
+         1    +4
+         7    VOID
+         9    ;+4
+         1    -63
+         9    ;+3
+         8    ;+3
+         4    -64
+         1    +32
+         1    +32
+STROKE   1    RW2
+         5    RW2
+         10   RW0
+         4    RW0
+         9    PACK
+         4    RW2
+         0    RW1
+         /5   I+40
+         10   RW1
+         4    RW1
+         9    NEXWR1
+         11   CHIPL
+         8    CHIPE
+         1    -10
+         7    E7
+         1    -10
+         7    E9
+         8    ;-6
+E7       4    +7
+         8    E
+PACK     0    +0
+         4    RW2
+         14   6
+         5    RW2
+         8    NEXCHA
+VOID     4    &400000
+         5    W7
+         4    +0
+         8    STROKE
+NEWLIN   4    +1
+         1    RW2
+         5    RW2
+RETUR4   10   RW0
+         4    RW0
+         9    JSTIFY
+         4    RW2
+         0    RW1
+         /5   I+40
+         4    W7
+         7    ;+3
+         4    +8
+         8    E
+         4    -3
+         5    RW0
+         4    -39
+         5    RW1
+         4    +0
+         0    I
+         14   6
+         3    RW4
+         8    REPEAT
+JSTIFY   4    RW2
+         0    +0
+         14   6
+         5    RW2
+         8    RETUR4
+STOP     4    CHRCOU
+         1    -1
+         7    ;+0
+         8    E9
+PCTEST   4    CHRCOU
+         1    -1
+         7    PRCENT
+E9       4    +9
+         8    E
+
+(NUMBER)
+
+NUMBER   +0
+FRACT    11   INTL
+         8    INTE
+         5    WX
+         4    NXCHAR
+         1    -15
+         7    A2
+         1    +1
+         7    DECPT
+         4    -17
+         8    C
+A2       4    +0
+         5    F1
+EA       11   INTAL
+         8    INTAE
+C        1    +122880
+         6    +122879
+         5    X2
+         1    +17
+         6    +122879
+         5    Y2
+         2    +0
+         4    WX
+Y2       +0
+         5    WY
+         4    F1
+X2       +0
+         1    WY
+EXIT2    0    NUMBER
+         /8   1
+DECPT    11   INTL
+         8    INTE
+         0    W5
+         /4   TABLE
+         5    W7
+         4    W5
+         2    +6
+         9    E6
+         7    SIX1
+         4    +0
+         5    W3
+RETUR5   /4   TABLE
+         14   8191
+         2    INTGR
+         9    CLEAR
+         5    INTGR
+         4    +65536
+REPT     5    W8
+         0    W3
+         14   1
+         4    INTGR
+         14   1
+         13   W7
+         14   8191
+         1    W8
+         5    F1
+         4    NXCHAR
+         1    -15
+         7    EA
+         4    +0
+         8    C
+E6       4    +6
+         8    E
+SIX1     4    W4
+         5    INTGR
+         8    RETUR5
+CLEAR    4    +0
+         8    REPT
+INTL     +0
+INTE     4    +0
+         5    W5
+         5    INTGR
+IREPT    11   READL
+         8    READE
+         6    +65536
+         7    NODIG
+ENTRY2   4    NXCHAR
+         6    +15
+         0    +0
+         14   8191
+         1    INTGR
+         14   8190
+         1    INTGR
+         3    W3
+         5    W4
+         14   3
+         5    INTGR
+         10   W5
+         8    IREPT
+NODIG    4    INTGR
+         0    INTL
+         /8   1
+NBEGIN   11   READL
+         8    READE
+         6    -65600
+         7    REST
+         4    +7
+         8    E
+REST     4    +0
+         5    W5
+         5    INTGR
+         11   INTL
+         8    ENTRY2
+         4    W5
+         2    +6
+         9    E6
+         4    W4
+         2    +16383
+         9    E6
+         4    INTGR
+         8    EXIT2
+INTAL    +0
+INTAE    11   READL
+         8    READE
+INTA1    4    GRPCOD
+         6    +65536
+         7    NOTDIG
+         4    +0
+         5    INTGR
+         11   INTL
+         8    ENTRY2
+         8    INTEX
+NOTDIG   4    NXCHAR
+         1    -11
+         7    PLUS
+         1    -2
+         7    MINUS
+         8    E1
+PLUS     11   INTL
+         8    INTE
+         5    INTGR
+INTEX    0    INTAL
+         /8   1
+MINUS    11   INTL
+         8    INTE
+         2    +0
+         8    ;-6
+WX       +0
+WY       +0
+F1       +0
+
+(STACK)
+
+STACKL   +0
+STACKE   4    +0
+         5    NAMTWO
+         5    W4
+         4    -2
+         5    W2
+         4    -3
+         5    W1
+RETUR6   4    NXCHAR
+         11   ADDCHL
+         8    ADDCHE
+         8    ;+7
+         4    W3
+         0    W2
+         /5   BRKCOU
+         10   W2
+         4    -3
+         5    W1
+         11   READL
+         8    READE
+         6    +98304
+         7    ;+4
+         4    W2
+         7    ;-5
+         8    RETUR6
+         4    W2
+         7    EXIT3
+         4    +0
+         11   ADDCHL
+         8    ADDCHE
+         8    ;-3
+         4    W3
+         0    W2
+         /5   BRKCOU
+EXIT3    0    STACKL
+         /8   1
+
+(ADDCHA)
+
+ADDCHL   +0
+ADDCHE   1    W4
+         5    W3
+         0    +0
+         14   6
+         5    W4
+         10   W1
+         4    W1
+         0    ADDCHL
+         /9   1
+         /8   2
+
+(GLOBALS)
+
+         +0
+F2       +0
+INTGR    +0
+CBB      +0
+SP       +8
+WORD     +0
+DP       +0
+PASS     -1
+CURSTO   -1
+PLIT     +0
+BELIT1   +0
+BELIT2   +0
+LITAD    0    BELITS
+         +0
+FIRST    +0
+MIDLIT   +0
+TOPLIT   +0
+W0       +0
+W1       +0
+W2       +0
+W3       +0
+W4       +0
+W5       +0
+         +0
+W7       +0
+W8       +0
+W9       +0
+OPTION   +0
+SIX2     +6
+NAMONE   +0
+NAMTWO   +0
+BRKCOU   +0
+BLOC     +0
+         +0
+         +0
+ERGON    +0
+DFLAG    +0
+LITFLG   +0
+BLKPO    +0
+NEXT1    +0
+NEXT2    +0
+BD       +0
+BG       +0
+
+(PRINT)
+
+PRINTL   +0
+ERFLAG   +0
+ERRENT   4    +0
+         8    ;+2
+PRINTE   4    +1
+         5    ERFLAG
+         0    PRINTL
+         /4   1
+         6    +8191
+         5    W0
+         0    W0
+         /4   0
+         2    +0
+         5    W1
+NEXWR2   4    -3
+         5    W2
+         0    W0
+         /0   1
+         4    +0
+         14   6
+         5    W3
+         3    W4
+NEXCH    4    W3
+         1    -1
+         7    ;+2
+         1    +23
+         1    +10
+         11   CHOPL
+         8    CHOPE
+         4    ERFLAG
+         11   CHOPL
+         7    CHOPE
+         10   ERFLAG
+         10   W1
+         4    W1
+         0    PRINTL
+         /7   2
+         4    +0
+         0    W4
+         14   7
+         5    W3
+         3    W4
+         10   W2
+         4    W2
+         9    NEXCH
+         10   W0
+         8    NEXWR2
+
+(TABLE)
+
+TABLE    +1
+         +10
+         +100
+         +1000
+         +10000
+         +100000
+         +125000
+
+(LISTAD)
+
+ZSUPRS   +0
+LISTL    +0
+LISTE1   5    W1
+LISTE2   4    +0
+         5    ZSUPRS
+         4    +4
+         5    W2
+RETUR7   4    +16
+         5    W3
+         0    W2
+         /4   TABLE
+         5    W4
+         2    W1
+         5    W1
+         9    ;+4
+         10   W3
+         4    W4
+         8    ;-5
+         1    W4
+         5    W1
+         4    -1
+         1    W2
+         5    W2
+         4    W3
+         2    +16
+         7    ;+3
+         10   ZSUPRS
+         8    ;+3
+         4    ZSUPRS
+         7    ;+2
+         4    W3
+         1    +32
+         11   CHOPL
+         8    CHOPE
+         4    W2
+         7    ;+2
+         8    RETUR7
+         4    W1
+         1    +48
+         11   CHOPL
+         8    CHOPE
+         0    LISTL
+         /8   1
+TABAD    5    W1
+         4    -224
+         11   CHOPL
+         8    CHOPE
+         8    LISTE2
+
+(SEARCH)
+
+SEARCL   +0
+SEARCE   11   E5TESL
+         8    E5TESE
+         4    BD
+         5    NX
+         4    BLOC
+         5    BLOC1
+         4    BD
+TESDIC   5    DP
+         2    BLOC1
+         9    END2
+         0    DP
+         /4   DEBUT+1
+         2    NAMONE
+         7    TES2
+A3       4    +3
+         1    DP
+         8    TESDIC
+TES2     /4   DEBUT+2
+         2    NAMTWO
+         7    EXIT4
+         8    A3
+END2     4    BLOC1
+         7    GO5
+G        4    +0
+         5    BLOC1
+         4    BG
+         8    TESDIC
+GO5      0    SEARCL
+         4    SP
+         /1   1
+         0    NX
+         /5   DEBUT-3
+         4    NAMONE
+         /5   DEBUT-2
+         4    NAMTWO
+         /5   DEBUT-1
+         4    -3
+         1    NX
+         5    DP
+         0    SEARCL
+         /8   2
+EXIT4    0    SEARCL
+         /8   3
+GLOBON   11   E5TESL
+         8    E5TESE
+         4    BG
+         5    NX
+         8    G
+NX       +0
+BLOC1    +0
+
+(E5TEST)
+
+E5TESL   +0
+E5TESE   4    BELOC
+         2    BG
+         1    -3
+         5    SPACE1
+         4    TOPLIT
+         1    LITAD
+         2    DICAD
+         1    BD
+         5    SPACE2
+         1    SPACE1
+         1    -9
+         9    E52
+         4    SPACE1
+         1    -3
+         9    TLTB
+         4    SPACE2
+         1    -3
+         9    BLTT
+TESTSP   0    CURSTO
+         4    SP
+         /2   MSP
+         9    E52
+         0    E5TESL
+         /8   1
+         +8166
+MSP      +16383
+TLTB     4    DICAD
+         1    BELOC
+         1    =/4 0
+         5    READ
+         4    INC
+         5    INCDEC
+         4    BELOC
+         2    BD
+         5    COUNT2
+         4    SPACE2
+         2    +0
+         8    GO9
+BLTT     4    DICAD
+         1    BD
+         1    =/4 0
+         5    READ
+         4    DEC
+         5    INCDEC
+         4    BD
+         2    BELOC
+         5    COUNT2
+         4    SPACE1
+GO9      14   8191
+         5    SHIFT
+         1    READ
+         1    =1 0
+         5    STORE
+         4    COUNT2
+         7    ;+7
+INCDEC   >1
+         0    COUNT2
+         5    COUNT2
+READ     >1
+STORE    >1
+         8    ;-7
+         4    SHIFT
+         1    BELOC
+         5    BELOC
+         4    SHIFT
+         1    BD
+         5    BD
+         4    SHIFT
+         1    BLOC
+         5    BLOC
+         8    TESTSP
+INC      1    +1
+DEC      1    -1
+E52      4    +5
+         8    EPLUS1
+SPACE1   +0
+SPACE2   +0
+DICAD    0    DEBUT
+SHIFT    +0
+COUNT2   +0
+
+(TESLAB)
+
+TESLAL   +0
+TESLAE   5    DFLAG
+         0    DFLAG
+         /4   BLOC
+         5    DP
+TEST2    0    DFLAG
+         /4   BD
+         2    DP
+         0    TESLAL
+         /9   1
+         0    DP
+         /4   DEBUT
+         9    ERROR
+GO6      4    -3
+         1    DP
+         5    DP
+         8    TEST2
+ERROR    /4   DEBUT+1
+         9    ;+2
+         1    &400000
+         5    NAM1
+         /4   DEBUT+2
+         5    NAM2
+         11   PRINTL
+         8    ERRENT
+         0    MESSAG
+         10   ERGON
+         8    GO6
+MESSAG   +12
+         £^EU
+         +0
+NAM1     +0
+NAM2     +0
+
+(TABOCT)
+
+TABOCL   +0
+TABOCE   4    -224
+         11   CHOPL
+         8    CHOPE
+         4    +38
+         11   CHOPL
+         8    CHOPE
+         4    +0
+         5    W3
+A4       0    W3
+         4    W9
+         /14  8180
+         6    +7
+         1    +48
+         11   CHOPL
+         8    CHOPE
+         4    +3
+         1    W3
+         5    W3
+         1    -15
+         9    A4
+         0    TABOCL
+         /8   1
+
+(DUMP)
+
+DUMP     11   BTOPL
+         8    BTOPI
+         4    ;+4
+         2    =/4 8
+         11   DUMBLL
+         8    DUMBLE
+         /4   ASSEND
+         4    BG
+         7    ;+4
+         11   DUMBLL
+         8    DUMBLE
+         /4   DEBUT
+         11   BTOPL
+         8    BTOPT
+         8    ;+0
+DUMBLL   +0
+DUMBLE   5    DP
+         0    DUMBLL
+         /4   1
+         5    ;+5
+         1    DP
+         6    +8191
+         5    BTOPA
+         0    DP
+         +0
+         11   BTOPL
+         8    BTOPE
+         10   DP
+         4    DP
+         9    ;-6
+         0    DUMBLL
+         /8   2
+
+(POSITION OF DICTIONARY)
+
+ASSEND=2110
+BELITS=2110
+DEBUT=8159
+BELOC -2900
+<! Halt !>

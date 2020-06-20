@@ -1,0 +1,518 @@
+﻿
+((FLOATING-POINT MATHEMATICAL SUBROUTINES, 20/12/69)
+
+SERIES   +0
+ 4 +0
+ 11 LINK         (SET RETURN FROM DLMULT)
+ 5 FPA+1
+ 0 SERIES
+ /1 1
+ 5 FPA           (INCREMENT FPA)
+ /4 2
+ 10 SERIES
+ 1 FPA+1
+ 10 SERIES
+ 9 OVERFLOW
+RETURN 5 FPA+1   (INCREMENT FPA+1)
+ /4 4
+ /9 5            (RETURN IF LAST COEFFICIANT , FPA,FPA+1 = SUM)
+ 8 DLMULT
+OVERFLOW 6 =15 8191
+ 10 FPA
+ 8 RETURN
+
+SQRT
+QFSQRT +0
+ +0 (EXIT FROM QF)
+ 4 FPA
+ 9 ERRSQRT
+ 7 RETSQRT
+ 4 FPA+2
+ 6 +1
+ 7 EVEN
+ 0 FPA+1 (HALVE MANTISSA)
+ 14 1
+ 4 FPA
+ 14 8191
+ 3 FPA+1
+ 5 FPA
+EVEN 4 FPA (X0=X/2+.5)
+ 14 8191
+ 1 =8 0
+ 5 WS+17
+ 4 FPA (X1=[X/X0+X0]/2)
+ 13 WS+17
+ 6 =/15 8190 (ENSURE BIT 1=0)
+ 1 WS+17
+ 14 8191
+ 6 +131071
+ 5 WS+17
+4 FPA (X2=[X/X1+X1]/2)
+13 WS+17
+ 6 =/15 8190
+1 WS+17
+14 8191
+6 +131071
+5 WS+17
+ 4 FPA (X3=[X/X2+X2]/2)
+ 13 WS+17
+ 6 =/15 8190
+ 1 WS+17
+ 14 8191
+ 6 +131071
+ 5 WS+17
+ 4 +0
+ 5 WS+18
+ 0 FPA+1 (NEXT STEP IS DOUBLE LENGTH)
+ 14 1
+ 4 FPA
+ 14 8191
+ 3 WS+14 (WS13AND14/WS17AND18)
+ 5 WS+13
+ 11 DLDIV
+ 8 DLDIV+1
+ 0 WS+18
+ 14 1
+ 4 WS+17
+ 14 8191
+ 3 WS+18
+ 5 WS+17
+ 4 WS+18
+ 1 WS+29
+ 9 CARRYSQRT
+BFC 5 FPA+1
+ 4 WS+17
+ 1 WS+28
+ 5 FPA
+ 10 FPA+2 (ADD 1 TO EXPONENT AND HALVE IT)
+ 4 FPA+2 (THIS WORKS IN ALL CASES)
+ 14 8191 (POS,NEG,ZERO,ODD AND EVEN)
+ 5 FPA+2
+RETSQRT 4 SQRT
+ 5 QF
+ 8 INTERP (RETURN TO FLOATING POINT MODE)
+CARRYSQRT 10 WS+17
+ 6 +131071
+ 8 BFC
+ERRSQRT   4     +1
+          8     QFMERR
+ 4 FPA+1 (RESUME TO EVALUATE SQRT.MODX)
+ 7 FPA1ZR
+ 2 +0
+ 6 +131071
+ 5 FPA+1
+ 10 FPA
+ 4 FPA
+ 2 +0
+ 5 FPA
+ 8 SQRT+5
+FPA1ZR 4 FPA
+ 1 =/0 0
+ 7 ;+2 (SPECIAL CASE WHEN MANTISSA=-1)
+ 8 ;-7
+ 4 =8 0
+ 5 FPA
+ 10 FPA+2
+ 8 SQRT+5
+
+COS
+QFCOS   +0
+   +0           (EXIT QF)
+ 4 COS
+ 5 QF           (SET RETURN)
+ 4 +0
+ 8 SINCOS
+SIN
+QFSIN   +0
+   +0           (EXIT QF)
+ 4 SIN
+ 5 QF           (SET RETURN)
+ 4 =/8 0
+SINCOS 5 SIN    (STORE 0.0 FOR COS AND -0.5 FOR SIN)
+ 4 &006671
+ 5 FPB+1
+ 4 &242763
+ 5 FPB
+ 11 LINK
+ 8 DLMULT+1     (FPA,FPA+1 = 2*B/PY)
+ 4 FPA+2
+ 1 +35
+ 9 ;+3
+ 1 -73
+ 9 ;+2
+ 4 +0
+ 1 =15 37
+ 6 =14 8191
+ 5 ;+4
+ 0 FPA+1
+ 14 1
+ 4 FPA
+   +0           (SHIFT B LEFT P-1 PLACES)
+ 1 SIN          (ADD INCREMENT)
+ 3 FPA+1
+ 3 FPB+1
+ 5 FPA
+ 5 FPB
+ 11 LINK
+ 8 DLMULT+1
+ 5 FPB
+ 4 FPA+1
+ 5 FPB+1        (FPB,FPB+1 = X^2)
+ 11 SERIES
+ 8 SERIES+1     (SUM SERIES)
+   -1
+   +130994
+   +0
+   +5724
+   -3
+   +87061
+   +85
+   +26055
+   -1934
+   +43641
+   +23510
+   +74970
+   -114342
+   +37873
+   +92681
+   +117968
+   +0
+   -1
+ 4 FPA+1
+ 5 FPB+1
+ 4 FPA
+ 5 FPB
+ 11 LINK
+ 8 DLMULT+1      (FPA,FPA+1 = COS[PY*X/2]^2/2)
+ 0 FPA+1
+ 14 1
+ 4 FPA
+ 14 1
+ 1 =/8 0
+ 3 FPA+1
+ 5 FPA           (FPA,FPA+1 = COS[PY*X/2]^2-0.5)
+ 4 +1
+ 5 FPA+2         (FPA+2 = 1)
+ 8 FSTAND
+
+ARCTAN
+QFATAN   +0
+   +0            (EXIT QF)
+ 4 FPA+2
+ 2 +0
+ 9 AT1           (TO AT1 IF P>0)
+ 4 FPA
+ 5 WS+28
+ 4 FPA+1
+ 5 WS+29         (WS+28,WS+29 = FPA,FPA+1)
+ 4 ATORD1
+ 5 ATST1
+ 8 AT2
+AT1 1 +1
+ 5 FPA+2         (FPA+2 = 1-P)
+ 4 FPA
+ 5 WS+17
+ 4 FPA+1
+ 5 WS+18         (WS+17,WS+18 = B)
+ 4 +65535
+ 5 WS+13
+ 4 +131071
+ 5 WS+14         (WS+13,WS+14 = 0.5-2^-34)
+ 11 DLDIV
+ 8 DLDIV+2       (WS+28,WS+29 = 1/[2*B])
+ 4 ATORD4
+ 5 ATST1
+ 4 FPA
+ 9 AT4
+ 4 ATORD3
+ 8 ;+2
+AT4 4 ATORD2
+ 5 ATST2
+AT2 4 FPA+2      (NOW -1<P)
+ 1 +36
+ 9 ATBIG
+AT3 1 =14 8156
+ 6 =14 8191
+ 5 ;+4           (SET SHIFT)
+ 0 WS+29
+ 14 1
+ 4 WS+28
+   +0            (SHIFT TO DESTANDARDISE Z SO THAT P = 0)
+ 3 FPA+1
+ 3 FPB+1
+ 3 WS+29
+ 5 FPA
+ 5 FPB
+ 5 WS+28
+ 11 LINK
+ 8 DLMULT+1      (FPA,FPA+1 = Z^2)
+ 5 FPB
+ 4 FPA+1
+ 5 FPB+1         (FPB,FPB+1 = Z^2)
+ 11 SERIES
+ 8 SERIES+1      (SUM SERIES)
+   +23
+   +92819
+   -186
+   +36020
+   +683
+   +41427
+   -1600
+   +111633
+   +2752
+   +58163
+   -3873
+   +55530
+   +4877
+   +77093
+   -5920
+   +44706
+   +7275
+   +99259
+   -9362
+   +41427
+   +13107
+   +21722
+   -21846
+   +87501
+   +65535
+   +131071
+   +0
+   -1
+ 4 WS+28
+ 5 FPB
+ 4 WS+29
+ 5 FPB+1
+ 11 LINK
+ 8 DLMULT
+ 4 +1
+ 5 FPA+2          (FPA = ARCTAN[Z])
+ATST1     +0      (P>0 STORE FORMAT PARAMETER ELSE TO AOUT)
+ 5 ATK
+ 4 +0
+ 5 EXIT+2
+ 11 QF
+ 8 FSTAND         (ENTER QF UNPACKED)
+ATST2   +0        (A>=1 NEGADD PY/4, A<=-1 NEGADD -PY/4)
+   +0             (EXIT QF , FPA = ARCTAN[A])
+ 4 ATK
+ 5 EXIT+2
+ATOUT 4 ARCTAN
+ 5 QF             (SET RETURN)
+ 8 FSTAND
+ATORD1 8 ATOUT
+ATMPB4 &466740
+ &112567
+   +1
+ATPPB4 &311037
+   &265211
+   +1
+ATORD2 2 ATMPB4
+ATORD3 2 ATPPB4
+ATORD4 4 EXIT+2
+ATBIG 4 +0
+ 8 AT3
+ATK +0
+
+LN
+QFLOG  +0
+  +0             (EXIT QF)
+ 4 FPA
+ 7 LOERR         (ERROR A=0)
+ 9 LOERR         (ERROR A<0)
+ 0 FPA+1
+ 14 1
+ 4 FPA
+ 14 8191
+ 1 =8 0
+ 5 WS+17
+ 3 WS+18         (WS+17,WS+18 = [B+1]/2)
+ 1 =/0 0
+ 5 WS+13
+ 3 WS+14         (WS+13,WS+14 = [B-1]/2)
+ 11 DLDIV
+ 8 DLDIV+1       (WS+28,WS+29 = -T)
+ 5 FPA
+ 5 FPB
+ 4 WS+29
+ 5 FPA+1
+ 5 FPB+1
+ 11 LINK
+ 8 DLMULT        (FPA,FPA+1 = T^2)
+ 5 FPB
+ 4 FPA+1
+ 5 FPB+1         (FPB,FPB+1 = T^2)
+ 11 SERIES
+ 8 SERIES+1      (SUM SERIES)
+   +18142
+   +75061
+   +20153
+   +80261
+   +23831
+   +48226
+   +29127
+   +14509
+   +37449
+   +18724
+   +52428
+   +104857
+   +87381
+   +43690
+   +0
+   -1
+ 11 LINK
+ 8 DLMULT
+ 0 WS+29
+ 14 1
+ 4 WS+28
+ 3 FPB+1
+ 5 FPB           (FPB,FPB+1 = -T)
+ 14 1
+ 5 WS+28
+ 3 WS+29         (WS+28,WS+29 = -2*T)
+ 11 LINK
+ 8 DLMULT
+ 1 WS+28
+ 5 FPA
+ 4 FPA+1
+ 1 WS+29
+ 9 LOV
+LO 5 FPA+1       (FPA,FPA+1 = LOG[B])
+ 4 FPA+2
+ 5 LOK
+ 4 +0
+ 5 FPA+2         (STORE FPA+2 AND SET 0)
+ 11 QF
+ 8 FSTAND        (STANDARDISE FPA)
+ +0
+ 4 FPA
+ 5 WS+28
+ 4 FPA+1
+ 5 WS+29
+ 4 FPA+2
+ 5 WS+30         (STORE FPA)
+ 4 LOK
+ 5 FPA
+ 4 EXIT+2
+ 5 LOK           (STORE FORMAT PARAMETER)
+ 4 +0
+ 5 FPA+1
+ 5 EXIT+2
+ 4 +17
+ 5 FPA+2         (FPA = P)
+ 11 QF
+ 8 FSTAND        (ENTER QF UNPACKED)
+ 12 LOGE2
+ 1 WS+28
+   +0            (EXIT QF , FPA = LOG[A])
+ 4 LOK
+ 5 EXIT+2        (RESET FORMAT PARAMETER)
+ 4 LN
+ 5 QF
+ 8 INTERP
+LOGE2 +90852
+  +24543
+   +0
+LOV 6 +131071
+ 10 FPA
+ 8 LO
+LOERR     4     +3
+          8     QFMERR
+ 4 LN
+ 5 QF
+FZERO 4 +0 (FPA:=0.0)
+ 5 FPA
+ 5 FPA+1
+ 5 FPA+2
+ 8 INTERP
+
+LOK +0
+
+EXP
+QFEXP   +0
+   +0            (EXIT QF)
+ 4 EXP
+ 5 QF            (SET RETURN)
+ 4 FPA+2
+ 9 EXNEGP        (TO EXNEGP IF P<0)
+ 1 -17
+ 9 EXPOSP        (TO EXPOSP IF -1<P<17)
+ 4 FPA
+ 9 EXZERO        (TO EXZERO IF P>16 AND B<0)
+          4     +4
+          8     QFMERR
+ 8 INTERP        (RESTART AT 9,TAKES EXP[X] = X)
+EXZERO 8 FZERO        (EXP[X] = 0.0)
+EXONE 4 -36
+EXNEGP 1 +36     (P<0,DESTANDARDISE FPA SO THAT P = 0)
+ 9 EXONE
+ 1 =14 8156
+ 5 ;+4
+ 0 FPA+1
+ 14 1
+ 4 FPA
+   +0
+ 5 FPA
+ 3 FPA+1
+ 4 +0
+ 5 FPA+2
+EXPOSP  4 FPA+2  (NOW -1<P)
+ 1 =14 1
+ 5 ;+16          (SET SHIFT FOR F)
+ 1 =0 8175
+ 6 =14 8191
+ 5 ;+7           (SET SHIFT FOR I)
+ 4 LOG2E+1
+ 5 FPB+1
+ 4 LOG2E
+ 5 FPB
+ 11 LINK
+ 8 DLMULT+1      (FPA,FPA+1 = B*LOG2E)
+   +0            (SHIFT TO GET I*2^-17)
+ 5 FPA+2
+ 10 FPA+2        (FPA+2 = [I+1]*2^-17)
+ 0 FPA+1
+ 14 1
+ 4 FPA
+   +0            (SHIFT TO GET F)
+ 6 =15 8191
+ 1 =/8 0
+ 14 1
+ 5 FPB
+ 3 FPB+1         (FPB,FPB+1 = X)
+ 11 SERIES
+ 8 SERIES+1      (SUM SERIES)
+   +0
+   +1453
+   +0
+   +29363
+   +3
+   +112955
+   +55
+   +93527
+   +643
+   +3708
+   +5566
+   +21285
+   +32121
+   +12955
+   +92681
+   +117968
+   +0
+   -1
+ 8 INTERP
+LOG2E   +94548
+   +60581
+
+
+QFMERR    0     +0
+          14    6
+          1     £ 0.
+          5     ;+6
+          11    ERRORL
+          8     ERRORE
+          £QFM
+          £ ER
+          £ROR
+          >1
+<! Halt !>

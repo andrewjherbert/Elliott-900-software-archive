@@ -1,0 +1,28 @@
+﻿<! Scanning From "WOOD\IMAGES" TO "WOOD\SCANNED" !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\WOOD\IMAGES\CASTLE.1 " !>
+<! WOOD\SCANNED\CASTLE Detected to be 900 telecode !>
+<! Parity Error (Code = 42) !>
+<! Parity Error (Code = 79) !>
+<! Parity Error (Code = 79) !>
+<! Parity Error (Code = 14) !>
+<! Parity Error (Code = 14) !>
+<! Parity Error (Code = 14) !>
+<! Parity Error (Code = 88) !>
+<! Parity Error (Code = 88) !>
+<! Parity Error (Code = 88) !>
+<! Parity Error (Code = 88) !>
+<! Parity Error (Code = 88) !>
+<! Parity Error (Code = 88) !>
+<! Parity Error (Code = 88) !>
+<! Unknown 900 character 024 !>
+<! Unknown 900 character 024 !>
+<! Unknown 900 character 024 !>
+<! Unknown 900 character 024 !>
+<! Unknown 900 character 024 !>
+<! Unknown 900 character 130 !>
+<! WOOD\SCANNED\CASTLE Forced to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\WOOD\IMAGES\CASTLE.2 " !>
+<! 
+2 Files Scanned 0 Files Ignored !>
+<! 0 Parity Errors 0 Other problems !>
+FINISHED

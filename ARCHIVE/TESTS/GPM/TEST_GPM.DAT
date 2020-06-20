@@ -1,0 +1,42 @@
+﻿C Test GPM
+
+on 903 16K
+
+c load gpm
+at ptr file ../../SCRIPTS/GPM/GPM.BIN
+j 8181
+st 8175
+
+c run gpm
+select out tty
+
+c run macros
+at ptr file ../../MASTERS/GPM/GPMDATA.900
+
+c Functional tests
+j 10
+st 36
+j 9
+st 1246
+
+c Strachey examples
+j 10
+st 36
+
+c Hanoi
+j 10
+st 36
+
+c Permutations
+j 10
+st 36
+
+c Primes
+j 10
+st 36
+
+c Collatz
+j 10
+st 36
+
+sh t

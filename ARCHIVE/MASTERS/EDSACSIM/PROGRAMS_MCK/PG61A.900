@@ -1,0 +1,293 @@
+﻿
+[WWG Page 61 Example by Don Hunter.
+
+ Converted and annotated by Andrew Herbert 07/11/2013.
+
+ Tape label: Page 61 example but 
+ (1) proper E3 
+ (2) 200(50)450 in x 
+ (3) result multiplied by (xsinX)/100 
+ 5 Nov 89
+
+ Page 61 Example:
+
+ Evaluation of a definite integral relating to to the ionization of
+ an exponential atmosphere by solar radiation.
+
+ Tabulated as a function of chi and x for chi =90(-1)50 degrees
+ and x =200(20)280 (i.e., 5 columns).
+
+ This program is essentially PG61C with the integral multiplied
+ by x sin chi. i.e., the full Chapman integral:
+
+ x sin chi int (0 to chi) exp(x - xsin chi/sin lambda) 
+	cosec^2 lambda dlamba.]
+
+...
+[R9]
+PKT56KGKT20FVDL8FA40DUDTFI40F
+A40FS39FG@S2FG23FA5@T5@E4@
+...
+...
+	PK		[Load M1 at 84]
+	T84K
+[M1]
+GKH2FTFA42FC42FU42FA8FU22FA15@
+AFH8FT45FA10@A2FT10@E34FNFT44K
+	P76F		[Routines table at 76]
+			[0: Master routine]
+			[1: Aux]
+			[2: Q1]
+			[3: E3]
+			[4: P11]
+			[5: T7]
+  			[6: D7]
+			[7: R1]
+	T100K		[Program at 100]
+
+...
+	PZGK
+	E84K		[H sequence]
+	TD
+	G16K		[Leave space for 16 long numbers]
+			
+	E84K
+	TF		[N sequence]
+	P200F		[0N: Starting value of x.2^-15]
+	P50F		[1N: Increment of x.2^-15]
+	P200F		[2N: Current value of x.2^-15]
+	P900F		[3N: Current value of 10.chi.2^15]
+	P10F		[4N: Negative increment of chi]
+	P500F		[5N: Final value of chi plus 1]
+	P5F		[6N: Columns to print]
+	PF		[7N: Column counter]
+	P448F		[8N: 0.0005798...] [nb different to WWG]
+	P19F
+
+...
+	PZGK
+	T94KT!		[Signal start of routines]
+	E84KIF
+[Master routine]
+	GK
+[ 0]	A@		[Call in R1 to read three constants]
+	G7!		
+	T70D		[70D = 64, 72D = round off 74D = convert deg to rad]
+	S6N		[Plant column counter]
+	T7N		
+	A3N		[Plant current value of chi]
+	T12@		
+	T10@		[Plant 0]
+[ 8]	A8@
+	G2!		[Calls in Q1 which places integral in 0H]
+[10]	PF		[Current value of chi]
+[11]	P5F		[Strip width -- make this PD for best accuracy]
+[12]	PF		[Upper limit of integration]
+	H74D		[Place 0.5 chi radians in 4D]
+	V3N		
+	L8F		
+	YF
+	T4D
+	A18@		[Call in T7, which places 0.5 sin chi in 4D]
+	G5!
+	H4D		[Place sin chi in 0D]
+	V70D		[Why * 64?]
+	LD		[*2 for sin chi]		
+	YF
+	TD
+	HD		[Place x sin chi in 0D]
+	V2N
+	L16F
+	YF
+	TD
+	H74D
+	VD
+	YF
+	TD
+	HD
+	VH
+	L128F
+	YF
+	TD
+[39]	A39@		[Call in P11 to print value of integral]
+	G4!
+	A7N		[Column count]
+	A2F
+	E49@
+	T7N
+	A2N		[Increase x]
+	A1N
+	T2N
+	E5@
+[49]	A3N	   	[Increase Chi]
+	S4N
+	U3N
+	S5N
+	E55@
+	ZF
+[55]	TF
+	AN		[Reset x]
+	T2N
+	E3@
+
+...
+	PZGK
+	E84KPF
+[Auxiliary routine -- 0D = lambda]
+	GK
+	G5@		[Skip to 5@]
+[1]	ZF		[Becomes return link]
+[2]	TD		[Store Acc. in 0D for result]
+	TD		[Clear]
+	E1@		[Jump to return link]
+[5]	A3F
+	T1@		[Plant link in 1@]
+	H74D		[Convert lambda to radians]
+	VD
+	L8F		[0.5 lambda to 4D]
+	YF
+	T4D		
+[12]	A12@		[Call in T7 which places 0.5 sin lambda in 4D]
+	G5!
+	A4D		[0.5 sin lambda to 2H]
+	T2H
+	H74D		[Convert 10.chi to radians]
+	V3N
+	L8F
+	YF
+	T4D		[Store in 4D]
+[21]	A21@		[Call in T7, which places 0.5 sin chi on 4D]
+	G5!
+	A4D		[0.5 sin chi to 4H]
+	T4H		
+	A2H		[0.5 sin chi - 0.5 sin lambda to 0D]
+	S4H
+	TD
+	A2H		[0.5 sin lambda to 4D]
+	T4D
+	AD		[Form abs(0D) in 6H]
+	E34@
+	T6D
+	SD
+[34]	T6D		[Form abs(4D) in 8H]
+	A4D
+	E39@
+	T8D
+	S4D
+[39]	T8D
+	A6D		[abs(0D)-abs(4D)]
+	S8D
+	E2@		[Exit if >= 0]
+	T8D		[Clear]
+[44]	A44@		[Calls in D7 which places]
+	G6!		[(0.5 sin chi - 0.5 sin lambda)/(0.5 sin chi) in 0D]
+	A2N		[x.2^-15]
+	L8F
+	T4D
+	H4D		[x.2^10]
+	VD		[x((sin chi-sin lambda)/(sin chi)).2^-10 = 2^-6 u]
+	A8N
+	G2@		[Exit if <= 8N (0.00005)]
+	S8N		[Restore value]
+	L16F
+	T6H		[u to 6H]
+	H6H		[Calls in E3 which places e-(2^4.u) in 0D]
+[57]	A57@
+	G3!
+	AD		[0.25 e^-(2^4.u) in 0D]
+	R1F
+	TD
+	H2H		[0.25 sin^2 lambda]
+	V2H
+	L1F		[sin^2 lambda]
+	N2H		[sin^2 lambda-0.25sin^2 lambda]
+	YF
+	T4D		[0.75sin^2 lambda to 4D]
+	AD
+	E72@		[Put abs(0.25 e^-(2^4.u)) in 6H]
+	T6D
+	SD
+[72]	T6D		
+	A4D		[Put abs 0.75sin^2 lambda in 8D]
+	E77@
+	T8D
+	S4D
+[77]	T8D
+	A6D
+	S8D
+	E2@		[Exit if 6H-8D <= 8N (0.00005)]
+	T6D
+[82]	A82@		[Call in D7 which places 1/3 e-2^4u cosec^2 in 0D]
+	G6!
+	E1@
+...
+	PZGK
+	E84KPF
+[N parameter for Q1]
+T46K
+G1!
+[Q1]
+TZ
+A41@U8@A2FU11@A3FU40@S42@T36@PFU8@TDPFT11@THT43@T4FA21@T23@T4FA19@
+PNH11@VDPFYFAHTHA45@S43@U43@A44@T23@A8@A11@U8@UDPFG18@S11@G15@PFP2F
+M1FPFLDPD
+...
+	PZGK
+	E84KPF
+[Parameter for E3]
+T45K
+P4F
+[E3]
+TZT20FVDL8FA40DUDTFI40FA40FS39FG@S2FG23FA5@T5@E4@E13ZT30#@
+41F430F4734F47343F426088F3408704F23860929F143165577F715827883F
+2863311531F8589934592F17179869183F17179869183#TZA3FT25@A30#@TD
+S26@A28@T8@VDADYFTDA8@S27@G5@S29@T4FHDVDYFYFYFTDA4FA2FG15@ZFP24F
+A54#@A56#@PHT56Z
+...
+	PZGK
+	E84KPF
+[Parameters for P11]
+T45K
+A72D
+P25F
+P46@
+P1024F
+[P11]
+TZ
+A3FTMA20@G11@O1MO2MS2FEJ@O2MA7MS19@A7MT20@ADE21@TDSDO@E22@PNPF
+O5MPHTDA6MH4MGKT4FVDUFOFFFSFG9@S3MGJ@O2MA3ML4FTDA4FLDE@O5MLDG@O5M
+O5MO5MO40K#FT22KTM@F&FQFJF!FP&P5F
+...
+	PZGK
+	E84KPF
+[T7]
+GKE69KT26#@
+11453246086F
+2290648539F
+218152390F
+12105378F
+419996#
+TZA3FT25@H4DV4DYFTDHDN34#@A32#@TDNDA30#@
+TDNDA28#@TDNDA26#@TDNDTDHDV4DA4DT4DEFT36Z
+...
+	PZGK
+	E84KPF
+[D7]
+GKA3FT25@SDTDS4DE13@T4DE2@T4DADLDTDA4DLDE8@
+RDT4DH4DNDADYFTDN4DYFG16@ZF
+...
+	PZGK
+	E84KPF
+[R1]
+GKT45KP32@P47@TZA3NU4@A4NT9HAFTHTDT4DA5NT13@H2NS6NT4@IFAFS6NE4H
+T6FV4DL8FADT4DA4@A7NG12@H4DNNR128FR128FV1NLDYFTFAHA3NE5@S6NE42@
+A7NE44@T6FEFS4DT4DA2NT13@E22@P610DZ1523DTFP2FU1FIFP5DPD
+...
+	PK
+	E25K		[Run program]
+	E!PF
+[constants to be read in]
+64+
+000005+			[Round off number]
+893608577+F		[Degrees to radians 2^9.pi/1800]
+<! halt !>

@@ -1,0 +1,146 @@
+﻿[Airy Integral to 5 figures by Andrew Herbert 02/11/2013]
+ 
+[Derived from Don Hunter version]
+
+[Uses R5 to read in numbers and M1 to abstract addressing]
+
+...
+	P 		K 	[Start tape]
+	T 	64	K	[Load R5 at location 64]
+
+[R5]
+GKT#ZD409DTZS1638DT2#ZC819FT2ZL1229FT4Z
+P2FV#@LDYFTDA8@S4@T8@E15@N2#@YFTDHDIFAFR16FTD
+AFE13@A7@G27@H8FE25FS21@E5@TFN#@E6@E11Z
+
+T 62 D
+500000+				[62D = 0.000005      - rounding for P11]
+1000000000+			[60D = 0.0000000001  - EPS]
+94169763+			[58D = 0.36796149    - Y1]
+50820553+			[56D = 0.35502805    - Y0]
+12666666240+			[54D = 0.04266666621 - DX^2/12
+					scaled by 2^11.10-1]
+X T Z
+
+[M1]
+GKH2FTFA42FC42FU42FA8FU22FA15@
+AFH8FT45FA10@A2FT10@E34FNFT44K
+
+	P 	50 	F	[Locate subroutine references at 50]
+	T 	80 	K	[Locate program at 80]
+...
+	P	Z
+	G	K
+	E	64	K	[Enter M1]
+	T		D	[H sequence is long words]
+	G	8	K	[Leave 8 locations for H]
+				[0H: Y2]
+				[2H: ETA]
+				[4H: W1]
+				[6H: W2]
+
+	E	64	K	[Enter M1 for N sequence]
+	T		F	[N sequence is short words]
+[0N]	P		F	[=    0 initial X0 scaled by 2^-10.10]
+[1N]	P	8	F	[=   16 initial X1 scaled by 2^-10.10]
+[2N]	P	16	F	[=   32 initial X2 scaled by 2^-10.10]
+[3N]	P	8	F	[=   16	DX         scaled by 2^-10.10]
+[4N]	P	80	F	[=  160 X1*10      scaled by 2^-10.10]
+[5N]	P	800	F	[= 1600 DX*100     scaled by 2^-10.10]
+...
+	P		Z
+	G		K
+	E	64	K	[Enter M1 for M sequence]
+	T		F	[M sequence is short words]
+[0M]	@		F	[cr]
+[1M]	&		F	[lf]
+[2M]	#		F	[figs]
+[3M]	J		F	[= 10/16]
+...
+	P		Z
+	G		K
+	T	74	K	[Prime M1 to assemble routines]	
+	T		!
+	E	64	K	[Enter M1 to set up master routine as 0!]
+	I		F	
+
+[Master routine]
+	G		K
+[ 0]	O		M	[Punch cr]
+	O	1	M	[Punch lf]	
+
+[LOOP]
+[ 2]	H	2	N	[X2]
+	V		H	[X2*Y2]
+	H	4	N	[10*X1]
+	V	58	D	[10*X1*Y1+Y2*X2]
+	H		N	[X0]
+	V	56	D	[X0*Y0+10*X1*Y1+X2*Y2]
+	Y		F	[Round]	
+	T	4	H	[W1:=...]
+[10]	H	54	D	[DX^2/12]
+	N	4	H	[-DX^2/12*W1]
+	A	58	D	[Y1-...]
+	A	58	D	[2*Y1-...]
+	S	56	D	[2*Y1-Y0-...]
+	U	2	H	[ETA := ...]
+	S		H	[ETA-Y2]
+	E	20	@	[If ETA-Y2 >= 0, goto 20@]
+	T	6	H	[W2:=...]
+	S	6	H	[abs(ETA-Y2)]
+[20]	S	60	D	[Compare to EPS]
+	G	26	@	[If < 0, go to 26@ -- Print value]
+	T		F	[Clear]
+	A	2	H
+	T		H	[Y2 := ETA]
+	E	2	@	[Goto LOOP]
+
+[26]	T		F	[Clear acc.]
+	A	56	D	[Y0]
+	T		D	[Y0 to 0D]	
+[29]	A	29	@	[Link]
+[30]	G	1	!	[Call P11 to print Y0]
+	T		F	[Clear acc.]
+	A	1	N	[X1]
+	T		N	[X0:=X1]
+	A	2	N	[X2]
+	U	1	N	[X1:=X2]	
+	A	3	N	[DX]
+	T	2	N	[X2:=X2+DX]
+	A	58	D	[Y1]	
+	T	56	D	[Y0:=Y1]
+[40]	A	2	H	[ETA]
+	T	58	D	[Y1:=ETA]
+	H	3	M	[10/16]
+	V	1	N	[10/16*X1]
+	L	4	F	[<<16]
+	T	4	N	[4N:=10*X1]
+	A		N	[X0]
+	S	5	N	[X0-XMAX]
+	G	53	@	[-ve, continue]
+	O		M	[Punch cr]
+[50]	O	1	M	[Punch lf]
+	O	2	M	[Punch figs]	
+	Z		F	[Stop]
+	T		F	[Clear acc.]
+	E	2	@	[Go to LOOP]
+...
+	P		Z
+	G		K
+	E	64	K	[Enter M1 to set up P11 as 1!]
+	P		F
+
+[Parameters for P11]
+	T	45	K	
+	A	62	D	[Round off number]
+	P	20	F	[5 columns]
+	P	46	@	[@ spaces between columns]
+	P	1024	F	[5 digits]
+
+[P11 - modified to print in blocks of 4]
+TZA3FTMA20@G11@O1MO2MS2FEJ@O2MA7MS19@A7MT20@ADE21@TDSDO@E22@PNPF
+O5MPHTDA6MH4MGKT4FVDUFOFFFSFG9@S3MGJ@O2MA3ML4FTDA4FLDE@O5MLDG@O5M
+O5MO5MO40K#FT22KTM@F&FQFJF!FP&P4F
+...
+PZE25KE!PF	[Run program]
+<! Halt !>

@@ -1,0 +1,54 @@
+﻿Character codes in use with EDSAC.
+I found these to be confusing when I started working on
+the EDSAC replica. The First two columns show the codes
+used on paper tape. There was no way of distinguishing
+letters from digits! You can write P instead of 0 and
+EDSAC cannot tell the difference. The actual holes in
+the paper tape are given in the column labelled Binary
+except that the first bit is inverted. Blank tape therefore
+gives 10000, and erase (all five holes punched) gives 01111.
+
+The Printer codes are more conventional, with LS and FS being
+letter shift and figure shift, CR and LF being carriage return
+and line feed, and SP being the space character.
+
+For inputs to either simulator (Elsie or Martin's) use only
+letters and digits. The layout and greek characters use the
+ASCII substitutes as shown in the right hand column. Space,
+Newline can be used to make tape files more legible and are
+ignored.
+
+Tape codes     Printer Binary  Ascii substitute
+ls      fs      ls      fs
+P      0       P       0       00000   
+Q      1       Q       1       00001   
+W      2       W       2       00010   
+E      3       E       3       00011   
+R      4       R       4       00100   
+T      5       T       5       00101   
+Y      6       Y       6       00110   
+U      7       U       7       00111   
+I      8       I       8       01000   
+O      9       O       9       01001   
+J      J       01010   
+pi             FS      01011   #
+S      S       "       01100   
+Z      Z       +       01101   
+K      K       (       01110   
+Erase          LS      01111   *
+Blank          10000   .
+F      F       $       10001   
+theta          CR      10010   @
+D      D       ;       10011   
+phi            SP      10100   !
+H      H       �       10101   
+N      N       ,       10110   
+M      M       .       10111   
+delta          LF      11000   &
+L      L       )       11001   
+X      X       /       11010   
+G      G       #       11011   
+A      A       -       11100   
+B      B       ?       11101   
+C      C       :       11110   
+V      V       =       11111   

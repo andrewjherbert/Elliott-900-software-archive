@@ -1,0 +1,40 @@
+﻿
+C Build Aldenham Editor version 9C4
+C N.B. doesn't build identical image to 
+C ../../MASTERS/ALDENHAM/EDIT9C4.BIN
+
+on 903
+
+c build EDIT9C4 from sources
+
+c load SIR assembler
+select out tty
+c first pass
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+c tape 1
+at ptr file ../../MASTERS/ALDENHAM/EDIT9C4SRC1.900
+j 8
+st 6927
+c  tape 2, n.b. has two parts
+at ptr file ../../MASTERS/ALDENHAM/EDIT9C4SRC2.900
+j 9
+st 6927
+j 9
+st 6927
+c load unidump-d
+select out auto
+nonstop on
+at ptr file ../../MASTERS/ALDENHAM/UNIDUMP-D.BIN
+at ptp file EDIT9C4.BIN
+at tty inline
+3
+0
+33
+32
+3897
+<! halt !><!!>
+j 8181
+nonstop off
+de ptp
+sh t

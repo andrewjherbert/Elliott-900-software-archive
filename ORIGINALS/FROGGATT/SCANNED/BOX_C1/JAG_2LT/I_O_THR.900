@@ -1,0 +1,64 @@
+﻿
+((INPUT & OUTPUT THRESHOLD TESTS, 11/9/72)
+
+(DATA INPUT THRESHOLD TEST)
+
+(The program waits for 18 replies with data below
+threshold; and then for 18 replies with data above
+threshold, each bit being present in turn)
+
+(Workspaces)
+
+DITHW    >1   (Count & Expected data)
+
+(Below-threshold test)
+
+DITH     4    +1
+DITH1    5    DITHW
+
+         15   0
+         7    ;+2
+         8    FAIL
+
+         4    DITHW
+         9    DITH2
+         1    DITHW
+         8    DITH1
+
+(Above-threshold test)
+
+DITH2    4    +1
+DITH3    5    DITHW
+
+         15   0
+         2    DITHW
+         7    ;+2
+         8    FAIL
+
+         4    DITHW
+         9    OK
+         1    DITHW
+         8    DITH3
+
+(DATA OUTPUT THRESHOLD TEST)
+
+(The program generates all-zero data until first reply,
+then all-ones data until the second)
+
+DOTH     4    +0
+         15   4096
+         4    &777777
+         15   4096
+         8    SWITCH
+
+(ADDRESS OUTPUT THRESHOLD TEST)
+
+(The program generates all-zero address lines until
+first reply, then all-ones address lines until the
+second)
+
+AOTH     4    +0
+         15   4096
+         15   6143
+         8    SWITCH
+<! Halt !>

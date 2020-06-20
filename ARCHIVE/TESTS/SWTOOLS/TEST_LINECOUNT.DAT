@@ -1,0 +1,19 @@
+﻿C Test linecount filter
+
+on 903 16K
+
+c load Algol
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+c translate program
+at ptr file ../../MASTERS/SWTOOLS/LINECOUNT.900
+j 8
+
+c link in library
+at ptr file ../../MASTERS/SWTOOLS/CHIOAL.RLB
+j 14
+
+at ptr file ../../MASTERS/SWTOOLS/LINECOUNT.900
+select out tty
+j 10

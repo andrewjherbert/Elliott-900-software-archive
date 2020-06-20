@@ -1,0 +1,202 @@
+﻿
+*17
+
+((AJH MUSIC PROGRAM 09/11/2014 - tuned to TNMoC 903)
+
+(BASED ON TJF MUSIC PROGRAM, 22/2/72)
+
+(
+Notation:
+
+A-G H-N O-U V: naturals in successive octaves.
+a-g h-n o-u v: semitone above equivalent capital.
+
+WwXxYyZz are input but output no note.
+
+$:  add a semitone [to A-Z only].
++:  add an octave.
+-:  subtract an octave.
+&n: decrease tempo by factor 1.n where n=1,2,..,9,:,..@.
+    n=0 resets tempo to normal.
+    N.B. no separators allowed between & and digit.
+*   double tempo.
+/   halve tempo.
+[\]^_`: rest - i.e., silence.
+)
+
+[CHIPF CHIPL CHIPE]
+
+(Read in & store score up to & inc. <H>)
+
+<
+(Entry points)
+(8)	  8	REP	  (Read and a tune and play repeatedly)
+(9)	  8	SGL	  (Read in a tune and play once, then read next)
+(10)	  8	PAUSE	  (Play last tune read in)	
+
+REPEAT	  4	REPFLG
+	  7	PAUSE
+	  8	START
+	  
+REP	  4	+0
+	  8	;+2
+SGL	  4	+1
+	  5	REPFLG
+
+START  	  4     +0
+          5     CHIPF
+          5     SCORF
+          11    CHIPL
+          8     CHIPE
+          0     SCORF
+          /5    SCORE
+          1     -20
+          7     ;+3
+          10    SCORF
+          8     ;-7
+
+(Pause before starting to play)
+
+PAUSE	  4	+32768	  (Reset tempo)
+	  5 	TEMPO
+	  4	-300	  
+	  5	COUNT
+	  14 	1000	  
+	  10	COUNT
+	  4 	COUNT
+	  9	;-3
+
+(Fetch score character & test which group it is in)
+
+          5     SCORF
+          8     ;+2
+NXCHAR    10    SCORF
+(+1)      0     SCORF
+          /4    SCORE
+
+          1     -20
+          7     REPEAT    (Test for <H>)
+          1     -16
+          7     SHARP     (Test for $)
+	  1	-7
+          7     PLUS      (Test for +)
+          1     -2
+          7     MINUS     (Test for -)
+	  1	+7
+	  7	AMPSND	  (Test for &)
+          1     -4
+	  7	STAR	  (Test for *)
+	  1	-5
+	  7	SLASH	  (Test for /)
+          9     NXCHAR	  (Ignore other symbols)
+          1     -18
+          9     TIME      (Test for digit, etc.)
+
+(Otherwise character is letter; fetch appropriate frequency)
+
+DECODE    5     NOTE
+          0     NOTE
+NATURL    /4	SHIFTS
+(+1)	  5	SHIFT	  (Count for note)
+	  1	+33
+	  5	SHIFTL	  (Count for duration)
+          8     NXCHAR
+
+(Move note up by a semitone)
+
+SHARP     0     NOTE
+          /4    SHIFTS+32
+          8     NATURL+1
+
+(Move note up or down one octave)
+
+PLUS      4	SHIFT	  (Raise by an octave)
+	  1	+8
+	  8	NATURL+1
+
+MINUS     4	SHIFT	  (Drop by an octave)
+	  1	SHIFT-8
+	  8	NATURL+1
+
+STAR	  4	TEMPO	  (Halve tempo - i.e., play twice as fast)
+	  14	8191
+	  8	;+3
+
+SLASH	  4	TEMPO	  (Double tempo - i.e., play half as fast)
+	  14	1
+	  5 	TEMPO
+	  8	NXCHAR
+
+AMPSND	  10	SCORF	  (Decrease tempo - i.e., slow down by factor)
+	  0	SCORF
+	  /4	SCORE
+	  1	-48
+	  9     NXCHAR+1  (Reject if not a digit)
+	  1	-10
+          9     ;+2
+          8	NXCHAR-1
+	  1	+10
+	  7	RESET	  (&0 resets tempo)
+	  12	+.1
+	  14	17	  (&n - n * 0.1)
+	  12	TEMPO
+	  1	TEMPO	  (tempo + n * 0.1 * tempo )
+	  5	TEMPO
+          8     NXCHAR
+
+RESET	  4	+32768	  (Reset tempo)
+	  5	TEMPO
+	  8	NXCHAR
+
+(Calculate number of loops = n*tempo/shift)
+(Speed up TNMOC by factor of 2)
+
+TIME      /4	SCORE	  (Convert character to 0..9 )
+	  2	+48
+	  5	COUNT
+	  4	TEMPO	  (2*tempo/shift)
+	  14	8176
+          13	SHIFTL
+          12   	COUNT	  (2*n*tempo/shift/2)
+	  14	16
+	  5	COUNT
+	  4	SHIFT
+ 	  1     =14 0
+          5     ;+1
+
+(Output note for required duration)
+
+          >1
+          10    COUNT
+          4     COUNT
+          9     ;-3
+          8     NXCHAR
+
+(Workspace)
+TEMPO	  >1
+SCORF     >1
+NOTE      >1
+SHIFT	  >1
+SHIFTL    >1
+COUNT	  >1
+REPFLG	  >1
+
+(Shifts from measurement with oscilloscope.)
+          +999 +999 +999 +999 +999 +999 +999  (Guard)
+SHIFTS	  +999 +999 +999 +999 +999 +357 +268  (A-G)
+	  +207 +163 +144 +118  +90  +80  +62  (H-N)
+	   +49  +38  +33  +24  +15  +12   +6  (O-U)
+	    +1 +999 +999 +999 +999            (V-Z)
+
+          +900 +900 +900 +900 +900 +900       ([-@)
+
+	  +999 +999 +999 +999 +357 +303 +237  (a-g)
+          +185 +144 +128 +103  +80  +70  +56  (h-n)
+           +42  +33  +28  +19  +12   +9   +4  (o-u)
+          +999 +999 +999 +999 +999            (v-z)
+          +900 +900 +900 +900 +900            (unused)
+          +999 +999 +999 +999 +999 +999 +999  (Guard)
+
+SCORE=1024
+
+<! halt !>

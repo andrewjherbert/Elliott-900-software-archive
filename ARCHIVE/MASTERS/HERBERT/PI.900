@@ -1,0 +1,138 @@
+﻿
+GLOBAL,PI,HATAN,HMPY,HSUB,FLOAT,ALOG]
+
+C     EVALUATE PI 01/07/2012 - BASED ON DGNH JAN 1973 PROGRAM
+C     USES MACHIN'S FORMULA PI/4 = 4 ATAN (1/5) - ATAN (1/239)
+C     PUT ARRAYS IN COMMON TO GET MORE STORE
+
+      DIMENSION IA(205),IB(205),IDIGITS(1000)
+      COMMON ISCAL,LENG,IA,IB,IDIGITS
+      DO 11 I = 1, 1000
+   11    IDIGITS(I) = 0.0
+   90 WRITE(3,100)
+  100 FORMAT(//12HDIGITS OF PI,
+     $       //22HENTER NO. OF PLACES =  )
+      READ(3,110) IDIGS
+  110 FORMAT(I8)
+      IF(IDIGS)90,90,95
+   95 K=IDIGS-1000
+      IF(K) 13,13,12
+   12 WRITE(3,120) IDIGS
+  120 FORMAT(I5,3X,11HIS TOO MUCH)      
+      GOTO 90
+   13 LENG=(IDIGS+10)/5
+      N1=FLOAT(IDIGS+10)/(0.868589*ALOG(239.0))
+      N2=FLOAT(IDIGS+10)/(0.868589*ALOG(5.0))
+      N=239
+      NTERM=N1
+      CALL HATAN(N,NTERM)
+      DO 30 L=1,LENG
+         IB(L)=IA(L)
+   30 CONTINUE
+      N=5
+      NTERM=N2
+      CALL HATAN(N,NTERM)
+      ISCAL=4
+      CALL HMPY
+      CALL HSUB
+      CALL HMPY
+C  SPLIT OUT DIGITS
+      DO 40 J = 1, IDIGS, 5
+         I      = J/5+1
+         NUMBER = IA(I) 
+         IDIGITS(J)   = NUMBER / 10000
+         NUMBER = NUMBER - IDIGITS(J)   * 10000
+         IDIGITS(J+1) = NUMBER /  1000
+         NUMBER = NUMBER - IDIGITS(J+1) *  1000
+         IDIGITS(J+2) = NUMBER /   100
+         NUMBER = NUMBER - IDIGITS(J+2) *   100
+         IDIGITS(J+3) = NUMBER /    10
+         IDIGITS(J+4) = NUMBER - IDIGITS(J+3) *    10
+   40 CONTINUE
+      WRITE(3, 140) IDIGITS
+  140 FORMAT(40I1)
+      STOP
+      END
+
+GLOBAL,HATAN,HMPY,HDVD]
+C     ARCTAN
+      SUBROUTINE HATAN(N,NTERM)
+      DIMENSION IA(205),IB(205),IDIGITS(1000)
+      COMMON ISCAL,LENG,IA,IB,IDIGITS
+      DO 300 L=2,LENG
+         IA(L)=99999
+  300 CONTINUE
+      IA(1)=0
+      DO 500 K=1,NTERM
+         L=NTERM-K+1
+         ISCAL=2*L-1
+         CALL HMPY
+         ISCAL=2*L+1
+         CALL HDVD
+         ISCAL=N
+         CALL HDVD
+         CALL HDVD
+         DO 400 J=2,LENG
+            IA(J)=99999-IA(J)
+  400    CONTINUE
+  500 CONTINUE
+      CALL HDVD
+      RETURN
+      END  
+ 
+GLOBAL,HMPY,FLOAT]
+C     MULTIPLY
+      SUBROUTINE HMPY
+      DIMENSION IA(205),IB(205),IDIGITS(1000)
+      COMMON ISCAL,LENG,IA,IB,IDIGITS
+      CAR=0.0
+      SCAL=ISCAL
+      DO 300 K=1,LENG
+         L=LENG-K+1
+         W=FLOAT(IA(L))*SCAL+CAR
+         M=W/100000.0
+         CAR=M
+         IA(L)=W-100000.0*CAR
+  300 CONTINUE
+      RETURN
+      END
+
+GLOBAL,HDVD,FLOAT]
+C     DIVIDE
+      SUBROUTINE HDVD
+      DIMENSION IA(205),IB(205),IDIGITS(1000)
+      COMMON ISCAL,LENG,IA,IB,IDIGITS
+      REM=0.0
+      SCAL=ISCAL
+      DO 300 L=1,LENG
+         W=100000.0*REM+FLOAT(IA(L))
+         IQUOT=W/SCAL
+         REM=W-FLOAT(IQUOT)*SCAL
+         IA(L)=IQUOT
+  300 CONTINUE
+      RETURN
+      END
+
+C     SUBTRACT
+      SUBROUTINE HSUB
+      DIMENSION IA(205),IB(205),IDIGITS(1000)
+      COMMON ISCAL,LENG,IA,IB,IDIGITS
+      IBOR=0
+      DO 300 K=1,LENG
+         L=LENG-K+1
+         J=IA(L)-IB(L)-IBOR
+      IF(J) 200,210,210
+  200 IBOR=1
+      J=J+100000
+      GOTO 220
+  210 IBOR=0
+  220 IA(L)=J
+  300 CONTINUE
+      RETURN
+      END
+
+      FUNCTION FLOAT(N)
+      FLOAT=N
+      RETURN
+      END                                                                        
+<! Halt !>

@@ -1,0 +1,52 @@
+﻿C Build EDSAC Simulator
+on 903
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+select out tty
+nonprinting off
+
+at ptr inline
+
+*19
+<! halt !><!!>
+j 8
+st 6927
+
+at ptr file ../../MASTERS/EDSACSIM/EDSACSIM.900
+j 9
+st 6927
+
+at ptr file ../../MASTERS/903SIR/SSYS1(ISS1).900
+j 9
+st 6927
+
+at ptr file ../../MASTERS/903SIR/QOUT1(ISS4).900
+j 9
+st 6927
+
+at ptr inline 
+
+%
+<! halt !><!!>
+j 9
+st 6927
+
+c dump out with T22-23
+select out auto
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+at ptp file EDSACSIM.BIN
+j 8181
+st 8070
+at ptr inline
++32
++1757
+<! halt !><!!>
+j 8179
+de ptp
+st 8113
+
+sh t
+

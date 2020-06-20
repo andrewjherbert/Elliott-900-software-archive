@@ -1,0 +1,161 @@
+﻿
+*17
+((FIXES TO FRED 9/2/71 - ANDREW HERBERT 20/05/2015)
+
+P=277
+F=278
+q=279
+C=280
+H=281
+A=282
+W=284
+r=285
+W1=288
+SBLK1=291
+ST=2048
+
+Start=14
+Copy=22
+EndFn=206
+NextCh=49
+Load=60
+Mon2=298
+Mon3=297
+Mon4=296
+Mon8=292
+
+(Stop DEC outputing leading zeros)
+^408
+	8       LDZERO
+
+(Corrected loading of '-' in DEC)
+^419
+	8	LDMIN
+
+(Correct LdArg)
+^172			(LdArg)
+	8       LdArg
+
+(Correct BIN)
+^366
+	8	BIN
+
+(Fixes)
+
+^1900
+LDZERO	4	 r	(Test for last digit)
+	1	 +1
+	7	 LASTD
+	4	 W
+	7	 413	(Ignore leading zeros)	
+        8	 409	(Print final zero)
+LASTD   4  	 W	(Resume original code)
+        8  	 409
+
+(Corrected LoadArg)
+
+LdArg    4       P
+         7       TEST
+         11      SBLK1
+         8       NextCh
+         4       P
+         1       +2
+         5       W
+         4       +48
+         2       A
+         5       W1
+         9       Mon3
+         4       -1
+         5       R
+LAB2     10      R
+         4       R
+         2       W1
+         7       LAB3
+         0       W
+         /4      ST
+         1       W
+         5       W
+         0       W
+         /4      ST
+         9       MON4
+         8       LAB2
+TEST     4       H
+         7       COPY
+         8       MON2
+LAB3     4       +0
+         5       R
+LAB4     10      R
+         4       R
+         0       W
+         /2      ST
+         7       START
+         4       W
+         1       R
+         5       1
+         /4      ST
+         5       A
+         11      SBLK1
+         8       Load
+         8       LAB4
+
+(Corrected BIN)
+
+T	   >1
+
+BIN 	   4	+0
+ 	   5	 W
+ 	   0 	 P
+ 	   /4 	 ST+7
+ 	   2 	 +43	('+')
+ 	   7 	 LAB15
+ 	   /4 	 ST+7
+ 	   2 	 +45	(-)
+ 	   7	 LAB15
+	   4	 +7
+ 	   8 	 LAB16
+
+LAB15 	   4 	 +8
+LAB16 	   1 	 P
+ 	   5 	 A
+LAB17 	   0 	 A
+ 	   /4	 ST
+ 	   9 	 LAB18
+ 	   4 	 +48
+ 	   /2 	 ST
+ 	   5 	 T
+ 	   9	 MON10
+ 	   2 	 +9
+ 	   9 	 MON10
+ 	   10 	 A
+ 	   4 	 W
+ 	   12 	 +10
+  	   14 	 17
+ 	   1 	 T
+ 	   5 	 W
+	   8 	 LAB17
+
+LAB18 	   0 	 P
+	    /4 	 ST+7
+ 	    2 	 +45	('-')
+ 	    7 	 LAB20
+	    4 	 W
+ 	    8 	 LAB19
+LAB20 	    4 	 W
+ 	    2 	 +0
+LAB19 	    5 	 A
+ 	    11   SBLK1
+ 	    8 	 LOAD
+ 	    8 	 ENDFN
+
+MON10	    10   290
+	    10	 290
+	    8	 Mon8
+
+(Corrected DEC)
+LDMIN	    4	 +45
+	    5	 A
+	    8	 420
+
+%
+
+<! halt !>

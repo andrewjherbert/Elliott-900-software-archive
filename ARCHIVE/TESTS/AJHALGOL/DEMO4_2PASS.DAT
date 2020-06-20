@@ -1,0 +1,72 @@
+﻿on
+telecode 903
+
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+
+INTEGRATION;
+"BEGIN"
+   "COMMENT" 13-APR-1996.
+             What Everybody should know about Algol.
+             Bryan Higman, Computer Journal Vol. 6
+             No. 1, April 1963, pages 50-55.
+             PI equals six times the volume of a
+             one eighth of a unit sphere.
+             Note the use of parameter comments;
+   "REAL" X, Y;
+
+   "REAL" "PROCEDURE" SIMPS(F, X, A, B, DELTA, V);
+          "VALUE" A, B, DELTA, V; "REAL" F, X, A, B, DELTA, V;
+   "BEGIN"
+      "PROCEDURE" LOCAL(N, K, H, J, II);
+      "VALUE" N, K, H, J, II; "INTEGER" N, K; "REAL" H, J, II;
+      "BEGIN" 
+         V := (B - A) * V; X := A;
+         J := F; X := B; J := (J + F) * H;
+L:       B := 0;
+         "FOR" K := 1 "STEP" 1 "UNTIL" N "DO"
+         "BEGIN"
+            X := (2 * K - 1) * H + A; B := B + F
+         "END";
+         II := 4 * H * B + J;
+         "IF" ABS(II - V) > ABS(V) * DELTA "THEN"
+         "BEGIN"
+            V := II; J := (II + J) / 4;
+            N := 2 * N; H := H / 2; "GOTO" L
+         "END";
+         SIMPS := II / 3
+      "END";
+      LOCAL(1, 0, (B - A) / 2, 0,0)
+   "END";
+
+   "PRINT" PUNCH(3), 'PI = `, SAME LINE, 6 * 
+       SIMPS(SIMPS(SQRT(ABS(1 - X^2 - Y^2)))
+             WITH RESPECT TO:(X)
+             FROM:(0)TO:(SQRT(ABS(1 - Y^2)))
+             WITH AN ACCURACY OF:(0.00001)
+             AND DELTA EQUAL TO:(99))
+       WITH RESPECT TO:(Y)
+       FROM:(0)TO:(1)
+       WITH AN ACCURACY OF:(0.00001)
+       AND DELTA EQUAL TO:(99)
+"END"
+<! halt !>
+<!!>
+at ptp file TEST.RLB
+c compile
+j 14
+de ptp
+
+c run
+at ptr file ../../SCRIPTS/AJHALGOL/ALG2(AJH).BIN
+j 8181
+at ptr file TEST.RLB
+j 8
+select out tty
+nonprinting off
+j 10
+
+delete TEST.RLB
+sh t

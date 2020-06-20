@@ -1,0 +1,42 @@
+﻿C Build C&G Mnemonic Code System
+
+C To do - provoke all errors
+C Esp ERR12 and ERR18 in QF
+C Test Edit entries
+
+on 903
+
+c make image of binary
+ at ptr file ../../MASTERS/CANDG/CANDG.BIN
+ j 8181
+ st 5171
+
+ du 8192 CANDG.IMG 
+
+c assemble
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+
+select out tty
+
+c first pass
+at ptr file ../../MASTERS/CANDG/CANDG.900
+j 12
+st 562
+c second pass
+select out auto
+rewind
+at ptp file CANDG.BIN
+j 10
+de ptp
+
+c verify against image - errors after 3559 are not significant
+ at ptr file CANDG.BIN
+ j 8181
+ st 8175
+ vi CANDG.IMG
+
+delete CANDG.IMG
+
+sh t

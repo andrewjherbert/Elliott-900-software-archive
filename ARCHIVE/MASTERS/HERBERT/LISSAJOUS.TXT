@@ -1,0 +1,26 @@
+﻿Lissajous;
+"begin"
+       "real" a, b, r, t;
+       setorigin(0, 500);
+       way(0,5);
+       punch(5);
+       r := 100;
+       "read" a;
+       "for" b := 1.0 "step" 1.0 "until" 7.0 "do" "begin"
+       movepen(-500,+250);
+       setorigin(500,0);
+       movepen(200,50);
+       "print" {x=r*cos(t*a) y=r*sin(t*b)};
+       movepen(200,0);
+       "print" {a=}, a;
+                movepen(200,-50);
+                "print" {b=}, b;
+       "for" t := 0.0 "step" 1.0 "until" 360.0 "do"
+       "if" t=0.0 "then"
+       movepen(r*cos(t*a),r*sin(t*b))
+       "else"
+       drawline(r*cos(t*a),r*sin(t*b))
+       "end" t loop
+       "end" b loop
+"end" program
+<! Halt !>

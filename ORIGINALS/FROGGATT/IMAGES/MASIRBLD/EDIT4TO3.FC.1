@@ -1,0 +1,65 @@
+Comparing files MASIR.IS4 and MASIR.IS3
+****** MASIR.IS4
+<! File Name "MASIR1B.IS4" !>
+<! 903 TeleType Code !>
+****** MASIR.IS3
+<! File Name "MASIR1B.IS3" !>
+<! 903 TeleType Code !>
+******
+
+****** MASIR.IS4
+/5  1
+
+(THIS CODE INSERTED TO CORRECT LITERAL GENERATED FOR +LOCAL)
+(WHEN MODULE PATCHED TO ABSOLUTE LOCATION - SAN/7 -GRC 18/11/75)
+
+4  ABSADR        (ABSOLUTE PATCH )
+7  ;+4           (NO)
+4  ACTADR        (GET ABSOLUTE ADDRESS OF LABEL)
+6  &017777       (CONVERT TO MODULE RELATIVE)
+8  ;+2           (AND STORE THAT)
+
+
+4  ACTADR
+****** MASIR.IS3
+/5  1
+4  ACTADR
+******
+
+****** MASIR.IS4
+<! 0 Halt Codes !>
+<! File Name "MASIR67.IS4" !>
+<! 903 TeleType Code !>
+****** MASIR.IS3
+<! 0 Halt Codes !>
+<! File Name "MASIR67.IS3" !>
+<! 903 TeleType Code !>
+******
+
+****** MASIR.IS4
+
+(THIS CODE INSERTED TO IGNORE COMMENTS INSIDE MACRO TEXT - GRC 18/11/75)
+
+BRACKET  4  NEXCHAR        (GET NEXT CHAR)
+         1  -8             (IS IT ORB)
+         7  ;+2            (YES)
+         8  BRACK2         (N0)
+
+BRACK1   11 GETCHAR        (GET NEXT CHAR)
+         8  GETCHAR+1
+         4  NEXCHAR
+         1  -9             (IS IT CRB)
+         7  NEXT           (YES)
+         8  BRACK1         (NO)
+
+
+
+BRACK2      4  NEXCHAR
+             1  -59
+****** MASIR.IS3
+
+BRACKET      4  NEXCHAR
+             1  -59
+******
+
+

@@ -1,0 +1,8 @@
+﻿C Test detabn filter
+
+do ../../scripts/swtools/detabn tabs.txt notabs.txt
+
+sh t
+
+print notabs.txt
+

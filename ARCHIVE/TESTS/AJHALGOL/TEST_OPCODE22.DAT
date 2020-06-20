@@ -1,0 +1,45 @@
+﻿c Algol function codes: procedure call with procedure argument (2)
+
+c N.B. This fails Error 7 as expected!
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin" 
+"comment" note NO use of (0.5) to help translator, gives rise to error 7;
+    "procedure" pr(r); "value" r; "real" r; "print" r;
+    "procedure" p(pp);  "procedure" pp; pp(0.5);
+    p(pr)
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run trivial program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t

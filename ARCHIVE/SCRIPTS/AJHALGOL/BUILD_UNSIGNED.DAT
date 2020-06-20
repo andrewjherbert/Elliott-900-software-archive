@@ -1,0 +1,15 @@
+﻿C Build UNSIGNED RLB
+
+on 903
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+at ptr file ../../MASTERS/AJHALGOL/UNSIGNED.900
+at ptp file UNSIGNED.RLB
+j 8
+st 6239
+
+de ptp
+sh t

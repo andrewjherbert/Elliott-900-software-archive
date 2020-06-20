@@ -1,0 +1,9 @@
+﻿FL TC:  "IF"P[1]=1"OR"P[2]=1"THEN"
+DE
+IB
+  "BEGIN""FOR"J:=1"STEP"1"UNTIL"9"DO"
+    P2[J]:=P3[J];
+    "GOTO"TD;
+    "END";
+^
+RE

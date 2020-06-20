@@ -1,0 +1,42 @@
+﻿
+P51;
+"BEGIN"
+   "REAL" H,H2,H4,S0,S4; "ARRAY" A,K[1:5];
+
+   "PROCEDURE" T(A,B); "VALUE" B; "REAL" A,B;
+   "BEGIN"
+      "BOOLEAN" PLUS; "INTEGER" J,K; "REAL" W;
+      PLUS:=B>0; B:=ABS(B); J:=ENTIER(10000*B);
+      K:=ENTIER(10000*(10000*B-J)); W:=0.0001*(J+0.0001*K);
+      A:="IF" PLUS "THEN" W "ELSE"
+        ("IF" W=0 "THEN" 0 "ELSE" -W)
+   "END";
+
+   "PROCEDURE" F;
+   "BEGIN"
+      T(S0,S0*S0+0.25); T(S4,(15/16)*S0);
+      "PRINT" PUNCH(3), ALIGNED(1,8),S4; T(S0,(3/16)/S4)
+   "END";
+
+   "PROCEDURE" Q2;
+   "BEGIN"
+      "INTEGER" R;
+      H4:=0;
+      "FOR" R:=1 "STEP" 1 "UNTIL" 5 "DO"
+      "BEGIN"
+         T(S0,H+K[R]*H2); F; T(H4,A[R]*S0+H4)
+      "END"; T(S0,H2*H4)
+   "END";
+
+   A[5]:=A[1]:=0.1184634425;
+   A[4]:=A[2]:=0.2393143353;
+   A[3]:=0.2844444444;
+   K[1]:=0.046910077;
+   K[2]:=0.2307653449;
+   K[3]:=0.5;
+   K[4]:=0.769234655;
+   K[5]:=0.9530899231;
+
+ H:=0; H2:=0.5; Q2; "PRINT" PUNCH(3),ALIGNED(1,8),S0
+"END"
+<! Halt !>

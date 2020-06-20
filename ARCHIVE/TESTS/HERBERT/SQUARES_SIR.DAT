@@ -1,0 +1,19 @@
+﻿C Assemble and dump squares
+
+on 903
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+at ptr file ../../MASTERS/HERBERT/SQUARES_SIR.900
+select out tty
+nonprinting off
+j 8
+st 6927
+at ptr file ../../MASTERS/HERBERT/SGLPAK.RLB
+j 11
+st 7815
+j 32
+st 49
+
+sh t

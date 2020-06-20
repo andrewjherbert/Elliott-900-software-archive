@@ -1,0 +1,16 @@
+﻿
+CAP Coral Compiler for 920C
+
+BIN-16K     SCB    "CORAL 16K EXTENDED LOADER, Binary Mode 3" MASD
+CORALIO     ASCII  Basic input-output library for 920 Coral.
+MACRO       SCB    "920C CORAL MACRO PASS, CAP BOREHAMWOOD VERSION 
+                   3B" MASD
+PASS1A      SCB    "920C CORAL PASS 1A, CAP BOREHAMWOOD VERSION 
+                   3B" MASD
+PASS1B      SCB    "920C CORAL PASS 1B, CAP BOREHAMWOOD VERSION
+                   3B" MASD
+PASS2       SCB    "920C CORAL PASS 1B, CAP BOREHAMWOOD VERSION 
+                   3B" MASD
+CORALCAPQF  ASCII  "CORAL CAPQF TJF VERSION 16/2/76, 900-Series
+                   Telecode"
+              RLB  "CAPQF TJF VERSION 16/2/76, RLB Mode 3" MASD

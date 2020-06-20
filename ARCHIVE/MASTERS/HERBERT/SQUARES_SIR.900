@@ -1,0 +1,33 @@
+﻿
+*19
+
+((TABLE OF SQUARES, ANDREW HERBERT, 28-05-15)
+
+[SQUARE QDOUT QOUT1]
+
+SQUARE	4     +3	(Teleprinter output)
+	5     QDOUT
+	4     +0	(X:=0)	
+	5     X
+LOOP	11    QOUT1	(Print X)
+        8     QOUT1+1
+	/0 0
+	4     X		(Square X)
+	12    X
+	14    17
+	11    QOUT1	(Print X*X)
+	8     QOUT1+1
+	+0
+	10    X		(X:=X+1)
+	4     X
+	1     -11	(Test for X <= 10)
+	9     ;+2
+	8     ;+0	(Stop after 10)
+	4     X		(Otherwise do next X)
+	8     LOOP
+
+X	>1
+
+%
+
+<! halt !>

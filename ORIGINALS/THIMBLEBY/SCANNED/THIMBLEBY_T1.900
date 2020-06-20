@@ -1,0 +1,1275 @@
+﻿((905 DISC PATCHER))
+(HAROLD THIMBLEBY 7/3/77)
+(LAST MOD 1/4/77 HT)
+*PROG HPATCH
+
+[MAIN QDIN QDOUT QCHIN QCHOP QSTOP BUF]
+
+*DEFINE CHSIX [
+          5  T2
+          6  &777700
+          7  ;+2
+          8  NOTSIX
+          4  T2 ]
+
+*DEFINE PRINTN [
+         11  PRINT
+          8  OCTOUT ]
+
+*DEFINE CALL(R) [
+         11  R
+          8  R+1 ]
+
+*DEFINE LEAVE(R) [
+          0  R
+         /8  1 ]
+
+*DEFINE MV(L,R) [
+          4  R
+          5  L ]
+
+*DEFINE FLIP(F) [
+          4  F
+          2  -1
+          5  F ]
+
+
+
+MAIN      4  :MAIN/
+          2  +0
+          5  MODOFF
+
+          MV(SCANNING, +0)
+          MV(SRCHLO, &0)
+          MV(SRCHHI, &77)
+          MV(PROTECT, -1)
+          MV(QDIN, +3)
+          MV(QDOUT, +3)
+          MV(CP, +0)
+          MV(MAXTRIES, +1)
+          MV(OFLG, -1)
+          MV(AFLG, +0)
+          MV(MATCH, +0)
+          MV(PMASK, +0)
+          MV(PVALUE, +0)
+
+          CALL(MESS)
+          \^DI
+          \SC
+          \PAT
+          \CHE
+          \R^"
+
+PROMPT    CALL(DECODE)
+
+EXAMINE   4  CH
+          2  \  S
+          7  ;+2
+          8  SETUP
+          CALL(GETCH)
+          MV(SCANNING, -1)
+          4  CH
+          7  ;+2
+          8  SETUP
+          4  MATCH
+          9  ;+2
+          8  FAIL
+          MV(CP, LASTS)
+          MV(MATCH, +0)
+          MV(DAMS, CP)
+          CALL(GETDISC)
+          MV(T, C6BITS)
+         10  T
+          8  SCAN
+
+
+SETUP     4  CH
+          2  \  R
+          7  ;+2
+          8  RLOC
+          CALL(MESS)
+          \^CA
+          \NNO
+          \T R
+          \EPE
+          \AT"
+          8  PROMPT
+
+RLOC      CALL(READN)
+
+          4  CH
+          2  \  :
+          7  ;+2
+          8  NEXT1
+          4  SCANNING
+          9  FAIL
+          CALL(PRINT)
+          8  PROMPT
+
+NEXT1     MV(C6BITS, +0)
+          MV(E6BITS, &77)
+          4  N
+          5  SAVE
+          5  EP
+
+          4  CH
+          2  \  ;
+          7  ;+2
+          8  NEXT2
+          4  SCANNING
+          9  FAIL
+          CALL(GETCH)
+          CALL(READN)
+          CHSIX
+          5  E6BITS
+          5  C6BITS
+
+NEXT2     4  CH
+          2  \  ,
+          7  ;+2
+          8  NEXT3
+          CALL(GETCH)
+          CALL(READN)
+          5  EP
+          MV(E6BITS, &77)
+
+          4  CH
+          2  \  ;
+          7  ;+2
+          8  NEXT3
+          4  SCANNING
+          9  FAIL
+          CALL(GETCH)
+          CALL(READN)
+          CHSIX
+          5  E6BITS
+
+NEXT3     4  CH
+          7  ;+2                (END COMMAND WITH SPACE)
+          8  FAIL
+
+          RWG
+          5  KEYSW
+
+          MV(CP, SAVE)
+          MV(RUN, +0)
+
+          4  CP                 (CHECK LIST OK)
+          9  MAYBOK
+          2  EP
+          9  BAD
+          7  ;+2
+          8  LOOP
+          4  C6BITS
+          2  E6BITS
+          9  BAD
+          8  LOOP
+BAD       CALL(MESS)
+          \^BA
+          \D L
+          \IST
+          \"
+          8  PROMPT
+
+MAYBOK    4  EP
+          9  ;+2
+          8  LOOP
+          2  CP
+          9  BAD
+
+
+LOOP      RWG
+          1  KEYSW
+          6  &1
+          7  NOFLIP
+          4  SCANNING
+          9  PROMPT
+          FLIP(RUN)
+
+NOFLIP    RWG
+          5  KEYSW
+          MV(DAMS, CP)
+          MV(ISPROT, +0)
+          MV(DALS, C6BITS)
+          CALL(GETDISC)
+          MV(N, WORD)
+
+          4  SCANNING
+          9  ;+2
+          8  OPEN
+          CALL(SEARCH)
+          4  MATCH
+          9  PROMPT
+NEWSCAN  10  CP
+          4  CP
+          2  EP
+          9  ;+2
+          8  LOOP
+          CALL(MESS)
+          \^PA
+          \TTE
+          \RN
+          \NOT
+          \ FO
+          \UND
+          \"
+          8  PROMPT
+
+OPEN      CALL(MESS)
+          \^"
+          MV(N, CP)
+          PRINTN
+          4  \  ;
+          MQCHOP
+          4  C6BITS
+          CALL(TWODIG)
+          MV(N, WORD)
+          CALL(PRINT)
+          4  ISPROT
+          7  ISNT
+          CALL(MESS)
+          \ *"
+
+ISNT      RWG
+          1  KEYSW
+          6  &1
+          7  INTERQ
+          FLIP(RUN)
+INTERQ    RWG
+          5  KEYSW
+          4  RUN
+          9  INCCP              (IF NO INTERACTION)
+
+          CALL(MESS)
+          \ "
+
+          CALL(GETCH)
+
+          4  CH
+          2  \  .
+          7  PROMPT
+
+          4  CH
+          2  \  :
+          7  ;+2
+          8  NEXT4
+          CALL(GETCH)
+          CALL(READN)
+          5  T2
+          4  CH
+          7  ;+2
+          8  FAIL
+          4  T2
+          CALL(SETDISC)
+          8  LOOP               (VERIFY)
+
+NEXT4     4  CH
+          2  \  -
+          7  ;+2
+          8  NEXT5
+          FLIP(RUN)
+          8  INCCP
+
+NEXT5     4  CH
+          7  ;+2
+          8  NEXT6
+         10  C6BITS
+          4  C6BITS
+          6  &77
+          5  C6BITS
+          7  ;+2
+          8  LOOP
+         10  CP
+          CALL(MESS)
+          \^^"
+          8  LOOP
+
+NEXT6     4  CH
+          2  &76 (UPARROW)
+          7  ;+2
+          8  NEXT7
+          4  C6BITS
+          1  -1
+          6  &77
+          5  C6BITS
+          2  &77
+          7  ;+2
+          8  LOOP
+          4  CP
+          1  -1
+          9  FAIL
+          5  CP
+          CALL(MESS)
+          \^^"
+          8  LOOP
+
+
+INCCP     4  CP
+          2  EP
+          7  ;+3
+          9  PROMPT
+          8  MASK6
+          4  C6BITS
+          2  E6BITS
+          7  PROMPT
+          9  PROMPT
+MASK6    10  C6BITS
+          4  C6BITS
+          6  &77
+          5  C6BITS
+          7  ;+2
+          8  LOOP
+         10  CP
+          CALL(MESS)
+          \^^"
+          8  LOOP
+
+
+NEXT7     4  CH
+          2  \  S
+          7  EXAMINE
+         11  DECODE
+          8  NOPROMPT
+          8  SETUP
+
+
+
+KEYSW     +0    (CONSOLE SWITCH GENERATOR)
+RUN       +0    (CONTINUOUS LIST IF -1)
+CP        +0    (CURRENT SECTOR ADDRESS)
+EP        +0    (END OF SECTOR LIST ADDRESS)
+OFLG      +0    (PRINT IN OCTAL IF -1)
+DFLG      +0    (PRINT IN DECIMAL IF -1)
+AFLG      +0    (PRINT IN ALPHANUMERIC IF -1)
+CH        +0    (CURRENT CHARACTER INPUT)
+N         +0    (GENERAL INTEGER PARAMETER/RESULT)
+SAVE      +0
+T         +0
+T2        +0
+T3        +0    (USED BY PRINT)
+ZERO      +0    (FLAG USED IN DECIMAL OUTPUT)
+S         +0
+WS        +0
+C6BITS    +0    (CURRENT WORD WITHIN SECTOR ADDRESS)
+E6BITS    +0    (END OF LIST WORD WITHIN SECTOR ADDRESS)
+DAMS      +0    (MOST SIGNIFICANT 12 BITS DISC ADDRESS)
+DALS      +0    (LEAST SIGNIFICANT 12 BITS DISC ADDRESS)
+WORD      +0
+PROTECT   +0    (IF ZERO GIVE OVERRIDE MESSAGES)
+ISPROT    +0    (-1 IF IN PROTECTION OVERRIDE)
+WORD2     +0
+STATUS    +0    (DISC STATUS COPY)
+ERPT      +0
+MODOFF    +0    (MODULE RELATIVE ADDRESS OF MODULE 0)
+BUF       >+65  (BUFFER FOR SECTOR)
+MATCH     +0    (PATTERN FOUND IF -1)
+PVALUE    +0    (PATTERN VALUE)
+PMASK     +0    (PATTERN MASK)
+SRCHLO    +0    (WORD OFFSET FOR SEARCH START)
+SRCHHI    +0    (WORD OFFSET FOR SEARCH END)
+SCANNIN   +0    (SEARCH IF -1 ELSE OPEN IF 0)
+MAXTRIE   +0    (NUMBER OF DISC TRANSFERS BEFORE REPORTING ERRORS)
+TRY       +0    (COUNT OF CURRENT TRANSFERS)
+SHIFT     +0    (USED BY MESS TO OUTPUT STRINGS)
+OLDSC     +0    (USED BY SEARCH)
+LASTS     +0    (USED BY SEARCH FOR 'S')
+LASTT     +0
+TENPOW    +100000
+          +10000
+          +1000
+          +100
+          +10
+          +1
+          +0
+
+
+(*********************ROUTINES**********************)
+
+GETCH     +0
+          CALL(QCHIN)
+          9  FAIL               (FOR SEX900)
+          5  CH
+          2  \  ^
+          7  QPROMPT
+          4  CH
+          LEAVE(GETCH)
+
+QPROMPT   4  =/0 141
+          MQCHOP
+          4  =/0 0
+          MQCHOP
+          CALL(MESS)
+          \SCR
+          \APP
+          \ED"
+          8  PROMPT
+
+(**********************************)
+
+READN     +0
+          MV(N, +0)
+          4  CH
+          2  \  +
+          7  SUM
+          4  CH
+          2  \  -
+          7  SUM
+          CALL(NUMB)
+          5  N
+
+SUM       4  CH
+          2  \  +
+          7  ;+2
+          8  NEXT11
+          CALL(GETCH)
+          CALL(NUMB)
+          1  N
+          5  N
+          8  SUM
+
+NEXT11    4  CH
+          2  \  -
+          7  ;+2
+          8  NEXT12
+          CALL(GETCH)
+          CALL(NUMB)
+          2  N
+          5  N
+          8  SUM
+
+NEXT12    4  N
+          LEAVE(READN)
+
+(**********************************)
+
+
+
+NUMB      +0
+          CALL(GETNO)
+          5  S
+          4  CH
+          2  \  C               (INDIRECTION)
+          7  ;+2
+          8  NEXT21
+          MV(DAMS, S)
+          CALL(GETCH)
+          CALL(GETNO)
+          CHSIX
+          5  DALS
+          CALL(GETDISC)
+          MV(S, WORD)
+NEXT21    4  S
+          LEAVE(NUMB)
+
+
+(**********************************)
+
+
+GETNO     +0
+          4  CH
+          2  \  \
+          7  ALPHA
+
+          4  CH
+          2  \  .
+          7  DOT
+
+          4  CH
+          1  -16                (-SIR 0)
+          9  FAIL
+          1  -8
+          9  OCTAL
+
+          4  CH
+          2  \  D
+          7  DECIMAL
+
+          8  FAIL
+
+ALPHA     CALL(QCHIN)
+          9  FAIL
+         14  6
+          6  &777700
+          5  WS
+          CALL(QCHIN)
+          9  FAIL
+          1  WS
+         14  6
+          6  &777700
+          5  WS
+          CALL(QCHIN)
+          9  FAIL
+          1  WS
+          5  WS
+          CALL(GETCH)
+          4  WS
+          LEAVE(GETNO)
+
+DOT       CALL(GETCH)
+          4  CP
+          LEAVE(GETNO)
+
+OCTAL     4  CH
+          1  -16
+          5  WS
+RDOCTAL   CALL(GETCH)
+          1  -16
+          9  LOC
+          1  -8
+          9  ;+2
+          8  LOC
+
+          4  WS
+          6  &700000
+          7  NEXT41
+TOOBIG    CALL(MESS)
+          \^TO
+          \O M
+          \ANY
+          \ DI
+          \GIT
+          \S"
+          8  PROMPT
+
+NEXT41    4  WS
+         14  3
+          6  &777770
+          1  CH
+          1  -16
+          5  WS
+          8  RDOCTAL
+
+DECIMAL   CALL(GETCH)
+          4  CH
+          1  -16
+          9  FAIL
+          1  -10
+          9  ;+2
+          8  FAIL
+          4  CH
+          1  -16
+          5  WS
+
+RDEC      CALL(GETCH)
+          4  CH
+          1  -16
+          9  LOC
+          1  -10
+          9  ;+2
+          8  LOC
+          4  WS
+         12  +10
+         14  17
+          9  TOOBIG
+          1  CH
+          1  -16
+          5  WS
+          9  TOOBIG
+          8  RDEC
+
+LOC       4  WS
+          LEAVE(GETNO)
+
+(**********************************)
+
+
+PRINT     +0
+          CALL(MESS)
+          \
+          \"
+          4  DFLG
+          7  ALPHOUT
+          MV(ZERO, +0)
+          MV(WS, +0)
+
+          MV(T3, N)
+          4  T3
+          9  ;+3
+          4  \  +
+          8  ;+5
+          2  +0
+          5  T3
+          9  FUDGE
+          4  \  -
+          MQCHOP
+
+
+DECOUT    0  WS
+         /4  TENPOW
+          7  BLANK
+          5  S
+          1  -1
+          7  DIV1
+          4  T3
+         14  8176
+         13  S
+         14  8191
+REM       7  ;+2
+         10  ZERO
+          5  T2
+         14  8176
+         13  +10
+         14  8191
+         12  +10
+         14  17
+          2  T2
+          1  \  0
+          5  T2
+          4  ZERO
+          7  NDECDIG
+          4  T2
+          MQCHOP
+NDECDIG  10  WS
+          8  DECOUT
+
+DIV1      MV(T2, T3)
+          8  REM
+
+BLANK     MV(S, T3)
+          4  ZERO
+          7  ;+2
+          8  PAD
+         10  S
+          4  \  0
+          MQCHOP
+
+PAD       MV(WS, +0)
+PADS      0  WS
+         /4  TENPOW
+          7  AN
+          2  S
+          9  SPACE
+NEXWS    10  WS
+          8  PADS
+
+SPACE     4  \
+          MQCHOP
+          8  NEXWS
+
+FUDGE     CALL(MESS)
+          \-13
+          \107
+          \2"
+
+AN        CALL(MESS)
+          \  "
+
+
+ALPHOUT   4  AFLG
+          7  TESTOCT
+
+          4  N
+         14  8180
+          6  &77
+          1  =/0 32
+          MQCHOP
+          4  N
+         14  8186
+          6  &77
+          1  =/0 32
+          MQCHOP
+          4  N
+          6  &77
+          1  =/0 32
+          MQCHOP
+
+          CALL(MESS)
+          \
+          \"
+
+TESTOCT   4  OFLG
+          9  OCTOUT
+          4  AFLG
+          9  LPNT
+          4  DFLG
+          9  LPNT
+          8  OCTOUT
+
+LPNT      LEAVE(PRINT)
+
+OCTOUT    MV(WS, -6)            (OCTAL PRINT)
+          MV(S, N)
+
+NDIG      4  S
+         14  8177
+          6  &7
+          1  \  0
+          MQCHOP
+          4  S
+         14  3
+          5  S
+         10  WS
+          4  WS
+          9  NDIG
+
+          LEAVE(PRINT)
+
+(**********************************)
+
+ERR       +0
+          CALL(MESS)
+          \^BA
+          \D C
+          \OMM
+          \AND
+          \"
+          LEAVE(ERR)
+
+FAIL      CALL(ERR)
+          8  PROMPT
+
+NOTSIX    CALL(MESS)
+          \^OF
+          \FSE
+          \T T
+          \OO
+          \BIG
+          \"
+          8  PROMPT
+
+(**********************************)
+
+DECODE    +0
+          MV(SCANNING, +0)
+          CALL(MESS)
+          \^?
+          \"
+
+          CALL(GETCH)
+NOPROMPT  4  CH
+          2  \  A
+          7  ;+2
+          8  NEXT51
+          FLIP(AFLG)
+
+FLAG      9  UP
+          4  \  -
+          MQCHOP
+          8  DECODE+1
+UP        4  \  +
+          MQCHOP
+          8  DECODE+1
+
+
+NEXT51    4  CH
+          2  \  O
+          7  ;+2
+          8  NEXT52
+          FLIP(OFLG)
+          8  FLAG
+
+NEXT52    4  CH
+          2  \  Q
+          7  ;+2
+          8  NEXT53
+          CALL(MESS)
+          \UIT
+          \^"
+          0  MODOFF
+         /4  1
+          5  T
+          4  +0
+         /5  1
+          0  MODOFF
+         /4  1
+          2  MODOFF
+          7  LOAD
+          4  T
+         /5  1
+          CALL(QSTOP)
+LOAD      CALL(MESS)
+          \ &
+          \LOA
+          \D^"
+          0  MODOFF
+         /8  8181
+
+
+NEXT53    4  CH
+          2  \  P
+          7  ;+2
+          8  NEXT54
+          CALL(GETCH)
+
+          4  CH
+          2  \  A
+          7  PCLEAR             (DISPLAY PATTERN)
+
+          CALL(READN)
+          5  PVALUE
+
+          MV(PMASK, -1)
+
+          4  CH
+          7  PROMPT
+          2  \  ,
+          7  ;+2
+          8  FAIL
+
+          CALL(GETCH)
+          CALL(READN)
+          5  PMASK
+          4  PVALUE
+          6  PMASK
+          5  PVALUE
+          4  CH
+          7  PROMPT
+          MV(PMASK, +0)
+          MV(PVALUE, +0)
+          8  FAIL
+
+
+PCLEAR    CALL(MESS)
+          \TTE
+          \RN
+          \IS:
+          \"
+          MV(N, PVALUE)
+          CALL(PRINT)
+          4  \  ,
+          MQCHOP
+          MV(N, PMASK)
+          PRINTN
+          CALL(MESS)
+          \^
+          \OVE
+          \R:
+          \"
+          4  SRCHLO
+          CALL(TWODIG)
+          4  \  -
+          MQCHOP
+          4  SRCHHI
+          CALL(TWODIG)
+          8  DECODE+1
+
+NEXT54    4  CH
+          2  \  T
+          7  ;+2
+          8  NEXT55
+          CALL(GETCH)
+          CALL(READN)
+          9  FAIL
+          5  TRY
+          4  CH
+          7  ;+2
+          8  FAIL
+          CALL(MESS)
+          \WAS
+          \: "
+          MV(N, MAXTRIES)
+          PRINTN
+          MV(MAXTRIES, TRY)
+          8  DECODE+1
+
+NEXT55    4  CH
+          2  \  C
+          7  ;+2
+          8  NEXT56
+          FLIP(PROTECT)
+          8  FLAG
+
+NEXT56    4  CH
+          2  \  N
+          7  ;+2
+          8  NEXT57
+          FLIP(DFLG)
+          8  FLAG
+
+NEXT57    4  CH
+          2  \  W
+          7  ;+2
+          8  NEXT58
+          CALL(GETCH)
+          MV(SRCHLO, &0)
+          MV(SRCHHI, &77)
+          4  CH
+          7  DECODE+1
+          CALL(READN)
+          CHSIX
+          5  SRCHHI
+          4  CH
+          7  DECODE+1
+          2  \  ,
+          7  ;+2
+          8  FAIL
+          MV(SRCHLO, SRCHHI)
+          CALL(GETCH)
+          CALL(READN)
+          CHSIX
+          5  SRCHHI
+          4  CH
+          7  DECODE+1
+          8  FAIL
+
+NEXT58    LEAVE(DECODE)
+(**********************************)
+
+DTRAN     +0
+          0  MODOFF
+         /5  88                 (READ/WRITE)
+
+          MV(TRY, +0)
+          4  DAMS
+         14  8186
+          6  &7777
+          5  T
+         14  12
+          6  &7700
+          0  MODOFF
+         /5  94
+          4  T
+         /5  93
+          4  +64                (TRANSFER LENGTH)
+         /5  92
+          4  :BUF
+         /5  90
+AGAIN     4  -1
+         /5  95                 (STATUS)
+
+          4  +1
+         15  5184
+         /4  95
+          9  ;-1                (WAIT TILL DONE)
+
+          6  &37777
+          7  OKTRAN
+          5  SAVE
+          2  -1
+          6  STATUS
+          1  SAVE
+          5  STATUS (OR IN NEW STATUS)
+
+          2  &4000
+          7  TESTPROT
+
+          4  TRY
+         10  TRY
+          2  MAXTRIES
+          9  TRERR
+          RWG
+          1  KEYSW
+          6  &1
+          7  ;+2
+          8  AGAIN
+          CALL(MESS)
+          \^CU
+          \RRE
+          \NT
+          \TRA
+          \NSF
+          \ER
+          \ABO
+          \RTE
+          \D"
+
+
+TRERR     0  MODOFF
+         /4  88
+          2  +2
+          7  WRD
+          CALL(MESS)
+          \^RE
+          \AD"
+          8  STAT
+
+TESTPROT  MV(ISPROT, -1)
+          0  MODOFF
+         /4  88
+          2  +2
+          7  ;+2
+          8  OKTRAN
+          4  PROTECT
+          2  +0
+          9  OKTRAN
+          8  TRERR
+
+WRD       CALL(MESS)
+          \^WR
+          \IT"
+
+STAT      CALL(MESS)
+          \ING
+          \ SE
+          \CTO
+          \R:
+          \"
+          MV(N, DAMS)
+          PRINTN
+          CALL(MESS)
+          \^ST
+          \ATU
+          \S:
+          \"
+          MV(N, STATUS)
+          PRINTN
+          MV(ERPT, +11)
+
+ERLOOP    4  STATUS
+          6  &1
+          7  NEXTER
+          0  ERPT
+         /8  ;+1
+          8  PO
+          8  MMP
+          8  AARGH
+          8  AARGH
+          8  SPE
+          8  CSL
+          8  DNR
+          8  IO
+          8  SO
+          8  DWL
+          8  MT
+          8  DPE
+
+
+DPE       CALL(MESS)
+          \^DI
+          \SC
+          \PAR
+          \ITY
+          \ ER
+          \ROR
+          \"
+          8  NEXTER
+
+MT        CALL(MESS)
+          \^MI
+          \SSE
+          \D T
+          \RAN
+          \SFE
+          \R"
+          8  NEXTER
+
+DWL       CALL(MESS)
+          \^DI
+          \SC
+          \WRI
+          \TE
+          \LOC
+          \KOU
+          \T"
+          8  NEXTER
+
+SO        CALL(MESS)
+          \^AD
+          \DRE
+          \SS
+          \OUT
+          \ OF
+          \ RA
+          \NGE
+          \"
+          8  NEXTER
+
+IO        CALL(MESS)
+          \^IL
+          \LEG
+          \AL
+          \OPE
+          \RAT
+          \ION
+          \"
+          8  NEXTER
+
+DNR       CALL(MESS)
+          \^DI
+          \SC
+          \NOT
+          \ RE
+          \ADY
+          \"
+          8  NEXTER
+
+CSL       CALL(MESS)
+          \^CO
+          \RE
+          \STO
+          \RE
+          \LOC
+          \KOU
+          \T"
+          8  NEXTER
+
+SPE       CALL(MESS)
+          \^ST
+          \ORE
+          \ PA
+          \RIT
+          \Y E
+          \RRO
+          \R"
+          8  NEXTER
+
+MMP       CALL(MESS)
+          \^MA
+          \INT
+          \ENA
+          \NCE
+          \ PE
+          \RMI
+          \T"
+          8  NEXTER
+
+PO        CALL(MESS)
+          \^PR
+          \OTE
+          \CTI
+          \ON
+          \OVE
+          \RRI
+          \DE"
+          8  NEXTER
+
+AARGH     CALL(MESS)
+          \^UN
+          \DEF
+          \INE
+          \D B
+          \IT"
+          8  NEXTER
+
+NEXTER    4  ERPT
+          1  -1
+          5  ERPT
+          4  STATUS
+         14  8191
+          6  +131071
+          5  STATUS
+          7  ;+2
+          8  ERLOOP
+
+          0  MODOFF
+         /4  95
+          5  STATUS
+          6  &773777
+          7  OKTRAN
+          MV(OLDSC, SCANNING)
+          CALL(DECODE)
+          4  CH
+          2  \  R
+          7  ;+2
+          8  EXAMINE
+          MV(TRY, +0)
+          MV(SCANNING, OLDSC)
+          8  LOOP
+
+OKTRAN    LEAVE(DTRAN)
+
+(**********************************)
+
+GETDISC   +0
+          4  +1
+          CALL(DTRAN)
+          0  DALS
+         /4  BUF
+          5  WORD
+          LEAVE(GETDISC)
+
+(**********************************)
+
+
+SETDISC   +0
+          5  WORD2
+          CALL(GETDISC)
+          0  DALS
+          4  WORD2
+         /5  BUF
+          4  +2
+          CALL(DTRAN)
+          LEAVE(SETDISC)
+
+(**********************************)
+
+
+
+TWODIG    +0
+         14  12
+          5  S
+          MV(WS, -2)
+         11  PRINT
+          8  NDIG
+          LEAVE(TWODIG)
+
+(**********************************)
+
+SEARCH    +0
+          4  PMASK
+          7  ;+2
+          8  GOODP
+BADP      CALL(MESS)
+          \^BA
+          \D P
+          \ATT
+          \ERN
+          \"
+          8  PROMPT
+
+GOODP     4  SRCHHI
+          2  SRCHLO
+          7  ;+3
+          9  ;+2
+          8  BADW
+          MV(MATCH, +0)
+          MV(T, SRCHLO)
+
+SCAN      0  T
+         /4  BUF
+          6  PMASK
+          2  PVALUE
+          7  FOUNDP
+NSCAN    10  T
+          4  SRCHHI
+          1  +1
+          2  T
+          9  SCAN
+          LEAVE(SEARCH)
+
+FOUNDP    MV(MATCH, -1)
+          CALL(MESS)
+          \^PA
+          \TTE
+          \RN
+          \FOU
+          \ND"
+          MV(SCANNING, +0)
+          MV(C6BITS, T)
+          MV(LASTT, T)
+          MV(LASTS, CP)
+          8  LOOP
+
+BADW      CALL(MESS)
+          \^BA
+          \D W
+          \ORD
+          \ RA
+          \NGE
+          \"
+          8  PROMPT
+
+
+(**********************************)
+
+MESS     +0
+LOOP1    10  MESS
+          4  -12
+LOOP2     5  SHIFT
+          0  MESS
+         /4  0
+          0  SHIFT
+        /14  0
+          6  &77
+          2  \  "
+          0  MESS
+         /7  1
+          2  \  "
+          MQCHOP
+          4  SHIFT
+          7  LOOP1
+          1  +6
+          8  LOOP2
+
+%
+)

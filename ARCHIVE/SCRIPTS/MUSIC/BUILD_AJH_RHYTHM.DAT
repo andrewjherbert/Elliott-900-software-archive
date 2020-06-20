@@ -1,0 +1,47 @@
+﻿C Convert Fascinating Rhythm from Algol to AJH format.
+C Andrew Herbert 16/01/2014.
+on 903 16K
+
+c Edit original tape
+at ptr file ../../MASTERS/ACDUTILITIES/BOWDLER.BIN
+j 8181
+st 8175
+
+c Insert note count and unit beat
+
+at ptr inline
+
+DLE 25 3
+INS
+436 20 
+^%,
+CLI 25 16 25 2 0 14
+PSC
+<! halt !><!!>
+at ptp file errors.txt legible
+j 13
+de ptp
+print errors.txt
+st 490
+delete errors.txt
+
+at ptr file ../../MASTERS/MUSIC/ALGOL_MUSIC/ALG_RHYTHM.900
+at ptp file AJH_RHYTHM.900
+j 9
+de ptp
+st 1274
+
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+
+at ptr file ../../MASTERS/MUSIC/ALGOL_MUSIC/ALG_TRANS.900
+j 8
+
+c initialize
+j 10
+at ptr file AJH_RHYTHM.900
+at ptp file AJH_RHYTHM.900
+j 9
+de ptp
+
+sh t

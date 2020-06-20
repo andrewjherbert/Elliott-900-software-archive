@@ -1,0 +1,116 @@
+﻿
+*19
+(( TELEPRINTER TESTS)
+
+
+[ TTY2 ]
+
+	8	OUTF		(  8 check output - fast, from 0 )
+	8	OUTE		(  9 check output - fast, from 1 )
+	8	OUTS		( 10 check output - slow )
+	8	RESUME		( 11 continue )
+	8	INPUT		( 12 check input )
+	8	TTY2		( 13 use tty2 )
+TTY1	4	+0		( 14 use tty1 )
+	5	DEV
+STOP	8	;+0
+
+TTY2	4	+2
+	5	DEV
+	8	STOP
+
+I	>1
+COUNT	>1
+DEV	+2			( bit to convert tty1 to tty2 )
+
+( Table of printable ASCII characters with parity )
+CHTAB	+163 +036 +165 +166 +039 +040 +169 +170 +043 +172
+	+045 +046 +175 +048 +177 +178 +051 +180 +053 +054
+	+183 +184 +057 +058 +187 +060 +189 +190 +063 +192
+	+065 +066 +195 +068 +197 +198 +071 +072 +201 +202
+	+075 +204 +077 +078 +207 +080 +209 +210 +083 +212
+	+085 +086 +215 +216 +089 +090 +219 +092 +221 +222
+	+095 +096 +225 +226 +099 +228 +101 +102 +231 +232
+	+105 +106 +235 +108 +237 +238 +111 +240 +113 +114
+	+243 +116 +245 +246 +119 +120 +249 +250 +123 +252
+	+125 +126 -1	
+
+INPUT	0	DEV
+	4	+0
+	/15	2052		( read ch from tty )
+	15	6144		( output to punch )
+	8	INPUT+1
+
+OUTF	4	+0
+	5	COUNT
+	5	I
+LOOPF	0	I
+	/4 	CHTAB
+	9	OUTF		( -ve terminates CHTAB )
+	0	DEV
+	/15	6148
+	10 	I
+	10 	COUNT
+	4	COUNT
+	2	+70
+	7	NLF		( wrap at 70 chars )
+	8	LOOPF
+NLF	4	+141		( newline sequence )
+	/15 	6148
+	4	+10
+	/15 	6148
+	4	+0
+	5 	COUNT
+	8	LOOPF
+
+
+OUTE	4	+1		( start offset by 1 )
+	5	COUNT
+	5	I
+LOOPE	0	I
+	/4 	CHTAB
+	9	OUTE		( -ve terminates CHTAB )
+	0	DEV
+	/15	6148
+	10 	I
+	10 	COUNT
+	4	COUNT
+	2	+70
+	7	NLE		( wrap at 70 chars )
+	8	LOOPE
+NLE	4	+141		( newline sequence )
+	/15 	6148
+	4	+10
+	/15 	6148
+	4	+0
+	5 	COUNT
+	8	LOOPE	
+
+OUTS	4	+0
+	5	COUNT
+	5	I
+LOOPS	0	I
+	/4 	CHTAB
+	9	OUTs		( -ve terminates CHTAB )
+	0	DEV
+	/15	6148
+	8	;+0
+RESUME	10 	I
+	10 	COUNT
+	4	COUNT
+	2	+70
+	7	NLS		( wrap at 70 chars )
+	8	LOOPS
+NLS	4	+141		( newline sequence )
+	/15 	6148
+	4	+10
+	/15 	6148
+	4	+0
+	5 	COUNT
+	8	LOOPS	
+%
+
+<! Halt !>
+
+
+

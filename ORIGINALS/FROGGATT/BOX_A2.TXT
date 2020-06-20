@@ -1,0 +1,464 @@
+﻿
+        SIR & SIR S/Rs & MACRO EXPANSION.
+        =================================
+
+Total files listed:
+      219 file(s)      1,866,708 bytes
+   No legible headers.
+   All labelled by me unless otherwise stated.
+   Generally given here in original date order.
+
+
+Bag "SIROS, & 903 SIR SOURCE".
+------------------------------
+Directory BOX_A2\SIROS
+        4 file(s)        128,248 bytes
+   Neither tape labelled by me or in my style.
+
+"SIROS"
+SIROS    1          29,085 27/12/11   15:58
+SIROS    2          29,085 27/12/11   16:20
+"SIR SOURCE, ISSUE 6"
+   "8 Tapes in 1"
+SIR_ISS6 1          35,039 27/12/11   16:16
+SIR_ISS6 2          35,039 27/12/11   16:25
+
+
+Bag "1-PASS SIR".
+-----------------
+Directory BOX_A2\SIR1PASS
+       20 file(s)        180,518 bytes
+
+"1-PASS SIR 2/6/66, Binary" XACD just predates my joining
+SIR1P_66 1           8,106 27/12/11   17:04
+SIR1P_66 2           8,106 27/12/11   17:39
+"SIR FOR ALGOL II, Binary"
+SIRALGOL 1           7,095 27/12/11   17:06
+SIRALGOL 2           7,095 27/12/11   17:41
+"TO PRINT 1-PASS SIR TAPE 1A 22/2/71, 920 Telecode"
+GENS1_1A 1           6,806 27/12/11   17:08
+GENS1_1A 2           6,806 27/12/11   17:42
+"TO PRINT 1-PASS SIR TAPE 2 24/3/71, 920 Telecode"
+GENS1_2  1           6,953 27/12/11   17:09
+GENS1_2  2           6,953 27/12/11   17:44
+"TO PRINT 1-PASS SIR TAPE 1 22/2/71, Binary Mode 3"
+GENS1_B  1           3,064 27/12/11   17:10
+GENS1_B  2           3,064 27/12/11   17:44
+"1-PASS SIR 24/3/71, 900-Series Telecode Vol 1"
+SIR1P_1  1          35,038 27/12/11   17:14
+SIR1P_1  2          35,038 27/12/11   17:47
+"1-PASS SIR 24/3/71, 920 Telecode Vol 2"
+SIR1P_2F 1           6,941 27/12/11   17:16
+SIR1P_2F 2           6,941 27/12/11   17:50
+"1-PASS SIR 24/3/71, 900-Series Telecode Vol 2"
+SIR1P_2T 1           7,854 27/12/11   17:17
+SIR1P_2T 2           7,854 27/12/11   17:51
+"1-PASS SIR 24/3/71, Binary Mode 3" ACD (faded)
+SIR1P_B  1           7,946 27/12/11   17:19
+SIR1P_B  2           7,946 27/12/11   17:53
+"1-PASS SIR Options" Mylar identified by single notch
+   Unlabelled, title taken from documentation.
+   In centre of "1-PASS SIR 24/3/71, Binary Mode 3".
+SIR1P_OP 1             456 27/12/11   17:20
+SIR1P_OP 2             456 27/12/11   17:53
+
+
+Bag "2-PASS SIR".
+-----------------
+Directory BOX_A2\SIR2PASS
+       28 file(s)        330,332 bytes
+   Are any of these the same as Hans Pufal's?
+   Were the TJF copies for IGL?
+
+"2-PASS SIR 19/7/66, Telecode" just predates my joining
+SIR2P66S 1          23,439 27/12/11   19:40
+SIR2P66S 2          23,439 27/12/11   22:22
+"2-PASS SIR 19/7/66, Binary" XACD just predates my joining
+SIR2P66B 1           5,915 27/12/11   19:41
+SIR2P66B 2           5,915 27/12/11   22:26
+"2-PASS SIR 15/2/68, Telecode"
+SIR2P68S 1          28,244 27/12/11   19:45
+SIR2P68S 2          28,244 27/12/11   22:29
+"EASAMS 2-PASS SIR 5/9/69, Binary"
+SIR2P69B 1           5,794 27/12/11   19:47
+SIR2P69B 2           5,794 27/12/11   22:33
+"TO PRINT 2-PASS SIR TAPE 1 20/3/70, Telecode"
+GENS2_1  1           6,700 27/12/11   19:49
+GENS2_1  2           6,700 27/12/11   22:37
+"TO PRINT 2-PASS SIR TAPE 2 24/3/70, Telecode"
+GENS2_2  1           7,741 27/12/11   19:50
+GENS2_2  2           7,741 27/12/11   22:39
+"2-PASS SIR 13/4/70, Telecode Vol 1" ACD
+SIR2P_1F 1          20,497 27/12/11   19:53
+SIR2P_1F 2          20,497 27/12/11   22:40
+"2-PASS SIR 13/4/70, 900-Series Telecode Vol 1" TJF
+SIR2P_1T 1          24,994 27/12/11   22:06
+SIR2P_1T 2          24,994 27/12/11   22:43
+"2-PASS SIR 13/4/70, Telecode Vol 2" ACD
+SIR2P_2F 1           9,773 27/12/11   22:09
+SIR2P_2F 2           9,773 27/12/11   22:46
+"2-PASS SIR 13/4/70, 900-Series Telecode Vol 2" TJF
+SIR2P_2T 1          11,292 27/12/11   22:11
+SIR2P_2T 2          11,292 27/12/11   22:48
+"SMALL DIC 2-PASS SIR 13/4/70, Binary Mode 3"
+SMALLDIC 1           6,773 27/12/11   22:13
+SMALLDIC 2           6,773 27/12/11   22:50
+"2-PASS SIR 13/4/70, Binary Mode 3" XACD
+SIR2P70B 1           6,773 27/12/11   22:15
+SIR2P70B 2           6,773 27/12/11   22:52
+"2-PASS SIR 7/1/71, Binary Mode 3" ACD TJF
+SIR2P71B 1           6,773 27/12/11   22:16
+SIR2P71B 2           6,773 27/12/11   22:53
+"2-PASS SIR Options" Mylar identified by double notch
+   Unlabelled, title taken from documentation.
+   In centre of "2-PASS SIR 7/1/71, Binary Mode 3"
+SIR2P_OP 1             458 27/12/11   22:17
+SIR2P_OP 2             458 27/12/11   22:54
+
+
+Bag "903 MASIR. GPM, FRED".
+---------------------------
+Directory BOX_A2\MASIR
+       14 file(s)        100,616 bytes
+   Does the full-stop after MASIR imply that
+      GPM &/or FRED are not 900-series specific?
+
+"903 MASIR 1/1/74, Binary Mode 3" MASD "Torn & Repaired"
+   Torn between *.1 & *.2 and repaired with holed patch
+MASIR    1          18,795 28/12/11   12:15
+MASIR    2          18,795 28/12/11   12:37
+"903 LOADER 1/1/74, Binary Mode 3" MASD "Torn Leader"
+   Torn and repaired long ago with Sellotape
+LOADER   1           9,843 28/12/11   12:18
+LOADER   2           9,843 28/12/11   12:39
+"903 MAPLOD 256 1/1/74, Binary Mode 3" MASD
+MAPLOD_2 1           2,276 28/12/11   12:27
+MAPLOD_2 2           2,276 28/12/11   12:41
+"903 MAPLOD 4096 1/1/74, Binary Mode 3" MASD
+MAPLOD_4 1           2,276 28/12/11   12:28
+MAPLOD_4 2           2,276 28/12/11   12:42
+"MASIR EXAMPLE 15/12/71, 900-Series Telecode"
+MASIR_EX 1           2,778 28/12/11   12:29
+MASIR_EX 2           2,778 28/12/11   12:44
+"FRED 9/2/71, Binary Mode 3"
+FRED     1           5,098 28/12/11   12:30
+FRED     2           5,098 28/12/11   12:45
+"GPM10 9/5/77, 900-Series Telecode"
+GPM10    1           9,242 28/12/11   12:32
+GPM10    2           9,242 28/12/11   12:46
+
+
+Loose "TEXT".
+-------------
+Directory BOX_A2\TEXT
+        4 file(s)         22,098 bytes
+
+"INTERNAL CODE 1/12/69, Telecode"
+   Tape title & date (but not Telecode) are in "..." quotes.
+INT_CODE 1           1,760 28/12/11   14:15
+INT_CODE 2           1,760 28/12/11   14:18
+"ACD LIBRARY MEMORY JOGGER 14/4/72, 920 Telecode"
+LIBMEJOG 1           9,289 28/12/11   14:16
+LIBMEJOG 2           9,289 28/12/11   14:20
+
+
+Bag "903/920 SIR SUBROUTINES CH I/O".
+-------------------------------------
+Directory BOX_A2\CHIO
+       28 file(s)        243,614 bytes
+   Four of these tapes not labelled by me but in my style.
+
+"TELECODE CHARACTER INPUT & OUTPUT SUBROUTINE 17/8/68, Telecode"
+TCIO_68  1           8,397 28/12/11   14:59
+TCIO_68  2           8,397 28/12/11   15:46
+"PAPER TAPE CHARACTER INPUT & OUTPUT SUBROUTINE 29/10/69, Telecode"
+PTCIO_69 1          11,856 28/12/11   15:01
+PTCIO_69 2          11,856 28/12/11   15:48
+"CH I/O S/R 15/12/69, Telecode"
+CHIO_69  1           9,205 28/12/11   15:02
+CHIO_69  2           9,205 28/12/11   15:50
+"CH I/O + LEGTAPE S/R 15/12/69, Telecode"
+CHIOL_69 1          11,854 28/12/11   15:04
+CHIOL_69 2          11,854 28/12/11   15:51
+"LEGTAPE S/R 31/3/70, 900-Series Telecode" ACD
+LEG_70   1           3,878 28/12/11   15:05
+LEG_70   2           3,878 28/12/11   15:51
+"CH I/O S/R 31/3/70, 900-Series Telecode" ACD
+CHIO_70  1          10,139 28/12/11   15:06
+CHIO_70  2          10,139 28/12/11   15:52
+"CH I/O + LEGTAPE S/R 31/3/70, 900-Series Telecode" ACD TJF
+CHIOL_70 1          13,000 28/12/11   15:09
+CHIOL_70 2          13,000 28/12/11   15:54
+"CH I/O + FULL LEGTAPE S/R 31/3/70, 920 Telecode"
+CHIOFL70 1          12,207 28/12/11   15:13
+CHIOFL70 2          12,207 28/12/11   15:55
+"BIT COUNT 1/4/70, 900-Series Telecode" no S/R in name
+BITCOUNT 1             809 28/12/11   15:14
+BITCOUNT 2             809 28/12/11   15:56
+"TIP & TOP S/R 1/4/70, 900-Series Telecode"
+TIPTOP   1           2,743 28/12/11   15:15
+TIPTOP   2           2,743 28/12/11   15:58
+"PIP & POP S/R 1/4/70, 900-Series Telecode"
+PIPPOP   1           8,816 28/12/11   15:17
+PIPPOP   2           8,816 28/12/11   15:59
+"PIP & POP + FULL LEGTAPE S/R 1/4/70, 900-Series Telecode"
+PIPPOPFL 1          12,365 28/12/11   15:19
+PIPPOPFL 2          12,365 28/12/11   16:01
+"CH I/O S/R IN 1-PASS SIR 2/4/71, 900-Series Telecode" ACD
+CHIOSIR1 1           3,279 28/12/11   15:20
+CHIOSIR1 2           3,279 28/12/11   16:01
+"CH I/O + LEGTAPE S/R 22/5/72, 900-Series Telecode"
+CHIOL_72 1          13,259 28/12/11   15:22
+CHIOL_72 2          13,259 28/12/11   16:03
+
+
+Bag "LEGIBLE TABLES".
+---------------------
+Directory BOX_A2\LEGIBLE
+       34 file(s)         82,884 bytes
+   Four of these tapes not labelled by me but in my style.
+
+"LEGTAPE SOURCE TABLE ALL 7/12/69, 920 Telecode"
+   First & Second Masters read once each.
+SRCALL_F 1           2,886 29/12/11   11:09
+SRCALL_F 2           2,886 29/12/11   11:41
+"LEGTAPE SOURCE TABLE ALL 7/12/69, 900-Series Telecode"
+SRCALL_T 1           2,978 29/12/11   11:10
+SRCALL_T 2           2,978 29/12/11   11:42
+"LEGTAPE SOURCE TABLE NLC 7/12/69, Telecode"
+SRCNLC   1           2,211 29/12/11   11:11
+SRCNLC   2           2,211 29/12/11   11:43
+"LEGIBLE TAPE SOURCE TABLE +- DIGITS SPACE 7/12/69, Telecode"
+   Name not LEGTAPE, and probably a logical date.
+SRCNUM   1             762 29/12/11   11:12
+SRCNUM   2             762 29/12/11   11:44
+"LEGIBLE TAPE TABLES ALL 7/12/69, Telecode"
+TABALL   1           2,864 29/12/11   11:13
+TABALL   2           2,864 29/12/11   11:45
+"LEGIBLE TAPE TABLES NLC 7/12/69, Telecode"
+TABNLC   1           2,256 29/12/11   11:14
+TABNLC   2           2,256 29/12/11   11:46
+"TO MAKE LTABS 8/10/70, Telecode Vol I" sic (I not 1)
+GENTAB70 1           3,278 29/12/11   11:14
+GENTAB70 2           3,278 29/12/11   11:47
+"102C/902 LEGIBLE TAPE TABLES ALL 8/10/70, 920 Telecode"
+T12ALL_F 1           3,612 29/12/11   11:18
+T12ALL_F 2           3,612 29/12/11   11:48
+"102C/902 LEGIBLE TAPE TABLES ALL 8/10/70, 900-Series Telecode"
+T12ALL_T 1           3,760 29/12/11   11:20
+T12ALL_T 2           3,760 29/12/11   11:50
+"102C/902 LEGIBLE TAPE TABLES NLC 8/10/70, 920 Telecode"
+T12NLC   1           2,802 29/12/11   11:21
+T12NLC   2           2,802 29/12/11   11:51
+"102C/902 LEGIBLE TAPE TABLES +- DIGITS SPACE 8/10/70, 920 Telecode"
+T12NUM   1             942 29/12/11   11:21
+T12NUM   2             942 29/12/11   11:52
+"K-TABLES-18-ALL 16/12/71, 900-Series Telecode"
+KTABALL  1           2,940 29/12/11   11:22
+KTABALL  2           2,940 29/12/11   11:53
+"K-TABLES-18-ALL LESS SPACE 16/12/71, 900-Series Telecode"
+KTABNSP  1           2,916 29/12/11   11:23
+KTABNSP  2           2,916 29/12/11   11:54
+"TO MAKE LTABS 16/12/71, 900-Series Telecode Vol 1"
+GENTAB71 1           3,933 29/12/11   11:24
+GENTAB71 2           3,933 29/12/11   11:55
+"KEYBOARD ALPHABET 13/11/72, 920 Telecode"
+KALPHAB  1             454 29/12/11   11:25
+KALPHAB  2             454 29/12/11   11:56
+"TO PRINT KEYBOARD TABLE 14/11/72, 920 Telecode"
+GENKTAB  1           2,186 29/12/11   11:26
+GENKTAB  2           2,186 29/12/11   11:57
+"KEYBOARD TABLE 14/11/72, 920 Telecode"
+KTAB     1             662 29/12/11   11:26
+KTAB     2             662 29/12/11   11:57
+
+
+Bag "903/920 SIR SUBROUTINES F/P".
+----------------------------------
+Directory BOX_A2\FLOAT
+        8 file(s)        114,064 bytes
+   Three ACD Q-tapes not labelled by me but in my style
+      apart from hyphens missing in "900-Series".
+
+"QF 17/6/71, 900 Series Telecode" ACD
+QF       1          14,250 29/12/11   17:21
+QF       2          14,250 29/12/11   17:30
+"QFMATH 20/12/69, 900 Series Telecode" ACD
+QFMATH   1           9,926 29/12/11   17:23
+QFMATH   2           9,926 29/12/11   17:33
+"QF I/O 17/6/71, 900 Series Telecode" ACD
+QFIO     1          20,618 29/12/11   17:25
+QFIO     2          20,618 29/12/11   17:36
+"FLOATING POINT PACKAGE 17/6/71, Intermediate Mode 3" ACD
+RLB      1          12,238 29/12/11   17:27
+RLB      2          12,238 29/12/11   17:38
+
+
+Bag "903/920 SIR SUBROUTINES S/L & D/L".
+----------------------------------------
+Directory BOX_A2\FIXED
+       28 file(s)        112,586 bytes
+   Four ACD Q-tapes not labelled by me but in my style
+      apart from hyphens missing in "900-Series".
+   SIT = SIR title, MAT = MASIR title.
+
+"ASCD MULTILEVEL MATHS SUBROUTINES, Telecode"
+MULTILEV 1           4,700 30/12/11   12:11
+MULTILEV 2           4,700 30/12/11   12:30
+"QSMATH 15/12/69, 900 Series Telecode" ACD
+QSMATH   1           7,864 30/12/11   12:12
+QSMATH   2           7,864 30/12/11   12:31
+"QS I/O 15/12/69, 900 Series Telecode" ACD
+QSIO     1           4,988 30/12/11   12:14
+QSIO     2           4,988 30/12/11   12:33
+"QDLA 15/12/69, 900 Series Telecode" ACD
+QDLA     1          12,220 30/12/11   12:15
+QDLA     2          12,220 30/12/11   12:34
+"QDMATH 15/12/69, 900 Series Telecode" ACD
+QDMATH   1           7,150 30/12/11   12:17
+QDMATH   2           7,150 30/12/11   12:36
+"MISCELLANEOUS MATHEMATICAL SUBROUTINES 16/12/69, 900-Series Telecode" ACD
+MISCMATH 1           3,048 30/12/11   12:18
+MISCMATH 2           3,048 30/12/11   12:37
+"OPTIMISED MATHEMATICAL SUBROUTINES 1/12/71, 900-Series Telecode" ACD
+OPTIMATH 1           3,242 30/12/11   12:19
+OPTIMATH 2           3,242 30/12/11   12:38
+"SLOP 9/8/71, 900-Series Telecode MAT"
+SLOP_MAT 1           2,746 30/12/11   12:20
+SLOP_MAT 2           2,746 30/12/11   12:39
+"SLOP 9/8/71, 900-Series Telecode SIT" TJF
+SLOP_SIT 1           2,745 30/12/11   12:21
+SLOP_SIT 2           2,745 30/12/11   12:40
+"INTIP 8/3/74, 900-Series Telecode"
+INTIP    1           1,203 30/12/11   12:21
+INTIP    2           1,203 30/12/11   12:40
+"IDIP 8/3/74, 900-Series Telecode"
+IDIP     1           1,653 30/12/11   12:21
+IDIP     2           1,653 30/12/11   12:41
+"AMIP 13/3/74, 900-Series Telecode"
+AMIP     1           2,272 30/12/11   12:22
+AMIP     2           2,272 30/12/11   12:42
+"ADIP 13/3/74, 900-Series Telecode"
+ADIP     1           1,655 30/12/11   12:22
+ADIP     2           1,655 30/12/11   12:42
+"ADOP 13/3/74, 900-Series Telecode"
+ADOP     1             807 30/12/11   12:23
+ADOP     2             807 30/12/11   12:42
+
+
+Bag "OLD SUBROUTINES".
+----------------------
+Directory BOX_A2\OLD_SR
+       33 file(s)         56,517 bytes
+   All on coloured tape, mainly green.
+   Usually end in CRLF ")" CRLF, or just CRLF ")", not Haltcode.
+   I suspect that I cut off (& filed?) the original names.
+   ALPHA & BETA are written on tape as single Greek letters.
+   Why is only B1 obsolete?
+   Except on B105, why are LOCation counts included?
+
+"B1 61 LOC, Telecode (T2)" /Obsolete/
+B1       1             723 30/12/11   14:23
+B1       2             723 30/12/11   14:41
+"B2, Telecode (T2)"
+B2       1             697 30/12/11   14:24
+B2       2             697 30/12/11   14:41
+"B4, Telecode (T2)"
+B4       1             789 30/12/11   14:24
+B4       2             789 30/12/11   14:42
+"B6 77 LOC ALPHA, Telecode (T2)"
+B6_A     1             803 30/12/11   15:03
+B6_A     2             803 30/12/11   14:45
+B6_A     BAD           783 30/12/11   14:25
+"B6 77 LOC BETA, Telecode (T2)"
+B6_B     1             815 30/12/11   14:26
+B6_B     2             815 30/12/11   14:46
+"B10 ALPHA, Telecode (T2)"
+B10_A    1           1,033 30/12/11   14:26
+B10_A    2           1,033 30/12/11   14:47
+"B10 BETA, Telecode (T2)"
+B10_B    1           1,033 30/12/11   14:27
+B10_B    2           1,033 30/12/11   14:47
+"B104, Telecode (T2)"
+B104     1           1,815 30/12/11   14:27
+B104     2           1,815 30/12/11   14:48
+"B105 254 LOC, Telecode (T2)"
+B105_254 1           2,116 30/12/11   14:28
+B105_254 2           2,116 30/12/11   14:49
+"B105 258 LOC, Telecode" no T2 in name
+B105_258 1           2,142 30/12/11   14:29
+B105_258 2           2,142 30/12/11   14:49
+"B106, Telecode (T2)"
+B106     1             924 30/12/11   14:29
+B106     2             924 30/12/11   14:51
+"D7, Telecode (T2)"
+D7       1           1,449 30/12/11   14:30
+D7       2           1,449 30/12/11   14:51
+"E1 (SUBROUTINES), Telecode (T2)"
+E1       1           2,343 30/12/11   14:31
+E1       2           2,343 30/12/11   14:53
+"E1A, Telecode (T2)"
+E1A      1           6,556 30/12/11   14:32
+E1A      2           6,556 30/12/11   14:54
+"T105 210 LOC, Telecode (T2)" has a final erase
+T105     1           1,760 30/12/11   14:33
+T105     2           1,760 30/12/11   14:55
+"T106, Telecode (T2)"
+T106     1           2,869 30/12/11   14:34
+T106     2           2,869 30/12/11   14:55
+
+
+Bag "900 ML/I As Received, Plus RADOS FETCH".
+---------------------------------------------
+Directory BOX_A2\MLI_REC
+       11 file(s)        202,888 bytes
+   Three ML/I tapes not labelled by me or in my style.
+   ML/I source & documentation Red rubber stamped
+      "Computing Activities Unit"
+      "Royal College of Art"
+      "London, SW7 2EU"
+      "(01) 584 5020 Ext 328 or 263"
+   ML/I disc filing routines not stamped.
+
+"ML/I source, SAVEd MASIR, 13 Oct '76"
+   One old full-width tear, repaired with new holed patch.
+   Edge of tape missing alongside five holes, not repaired.
+SOURCE   1          55,662 30/12/11   15:21
+SOURCE   2          55,662 30/12/11   15:27
+SOURCE   3          55,662 30/12/11   15:42
+"ML/I disc filing routines, SAVEd MASIR" inside out
+   "define macro TEST, YES -to RUN, NO -to DPROG"
+DISCROUT 1           5,358 30/12/11   16:07
+DISCROUT 2           5,358 30/12/11   16:13
+"ML/I documentation, (ASCII) 13 Oct '76"
+DOCUMENT 1           7,983 30/12/11   16:11
+DOCUMENT 2           7,983 30/12/11   16:14
+"RADOS FETCH 17/11/76, 900-Series Telecode Vol 1"
+FETCH_S  1           2,597 30/12/11   16:08
+FETCH_S  2           2,597 30/12/11   16:15
+"RADOS FETCH 17/11/76, Binary Mode 3"
+FETCH_B  1           2,013 30/12/11   16:09
+FETCH_B  2           2,013 30/12/11   16:16
+
+
+Bag "900 ML/I As Re-Issued".
+----------------------------
+Directory BOX_A2\MLI_ISS
+        7 file(s)        292,343 bytes
+   I derived these from "ML/I As Received"
+      including using FETCH for the SAVEd MASIR.
+
+"900 ML/I MAIN TAPE, 900-Series Telecode" TJF
+SOURCE   1          87,111 30/12/11   16:29
+SOURCE   2          87,111 30/12/11   16:47
+SOURCE   3          87,111 30/12/11   16:59
+"900 ML/I DISC FILING ROUTINES, 900-Series Telecode" TJF
+DISCROUT 1           6,891 30/12/11   16:34
+DISCROUT 2           6,891 30/12/11   16:50
+"900 ML/I DOCUMENTATION, 900-Series Telecode" TJF
+DOCUMENT 1           8,614 30/12/11   16:36
+DOCUMENT 2           8,614 30/12/11   16:52
+
+
+*** EOF ***
+

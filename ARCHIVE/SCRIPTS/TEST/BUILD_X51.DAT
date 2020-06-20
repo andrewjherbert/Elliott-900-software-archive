@@ -1,0 +1,65 @@
+﻿C Build X.51 Paper tape test program
+
+on 903
+
+c create image of distributed X.51 binary
+at ptr file ../../MASTERS/TEST/X51(ISS1).BIN
+j 8181
+st 7820
+du 8192 X51.IMG
+
+c Assemble with 1-Pass SIR
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+select out tty
+nonprinting off
+at ptr inline
+
+*19
+^21
+<! halt !><!!>
+j 8
+st 6927
+at ptr file ../../MASTERS/TEST/X51.900
+j 9
+st 6927
+at ptr inline
+
+%
+<! halt !><!!>
+j 9
+st 6927
+
+c Dump out with T22DUMP
+
+select out auto
+nonprinting on
+at ptp file X51.BIN
+at ptr file ../../MASTERS/903UTILITIES/T22_23(ISS3).BIN
+j 8181
+st 8070
+
+at ptr inline
++21
++279
+<! halt !><!!>
+j 8179
+st 8113
+de ptp
+
+c Check against distributed binary
+c
+c Only differences between locations 21-280 are
+c significant.
+c
+clear
+at ptr file X51.BIN
+j 8181
+st 8171
+vi X51.IMG
+
+delete X51.IMG
+
+sh t

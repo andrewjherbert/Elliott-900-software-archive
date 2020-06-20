@@ -1,0 +1,35 @@
+﻿
+         -1
+TABLE    8    PRE
+         8    TILT
+         8    RUN
+         8    BACK
+         8    GENMOVE
+         8    GENMOVE
+         8    GENMOVE
+         8    WHICH
+         8    STATE8
+         8    STATE9
+
+         8    STATE10
+         8    STATE20
+         8    BRAD
+         8    GENMOVE
+         8    GENMOV
+         8    GENMOV
+
+          8           STAT16          (B01 REPETITION)
+          8           STAT17
+          8           STAT18
+          8           STAT19         (C23/D23 ONLY)
+          8           GENMOVE
+          8           GENMOVE
+          8           GENMOVE
+          8           STAT23
+
+   8   STAT24     (OVER RUN CORRECTION SEPT 1971)
+   8   STAT25
+   8   STAT26
+   >+10
+
+WHICH    

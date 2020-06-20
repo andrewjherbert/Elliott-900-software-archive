@@ -1,0 +1,136 @@
+﻿
+((TELECODE I/O SUBROUTINES IN 1-PASS SIR 24/3/71, 1/4/71)
+
+[CHIP CHIPF CHIPL CHIPE CHOPF CHOPL CHOPE CHOPC]
+
+(TELECODE INPUT SUBROUTINE)
+
+(Appears, to the users programme, to read one 903/ISO or 920
+Telecode character from tape, and convert to internal
+code, but reads tape in one line at a time)
+
+CHIPE 	4 	CHIPF
+ 	7 	FILBUF 	(Test if first entry)
+ 	4 	CHIP
+ 	1 	-10 	(C-10, test if <N>)
+ 	7 	FILBUF
+ 	1 	-10 	(C-20, test if <H>)
+ 	7 	;+0
+
+READBF 	0 	BUFCT
+ 	4 	BUFCT
+ 	1 	-61
+ 	9 	;+4
+ 	/4 	LINE-61 	(Read character from m.s. end)
+ 	14 	8185
+ 	8 	;+3
+ 	/4 	LINE 	(Read character from l.s. end)
+ 	6 	&177
+ 	5 	CHIP
+ 	10 	BUFCT
+
+ 	0 	CHIPL
+ 	/8 	1
+
+FILBUF 	5 	BUFCT
+
+(+1) 	11 	7915
+ 	8 	7772
+ 	7 	;+0 	(Stop iff parity error or illegal ch.)
+
+ 	0 	BUFCT
+ 	4 	BUFCT
+ 	1 	-61
+ 	9 	;+7
+ 	/4 	LINE-61
+ 	14 	8185
+ 	4 	CHIP
+ 	14 	7
+ 	/5 	LINE-61 	(Store character in m.s. end)
+ 	8 	;+3
+ 	4 	CHIP
+ 	/5 	LINE 	(Store character in l.s. end)
+ 	10 	BUFCT
+
+ 	4 	CHIP
+ 	1 	-10 	(C-10, test if <N>)
+ 	7 	CLECT
+ 	1 	-10 	(C-20, test if <H>)
+ 	7 	CLECT
+
+ 	4 	BUFCT
+ 	1 	-121
+ 	7 	;+0 	(Stop iff line too long)
+ 	8 	FILBUF+1
+
+CLECT 	5 	BUFCT
+ 	8 	READBF
+
+CHIPF=7914 	 	(+0 on first entry)
+CHIPL 	>1 	(Link)
+CHIP=7916 	 	(Last character read in)
+BUFCT 	>1 	(Line buffer pointer)
+LINE 	>61 	(Line buffer)
+
+(TELECODE OUTPUT SUBROUTINE)
+
+(Prints one or several internal code
+characters in 903/ISO or 920 Telecode)
+
+CHOPE=7831 	 	(Entry)
+CHOPF=7917 	 	(+0 on first entry)
+CHOPL=7918 	 	(Link)
+CHOPC=7919 	 	(Output telecode: +0=920, +1=903)
+
+((ERROR ROUTINE, 2/4/71)
+
+[ERRORL ERRORE CHOPF CHOPL CHOPE]
+
+(Prints out the error message following the entry
+instructions in alphanumeric group form, until
+a full-stop is found, then stops. The message
+is preceded by <N> and an error marker,
+followed by <H>, and is in the current output code)
+
+ERRORL 	>1
+
+ERRORE 	4 	+0
+ 	5 	CHOPF
+ 	4 	+10
+ 	11 	CHOPL
+ 	8 	CHOPE
+ 	4 	+0
+ 	11 	CHOPL
+ 	8 	CHOPE
+
+NEXTWD 	4 	-2
+ 	5 	COUNT
+ 	10 	ERRORL
+ 	0 	ERRORL
+ 	/4 	0
+
+NEXTCH 	5 	WORD
+ 	14 	8180
+ 	6 	&77
+ 	1 	-14 	(6-bit code test if .)
+ 	7 	STOP
+ 	1 	+46 	(Restore 7-bit code)
+ 	11 	CHOPL
+ 	8 	CHOPE
+
+ 	4 	COUNT
+ 	7 	NEXTWD
+ 	10 	COUNT
+
+ 	4 	WORD
+ 	14 	6
+ 	8 	NEXTCH
+
+STOP 	4 	+20
+ 	11 	CHOPL
+ 	8 	CHOPE
+ 	8 	;+0
+
+COUNT 	>1
+WORD 	>1
+<! Halt !>

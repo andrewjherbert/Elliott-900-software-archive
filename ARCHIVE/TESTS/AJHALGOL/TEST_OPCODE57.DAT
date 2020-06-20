@@ -1,0 +1,51 @@
+﻿c Algol function codes: test call by name expressions (lvalues)
+
+
+on 903 16K
+
+c translate trivial program
+at ptr file ../../SCRIPTS/AJHALGOL/ALG1(AJH).BIN
+j 8181
+
+at ptr inline
+opcode;
+"begin"
+   "integer" "array" a[1:1];
+   "integer" i;
+   "procedure" p1(i); "integer" i; i := 99;
+   "integer" "procedure" p2; p2 := 1;
+   a[1] := i := 2;
+   "comment" p1(p2);
+   p1(a[1]);
+   "comment" p1(i+a[1]) - fails error 21;
+   "comment" p1(1) - fails error 21;
+   "comment" p1(1+2) - fails error 21;
+"end"
+<! halt !><!!>
+at ptp file TEST.RLB
+j 8
+st 9
+de ptp
+
+printalgol TEST.RLB
+
+c load new LP system
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLP(AJH).BIN
+j 8181
+
+c run trivial program
+at ptr file TEST.RLB
+at tty inline
+R
+C
+<!!>
+nonstop on
+select out tty
+nonprinting off
+j 8
+c runs off tty
+nonstop off
+
+delete TEST.RLB
+sh t
+

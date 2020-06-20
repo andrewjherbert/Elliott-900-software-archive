@@ -1,0 +1,36 @@
+﻿<! Scanning From "THIMBLEBY\IMAGES" TO "THIMBLEBY\SCANNED" !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T1.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T1 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T10.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T10 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T11.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T11 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T12.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T12 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T2.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T2 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T3.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T3 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T4.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T4 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T5.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T5 Assumed to be binary !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T6.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T6 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T7.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T7 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T8.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T8 Detected to be 900 telecode !>
+<! File Name " Z:\Andrew On My Mac\Dropbox\Elliott903\Papertapes\ORIGINALS\THIMBLEBY\IMAGES\THIMBLEBY_T9.1 " !>
+<! THIMBLEBY\SCANNED\THIMBLEBY_T9 Detected to be 900 telecode !>
+<! Final Character Not Halt Code !>
+<! 
+12 Files Scanned 0 Files Ignored !>
+<! 0 Parity Errors 7 Other problems !>
+FINISHED

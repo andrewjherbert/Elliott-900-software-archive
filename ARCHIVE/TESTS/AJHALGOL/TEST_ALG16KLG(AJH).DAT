@@ -1,0 +1,18 @@
+﻿C Test 2-Pass ALGOL System (AJH)
+
+on 903 16k
+
+c load new 16KLG
+clear
+at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+st 5124
+
+at ptr file ../../../MASTERS/ALGOL/AJH/TEST_PROGRAM.900
+select out tty
+j 8
+st 7943
+j 10
+st 1727
+
+sh t

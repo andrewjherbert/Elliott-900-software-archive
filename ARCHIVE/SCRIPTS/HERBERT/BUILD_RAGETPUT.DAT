@@ -1,0 +1,88 @@
+﻿C Build RAGET and RAPUT for ALGOL issue 5
+
+on 903
+
+at ptr file ../903SIR/SIR(ISS6)(5500).BIN
+j 8181
+st 8171
+
+
+at ptp file RAGETPUT.RLB
+at ptr inline
+*1
+[RAGET RAPUT]
+
+
+FP=38
+WS=80
+PACK=74
+
+FAIL	4	+5	
+	11	65	( call ALGOL error handling )
+	8	66
+	8	;+0	( no continuation )
+
+( raget [a, i] )
+RAGET	/14 2		( 2 parameters )
+	>1		( link )
+	0 	FP
+	/4	6	( second parameter i )
+	5	WS
+	/0	3	( first parameter a )
+	/4	0	( address of array )
+	1	WS	( base+i )
+	5	WS
+	0	WS	( get 2 word real from array and unpack )
+	/4	1	( position of i-th word = base+i+1 )
+	5	WS	
+	/4	2	( first word of mantissa )
+	6	&377600	
+	5	WS+1	( second word of mantissa )
+	/4	2
+	14	11
+	14 	8181	( exponent )	
+	0	FP	( put in result stack frame )
+	/5	2
+	4	WS+1
+	/5	1
+	4	WS
+	/5	0
+	0	RAGET+1
+	/8	1
+			
+
+( raput [a, i, r] )
+RAPUT	/14 3		( 3 parameters )
+	>1		( link )
+	0 	FP
+	/4	6	( second parameter i )
+	9	FAIL	( i must >= 1 )
+	7	FAIL
+	5	WS
+	/4	9	( r from stack, unpacked )
+	5	WS+3
+	/4	10
+	5	WS+4
+	/4	11
+	5	WS+5
+	/0	3	( first parameter a )
+	/4	0	( address of array )
+	1	WS
+	5	103	( address for result of unpack )
+	10	103	( position of i-th word = base+i+1 )
+	/0 	1	( address of array map  - check i <= size )
+	4	WS
+	/2	1	( total size - relative size )
+	9	FAIL
+	0	PACK	( interpreter routine to pack a real )
+	/11	0	( will unpack into i-th word of a )
+	/8	24
+	0	RAPUT+1
+E	/8	1
+%
+<! halt !><!!>
+j 8
+st 6239
+
+de ptp
+sh t

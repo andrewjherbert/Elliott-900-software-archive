@@ -1,0 +1,488 @@
+﻿<! Legible Header  OOO  OOOOO  OOO  OOOO  OOOOO OOOO  OOOOO O   O       OOOOO     O   O    !>
+<! Legible Header O   O   O   O   O O   O   O   O   O O     O  O        O         O  OO    !>
+<! Legible Header O       O   O   O O   O   O   O   O O     O O         O        O  O O    !>
+<! Legible Header  OOO    O   OOOOO OOOO    O   OOOO  OOOO  OO          OOOO    O     O    !>
+<! Legible Header     O   O   O   O O       O   O     O     O           O             O    !>
+<! Legible Header O   O   O   O   O O  O    O   O  O  O     O  O        O     O       O    !>
+<! Legible Header  OOO    O   O   O O   O   O   O   O OOOOO O   O       O     O     OOOOO  !>
+<! Legible Header                                                                          !>
+
+STARTREK;
+"BEGIN"
+"COMMENT" IMPLEMENTED FROM RAIR BASIC BY R.J. JENKINS MARCH 1978 ;
+
+"INTEGER"S1,S2,I,J,CS,K3,R1,R2,H,E,T9,T,E0,T0,P,P0,S9,Q1,Q2,B9,K9,
+K0,B3,S3,A,N,Z1,Z2,COM,F,OLDX,OLDY,OLDQ1,OLDQ2,NEWX,NEWY;
+"REAL"X2,C1,W1,X,X1,Y1,Y;
+
+"SWITCH"SS:=L1460,PRINTQUAD,SUQ,L1530,L1560,CONT,L1875,
+L1920,BLOCKED,L2030,L2130,L2200,L2280;
+
+"SWITCH"SC:=COURSE,SRS,LRS,PHASERS,TORPEDOS,DAMAGE,END,COMMAND;
+
+"INTEGER""ARRAY"D[1:6],G,Q[1:8,1:8],K[1:9,1:3];
+
+"COMMENT" STARTREK PROCEDURES;
+
+"REAL""PROCEDURE"FND;
+"BEGIN"
+FND:=SQRT((K[I,1]-S1)^2 + (K[I,2]-S2)^2);
+"END" OF FND;
+
+"CODE" "INTEGER" "PROCEDURE" IRANDOM; "ALGOL"; "COMMENT" ADDED AJH 27/03/2014;
+
+"REAL""PROCEDURE"RND;
+"BEGIN"
+RND:=IRANDOM/131071;
+"END" OF RND;
+
+"INTEGER""PROCEDURE"FNR;
+"BEGIN"
+FNR:=ENTIER(RND*8+1);
+"END";
+
+"PROCEDURE"RANDOM;
+"BEGIN"
+"SWITCH"SS:=AGAIN;
+AGAIN:R1:=FNR;
+R2:=FNR;
+"IF"Q[R1,R2]"NE"0"THEN""GOTO"AGAIN;
+"END";
+
+"PROCEDURE"CALCULATE;"BEGIN"X1:=-SIN(((C1-1)*0.785398));
+X2:=COS(((C1-1)*0.785398));"END";
+
+
+"INTEGER""PROCEDURE"FNW(I,J);
+"VALUE"I;
+"INTEGER"I,J;
+"BEGIN"
+"IF"I<1"OR"I>8"OR"J<1"OR"J>8"THEN"FNW:=0"ELSE"FNW:=-1;
+"END" OF FNW;
+"PROCEDURE"CONDITION;
+"BEGIN"
+"IF"CS=1"THEN""PRINT"' GREEN@;
+"IF"CS=2"THEN""PRINT"'YELLOW@;
+"IF"CS=3"THEN""PRINT"'DOCKED@;
+"IF"CS=4"THEN""PRINT"'   RED@;
+"END" OF CONDITION;
+
+"PROCEDURE"DEVICE(N);
+"INTEGER"N;
+"BEGIN"
+"IF"N=1"THEN""PRINT"'WARP ENGINES@;
+"IF"N=2"THEN""PRINT"'S.R. SENSORS@;
+"IF"N=3"THEN""PRINT"'L.R. SENSORS@;
+"IF"N=4"THEN""PRINT"'PHASER CNTRL@;
+"IF"N=5"THEN""PRINT"'PHOTON TUBES@;
+"IF"N=6"THEN""PRINT"'DAMAGE CNTRL@;
+"END" OF DEVICE;
+
+"PROCEDURE"ATTACK;
+"BEGIN"
+"SWITCH"SS:=OUT;
+"IF"K3=0"THEN""GOTO"OUT;
+"IF"CS=3"THEN""PRINT"''L@STARBASE SHIELDS PROTECT ENTERPRISE@;
+"IF"CS=3"THEN""GOTO"OUT;
+"PRINT"''L@@;
+"FOR"I:=1"STEP"1"UNTIL"K3"DO""BEGIN"
+     H:=ENTIER((K[I,3]/FND)*(2+RND))+1;
+     E:=E-H;
+"PRINT"DIGITS(3),H,SAMELINE,' UNIT HIT FROM KLINGON AT SECTOR@,
+K[I,2],' -@,K[I,1],''L@@,'YOU HAVE@,DIGITS(4),E, ' UNITS LEFT @;
+"END";
+OUT: "END" OF ATTACK;
+
+"PROCEDURE"DEFEAT;
+"BEGIN"
+"PRINT"''L3@IT IS STARDATE@,SAMELINE,T,'
+THE ENTERPRISE HAS BEEN DESTROYED.
+THE UNION WILL BE CONQUERED.
+THE CAUSE OF SOCIALISM IS DEAD.
+SO ARE YOU@;
+STOP;
+"END" OF DEFEAT;
+
+"PROCEDURE"VICTORY;
+"BEGIN"
+"FOR"I:=1"STEP"1"UNTIL"15"DO""PRINT"''B135@@;
+"PRINT"''L3@THE UNION HAS BEEN SAVED.
+YOU HAVE BEEN APPOINTED LIFE CHAIRMAN OF THE PARTY.
+FASCISM IS DEAD.
+LONG LIVE THE PROLETARIAT.
+
+RATING =@,SAMELINE,ENTIER((K0/(T-T0))*1000),'  @;
+STOP;
+"END";
+
+
+"COMMENT" BODY OF STARTREK PROGRAM;
+
+READER(3);
+PUNCH(3);
+
+T:=T0:=ENTIER(RND*20+20)*100;
+T9:=40;
+E:=E0:=3000;
+P:=P0:=10;
+S9:=200;
+
+"COMMENT"SET CO ORDINATES OF ENTERPRISE;
+Q1:=FNR;
+Q2:=FNR;
+S1:=FNR;
+S2:=FNR;
+
+"COMMENT"SET UP GALAXY;
+
+B9:=K9:=0;
+"FOR"I:=1"STEP"1"UNTIL"8"DO""BEGIN"
+        "FOR"J:=1"STEP"1"UNTIL"8"DO""BEGIN"
+                            X:=ENTIER(RND*64)+1;
+                            "IF"X<10"THEN"K3:=ENTIER(RND*3)+1"ELSE"
+                            K3:=0;
+                            K9:=K9+K3;
+                            "IF"RND>0.9"THEN"B3:=1"ELSE"B3:=0;
+                            B9:=B9+K3;
+                            G[I,J]:=(K3*100)+(B3*10)+FNR;
+        "END";
+"END";
+
+K0:=K9;
+"IF"B9=0"THEN""BEGIN"I:=FNR;J:=FNR;G[I,J]:=G[I,J]+10;B9:=1;"END";
+"PRINT"''L3@ORDERS:    STARDATE@,SAMELINE,T,'
+COMRADE, YOU HAVE BEEN SELECTED BY THE PARTY TO DEFEND THE GALAXY
+FROM THE DEADLY FASCIST KLINGON MENACE WHICH NOW THREATENS THE UNION.
+TO DO THIS YOU MUST ANNIHILATE THE KLINGON FORCE OF@,DIGITS(2),K9,'
+BATTLE CRUISERS. YOU HAVE 40 SOLAR YEARS TO COMPLETE YOUR MISSION.
+(I.E. UNTIL STARDATE@,DIGITS(4),T0+T9,').
+YOU ARE SUPPLIED WITH@,DIGITS(2),B9,' SUPPORTING STARBASE@;
+"IF"B9>1"THEN""PRINT"'S@;
+"PRINT"'
+ARE YOU FAMILIAR WITH THE CONTROLS OF THE STARSHIP ENTERPRISE ? @;
+ADVANCE(3);
+"IF"BUFFER(3,'N@)"THEN""PRINT"'O'L@YOU SHOULD CONSULT THE DATABASE
+(YELLOW ALGOL FILE).@;
+"IF"BUFFER(3,'Y@)"THEN""PRINT"'ES@;
+"PRINT"''L@DO YOU WANT A CHART ? @;
+ADVANCE(3);
+"IF"BUFFER(3,'Y@)"THEN""PRINT"'ES
+
+
+...................................................................
+                        THE GALAXY
+                        ==========
+
+                1   2   3   4   5   6   7   8 
+              ---------------------------------
+            1 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+            2 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+            3 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+            4 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+            5 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+            6 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+            7 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+            8 :   :   :   :   :   :   :   :   :
+              ---------------------------------
+
+                      PRINTED BY HER MAJESTYS STATIONARY OFFICE
+
+...................................................................
+@"ELSE""PRINT"'O@;
+"FOR"I:=1"STEP"1"UNTIL"6"DO"D[I]:=0;
+
+SUQ:
+"PRINT"''L@YOU ARE NOW IN QUADRANT@,SAMELINE,DIGITS(1),Q2,' -@,Q1;
+
+"COMMENT"SET UP QUADRANT;
+
+K3:=B3:=S3:=0;
+"IF"FNW(Q1,Q2)=0"THEN""GOTO"L1460;
+"FOR"I:=1"STEP"1"UNTIL"9"DO"
+"FOR"J:=1"STEP"1"UNTIL"3"DO"
+K[I,J]:=0;
+
+X:=G[Q1,Q2];
+K3:=ENTIER(X/100);
+B3:=ENTIER(X/10)-(10*K3);
+S3:=X-(ENTIER(X/10)*10);
+
+L1460: "FOR"I:=1"STEP"1"UNTIL"8"DO"
+"FOR"J:=1"STEP"1"UNTIL"8"DO"Q[I,J]:=0;
+Q[S1,S2]:=1;
+"FOR"I:=1"STEP"1"UNTIL"K3"DO""BEGIN"
+        RANDOM;
+        Q[R1,R2]:=2;
+        K[I,1]:=R1;
+        K[I,2]:=R2;
+        K[I,3]:=S9;
+"END";
+
+"FOR"I:=1"STEP"1"UNTIL"B3"DO""BEGIN"
+        RANDOM;
+        Q[R1,R2]:=3;
+"END";
+
+"FOR"I:=1"STEP"1"UNTIL"S3"DO""BEGIN"
+        RANDOM;
+        Q[R1,R2]:=4;
+"END";
+
+"COMMENT"SHORT RANGE SENSOR SCAN;
+SRS:
+Q[S1,S2]:=1;
+"IF"E>E0/10"THEN"CS:=1"ELSE""BEGIN"
+        CS:=2;
+        "GOTO"L1530;
+"END";
+
+"FOR"I:=Q1-1"STEP"1"UNTIL"Q1+1"DO""BEGIN"
+        "FOR"J:=Q2-1"STEP"1"UNTIL"Q2+2"DO""BEGIN"
+                "IF"FNW(I,J)=0"THEN""BEGIN"
+                        CS:=2;
+                        I:=J:=10;
+                "END";
+        "END";
+"END";
+
+L1530: "FOR"I:=S1"STEP"1"UNTIL"S1+1"DO""BEGIN"
+                "FOR"J:=S2-1"STEP"1"UNTIL"S2+1"DO""BEGIN"
+                "IF"I<1"OR"I>8"OR"J<1"OR"J>8"THEN""GOTO"L1560;
+                "IF"Q[I,J]=3"THEN""BEGIN"
+                        CS:=3;
+                        E:=E0;
+                        P:=P0;
+                        "GOTO"PRINTQUAD;
+                "END";
+L1560:
+                "END";
+"END";
+
+"IF"K3"NE"0"THEN""BEGIN"
+        CS:=4;
+        "END";
+"IF"D[2]<0"THEN""BEGIN"
+        "PRINT"''L@SHORT RANGE SENSORS INOPERABLE@;
+        "GOTO"COMMAND;
+"END";
+PRINTQUAD:
+"PRINT"''L3@---------------@;
+"PRINT"''L@@;
+"FOR"I:=1"STEP"1"UNTIL"8"DO""BEGIN"
+"FOR"J:=1"STEP"1"UNTIL"8"DO""BEGIN"
+        "IF"Q[I,J]=0"THEN""PRINT"'. @;
+        "IF"Q[I,J]=1"THEN""PRINT"'E @;
+        "IF"Q[I,J]=3"THEN""PRINT"'B @;
+        "IF"Q[I,J]=4"THEN""PRINT"'* @;
+"IF"Q[I,J]"NE"0"AND"Q[I,J]"NE"1"AND"Q[I,J]"NE"3"AND"Q[I,J]"NE"4
+"THEN""PRINT"'K @;
+"END";
+"PRINT"''L@@;
+"END";
+"PRINT"'---------------@;
+"PRINT"''L@STARDATE:@,SAMELINE,DIGITS(4),T,''S25@@,'CONDITION @;
+CONDITION;
+"PRINT"''L@QUADRANT:@,SAMELINE,Q2,'  -@,Q1,''S17@@,
+'ENERGY:@,E,''S5@@,''L@@,'PHOTON TORPEDOS:@,P,''L@KLINGONS:@,K9;
+"IF"K3>0"THEN"ATTACK;
+"GOTO"COMMAND;
+
+COURSE: "PRINT"''L@COURSE (1-8.99999): @;
+"READ"C1;
+"PRINT"''L@WARP FACTOR (0-12): @;
+"READ"W1;
+
+"IF"C1<1"OR"C1"GE"9"OR"W1<0"OR"W1>12"THEN""GOTO"COMMAND;
+"IF"W1>0.2"AND"D[1]<0"THEN""BEGIN""PRINT"'
+WARP ENGINES ARE DAMAGED. MAXIMUM WARP FACTOR = 0.2 @;
+"GOTO"COMMAND;
+"END";
+"IF"K3>0"THEN"ATTACK;
+"FOR"I:=1"STEP"1"UNTIL"6"DO""IF"D[I]<0"THEN"D[I]:=D[I]+1;
+
+"IF"RND>0.2"THEN""GOTO"CONT;
+"IF"RND>0.5"THEN""BEGIN"
+      I:=ENTIER(RND*6+1);
+      "PRINT"''L@SPACE STORM @;
+      DEVICE(I);
+      "PRINT"' DAMAGED@;
+      D[I]:=D[I]-ENTIER(RND*4+1);
+     "GOTO"CONT;
+"END";
+
+"FOR"I:=1"STEP"1"UNTIL"6"DO"
+      "IF"D[1]<0"THEN""BEGIN"
+      "PRINT"''L@***** TRUCE ****** @;
+      DEVICE(I);
+      "PRINT"' STATE OF REPAIR IMPROVED @;
+      D[I]:=D[I]+ENTIER(RND*4);
+      "IF"D[I]>0"THEN"D[I]:=0;
+      "GOTO"CONT;
+"END";
+
+CONT: T:=T+1;
+     N:=ENTIER(W1*8);
+E:=E-N;
+"IF"E<0"THEN"DEFEAT;
+"IF"T>(T0+T9)"THEN"DEFEAT;
+Q[S1,S2]:=0;
+C1:=(C1-1)*0.785398;
+W1:=W1/0.125;
+OLDQ1:=Q1; OLDQ2:=Q2;
+OLDX:=(S2-1) + ((Q2-1)*8);
+OLDY:=((9-S1)-1) + (((9-Q1)-1)*8);
+
+NEWY:=ENTIER((W1*SIN(C1))+0.5)+OLDY;
+NEWX:=ENTIER((W1*COS(C1))+0.5)+OLDX;
+"IF"NEWX>63"OR"NEWY>63"OR"NEWX<0"OR"NEWY<0"THEN""BEGIN"
+     "IF"NEWX>63"THEN"S2:=Q2:=8;
+     "IF"NEWX<0"THEN"S2:=Q2:=1;
+     "IF"NEWY>63"THEN"S1:=Q1:=1;
+     "IF"NEWY<0"THEN"S1:=Q1:=8;
+"END""ELSE""BEGIN"
+     Q2:=ENTIER(NEWX/8)+1;
+     S2:=ENTIER(((NEWX/8)-(Q2-1))*8)+1;
+     Q1:=9-(ENTIER(NEWY/8)+1);
+     S1:=9-(ENTIER(((NEWY/8)-(8-Q1))*8)+1);
+"END";
+"IF"Q1=OLDQ1"AND"Q2=OLDQ2"THEN""GOTO"SRS"ELSE""GOTO"SUQ;
+S1:=8*(X-Z1)+0.5;
+"COMMENT"LONG RANGE SCAN;
+
+LRS:"IF"D[3]<0"THEN""BEGIN"
+      "PRINT"''L@LONG RANGE SENSORS INOPERABLE, STILL UNDERGOING REPAIRS@;
+      "GOTO"COMMAND;
+"END";
+
+"PRINT"''L@LONG RANGE SENSOR SCAN FOR QUADRANT@,SAMELINE,Q2,'   -@,Q1;
+"FOR"I:=Q1-1"STEP"1"UNTIL"Q1+1"DO""BEGIN"
+"PRINT"''L@   @;
+      "FOR"J:=Q2-1"STEP"1"UNTIL"Q2+1"DO""BEGIN"
+            "IF"FNW(I,J)=0"THEN""BEGIN"
+                  "PRINT"'  000@;
+                  "GOTO"L2030;
+            "END";
+            "PRINT"DIGITS(4),SAMELINE,G[I,J];
+L2030:"END";
+"END";
+
+"GOTO"COMMAND;
+ 
+"COMMENT"PHASER CONTROL;
+PHASERS: "IF"D[4]<0"THEN""BEGIN"
+      "PRINT"''L@PHASER CONTROL DISABLED@;
+      "GOTO"COMMAND;
+"END";
+"PRINT"''L@PHASERS LOCKED IN ON TARGET.
+ENERGY AVAILABLE:@,SAMELINE,E,' UNITS@;
+"PRINT"''L@NUMBER OF UNITS TO FIRE ? @;
+"READ"X;
+"IF"X"LE"0"THEN""GOTO"COMMAND;
+"IF"X>E"THEN""GOTO"PHASERS;
+E:=E-X;
+"FOR"I:=1"STEP"1"UNTIL"9"DO""BEGIN"
+      "IF"K[I,3]"LE"0"THEN""GOTO"L2130;
+      H:=ENTIER(X/FND*(2+RND));
+      K[I,3]:=K[I,3]-H;
+      "PRINT"H,SAMELINE,' UNIT HIT ON KLINGON AT SECTOR@,
+K[I,2],'   -@,K[I,1];
+      "IF"K[I,3]>0"THEN""BEGIN"
+            "PRINT"''L@IT HAS @,SAMELINE,K[I,3],' UNITS LEFT@;
+            "GOTO"L2130;
+            "END";
+      "PRINT"''L@KLINGON AT SECTOR@,DIGITS(1),SAMELINE,K[I,2],' -@,K[I,1],
+' DESTROYED.@;
+      K3:=K3-1;
+      K9:=K9-1;
+      Q[ K[I,1], K[I,2] ]:=0;
+      G[Q1,Q2]:=G[Q1,Q2]-100;
+      "IF"K9"LE"0"THEN"VICTORY;
+
+L2130:"END";
+ATTACK;
+"GOTO"COMMAND;
+
+TORPEDOS: "IF"D[5]<0"THEN""BEGIN"
+      "PRINT"''L@PHOTON TUBES NOT YET OPERATIONAL.@;
+       "GOTO"COMMAND;
+"END";
+"IF"P=0"THEN""BEGIN"
+      "PRINT"''L@ALL PHOTON TORPEDOS USED@;
+      "GOTO"COMMAND;
+"END";
+"PRINT"''L@TORPEDO COURSE (1-8.99999): @;
+"READ"C1;
+"IF"C1=0"THEN""GOTO"COMMAND;
+"IF"C1<1"OR"C1"GE"9"THEN""GOTO"TORPEDOS;
+CALCULATE;
+X:=S1;
+Y:=S2;
+P:=P-1;
+"PRINT"''L@TORPEDO TRACK: @;
+
+L2200:X:=X+X1;
+Y:=Y+X2;
+Z1:=ENTIER(X+0.5);
+Z2:=ENTIER(Y+0.5);
+"IF"FNW(Z1,Z2)=0"THEN""BEGIN"
+      "PRINT"''L@MISSED.....@;
+      ATTACK;
+      "GOTO"COMMAND;
+"END";
+OLDX:=ENTIER(X+0.5); OLDY:=ENTIER(Y+0.5);
+"PRINT"DIGITS(1),OLDY,SAMELINE,' -@,OLDX;
+"IF"Q[Z1,Z2]=0"THEN""GOTO"L2200;
+
+"FOR"I:=1"STEP"1"UNTIL"9"DO"
+      "IF"K[I,1]=Z1"AND"K[I,2]=Z2"THEN""BEGIN"
+      K[I,3]:=0;
+       "PRINT"''L@KLINGON DESTROYED@;
+      K3:=K3-1;
+      K9:=K9-1;
+      "IF"K9"LE"0"THEN"VICTORY"ELSE""GOTO"L2280;
+"END";
+"IF"Q[Z1,Z2]=4"THEN""BEGIN"
+      "PRINT"''L@STAR DESTROYED@;
+      "GOTO"L2280;
+"END";
+"PRINT"''L@*********** STARBASE DESTROYED...CONGRATULATIONS***********@;
+B3:=B3-1;
+F:=ENTIER(RND*4+2);
+"PRINT"''L@YOU FORFEIT@,SAMELINE,F,' STARYEARS FOR INCOMPETENCE.@;
+T:=T+F;
+"IF"T"GE"(T0+T9)"THEN"DEFEAT;
+"PRINT"''L@THE PARTY CANNOT TOLERATE SUCH INCOMPETENCE. YOU ARE IN
+GRAVE DANGER OF BEING RECALLED BY THE KREMLIN.@;
+
+L2280:Q[Z1,Z2]:=0;
+G[Q1,Q2]:=(K3*100)+(B3*10)+S3;
+ATTACK;
+
+COMMAND: COM:=8;
+   "PRINT"''L@COMMAND ? @;
+ADVANCE(3);
+"IF"BUFFER(3,'C@)"THEN"COM:=1;
+"IF"BUFFER(3,'S@)"THEN"COM:=2;
+"IF"BUFFER(3,'L@)"THEN"COM:=3;
+"IF"BUFFER(3,'P@)"THEN"COM:=4;
+"IF"BUFFER(3,'T@)"THEN"COM:=5;
+"IF"BUFFER(3,'D@)"THEN"COM:=6;
+"IF"BUFFER(3,'E@)"THEN"COM:=7;
+"GOTO"SC[COM];
+
+DAMAGE: "FOR"I:=1"STEP"1"UNTIL"6"DO""BEGIN"
+      "PRINT"''L@@;
+      DEVICE(I);
+      "PRINT"SAMELINE,D[I];
+"END";
+"GOTO"COMMAND;
+
+END: "END" OF STARTREK;
+<! Halt !>

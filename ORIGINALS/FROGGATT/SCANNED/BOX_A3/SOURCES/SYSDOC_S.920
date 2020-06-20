@@ -1,0 +1,1255 @@
+﻿
+((SYSTEMS DOCUMENTATION,30/9/69)
+
+((TRIGGER POINTS & FREEZE PROGRAM)
+
+[  CHOPF  CHOPB
+ CHIP CHIPL CHIPE CHOPL CHOPE CHIPF JX CHOPC CHOPCR
+ FREEZE FRCONT CNVERT CVTCON CVTEND ]
+
+         8    FREEZE
+         8    FRCONT
+         8    CNVERT
+         8    CVTCON
+         8    CVTEND
+
+FREEZE   4    +0
+         5    CHOPB
+         5    N
+         5    CHIPF
+         5    CHOPF
+         4    +1
+         5    LCOUNT
+         4    CHOPCR
+         5    CHOPC
+         11   CHIPL
+         8    CHIPE
+         11   CHOPL
+         8    CHOPE
+         8    FRCONT
+
+LOOP1    11   MARKL
+         8    MARKE
+FRCONT   4    +0
+         5    CHARC
+LOOP3    11   CHIPL
+         8    CHIPE
+         4    CHARC
+         7    JUMP1
+J5       4    CHIP
+         1    -20
+         7    JX
+J6       4    CHIP
+         11   CHOPL
+         8    CHOPE
+         1    -10
+         7    HOP
+         8    LOOP3
+HOP      10   LCOUNT
+         4    LCOUNT
+         1    -50
+         9    FRCONT
+         8    LOOP1
+
+JUMP1    10   CHARC
+         4    CHIP
+         1    -40
+         7    HOP1
+         8    J5
+HOP1     11   CHIPL
+         8    CHIPE
+         1    -92
+         7    J7
+         1    +52
+         7    ;+2
+         8    GOON
+         4    LCOUNT
+         7    GOON
+         11   MARKL
+         8    MARKE
+GOON     4    +40
+         11   CHOPL
+         8    CHOPE
+         8    J6
+J7       11   CHIPL
+         8    CHIPE
+         1    -92
+         7    ;+8
+         4    +40
+         11   CHOPL
+         8    CHOPE
+         4    +92
+         11   CHOPL
+         8    CHOPE
+         8    J6
+         11   CHIPL
+         8    CHIPE
+         1    -10
+         7    FRCONT
+         8    ;-4
+
+((PAGE MARKER OUTPUT SUBROUTINE)
+
+MARKL    >1
+MARKE    4    +0
+         5    LCOUNT
+         10   N
+         4    +40
+         11   CHOPL
+         8    CHOPE
+         4    +92
+         11   CHOPL
+         8    CHOPE
+         11   CHOPL
+         8    CHOPE
+
+         4    -1
+         5    B
+         4    N
+         5    REM
+L2       0    B
+         4    +0
+         5    COUNT
+         4    REM
+         /1   UNIT+1
+         9    L1
+         10   COUNT
+         5    REM
+         8    ;-4
+L1       4    COUNT
+         /5   PAGE+1
+         10   B
+         4    B
+         7    L2
+         4    PAGE
+         7    J1
+         1    +48
+         11   CHOPL
+         8    CHOPE
+
+J1       4    PAGE+1
+         7    J2
+J4       1    +48
+         11   CHOPL
+         8    CHOPE
+J3       4    REM
+         1    +48
+         11   CHOPL
+         8    CHOPE
+         4    +41
+         11   CHOPL
+         8    CHOPE
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         0    MARKL
+         /8   1
+
+J2       4    PAGE
+         7    J3
+         4    PAGE+1
+         8    J4
+
+N        >1
+LCOUNT   >1
+B        >1
+REM      >1
+COUNT    >1
+CHARC    >1
+PAGE     >2
+
+
+UNIT     -100
+         -10
+
+
+((CONVERT PROGRAMME)
+[ CHOPF  CHIPL CHIPE CHIP CHIPF CHOPL CHOPE  CHOPB
+CHOPC CHOPCR CHIP1 CHIP2 CHIP3 CHIP4 CHOP1
+JX   CNVERT CVTCON CVTEND   NLLINK NLENT ]
+
+CNVERT   4    +0
+         5    N
+         5    N+1
+         5    N+2
+         5    N+3
+         5    CHIPF
+         5    CHOPF
+         5    LINEF
+         4    CHOPCR
+         5    CHOPC
+L1       11   CHIPL
+         8    CHIPE
+         4    LINEF
+         7    J1
+
+         4    CHIP
+         1    -10
+         7    L1
+         1    -30
+         7    ;+2
+         8    ERRORA
+         11   CHIPL
+         8    CHIPE
+         1    -92
+         7    ;+2
+         8    ERRORA
+
+         11   CHIPL
+         8    CHIPE
+         1    -92
+         7    ;+2
+         8    ERRORB
+
+         11   CHIPL
+         8    CHIPE
+         1    -49
+         7    ;+2
+         8    ERRORC
+
+         11   CHIPL
+         8    CHIPE
+         1    -41
+         7    ;+2
+         8    ERRORD
+
+         11   CHIPL
+         8    CHIPE
+         1    -10
+         7    ;+2
+         8    ERRORE
+         4    +50
+         5    LINCNT
+         4    +0
+         5    TITFLG
+         5    CHARC
+         4    +1
+         5    ENDF
+         4    +49
+         5    N
+
+CVTCON   4    -1
+         5    CHOPB
+         11   CHIPL
+         8    CHIPE
+         4    TITFLG
+         7    TSTORE
+         4    PAGEF
+         7    ;+2
+         8    ;+5
+         4    CHIP
+         1    -10
+         7    CVTCON
+         10   PAGEF
+         4    CHARC
+         7    CH1
+         10   CHARC
+         4    CHARC
+         1    -76
+         7    ERRORJ
+J2       4    CHIP
+         11   CHOPL
+         8    CHOPE
+         1    -10
+         7    ;+2
+         8    CVTCON
+         4    +0
+         5    CHARC
+
+REPEAT   10   LINCNT
+         8    CVTCON
+
+
+J1       4    CHIP
+         1    -10
+         7    ;+2
+         8    ERRORF
+
+         10   LINEF
+         8    L1
+
+TSTORE   4    CHIP
+         1    -10
+         7    CVTCON
+         1    -30
+         7    NOTALG
+         4    +0
+         5    FLAG
+L3       0    FLAG
+         4    CHIP
+         /5   TITLE
+         /5   BUF
+
+         11   CHIPL
+         8    CHIPE
+         1    -59
+         7    J6
+         1    +49
+         7    ERRORG
+
+         10   FLAG
+         4    FLAG
+         1    -75
+         9    L3
+         8    ERRORJ
+
+J6       4    +59
+         0    FLAG
+         /5   BUF+1
+         11   CHIPL
+         8    CHIPE
+         1    -10
+         7    ;+2
+         8    ERRORH
+
+         10   FLAG
+         0    FLAG
+         4    +10
+         /5   BUF+1
+         /5   TITLE
+         8    NEWPGE
+
+NOTALG   4    +40
+         5    BUF
+         11   CHIPL
+         8    CHIPE
+         1    -40
+         7    SIR
+         1    -2
+         7    ;+2
+         8    ERRORI
+
+         4    +2
+
+SIR      1    +40
+         5    BUF+1
+         4    +0
+         5    FLAG
+
+J7       11   CHIPL
+         8    CHIPE
+         0    FLAG
+         1    -41
+         7    JUMP1
+         4    CHIP
+         /5   TITLE
+         /5   BUF+2
+         10   FLAG
+         4    FLAG
+         1    -73
+         9    J7
+         8    ERRORJ
+
+
+JUMP1    4    +41
+         /5   BUF+2
+         11   CHIPL
+         8    CHIPE
+         1    -10
+         7    JUMP2
+         8    ERRORH
+
+JUMP2    4    +10
+         0    FLAG
+         /5   BUF+3
+         /5   TITLE
+
+NEWPGE   4    -60
+         1    LINCNT
+         11   NLLINK
+         8    NLENT
+         4    +45
+         11   CHOPL
+         8    CHOPE
+         11   CHOPL
+         8    CHOPE
+         11   CHOPL
+         8    CHOPE
+
+         4    -6
+         11   NLLINK
+         8    NLENT
+         4    -53
+         5    S
+         4    +32
+         11   CHOPL
+         8    CHOPE
+         10   S
+         4    S
+         9    ;-5
+
+         4    +0
+         5    BCNT
+         0    BCNT
+         /4   TAB
+         7    FINPRT
+         11   CHOPL
+         8    CHOPE
+         10   BCNT
+         8    ;-6
+
+TAB +80 +114 +111 +103 +114 +97 +109
+    +109 +101
+    +32 +80 +97 +103 +101 +32
+    +0
+
+FINPRT   4    -4
+         5    B
+J10      0    B
+         /4   N+4
+         7    ;+6
+         11   CHOPL
+         8    CHOPE
+         10   B
+         4    B
+         9    J10
+
+         4    -2
+         11   NLLINK
+         8    NLENT
+         4    +0
+         5    FLAG
+J12      0    FLAG
+         /4   TITLE
+         1    -10
+         7    J12A
+         0    FLAG
+         /4   TITLE
+         11   CHOPL
+         8    CHOPE
+         10   FLAG
+         8    J12
+
+J12A     4    +10
+         11   CHOPL
+         8    CHOPE
+         4    +0
+         5    FLAG
+(+5)     0    FLAG
+         /4   TITLE
+         1    -10
+         7    J11
+         4    +45
+         11   CHOPL
+         8    CHOPE
+         10   FLAG
+         8    J12A+5
+J11      4    -9
+         11   NLLINK
+         8    NLENT
+         4    TITFLG
+         7    J13
+         4    +0
+         5    LINCNT
+         5    PAGEF
+         8    REPEAT
+
+J13      4    +0
+         5    B
+J15      0    B
+         /4   BUF
+         1    -10
+         7    J14
+         1    +10
+         11   CHOPL
+         8    CHOPE
+         10   B
+         8    J15
+
+J14      4    +10
+         11   CHOPL
+         8    CHOPE
+         10   TITFLG
+         4    +1
+         5    LINCNT
+         8    REPEAT
+
+CVTEND   4    +0
+         5    ENDF
+         8    END
+
+CH1      10   CHARC
+         4    CHIP
+         1    -40
+         7    J3
+         1    +20
+         7    END
+         1    +20
+         8    J2
+
+J3       11   CHIPL
+         8    CHIPE
+         1    -92
+         7    J4
+         4    +40
+         11   CHOPL
+         8    CHOPE
+         8    J2
+
+J4       11   CHIPL
+         8    CHIPE
+         1    -92
+         7    ;+2
+         8    J20
+         4    -4
+         5    B
+L2       11   CHIPL
+         8    CHIPE
+         0    B
+         4    +0
+         /5   N+4
+         4    CHIP
+         1    -41
+         7    NEWPGE
+         1    +41
+         /5   N+4
+         10   B
+         4    B
+         7    L2
+         9    L2
+         8    ERRORK
+
+J20      4    +40
+         11   CHOPL
+         8    CHOPE
+         4    +92
+         11   CHOPL
+         8    CHOPE
+         8    J2
+END      4    ENDF
+         7    ;+2
+         8    ;+0
+         4    -60
+         1    LINCNT
+         11   NLLINK
+         8    NLENT
+         4    -3
+         5    X
+
+         4    +45
+         11   CHOPL
+         8    CHOPE
+         11   CHOPL
+         8    CHOPE
+         11   CHOPL
+         8    CHOPE
+JX       4    +20
+         11   CHOPL
+         8    CHOPE
+         8    ;+0
+((ERROR SUBROUTINE)
+CHIP1    11   ERRL
+         8    ERRE
+         £PAR
+         £ITY
+         £ ER
+         £ROR
+         £.
+CHIP2
+ERRORF   11   ERRL
+         8    ERRE
+         £1ST
+         £ CH
+         £ARC
+         £TER
+         £ NO
+         £T N
+         £EW
+         £LIN
+         £E.
+ERRORA
+ERRORB
+ERRORC
+ERRORD
+ERRORE
+ERRORK   11   ERRL
+         8    ERRE
+         £PAG
+         £E M
+         £ARK
+         £ER
+         £ERR
+         £OR.
+CHIP3
+CHOP1    11   ERRL
+         8    ERRE
+         £ILL
+         £EGA
+         £L C
+         £HAR
+         £ACT
+         £ER.
+CHIP4
+ERRORJ   11   ERRL
+         8    ERRE
+         £TOO
+         £ MA
+         £NY
+         £CHA
+         £RAC
+         £TER
+         £S O
+         £N L
+         £INE
+         £.
+
+ERRORI
+ERRORG
+ERRORH   11   ERRL
+         8    ERRE
+         £ILL
+         £EGA
+         £L T
+         £ITL
+         £E F
+         £ORM
+         £AT.
+ERRL     >1
+ERRE     4    +0
+         5    CHOPF
+         4    CHOPC
+         5    CHOPCR
+         4    &400000
+         5    CHOPC    (Legible tape output)
+
+NEXTWD   4    -2
+         5    COUNT
+         10   ERRL
+         0    ERRL
+         /4   0
+NEXTCH   5    CHAR
+         14   8180
+         6    &77
+         1    -14
+         7    JX
+         1    +46
+         11   CHOPL
+         8    CHOPE
+         4    COUNT
+         7    NEXTWD
+         10   COUNT
+         4    CHAR
+         14   6
+         8    NEXTCH
+
+COUNT    >1
+CHAR     >1
+CHOPCR   +0
+BCNT     >1
+PAGEF    >1
+ENDF     >1
+LINEF    >1
+LINCNT   >1
+TITFLG   >1
+CHARC    >1
+N        >4
+B        >1
+X        >1
+X3       >1
+FLAG     >1
+S        >1
+TITLE    >75
+BUF      >75
+
+
+
+
+((NEWLINE SUBROUTINE)
+[ NLLINK NLENT CHOPL CHOPE  ]
+
+NLLINK   >1
+X        >1
+
+NLENT    9    ;+2
+         4    -1
+         5    X
+         4    +10
+         11   CHOPL
+         8    CHOPE
+         10   X
+         4    X
+         9    NLENT
+         0    NLLINK
+         /8   1
+
+
+
+((PAPER TAPE CHARACTER INPUT & OUTPUT SUBROUTINE, 29/10/68)
+
+[CHIP CHIPF CHIPL CHIPE CHIPS CHIPM CHIP1 CHIP2 CHIP3 CHIP4
+CHOP CHOPF CHOPL CHOPE CHOPC CHOPB CHOP1]
+
+(INPUT SUBROUTINE)
+
+(Appears, to the users programme, to read one 920 or 903
+Telecode character from tape, and convert to internal
+code, but can read tape in one line at a time)
+
+CHIPL    >1
+
+REVFLG   4    FLAG
+         1    &400000
+SETFLG   5    FLAG
+
+SETBN    4    +0
+         5    B
+         5    N
+
+TESFLG   4    FLAG
+         9    UNPACK
+
+SETBAR   4    +0
+(+1)     5    BARS
+
+         4    +0
+RENXT    15   2048     (Mode 1 on 920A, otherwise 3)
+         5    CHIP
+         11   BITCTL
+         8    BITCTE
+         5    TOTAL
+
+         0    +0       (Clear Q-register)
+         8    ;+1      (Set Q-register nonzero on 920A)
+         14   18
+         7    NOTA
+
+         4    CHIP
+         14   8188
+         5    CHIP
+         4    TOTAL
+         14   8191
+         4    CHIP
+         14   5
+         8    WASA
+
+NOTA     4    TOTAL
+         6    +1
+         7    ;+2
+         8    CHIP1
+         4    CHIP
+
+WASA     6    &177
+         5    CHIP
+         7    RENXT
+         1    -127
+         7    RENXT
+
+         4    CHIPF
+         7    ;+2
+         8    ;+3
+         4    CHIP
+         5    CHIPF
+
+         0    CHIP
+
+         1    -13
+         7    IN903
+         1    +3
+         7    IN903
+         1    -8
+         7    IN920
+         8    CHIP2
+
+IN920    /4   CODTAB
+         6    &177
+         7    CHIP3
+         5    CHIP
+
+         1    -127
+         7    VBIN
+         1    +1
+         7    HBIN
+         8    ADDBAR
+
+VBIN     4    BARS
+         6    &400
+         1    &200
+         8    SETBAR+1
+
+HBIN     4    BARS
+         6    &200
+         1    &400
+         8    SETBAR+1
+
+IN903    4    CHIP
+         1    -13
+         7    RENXT
+
+         /4   CODTAB
+         9    ;+2
+         8    CHIP3
+
+ADDBAR   4    CHIP
+         1    BARS
+         6    &377
+         1    -178
+         7    HALF
+         1    -33
+         7    DOLLAR
+         1    +23
+         7    ACUTE
+         1    -2
+         7    GRAVE
+         4    CHIP
+         8    NOTDOU
+
+HALF     4    -1
+DOLLAR   1    -3
+ACUTE    1    -25
+GRAVE    1    +64
+         5    CHIP
+
+         1    -128
+NOTDOU   1    BARS
+         5    BARS
+
+         4    CHIPM
+         9    CAT
+         7    ;+5
+         0    CHIP
+         /4   CODTAB
+         14   1
+         9    SETBN
+
+         0    B
+         4    N
+         7    ;+6
+         2    +0       (Clear Q-register)
+         4    BARS
+         14   9
+         /1   LINE
+         8    ;+2
+         4    BARS
+         /5   LINE
+         8    TESEND
+
+UNPACK   0    B
+         4    N
+         7    ;+4
+         /4   LINE
+         14   8183
+         8    ;+2
+         /4   LINE
+         5    BARS
+
+CAT      4    BARS
+         6    &400
+         7    ;+3
+         4    +126
+         8    INEND
+
+HBLAST   4    BARS
+         6    &200
+         7    ;+3
+         4    +127
+         8    INEND
+
+VBLAST   4    BARS
+         6    &177
+
+INEND    5    CHIP
+         0    CHIPL
+         /8   1
+CHIPE    4    CHIPF
+         7    SETFLG
+
+         4    CHIP
+         1    -127
+         7    VBLAST
+         1    +1
+         7    HBLAST
+
+         4    CHIPM
+         9    SETBAR
+
+TESEND   4    CHIP
+         1    -10
+         7    REVFLG
+         4    CHIP
+         2    CHIPS
+         7    REVFLG
+
+         4    N
+         1    &400000
+         5    N
+         9    TESFLG
+         4    B
+         2    +59
+         9    CHIP4
+         10   B
+         8    TESFLG
+
+CHIP     >1
+CHIPF    >1            (+0 on 1st entry)
+CHIPS    +20           (Value of End-of-tape symbol)
+CHIPM    +0            (+0 for LAT, +1 for LATWD, -1 for CAT)
+FLAG     >1            (+0 for READIN, &400000 for READOUT)
+B        >1
+N        >1
+BARS     >1
+LINE     >61
+
+(OUTPUT SUBROUTINE)
+
+(Punches out one internal code character
+in 920 or 903 Telecode or in Legible Tape)
+
+CHOPL    >1
+
+(-1)     4    CHIP
+CHOPE    5    CHOP
+(+1)     6    &777600
+         7    ;+2
+         8    CHOP1
+
+         4    CHOPF
+         7    BLANKS
+
+TESCOD   0    CHOP
+         4    CHOPC
+         7    OUT920
+         9    OUTLEG
+
+(OUT903) 4    CHOP
+         1    -10
+         7    CR
+         1    +1
+         7    TAB
+         1    -116
+         7    OUTEND
+
+         /4   CODTAB
+         9    ;+2
+         8    CHOP1
+LF       4    CHOP
+         8    INSPTY
+
+TAB      4    +160
+         8    PUNCH
+CR       4    +141
+         15   6144
+         8    LF
+
+OUT920   /4   CODTAB
+         6    &040000
+         7    ;+3
+         4    +126
+         15   6144
+         /4   CODTAB
+         14   8185
+         6    &177
+         7    CHOP1
+
+INSPTY   5    W
+         11   BITCTL
+         8    BITCTE
+         0    +0       (Clear Q-register)
+         14   7
+         1    W
+PUNCH    15   6144
+
+         4    CHOP
+         1    -10
+         7    NL
+         1    -10
+         7    BLANKS
+         8    OUTEND
+
+OUTLEG   4    CHOP
+         1    -20
+         7    BLANKS
+         1    -105
+         7    OUTEND
+
+         4    CHOP
+         14   8191
+         5    ADRES
+
+         0    ADRES
+         /4   LTAB1
+         6    =0 8191
+         5    ADRES
+         /4   LTAB1
+         14   8179
+         2    +0
+         5    COUNT
+
+         4    CHOP
+         6    +1
+         7    EVEN
+
+(ODD)    4    COUNT
+         2    ADRES
+         5    ADRES
+         /4   LTAB1+1
+         6    =0 8191
+         2    ADRES
+         5    COUNT
+
+EVEN     4    COUNT
+         7    CHOP1
+
+LOOP     4    ADRES
+         14   8191
+         5    W
+         4    +0
+         14   1
+         0    W
+         7    ;+3
+         /4   LTAB2
+         8    ;+3
+         /4   LTAB2
+         14   8183
+
+         14   8188
+         5    W
+         14   1
+         4    W
+         14   3
+         15   6144
+
+         10   ADRES
+         10   COUNT
+         4    COUNT
+         9    LOOP
+         8    GAP
+
+NL       4    CHOPB
+         9    OUTEND
+         15   6144
+         15   6144
+
+GAP      15   6144
+         15   6144
+         8    OUTEND
+
+BLANKS   4    -180
+         5    W
+         4    +0
+         15   6144
+         10   W
+         4    W
+         9    ;-4
+
+         4    CHOPF
+         1    &400000
+         5    CHOPF
+         9    TESCOD
+
+OUTEND   4    CHOP
+         0    CHOPL
+         /8   1
+
+CHOPF    >1            (+0 on 1st entry)
+CHOPC    +0            (+0 for 920, >0 for 903, <0 for legible)
+CHOPB    +0            (+0 for CLEAN, <0 for UNCLEAN)
+CHOP     >1
+W        >1
+ADRES    >1
+COUNT    >1
+
+(FAST BIT-COUNTING SUBROUTINE)
+
+BITCTL   >1
+BITCTE   14   8188
+         1    =14 1
+         5    SHIFT1
+         4    +0
+         14   4
+         1    =14 1
+         5    SHIFT2
+         2    &323130  (Set Q-register)
+SHIFT1   >1
+         5    TOTAL
+         2    &323130  (Set Q-register)
+SHIFT2   >1
+         1    TOTAL
+         0    BITCTL
+         /8   1
+TOTAL    >1
+
+(CODE TABLE)
+
+(A table for converting 920 & 903 Telecodes to & from
+an internal 7-bit code. The internal code is an extended
+903 code, and is given below. It includes all the
+printing characters of the 920, 903, & TELEX codes.)
+
+CODTAB   &000000 (0)
+         &000000 (1)
+         &000000 (2)
+         &000603 (3,     Throw)
+         &000000 (4)
+         &000000 (5)
+         &000000 (6)
+         &400000 (7,     Bell)
+         &000000 (8)
+         &405051 (9,     Tab, <T>)
+         &404454 (10,     New line or Line feed, <N>)
+         &000000 (11)
+         &000072 (12)
+         &000000 (13)
+         &000000 (14)
+         &000057 (15)
+         &000040 (16)
+         &000000 (17)
+         &000012 (18)
+         &000000 (19)
+         &407011 (20,     Stopcode, <H>)
+         &000000 (21)
+         &000000 (22)
+         &000000 (23)
+         &000050 (24)
+         &000000 (25)
+         &016400 (26,     10)
+         &012734 (27,     11)
+         &000024 (28)
+         &000046 (29)
+         &000052 (30)
+         &000000 (31)
+
+         &404000 (32,     Space, <S>)
+         &600061 (33,     Exclamation mark)
+         &417462 (34,  ~  Tilde or Ditto)
+         &450400 (35,  ½  Vertical bar + 2, or 1/2)
+         &470664 (36,  $  Vertical bar + S, or Dollar sign)
+         &413600 (37,     Percentage sign)
+         &407200 (38,  &)
+         &456667 (39,  '  Vertical bar + <, or Acute accent)
+         &406070 (40,     Open round bracket)
+         &402335 (41,     Close round bracket)
+         &407477 (42,  *)
+         &413233 (43,  +)
+         &402476 (44,  ,)
+         &413453 (45,  -)
+         &417655 (46,  .)
+         &403645 (47,  /)
+         &414060 (48,  0)
+         &410200 (49,  1)
+         &410400 (50,  2)
+         &414663 (51,  3)
+         &411000 (52,  4)
+         &415265 (53,  5)
+         &415466 (54,  6)
+         &411600 (55,  7)
+         &412133 (56,  8)
+         &416271 (57,  9)
+         &403032 (58,  :)
+         &424074 (59,  ;)
+         &416675 (60,  <)
+         &417136 (61,  =)
+         &413042 (62,  >)
+         &412456 (63,  ❿)
+
+         &453173 (64,  `  Vertical bar + >, or Grave accent)
+         &420301 (65,  A)
+         &420502 (66,  B)
+         &424743 (67,  C)
+         &421104 (68,  D)
+         &425345 (69,  E)
+         &425546 (70,  F)
+         &421707 (71,  G)
+         &422110 (72,  H)
+         &426351 (73,  I)
+         &426552 (74,  J)
+         &422713 (75,  K)
+         &427154 (76,  L)
+         &423315 (77,  M)
+         &423516 (78,  N)
+         &427757 (79,  O)
+         &430073 (80,  P)
+         &434341 (81,  Q)
+         &434542 (82,  R)
+         &430703 (83,  S)
+         &435144 (84,  T)
+         &431305 (85,  U)
+         &431506 (86,  V)
+         &435747 (87,  W)
+         &436150 (88,  X)
+         &432311 (89,  Y)
+         &432512 (90,  Z)
+         &416153 (91,  [)
+         &406714 (92,  £)
+         &412355 (93,  ])
+         &417356 (94,  ↑)
+         &400117 (95,     Left-pointing arrow)
+
+         &600120 (96,     Encircled letter <a>)
+         &424361 (97,  a)
+         &424562 (98,  b)
+         &420723 (99,  c)
+         &425164 (100,  d)
+         &421325 (101,  e)
+         &421526 (102,  f)
+         &425767 (103,  g)
+         &426170 (104,  h)
+         &422331 (105,  i)
+         &422532 (106,  j)
+         &426600 (107,  k)
+         &423000 (108,  l)
+         &427200 (109,  m)
+         &427576 (110,  n)
+         &423600 (111,  o)
+         &434160 (112,  p)
+         &430321 (113,  q)
+         &430522 (114,  r)
+         &434763 (115,  s)
+         &431124 (116,  t)
+         &435365 (117,  u)
+         &435566 (118,  v)
+         &431727 (119,  w)
+         &432130 (120,  x)
+         &436371 (121,  y)
+         &436572 (122,  z)
+         &220000 (123,     Question mark)
+         &000000 (124,     Apostrophe)
+         &033400 (125,     As 126 if 920, ignored if 903)
+         &033577 (126,     Horizontal bar or Underline)
+         &037400 (127,     Vertical bar excluding above)
+
+(LEGIBLE TAPE TABLES)
+
+LTAB1    0 0 0 0 0 0 0 0 0 0 7 7 0 14 0 14
+         0 14 0 14 0 14 0 14 0 14 11 14 0 32 0 32
+         7 32 6 40 6 55 6 70 3 79 7 85 2 99 2 108
+         7 119 6 129 6 141 6 153 6 166 2 178 5 182 5 194
+         3 205 6 214 6 226 5 237 6 249 7 258 6 271 7 284
+         6 298 6 311 7 323 7 336 7 350 7 364 6 375 5 385
+         0 397 4 401 4 409 4 417 4 426 5 433 4 442 5 451
+         4 460 4 469 5 477 5 486 5 496 5 506 2 516 0 518
+         0 518
+
+LTAB2    &000000 &000000 &000000 &000000 &000000 &000000 &000000 &402777
+         &400000 &174202 &401401 &401202 &174402 &777400 &000402 &777400
+         &000000 &000000 &000000 &000577 &040020 &020040 &040020 &400237
+         &100040 &020450 &624522 &441216 &421777 &777421 &342407 &205107
+         &040020 &010704 &502701 &356421 &451506 &200500 &004002 &001174
+         &202401 &401202 &174202 &104050 &777050 &104202 &020020 &020376
+         &020020 &020540 &340020 &020020 &020020 &020020 &600600 &400200
+         &100040 &020010 &004002 &001174 &202401 &401401 &202174 &402777
+         &400602 &501441 &421411 &406202 &401421 &421421 &356020 &030024
+         &022777 &020437 &421421 &421421 &341376 &421421 &421421 &342003
+         &401201 &101041 &021017 &356421 &421421 &421356 &216421 &421421
+         &421376 &606606 &546346 &020050 &104202 &401104 &104104 &104104
+         &104104 &401202 &104050 &020760 &000340 &420420 &340001 &002004
+         &776021 &021021 &021776 &777421 &421421 &421356 &376401 &401401
+         &401202 &777401 &401401 &401376 &777421 &421421 &401777 &021021
+         &021001 &376401 &401401 &441342 &040777 &020020 &020020 &777401
+         &777401 &201401 &401377 &001001 &001777 &020050 &104202 &401777
+         &400400 &400400 &400777 &002004 &030004 &002777 &777004 &010020
+         &040100 &777376 &401401 &401401 &401376 &777021 &021021 &021016
+         &174202 &401401 &501202 &574777 &021061 &121221 &416216 &421421
+         &421421 &342001 &001001 &777001 &001001 &377400 &400400 &400377
+         &077100 &200400 &200100 &077377 &400200 &100200 &400377 &603104
+         &050020 &050104 &603001 &002004 &770004 &002001 &601501 &441421
+         &411405 &403777 &401401 &401460 &776461 &461402 &400401 &401401
+         &777004 &002777 &002004 &020070 &124020 &020020 &020740 &120120
+         &740760 &520520 &240340 &420420 &240760 &420420 &340760 &520520
+         &420760 &120120 &020340 &420620 &640200 &760100 &100760 &420760
+         &420220 &420360 &020020 &760100 &240420 &760400 &400400 &760040
+         &100040 &760760 &040100 &200760 &340420 &420340 &760120 &120040
+         &340420 &620740 &400760 &120320 &440440 &520520 &220020 &020760
+         &020020 &360400 &400360 &160200 &400200 &160360 &400200 &400360
+         &420240 &100240 &420020 &040700 &040020 &420620 &520460 &420002
+         &001541 &021016 &023017
+<! Halt !>

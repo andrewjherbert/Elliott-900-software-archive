@@ -1,0 +1,162 @@
+﻿
+CHESS;
+"COMMENT" THE FOLLOWING IS A PROGRAM FOR THE SORTING OF THE COMPUTED
+          MOVES AND THEN THE PRINTING OF THE BEST MOVE, AND THE OPPONENTS
+          MOVE, IN DIAGRAMATIC FORM AFTER EACH COMPUTER MOVE;
+   "BEGIN""REAL"A,B,C,C1,C2,D,E,F,G,H,I,J,N,N1,PEN,MC,MSI,MV,MST;
+   "ARRAY"WHM,BLM[1:65];
+   "SWITCH"SS:=AA,AB,AC,AD,AE,AF,AI,AJ,AS,AT,AU,AV,ME;
+   "SWITCH"LIST:=P,KT,BI,R,Q,K;
+   "SWITCH"NEXT:=AH,AG;
+   N:=1;
+   "READ"C;
+AT:"READ"I;
+   "READ"WHM[I];
+   C:=C-1;
+   "IF"C=0"THEN""GOTO"AS"ELSE""GOTO"AT;
+AS:"READ"D;
+AV:"READ"I;
+   "READ"BLM[I];
+   D:=D-1;
+   "IF"D=0"THEN"
+     "BEGIN";
+     C2:=1;
+     "GOTO"AJ;
+     "END"
+   "ELSE""GOTO"AV;
+AG:C2:=0;
+   "READ"N;
+   N1:=N;
+AJ:"BEGIN""ARRAY"X[1:N],Y[1:N,1:4];
+   "IF"C2=1"THEN""GOTO"AH;
+   "FOR"I:=1"STEP"1"UNTIL"N"DO"
+     "BEGIN";
+     "READ"X[I];
+     "IF"X[I]=-1"THEN""GOTO"ME;
+     "FOR"J:=1"STEP"1"UNTIL"4"DO"
+     "READ"Y[I,J];
+     "END";
+   I:=1;
+AF:E:=X[I]-X[I+1];
+   "IF"E<0"THEN"
+     "BEGIN";
+     A:=X[I];B:=X[I+1];X[I]:=B;X[I+1]:=A;
+     "FOR"J:=1"STEP"1"UNTIL"4"DO"
+       "BEGIN";
+       C:=Y[I,J];D:=Y[I+1,J];Y[I,J]:=D;Y[I+1,J]:=C;
+       "END";
+     PEN:=1;
+     "END"
+   "ELSE""IF"E=0"THEN"
+     "BEGIN";
+     F:=Y[I,2]-Y[I+1,2];
+     "IF"F=0"OR"F>0"THEN""GOTO"AE"ELSE"
+       "BEGIN";
+       A:=X[I];B:=X[I+1];X[I]:=B;X[I+1]:=A;
+       "FOR"J:=1"STEP"1"UNTIL"4"DO"
+         "BEGIN";
+         C:=Y[I,J];D:=Y[I+1,J];Y[I,J]:=D;Y[I+1,J]:=C;
+         "END";
+       PEN:=1;
+       "END";
+     "END";
+AE:I:=I+1;
+   "IF"I<N"THEN""GOTO"AF"ELSE""IF"PEN=1"THEN"
+      "BEGIN";
+      N:=N-1;
+      I:=1;
+      PEN:=0;
+      "GOTO"AF;
+      "END"
+   "ELSE"
+     "BEGIN";
+     "PRINT"''S12@X'S7@MC'S6@MV'S5@MSI'S5@MST'L1@@;
+     "FOR"I:=1"STEP"1"UNTIL"N1"DO"
+   "PRINT"ALIGNED(10,0),PREFIX('   @),X[I],PREFIX('    @),ALIGNED(2,0),
+          Y[I,1],Y[I,2],Y[I,3],Y[I,4],''L1@@;
+     "END";
+   <! Halt !>MC:=Y[1,1];
+   MV:=Y[1,2];
+   MSI:=Y[1,3];
+   MST:=Y[1,4];
+   C1:=1;
+   "GOTO"AI;
+AU:"READ"MC;
+   "IF"MC=-1"THEN""GOTO"ME;
+   "READ"MV,MSI,MST;
+   C1:=2;
+AI:"IF"MC=0"THEN"
+     "BEGIN";
+     "IF"MV=69"THEN"
+       "BEGIN";
+       WHM[5]:=WHM[8]:=0;
+       WHM[7]:=6;WHM[6]:=4;
+       "END"
+     "ELSE"
+       "IF"MV=59"THEN"
+       "BEGIN";
+       WHM[5]:=WHM[1]:=0;
+       WHM[3]:=6;WHM[4]:=4;
+       "END"
+     "ELSE"
+       "BEGIN";
+       WHM[MST]:=MV;
+       WHM[MSI]:=BLM[MST]:=0;
+       "END";
+     "END"
+   "ELSE"   "IF"MV=69"THEN"
+     "BEGIN";
+     BLM[61]:=BLM[64]:=0;
+     BLM[63]:=6;BLM[62]:=4;
+     "END"
+   "ELSE""IF"MV=59"THEN"
+     "BEGIN";
+     BLM[57]:=BLM[61]:=0;
+     BLM[59]:=6;BLM[60]:=4;
+     "END"
+   "ELSE"
+     "BEGIN";
+     BLM[MST]:=MV;
+     BLM[MSI]:=WHM[MST]:=0;
+     "END";
+   "GOTO"NEXT[C1];
+<! Halt !>AH:"PRINT"''L1S28@BLACK'L1S10@-----------------------------------------@,
+    ''L1@@;
+   C:=1;
+   "FOR"I:=56"STEP"-8"UNTIL"0"DO"
+     "BEGIN";
+     "IF"C=1"THEN""GOTO"AD"ELSE"
+     "PRINT"''L1S10@I    I    I    I    I    I    I    I    I'L1S10@@,
+            '-----------------------------------------'L1@@;
+AD:  "PRINT"''S10@I    I    I    I    I    I    I    I    I'L1S10@I@;
+     C:=C+1;
+     "FOR"J:=1"STEP"1"UNTIL"8"DO"
+       "BEGIN";
+       "IF"WHM[I+J]=0"THEN""GOTO"AA"ELSE"
+         "BEGIN";
+         "PRINT"' W@;
+         "GOTO"LIST[WHM[I+J]];
+         "END";
+ AA:  "IF"BLM[I+J]=0"THEN""GOTO"AB"ELSE"
+         "BEGIN";
+         "PRINT"' B@;
+         "GOTO"LIST[BLM[I+J]];
+         "END";
+ P:    "PRINT"'P@;"GOTO"AC; KT:    "PRINT"'N@;"GOTO"AC;
+BI:    "PRINT"'B@;"GOTO"AC;
+ R:    "PRINT"'R@;"GOTO"AC;
+ Q:    "PRINT"'Q@;"GOTO"AC;
+ K:    "PRINT"'K@;"GOTO"AC;
+AB:    "PRINT"'   @;
+ AC:"PRINT"' I@;
+       "IF"I=0"AND"J=8"THEN"
+         "BEGIN";
+"PRINT"''L1S10@I    I    I    I    I    I    I    I    I'L1S10@@,
+       '-----------------------------------------'L1S28@WHITE'L1@@;
+         "END";
+       "END";
+     "END";
+   "IF"C2=1"THEN""GOTO"AG"ELSE""GOTO"AU;
+"END";
+ME:"PRINT"''L3S29@END OF PROGRAM@;
+"END";

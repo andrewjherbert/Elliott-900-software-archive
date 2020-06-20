@@ -1,0 +1,86 @@
+﻿
+((ADDRESS INPUT SUBROUTINE, 13/3/74))
+
+[ADIPL ADIPE ADDRA ADDRB
+INTIPL INTIPE CHIPL CHIPE CHIP
+ASUSER AEUSER ERRORL ERRORE]
+
+ADIPL     >1
+ADDRA     >1
+ADDRB     >1
+FLAG      >1
+
+(-2)      11    CHIPL
+          8     CHIPE
+
+ADIPE     4     £R 1
+          5     ERRNO
+
+          4     -1
+          5     FLAG
+
+          11    INTIPL
+          8     INTIPE
+ADIP1     5     ADDRB
+
+          4     CHIP
+          1     -94
+          7     ;+2
+          8     ADIP2
+
+          4     ADDRB
+          2     +8191
+          9     ERROR1
+
+          11    INTIPL
+          8     INTIPE-2
+          2     +15
+          9     ERROR2
+          2     +15
+          14    13
+          1     ADDRB
+          5     ADDRB
+
+ADIP2     4     ASUSER
+          2     ADDRB
+          9     ERROR3
+          4     +1
+          1     ADDRB
+          2     AEUSER
+          9     ERROR4
+
+          4     FLAG
+          7     ADIP3
+          10    FLAG
+
+          4     ADDRB
+          5     ADDRA
+
+          4     CHIP
+          1     -45
+          7     ;+2
+          8     ADIPX
+
+          11    INTIPL
+          8     INTIPE-2
+          8     ADIP1
+
+ADIP3     4     ADDRA
+          2     ADDRB
+          9     ERROR5
+
+ADIPX     0     ADIPL
+          /8    1
+
+ERROR5    10    ERRNO
+ERROR4    10    ERRNO
+ERROR3    10    ERRNO
+ERROR2    10    ERRNO
+ERROR1    11    ERRORL
+          8     ERRORE
+          £ADI
+          £P E
+          £RRO
+ERRNO     >1
+          £.
+<! Halt !>

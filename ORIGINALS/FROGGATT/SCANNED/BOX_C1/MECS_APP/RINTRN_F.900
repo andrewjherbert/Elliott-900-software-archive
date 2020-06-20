@@ -1,0 +1,124 @@
+﻿<! Legible Header OOO   OOO  OOOOO       OOOO  OOOOO O   O OOOOO OOOO  O   O       OOOOO  OOO  OOOO  OOOOO OOOO   OOO  O   O  !>
+<! Legible Header    O O   O O           OOOOO   O   OO  O OOOOO OOOOO OO  O       O   O O   O OOOOO OOOOO OOOOO O   O OO  O  !>
+<! Legible Header    O O   O O           O   O   O   OO  O   O   O   O OO  O       O     O   O O   O   O   O   O O   O OO  O  !>
+<! Legible Header OOOO O   O OOOO        OOOOO   O   O O O   O   OOOOO O O O       OOOO  O   O OOOOO   O   OOOOO OOOOO O O O  !>
+<! Legible Header    O O   O             OO      O   O   O   O   OO    O   O       O     O   O OO      O   OO    O   O O   O  !>
+<! Legible Header    O O   O     O       O O     O   O  OO   O   O O   O  OO       O     O   O O O     O   O O         O  OO  !>
+<! Legible Header OOOO O   O OOOOO       O  O    O   O  OO   O   O  O  O  OO       O     O   O O  O    O   O  O  O   O O  OO  !>
+<! Legible Header OOO   OOO  OOOO        O   O OOOOO O   O   O   O   O O   O       O      OOO  O   O   O   O   O O   O O   O  !>
+
+
+
+
+C    THIS PROGRAM TESTS THE SUB-PROGRAM  RINTRN
+
+GLOBAL ,TEST,RINTRN,COS]
+
+
+1    FORMAT (11HTEST RINTRN/1X,
+$    22HI   RINTRN  COS(I/180))
+
+3    FORMAT (I3,2F9.7)
+
+
+     WRITE (3,1)
+
+     DO 4 I=1,30
+     ANS1=RINTRN(0.0,I*0.017453293,1E-5)
+     ANS2=COS(I*0.017453293)
+4    WRITE (3,3)I,ANS1,ANS2
+
+     END
+
+
+
+
+
+
+
+
+
+
+
+     GLOBAL,RINTRN,ABS,QFUNC]
+
+     FUNCTION RINTRN(A,B,EPS)
+
+C    COMPUTES THE INTEGRAL FROM A TO B OF QFUNC DX
+C    WITH AN ABSOLUTE TOLERANCE OF EPS
+
+C    QFUNC MUST BE DEFINED AS A FORTRAN FUNCTION BY THE USER
+
+C    THIS IS A TRANSLITERATION OF THE ALGOL PROCEDURE INTRNR
+
+     DIMENSION S(30)
+
+C    S IS USED AS A PUSH DOWN STACK.IT MAY BE NECESSARY TO
+C    INCREASE ITS SIZE FOR CERTAIN FUNCTIONS
+
+
+     DELTA=180.*EPS/ABS(B-A)
+     RI=0.
+     X0=A
+     F0=QFUNC(X0)
+     S(1)=B
+     S(2)=QFUNC(B)
+     X=(A+B)/2.
+     S(3)=QFUNC(X)
+     IC=3
+
+1    F2=S(IC)
+     F4=S(IC-1)
+     X4=S(IC-2)
+     IC=IC-3
+
+
+2    X2=(X0+X4)/2.0
+     X=(X0+X2)/2.0
+     F1=QFUNC(X)
+     X=(X2+X4)/2.0
+     F3=QFUNC(X)
+     T=6.0*F2-4.0*(F1+F3)+F0+F4
+
+     IF(ABS(T)-DELTA)4,4,5
+5    S(IC+1)=X4
+     S(IC+2)=F4
+     S(IC+3)=F3
+     IC=IC+3
+
+     X4=X2
+     F4=F2
+     F2=F1
+     GO TO 2
+
+4    RI=RI+(X4-X0)*(4.*(F1+F3)+F2+F2+F0+F4-T/15.)
+
+     IF (IC)6,3,6
+6    X0=X4
+
+     F0=F4
+     GOTO 1
+
+ 3   RINTRN=RI/12.0
+RETURN
+
+     END
+
+
+
+
+
+
+
+
+
+     GLOBAL,QFUNC,SIN]
+
+     FUNCTION QFUNC(X)
+C    THIS BLOCK DEFINES THE FUNCTION TO BE INTEGRATED AS SIN
+     QFUNC=SIN(X)
+     RETURN
+     END
+
+
+<! Halt !>

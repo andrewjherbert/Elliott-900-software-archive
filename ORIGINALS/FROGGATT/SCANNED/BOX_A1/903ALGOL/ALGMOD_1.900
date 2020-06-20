@@ -1,0 +1,55 @@
+﻿
+((ALGMOD, 21/12/73, PART 1))
+
+^8100
+
+[]
+
+HIMOD    >1
+LOMOD    >1
+
+<        4    =2 0
+         5    HIMOD
+
+         4    +0
+         0    HIMOD
+         /5   0
+         10   HIMOD
+         4    =2 2
+         2    HIMOD
+         9    ;-6
+
+         4    =0 2
+         5    LOMOD
+         0    LOMOD
+         /4   0
+         10   LOMOD
+         0    HIMOD
+         /5   0
+         10   HIMOD
+         4    =2 8100
+         2    HIMOD
+         9    ;-8
+
+         4    +0
+         0    HIMOD
+         /5   0
+         10   HIMOD
+         4    =3 0
+         2    HIMOD
+         9    ;-6
+
+         4    =1 0
+         5    LOMOD
+         0    LOMOD
+         /4   0
+         10   LOMOD
+         0    HIMOD
+         /5   0
+         10   HIMOD
+         4    =4 0
+         2    HIMOD
+         9    ;-8
+
+         8    8181
+<! Halt !>
