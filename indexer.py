@@ -10,7 +10,6 @@ def fullName (path, name):
 
 def indexPath (path):
     outfile = open (path + '/index.html', 'w')
-    outfile.write ('<!DOCTYPE html>\n')
     outfile.write ('<html>\n')
     outfile.write ('<body>\n')
     outfile.write ('<table>\n')
