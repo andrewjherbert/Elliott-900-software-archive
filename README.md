@@ -4,7 +4,7 @@ Andrew Herbert
 
 This repository contains the original images of my collection of Elliott 900 series paper tapes alongside those of several 
 other Elliott 900 enthusiasts and processed versions that have been checked out using my Elliott 900 Series simulator 
-(see andrewjherbert/FS-SIM900).
+(see andrewjherbert/Elliott-900-simulator).
 
 For those who want to explore the range of Elliott 900 software and how it was used go strainght to the ARCHIVE folder.
 
@@ -16,18 +16,18 @@ In the IMAGES sub-folders, files are named XXX.1,  XXX2.2 etc to represent succe
 
 These image files have then been processed and automatically classified as being in one of several representations:
 
-1      Binary tapes -- these are converted to two formats:
+Binary tapes -- these are converted to two formats:
 
-    1.1   RAW -- the image unprocessed
+  RAW -- the image unprocessed
     
-    1.2   BIN -- the image represented as a sequence of decimal numbers.  If the image appears to have a legible header,
-          it is represented in the file by a comment enclosed within ( * ... * )
+  BIN -- the image represented as a sequence of decimal numbers.  If the image appears to have a legible header,
+         it is represented in the file by a comment enclosed within ( * ... * )
           
-2     Source tapes -- these are converted into one of two formats depending on the characters found in the original:
+Source tapes -- these are converted into one of two formats depending on the characters found in the original:
 
-    2.1    920 -- tapes in Elliott 920 telecode
+  920 -- tapes in Elliott 920 telecode
     
-    2.2    900 -- tapes in Elliott 900 telecode
+  900 -- tapes in Elliott 900 telecode
 
 Files for 920 or 900 tapes are written in UTF-8 using ASCII characters for their equivalents in the Elliott code and,
 where there are no equivalents, the nearest Unicode equivalent.
