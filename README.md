@@ -16,13 +16,18 @@ In the IMAGES sub-folders, files are named XXX.1,  XXX2.2 etc to represent succe
 
 These image files have then been processed and automatically classified as being in one of several representations:
 
-1)     Binary tapes -- these are converted to two formats:
-1.1)   RAW -- the image unprocessed
-1.2)   BIN -- the image represented as a sequence of decimal numbers.  If the image appears to have a legible header,
-       it is represented in the file by a comment enclosed within (* ... *)
-2)     Source tapes -- these are converted into one of two formats depending on the characters found in the original:
-2.1)   920 -- tapes in Elliott 920 telecode
-2.2)   900 -- tapes in Elliott 900 telecode
+1      Binary tapes -- these are converted to two formats:
+
+    1.1   RAW -- the image unprocessed
+    
+    1.2   BIN -- the image represented as a sequence of decimal numbers.  If the image appears to have a legible header,
+          it is represented in the file by a comment enclosed within ( * ... * )
+          
+2     Source tapes -- these are converted into one of two formats depending on the characters found in the original:
+
+    2.1    920 -- tapes in Elliott 920 telecode
+    
+    2.2    900 -- tapes in Elliott 900 telecode
 
 Files for 920 or 900 tapes are written in UTF-8 using ASCII characters for their equivalents in the Elliott code and,
 where there are no equivalents, the nearest Unicode equivalent.
@@ -33,6 +38,4 @@ In simple terms, if you want to see the original bits, look at the RAW file: if 
 version look at the corresponding 900 or 920 file as appropriate.
 
 Note the process of scanning tapes and producing the corresponding images is automated and sometimes makes mistakes.  In
-all cases of doubt go back to the original images  XXXX.1, XXXX.2 etc.
-look 
-       
+all cases of doubt go back to the original images  XXXX.1, XXXX.2 etc.      
