@@ -3,7 +3,7 @@ zeller;
 "begin"
 
    "comment" calculate the date of the week on which any date falls, for
-             years = 0AD using Zeller{s congruences;
+             years >= 0AD using Zeller{s congruences;
 
    "comment" Andrew Herbert 1 July 2012;
 
