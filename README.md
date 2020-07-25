@@ -8,7 +8,7 @@ other Elliott 900 enthusiasts and processed versions that have been checked out 
 
 For those who want to explore the range of Elliott 900 software and how it was used go strainght to the ARCHIVE folder.
 
-Fot those who want to look at exact binary images of the paper tapes do to the ORIGINALS folder.  This is sub-divided by 
+Fot those who want to look at exact binary images of the paper tapes go to the ORIGINALS folder.  This is sub-divided by 
 collections, and each collection has an IMAGES sub-folder with the paper tape image as read in and a SCANNED sub-folder 
 containing various processed representations of the corresponding image.
 
