@@ -9,7 +9,7 @@ j 8181
 st 8175
 
 c load esp code procedures
-at ptr file ...\..\MASTERS\HERBERT\ESPDEMO.RLB
+at ptr file ..\..\MASTERS\HERBERT\ESPDEMO.RLB
 j 12
 st 15840
 

@@ -2,10 +2,11 @@
 C McCracken A Guide to FORTRAN IV Programming Case Study 7
 C Binary Adder
 C
-C Load Fortran system
+C Load Fortran compiler
 on 905 16K
 at ptr file ../../MASTERS/905FORTRAN/905FORT(ISS6).BIN
 j 8181
+st 8171
 
 C compile program
 
@@ -13,16 +14,12 @@ nonstop on
 
 at ptp file BINARYADDER_RLB.BIN
 at ptr file ../../MASTERS/HERBERT/BINARYADDER.900
-
 at tty inline
 O0R
 <!!>
-
 j 16
-
 c run out of tty input
 de ptp
-
 reverse BINARYADDER_RLB.BIN
 
 c load loader
@@ -53,12 +50,7 @@ M<!!>
 j 16
 
 de ptp
-
-at ptr file BINARYADDER.BIN
-j 8181
-st 8164
-j 16
-
+delete BINARYADDER_RLB.BIN
 sh t
 
 

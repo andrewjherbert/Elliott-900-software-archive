@@ -5,40 +5,34 @@ ALG3(ISS6PLTMOD)        ASCII   Algol issue 6 library with plotter characters
                         RLB
 
 BINARYADDER             ASCII   905 FORTRAN program to simulate binary adder.
-                        SCB
+BEZIER                  ASCII   Algol program to plot quadratic Bezier curve.
 COLINRACEALG            ASCII   TNMoC computer benchmark by Colin Eby in Algol.
 COLINRACEFORT           ASCII   ditto in FORTRAN II.
 COLINRACEFORT4          ASCII   ditto in FORTRAN IV.
 COLINRACESIR            ASCII   ditto in 903 SIR.
 COLINRACESIRFIX         ASCII   ditto using fixed point arithmetic.
 CORRECT                 ASCII   Utility to correct mispunched tapes from PC.
-                        SCB
 CURVES                  ASCII   Medway and Maidstone Curve plotting example.
-                        RLB
+                        SCB
 DAMPEDII                ASCII   FORTRAN II program to display a damped sinusoid.
 DAMPEDIV                ASCII   FORTRAN IV program to display a damped sinusoid.
-                        SCB
 DAYOFWEEK               ASCII   ALGOL program to compute day of week for a given
                                  date.
 DBLDATA                 ASCII   Data tape for DBLDEMO.
 DBLDEMO                 ASCII   Demonstrate DBLPAK.
 DBLPAK                  ASCII   Double length arithmetic routines (QDLA etc).
                         RLB
-
 ESP1(AJH)               ASCII   Improved version of ESP1(ISS2).    
-
 ESPDEMO                 ASCII   Demonstrate Elliott Simulation Package.
-                        RLB
 FIBONACCI(ALG)          ASCII   Calculate as many Fibonacci numbers as possible
                                 in 30 seconds (Algol version).
 FLTDATA                 ASCII   Data tape for FLTDEMO.
 FLTDEMO                 ASCII   Demonstrate FLTPAK.
 FLTPAK                  ASCII   Floating point arithmetic routines (QF etc).
 HEAT                    ASCII   FORTRAN IV program to solve heat equation.
-                        SCB
 IRANDOM                 ASCII   ALGOL code procedure to calculate random
                                 integers.
-                        SCB
+                        RLB
 KENT_COSTING            ASCII   905 FORTRAN Kent Programming Prize costing
                                 program.
 KENT_MASTER.TXT         ASCII   Master file for Kent Programming Prize.
@@ -54,7 +48,6 @@ ONLINETEST2             ASCII   ONLINETEST for second teleprinter channel.
 PI                      ASCII   903 FORTRAN program to calculate digits of pi.
 POLISH                  ASCII   905 FORTRAN program to translate to polish
                                 notation.
-                        SCB
 PRIMES                  ASCII   ALGOL program to compute primes.
 PRIMES_BASIC            ASCII   BASIC program to compute primes by sieve method.
 PRIMES_BASIC2           ASCII   BASIC program to compute primes by factoring.
@@ -65,7 +58,7 @@ SGLDATA                 ASCII   Data for SGLDEMO.
 SGLDEMO                 ASCII   Demonstrate SGLPAK.
 SGLPAK                  ASCII   Single length arithmetic routines (includes
                                 SSYS1).
-                        SCB
+                        RLB
 SHELLDATA               ASCII   Data for SHELLDEMO.
 SHELLDEMO               ASCII   Demonstrate SHELLSORT(ISS3) [in 903SIR folder].
 SIO                     ASCII   Single length number input/output.

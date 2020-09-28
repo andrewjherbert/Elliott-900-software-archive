@@ -2,7 +2,7 @@
 
 on 903 16k
 
-at ptr file ../../MASTERS/HERBERT/HEATMAPIV.BIN
+at ptr file ../../SCRIPTS/HERBERT/HEATMAPIV.BIN
 j 8181
 at tty inline
 <!!>

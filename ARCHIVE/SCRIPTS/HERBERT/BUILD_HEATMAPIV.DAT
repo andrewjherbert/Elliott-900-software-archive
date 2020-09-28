@@ -2,10 +2,11 @@
 C McCracken A Guide to FORTRAN IV Programming Case Study 11B
 C HEAT MAP
 C
-C Load Fortran system
-on 905 16K
+C Load Fortran compiler
+on 900 16K
 at ptr file ../../MASTERS/905FORTRAN/905FORT(ISS6).BIN
 j 8181
+st 8171
 
 C compile program
 
@@ -13,16 +14,11 @@ nonstop on
 
 at ptp file HEATMAPIV_RLB.BIN
 at ptr file ../../MASTERS/HERBERT/HEATMAPIV.900
-
 at tty inline
-O0R
-<!!>
-
+O0R<!!>
 j 16
-
 c run out of tty input
 de ptp
-
 reverse HEATMAPIV_RLB.BIN
 
 c load loader
@@ -51,13 +47,8 @@ c reader unloads
 at tty inline
 M<!!>
 j 16
-
+delete HEATMAPIV_RLB.BIN
 de ptp
-
-at ptr file HEATMAPIV.BIN
-j 8181
-st 8164
-j 16
 
 sh t
 

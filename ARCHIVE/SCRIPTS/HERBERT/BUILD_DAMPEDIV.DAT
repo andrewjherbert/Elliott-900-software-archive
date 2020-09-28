@@ -54,11 +54,7 @@ j 16
 
 de ptp
 
-at ptr file DAMPEDIV.BIN
-j 8181
-st 8164
-j 16
-de ptp
+delete DAMPEDIV_RLB.BIN
 
 sh t
 

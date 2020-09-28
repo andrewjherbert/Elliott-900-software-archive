@@ -15,7 +15,7 @@ at ptr inline
 GOBLIN	/14	1
 	+0
 	0	138		( FP )
-	/4      3		( address )
+	/4  3		( address )
 	/5	0		( result )
 	0	GOBLIN+1
 	/8 	1
@@ -24,7 +24,7 @@ GREMLIN	/14	1
 	+0
 	0	138		( FP )
 	/0	3		( first parameter )
-	/4      0		( indirect to value )
+	/4  0		( indirect to value )
         0       138             ( FP )
 	/5	0		( result )
 	0	GREMLIN+1

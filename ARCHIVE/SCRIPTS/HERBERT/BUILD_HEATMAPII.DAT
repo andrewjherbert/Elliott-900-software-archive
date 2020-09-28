@@ -41,19 +41,7 @@ at ptr file HEATMAPII_DATA.900
 r
 
 de ptp
-
-at ptr file ../../MASTERS/903FORTRAN/903FORT16KLP(ISS4).BIN
-j 8181
-st 8171
-
-select out tty
-nonprinting off
-
-C load RLB
-at ptr file HEATMAPII_RLB_DATA.BIN
-j 14
-st 16006
-j 11
-st 10111
+delete HEATMAPII_RLB_DATA.BIN
+delete HEATMAPII.RLB
 
 sh t

@@ -8,8 +8,7 @@ nonstop on
 at ptr file ../../MASTERS/HERBERT/COLINRACEFORT4.900
 at ptp file COLINRACEFORT4.BIN
 at tty inline
-O0R
-<!!>
+O0R<!!>
 j 16
 de ptp
 reverse COLINRACEFORT4.BIN

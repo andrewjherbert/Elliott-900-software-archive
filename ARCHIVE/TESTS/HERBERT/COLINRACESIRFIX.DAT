@@ -18,4 +18,4 @@ sh t
 select out tty
 j 8
 sh t
-delete COLINSRACESIRFIX.BIN
+delete COLINRACESIRFIX.BIN

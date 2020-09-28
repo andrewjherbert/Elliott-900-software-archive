@@ -23,7 +23,7 @@ reader(3); punch(3);
 j 8
 st 8000
 
-at ptr file ../../MASTERS/HERBERT/IRANDOM.RLB
+at ptr file ../../SCRIPTS/HERBERT/IRANDOM.RLB
 j 14
 st 8000
 

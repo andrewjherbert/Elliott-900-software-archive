@@ -17,7 +17,7 @@ j 13
 st 15850
 
 c load program
-at ptr file ../../MASTERS/HERBERT/CURVES.RLB
+at ptr file ../../SCRIPTS/HERBERT/CURVES.RLB
 at ptp file CURVES.BIN
 at tty inline
 RD<!!>

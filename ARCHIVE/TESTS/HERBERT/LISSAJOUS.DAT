@@ -5,7 +5,7 @@ on 903 16K
 nonprinting off
 
 c translate program
-at ptr file ../../SCRIPTS/AJHALGOL/ALG16KLG(AJH).BIN
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
 j 8181
 st 8175
 at ptr file ../../masters/herbert/lissajous.txt

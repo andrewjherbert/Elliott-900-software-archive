@@ -5,7 +5,7 @@ on 903
 C load PERT binary
 at ptr file ../../MASTERS/PERT/PERT(ISS2P).BIN
 j 8181
-st 8175
+st 8171
 
 c steering tape
 select out tty
