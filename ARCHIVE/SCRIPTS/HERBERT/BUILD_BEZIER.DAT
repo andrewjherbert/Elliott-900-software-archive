@@ -1,0 +1,16 @@
+c Bezier plotting
+
+on 903 8K
+
+c load MASD Algol translator
+at ptr file ../../MASTERS/MASDALGOL/ALG1(MASD).BIN
+j 8181
+st 8171
+
+c translate source program
+at ptr file ../../MASTERS/HERBERT/BEZIER.900
+at ptp file BEZIER.RLB
+j 8
+st 9
+de ptp
+sh t

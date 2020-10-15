@@ -1,7 +1,7 @@
-﻿
+
 *19
 
-((COUNTDOWN NUMBERS GAME SOLVER, 14/12/13))
+((COUNTDOWN NUMBERS GAME SOLVER, 2/6/20))
 
 [CNTDWN ERRORP CARD TARGET DEPTH OPS VRS
 TRY5L TRY5E NDOPL NDOPE SLOPL SLOPE MESOPL MESOPE
@@ -18,7 +18,7 @@ CNTDWN    4     +0
           #COU #NTD #OWN # NU #MBE #RS  #GAM #E S #OLV #ER.
           11    MESOPL
           8     MESOPN
-          #TER #RY  #FRO #GGA #TT, # DE #CEM #BER # 20 #13.
+          #TER #RY  #FRO #GGA #TT, # JU #NE  #202 #0.
 
 RESTAR    11    MESOPL
           8     MESOPN
@@ -188,14 +188,14 @@ MESOPN    11    CHOPL
           8     MESOPE
 
 [CARD VX VY TARGET DEPTH
-OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+OPS VXS VYS VRS Q]
 
 (Global Items)
 
 (CARD: array [0..6] of INTEGER;
  TARGET, DEPTH: INTEGER;
  type NODE_TYPE is record
-    OP: CHARACTER; IX,VX,IY,VY,IR,VR: INTEGER;
+    OP: CHARACTER; VX,VY,VR: INTEGER;
  end record;
  NODE: array [0..4] of NODE_TYPE;)
 
@@ -207,18 +207,14 @@ TARGET    >1              (Must be at CARD+6)
 DEPTH     >1
 
 OPS       >5
-IXS       >5
 VXS       >5
-IYS       >5
 VYS       >5
-IRS       >5
 VRS       >5
 
 Q         >1              (Shareable Workspace)
-TOGGLE    +1 +0           (For B := +1-B)
 
 [CARD TARGET DEPTH TRY5L TRY5E TRY4L TRY4E
-OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+OPS VXS VYS VRS Q]
 
 TRY5L     >1
 IX        >1
@@ -251,13 +247,13 @@ NEXTYS    10    IY
 
 (VR := VX+VY; CARD[IX] := VR;
  if TRY4 then
-    NODE[4] := ['+',IX,VX,IY,VY,IX,VR];
+    NODE[4] := ['+',VX,VY,VR];
     return TRUE;
  end if;
  if VX > 1 and then VY > 1 then
     VR := VX*VY; CARD[IX] := VR;
     if TRY4 then
-       NODE[4] := ['*',IX,VX,IY,VY,IX,VR];
+       NODE[4] := ['*',VX,VY,VR];
        return TRUE;
     end if;
  end if;)
@@ -297,14 +293,14 @@ ENDMUS    4     VY
 (   VR := VX-VY; CARD[IX] := VR;
     if VR /= 0 then
        if TRY4 then
-          NODE[4] := ['-',IX,VX,IY,VY,IX,VR];
+          NODE[4] := ['-',VX,VY,VR];
           return TRUE;
        end if;
     end if;
     if VY > 1 and then VX rem VY = 0 then
        VR := VX/VY; CARD[IX] := VR;
        if TRY4 then
-          NODE[4] := ['/',IX,VX,IY,VY,IX,VR];
+          NODE[4] := ['/',VX,VY,VR];
           return TRUE;
        end if;
     end if;
@@ -341,13 +337,13 @@ ENDSUS    4     VY
 
 (   VR := VY-VX; CARD[IX] := VR;
     if TRY4 then
-       NODE[4] := ['-',IY,VY,IX,VX,IX,VR];
+       NODE[4] := ['-',VY,VX,VR];
        return TRUE;
     end if;
     if VX > 1 and then VY rem VX = 0 then
        VR := VY/VX; CARD[IX] := VR;
        if TRY4 then
-          NODE[4] := ['/',IY,VY,IX,VX,IX,VR];
+          NODE[4] := ['/',VY,VX,VR];
           return TRUE;
        end if;
     end if;
@@ -410,10 +406,10 @@ NEXTYQ    10    IY
           5     VY
 
 (if VX+VY = TARGET then
-    NODE[4] := ['+',IX,VX,IY,VY,IX,TARGET];
+    NODE[4] := ['+',VX,VY,TARGET];
     return TRUE;
  elsif VX*VY = TARGET then
-    NODE[4] := ['*',IX,VX,IY,VY,IX,TARGET];
+    NODE[4] := ['*',VX,VY,TARGET];
     return TRUE;
  end if;)
 
@@ -437,10 +433,10 @@ ENDMUQ    4     VY
           9     REVERQ
 
 (   if VX-VY = TARGET then
-       NODE[4] := ['-',IX,VX,IY,VY,IX,TARGET];
+       NODE[4] := ['-',VX,VY,TARGET];
        return TRUE;
     elsif VX = VY*TARGET then
-       NODE[4] := ['/',IX,VX,IY,VY,IX,TARGET];
+       NODE[4] := ['/',VX,VY,TARGET];
        return TRUE;
     end if;
  else)
@@ -459,10 +455,10 @@ ENDMUQ    4     VY
           8     ENDOPQ
 
 (   if VY-VX = TARGET then
-       NODE[4] := ['-',IY,VY,IX,VX,IX,TARGET];
+       NODE[4] := ['-',VY,VX,TARGET];
        return TRUE;
     elsif VY = VX*TARGET then
-       NODE[4] := ['/',IY,VY,IX,VX,IX,TARGET];
+       NODE[4] := ['/',VY,VX,TARGET];
        return TRUE;
     end if;
  end if;)
@@ -492,33 +488,24 @@ ENDOPQ    4     IY
 (Record successful node details)
 
 SUBYX     10    OPS+4
-DIVYX     0     +1
+DIVYX     4     VY
+          5     VXS+4
+          4     VX
           8     SETCOM
 ADDXY     10    OPS+4
 MULXY     10    OPS+4
 SUBXY     10    OPS+4
-DIVXY     0     +0
-SETCOM    /4    IX        (IX or IY)
-          1     +5
-          5     IXS+4
-          /4    VX        (VX or VY)
+DIVXY     4     VX
           5     VXS+4
-          /0    TOGGLE    (B := +1-B)
-          /4    IX        (IY or IX)
-          1     +5
-          5     IYS+4
-          /4    VX        (VY or VX)
-          5     VYS+4
-          4     IX
-          1     +5
-          5     IRS+4
+          4     VY
+SETCOM    5     VYS+4
           4     VR        (Whether valid or not)
           5     VRS+4
           0     TRY5L
           /8    1
 
 [CARD TARGET DEPTH TRY4L TRY4E TRY3L TRY3E
-OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+OPS VXS VYS VRS Q]
 
 TRY4L     >1
 IX        >1
@@ -553,13 +540,13 @@ NEXTYS    10    IY
 
 (VR := VX+VY; CARD[IX] := VR;
  if TRY3 then
-    NODE[3] := ['+',IX,VX,IY,VY,IX,VR];
+    NODE[3] := ['+',VX,VY,VR];
     return TRUE;
  end if;
  if VX > 1 and then VY > 1 then
     VR := VX*VY; CARD[IX] := VR;
     if TRY3 then
-       NODE[3] := ['*',IX,VX,IY,VY,IX,VR];
+       NODE[3] := ['*',VX,VY,VR];
        return TRUE;
     end if;
  end if;)
@@ -599,14 +586,14 @@ ENDMUS    4     VY
 (   VR := VX-VY; CARD[IX] := VR;
     if VR /= 0 then
        if TRY3 then
-          NODE[3] := ['-',IX,VX,IY,VY,IX,VR];
+          NODE[3] := ['-',VX,VY,VR];
           return TRUE;
        end if;
     end if;
     if VY > 1 and then VX rem VY = 0 then
        VR := VX/VY; CARD[IX] := VR;
        if TRY3 then
-          NODE[3] := ['/',IX,VX,IY,VY,IX,VR];
+          NODE[3] := ['/',VX,VY,VR];
           return TRUE;
        end if;
     end if;
@@ -643,13 +630,13 @@ ENDSUS    4     VY
 
 (   VR := VY-VX; CARD[IX] := VR;
     if TRY3 then
-       NODE[3] := ['-',IY,VY,IX,VX,IX,VR];
+       NODE[3] := ['-',VY,VX,VR];
        return TRUE;
     end if;
     if VX > 1 and then VY rem VX = 0 then
        VR := VY/VX; CARD[IX] := VR;
        if TRY3 then
-          NODE[3] := ['/',IY,VY,IX,VX,IX,VR];
+          NODE[3] := ['/',VY,VX,VR];
           return TRUE;
        end if;
     end if;
@@ -712,10 +699,10 @@ NEXTYQ    10    IY
           5     VY
 
 (if VX+VY = TARGET then
-    NODE[3] := ['+',IX,VX,IY,VY,IX,TARGET];
+    NODE[3] := ['+',VX,VY,TARGET];
     return TRUE;
  elsif VX*VY = TARGET then
-    NODE[3] := ['*',IX,VX,IY,VY,IX,TARGET];
+    NODE[3] := ['*',VX,VY,TARGET];
     return TRUE;
  end if;)
 
@@ -739,10 +726,10 @@ ENDMUQ    4     VY
           9     REVERQ
 
 (   if VX-VY = TARGET then
-       NODE[3] := ['-',IX,VX,IY,VY,IX,TARGET];
+       NODE[3] := ['-',VX,VY,TARGET];
        return TRUE;
     elsif VX = VY*TARGET then
-       NODE[3] := ['/',IX,VX,IY,VY,IX,TARGET];
+       NODE[3] := ['/',VX,VY,TARGET];
        return TRUE;
     end if;
  else)
@@ -761,10 +748,10 @@ ENDMUQ    4     VY
           8     ENDOPQ
 
 (   if VY-VX = TARGET then
-       NODE[3] := ['-',IY,VY,IX,VX,IX,TARGET];
+       NODE[3] := ['-',VY,VX,TARGET];
        return TRUE;
     elsif VY = VX*TARGET then
-       NODE[3] := ['/',IY,VY,IX,VX,IX,TARGET];
+       NODE[3] := ['/',VY,VX,TARGET];
        return TRUE;
     end if;
  end if;)
@@ -794,33 +781,24 @@ ENDOPQ    4     IY
 (Record successful node details)
 
 SUBYX     10    OPS+3
-DIVYX     0     +1
+DIVYX     4     VY
+          5     VXS+3
+          4     VX
           8     SETCOM
 ADDXY     10    OPS+3
 MULXY     10    OPS+3
 SUBXY     10    OPS+3
-DIVXY     0     +0
-SETCOM    /4    IX        (IX or IY)
-          1     +4
-          5     IXS+3
-          /4    VX        (VX or VY)
+DIVXY     4     VX
           5     VXS+3
-          /0    TOGGLE    (B := +1-B)
-          /4    IX        (IY or IX)
-          1     +4
-          5     IYS+3
-          /4    VX        (VY or VX)
-          5     VYS+3
-          4     IX
-          1     +4
-          5     IRS+3
+          4     VY
+SETCOM    5     VYS+3
           4     VR        (Whether valid or not)
           5     VRS+3
           0     TRY4L
           /8    1
 
 [CARD TARGET DEPTH TRY3L TRY3E TRY2L TRY2E
-OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+OPS VXS VYS VRS Q]
 
 TRY3L     >1
 IX        >1
@@ -855,13 +833,13 @@ NEXTYS    10    IY
 
 (VR := VX+VY; CARD[IX] := VR;
  if TRY2 then
-    NODE[2] := ['+',IX,VX,IY,VY,IX,VR];
+    NODE[2] := ['+',VX,VY,VR];
     return TRUE;
  end if;
  if VX > 1 and then VY > 1 then
     VR := VX*VY; CARD[IX] := VR;
     if TRY2 then
-       NODE[2] := ['*',IX,VX,IY,VY,IX,VR];
+       NODE[2] := ['*',VX,VY,VR];
        return TRUE;
     end if;
  end if;)
@@ -901,14 +879,14 @@ ENDMUS    4     VY
 (   VR := VX-VY; CARD[IX] := VR;
     if VR /= 0 then
        if TRY2 then
-          NODE[2] := ['-',IX,VX,IY,VY,IX,VR];
+          NODE[2] := ['-',VX,VY,VR];
           return TRUE;
        end if;
     end if;
     if VY > 1 and then VX rem VY = 0 then
        VR := VX/VY; CARD[IX] := VR;
        if TRY2 then
-          NODE[2] := ['/',IX,VX,IY,VY,IX,VR];
+          NODE[2] := ['/',VX,VY,VR];
           return TRUE;
        end if;
     end if;
@@ -945,13 +923,13 @@ ENDSUS    4     VY
 
 (   VR := VY-VX; CARD[IX] := VR;
     if TRY2 then
-       NODE[2] := ['-',IY,VY,IX,VX,IX,VR];
+       NODE[2] := ['-',VY,VX,VR];
        return TRUE;
     end if;
     if VX > 1 and then VY rem VX = 0 then
        VR := VY/VX; CARD[IX] := VR;
        if TRY2 then
-          NODE[2] := ['/',IY,VY,IX,VX,IX,VR];
+          NODE[2] := ['/',VY,VX,VR];
           return TRUE;
        end if;
     end if;
@@ -1014,10 +992,10 @@ NEXTYQ    10    IY
           5     VY
 
 (if VX+VY = TARGET then
-    NODE[2] := ['+',IX,VX,IY,VY,IX,TARGET];
+    NODE[2] := ['+',VX,VY,TARGET];
     return TRUE;
  elsif VX*VY = TARGET then
-    NODE[2] := ['*',IX,VX,IY,VY,IX,TARGET];
+    NODE[2] := ['*',VX,VY,TARGET];
     return TRUE;
  end if;)
 
@@ -1041,10 +1019,10 @@ ENDMUQ    4     VY
           9     REVERQ
 
 (   if VX-VY = TARGET then
-       NODE[2] := ['-',IX,VX,IY,VY,IX,TARGET];
+       NODE[2] := ['-',VX,VY,TARGET];
        return TRUE;
     elsif VX = VY*TARGET then
-       NODE[2] := ['/',IX,VX,IY,VY,IX,TARGET];
+       NODE[2] := ['/',VX,VY,TARGET];
        return TRUE;
     end if;
  else)
@@ -1063,10 +1041,10 @@ ENDMUQ    4     VY
           8     ENDOPQ
 
 (   if VY-VX = TARGET then
-       NODE[2] := ['-',IY,VY,IX,VX,IX,TARGET];
+       NODE[2] := ['-',VY,VX,TARGET];
        return TRUE;
     elsif VY = VX*TARGET then
-       NODE[2] := ['/',IY,VY,IX,VX,IX,TARGET];
+       NODE[2] := ['/',VY,VX,TARGET];
        return TRUE;
     end if;
  end if;)
@@ -1096,33 +1074,24 @@ ENDOPQ    4     IY
 (Record successful node details)
 
 SUBYX     10    OPS+2
-DIVYX     0     +1
+DIVYX     4     VY
+          5     VXS+2
+          4     VX
           8     SETCOM
 ADDXY     10    OPS+2
 MULXY     10    OPS+2
 SUBXY     10    OPS+2
-DIVXY     0     +0
-SETCOM    /4    IX        (IX or IY)
-          1     +3
-          5     IXS+2
-          /4    VX        (VX or VY)
+DIVXY     4     VX
           5     VXS+2
-          /0    TOGGLE    (B := +1-B)
-          /4    IX        (IY or IX)
-          1     +3
-          5     IYS+2
-          /4    VX        (VY or VX)
-          5     VYS+2
-          4     IX
-          1     +3
-          5     IRS+2
+          4     VY
+SETCOM    5     VYS+2
           4     VR        (Whether valid or not)
           5     VRS+2
           0     TRY3L
           /8    1
 
 [CARD TARGET DEPTH TRY2L TRY2E TRY1L TRY1E
-OPS IXS VXS IYS VYS IRS VRS Q TOGGLE]
+OPS VXS VYS VRS Q]
 
 TRY2L     >1
 IX        >1
@@ -1157,13 +1126,13 @@ NEXTYS    10    IY
 
 (VR := VX+VY; CARD[IX] := VR;
  if TRY1 then
-    NODE[1] := ['+',IX,VX,IY,VY,IX,VR];
+    NODE[1] := ['+',VX,VY,VR];
     return TRUE;
  end if;
  if VX > 1 and then VY > 1 then
     VR := VX*VY; CARD[IX] := VR;
     if TRY1 then
-       NODE[1] := ['*',IX,VX,IY,VY,IX,VR];
+       NODE[1] := ['*',VX,VY,VR];
        return TRUE;
     end if;
  end if;)
@@ -1205,14 +1174,14 @@ ENDMUS    4     VY
 (   VR := VX-VY; CARD[IX] := VR;
     if VR /= 0 then
        if TRY1 then
-          NODE[1] := ['-',IX,VX,IY,VY,IX,VR];
+          NODE[1] := ['-',VX,VY,VR];
           return TRUE;
        end if;
     end if;
     if VY > 1 and then VX rem VY = 0 then
        VR := VX/VY; CARD[IX] := VR;
        if TRY1 then
-          NODE[1] := ['/',IX,VX,IY,VY,IX,VR];
+          NODE[1] := ['/',VX,VY,VR];
           return TRUE;
        end if;
     end if;
@@ -1251,13 +1220,13 @@ ENDSUS    4     VY
 
 (   VR := VY-VX; CARD[IX] := VR;
     if TRY1 then
-       NODE[1] := ['-',IY,VY,IX,VX,IX,VR];
+       NODE[1] := ['-',VY,VX,VR];
        return TRUE;
     end if;
     if VX > 1 and then VY rem VX = 0 then
        VR := VY/VX; CARD[IX] := VR;
        if TRY1 then
-          NODE[1] := ['/',IY,VY,IX,VX,IX,VR];
+          NODE[1] := ['/',VY,VX,VR];
           return TRUE;
        end if;
     end if;
@@ -1322,10 +1291,10 @@ NEXTYQ    10    IY
           5     VY
 
 (if VX+VY = TARGET then
-    NODE[1] := ['+',IX,VX,IY,VY,IX,TARGET];
+    NODE[1] := ['+',VX,VY,TARGET];
     return TRUE;
  elsif VX*VY = TARGET then
-    NODE[1] := ['*',IX,VX,IY,VY,IX,TARGET];
+    NODE[1] := ['*',VX,VY,TARGET];
     return TRUE;
  end if;)
 
@@ -1349,10 +1318,10 @@ ENDMUQ    4     VY
           9     REVERQ
 
 (   if VX-VY = TARGET then
-       NODE[1] := ['-',IX,VX,IY,VY,IX,TARGET];
+       NODE[1] := ['-',VX,VY,TARGET];
        return TRUE;
     elsif VX = VY*TARGET then
-       NODE[1] := ['/',IX,VX,IY,VY,IX,TARGET];
+       NODE[1] := ['/',VX,VY,TARGET];
        return TRUE;
     end if;
  else)
@@ -1371,10 +1340,10 @@ ENDMUQ    4     VY
           8     ENDOPQ
 
 (   if VY-VX = TARGET then
-       NODE[1] := ['-',IY,VY,IX,VX,IX,TARGET];
+       NODE[1] := ['-',VY,VX,TARGET];
        return TRUE;
     elsif VY = VX*TARGET then
-       NODE[1] := ['/',IY,VY,IX,VX,IX,TARGET];
+       NODE[1] := ['/',VY,VX,TARGET];
        return TRUE;
     end if;
  end if;)
@@ -1404,33 +1373,24 @@ ENDOPQ    4     IY
 (Record successful node details)
 
 SUBYX     10    OPS+1
-DIVYX     0     +1
+DIVYX     4     VY
+          5     VXS+1
+          4     VX
           8     SETCOM
 ADDXY     10    OPS+1
 MULXY     10    OPS+1
 SUBXY     10    OPS+1
-DIVXY     0     +0
-SETCOM    /4    IX        (IX or IY)
-          1     +2
-          5     IXS+1
-          /4    VX        (VX or VY)
+DIVXY     4     VX
           5     VXS+1
-          /0    TOGGLE    (B := +1-B)
-          /4    IX        (IY or IX)
-          1     +2
-          5     IYS+1
-          /4    VX        (VY or VX)
-          5     VYS+1
-          4     IX
-          1     +2
-          5     IRS+1
+          4     VY
+SETCOM    5     VYS+1
           4     VR        (Whether valid or not)
           5     VRS+1
           0     TRY2L
           /8    1
 
 [VX VY TARGET TRY1L TRY1E
-OPS IXS VXS IYS VYS Q]
+OPS VXS VYS Q]
 
 TRY1L=1                   (Link directly into B)
 
@@ -1439,10 +1399,10 @@ TRY1L=1                   (Link directly into B)
 (Optimised to use remaining 2 cards)
 
 (if VX+VY = TARGET then
-    NODE[0] := ['+',IX,VX,IY,VY,IX,TARGET];
+    NODE[0] := ['+',VX,VY,TARGET];
     return TRUE;
  elsif VX*VY = TARGET then
-    NODE[0] := ['*',IX,VX,IY,VY,IX,TARGET];
+    NODE[0] := ['*',VX,VY,TARGET];
     return TRUE;
  end if;)
 
@@ -1467,10 +1427,10 @@ ENDMUQ    4     VY
           9     REVERQ
 
 (   if VX-VY = TARGET then
-       NODE[0] := ['-',IX,VX,IY,VY,IX,TARGET];
+       NODE[0] := ['-',VX,VY,TARGET];
        return TRUE;
     elsif VX = VY*TARGET then
-       NODE[0] := ['/',IX,VX,IY,VY,IX,TARGET];
+       NODE[0] := ['/',VX,VY,TARGET];
        return TRUE;
     end if;
  else)
@@ -1489,10 +1449,10 @@ ENDMUQ    4     VY
           /8    2
 
 (   if VY-VX = TARGET then
-       NODE[0] := ['-',IY,VY,IX,VX,IX,TARGET];
+       NODE[0] := ['-',VY,VX,TARGET];
        return TRUE;
     elsif VY = VX*TARGET then
-       NODE[0] := ['/',IY,VY,IX,VX,IX,TARGET];
+       NODE[0] := ['/',VY,VX,TARGET];
        return TRUE;
     end if;
  end if;)
@@ -1516,8 +1476,6 @@ SUBYX     10    OPS
 DIVYX     4     VY
           5     VXS
           4     VX
-          5     VYS
-          4     +1        (IX := 1, IY := 0)
           8     SETCOM
 ADDXY     10    OPS
 MULXY     10    OPS
@@ -1525,15 +1483,11 @@ SUBXY     10    OPS
 DIVXY     4     VX
           5     VXS
           4     VY
-          5     VYS
-          4     +0        (IX := 0, IY := 1)
-SETCOM    5     IXS
-          2     +1
-          5     IYS
+SETCOM    5     VYS
           /8    1
 
 [NDOPL NDOPE SLOPL SLOPE MESOPL MESOPE
-DEPTH OPS IXS VXS IYS VYS IRS VRS]
+DEPTH OPS VXS VYS VRS]
 
 NDOPL     >1
 TEMP      >1
@@ -1565,9 +1519,9 @@ NDOPR     5     TEMP      (Recursive entry)
           10    SP
 
 (for THAT in THIS+1..NODE'LAST loop
-    if NODE[THAT].IR = NODE[THIS].IX then
+    if NODE[THAT].VR = NODE[THIS].VX then
        PUT ["[ "]; PUTNODE [THAT]; PUT [" ]"];
-       NODE[THAT].IR := -1; goto EXITX;
+       NODE[THAT].VR := -1; goto EXITX;
     end if;
  end loop;
  IIO.PUT [NODE[THIS].VX, WIDTH=>0];
@@ -1580,9 +1534,9 @@ NEXTX     1     +1
           1     -5
           0     THIS
           7     LASTX
-          /4    IXS
+          /4    VXS
           0     THAT
-          /2    IRS
+          /2    VRS
           7     ;+3
           4     THAT
           8     NEXTX
@@ -1597,7 +1551,7 @@ NEXTX     1     +1
           # ).
           4     -1
           0     THAT
-          /5    IRS
+          /5    VRS
           8     EXITX
 LASTX     /4    VXS
           11    SLOPL
@@ -1614,9 +1568,9 @@ EXITX     0     THIS
           >1 #.
 
 (for THAT in THIS+1..NODE'LAST loop
-    if NODE[THAT].IR = NODE[THIS].IY then
+    if NODE[THAT].VR = NODE[THIS].VY then
        PUT ["[ "]; PUTNODE [THAT]; PUT [" ]"];
-       NODE[THAT].IR := -1; goto EXITY;
+       NODE[THAT].VR := -1; goto EXITY;
     end if;
  end loop;
  IIO.PUT [NODE[THIS].VY, WIDTH=>0];
@@ -1628,9 +1582,9 @@ NEXTY     1     +1
           1     -5
           0     THIS
           7     LASTY
-          /4    IYS
+          /4    VYS
           0     THAT
-          /2    IRS
+          /2    VRS
           7     ;+3
           4     THAT
           8     NEXTY
@@ -1645,7 +1599,7 @@ NEXTY     1     +1
           # ).
           4     -1
           0     THAT
-          /5    IRS
+          /5    VRS
           8     EXITY
 LASTY     /4    VYS
           11    SLOPL

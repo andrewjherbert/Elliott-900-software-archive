@@ -1,0 +1,120 @@
+﻿C Kent Programming Prize Competition 1972
+
+
+c **************************
+
+C Build Update and Costing Program
+C A.J. HERBERT 27 September 2020
+
+C CRASHES IN FORTRAN  IV - suspect simulator bug
+
+c **************************
+
+on 905 16K
+nonstop on
+
+C Load Fortran system
+at ptr file ../../MASTERS/905FORTRAN/905FORT(ISS6).BIN
+j 8181
+st 8171
+
+C Note use of compressed arrays option
+
+C compile update program
+at ptr file ../../MASTERS/HERBERT/KENT_UPDATE.900
+at ptp file KENT_UPDATE.RLB.BIN
+at tty inline
+O12R
+<!!>
+j 16
+c run out of tty input
+de ptp
+reverse KENT_UPDATE.RLB.BIN
+
+C compile costing program
+at ptr file ../../MASTERS/HERBERT/KENT_COSTING.900
+at ptp file KENT_COSTING.RLB.BIN
+at tty inline
+O12R
+<!!>
+j 16
+c run out of tty input
+de ptp
+reverse KENT_COSTING.RLB.BIN
+
+C Assemble sort subroutine
+C load MASIR
+at ptr file ../../MASTERS/MASIR/MASIR(ISS3).BIN
+j 8181
+st 8164
+
+c assemble sort
+at ptr file ../../MASTERS/HERBERT/KENT_SORT.900
+at ptp file KENT_SORT_RLB.BIN
+at tty inline
+O4M
+<!!>
+j 16
+c falls off tty inline
+de ptp
+reverse KENT_SORT_RLB.BIN
+
+C build binaries
+c load loader
+at ptr file ../../MASTERS/MASIR/LOADER(ISS3).BIN
+j 8181
+st 8171
+
+c generate update binary
+at ptp file KENT_UPDATE.BIN
+at ptr file KENT_UPDATE.RLB.BIN
+at tty inline
+O134L<!!>
+j 16
+
+c read unloads, load library tape 1
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB1(ISS4).BIN
+at tty inline
+O137LM<!!>
+j 16
+
+c reader unloads, load library tape 2
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB2(ISS5).BIN
+r
+
+c reader unloads, load sort
+at ptr file KENT_SORT_RLB.BIN
+r
+
+c generate costing binary
+at ptr file KENT_COSTING.RLB.BIN
+at ptp file KENT_COSTING.BIN
+at tty inline
+O134L<!!>
+j 16
+
+c read unloads, load library tape 1
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB1(ISS4).BIN
+at tty inline
+O137LM<!!>
+j 16
+
+c reader unloads, load library tape 2
+at ptr file ../../MASTERS/905FORTRAN/905FORTLIB2(ISS5).BIN
+r
+c reader unloads, load sort
+at ptr file KENT_SORT.BIN
+r
+de ptp
+
+delete KENT_UPDATE.RLB.BIN 
+delete KENT_COSTING.RLB.BIN
+delete KENT_SORT.RLB>BIN
+
+sh t
+
+
+
+
+
+
