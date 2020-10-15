@@ -13,12 +13,14 @@ EASTERDA        ASCII   EASTERD for use with 920ABASIC.
 GCDLOOP:        ASCII   Basic program source to compute great circle distances.
 GCDLOOPA:       ASCII   GCDLOOP for 920ABASIC.
 TICTACTOE.BASIC ASCII   Erik Baiger's BASIC noughts and crosses.
+TVTOUR          ASCII   Computes distances for a world tour by Terry and Val
+			Froggatt.
 
 920ABASIC is a version of TJF's BASIC patched by Chris Moller for use on a
-920A computer at Aldenham School. It is orinted towards batch running of
+920A computer at Aldenham School. It is oriented towards batch running of
 programs punched on paper tape, whereas the original assumes interactive input.
 
 920ABASIC requires that a program tape will be loaded imemdiately after the
-program, and complete with LIST, RUN commands and data as required.  PRINT
+binary, and complete with LIST, RUN commands and data as required.  PRINT
 output goes to the teleprinter.  The KEY command is a no-op.
 
