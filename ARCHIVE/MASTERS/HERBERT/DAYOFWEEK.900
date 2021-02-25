@@ -5,9 +5,9 @@ zeller;
    "comment" calculate the date of the week on which any date falls, for
              years >= 0AD using Zeller{s congruences;
 
-   "comment" Andrew Herbert 1 July 2012;
+   "comment" Andrew Herbert 25 February 2021;
 
-   "integer" day, month, year, which;
+   "integer" day, month, year, which, i;
 
    "procedure" day name (day);
        "value" day; "integer" day;
@@ -52,7 +52,7 @@ zeller;
       "if" a < 0 "then" "print" {{GLOOM}}, same line, a, stop;
       mod := a - (a "div" b) * b;
    "end";
-   
+
    "comment" leap year calculation from Wikipedia;
 
    "boolean" "procedure" leap (year);
@@ -60,7 +60,7 @@ zeller;
    "begin"
       "if" mod (year, 100) = 0
       "then" "begin"
-             "if"   mod (year, 400) 
+             "if"   mod (year, 400)
              "then" leap := "true"
              "else" leap := "false"
              "end"
@@ -74,82 +74,85 @@ zeller;
    "integer" "procedure" gregorian (day, month, year);
       "value" day, month, year; "integer" day, month, year;
    "begin"
-      "integer" y; 
-      y := "if" month < 3 "then" year-1 "else" year;
-      gregorian := mod ((day + (26 * (month + 1) "div" 10) + y + (y "div" 4) +
-                        6 * (y "div" 100) + (y "div" 400)), 7)
+      "if" month < 3 "then"
+          "begin"
+              year := year - 1;
+	      month := month + 12
+	  "end";
+      gregorian := mod ((day + (26 * (month + 1) "div" 10) + year + (
+      year "div" 4) + 6 * (year "div" 100) + (year "div" 400)), 7)
    "end";
 
    "integer" "procedure" julian (day, month, year);
       "value" day, month, year; "integer" day, month, year;
    "begin"
-      "integer" y; 
-      y := "if" month < 3 "then" year-1 "else" year;
-      julian := mod ((day + (26 * (month + 1) "div" 10) + y + (y "div" 4) +5), 7)
+      "if" month < 3 "then"
+          "begin"
+	      year := year - 1;
+	      month := month +12
+	  "end";
+      julian := mod ((day + (26 * (month + 1) "div" 10) + year + (year "div" 4)
+                                                             + 5), 7)
    "end";
 
-   "procedure" date error;
-   "begin"
-      "print" { Invalid date - try again{B33L2}}
-   "end";
-         
    "comment" print titles;
-   punch (3); reader (3);
    "print" {{L2}Calculate day of week for a given date using Zeller{Q}s congruences{L2}};
 
    "comment" main loop reading in dates and calculating day of week;
 
-again:
-   "print" {{L}Input day (dd) month (mm) year (yyyy): };
-   "read" day, month, year; 
+	"for" i:=1, i+1 "while" "true" "do"
+		"begin"
+		   "read" day, month, year;
 
-   "comment" date before AD 0 terminates;
-   "if" day < 0 "and" month < 0 "and" year < 0 
-   "then" "begin"
-             "print" {{L4}Goodbye{L2}};
-              stop
-          "end";
+		   "comment" date before AD 0 terminates;
+		   "if" day < 0
+		   "then" stop;
 
-   "if" year < 0 "or" year > 9999
-   "then" "begin"
-          "print" year, { is an inappropriate year - try again{B33L2}};
-          "goto" again
-          "end";
+		   "if" year < 0 "or" year > 9999
+		   "then" "begin"
+					  "print" year, { is an inappropriate year{B33L2}};
+					  stop
+				  "end";
 
-   "comment" check date is valid;
-    "if" day = 29 "and" month = 2 "and" ("not" leap (year))
-      "then" "begin"
-         "print" digits (4), year, { was not a leap year - try again{B33L2}};
-         "goto" again
-      "end";
+		   "comment" check date is valid;
+			"if" day = 29 "and" month = 2 "and" ("not" leap (year))
+			  "then" "begin"
+				 "print" digits (4), year, { was not a leap year{B33L2}};
+				 stop
+			  "end";
 
-   "if" month < 1 "or" month > 12
-      "then" "begin"
-         "print" month, 
-                 { is an inappropriate month - try again{B33L2}};
-         "goto" again
-      "end";
+		   "if" month < 1 "or" month > 12
+			  "then" "begin"
+				 "print" month,
+						 { is an inappropriate month{B33L2}};
+				 stop
+			  "end";
 
-   "if" day < 1 "or" day > length (month) 
-   "then" "begin"
-          "print" day, same line,
-                  { is an inappropriate day for month}, digits (2), month, 
-                  { - try again{B33L2}};
-          "goto" again
-          "end";
+		   "if" day < 1 "or" day > length (month)
+		   "then" "begin"
+				  "print" day, same line,
+						  { is an inappropriate day for month}, digits (2), month,
+						  {{B33L2}};
+				  stop
+				  "end";
 
-   "print" {{L}}, digits (2), day, same line, month, digits (4), year;
+		   "print" {{L}}, digits (2), day, same line, month, digits (4), year;
 
-   "if" year > 1752
-   "or" (year = 1752 "and" month > 9)
-   "or" (year = 1752 "and" month = 9 "and" day > 10)
-   "then" which := julian    (day, month, year) + 1
-   "else" which := gregorian (day, month, year) + 1;
+		   "if" year > 1752
+		   "or" (year = 1752 "and" month > 9)
+		   "or" (year = 1752 "and" month = 9 "and" day > 10)
+		   "then" which := julian    (day, month, year) + 1
+		   "else" which := gregorian (day, month, year) + 1;
 
-   "print" { is a };
-   day name (which); 
-   "print" {{L2}};
-   "goto" again
-
+		   "print" { is a };
+		   day name (which);
+		   "print" {{L2}}
+		"end"
 "end"
+
+26 02 2021
+30 03 1954
+24 01 2021
+24 04 2021
+-1 0 0
 <! halt !>
