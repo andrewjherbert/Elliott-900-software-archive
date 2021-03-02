@@ -1,0 +1,348 @@
+
+*1
+
+[QAPLT1 QPLOT SETORI MOVEPE DRAWLI]
+
+QAPLT1
+
+BASE=100
+
+MAXWID    -3400
+
+ODEV      +4864
+OUTPUT    +0
+          0     ODEV
+          /15   0
+          0     OUTPUT
+          /8    1
+
+ERROR     +0
+          8     ;+0
+MESSL     +0
+          +0
+CHAR      8     ;+0
+
+PRSENT    +0
+NEXT      +0
+DELTAX    +0
+DELTAY    +0
+DXPDY     +0
+DXMDY     +0
+AXIS      +0
+DIAG      +0
+L         +0
+M         +0
+C         +0
+D         +0
+A         +0
+          +0
+B         +0
+          +0
+
+E         +1
+W         +2
+N         +4
+S         +8
+NE        +5
+SE        +9
+NW        +6
+SW        +10
+
+QPLOT     +0
+          8     LINE
+          8     CHAR
+
+X2        +0
+Y2        +0
+X1        +0
+Y1        +0
+
+LINE      0     QPLOT
+          /4    1
+          7     VRTOK1
+          9     DYNO
+          8     STATIC
+
+L11       4     NEXT      (MOVE PEN VERTICALLY IF NECESSARY)
+          2     PRSENT
+          7     VRTOK2
+          4     NEXT
+          11    OUTPUT
+          8     OUTPUT+1
+          5     PRSENT
+
+VRTOK2    4     X2        (IS LINE NON TRIVIAL AND LEGAL)
+          2     X1
+          7     ;+2
+          8     VRTOK1
+
+          4     Y2
+          2     Y1
+          7     PLOTEX
+          8     VRTOK1
+
+DYNO      2     +0
+STATIC    0     +0
+          14    4
+          5     NEXT
+          14    8188
+          1     -1
+          7     L11
+          1     -1
+          7     L11
+          11    ERROR
+          8     ERROR+1
+          0     MESSL
+
+VRTOK1    4     X1
+          2     X2
+          5     DELTAX
+          4     Y1
+          2     Y2
+          5     DELTAY
+          1     DELTAX
+          5     DXPDY
+          4     DELTAY
+          2     DELTAX
+          5     DXMDY
+
+          4     DELTAX
+          9     OCT3456
+          4     DELTAY
+          9     OCT78
+          4     DXMDY
+          9     OCT2
+
+OCT1      4     E
+          5     AXIS
+          4     NE
+          5     DIAG
+          4     DELTAX
+L4        5     L
+          4     DELTAY
+          5     M
+L2        4     +1
+          5     C
+          4     +0
+          5     D
+          8     CALC
+
+OCT2      4     N
+          5     AXIS
+          4     NE
+          5     DIAG
+          4     DELTAX
+L3        5     M
+          4     DELTAY
+          5     L
+          8     L2
+
+OCT78     4     DXPDY
+          9     OCT7
+
+OCT8      4     E
+          5     AXIS
+          4     SE
+          5     DIAG
+          4     DELTAX
+L6        5     L
+          4     DELTAY
+          2     +0
+          5     M
+          8     L2
+
+OCT7      4     S
+          5     AXIS
+          4     SE
+          5     DIAG
+          4     DELTAX
+L5        5     M
+          4     DELTAY
+          2     +0
+          5     L
+          8     L2
+
+OCT3456   4     DELTAY
+          9     OCT56
+          4     DXPDY
+          9     OCT4
+
+OCT3      4     N
+          5     AXIS
+          4     NW
+          5     DIAG
+          4     DELTAX
+          2     +0
+          8     L3
+
+OCT4      4     W
+          5     AXIS
+          4     NW
+          5     DIAG
+          4     DELTAX
+          2     +0
+          8     L4
+
+OCT56     4     DXMDY
+          9     OCT5
+
+OCT6      4     S
+          5     AXIS
+          4     SW
+          5     DIAG
+          4     DELTAX
+          2     +0
+          8     L5
+
+OCT5      4     W
+          5     AXIS
+          4     SW
+          5     DIAG
+          4     DELTAX
+          2     +0
+          8     L6
+
+CALC      0     +0
+          4     D
+          14    1
+          1     +1
+          12    L
+          14    8191
+          3     A
+          5     A+1
+          4     M
+          12    C
+          3     B
+          5     B+1
+
+          2     A+1
+          7     L7
+L10       9     L8
+          4     AXIS
+          11    OUTPUT    
+          8     OUTPUT+1
+          8     L9
+L8        10    D
+          4     DIAG
+          11    OUTPUT
+          8     OUTPUT+1
+          8     L9
+L7        4     B
+          2     A
+          8     L10
+
+L9        4     L
+          2     C
+          10    C
+          9     CALC
+          4     X2
+          5     X1
+          4     Y2
+          5     Y1
+
+PLOTEX    0     QPLOT
+          /8    2
+
+COUNT1    +0
+COUNT2    +0
+
+RIGHT     +1
+LEFT      +2
+RAISE     +16
+
+TABAD1    0     ;+1
+          +1
+          +2
+          +4
+          +8
+          +5
+          +9
+          +6
+          +10
+
+TABAD2    0     ;+1
+          +4
+          +8
+          +2
+          +1
+          +6
+          +5
+          +10
+          +9
+
+SETORI    /14   2
+          +0
+          4     RAISE
+          11    OUTPUT
+          8     OUTPUT+1
+          4     MAXWID
+          5     COUNT2
+          4     LEFT
+          11    OUTPUT
+          8     OUTPUT+1
+          10    COUNT2
+          4     COUNT2
+          9     ;-5
+          0     BASE+38
+          /4    3
+          2     +0
+          5     COUNT2
+          4     RIGHT
+          11    OUTPUT
+          8     OUTPUT+1
+          10    COUNT2
+          4     COUNT2
+          9     ;-5
+          4     +0
+          5     X1
+          5     Y1
+          0     BASE+38
+          /4    6
+          1     -1
+          7     GETAD
+          4     TABAD1
+GOTAD     5     COUNT1
+          4     -8
+          5     COUNT2
+          0     COUNT1
+          /4    0
+          0     COUNT2
+          /5    E+8
+          10    COUNT1
+          10    COUNT2
+          4     COUNT2
+          9     ;-7
+          4     RAISE
+          5     PRSENT
+          0     SETORI+1
+          /8    1
+GETAD     4     TABAD2
+          8     GOTAD
+
+MOVEPE    /14   2
+          +0
+          0     BASE+38
+          /4    3
+          5     X2
+          /4    6
+          5     Y2
+          11    QPLOT
+          8     QPLOT+1
+          +1
+          0     MOVEPE+1
+          /8    1
+
+DRAWLI    /14   2
+          +0
+          0     BASE+38
+          /4    3
+          5     X2
+          /4    6
+          5     Y2
+          11    QPLOT
+          8     QPLOT+1
+          +2
+          0     DRAWLI+1
+          /8    1
+
+%

@@ -3,7 +3,10 @@
 ALG1(ISS6)      SCB     Algol tape 1 Issue 6.
 ALG1_SYMBOLS    ASCII   Recovered version of translator symbol table.
 ALG2(ISS6)      SCB     Algol tape 2 Issue 6.
-ALG3(ISS6)      RLB     Algol tape 3 Issue 6.  Includes plotting functions.
+ALG3(ISS5)      RLB     Algol tape 3 Issue 5. Includes plotting functions.
+                        For use with 16K Land and Go system only.
+ALG3(ISS6)      RLB     Algol tape 3 Issue 6. Includes plotting functions.
+                        For use with 8K and 16K Large Program systems only.
 ALG3(ISS7)      RLB     Algol tape 3 Issue 7. N.B. No plotting functions.
 ALG3(TJF)       RLB     ALG3(ISS7) with TJF revised plotting functions and
                         a final halt code added.

@@ -1,9 +1,5 @@
 ﻿This folder contains files for programs authored by Andrew Herbert
 
-ALG3(ISS6PLTMOD)        ASCII   Algol issue 6 library with plotter characters
-                                /, ( and ) added.
-                        RLB
-
 BINARYADDER             ASCII   905 FORTRAN program to simulate binary adder.
 BEZIER                  ASCII   Algol program to plot quadratic Bezier curve.
 COLINRACEALG            ASCII   TNMoC computer benchmark by Colin Eby in Algol.

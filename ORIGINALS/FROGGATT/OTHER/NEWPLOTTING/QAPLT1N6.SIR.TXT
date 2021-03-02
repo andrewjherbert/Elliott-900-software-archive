@@ -1,0 +1,180 @@
+
+*1
+
+((QAPLT1 for Algol library issue 6, 4/11/12)
+
+(This Elliott SIR subroutine was written by Terry Froggatt,
+ after refurbishing a brace of Benson-Lehner plotters in 2012.
+ It is a direct replacement for the library tape version, but
+ substantially smaller, and with several minor corrections)
+
+[QAPLT1 QPLOT SETORI MOVEPE DRAWLI]
+
+QAPLT1
+
+BASE=100
+
+PLOTAD=4864               (Standard Plotter Address)
+
+(Entry points QPLOT+1 & QPLOT+2, and parameters X2,Y2,X1,Y1,
+ are accessed as offsets of QPLOT, as part of the published
+ user interface, and SENSE has been added in this version)
+
+PENPOS    +0              (+0=Unknow, +16=Raised, +32=Lowered)
+SENSE     +1              (+0=Benson-Lehner, +1=QPLOT)
+QPLOT                     (Loaded into B-reg before main loop)
+STEPS     >1              (Only required in main loop)
+          8     LINE      (Draw Line from X1,Y1 to X2,Y2)
+          8     ;+0       (Draw Character given 6-bit code)
+
+X2        +0              (QPLOT+3)
+Y2        +0              (QPLOT+4)
+X1        +0              (QPLOT+5)
+Y1        +0              (QPLOT+6)
+X0                        (This must directly follow Y1, and is
+                           used briefly before AXIS is required)
+
+AXIS      >1              (Axis step has just one bit)
+DIAG      >1              (Diagonal step has two bits)
+LARGE     >1              (Larger of NS & EW Deltas)
+SMALL     >1              (Smaller of NS & EW Deltas)
+DELTA     >1              (Used for both Abs Delta NS and
+                           Step Direction Discriminator)
+
+LINE      0     QPLOT
+          /4    1
+          7     VERTOK
+          6     +1
+          7     LOWER
+          4     +16
+          8     RAISE
+LOWER     4     PENPOS
+          2     +32
+          7     VERTOK
+          4     +32
+RAISE     5     PENPOS
+          15    PLOTAD    (Output to Plotter)
+
+VERTOK    0     SENSE     (+0=Benson-Lehner, +1=QPLOT)
+          /4    X1        (4 X1 or 4 Y1)
+          /2    X2        (2 X2 or 4 Y2)
+          9     ;+4       (Test North or South)
+          5     DELTA     (Abs Delta NS)
+          4     +5        (Bits for North East step)
+          8     ;+4       (North)
+          2     +0        (South)
+          5     DELTA     (Abs Delta NS)
+          4     +9        (Bits for South East step)
+          5     DIAG      (Provisionally Set Diagonal)
+
+          4     X2
+          5     X0
+          /4    Y2        (4 Y2 or 4 X1)
+          /2    Y1        (2 Y1 or 2 X0=X2)
+          9     ;+2       (Test East or West)
+          8     ;+3       (East)
+          2     +0        (West)
+          10    DIAG      (Change NE to NW or SE to SW)
+          5     LARGE     (Provisionally Abs Delta EW)
+          5     SMALL     (Provisionally Abs Delta EW)
+
+          2     DELTA     (Abs Delta NS - Abs Delta EW)
+          9     ;+5
+          4     DELTA     (Abs Delta NS)
+          5     LARGE     (Abs Delta NS >= Abs Delta EW)
+          4     +12       (Bits for North or South step)
+          8     ;+4
+          4     DELTA     (Abs Delta NS)
+          5     SMALL     (Abs Delta NS < Abs Delta EW)
+          4     +3        (Bits for East or West step)
+          6     DIAG      (Diagonal step has two bits)
+          5     AXIS      (Axis step has just one bit)
+
+          4     X2
+          5     X1
+          4     Y2
+          5     Y1
+
+          0     LARGE     (Interrupt cannot follow this so Q is safe)
+          3     DELTA     (Set Mid-Point Discriminator to LARGE/2.
+                           It would be more correct to set to LARGE,
+                           then to subtract 2*SMALL & add 2*LARGE
+                           within the loop, but this might differ
+                           slightly from the previous version)
+
+          4     LARGE
+          0     QPLOT     (Frees up QPLOT for use as STEPS)
+NXSTEP    /7    2         (Test at start of loop in case QPLOT has)
+          5     STEPS     (been called just to raise or lower pen)
+
+          4     SMALL
+          2     DELTA     (Subtract SMALL, LARGE times)
+          9     ;+4
+          5     DELTA
+          4     AXIS      (Take one step along axis)
+          8     ;+4
+          1     LARGE     (Add LARGE, SMALL times)
+          5     DELTA
+          4     DIAG      (Take one step along diagonal)
+          15    PLOTAD    (Output to Plotter)
+
+          4     STEPS
+          1     -1
+          8     NXSTEP
+
+(Algol Interface)
+
+SETORI    /14   2
+          >1
+          0     BASE+38
+          /4    6
+          2     +1
+          7     ;+2       (If parameter = 1, Y-axis is across paper)
+          4     +1        (All other values, X-axis is across paper)
+          5     SENSE
+          4     +16       (Raise)
+          5     PENPOS
+          15    PLOTAD
+          4     -3400     (Maximum width of any plotter model)
+          5     STEPS
+          4     +2        (Left)
+          15    PLOTAD
+          10    STEPS
+          4     STEPS
+          9     ;-4
+          5     X1
+          5     Y1
+          8     ;+4       (Avoid increment if origin is zero)
+          4     +1        (Right)
+          15    PLOTAD
+          10    STEPS
+          /4    3
+          2     STEPS
+          9     ;-5
+          0     SETORI+1
+          /8    1
+
+MOVEPE    /14   2
+          >1
+          11    QPLOT
+          8     GETXY2
+          +1
+          0     MOVEPE+1
+          /8    1
+
+DRAWLI    /14   2
+          >1
+          11    QPLOT
+          8     GETXY2
+          +2
+          0     DRAWLI+1
+          /8    1
+
+GETXY2    0     BASE+38
+          /4    3
+          5     X2
+          /4    6
+          5     Y2
+          8     QPLOT+1
+
+%
