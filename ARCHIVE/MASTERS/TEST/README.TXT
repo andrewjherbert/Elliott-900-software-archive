@@ -24,9 +24,14 @@ X400(ISS1)     SCB     "X400 ISS1"
 X402           SCB     "903 X402 BIN 19 1 67"  
 XPTS1(ISS1)    SCB     "903 XPTS1 RLB ISSUE 1"
 
+PCTEST         ASCII   Process counter test (14 instruction)
+               SCB
+
 QPLOTEST       SCB     Terry Froggatt's plotter test.
 
 XSTORE         ASCII   Terry Froggatt's store tester.
                SCB
 XSTORE2        ASCII   Version of XSTORE to soak test 16K.
+               SCB
+XSTORE_STP     ASCII   Version of XSTORE that halts on first error
                SCB

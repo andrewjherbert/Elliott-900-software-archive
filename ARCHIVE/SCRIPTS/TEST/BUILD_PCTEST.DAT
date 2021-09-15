@@ -1,5 +1,3 @@
-﻿C BUild GPM
-
 on 903 16K
 nonprinting off
 select out tty
@@ -7,17 +5,16 @@ at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
 j 8181
 st 8175
 
-c assemble GPM
+c assemble PCTEST
 
-at ptr file ../../MASTERS/HERBERT/GPM.900
+at ptr file ../../MASTERS/TEST/PCTEST.900
 j 12
 st 562
 
 rewind
 select out auto
-at ptp file GPM.BIN
+at ptp file PCTEST.BIN
 j 10
 st 587
 de ptp
-
 sh t
