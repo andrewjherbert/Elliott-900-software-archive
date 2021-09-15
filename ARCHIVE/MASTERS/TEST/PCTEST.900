@@ -15,14 +15,15 @@
 
 
 PCTEST <
-       4   +1          (Set up simulated AQ)
+       4   +0          (Zero error counts)
+       5   AERRS
+       5   QERRS
+CONTIN 4   +1          (Set up simulated AQ)
        5   A
        5   Q
        4   +0
        5   QCHK        (Expected value of Q after shift)
        5   QFLAG       (Indicate no overflow yet from Q to A)
-       5   AERRS       (Zero error counts)
-       5   QERRS
        4   =14 0       (Patch up shift order)
        5   SHIFT
        4   -49         (Count from 0 to 48)
@@ -82,7 +83,7 @@ NOFLO  1   Q           (Q = Q * 2)
        10  COUNT
        4   COUNT
        9   CYCLE
-       8   PCTEST      (Restart test)
+       8   CONTIN      (Restart test)
 
 Q0     4   QFLAG       (First time QCHK is zero?)
        9   NEXT        (No, so stays zero)
