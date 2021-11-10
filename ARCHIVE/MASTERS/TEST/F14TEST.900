@@ -1,0 +1,100 @@
+
+*17
+
+(FUNCTION 14 TEST - ANDREW HERBERT - 08/11/2021 )
+
+(TRY 14 1, 14 2, 14 3, ..., 14 17 with +1 in Q)
+
+
+[F14TST]
+
+F14TST
+F14TS1    4     =14 0
+       	  5     SHIFT1
+    	  4     +0
+          5     COUNT
+LOOP1     0     +1
+SHIFT1    +0           		(Becomes 14 n)
+       	  3     RESULT     	(Save Q17-Q1)
+       	  4     RESULT
+          0     COUNT
+         /2     RESTAB1
+          7     ;+2
+          8     ERROR1
+         10     COUNT      	(n := n+1)
+          4     COUNT
+          1     -18
+          7     F14TS2     	(Restart if n=18)
+         10     SHIFT1     	(Increment shift)
+          8     LOOP1
+
+ERROR1    4     +255
+         15     6144
+         15     6144
+         15     6144
+          4     COUNT
+         15     6144
+          4     +255
+         15     6144
+          4     RESULT
+          8     ;+0
+
+F14TS2    4     =14 8175
+          5     SHIFT2
+          4     +17
+          5     COUNT
+LOOP2     0     -1     		(Set up full house)
+          4     -1
+SHIFT2    +0           		(Becomes 14 8175+n)
+          3     RESULT
+          4     RESULT
+          1     -131071
+          7     ;+2
+          8     ERROR2
+          4     COUNT
+          1     -1
+          7     F14TST
+          5     COUNT
+         10     SHIFT2
+          8     LOOP2
+
+ERROR2    4     +127
+         15     6144
+         15     6144
+         15     6144
+          4     COUNT
+         15     6144
+          4     +127
+         15     6144
+          4     RESULT
+          8     ;+0
+
+
+
+
+COUNT    +0
+RESULT   >1
+
+
+RESTAB1  +0     (14 0)
+         +1     (14 1)
+     +2
+     +4
+     +8
+     +16
+     +32
+     +64
+     +128
+     +256
+     +512
+     +1024
+     +2048
+     +4096
+     +8192
+     +16384
+     +32768
+     +65536     (14 17)
+
+
+%
+<! HALT !>
