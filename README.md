@@ -40,7 +40,6 @@ version look at the corresponding 900 or 920 file as appropriate.
 Note the process of scanning tapes and producing the corresponding images is automated and sometimes makes mistakes.  In
 all cases of doubt go back to the original images  XXXX.1, XXXX.2 etc.
 
-All the software contained in this archive are thought to be orphaned works and/or
-otherwise free of copyright restrictions.  If this is not the case, the copyright owner is
-invited to contact me and ask for the copyright they hold to be acknowledged and/or have
-the relevant documents removed.
+All the software contained in this archive are thought to be orphaned works and/orotherwise free of copyright restrictions.
+If this is not the case, the copyright owner is invited to contact me and ask for the copyright they hold to be acknowledged
+and/or have the relevant documents removed.
