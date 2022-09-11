@@ -6,6 +6,6 @@ nonstop on
 at tty inline
 1 2 3 4 5 6 960
 <! halt !><!!>
-at ptr file ../../MASTERS/GAMES/CNTDWN.BIN
+at ptr file ../../MASTERS/GAMES/CNTDWN.SIR.BIN
 j 8181
 sh t
