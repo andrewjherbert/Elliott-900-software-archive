@@ -6,6 +6,9 @@ curves;
           reconstructed by Andrew Herbert
           22 September 2012;
 
+"comment" LIPS updated 12/09/2022 to calculate all points to solve
+          problem when run on real 16K 903 - possible store fault?
+
     "integer" i, j, eqnsize, super;
     "real" pi, two pi, four pi, piby2, piby4,piby3, piby6, piby12;
     "real" in2steps, inc2rad, plot inc, eps;
@@ -302,21 +305,25 @@ curves;
     "begin"
         "real" xx, asq, limit, yyy;
         "integer" i;
-        "real" "array" ycoords [-a*in2steps:+a*in2steps];
+        "comment" "real" "array" ycoords [-a*in2steps:+a*in2steps];
         asq := a*a;
         xx := -a;
-        ycoords[xx*in2steps] := 0.0;
+        "comment" ycoords[xx*in2steps] := 0.0;
         move to (x+xx, y);
         limit := a+eps;		
         "for" xx := xx+plot inc "step" plot inc "until" limit "do"
         "begin"
             "real" yy; yy := b*exp(1.5*ln(abs(1.0-(xx*xx)/(asq)))); 
-            ycoords[xx*in2steps] := yy;
+            "comment" ycoords[xx*in2steps] := yy;
             draw to (x+xx, y+yy)
         "end";
         limit := -a-eps;
         "for" xx := +a "step" -plot inc "until" limit "do"
-            draw to (x+xx, y-ycoords[xx*in2steps])
+	"begin"
+            "real" yy; yy := b*exp(1.5*ln(abs(1.0-(xx*xx)/(asq)))); 
+            "comment" draw to (x+xx, y-ycoords[xx*in2steps]);
+	    draw to (x+xx, y-yy)
+	   "end"
     "end" lips;
 
 "comment" draw a lituus r = a/sqrt t from t1 to t2 at x, y;
