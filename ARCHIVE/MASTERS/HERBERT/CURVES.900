@@ -6,8 +6,8 @@ curves;
           reconstructed by Andrew Herbert
           22 September 2012;
 
-"comment" LIPS updated 12/09/2022 to calculate all points to solve
-          problem when run on real 16K 903 - possible store fault?
+"comment" Updated 12/09/2022 to force LIPS to calculate upper and lower
+          curves, rather than memoizing data points from upper curve;
 
     "integer" i, j, eqnsize, super;
     "real" pi, two pi, four pi, piby2, piby4,piby3, piby6, piby12;
@@ -323,7 +323,7 @@ curves;
             "real" yy; yy := b*exp(1.5*ln(abs(1.0-(xx*xx)/(asq)))); 
             "comment" draw to (x+xx, y-ycoords[xx*in2steps]);
 	    draw to (x+xx, y-yy)
-	   "end"
+	"end"
     "end" lips;
 
 "comment" draw a lituus r = a/sqrt t from t1 to t2 at x, y;
