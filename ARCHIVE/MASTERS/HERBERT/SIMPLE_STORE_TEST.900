@@ -1,0 +1,42 @@
+
+((SIMPLE STORE TESTER - ANDREW HERBERT 06-03-2023)
+
+*19 (print labels in decimal and octal, set store pointer to 8)
+
+		4	+128			(START AT LOCATION 128)
+		5	LOC
+LOOP	0	LOC 			(WRITE AND READ BACK LOCATION)
+		4 	&151515
+		/5	0
+		/4	0
+		2	&151515		
+		7	OK				(JUMP IF READ BACK OK)
+		
+		4	+0				(HERE ON ERROR)
+		15	6144
+		15	6144
+		15	6144
+		4	LOC				(FAILING ADDRESS)
+		14 	8184			(TOP 5 BITS)
+		15 	6144
+		14 	8
+		15	6144
+		/4	LOC
+		14 	8176			(TOP 2 BITS)
+		15	6144
+		14 	8				(MIDDLE 8 BITS)
+		15 	6144
+		14 	8				(BOTTOM 8 BITS)
+		15 	6144
+		8	;+0
+		
+OK		10 	LOC				(TRY NEXT LOCATION)
+		4	LOC
+		1	-8179			(STOP AT INITIAL INSTRUCTIONS)
+		7	;+0
+		8	LOOP
+		
+LOC		>1
+
+%
+<! HALT !>	
