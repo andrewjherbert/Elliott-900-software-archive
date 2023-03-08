@@ -1,0 +1,22 @@
+﻿C Build SIMPLE_STORE_TESTER
+
+on 903 8K
+
+c assemble
+at ptr file ../../MASTERS/ACDSIR/SIR2P71.BIN
+j 8181
+st 8175
+c first pass
+select out tty
+at ptr file ../../MASTERS/HERBERT/X3(AJH).900
+j 12
+st 562
+c second pass
+rewind
+select out auto
+at ptp file X3(AJH).BIN
+j 10
+de ptp
+st 587
+
+sh t

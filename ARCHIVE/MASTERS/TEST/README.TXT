@@ -34,4 +34,4 @@ XSTORE2        ASCII   Version of XSTORE to soak test 16K
 XSTORE_STP     ASCII   Version of XSTORE that halts on first error
                SCB
 
-F14TEST         ASCII  Check operation of 14 instruction on Q reg
+F14TEST        ASCII  Check operation of 14 instruction on Q reg
