@@ -1,5 +1,5 @@
 
-((X3 AJH - MODIFIED X3 ISS4 - Andrew Herbert - 07/03/2023)
+((X3 AJH - MODIFIED X3 ISS4 - Andrew Herbert - 10/03/2023)
 
 (
 This version of X3 is an annotated and amended version of X3 ISS4.
@@ -408,7 +408,8 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 48: Function 13 - Divide - &546315 * &546315 / &546315)
+            10 TSTNUM   (Test 48: Function 13 - Divide - &546315 * &546315 /
+                                                                       &546315)
             4 &546315
             12 &546315
             13 &546315
@@ -418,13 +419,15 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 49: Function 13 - Divide - &546315 * &546315 / &546315)
+            10 TSTNUM   (Test 49: Function 13 - Divide - &546315 * &546315 / 
+                                                                       &546315)
             4 WORKSP
             2 &546315
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 50: Function 13 - Divide - &546315 * &546315 / &231463)
+            10 TSTNUM   (Test 50: Function 13 - Divide - &546315 * &546315 / 
+                                                                       &231463)
             4 &546315
             12 &546315
             13 &231463
@@ -434,7 +437,8 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 51: Function 13 - Divide - &546315 * &546315 / &231463)
+            10 TSTNUM   (Test 51: Function 13 - Divide - &546315 * &546315 / 
+                                                                       &231463)
             4 WORKSP
             2 &231463
             7 ;+2
@@ -463,9 +467,9 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED
 
-(Additional tests to confirm 920B/903)
+(Additional tests to confirm 920B/903 side effects)
 
-            10 TSTNUM   (Test 55: Function 7 - Jump if Zero - sets Q side effect)
+            10 TSTNUM   (Test 55: Function 7 - Jump if Zero - sets Q)
             4 +0
             7 ;+2
 LASTP0      0 ;+1
@@ -474,7 +478,7 @@ LASTP0      0 ;+1
             7 START
             8 FAILED
 
-            10 TSTNUM   (Test 56: Function 9 - Jump if negative - sets Q side effect)
+            10 TSTNUM   (Test 56: Function 9 - Jump if negative - sets Q)
             4 -1
             9 ;+2
 LASTP1      0 ;+1
@@ -483,14 +487,14 @@ LASTP1      0 ;+1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 57 - Function 0 - Set B Register - sets Q side effect)
+            10 TSTNUM   (Test 57 - Function 0 - Set B Register - sets Q)
             0 +2730
             14 18
             2 +2730
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 58: Function 2 - Negate and Add - sets Q side effect)
+            10 TSTNUM   (Test 58: Function 2 - Negate and Add - sets Q)
             4 +512
             2 +0
             14 18
@@ -498,7 +502,7 @@ LASTP1      0 ;+1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 59: Function 11 - Save SCR - sets Q side effect)
+            10 TSTNUM   (Test 59: Function 11 - Save SCR - sets Q)
             11 WORKSP
             14 18
             2 WRKSPP
@@ -512,7 +516,7 @@ FAILED      4 TSTNUM    (Continuously punch failing test number)
             8 ;-1
 
 TSTNUM      >1          (Test number)
-WORKSP      >1          (Workspace)
+WORKSP      &654321     (Workspace - set to other than 0)
 
 WRKSPP      0 WORKSP    (Address of WORKSP)
 PATTRN      &252525     (To check B modification)
