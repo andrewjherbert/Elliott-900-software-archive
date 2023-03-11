@@ -6,7 +6,7 @@ This version of X3 is an annotated and amended version of X3 ISS4.
 It has been modified to loop testing continuously.
 )
 
-*16 (clear 8K, start at 8)
+*8208 (clear 8K, start at 8)
 
 [START]
 
@@ -419,14 +419,14 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 49: Function 13 - Divide - &546315 * &546315 / 
+            10 TSTNUM   (Test 49: Function 13 - Divide - &546315 * &546315 /
                                                                        &546315)
             4 WORKSP
             2 &546315
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 50: Function 13 - Divide - &546315 * &546315 / 
+            10 TSTNUM   (Test 50: Function 13 - Divide - &546315 * &546315 /
                                                                        &231463)
             4 &546315
             12 &546315
@@ -437,7 +437,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 51: Function 13 - Divide - &546315 * &546315 / 
+            10 TSTNUM   (Test 51: Function 13 - Divide - &546315 * &546315 /
                                                                        &231463)
             4 WORKSP
             2 &231463
