@@ -1,12 +1,12 @@
 
-((X3 AJH - MODIFIED X3 ISS4 - Andrew Herbert - 10/03/2023)
+((X3 AJH - MODIFIED X3 ISS4 - Andrew Herbert - 13/03/2023)
 
 (
 This version of X3 is an annotated and amended version of X3 ISS4.
 It has been modified to loop testing continuously.
 )
 
-*8208 (clear 8K, start at 8)
+*8211 (clear 8K, start at 8)
 
 [START]
 
@@ -475,7 +475,7 @@ ELEVEN      4 WORKSP
 LASTP0      0 ;+1
             14 18
             2 LASTP0
-            7 START
+            7 ;+2
             8 FAILED
 
             10 TSTNUM   (Test 56: Function 9 - Jump if negative - sets Q)
@@ -495,17 +495,16 @@ LASTP1      0 ;+1
             8 FAILED
 
             10 TSTNUM   (Test 58: Function 2 - Negate and Add - sets Q)
-            4 +512
-            2 +0
+            2 +512
             14 18
             2  +512
             7 ;+2
             8 FAILED
 
             10 TSTNUM   (Test 59: Function 11 - Save SCR - sets Q)
+            0 +512
             11 WORKSP
             14 18
-            2 WRKSPP
             7 START     (Keep test continuously)
             8 FAILED
 
