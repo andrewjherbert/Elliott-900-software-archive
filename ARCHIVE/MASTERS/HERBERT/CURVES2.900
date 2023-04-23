@@ -1,0 +1,488 @@
+﻿
+curves2;
+"begin"
+
+"comment" Adapted from Eric Wright's 1971 CURVES program - Andrew Herbert - 23 April 2023;
+
+    "integer" i, j, eqnsize, super;
+    "real" pi, two pi, four pi, piby2, piby4,piby3, piby6, piby12;
+    "real" in2steps, inc2rad, plot inc, eps;
+    "real" chsize, cs;
+    "real" x, y;
+
+"comment" basic graphics;
+
+"comment" move to position on plot measured in inches from origin;
+
+    "procedure" move to (x, y);
+    "value" x, y; "real" x, y;
+    "begin"
+        move pen (x*in2steps, y*in2steps)
+    "end" move to;
+
+"comment" draw to position on plot measured in inches from origin;
+
+    "procedure" draw to (x, y);
+    "value" x, y; "real" x, y;
+    "begin"
+        draw line (x*in2steps, y*in2steps)
+    "end" draw to;
+
+"comment" procedures for plotting with polar coordinates;
+
+"comment" move pen to polar coordinate r, t centred at x, y;
+
+    "procedure" move polar (r, t, x, y);
+    "value" r, t, x, y; "real" r, t, x, y;
+    "begin"
+        move to (x + r * cos(t), y + r * sin(t))
+    "end" move polar;
+
+"comment" draw a line to polar coordinate r, t centred at x, y;
+
+    "procedure" draw polar (r, t, x, y);
+    "value" r, t, x, y; "real" r, t, x, y;
+    "begin"
+        draw to (x + r * cos(t), y + r * sin(t))
+    "end" draw polar;
+
+"comment" titles and labels;
+
+"comment" plot string s from position x, y character size l;
+
+    "procedure" plot string (s, l, x, y);
+    "value" l, x, y; "string" s; "real" x, y; "integer" l;
+    "begin"
+        way (0, l);
+        ch size := 5.0*l*plot inc;
+        move to (x, y);
+        "print" s
+    "end" plot string;
+
+"comment" draw axes with xrpt  x segments,
+          y rpt y segments of 0.5 inches;
+
+    "procedure" axes (x rpt, y rpt, x, y);
+    "value" x rpt, y rpt, x, y; "integer" x rpt, y rpt; "real" x, y;
+    "begin"
+        "real" major, minor, mm;
+        "real" x1, y1;
+        major := 0.4; minor := 0.05; mm := 0.45;
+        "for" x1 := x-xrpt*mm "step" mm "until" x-minor "do"
+        "begin"
+	    move to (x1, y); draw to (x1+major, y)
+        "end";
+        "for" x1 := x "step" mm "until" x+xrpt*mm-minor "do"
+	"begin"
+	    move to (x1+minor, y); draw to (x1+mm, y)
+        "end";
+        "for" y1 := y-yrpt*mm "step" mm "until" y-minor "do"
+        "begin"
+            move to (x, y1); draw to (x, y1+major)
+        "end";
+        "for" y1 := y "step" mm "until" y+yrpt*mm-minor "do"
+        "begin"
+            move to (x, y1+minor); draw to (x, y1+mm)
+        "end"
+    "end" axes;
+
+"comment" scalloped border, radius r, nx horizontal arcs, ny vertical arcs,
+          with top right corner at x, y;
+
+    "procedure" border (r, nx, ny, x, y);
+    "value" r, nx, ny, x, y; "real" x, y, r; "integer" nx, ny;
+    "begin"
+        "real" t, tinc, tincby2, tlimit;
+        "integer" i, j, ix, iy, ir, step, last;
+        "comment" calculate theta step size to subtend one plotter step;
+        tinc    := inc2rad/r;
+        tincby2 := tinc/2.0;
+        tlimit  := pi+tincby2;
+        "begin"
+        "integer" "array" coords [1:2, 0:tlimit/tinc];
+        move to (x+r+r, y); "comment" position and raise pen;
+
+        "comment" compute coordinates of hemisphere;
+        last := 0;
+        coords[1,0] := r; coords[2,0] := 0;
+        "for" t := tinc "step" tinc "until" tlimit "do"
+        "begin"
+             last := last+1;
+             coords[1, last] := r*cos(t)*in2steps;
+             coords[2, last] := r*sin(t)*in2steps
+        "end";
+        ir   := r*in2steps;
+        ix   := x*in2steps;
+        iy   := y*in2steps;
+        step := r*in2steps*2.0;
+        ix := ix+ir;
+        "comment" top border;
+        "for" i := 1 "step" 1 "until" nx "do"
+        "begin"
+            "for" j := 1 "step" 1 "until" last "do"
+                draw line (ix+coords[1,j], iy+coords[2,j]);
+            ix := ix-step
+        "end";
+        "comment" left border;
+        iy := iy-ir; ix := ix+ir;
+        "for" i := 1 "step" 1 "until" ny "do"
+        "begin"
+            "for" j := last "step" -1 "until" 1 "do"
+                draw line (ix-coords[2,j], iy-coords[1,j]);
+            iy := iy-step
+        "end";
+        ix := ix+ir; iy := iy+ir;
+        "comment" bottom border;
+        "for" i := 1 "step" 1 "until" nx "do"
+        "begin"
+            "for" j := last "step" -1 "until" 1 "do"
+                draw line (ix+coords[1,j], iy-coords[2,j]);
+            ix := ix+step
+        "end";
+        "comment" right border;
+        ix := ix-ir; iy := iy+ir;
+        "for" i := 1 "step" 1 "until" ny "do"
+        "begin"
+            "for" j := last-1 "step" -1 "until" 1 "do"
+                draw line (ix+coords[2,j], iy+coords[1,j]);
+            iy := iy+step
+        "end"
+        "end";
+    "end" border;
+
+"comment" shapes;
+
+"comment" draw an arc from t1 to t2, radius r, centred at x, y;
+
+    "procedure" arc (t1, t2, r, x, y);
+    "value" t1, t2, r, x, y; "real" t1, t2, r, x, y;
+    "begin"
+        "real" t, tinc, tlimit;
+        "comment" calculate theta step size to subtend one plotter step;
+        tinc   := inc2rad/r;
+        tlimit := tinc/2.0;
+        "if"    t1 > t2
+        "then" "begin"
+               tinc  := -tinc;
+               tlimit := t2+tlimit
+               "end"
+        "else" tlimit := t2-tlimit;
+         t := t1;
+         move polar (r, t, x, y);
+         "for" t := t1 "step" tinc "until" tlimit "do"
+             draw polar (r, t, x, y)
+    "end" arc;
+
+"comment" draw a cardioid r = a(1 - cos t);
+
+    "procedure" cardioid (a, x, y);
+    "value" a, x, y; "real" a, x, y;
+    "begin"
+        "real" t, tinc, tlimit;
+        tinc := inc2rad/a; tlimit := twopi-eps;
+        t := 0.0;
+        move polar (0.0, 0.0, x, y);
+        "for" t := tinc "step" tinc "until" tlimit "do"
+            draw polar (a*(1.0-cos(t)), t, x, y)
+    "end" cardioid;
+
+"comment" draw a circular saw wave r = a+mod(theta, b);
+
+    "procedure" circsaw (a, b, n, x, y);
+    "value" a, b, n, x, y; "real" a, b, x, y; "integer" n;
+    "begin"
+        "real" t, angle, half, tlimit;
+	angle := twopi/n;
+        half  := angle/2.0;
+        tlimit := twopi+eps;
+        t := 0.0;
+        move polar (a, t, x, y);
+        "for" t := angle "step" angle "until" tlimit
+        "do" "begin"
+            draw polar (a+b, t-half, x, y);
+            draw polar (a,   t,      x, y)
+        "end"
+    "end" circsaw;
+
+"comment" draw a damped oscillation y = exp(-ax).sin x;
+
+    "procedure" decay (a, b, c, to, x, y);
+    "value" a, b, c, to, x, y;
+    "real"  a, b, c, to, x, y;
+    "begin"
+        "real" xx, yy, step, limit;
+        step := 2.0*plot inc*b; limit := to+eps;
+        move to (x, y);
+        "for" xx := step "step" step "until" limit "do"
+        "begin"
+            yy := c*exp(-a*xx)*sin(xx);
+            draw to (x+(xx/b), y+yy)
+        "end"
+    "end" decay;
+
+"comment" flower = variations on r = a cos 3t and r = a;
+
+    "procedure" petals (a, p, rotate, x, y);
+    "value" a, p, rotate, x, y;
+    "real"  a, p, rotate, x, y;
+    "begin"
+        "real" t, tinc, tlimit;
+        "integer" i;
+        tinc   := inc2rad/a;
+        tlimit := p+tinc/2.0;
+        "for" i := 1 "step" 1 "until" 6 "do"
+        "begin"
+            t := -p;
+	    move polar (a*cos(3.0*t), t+rotate, x, y);
+            "for" t := t+tinc "step" tinc "until" tlimit "do"
+                draw polar (a*cos(3.0*t), t+rotate, x, y);
+            rotate := rotate+piby3
+        "end"
+    "end" petals;
+
+    "procedure" flower (a, c, x, y);
+    "value" a, c, x, y; "real" a, c, x, y;
+    "begin"
+        "real" halfc;
+        halfc := c/2.0;
+        "comment" circle at centre;
+        arc   (0, two pi, halfc,     x, y);
+        petals (a, 0.484, pi-piby6,  x, y);
+        petals (a, 0.264, pi      ,  x, y);
+        petals (a, 0.132, pi+piby12, x, y);
+        petals (a, 0.132, pi-piby12, x, y)
+    "end" flower;
+
+"comment" draw a hyperbolic spiral r = a/t from t1 to t2, at x, y;
+
+    "procedure" hspiral (a, t1, t2, x, y);
+    "value" a, t1, t2, x, y; "real" a, t1, t2, x, y;
+    "begin"
+        "real" t, tinc, tlimit;
+        "comment" plot graph;
+        t      := t1;
+        tinc   := inc2rad/a;
+        tlimit := t2+tinc/2.0;
+        move polar (a/t, t, x, y);
+        "if" t2 > pi
+        "then" "for" t := t+tinc "step" tinc "until" pi "do"
+                   draw polar (a/t, t, x, y);
+        tinc := 2.0*tinc;
+        "if" t2 > twopi
+        "then" "for" t := t+tinc "step" tinc "until" twopi "do"
+                   draw polar (a/t, t, x, y);
+        tinc := 2.0*tinc;
+        "for" t := t+tinc "step" tinc "until" tlimit "do"
+            draw polar (a/t, t, x, y)
+    "end" hspiral;
+
+"comment" draw a limacon r = b - a * cos t;
+
+    "procedure" limacon (a, b, x, y);
+    "value" a, b, x, y;
+    "real"  a, b, x, y;
+    "begin"
+        "real" t, tinc, tlimit;
+        t := 0.0;
+        move polar (b-a, t, x, y);
+        tinc := inc2rad/a;
+        tlimit := twopi-tinc/2.0;
+        "for" t := t+tinc "step" tinc "until" tlimit
+        "do"
+           draw polar (b-a*cos(t), t, x, y)
+    "end" limacon;
+
+"comment" draw lips (x/a)^2 + (y/b)^(2/3) = 1;
+
+    "procedure" lips(a, b, x, y);
+    "value" a, b, x, y;
+    "real"  a, b, x, y;
+    "begin"
+        "real" xx, asq, limit, yyy;
+        "integer" i;
+        "comment" "real" "array" ycoords [-a*in2steps:+a*in2steps];
+        asq := a*a;
+        xx := -a;
+        "comment" ycoords[xx*in2steps] := 0.0;
+        move to (x+xx, y);
+        limit := a+eps;
+        "for" xx := xx+plot inc "step" plot inc "until" limit "do"
+        "begin"
+            "real" yy; yy := b*exp(1.5*ln(abs(1.0-(xx*xx)/(asq))));
+            "comment" ycoords[xx*in2steps] := yy;
+            draw to (x+xx, y+yy)
+        "end";
+        limit := -a-eps;
+        "for" xx := +a "step" -plot inc "until" limit "do"
+	"begin"
+            "real" yy; yy := b*exp(1.5*ln(abs(1.0-(xx*xx)/(asq))));
+            "comment" draw to (x+xx, y-ycoords[xx*in2steps]);
+	    draw to (x+xx, y-yy)
+	"end"
+    "end" lips;
+
+"comment" draw a lituus r = a/sqrt t from t1 to t2 at x, y;
+
+    "procedure" lituus (a, t1, t2, x, y);
+    "value" a, t1, t2, x, y;
+    "real" a, t1, t2, x, y;
+    "begin"
+        "real" t, tinc, tlimit;
+        tinc := inc2rad/a; tlimit := t2+tinc/2.0;
+        t := t1;
+        move polar (a/sqrt(t), t, x, y);
+        "if" t2 > twopi
+        "then" "for" t := t1+tinc "step" tinc "until" twopi "do"
+                   draw polar (a/sqrt(t), t, x, y);
+        tinc := 2.0*tinc;
+        "for" t := t+tinc "step" tinc "until" tlimit "do"
+            draw polar (a/sqrt(t), t, x, y)
+    "end" lituus;
+
+"comment" draw a n segment zip of height h from x, y;
+
+    "procedure" zipper (h, n, x, y);
+    "value" h, n, x, y; "real" h, x, y; "integer" n;
+    "begin"
+        "real" hh, yy;"integer" i;
+        hh := h/2.0;
+        yy := y-h;
+        move to (x, y);
+        "for" i := 1 "step" 1 "until" n "do"
+        "begin"
+            draw to (x-hh, yy);
+            draw to (x+h,  yy);
+            draw to (x+hh, y);
+            x := x+h+h;
+            draw to (x,    y)
+        "end";
+        draw to (x-hh, yy)
+    "end";
+
+"comment" useful constants;
+
+    "comment" plotter step size in inches";
+    plot inc  := 0.005;
+    eps       := plot inc/2.0;
+    "comment" inches to plotter steps;
+    in2steps  := 1.0/plot inc;
+    "comment" plotter increments to theta at radius = 1
+              (divide by r for other values);
+    inc2rad   := 4.0*plot inc;
+    pi        := 3.1415926536;
+    twopi     := pi*2.0;
+    fourpi    := pi*4.0;
+    piby2     := pi/2.0;
+    piby4     := pi/4.0;
+    piby3     := pi/3.0;
+    piby6     := pi/6.0;
+    piby12    := pi/12.0;
+    eqnsize   := 5; "comment" text in equations;
+    super     := 3; "comment" superscript size";
+
+"comment" initialize plotter;
+
+    set origin (10, 0);
+    punch (5);
+
+"comment" ensure pen is writing;
+
+    move pen   (  0, -200);
+    draw line  (100, -200);
+    move pen   (110, -200);
+    way (0, eqnsize);
+   "print" punch(5), {Check pen};
+
+"comment" draw initials and date;
+
+    plot string ({A}, 8, 1.20, 1.20);
+    plot string ({J}, 8, 1.25, 1.14);
+    plot string ({H}, 8, 1.40, 1.20);
+    plot string ({2023}, eqn size, 9.375, 1.250);
+
+"comment" draw curves;
+
+    lips (1.6, 0.4,                                                  7.500,  1.750);
+    "comment" non-standard axes;
+    move to (5.8, 1.75);
+    "for" x := 6.2 "step" 0.5 "until" 9.61 "do"
+    "begin"
+        draw to (x, 1.75); move to (x+0.1, 1.75)
+    "end";
+    move to (7.5, 2.25); draw to (7.5, 1.75);
+    move to (7.5, 1.65); draw to (7.5, 1.20);
+    plot string ({(x/a)},   eqn size, 6.375,             2.300);
+    plot string ({+ (y/b)}, eqn size, 6.375+chsize* 6.0, 2.300);
+    plot string ({= 1},     eqn size, 6.375+chsize*15.5, 2.300);
+    cs := chsize;
+    plot string ({2},       super,    6.375+cs* 5.0, 2.350);
+    plot string ({2/3},     super,    6.375+cs*13.0, 2.350);
+
+    hspiral (1.0, pi/18.5, 5.0*pi,                                   2.250,  2.300);
+    axes    (2, 1, 2.250,  2.300);
+    plot string ({Hyperbolic Spiral}, eqn size, 4.250,  3.500);
+    plot string ({r = a/theta},       eqn size, 4.875,  3.000);
+
+    flower (2.5, 0.6,                                                4.500,  6.500);
+    plot string ({Variations on},     eqn size, 9.5-13.0*chsize, 7.250);
+    plot string ({r = a.cos 3.theta}, eqn size, 9.5-17.0*chsize, 6.750);
+    plot string ({and},               eqn size, 9.5- 3.0*chsize, 6.250);
+    plot string ({r = a},             eqn size, 9.5- 5.0*chsize, 5.750);
+
+    cardioid (0.70,                                                  3.000, 10.250);
+    axes     (2, 2, 3.0, 10.25);
+    plot string ({Cardioid},             eqn size, 3.500, 10.000);
+    plot string ({r = a(1 - cos theta)}, eqn size, 3.500,  9.750);
+
+    limacon (1.0, 0.5,                                               9.000, 10.250);
+    axes (1, 2, 9, 10.25);
+    plot string ({Limacon},             eqn size, 8.000, 9.125);
+    plot string ({r = b - a.cos theta}, eqn size, 7.000, 8.875);
+
+    lituus (0.8, 0.05, 6.5*pi,                                       2.750, 12.700);
+    "comment" non-standard axes;
+    move to (2.75, 13.40);   draw to (2.75, 13.00);
+    move to (2.75, 12.90);   draw to (2.75, 12.50);
+    move to (2.75, 12.45);   draw to (2.75, 12.05);
+
+    move to (2.05, 12.70);   draw to (2.45, 12.70);
+    move to (2.55, 12.70);   draw to (2.95, 12.70);
+    move to (3.05, 12.70);   draw to (3.45, 12.70);
+    plot string ({Lituus},        eqn size, 4.50,  13.250);
+    plot string ({r = a/(theta)}, eqn size, 5.50,  13.000);
+    plot string ({0.5},           super,    5.50+13.0*chsize, 13.050);
+
+    decay (0.1, 7.0, 1.5, 8.0*pi,                                   4.000, 11.500);
+    "for" x := 3.75 "step" 0.5 "until" 7.26 "do"
+    "begin"
+        move to (x, 11.5); draw to (x+0.4, 11.5)
+    "end";
+    plot string ({y = e},  eqn size, 5.250,            10.750);
+    plot string ({.sin x}, eqn size, 5.250+6.5*chsize, 10.750);
+    plot string ({-ax},    super,    5.250+5.0*chsize, 10.800);
+
+    circsaw (0.375, 0.1875, 18,                                     9.000,  12.500);
+
+
+"comment" draw zipper underlining;
+
+    zipper (0.125, 22,                                               2.750, 14.560);
+
+"comment" draw titles;
+    plot string ({The United Kingdom National Museum of Computing}, 7, 1.45, 15.5);
+    plot string ({ Elliott  903 }, 10, 3.75, 14.9);
+    plot string ({Curves}, 10,  1.750, 13.75);
+    plot string ({Curves},  8,  4.250, 13.75);
+    plot string ({Curves},  6,  6.255, 13.75);
+    plot string ({Curves},  4,  7.750, 13.75);
+    plot string ({Curves},  2,  8.750, 13.75);
+
+"comment" draw scalloped edge;
+
+    border (0.5, 9, 15, 9.0, 16.0);
+
+    move to (-1.0, 18.0)
+
+"end" curves
+<! halt !>
+

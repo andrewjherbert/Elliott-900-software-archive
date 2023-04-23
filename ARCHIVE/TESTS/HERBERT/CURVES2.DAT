@@ -1,0 +1,25 @@
+﻿c curves plotting
+
+on 903 16K
+
+c read in Algol 16K LG system
+at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
+j 8181
+st 8175
+
+c compile program in library mode
+at ptr file ../../MASTERS/HERBERT/CURVES2.900
+j 12
+st 1715
+
+c scan TJF library
+at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
+j 9
+st 8000
+
+c run program
+scale 3
+j 10
+st 1715
+
+sh t

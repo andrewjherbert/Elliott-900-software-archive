@@ -12,52 +12,52 @@ It has been modified to loop testing continuously.
 
 START <     4 +1
             5 TSTNUM
-            4 +0        (Test 1: Function 4 - Read)
+T1          4 +0        (Test 1: Function 4 - Read)
             5 WORKSP
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 2: Function 5 - Write)
+T2          10 TSTNUM   (Test 2: Function 5 - Write)
             4 WORKSP
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 3: Function 7 - Jump If Zero on -1)
+T3          10 TSTNUM   (Test 3: Function 7 - Jump If Zero on -1)
             4 -1
             7 FAILED
 
-            10 TSTNUM   (Test 4: Function 7 - Jump if Zero on +2)
+T4          10 TSTNUM   (Test 4: Function 7 - Jump if Zero on +2)
             4 +2
             7 FAILED
 
-            10 TSTNUM   (Test 5: Function 9 - Jump if negative on +0)
+T5          10 TSTNUM   (Test 5: Function 9 - Jump if negative on +0)
             4 +0
             9 FAILED
 
-            10 TSTNUM   (Test 6: Function 9 - Jump if negative on -1)
+T6          10 TSTNUM   (Test 6: Function 9 - Jump if negative on -1)
             4 -1
             9 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 7: Function 1 - Add - 0 + 0)
+T7          10 TSTNUM   (Test 7: Function 1 - Add - 0 + 0)
             4 +0
             1 +0
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 8: Function 1 - Add - -1 + +1)
+T8          10 TSTNUM   (Test 8: Function 1 - Add - -1 + +1)
             4 -1
             1 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 9: Function 1 - Add - +1 + -1)
+T9          10 TSTNUM   (Test 9: Function 1 - Add - +1 + -1)
             4 +1
             1 -1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 10: Function 1 - Add - &525252+&252525)
+T10         10 TSTNUM   (Test 10: Function 1 - Add - &525252+&252525)
             4 &525252
             1 &252525
             9 ;+2
@@ -66,7 +66,7 @@ START <     4 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 11: Function 1 - Add - &252525 + &525252)
+T11         10 TSTNUM   (Test 11: Function 1 - Add - &252525 + &525252)
             4 &252525
             1 &525252
             9 ;+2
@@ -75,7 +75,7 @@ START <     4 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 12: Function 1 - Add - &525252+&525252+&525252)
+T12         10 TSTNUM   (Test 12: Function 1 - Add - &525252+&525252+&525252)
             4 &525252
             1 &525252
             1 &525252
@@ -85,7 +85,7 @@ START <     4 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 13: Function 1 - Add - &252525+&252525+&252525)
+T13         10 TSTNUM   (Test 13: Function 1 - Add - &252525+&252525+&252525)
             4 &252525
             1 &252525
             1 &252525
@@ -95,19 +95,19 @@ START <     4 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 14: Function 2 - Negate and Add - -0 + 0)
+T14         10 TSTNUM   (Test 14: Function 2 - Negate and Add - -0 + 0)
             4 +0
             2 +0
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 15: Function 2 - Negate and Add - 1 - 1)
+T15         10 TSTNUM   (Test 15: Function 2 - Negate and Add - 1 - 1)
             4 -1
             2 -1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 16: Function 2 - Negate and Add - -0 - 1)
+T16         10 TSTNUM   (Test 16: Function 2 - Negate and Add - -0 - 1)
             4 +0
             2 -1
             9 ;+2
@@ -116,7 +116,7 @@ START <     4 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 17: Function 2 - Negate and Add - - -1 + 0)
+T17         10 TSTNUM   (Test 17: Function 2 - Negate and Add - - -1 + 0)
             4 -1
             2 +0
             9 FAILED
@@ -124,19 +124,19 @@ START <     4 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 18: Function 6 - Collate - +0 & -1)
+T18         10 TSTNUM   (Test 18: Function 6 - Collate - +0 & -1)
             4 +0
             6 -1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 19: Function 6 - Collate - -1 & +0)
+T19         10 TSTNUM   (Test 19: Function 6 - Collate - -1 & +0)
             4 -1
             6 +0
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 20: Function 6 - Collate - -1 & -1)
+T20         10 TSTNUM   (Test 20: Function 6 - Collate - -1 & -1)
             4 -1
             6 -1
             9 ;+2
@@ -145,14 +145,14 @@ START <     4 +1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 21: Function 6 - Collate - &000777 & &037037)
+T21         10 TSTNUM   (Test 21: Function 6 - Collate - &000777 & &037037)
             4 &000777
             6 &037037
             2 &000037
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 22: Function 10 - Count in Store)
+T22         10 TSTNUM   (Test 22: Function 10 - Count in Store)
             4 -1
             5 WORKSP
             10 WORKSP
@@ -162,7 +162,7 @@ START <     4 +1
             5 TSTNUM
             8 FAILED
 
-            10 TSTNUM   (Test 23 - Function 0 - Set B Register)
+T23         10 TSTNUM   (Test 23 - Function 0 - Set B Register)
             0 +2730
             4 1
             2 +2730
@@ -171,7 +171,7 @@ START <     4 +1
 
 ELEVNP      0 ELEVEN    (Address of ELEVEN)
 
-            10 TSTNUM   (Test 24 - Function 11 - Store SCR)
+T24         10 TSTNUM   (Test 24 - Function 11 - Store SCR)
             11 WORKSP   (Save SCR - will equal address of ELEVEN)
 ELEVEN      4 WORKSP
             6 +8191
@@ -179,7 +179,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 25: Function 3 - Store Q Register)
+T25         10 TSTNUM   (Test 25: Function 3 - Store Q Register)
             0 &525252
             3 WORKSP
             4 WORKSP
@@ -187,7 +187,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 26: Function 14 - Shift - 14 0)
+T26         10 TSTNUM   (Test 26: Function 14 - Shift - 14 0)
             0 &525252
             4 +1
             14 0
@@ -195,7 +195,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 27: Function 14 - Shift - 14 1 - Acc)
+T27         10 TSTNUM   (Test 27: Function 14 - Shift - 14 1 - Acc)
             0 &252525
             4 &252525
             14 1
@@ -204,13 +204,13 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Acc. wrong)
 
-            10 TSTNUM   (Test 28: Function 14 - Shift - 14 1 - Q)
+T28         10 TSTNUM   (Test 28: Function 14 - Shift - 14 1 - Q)
             4 WORKSP
             2 &252525
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 29: Function 14 - Shift 14 8191)
+T29         10 TSTNUM   (Test 29: Function 14 - Shift 14 8191)
             0 &252525
             4 &252525
             14 8191
@@ -224,7 +224,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 30: Function 14 - Shift - 14 1)
+T30         10 TSTNUM   (Test 30: Function 14 - Shift - 14 1)
             0 &525252
             4 &525252
             14 1
@@ -232,14 +232,13 @@ ELEVEN      4 WORKSP
             2 &252525
             7 ;+2
             8 FAILED    (Acc wrong)
-
-            10 TSTNUM   (Test 31: Function 14 - Shift - 14 1)
+T31         10 TSTNUM   (Test 31: Function 14 - Shift - 14 1)
             4 WORKSP
             2 &125252
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 32: Function 14 - Shift - 14 8191)
+T32         10 TSTNUM   (Test 32: Function 14 - Shift - 14 8191)
             0 &525252
             4 &525252
             14 8191
@@ -248,13 +247,13 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 33: Function 14 - Shift - 14 8191)
+T33         10 TSTNUM   (Test 33: Function 14 - Shift - 14 8191)
             4 WORKSP
             2 &125252
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 34: Function 14 - Shift - 14 2)
+T34         10 TSTNUM   (Test 34: Function 14 - Shift - 14 2)
             0 +2
             4 +0
             14 2
@@ -264,7 +263,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 35: Function 14 - Shift - 14 4)
+T35         10 TSTNUM   (Test 35: Function 14 - Shift - 14 4)
             0 +2
             4 +0
             14 4
@@ -274,7 +273,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 36: Function 14 - Shift - 14 8)
+T36         10 TSTNUM   (Test 36: Function 14 - Shift - 14 8)
             0 +2
             4 +0
             14 8
@@ -284,7 +283,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    ( Q wrong)
 
-            10 TSTNUM   (Test 37: Function 14 - Shift - 14 16)
+T37         10 TSTNUM   (Test 37: Function 14 - Shift - 14 16)
             0 +2
             4 +0
             14 16
@@ -294,7 +293,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 38: Function 14 - Shift - 14 32)
+T38         10 TSTNUM   (Test 38: Function 14 - Shift - 14 32)
             0 +2
             4 +0
             14 32
@@ -302,7 +301,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 39: Function 14 - Shift - 14 8190 - 2 right)
+T39         10 TSTNUM   (Test 39: Function 14 - Shift - 14 8190 - 2 right)
             0 +8
             4 +0
             14 8190
@@ -312,7 +311,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 40: Function 14 - Shift - 14 8188 - 4 right)
+T40         10 TSTNUM   (Test 40: Function 14 - Shift - 14 8188 - 4 right)
             0 +32
             4 +0
             14 8188
@@ -322,7 +321,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 41: Function 14 - Shift - 14 8184 - 8 right)
+T41         10 TSTNUM   (Test 41: Function 14 - Shift - 14 8184 - 8 right)
             0 +512
             4 +0
             14 8184
@@ -332,7 +331,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 42: Function 14 - Shift - 14 8176 - 16 right)
+T42         10 TSTNUM   (Test 42: Function 14 - Shift - 14 8176 - 16 right)
             0 =/0 0
             4 +0
             14 8176
@@ -342,7 +341,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 43: Function 14 - Shift - 14 8160 - 32 right)
+T43         10 TSTNUM   (Test 43: Function 14 - Shift - 14 8160 - 32 right)
             0 +0
             4 =4 0
             14 8160
@@ -352,8 +351,8 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 44: Function 14 - Shift - 14 35)
-            0 +1
+T44        10 TSTNUM   (Test 44: Function 14 - Shift - 14 35)
+             0 +1
             4 +0
             14 35
             9 ;+2
@@ -363,7 +362,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 44: Function 14 - Shift - 14 8157 - 35 right)
+T45         10 TSTNUM   (Test 45: Function 14 - Shift - 14 8157 - 35 right)
             4 =/0 0
             14 8157
             5 WORKSP
@@ -372,13 +371,13 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 45: Function 14 - Shift - 14 8157 - 35 right)
+T46         10 TSTNUM   (Test 46: Function 14 - Shift - 14 8157 - 35 right)
             4 WORKSP
             1 +1
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 46: Function 12 - Multiply - &546315 * &546315)
+T47         10 TSTNUM   (Test 47: Function 12 - Multiply - &546315 * &546315)
             4 &546315
             12 &546315
             5 WORKSP
@@ -387,13 +386,13 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 46: Function 12 - Multiply - &546315 * &546315)
+T48         10 TSTNUM   (Test 48: Function 12 - Multiply - &546315 * &546315)
             4 WORKSP
             2 &134121
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 47: Function 12 - Multiply - &546315 * 2)
+T49         10 TSTNUM   (Test 49: Function 12 - Multiply - &546315 * 2)
             4 &546315
             12 +2
             5 WORKSP
@@ -401,14 +400,14 @@ ELEVEN      4 WORKSP
             2 &631465
             7 ;+2
             8 FAILED    (Q wrong)
-
-            10 TSTNUM   (Test 47: Function 12 - Multiply - &546315 * 2)
+            
+T50        10 TSTNUM   (Test 50: Function 12 - Multiply - &546315 * 2)
             4 WORKSP
             2 -2
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 48: Function 13 - Divide - &546315 * &546315 /
+T51         10 TSTNUM   (Test 51: Function 13 - Divide - &546315 * &546315 /
                                                                        &546315)
             4 &546315
             12 &546315
@@ -419,14 +418,14 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 49: Function 13 - Divide - &546315 * &546315 /
+T52         10 TSTNUM   (Test 52: Function 13 - Divide - &546315 * &546315 /
                                                                        &546315)
             4 WORKSP
             2 &546315
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 50: Function 13 - Divide - &546315 * &546315 /
+T53         10 TSTNUM   (Test 53: Function 13 - Divide - &546315 * &546315 /
                                                                        &231463)
             4 &546315
             12 &546315
@@ -437,14 +436,14 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Q wrong)
 
-            10 TSTNUM   (Test 51: Function 13 - Divide - &546315 * &546315 /
+T54         10 TSTNUM   (Test 54: Function 13 - Divide - &546315 * &546315 /
                                                                        &231463)
             4 WORKSP
             2 &231463
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 52: Function 13 - Divide - &546315 * 2 / 2)
+T55         10 TSTNUM   (Test 55: Function 13 - Divide - &546315 * 2 / 2)
             4 &546315
             12 +2
             13 +2
@@ -452,7 +451,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 53: Function 13 - Divide - 546315 * 2 / 546315)
+T56         10 TSTNUM   (Test 56: Function 13 - Divide - 546315 * 2 / 546315)
             4 &546315
             12 +2
             13 &546315
@@ -460,7 +459,7 @@ ELEVEN      4 WORKSP
             7 ;+2
             8 FAILED    (Acc wrong)
 
-            10 TSTNUM   (Test 54: B modification)
+T57         10 TSTNUM   (Test 57: B modification)
             0 +2
             /4 PATTRN-2
             2 PATTRN
@@ -469,7 +468,7 @@ ELEVEN      4 WORKSP
 
 (Additional tests to confirm 920B/903 side effects)
 
-            10 TSTNUM   (Test 55: Function 7 - Jump if Zero - sets Q)
+T58         10 TSTNUM   (Test 58: Function 7 - Jump if Zero - sets Q)
             4 +0
             7 ;+2
 LASTP0      0 ;+1
@@ -478,7 +477,7 @@ LASTP0      0 ;+1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 56: Function 9 - Jump if negative - sets Q)
+T59         10 TSTNUM   (Test 59: Function 9 - Jump if negative - sets Q)
             4 -1
             9 ;+2
 LASTP1      0 ;+1
@@ -487,21 +486,21 @@ LASTP1      0 ;+1
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 57 - Function 0 - Set B Register - sets Q)
+T60         10 TSTNUM   (Test 60 - Function 0 - Set B Register - sets Q)
             0 +2730
             14 18
             2 +2730
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 58: Function 2 - Negate and Add - sets Q)
+T61         10 TSTNUM   (Test 61: Function 2 - Negate and Add - sets Q)
             2 +512
             14 18
             2  +512
             7 ;+2
             8 FAILED
 
-            10 TSTNUM   (Test 59: Function 11 - Save SCR - sets Q)
+T62         10 TSTNUM   (Test 62: Function 11 - Save SCR - sets Q)
             0 +512
             11 WORKSP
             14 18
