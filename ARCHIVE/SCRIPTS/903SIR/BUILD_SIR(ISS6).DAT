@@ -4,10 +4,11 @@ on 903 8K
 
 nonprinting off
 
-c high store version
+C HIGH STORE VERSION AT 5500
 
 clear
 
+c load low store assembler
 at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
 j 8181
 st 8171
@@ -86,33 +87,32 @@ j 4096
 de ptp
 st 4209
 
-leg SIR(ISS6)(5500).BIN 903 sir iss 6 [5500] scb
-
 sh t
 
-c verify SIR by assembling a trivial program
+c verify against MECSL issued binary
+
+c check loaded image
 
 clear
-
-select out tty
-
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+j 8181
+du 8192 SIR(ISS6)(5500).IMG
 at ptr file SIR(ISS6)(5500).BIN
 j 8181
 st 8171
+vi SIR(ISS6)(5500).IMG
+delete SIR(ISS6)(5500).IMG
 
-at ptr inline
+c compare paper tapes
 
-*3
-[GLOB]
-GLOB 8 GLOB
-%
-<! halt !>
-<!!>
-j 8
-st 6927
-sh t
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(5500).BIN
+scbdecode
+at ptr file SIR(ISS6)(5500).BIN
+scbdecode
 
-c lowstore version
+pause
+
+C LOW STORE VERSION AT 512
 
 clear
 
@@ -194,46 +194,6 @@ j 8179
 de ptp
 st 8113
 
-leg SIR(ISS6)(512).BIN 903 sir iss 6 [512] scb
-
 sh t
 
-c verify SIR by assembling a trivial program
-
-clear
-
-select out tty
-
-at ptr file SIR(ISS6)(512).BIN
-j 8181
-st 8171
-
-at ptr inline
-
-^4096
-*35
-[GLOB]
-GLOB 8 GLOB
-%
-<! halt !>
-<!!>
-j 8
-st 1939
-sh t
-
-c verify output using C4 - should flag an error for location 8
-
-at ptr file SIR(ISS6)(512).BIN
-j 8181
-st 8171
-
-at ptr file ../../MASTERS/903UTILITIES/C4(ISS1).BIN
-j 8181
-st 8179
-
-at ptr file SIR(ISS6)(512).BIN
-j 8
-st 8155
-
-sh t
 

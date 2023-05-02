@@ -1,0 +1,104 @@
+﻿c build 1-pass SIR Issue 4 from sources
+
+on 903 8K
+
+nonprinting off
+
+C HIGH STORE VERSION @ 5500
+
+clear
+
+c load low store assembler
+at ptr file ../../MASTERS/903SIR/SIR(ISS6)(512).BIN
+j 8181
+st 8171
+
+select out tty
+
+c position assembler in high store
+
+at ptr inline
+
+^5500
+*35
+
+<! halt !>
+<!!>
+j 8
+st 1939
+
+c asssemble assembler source code
+at ptr file ../../MASTERS/903SIR/SIR(ISS4).900
+j 9
+st 1939
+
+
+c assemble entry points
+at ptr inline
+
+^8
+[START CONTIN STARTA STARTB STARTC RENTRY]
+8 START
+8 RENTRY
+8 STARTA
+8 STARTB
+8 STARTC
++0
++0
++0
++0
+
+%
+
+
+<! Halt !>
+<!!>
+
+j 9
+st 1939
+
+select out auto
+
+c use T22-23 @ 4096 to dump out sumchecked binary
+at ptp file SIR(ISS4)(5500).BIN
+at ptr file ../../MASTERS/HERBERT/T22_23(4096).BIN
+j 8181
+st 8171
+at ptr inline
++8
++16
++5500
++8088
+<! halt !>
+<!!>
+j 4096
+de ptp
+st 4209
+
+sh t
+
+c verify against MECSL issued binary
+
+c check loaded image
+
+clear
+at ptr file ../../MASTERS/903SIR/SIR(ISS4)(5500).BIN
+j 8181
+du 8192 SIR(ISS4)(5500).IMG
+at ptr file SIR(ISS4)(5500).BIN
+j 8181
+st 8171
+vi SIR(ISS4)(5500).IMG
+delete SIR(ISS4)(5500).IMG
+
+c compare paper tapes
+
+at ptr file ../../MASTERS/903SIR/SIR(ISS4)(5500).BIN
+scbdecode
+at ptr file SIR(ISS4)(5500).BIN
+scbdecode
+
+
+
+
+
