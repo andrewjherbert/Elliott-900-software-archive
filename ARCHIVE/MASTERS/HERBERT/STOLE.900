@@ -1,0 +1,33 @@
+
+*19 (START AT 8)
+
+
+((STOLE - Program to report "holes" in store - Andrew Herbert - 19/05/2023)
+
+[STOLE]
+
+STOLE <
+        8   ;+2         (MAIN ENTRY)
+        8   NEXT        (CONTINUE AFTER STOP)
+        
+START   4   FIRST       (FIRST ADDRESS)
+        5   ADDR
+        
+LOOP    0   ADDR        (NEXT LOCATION TO TEST)
+        /5  0           (WRITE OWN ADDRESS)
+        /2  0           (CHECK READS BACK OK)
+        7   NEXT        (LOCATION OK, TRY NEXT IN SEQUENCE)
+        
+FAIL    4   ADDR		(FAILED - PUT ADDR INTO A)
+        8   ;+0         (STOP SO OPERATOR CAN NOTE ADDRESS)
+        
+NEXT    10  ADDR
+        4   ADDR
+        8   LOOP
+    
+ADDR    >1              (CURRENT LOCATION TO TEST)    
+FIRST   0   ;+1         (FIRST ADDRESS TO TEST)
+
+%
+
+<! HALT !>
