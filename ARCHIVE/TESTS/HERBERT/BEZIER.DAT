@@ -18,9 +18,9 @@ c load program
 at ptr file ../../SCRIPTS/HERBERT/BEZIER.RLB
 at tty inline
 R<!!>
-at ptp file GRAPHIC.BIN
+at ptp file BEZIER.BIN
 j 8
 nonstop off
 de ptp
-delete GRAPHIC.BIN
+delete BEZIER.BIN
 sh t
