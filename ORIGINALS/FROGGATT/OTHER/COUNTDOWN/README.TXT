@@ -10,7 +10,7 @@ tape.
 
 The SIR version works interactively at the teletype and
 expects the number cards to be input first, followed by
-the traget number.
+the target number.
 
 The SIR version is an improved algorithm compared to the
 Algol program.

@@ -10,7 +10,7 @@ st 8175
 c load patched library
 nonstop on
 
-at ptr file ../../MASTERS/HERBERT/ALG3(ISS6PLTMOD).RLB
+at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
 j 13
 st 15850
 
@@ -18,7 +18,9 @@ c load program
 at ptr file ../../SCRIPTS/HERBERT/BEZIER.RLB
 at tty inline
 R<!!>
+at ptp file GRAPHIC.BIN
 j 8
 nonstop off
 de ptp
+delete GRAPHIC.BIN
 sh t

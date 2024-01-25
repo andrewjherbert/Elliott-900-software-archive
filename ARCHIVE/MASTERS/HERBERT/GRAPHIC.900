@@ -1,0 +1,289 @@
+AUTOGRAPHICS;
+
+"BEGIN"
+"INTEGER" TYPE, NOPOINTS, I, SIDES, YY, XS, YS, N, MODE, WHICH;
+
+"ARRAY" X, Y, HX, HY[1:12], DX, DY[1:200];
+"INTEGER" "ARRAY" SELECT[1:12];
+"REAL" EX , S, WHY , P, Q;
+
+"REAL" SCABSCISSA, SCORDINATE; "COMMENT" SET BY ESETORIGIN;
+
+"INTEGER" "PROCEDURE" ROUND (R);
+	"VALUE" R;
+	"REAL" R;
+	"BEGIN"
+		ROUND := R
+	"END" ROUND;
+
+"PROCEDURE" ESETORIGIN(E, SCAA, SCAO, WAY);
+    "VALUE" E, SCAA, SCAO, WAY;
+    "INTEGER" E, WAY;
+    "REAL" SCAA, SCAO;
+    "BEGIN"
+        SCABSCISSA := (SCAA)*3; SCORDINATE := (SCAO)*3; "COMMENT" SET SCALING;
+        SETORIGIN((E),
+                  "IF" WAY = 1 "THEN" 0 "ELSE" "IF" WAY = 3 "THEN" 1 "ELSE" 0);
+    "END" ESETORIGIN;
+
+"PROCEDURE" EMOVEPEN(X, Y);
+    "VALUE" X, Y;
+    "REAL" X, Y;
+    "BEGIN"
+        MOVEPEN((ROUND((X)*SCABSCISSA)), (ROUND((Y)*SCORDINATE)))
+    "END" EMOVEPEN;
+
+"PROCEDURE" EDRAWLINE(X, Y);
+    "VALUE" X, Y;
+    "REAL" X, Y;
+    "BEGIN"
+        DRAWLINE((ROUND((X)*SCABSCISSA)), (ROUND((Y)*SCORDINATE)))
+    "END" EDRAWLINE;
+
+"SWITCH" WAY := A1, A2, A3, A4, A5, A6, A7, A8, NEWRUN, LOOP;
+
+
+"PROCEDURE" LINKUP(X, Y, NOPOINTS, MODE);
+    "VALUE" X,Y, NOPOINTS, MODE;
+    "ARRAY" X,Y;
+    "INTEGER" NOPOINTS, MODE;
+    "BEGIN"
+        "INTEGER" R, I;  "ARRAY" D, S, DX, DY[1:2];
+
+        "FOR" R := 1, 2 "DO"
+        "BEGIN"
+            D[R] := SQRT ((X[R] - X[3])^2 + (Y[R] - Y[3])^2);
+            S[R] := D[R]/(NOPOINTS);
+            DX[R] := S[R] * (X[R] - X[3])/D[R];
+            DY[R] := S[R] * (Y[R] - Y[3])/D[R]
+        "END";
+
+        "FOR" I := 1 "STEP" 2 "UNTIL" NOPOINTS-1 "DO"
+        "BEGIN"
+            EMOVEPEN (X[3] + DX[2]*I , Y[3] + DY[2]*I);
+            EDRAWLINE (X[1] - DX[1]*(I-1), Y[1] - DY[1]*(I-1));
+            EMOVEPEN(X[1] - DX[1]*I, Y[1] - DY[1]*I);
+            EDRAWLINE(X[3] + DX[2]*(I+1), Y[3] + DY[2]*(I+1))
+        "END";
+
+        "IF" (MODE) = 1 "THEN" "BEGIN"
+            EMOVEPEN (X[1], Y[1]);
+            EDRAWLINE (X[3], Y[3]);
+            EDRAWLINE (X[2], Y[2])
+        "END";
+
+"END" OF LINKUP;
+
+"PROCEDURE" FIGUREDRAW(X, Y, SELECT, S, EXIT, SIDES, FAST) ;
+    "VALUE" X, Y, S, FAST, SIDES;
+    "ARRAY" X,Y;
+    "REAL" S;
+    "LABEL" EXIT;
+    "INTEGER" SIDES, FAST;
+    "INTEGER" "ARRAY" SELECT;
+    "BEGIN"
+        "REAL" "ARRAY" XX, SS, YY[1:SIDES];  "REAL" R,D; "INTEGER" K, KK;
+        "SWITCH" P := AGAIN;
+        EMOVEPEN (X[1], Y[1]);
+        "FOR" K := 2 "STEP" 1 "UNTIL" (SIDES), 1 "DO"
+            "IF" (FAST) = 1 "THEN" EDRAWLINE(X[K], Y[K])
+            "ELSE" "BEGIN"
+                KK := "IF" K "NE" 1 "THEN" K-1 "ELSE" SIDES;
+                "IF" SELECT[KK] = 1
+                "THEN" EDRAWLINE(X[K], Y[K])
+                "ELSE" EMOVEPEN(X[K], Y[K])
+            "END";
+
+        "FOR" K := 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+            KK := "IF" K "NE" SIDES "THEN" K+1 "ELSE" 1;
+            D := SQRT(((X[KK] - X[K])^2) + ((Y[KK] - Y[K])^2));
+            SS[K] := D*(S)
+        "END";
+
+        AGAIN:
+        "FOR" K := 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+            KK := "IF" K "NE" SIDES "THEN" K+1 "ELSE" 1;
+            D := SQRT(((X[KK]-X[K])^2)+((Y[KK]-Y[K])^2));
+            R := D-SS[K];
+            "IF" R < 0 "THEN" "GOTO" EXIT;
+            XX[K] := (R*X[K]+SS[K]*X[KK])/D;
+            YY[K] := (R*Y[K]+SS[K]*Y[KK])/D;
+            "IF" FAST = 1
+            "THEN" EDRAWLINE(XX[K], YY[K])
+            "ELSE" "BEGIN"
+                "IF" K = 1
+                "THEN" EMOVEPEN(XX[1],YY[1])
+                "ELSE" "IF" SELECT[K-1] = 1
+                "THEN" EDRAWLINE(XX[K], YY[K])
+                "ELSE" EMOVEPEN(XX[K], YY[K])
+            "END"
+    "END";
+    "IF" FAST = 1
+    "THEN" EDRAWLINE(XX[1],YY[1])
+    "ELSE" "BEGIN"
+        "IF" SELECT[SIDES] = 1
+        "THEN" EDRAWLINE (XX[1], YY[1])
+        "ELSE" EMOVEPEN(XX[1], YY[1])
+    "END";
+
+    "FOR" K := 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+        X[K] := XX[K];
+        Y[K] := YY[K];
+    "END";
+    "GOTO" AGAIN;
+
+"END" OF FIGUREDRAW;
+
+"PROCEDURE" CIRCLEDRAW(R, CX, CY, DX, DY, NOPOINTS, MODE);
+    "VALUE" R, CX, CY, NOPOINTS, MODE;
+    "ARRAY" DX, DY;
+    "INTEGER" NOPOINTS, MODE;
+    "REAL" R, CX, CY;
+
+    "BEGIN" "INTEGER" COUNT; "REAL" X, PART;
+
+    "IF" (MODE) = 1 "THEN" EMOVEPEN((CX)+(R), (CY));
+
+
+    PART := 6.283185/NOPOINTS;
+
+    COUNT := 0;
+    "FOR" X := PART "STEP" PART "UNTIL" ((NOPOINTS)+0.0)*PART "DO" "BEGIN"
+        COUNT := COUNT + 1;
+        DX[COUNT] := R*COS(X) + CX;
+        DY[COUNT] := R*SIN(X) + CY;
+        "IF" MODE = 1 "THEN" EDRAWLINE (DX[COUNT], DY[COUNT])
+    "END"
+"END" OF CIRCLEDRAW;
+
+"PROCEDURE" DRAWFIGURE (X, Y, SELECT, S, EXIT, SIDES, FAST);
+    "VALUE" X, Y, S, FAST, SIDES;
+    "ARRAY" X, Y;
+    "REAL" S;
+    "LABEL" EXIT;
+    "INTEGER" SIDES, FAST;
+    "INTEGER" "ARRAY" SELECT;
+    "BEGIN"
+        "ARRAY" XX, YY[1:SIDES];
+        "REAL" R, D;
+        "INTEGER" K, KK;
+        "SWITCH" P := AGAIN;
+        EMOVEPEN(X[1], Y[1]);
+        "FOR" K := 2 "STEP" 1 "UNTIL" (SIDES), 1 "DO"
+        "IF" (FAST)  = 1
+        "THEN" EDRAWLINE(X[K], Y[K])
+        "ELSE" "BEGIN"
+              KK := "IF" K "NE" 1 "THEN" K-1 "ELSE" SIDES;
+              "IF" SELECT[KK] = 1
+              "THEN" EDRAWLINE(X[K], Y[K])
+              "ELSE" EMOVEPEN(X[K], Y[K])
+        "END";
+
+        AGAIN:
+        "FOR" K := 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+            KK := "IF" K "NE" SIDES "THEN" K+1 "ELSE" 1;
+            D := SQRT((X[KK]-X[K])^2+(Y[KK]-Y[K])^2);
+            R := D-(S);
+            "IF" R < 0 "THEN" "GOTO" EXIT;
+            XX[K] := (R*X[K]+S*X[KK])/D;
+            YY[K] := (R*Y[K]+S*Y[KK])/D;
+            "IF" FAST =1 "THEN" EDRAWLINE(XX[K], YY[K])
+            "ELSE"  "BEGIN"
+                "IF" K = 1 "THEN" EMOVEPEN (XX[1], YY[1])
+                "ELSE" "IF" SELECT[K-1] = 1
+                "THEN" EDRAWLINE(XX[K], YY[K])
+                "ELSE" EMOVEPEN(XX[K], YY[K])
+            "END";
+        "END";
+        "IF" FAST  = 1
+        "THEN" EDRAWLINE (XX[1],YY[1])
+        "ELSE" "BEGIN"
+            "IF" SELECT[SIDES] = 1
+            "THEN" EDRAWLINE(XX[1], YY[1])
+            "ELSE" EMOVEPEN(XX[1], YY[1])
+        "END";
+
+        "FOR" K:=1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+            X[K] := XX[K];
+            Y[K] := YY[K]
+        "END";
+    "GOTO" AGAIN;
+"END" OF DRAWFIGURE;
+
+READER(1);
+ESETORIGIN (0,1,1,1);
+NEWRUN: "READ" TYPE;
+"IF" TYPE < 0
+"THEN" STOP;
+
+"GOTO" WAY[(TYPE)];
+
+
+A1:
+"READ" NOPOINTS , MODE;
+"FOR" I := 1 "STEP" 1 "UNTIL" 3 "DO" "READ" X[I], Y[I];
+LINKUP (X,Y, NOPOINTS, MODE);
+"GOTO" NEWRUN;
+
+
+A2:
+"READ" S, SIDES, MODE;
+"FOR" I:= 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+    "READ" X[I], Y[I];
+    "IF" MODE "NE"1 "THEN" "READ" SELECT[I]
+"END";
+
+LOOP:
+DRAWFIGURE (X, Y, SELECT, S, NEWRUN, SIDES, MODE);
+
+A3:
+"READ" YY, XS, YS;
+
+"IF" YY "NE" 0 "THEN" EMOVEPEN(0, YY);
+ESETORIGIN (150, XS, YS, 1);
+"GOTO" NEWRUN;
+
+A4:
+"READ" N;
+"FOR" I:= 1 "STEP" 1 "UNTIL" N "DO" "BEGIN"
+    "READ" MODE, P, Q;
+    "IF" MODE = 1 "THEN" EDRAWLINE (P, Q) "ELSE" EMOVEPEN (P, Q);
+"END";
+"GOTO" NEWRUN;
+
+A5:
+"READ" WHICH, EX, WHY;
+X[WHICH] := EX;
+Y[WHICH] := WHY;
+"GOTO" LOOP;
+
+A6:
+"READ" S, SIDES, MODE;
+"FOR" I:= 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+    "READ" X[I],Y[I];
+    "IF" MODE "NE" 1 "THEN" "READ" SELECT[I]
+"END";
+
+FIGUREDRAW(X, Y, SELECT, S, NEWRUN, SIDES, MODE);
+
+A7:
+"READ" YY;
+
+"FOR" I := 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+    HX[I]:=X[I];
+    HY[I]:=Y[I]
+"END";
+"FOR" I:= 1 "STEP" 1 "UNTIL" SIDES "DO" "BEGIN"
+    X[I]:= HX[SIDES+1-I];
+    Y[I]:= HY[SIDES+1-I]
+"END";
+"IF" YY = 2
+"THEN" DRAWFIGURE (X, Y, SELECT,S, NEWRUN, SIDES, MODE)
+"ELSE" FIGUREDRAW(X, Y, SELECT, S, NEWRUN, SIDES, MODE);
+
+A8:
+"READ" S, P, Q, NOPOINTS, MODE;
+CIRCLEDRAW(S, P, Q, DX, DY, NOPOINTS, MODE);
+"GOTO" NEWRUN
+
+"END"
