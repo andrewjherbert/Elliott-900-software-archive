@@ -63,6 +63,8 @@ SIO                     ASCII   Single length number input/output.
 SQUARES_ALGOL		    ASCII	Table of squares in Algol.
 SQUARES_PLOT		    ASCII   Plot of rotating squares.
 SQUARES_SIR             ASCII   Table of squares in SIR.
+STOLE                   ASCII   Program to identify holes in syore
+                        SCB
 SUNSET                  ASCII   ALGOL program to compute times of sunrise,
                                 sunset etc.
 SUNSET_LIB              RLB     Code procedures for SUNSET.
