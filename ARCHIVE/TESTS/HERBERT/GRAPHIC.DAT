@@ -29,7 +29,7 @@ de plt
 c run program again
 scale 5
 
-at ptr file ../../MASTERS/HERBERT/GRAPHIC_DATA1.900
+at ptr file ../../MASTERS/HERBERT/GRAPHIC_DATA2.900
 
 j 10
 st 1715
