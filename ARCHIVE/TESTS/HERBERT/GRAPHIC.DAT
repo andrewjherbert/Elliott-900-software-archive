@@ -15,7 +15,7 @@ st 8000
 c compile program 
 at ptr file ../../MASTERS/HERBERT/GRAPHIC.900
 j 8
-st 1715
+st 8000
 
 c run program
 scale 4
