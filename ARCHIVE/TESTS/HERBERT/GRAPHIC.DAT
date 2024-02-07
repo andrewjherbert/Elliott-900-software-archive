@@ -7,18 +7,18 @@ at ptr file ../../MASTERS/AJHALGOL/ALG16KLG(AJH).BIN
 j 8181
 st 8175
 
-c compile program in library mode
-at ptr file ../../MASTERS/HERBERT/GRAPHIC.900
-j 12
-st 1715
-
-c scan TJF library
+c load full library
 at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
-j 9
+j 18
 st 8000
 
+c compile program 
+at ptr file ../../MASTERS/HERBERT/GRAPHIC.900
+j 8
+st 1715
+
 c run program
-scale 5
+scale 4
 
 at ptr file ../../MASTERS/HERBERT/GRAPHIC_DATA1.900
 
@@ -27,7 +27,7 @@ st 1715
 de plt
 
 c run program again
-scale 5
+scale 4
 
 at ptr file ../../MASTERS/HERBERT/GRAPHIC_DATA2.900
 
