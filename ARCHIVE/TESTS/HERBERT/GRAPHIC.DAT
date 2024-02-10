@@ -12,7 +12,7 @@ at ptr file ../../MASTERS/903ALGOL/ALG3(TJF).RLB
 j 18
 st 8000
 
-c compile program 
+c compile program
 at ptr file ../../MASTERS/HERBERT/GRAPHIC.900
 j 8
 st 8000
@@ -20,16 +20,7 @@ st 8000
 c run program
 scale 3
 
-at ptr file ../../MASTERS/HERBERT/GRAPHIC_DATA1.900
-
-j 10
-st 1715
-de plt
-
-c run program again
-scale 3
-
-at ptr file ../../MASTERS/HERBERT/GRAPHIC_DATA2.900
+at ptr file ../../MASTERS/HERBERT/GRAPHIC_DATA.900
 
 j 10
 st 1715
